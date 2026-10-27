@@ -2081,6 +2081,10 @@ export const DisabledStateTest: Story = {
         field.matches(':disabled'),
         'the authored status does not mirror a host attribute'
       ).toBe(false);
+      expect(
+        field.matches(':state(disabled)'),
+        'the authored status sets the disabled state'
+      ).toBe(true);
       expect(inputColor(), 'the input takes the disabled color').not.toBe(
         enabledColor
       );
@@ -2101,6 +2105,10 @@ export const DisabledStateTest: Story = {
         expect(
           field.matches(':disabled'),
           'cascade matches :disabled without the host property'
+        ).toBe(true);
+        expect(
+          field.matches(':state(disabled)'),
+          'the cascade sets the disabled state'
         ).toBe(true);
         expect(
           field.fieldStatus,
@@ -2131,6 +2139,10 @@ export const DisabledStateTest: Story = {
         expect(
           field.matches(':disabled'),
           ':disabled clears when re-enabled'
+        ).toBe(false);
+        expect(
+          field.matches(':state(disabled)'),
+          'the disabled state clears when re-enabled'
         ).toBe(false);
         expect(
           new FormData(form).get('username'),

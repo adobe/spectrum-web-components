@@ -150,35 +150,35 @@ slot[name="prefix"]::slotted(*) {
 
 /* ── Disabled ─────────────────────────────────────── */
 
-:host(:is(:disabled, [field-status="disabled"])) {
+:host(:state(disabled)) {
   --swc-text-field-border-color-default: token("disabled-border-color");
   --swc-text-field-border-color-hover: token("disabled-border-color");
   --swc-text-field-border-color-focus: token("disabled-border-color");
   --swc-text-field-border-color-focus-hover: token("disabled-border-color");
 }
 
-:host(:is(:disabled, [field-status="disabled"])) .swc-TextField-input {
+:host(:state(disabled)) .swc-TextField-input {
   color: token("disabled-content-color");
 }
 
-:host(:is(:disabled, [field-status="disabled"])) .swc-TextField-input::placeholder {
+:host(:state(disabled)) .swc-TextField-input::placeholder {
   color: token("disabled-content-color");
 }
 
-:host(:is(:disabled, [field-status="disabled"])) slot[name="prefix"]::slotted(*) {
+:host(:state(disabled)) slot[name="prefix"]::slotted(*) {
   color: token("disabled-content-color");
 }
 
 /* ── Invalid ──────────────────────────────────────── */
 
-:host([field-status="invalid"]:not(:disabled)) {
+:host([field-status="invalid"]:not(:state(disabled))) {
   --swc-text-field-border-color-default: token("negative-border-color-default");
   --swc-text-field-border-color-hover: token("negative-border-color-hover");
   --swc-text-field-border-color-focus: token("negative-border-color-focus");
   --swc-text-field-border-color-focus-hover: token("negative-border-color-focus-hover");
 }
 
-:host([field-status="invalid"]:not(:disabled)) .swc-TextField-invalidIcon {
+:host([field-status="invalid"]:not(:state(disabled))) .swc-TextField-invalidIcon {
   --swc-icon-color: token("negative-visual-color");
 }
 
@@ -222,13 +222,13 @@ slot[name="prefix"]::slotted(*) {
 @media (forced-colors: active) {
   /* The bordered wrapper is a <div>, not the native :disabled <input>, so the UA
      won't dim it. Force the disabled treatment to the system GrayText. */
-  :host(:is(:disabled, [field-status="disabled"])) .swc-TextField-control {
+  :host(:state(disabled)) .swc-TextField-control {
     border-color: GrayText;
   }
 
-  :host(:is(:disabled, [field-status="disabled"])) .swc-TextField-input,
-  :host(:is(:disabled, [field-status="disabled"])) .swc-TextField-input::placeholder,
-  :host(:is(:disabled, [field-status="disabled"])) slot[name="prefix"]::slotted(*) {
+  :host(:state(disabled)) .swc-TextField-input,
+  :host(:state(disabled)) .swc-TextField-input::placeholder,
+  :host(:state(disabled)) slot[name="prefix"]::slotted(*) {
     color: GrayText;
   }
 
@@ -237,7 +237,7 @@ slot[name="prefix"]::slotted(*) {
     outline-color: Highlight;
   }
 
-  :host([field-status="invalid"]:not(:disabled)) .swc-TextField-invalidIcon {
+  :host([field-status="invalid"]:not(:state(disabled))) .swc-TextField-invalidIcon {
     --swc-icon-color: CanvasText;
   }
 }

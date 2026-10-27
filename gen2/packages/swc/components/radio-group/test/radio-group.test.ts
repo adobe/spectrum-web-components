@@ -453,6 +453,10 @@ export const DisabledCascadeTest: Story = {
       items.every((item) => item.disabled),
       'group-level disabled cascades to every item'
     ).toBe(true);
+    expect(
+      group.matches(':state(disabled)'),
+      'the authored status sets the disabled state'
+    ).toBe(true);
   },
 };
 
@@ -507,12 +511,14 @@ export const DisabledStateLifecycleTest: Story = {
     await group.updateComplete;
     await waitFor(() => {
       expect(items.map((item) => item.disabled)).toEqual([true, true]);
+      expect(group.matches(':state(disabled)')).toBe(true);
     });
 
     fieldset.disabled = false;
     await waitFor(() => {
       expect(items.map((item) => item.disabled)).toEqual([false, true]);
       expect(items.map((item) => item.tabIndex)).toEqual([0, -1]);
+      expect(group.matches(':state(disabled)')).toBe(false);
     });
 
     group.fieldStatus = 'disabled';

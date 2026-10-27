@@ -454,6 +454,9 @@ export abstract class TextFieldBase extends SizedMixin(
         url: DOCS_URL,
       });
     }
+    this.internals.states[this.effectiveDisabled ? 'add' : 'delete'](
+      'disabled'
+    );
     super.update(changedProperties);
     // Push the current value into the form; exclude it entirely when disabled.
     this.fieldAssoc.setValue(this.effectiveDisabled ? null : this.value);

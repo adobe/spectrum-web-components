@@ -515,6 +515,9 @@ export abstract class RadioGroupBase extends SizedMixin(
         url: DOCS_URL,
       });
     }
+    this.internals.states[this.effectiveDisabled ? 'add' : 'delete'](
+      'disabled'
+    );
     super.update(changedProperties);
     const disabledChanged = this.syncDisabledState();
     if (disabledChanged) {
