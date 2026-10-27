@@ -54,7 +54,7 @@
 
 <!-- Document content (editable) -->
 
-> **Epic [SWC-2668](https://jira.corp.adobe.com/browse/SWC-2668)** · Planning output. Must be reviewed before implementation begins. **Provisional:** the 1st-gen Jira issue list has not been pulled yet. The Figma `S2 / Web` Menu frame and the Spectrum CSS `spectrum-two` menu source have been reviewed.
+> **Epic [SWC-2668](https://jira.corp.adobe.com/browse/SWC-2668)** · Planning output. Must be reviewed before implementation begins. **Provisional:** the 1st-gen Jira issue list has not been pulled yet (Jira MCP authentication failed). The Figma `S2 / Web` Menu and Divider frames and the Spectrum CSS `spectrum-two` menu source have been reviewed.
 >
 > This plan migrates `sp-menu-divider` to a standalone **`swc-menu-separator`**, following the [menu separator accessibility migration analysis](./accessibility-migration-analysis.md), which takes precedence. This supersedes the earlier draft recommendation to reuse `swc-divider`, and it conflicts with [Menu plan Q14](../menu/migration-plan.md#blockers-and-open-questions) (see Q1).
 
@@ -65,15 +65,13 @@
 - `sp-menu-divider` becomes **`swc-menu-separator`**. It is a static, non-focusable `role="separator"` line with no slotted content, used only as a direct child of `swc-menu`, `swc-action-menu`, or `swc-menu-item` (submenu), never inside `swc-menu-group`.
 - Naming follows the accessibility analysis and ARIA terminology (`separator`). 1st-gen has only `sp-menu-divider`; there is no 1st-gen `sp-menu-separator`.
 - The 1st-gen `size` property is dropped. Size, spacing, and thickness are owned by the menu context, so the element exposes no public properties.
-- Open risk: [Menu plan Q14](../menu/migration-plan.md#blockers-and-open-questions) decided there would be no dedicated element, and Menu Phase A/B scoping and its `swc-divider` references assume that. Menu docs must be reconciled (Q1).
-- Open risk: Figma draws a 2px line, while the Spectrum CSS story passes `size: "s"` to its divider (Q6).
+- Confirmed: a separate `swc-menu-separator` element is required (Q1). [Menu plan Q14](../menu/migration-plan.md#blockers-and-open-questions) assumed no dedicated element, so the Menu plan (Q14, Q15, Q21, Phase B) must be updated to match.
+- Confirmed: the Figma Divider frame ([node 9233:4610](https://www.figma.com/design/xHBWBBIe2eo5vwoCeNrC4Q/S2---Web?node-id=9233-4610)) defines Small as 1px, Medium as 2px and Large as 4px, so the 2px menu line is the Medium thickness (Q6).
 - Menu Phase A defers dividers, so this component ships with Menu Phase B or earlier if the team pulls it forward.
 
 ### Most blocking open questions
 
-- Q1 in [Scope and prerequisites](#scope-and-prerequisites): reverse Menu plan Q14 and update Menu docs, or keep both plans consistent another way.
 - Q2 in [Architecture and behavior](#architecture-and-behavior): whether the separator extends `DividerBase` or stands alone in core.
-- Q6 in [Design](#design): the line thickness (2px in Figma versus the small-size token in Spectrum CSS).
 
 ---
 
@@ -162,8 +160,7 @@ Migrate `swc-menu-separator` independently of the other menu parts. It has no be
 
 ### User confirmation needed
 
-1. Reverse Menu plan Q14 and ship a standalone element (Q1).
-2. Choose the core base: extend `DividerBase` or stand alone (Q2).
+1. Choose the core base: extend `DividerBase` or stand alone (Q2).
 
 ---
 
@@ -299,7 +296,7 @@ Planned rendering shape:
 
 - [ ] Add `.swc-MenuSeparator` to the internal element in `render()`; keep styling off `:host`
 - [ ] Copy the `.spectrum-Menu-divider` rule from `spectrum-css` `spectrum-two` `components/menu/index.css` into `menu-separator.css` as baseline
-- [ ] Apply the thickness chosen in Q6 and the container heights from Q3
+- [ ] Apply the Medium divider thickness (2px, Q6) and the container heights from Q3
 - [ ] Add `@cssprop` JSDoc for every exposed `--swc-*` property
 - [ ] Pass stylelint (property order, `no-descending-specificity`, token validation)
 
@@ -359,7 +356,6 @@ Planned rendering shape:
 | #   | Item                                                                                                                                                                                                                                                                                                  | Blocking? | Status | Owner                   |
 | --- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- | ------ | ----------------------- |
 | Q3  | Figma `S2 / Web` Menu frame ([node 10095:400](https://www.figma.com/design/xHBWBBIe2eo5vwoCeNrC4Q/S2---Web?node-id=10095-400)) has a single divider style: a 2px line in a 10px or 16px container, inset 10 to 12px. Next action: design confirms the container heights map to `menu-item-section-divider-height` per menu size. | No        | Open   | Design + implementation |
-| Q6  | Figma draws a 2px line; the Spectrum CSS story passes `size: "s"` (small thickness token); 1st-gen defaults to medium. Confirm which thickness token yields 2px and use it.                                                                                                                            | Yes       | Open   | Design + implementation |
 
 ### Architecture and behavior
 
@@ -374,7 +370,6 @@ Planned rendering shape:
 
 | #   | Item                                                                                                                                                                                                                                              | Blocking? | Status | Owner                  |
 | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- | ------ | ---------------------- |
-| Q1  | This plan reverses [Menu plan Q14](../menu/migration-plan.md#blockers-and-open-questions) (reuse `swc-divider`, no `swc-menu-separator`), per the instruction to prefer the menu-separator accessibility analysis. Menu plan Q14, Q15, Q21 and its Phase B text need updating to match. | Yes       | Open   | Architecture reviewer  |
 | Q4  | 1st-gen Jira issue table and breaking-change ticket(s) for B1 to B3 are missing.                                                                                                                                                                  | No        | Open   | Ticket owner           |
 | Q9  | Which tickets and migration order cover `swc-menu-separator` relative to `swc-menu`, `swc-menu-item`, and `swc-menu-group` (Menu plan Q15)?                                                                                                      | No        | Open   | Ticket owner           |
 
@@ -384,7 +379,8 @@ Planned rendering shape:
 
 | Ref | Decision                                                                                  | Rationale / context                                                                                                                                                                         |
 | --- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Q14 | Superseded for this plan: ship a standalone `swc-menu-separator`, not reuse `swc-divider`. | Direction from the plan owner: prefer the menu-separator accessibility analysis, which documents a standalone element. Menu plan Q14 argued duplication; the trade-off is two Storybook entries and test suites. Pending Q1. |
+| Q1  | Standalone `swc-menu-separator`; do not reuse `swc-divider`. | Confirmed by the plan owner, consistent with the menu-separator accessibility analysis. Supersedes Menu plan Q14. Menu plan Q14, Q15, Q21 and Phase B text still need updating. |
+| Q6  | Use the Medium divider thickness (2px). | Figma Divider frame (node 9233:4610): Small 1px, Medium 2px, Large 4px. The Menu frame draws 2px. 1st-gen also defaults to medium. The Spectrum CSS story passing `size: "s"` does not match Figma. |
 
 ---
 
@@ -399,6 +395,7 @@ Planned rendering shape:
 - [Menu rendering and styling migration analysis](../menu/rendering-and-styling-migration-analysis.md)
 - Epic: [SWC-2668](https://jira.corp.adobe.com/browse/SWC-2668)
 - Figma: [S2 / Web, Menu](https://www.figma.com/design/xHBWBBIe2eo5vwoCeNrC4Q/S2---Web?node-id=10095-400)
+- Figma: [S2 / Web, Divider](https://www.figma.com/design/xHBWBBIe2eo5vwoCeNrC4Q/S2---Web?node-id=9233-4610)
 - 1st-gen source: [`MenuDivider.ts`](../../../../1st-gen/packages/menu/src/MenuDivider.ts), [`menu-divider.css`](../../../../1st-gen/packages/menu/src/menu-divider.css)
 - gen2 `swc-divider`: [`Divider.ts`](../../../../gen2/packages/swc/components/divider/Divider.ts), [`Divider.base.ts`](../../../../gen2/packages/core/components/divider/Divider.base.ts)
 - Spectrum CSS: [`components/menu/index.css`](https://github.com/adobe/spectrum-css/blob/spectrum-two/components/menu/index.css) and `components/menu/stories/template.js` on `spectrum-two` (commit `4df8792e1`)
