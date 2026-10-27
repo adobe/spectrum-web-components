@@ -77,7 +77,7 @@
 
 - **Q14**: how to move focus to the first invalid checkbox after a failed submit in a `novalidate` form (C7). Blocks the accessibility phase. See [Architecture and behavior](#architecture-and-behavior).
 
-Q8, Q9, Q12, Q15, and Q16 are open but do not block implementation; see [Blockers and open questions](#blockers-and-open-questions).
+Q8, Q9, Q12, and Q15 are open but do not block implementation; see [Blockers and open questions](#blockers-and-open-questions).
 
 ---
 
@@ -239,7 +239,7 @@ gen2 (planned; see [Architecture](#architecture-core-vs-swc-split)):
 | `SizedMixin` (gen2 core) | already built | `size` with explicit default `m`. |
 | `LabellingMixin` (gen2 core) | already built (text field migration) | `label` slot presence, `renderLabel()` (`<label for>`), `accessible-label`, `accessible-labelledby`, `ariaLabelledByElements` wiring for `accessible-labelledby`, missing-name dev warnings. See Q3, Q13. |
 | `FieldDescriptionMixin` (gen2 core) | already built (text field migration) | `description` and `error-text` slots, `renderFieldDescription()`, `accessible-describedby`, `ariaDescribedByElements` wiring. On `main`, `renderFieldDescription()` adds the `swc-FormFieldDescription--invalid` class to the description while the field is invalid, and `tabindex="-1"` to the description and error-text spans. The `errorIcon` option of `renderFieldDescription()`, needed for B14, exists only on the radio branch so far. The accessibility analysis calls it `HelpTextMixin`. See Q3, Q7, B14. |
-| `swc-radio` and `swc-radio-group` | **unmerged** (radio branch) | Patterns checkbox reuses or aligns with (Q8, B14, B17), plus the `errorIcon` option. Checkbox waits for this branch to merge (Q3). |
+| `swc-radio` and `swc-radio-group` | **unmerged** (radio branch) | Patterns checkbox reuses or aligns with (Q8, B14, B17), plus the `errorIcon` option. `swc-radio-group` adopts `field-status` in [#6872](https://github.com/adobe/spectrum-web-components/pull/6872) (Q16). Checkbox waits for this branch to merge (Q3). |
 | `swc-icon-alert-triangle` (`@adobe/spectrum-wc-icons`) | already built | Error icon passed to `renderFieldDescription()`'s `errorIcon` option (B14), as `swc-radio-group` does. |
 | `FieldAssociationController` (gen2 core, SWC-2467) | already built (text field migration) | Wraps `ElementInternals`: `setValue()` (form value plus restore state), `formDisabledCallback`, validity reads. Host keeps `formAssociated`, `attachInternals()`, `setValidity()`, and `formResetCallback`. See Q3. |
 | `SlotPresenceController` (gen2 core) | already built | Used internally by both mixins. |
@@ -276,7 +276,7 @@ gen2 (planned; see [Architecture](#architecture-core-vs-swc-split)):
 
 ### User confirmation needed
 
-Q8 (open until the Styling phase): recommended local description and error rules in `checkbox.css`, and styling the fixed classes that `renderLabel()` emits; the CSS reviewer confirms. Q16: recommended that radio adopt `field-status` before it merges. Q3, Q4, and Q10 are settled in the [Decision log](#decision-log).
+Q8 (open until the Styling phase): recommended local description and error rules in `checkbox.css`, and styling the fixed classes that `renderLabel()` emits; the CSS reviewer confirms. Q3, Q4, Q10, and Q16 are settled in the [Decision log](#decision-log).
 
 ---
 
@@ -476,8 +476,7 @@ Rationale for using `LabellingMixin` and skipping `DisabledMixin`: C4 and C3 in 
 ### Setup
 
 - [x] Confirm the text field branch (shared form mixins and controller) has merged to `main` (Q3)
-- [ ] Confirm the radio branch merged to `main` with the `errorIcon` option of `renderFieldDescription()` (B14, Q3)
-- [ ] Confirm whether radio adopted `field-status` (Q16)
+- [ ] Confirm the radio branch merged to `main` with the `errorIcon` option of `renderFieldDescription()` and `swc-radio-group`'s `field-status` from [#6872](https://github.com/adobe/spectrum-web-components/pull/6872) (B14, Q3, Q16)
 - [ ] Create `gen2/packages/core/components/checkbox/`
 - [ ] Create `gen2/packages/swc/components/checkbox/`
 - [ ] Wire exports in both `package.json` files
@@ -677,9 +676,8 @@ _Q1 and Q2 are settled in the [Decision log](#decision-log)._
 | #   | Item | Blocking? | Status | Owner |
 | --- | ---- | --------- | ------ | ----- |
 | Q12 | File a `deferred` ticket for A1 (`swc-checkbox-group`) under Epic SWC-2340, then move A1 into the deferred-ticket table. Required before SWC-2342 closes. | No | Open | Team |
-| Q16 | Whether `swc-radio` and `swc-radio-group` adopt `field-status` too (B22). The radio branch still uses `disabled`, `readonly`, and `invalid` booleans. Recommended: radio follows `swc-text-field` before it merges, so all three form fields match. Checkbox adopts `field-status` either way (B22), so this is coordination, not a blocker. | No | Open: coordinate with radio | Radio owner + forms strategy owners |
 
-_Q10 and Q11 are settled in the [Decision log](#decision-log)._
+_Q10, Q11, and Q16 are settled in the [Decision log](#decision-log)._
 
 ### Deferred tickets
 
@@ -715,9 +713,10 @@ A2–A4 have no tickets by decision (Q11): they are on-request or follow from sh
 | Q10 | `swc-checkbox-group` is outside this migration. | The checkbox works standalone, so it ships first. Details: [Related components and ordering notes](#related-components-and-ordering-notes). |
 | Q11 | Only A1 gets a deferred ticket; A2–A4 are tracked in the Additive table without tickets. | A2 and A4 are on-request; A3 belongs to the shared forms strategy. Keeps the backlog limited to real, scheduled work. The former A5, the error icon, moved into scope with B14. |
 | Q13 | Use `LabellingMixin`'s name wiring unchanged: an in-shadow `<label for>` names the inner input from the `label` slot, `aria-label` carries `accessible-label`, and `ariaLabelledByElements` carries `accessible-labelledby`. | Testing during plan review found an in-shadow `<label for>` acceptable, and it matches `swc-text-field`. Browsers rank `aria-labelledby` over `aria-label` over a native label, so the precedence matches the order the accessibility analysis specifies. Internal wiring only; no public API change. This supersedes the accessibility analysis's description of the slotted label wired through `ariaLabelledByElements`, under [ARIA roles, states, and properties](./accessibility-migration-analysis.md#aria-roles-states-and-properties), [Shadow DOM and cross-root ARIA issues](./accessibility-migration-analysis.md#shadow-dom-and-cross-root-aria-issues), and [Summary checklist](./accessibility-migration-analysis.md#summary-checklist). |
+| Q16 | `swc-radio-group` adopts `field-status` too, in [#6872](https://github.com/adobe/spectrum-web-components/pull/6872) on the radio branch. | Confirmed by the radio owner in plan review. The item `swc-radio` keeps its own `disabled` boolean, because the group owns the field status. `swc-checkbox` stands alone, so it follows `swc-text-field` (B22). |
 | B17 | `field-status="invalid"` sets host `customError` validity, so `checkValidity()` is `false` even when the box is checked, and native submit is blocked in a form without `novalidate`. | Settled in plan review. It covers errors the application sets, such as a checked option the application then rejects, and matches `swc-radio-group` and `swc-text-field`. Details, including the read-only and disabled exceptions: B17. |
 | B18 | Inside a group, `swc-checkbox-group` owns the invalid state, its error text, and its constraint validity; items show no error text or error icon of their own. | From plan review; the checkbox-group plan confirms the details. This supersedes the accessibility analysis notes that keep item-level invalidity in a group, under [Overview](./accessibility-migration-analysis.md#overview) and [ARIA roles, states, and properties](./accessibility-migration-analysis.md#aria-roles-states-and-properties). How the group exposes the state to assistive technology is the checkbox-group plan's decision; its [accessibility analysis](../checkbox-group/accessibility-migration-analysis.md#aria-roles-states-and-properties) advises against `aria-invalid` on `role="group"` without a separate standards and assistive-technology decision. Details: B18. |
-| B22 | Follow `swc-text-field`: one optional `field-status` replaces the `disabled`, `readonly`, and `invalid` booleans, as specified in B22. | Decided in plan review after the text field migration merged, to keep the form fields consistent; `swc-text-field` adopted it at the forms checkpoint. Following `swc-text-field` reverses two earlier choices: inside a disabled fieldset, the error icon now hides instead of staying visible as in `swc-radio-group` (B14), and form reset now clears an invalid status instead of keeping it. Whether radio follows is Q16. |
+| B22 | Follow `swc-text-field`: one optional `field-status` replaces the `disabled`, `readonly`, and `invalid` booleans, as specified in B22. | Decided in plan review after the text field migration merged, to keep the form fields consistent; `swc-text-field` adopted it at the forms checkpoint. Following `swc-text-field` reverses two earlier choices: inside a disabled fieldset, the error icon now hides instead of staying visible as in `swc-radio-group` (B14), and form reset now clears an invalid status instead of keeping it. `swc-radio-group` follows too (Q16). |
 
 ---
 
