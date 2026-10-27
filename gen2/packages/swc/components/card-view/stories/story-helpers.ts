@@ -29,6 +29,14 @@ import '../swc-card-view-option-2b.js';
 import '../swc-card-view-option-2e.js';
 import '../swc-card-view-option-5a.js';
 import '../swc-card-view-option-6a.js';
+import '../swc-card-view-grid-nowrap.js';
+import '../swc-card-view-grid-loop.js';
+import '../swc-card-view-grid-advance.js';
+import '../swc-card-view-grid-semantic.js';
+import '../swc-card-view-waterfall-nowrap.js';
+import '../swc-card-view-waterfall-loop.js';
+import '../swc-card-view-waterfall-advance.js';
+import '../swc-card-view-waterfall-semantic.js';
 
 const photoTemplates: CardViewItem[] = [
   {
@@ -124,6 +132,7 @@ export const photos: CardViewItem[] = Array.from(
     const batch = Math.floor(index / photoTemplates.length);
     return {
       ...photo,
+      image: `https://picsum.photos/id/${index + 1}/${Math.round(600 / (photo.aspectRatio ?? 1.5))}/600`,
       id: batch === 0 ? photo.id : `${photo.id}-${index + 1}`,
       title: batch === 0 ? photo.title : `${photo.title} ${batch + 1}`,
     };

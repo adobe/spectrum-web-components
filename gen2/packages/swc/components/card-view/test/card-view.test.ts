@@ -13,6 +13,8 @@ import { html } from 'lit';
 import { expect, waitFor } from '@storybook/test';
 import type { Meta, StoryObj } from '@storybook/web-components';
 
+import type { CardViewItem } from '@adobe/spectrum-wc-core/components/card-view/index.js';
+
 import '../swc-card-view-option-1a.js';
 import '../swc-card-view-option-1b.js';
 import '../swc-card-view-option-1c.js';
@@ -28,6 +30,16 @@ import '../swc-card-view-option-2b.js';
 import '../swc-card-view-option-2e.js';
 import '../swc-card-view-option-5a.js';
 import '../swc-card-view-option-6a.js';
+import '../swc-card-view-grid-nowrap.js';
+import '../swc-card-view-grid-loop.js';
+import '../swc-card-view-grid-advance.js';
+import '../swc-card-view-grid-semantic.js';
+import '../swc-card-view-waterfall-nowrap.js';
+import '../swc-card-view-waterfall-loop.js';
+import '../swc-card-view-waterfall-advance.js';
+import '../swc-card-view-waterfall-semantic.js';
+
+import { photos } from '../stories/story-helpers.js';
 
 const tags = [
   'swc-card-view-option-1a',
@@ -47,7 +59,7 @@ const items = Array.from({ length: 8 }, (_, index) => ({
 }));
 
 type Prototype = HTMLElement & {
-  items: typeof items;
+  items: CardViewItem[];
   layout: string;
   selected: string[];
   selectionMode: string;
@@ -80,6 +92,226 @@ export default {
   tags: ['!autodocs', 'dev'],
   parameters: { docs: { disable: true, page: null } },
 } satisfies Meta;
+
+export const NamedLayoutNavigation: StoryObj = {
+  render: () => html`
+    <div></div>
+  `,
+  play: async ({ canvasElement }) => {
+    for (const layout of ['grid', 'waterfall']) {
+      for (const mode of ['nowrap', 'loop', 'advance', 'semantic']) {
+        const view = await mount(
+          canvasElement,
+          `swc-card-view-${layout}-${mode}`,
+          layout
+        );
+        Object.defineProperty(view, 'positions', {
+          get: () =>
+            items.map((_, index) => ({
+              left: (index % 3) * 120,
+              top: Math.floor(index / 3) * 120,
+              width: 100,
+              height: 100,
+              column: index % 3,
+            })),
+        });
+        const targets = [
+          ...view.shadowRoot!.querySelectorAll<HTMLElement>('[data-focus]'),
+        ];
+        const move = async (index: number, key: string) => {
+          targets[index].focus();
+          targets[index].dispatchEvent(
+            new KeyboardEvent('keydown', { key, bubbles: true, composed: true })
+          );
+          await view.updateComplete;
+          return Number(
+            view.shadowRoot!.activeElement?.getAttribute('data-index')
+          );
+        };
+        expect(view.shadowRoot!.querySelectorAll('[role="row"]')).toHaveLength(
+          1
+        );
+        expect(
+          view
+            .shadowRoot!.querySelector('[role="grid"]')
+            ?.getAttribute('aria-colcount')
+        ).toBe('8');
+        expect(await move(2, 'ArrowRight')).toBe(
+          mode === 'nowrap' ? 2 : mode === 'loop' ? 0 : 3
+        );
+        expect(await move(0, 'ArrowLeft')).toBe(
+          mode === 'nowrap' ? 0 : mode === 'loop' ? 2 : 7
+        );
+        expect(await move(6, 'ArrowDown')).toBe(
+          mode === 'nowrap'
+            ? 6
+            : mode === 'loop'
+              ? 0
+              : mode === 'advance'
+                ? 1
+                : 7
+        );
+        expect(await move(0, 'ArrowUp')).toBe(
+          mode === 'nowrap'
+            ? 0
+            : mode === 'loop'
+              ? 6
+              : mode === 'advance'
+                ? 5
+                : 7
+        );
+        expect(await move(7, 'ArrowDown')).toBe(
+          mode === 'nowrap'
+            ? 7
+            : mode === 'loop'
+              ? 1
+              : mode === 'advance'
+                ? 2
+                : 0
+        );
+        expect(await move(5, 'ArrowDown')).toBe(
+          mode === 'nowrap'
+            ? 5
+            : mode === 'loop'
+              ? 2
+              : mode === 'advance'
+                ? 0
+                : 6
+        );
+        expect(await move(7, 'ArrowRight')).toBe(
+          mode === 'nowrap' ? 7 : mode === 'loop' ? 6 : 0
+        );
+        expect(await move(4, 'ArrowRight')).toBe(5);
+        expect(await move(4, 'ArrowDown')).toBe(mode === 'semantic' ? 5 : 7);
+        view.items = items.map((item, index) => ({
+          ...item,
+          disabled: index === 1,
+        }));
+        await view.updateComplete;
+        expect(await move(0, 'ArrowRight')).not.toBe(1);
+        view.dir = 'rtl';
+        expect(await move(4, 'ArrowRight')).toBe(5);
+      }
+    }
+  },
+};
+
+export const PicsumImageSources: StoryObj = {
+  render: () => html`
+    <div></div>
+  `,
+  play: async ({ canvasElement }) => {
+    expect(photos).toHaveLength(100);
+    for (const [index, photo] of photos.entries()) {
+      expect(photo.image).toMatch(
+        new RegExp(`^https://picsum\\.photos/id/${index + 1}/[0-9]+/[0-9]+$`)
+      );
+    }
+    const view = await mount(canvasElement, 'swc-card-view-grid-nowrap');
+    view.items = photos.slice(0, 50);
+    await view.updateComplete;
+    expect(view.shadowRoot!.querySelectorAll('[role="row"]')).toHaveLength(1);
+    expect(
+      view
+        .shadowRoot!.querySelector('[role="grid"]')!
+        .getAttribute('aria-colcount')
+    ).toBe('50');
+    expect(
+      view.shadowRoot!.querySelector('input')!.getBoundingClientRect().width
+    ).toBeGreaterThanOrEqual(24);
+    expect(
+      view.shadowRoot!.querySelector('.title')!.getBoundingClientRect().height
+    ).toBeGreaterThanOrEqual(24);
+    await waitFor(() => {
+      const previews = [
+        ...view.shadowRoot!.querySelectorAll<HTMLImageElement>('img'),
+      ];
+      expect(previews).toHaveLength(50);
+      for (const [index, preview] of previews.entries()) {
+        const dimensions = new URL(preview.src).pathname.split('/');
+        expect(dimensions[2]).toBe(String(index + 1));
+        expect(Number(dimensions[3])).toBe(
+          Math.round(preview.getBoundingClientRect().height)
+        );
+        expect(
+          Math.abs(
+            Number(dimensions[4]) - preview.getBoundingClientRect().width
+          )
+        ).toBeLessThan(3);
+      }
+    });
+  },
+};
+
+export const WaterfallLayoutNavigation: StoryObj = {
+  render: () => html`
+    <div></div>
+  `,
+  play: async ({ canvasElement }) => {
+    const geometry = [
+      { left: 0, top: 0, height: 220, column: 0 },
+      { left: 120, top: 0, height: 100, column: 1 },
+      { left: 240, top: 0, height: 160, column: 2 },
+      { left: 120, top: 120, height: 160, column: 1 },
+      { left: 240, top: 180, height: 220, column: 2 },
+      { left: 0, top: 240, height: 100, column: 0 },
+      { left: 120, top: 300, height: 100, column: 1 },
+      { left: 0, top: 360, height: 100, column: 0 },
+    ];
+    for (const mode of ['nowrap', 'loop', 'advance', 'semantic']) {
+      const tag = `swc-card-view-waterfall-${mode}`;
+      expect((document.createElement(tag) as Prototype).layout).toBe(
+        'waterfall'
+      );
+      const view = await mount(canvasElement, tag, 'waterfall');
+      const cells = [
+        ...view.shadowRoot!.querySelectorAll<HTMLElement>('[role="gridcell"]'),
+      ];
+      expect(
+        new Set(
+          cells.slice(0, 3).map((cell) => cell.getBoundingClientRect().left)
+        ).size
+      ).toBe(mode === 'semantic' ? 1 : 3);
+      Object.defineProperty(view, 'positions', {
+        get: () =>
+          geometry.map((position) => ({
+            ...position,
+            width: 100,
+            left: view.dir === 'rtl' ? 240 - position.left : position.left,
+          })),
+      });
+      const move = async (index: number, key: string) => {
+        cells[index].focus();
+        cells[index].dispatchEvent(
+          new KeyboardEvent('keydown', { key, bubbles: true, composed: true })
+        );
+        await view.updateComplete;
+        return Number(
+          view.shadowRoot!.activeElement?.getAttribute('data-index')
+        );
+      };
+      expect(await move(2, 'ArrowRight')).toBe(
+        mode === 'nowrap' ? 2 : mode === 'loop' ? 0 : 3
+      );
+      expect(await move(7, 'ArrowDown')).toBe(
+        mode === 'nowrap' ? 7 : mode === 'advance' ? 1 : 0
+      );
+      expect(await move(0, 'ArrowUp')).toBe(
+        mode === 'nowrap' ? 0 : mode === 'advance' ? 4 : 7
+      );
+      view.dir = 'rtl';
+      expect(await move(0, 'ArrowRight')).toBe(
+        mode === 'nowrap'
+          ? 0
+          : mode === 'loop'
+            ? 2
+            : mode === 'semantic'
+              ? 1
+              : 7
+      );
+    }
+  },
+};
 
 export const GridNavigationMatrix: StoryObj = {
   render: () => html`

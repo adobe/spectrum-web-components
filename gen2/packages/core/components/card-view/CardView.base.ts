@@ -267,6 +267,33 @@ export abstract class CardViewBase extends SpectrumElement {
     return aligned[0]?.itemIndex ?? index;
   }
 
+  protected advancedSpatial(index: number, key: string): number {
+    const next = this.spatial(index, key);
+    if (next !== index) {
+      return next;
+    }
+    const horizontal = key === 'ArrowLeft' || key === 'ArrowRight';
+    const rtl = getComputedStyle(this).direction === 'rtl';
+    const direction =
+      (key === 'ArrowRight' || key === 'ArrowDown' ? 1 : -1) *
+      (horizontal && rtl ? -1 : 1);
+    const order = this.positions
+      .map((position, itemIndex) => ({ ...position, itemIndex }))
+      .filter((position) => !this.items[position.itemIndex]?.disabled)
+      .sort((first, second) =>
+        horizontal
+          ? first.top - second.top ||
+            (first.left - second.left) * (rtl ? -1 : 1)
+          : first.column - second.column || first.top - second.top
+      )
+      .map((position) => position.itemIndex);
+    const current = order.indexOf(index);
+    if (current < 0 || !order.length) {
+      return index;
+    }
+    return order[(current + direction + order.length) % order.length];
+  }
+
   protected cycle(index: number, direction: number): number {
     for (let step = 1; step <= this.items.length; step++) {
       const next =
@@ -378,13 +405,17 @@ export abstract class CardViewBase extends SpectrumElement {
       const rtl = getComputedStyle(this).direction === 'rtl';
       const direction = (forward ? 1 : -1) * (horizontal && rtl ? -1 : 1);
       next =
-        this.navigation === 'cycle'
-          ? this.cycle(index, direction)
-          : this.navigation === 'sequential-axis' && horizontal
-            ? this.sequential(index, direction)
-            : this.navigation === 'spatial-wrap'
-              ? this.wrappedSpatial(index, event.key)
-              : this.spatial(index, event.key);
+        this.navigation === 'semantic'
+          ? this.cycle(index, forward ? 1 : -1)
+          : this.navigation === 'cycle'
+            ? this.cycle(index, direction)
+            : this.navigation === 'sequential-axis' && horizontal
+              ? this.sequential(index, direction)
+              : this.navigation === 'spatial-wrap'
+                ? this.wrappedSpatial(index, event.key)
+                : this.navigation === 'spatial-advance'
+                  ? this.advancedSpatial(index, event.key)
+                  : this.spatial(index, event.key);
     } else if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
       if (this.model === 'vertical' && this.layout === 'waterfall') {
         return;

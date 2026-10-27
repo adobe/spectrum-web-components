@@ -23,6 +23,7 @@ import { styleMap } from 'lit/directives/style-map.js';
 import {
   CardViewBase,
   type CardViewItem,
+  type CardViewLayout,
   type CardViewModel,
   type CardViewNavigation,
   type CardViewPosition,
@@ -45,6 +46,9 @@ export class CardViewOption1A extends CardViewBase {
   private geometry: CardViewPosition[] = [];
 
   @state()
+  private previewSizes: number[][] = [];
+
+  @state()
   private collectionHeight = 0;
 
   private observer?: ResizeObserver;
@@ -60,6 +64,10 @@ export class CardViewOption1A extends CardViewBase {
 
   private get singleRow(): boolean {
     return this.model === 'single-row' || this.model === 'vertical';
+  }
+
+  protected get columnMajorWaterfall(): boolean {
+    return this.singleRow;
   }
 
   protected get focusTargets(): HTMLElement[] {
@@ -115,6 +123,16 @@ export class CardViewOption1A extends CardViewBase {
       ...this.renderRoot.querySelectorAll<HTMLElement>('swc-card'),
     ];
     const heights = cards.map((card) => card.getBoundingClientRect().height);
+    const previewSizes = cards.map((card) => {
+      const bounds = card.querySelector('img')!.getBoundingClientRect();
+      return [
+        Math.max(1, Math.round(bounds.width)),
+        Math.max(1, Math.round(bounds.height)),
+      ];
+    });
+    if (JSON.stringify(previewSizes) !== JSON.stringify(this.previewSizes)) {
+      this.previewSizes = previewSizes;
+    }
     const columnHeights = Array.from({ length: columns }, () => 0);
     const itemsPerColumn = Math.ceil(cards.length / columns);
     const rowHeight = Math.max(0, ...heights);
@@ -122,7 +140,7 @@ export class CardViewOption1A extends CardViewBase {
     const next = cards.map((_, index) => {
       const column =
         this.layout === 'waterfall'
-          ? this.singleRow
+          ? this.columnMajorWaterfall
             ? Math.floor(index / itemsPerColumn)
             : columnHeights.indexOf(Math.min(...columnHeights))
           : index % columns;
@@ -174,6 +192,10 @@ export class CardViewOption1A extends CardViewBase {
 
   private renderCard(item: CardViewItem, index: number): TemplateResult {
     const selected = this.selected.includes(item.id);
+    const [width, height] = this.previewSizes[index] ?? [224, 149];
+    const image = item.image.startsWith('https://picsum.photos/id/')
+      ? `https://picsum.photos/id/${index + 1}/${height}/${width}`
+      : item.image;
     return html`
       <swc-card
         variant=${this.variant}
@@ -182,7 +204,7 @@ export class CardViewOption1A extends CardViewBase {
       >
         <img
           slot="preview"
-          src=${item.image}
+          src=${image}
           alt=""
           style=${styleMap({
             aspectRatio: String(
@@ -507,4 +529,45 @@ export class CardViewOption5A extends CardViewOption1A {
  */
 export class CardViewOption6A extends CardViewOption1A {
   protected override readonly model: CardViewModel = 'fieldset';
+}
+
+export class CardViewGridNoWrap extends CardViewOption2B {
+  protected override readonly navigation: CardViewNavigation = 'spatial';
+
+  protected override get columnMajorWaterfall(): boolean {
+    return false;
+  }
+}
+
+export class CardViewGridLoop extends CardViewGridNoWrap {
+  protected override readonly navigation: CardViewNavigation = 'spatial-wrap';
+}
+
+export class CardViewGridAdvance extends CardViewGridNoWrap {
+  protected override readonly navigation: CardViewNavigation =
+    'spatial-advance';
+}
+
+export class CardViewGridSemantic extends CardViewGridNoWrap {
+  protected override readonly navigation: CardViewNavigation = 'semantic';
+}
+
+export class CardViewWaterfallNoWrap extends CardViewGridNoWrap {
+  public override layout: CardViewLayout = 'waterfall';
+}
+
+export class CardViewWaterfallLoop extends CardViewGridLoop {
+  public override layout: CardViewLayout = 'waterfall';
+}
+
+export class CardViewWaterfallAdvance extends CardViewGridAdvance {
+  public override layout: CardViewLayout = 'waterfall';
+}
+
+export class CardViewWaterfallSemantic extends CardViewGridSemantic {
+  public override layout: CardViewLayout = 'waterfall';
+
+  protected override get columnMajorWaterfall(): boolean {
+    return true;
+  }
 }

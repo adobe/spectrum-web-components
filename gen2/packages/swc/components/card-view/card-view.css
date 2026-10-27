@@ -75,8 +75,8 @@ img {
 
 input {
   display: block;
-  inline-size: 20px;
-  block-size: 20px;
+  inline-size: 24px;
+  block-size: 24px;
   margin: 0;
   cursor: pointer;
 }
@@ -90,6 +90,7 @@ input {
 }
 
 .title {
+  min-block-size: 24px;
   padding: 0;
   background: transparent;
   border: 0;

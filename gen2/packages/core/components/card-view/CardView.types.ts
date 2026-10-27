@@ -14,6 +14,8 @@ export type CardViewNavigation =
   | 'legacy'
   | 'spatial'
   | 'spatial-wrap'
+  | 'spatial-advance'
+  | 'semantic'
   | 'sequential-axis'
   | 'cycle';
 export type CardViewModel =
