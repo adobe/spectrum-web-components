@@ -446,10 +446,10 @@ export default defineConfig([
   },
 
   // ────────────────────────────────────────────────────────────────────────────
-  // Changesets changelog generator: Node globals and release-tooling imports
+  // Changesets scripts (e.g. changelog generators): Node globals and release-tooling imports
   // ────────────────────────────────────────────────────────────────────────────
   {
-    files: ['gen2/.changeset/changelog-grouped.cjs'],
+    files: ['**/.changeset/*.cjs', '**/.changeset/*.js', '**/.changeset/*.mjs'],
     languageOptions: {
       globals: globals.node,
     },
