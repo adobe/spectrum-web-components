@@ -341,7 +341,7 @@ Unchanged from 1st-gen: the host sets no `role`, `delegatesFocus` stays `true`, 
 | A1 | `swc-checkbox-group` | Group label, description, error, "select at least one" validity, `size`/`emphasized` propagation, group-level invalid state (B18), focus after a failed submit when the group is invalid (Q14), and in-group item layout (Q7). |
 | A2 | Additional `--swc-*` custom properties | Beyond the initial reviewed set, only on confirmed need. |
 | A3 | Custom validation (`validate`) and `validationBehavior` | React parity; no 1st-gen equivalent. Revisit once the forms strategy settles a shared `setValidity()` pattern. B17 already turns `field-status="invalid"` into `customError`; an `aria`-only mode, where the invalid status does not affect validity, would come with A3. |
-| A4 | Custom states (`:state(checked)`, `:state(indeterminate)`) | Styling hook for consumers now that `checked` no longer reflects (B9). Add on request. |
+| A4 | Custom states (`:state(checked)`, `:state(indeterminate)`) | Styling hook for consumers now that `checked` no longer reflects (B9). Add on request. `:state(disabled)` is not additive: it ships in the baseline (B22). |
 
 ---
 
@@ -377,6 +377,8 @@ These are derived from the 1st-gen implementation, the [Figma `S2 / Web` checkbo
 Methods: `click()` forwards to the inner input (no-op when effectively disabled; read-only blocks the toggle through the same guard as user clicks); `focus()` is native; `checkValidity()` and `reportValidity()` match `swc-text-field`.
 
 Events: `change` (`Event`, `bubbles`, `composed`, not cancelable; B10). The native `input` event already crosses the shadow boundary (composed) and is not re-dispatched.
+
+Custom states: `disabled` (`:state(disabled)`), set from effective disabled: `field-status="disabled"` or an ancestor `<fieldset disabled>` (B19, B22). **Confirmed.** It is the one disabled styling hook across the form-field family; the consumer contract is in the `form-fields.css` header ([#6872](https://github.com/adobe/spectrum-web-components/pull/6872)).
 
 #### Visual matrix (gen2)
 
@@ -452,6 +454,7 @@ Follow the [Badge migration reference](../../02_workstreams/02_gen2-component-mi
 Planned rendering shape:
 
 - Core owns API normalization, form participation, validity, and warnings.
+- Core sets the `disabled` custom state from effective disabled through `internals.states`, as `swc-radio-group` and `swc-text-field` do, so consumers get one disabled hook across the field family. It applies even though checkbox mostly uses local styles (Q8); the shared `form-fields.css` header documents the contract ([#6872](https://github.com/adobe/spectrum-web-components/pull/6872)).
 - SWC renders: a `.swc-Checkbox` wrapper (position context) containing the visually hidden but full-size native input (Spectrum CSS pattern, so the whole box-plus-label area is the hit target), the `.swc-Checkbox-box` with the size-mapped `Checkmark`/`Dash` SVG, and `renderLabel()` output; then `renderFieldDescription()` output with the error icon (B14), placed per Q7 and outside the hit target, as React S2 keeps help text outside `CheckboxButton`.
 
 Rationale for using `LabellingMixin` and skipping `DisabledMixin`: C4 and C3 in the [Decision log](#decision-log).
@@ -638,7 +641,7 @@ Accessibility (`checkbox.a11y.spec.ts` plus Storybook axe):
 
 #### General
 
-- [ ] JSDoc on all public props, slots, events, and CSS custom properties
+- [ ] JSDoc on all public props, slots, events, CSS custom properties, and the `disabled` custom state
 - [ ] Storybook stories: Playground; Overview; Anatomy (label, description, error text); Options (sizes, emphasized); States (checked, indeterminate, disabled, read-only, required, invalid); Behaviors (form participation in a native `<form novalidate>` with a submit handler (C7), `change` event); Accessibility (no-visible-label with `accessible-label`, grouped checkboxes inside a labelled native `fieldset` until `swc-checkbox-group` exists)
 - [ ] `checkbox.mdx` docs page per the stories-documentation guide
 
@@ -706,7 +709,7 @@ A2–A4 have no tickets by decision (Q11): they are on-request or follow from sh
 | C4 | Use `LabellingMixin` (unlike `swc-radio`). | Checkboxes without visible text are an evidenced pattern (table row selection, card selection), so `accessible-label`/`accessible-labelledby` are needed. |
 | C5 | Icon size mapping 50/75/100/200 for `s`/`m`/`l`/`xl`. | Spectrum CSS `spectrum-two` template; matches React's "one size smaller than the control" rule. |
 | C6 | Disabled uses the `disabled-content-color` token, as specified in the note under the visual matrix in [Public API](#public-api). | From plan review: matches `swc-radio`'s `radio.css`, and replaces the earlier inference from React S2's `gray-400`. |
-| C7 | Until a Spectrum form component exists, recommend `<form novalidate>` with a submit handler that checks validity, sets `field-status="invalid"` and error text, and cancels the submit. The handler clears the status on `change` or before validating again, because checking the box does not clear the `customError` that the invalid status sets (B17). Styling uses the reflected `field-status` attribute; no `:state(user-invalid)` is exposed. | From plan review: without `novalidate`, the native bubble shows instead of the Spectrum error UI, and the reflected `field-status` attribute already carries style overrides. Matches `swc-text-field` (its Q19). Focus after a failed submit stays open (Q14). |
+| C7 | Until a Spectrum form component exists, recommend `<form novalidate>` with a submit handler that checks validity, sets `field-status="invalid"` and error text, and cancels the submit. The handler clears the status on `change` or before validating again, because checking the box does not clear the `customError` that the invalid status sets (B17). Styling uses the reflected `field-status` attribute and the `disabled` custom state (`:state(disabled)`, B22); no `:state(user-invalid)` is exposed. | From plan review: without `novalidate`, the native bubble shows instead of the Spectrum error UI, and the reflected `field-status` attribute already carries style overrides. Matches `swc-text-field` (its Q19). Focus after a failed submit stays open (Q14). |
 | Q1 / B14 | Invalid leaves the box colors unchanged; a decorative error icon marks the state, as specified in B14. | Design decided, in a Slack discussion relayed in plan review, that invalid does not change the input's border or fill. This matches Figma, where checkbox has no invalid state, and follows Spectrum CSS, which already removed radio's invalid styles ([spectrum-css#2209](https://github.com/adobe/spectrum-css/pull/2209)). The error icon placement copies the `swc-radio-group` decision: the icon shows while `field-status="invalid"`, so the state never relies on color alone. Inside a disabled fieldset, the icon follows `swc-text-field` instead and hides (B22). This replaces the earlier plan to follow React S2's negative box colors and brings the error icon, formerly A5, into scope. |
 | Q2 | Read-only has no distinct visual treatment; it looks like the enabled state. Spectrum CSS's suppression of the down-state transform for read-only is kept. | Follows React S2, whose checkbox styles have no read-only condition. Figma's component frame has no read-only state. Read-only is conveyed to assistive technology by `aria-readonly="true"`. |
 | Q3 | Build on the shared form mixins and controller; start Setup (SWC-2343) once the radio branch merges to `main`; the text field branch already merged. | The foundation landed on `main` with the text field migration; building on it avoids a second labelling and form implementation and validates its boolean-field path. Plan review asked to wait for the radio branch too, so checkbox reuses settled radio patterns instead of chasing them while they shift; that branch also carries the `errorIcon` option that B14 needs. Details: [Dependency-aware recommendation](#dependency-aware-recommendation). |
