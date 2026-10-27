@@ -10,134 +10,59 @@ import borderArtwork from './assets/border.png';
 <Meta title="Card view/The card view oracle" />
 
 export const readings = {
-  row: {
-    label: 'The single-row grid · Five variations',
-    title: 'One row. A whole lot of columns.',
+  grid: {
+    label: 'Uniform grid · Four keyboard policies',
+    title: 'One semantic row. Four routes to test.',
     summary:
-      'One semantic row contains every card as a gridcell. Each card has a stable collection-order column index, even when the visual layout wraps.',
+      'All four examples use our recommended single-row grid: 50 cards, 50 semantic columns, and stable collection positions. Only keyboard navigation changes.',
     caution:
-      'Reported “x of y” speech is encouraging, not a guarantee. One semantic row still does not explain vertical arrows.',
+      'Users relying on semantics encounter one sequence. Sighted keyboard users see two visual dimensions. Test whether both can predict movement and reach every card.',
     variants: [
+      ['nowrap', 'NoWrap.', 'Follow visual neighbors and stop at an edge.'],
       [
-        '2A',
-        'The closest baseline.',
-        'Sequential Left/Right and spatial Up/Down in both layouts.',
+        'loop',
+        'Loop.',
+        'Return to the opposite edge of the same visual row or column.',
       ],
       [
-        '2B',
-        'Follow the geometry.',
-        'All four arrows are spatial, without wrapping.',
+        'advance',
+        'Advance.',
+        'Cross an edge into the next or previous visual row or column; cycle at the collection boundary.',
       ],
       [
-        '2C',
-        'Stay in the circle.',
-        'Spatial arrows wrap within the same aligned visual row or column.',
-      ],
-      [
-        '2D',
-        'The eternal return.',
-        'Each arrow cycles through the entire enabled collection.',
-      ],
-      [
-        '2E',
-        'The vertical journey.',
-        'In grid, sequential Left/Right and spatial Up/Down. In waterfall, Up/Down traverses columns in order; horizontal arrows do not navigate.',
+        'semantic',
+        'Semantic.',
+        'Right/Down follows the next semantic item; Left/Up follows the previous. Cycle through the whole collection.',
       ],
     ],
   },
-  list: {
-    label: 'The native list · One variation',
-    title: 'Sometimes the old path is the good path.',
+  waterfall: {
+    label: 'Waterfall · Four keyboard policies',
+    title: 'The cards do not share a horizontal row.',
     summary:
-      'A native ul and li preserve familiar content semantics. Each checkbox and action stays in the ordinary page tab order. Selection belongs to the checkbox, not aria-selected on a list item.',
+      'The same single-row semantics now contain unequal-height cards. NoWrap, Loop, and Advance place each card in the shortest column. Semantic fills top to bottom, then across columns.',
     caution:
-      'More tab stops. Supplementary arrows may not be available in browse mode. Position metadata has not reliably produced spoken “x of y.”',
+      'Several cards may overlap the active card vertically. Which one should Left or Right choose? Test the geometry instead of assuming a horizontal row exists.',
     variants: [
       [
-        '3A',
-        'The native-list alternative.',
-        'Sequential Left/Right and spatial Up/Down are supplementary. Every enabled child control is normally tabbable; no custom range selection.',
-      ],
-    ],
-  },
-  feed: {
-    label: 'The feed · One variation',
-    title: 'A story, not necessarily a selection tool.',
-    summary:
-      'A labelled feed contains focusable articles with position and total metadata. Each article keeps its real checkbox and action buttons.',
-    caution:
-      'Does an asset picker really behave like a content stream? This fully loaded prototype does not test feed loading behavior.',
-    variants: [
-      [
-        '4A',
-        'The reading-oriented experiment.',
-        'PageDown and PageUp move one article at a time. All enabled child controls stay in normal tab order; no custom range selection.',
-      ],
-    ],
-  },
-  toolbar: {
-    label: 'The toolbar · One variation',
-    title: 'Command the cards. But are they commands?',
-    summary:
-      'A labelled horizontal toolbar groups each card’s checkbox, Open button, and Share button. The cards themselves are not focusable controls.',
-    caution:
-      'A toolbar announces commands, not content objects. Spatial vertical arrows extend the usual horizontal-toolbar contract.',
-    variants: [
-      [
-        '5A',
-        'The command-grouping experiment.',
-        'Left/Right moves sequentially between checkboxes; Up/Down is spatial. Tab reaches the active card’s actions. With selection disabled, Open is the navigation target.',
-      ],
-    ],
-  },
-  fieldset: {
-    label: 'The native fieldset · One variation',
-    title: 'A gathering needs more than a name.',
-    summary:
-      'A native fieldset and visible legend name the collection. Each card is a labelled group containing native selection and action controls. There are no grid or toolbar roles.',
-    caution:
-      'Native grouping does not establish arrow navigation, roving focus, or collection-position announcements. Those expectations still need testing.',
-    variants: [
-      [
-        '6A',
-        'The form-grouping experiment.',
-        'Uses the same sequential horizontal and spatial vertical control navigation as 5A. Tab visits the active card’s actions. Selection stays in native checkboxes.',
-      ],
-    ],
-  },
-  column: {
-    label: 'The grid navigation · Six variations',
-    title: 'One grid. Many routes.',
-    summary:
-      'A grid can expose one semantic column or one semantic row. These experiments compare how arrow keys follow visual geometry, collection order, and wrapping rules.',
-    caution:
-      'The semantic shape does not guarantee a complete keyboard route. Test which cards each navigation pattern reaches and how positions are announced.',
-    variants: [
-      [
-        '1A',
-        'The RSP baseline.',
-        'Left/Right is sequential in grid, spatial in waterfall. Up/Down is spatial.',
-      ],
-      ['1B', 'Follow the geometry.', 'All arrows are spatial. No wrapping.'],
-      [
-        '1C',
-        'Stay in the circle.',
-        'Spatial arrows wrap within the same aligned visual row or column.',
+        'nowrap',
+        'NoWrap.',
+        'Choose an overlapping spatial neighbor; stop when none exists.',
       ],
       [
-        '1D',
-        'The historical RSP contract.',
-        'Sequential Left/Right, spatial Up/Down. Uses rowheaders.',
+        'loop',
+        'Loop.',
+        'Loop within the same overlapping band or visual column, not into another one.',
       ],
       [
-        '1E',
-        'The eternal return.',
-        'Each arrow cycles through the entire enabled collection.',
+        'advance',
+        'Advance.',
+        'Cross an edge in visual band or column order; cycle at the collection boundary.',
       ],
       [
-        '1F',
-        'Next column, please.',
-        'Sequential Left/Right; Up/Down follows columns, continuing into the next one.',
+        'semantic',
+        'Semantic.',
+        'Visit every enabled item in semantic order. Right/Down advances even when the next card is visually below.',
       ],
     ],
   },
@@ -840,9 +765,9 @@ export const Oracle = () => {
 <em>{"oracle"}</em>
 {" "}</h1>
 {" "}
-<p className="lede">{" Fifteen prototypes. Six possible destinies. "}
+<p className="lede">{" One recommended semantic row. Eight keyboard experiments. "}
 <br />
-{" One question: can people actually use the cards? "}</p>
+{" One question: can everyone find their way through the cards? "}</p>
 {" "}
 <div className="ornament" aria-hidden="true">{" ✧ I · VI ✧ "}</div>
 {" "}</div>
@@ -856,9 +781,9 @@ export const Oracle = () => {
 </aside>
 <section className="deck-section wrap" id="oracle-deck" aria-labelledby="oracle-deck-title">{" "}
 <div className="section-line">{" "}
-<h2 id="oracle-deck-title">{"Meet the six suits of semantics."}</h2>
+<h2 id="oracle-deck-title">{"The semantic reading is in."}</h2>
 {" "}
-<span className="small">{" The role is the promise. The keyboard has to keep it. "}</span>
+<span className="small">{" Recommend a single-row grid for “x of y.” Test the keyboard paths. "}</span>
 {" "}</div>
 {" "}
 <div className="deck">{" "}
@@ -867,7 +792,7 @@ export const Oracle = () => {
 <img src={artwork0} alt="" width="300" height="520" />
 {" "}</span>
 {" "}
-<figcaption><span className="card-number">{"I · Options 1A–1F"}</span>
+<figcaption><span className="card-number">{"I · Reference"}</span>
 {" "}
 <span className="card-title">{"The illusionist"}</span>
 {" "}
@@ -879,7 +804,7 @@ export const Oracle = () => {
 <img src={artwork1} alt="" width="300" height="520" />
 {" "}</span>
 {" "}
-<figcaption><span className="card-number">{"II · Options 2A–2E"}</span>
+<figcaption><span className="card-number">{"II · Recommended"}</span>
 {" "}
 <span className="card-title">{"The long revelation"}</span>
 {" "}
@@ -891,7 +816,7 @@ export const Oracle = () => {
 <img src={artwork2} alt="" width="300" height="520" />
 {" "}</span>
 {" "}
-<figcaption><span className="card-number">{"III · Option 3A"}</span>
+<figcaption><span className="card-number">{"III · List"}</span>
 {" "}
 <span className="card-title">{"The familiar path"}</span>
 {" "}
@@ -903,7 +828,7 @@ export const Oracle = () => {
 <img src={artwork3} alt="" width="300" height="520" />
 {" "}</span>
 {" "}
-<figcaption><span className="card-number">{"IV · Option 4A"}</span>
+<figcaption><span className="card-number">{"IV · Feed"}</span>
 {" "}
 <span className="card-title">{"The endless story"}</span>
 {" "}
@@ -915,7 +840,7 @@ export const Oracle = () => {
 <img src={artwork4} alt="" width="300" height="520" />
 {" "}</span>
 {" "}
-<figcaption><span className="card-number">{"V · Option 5A"}</span>
+<figcaption><span className="card-number">{"V · Toolbar"}</span>
 {" "}
 <span className="card-title">{"The commander"}</span>
 {" "}
@@ -927,7 +852,7 @@ export const Oracle = () => {
 <img src={artwork5} alt="" width="300" height="520" />
 {" "}</span>
 {" "}
-<figcaption><span className="card-number">{"VI · Option 6A"}</span>
+<figcaption><span className="card-number">{"VI · Fieldset"}</span>
 {" "}
 <span className="card-title">{"The gathering"}</span>
 {" "}
@@ -935,7 +860,7 @@ export const Oracle = () => {
 {" "}</figcaption></figure>
 {" "}</div>
 {" "}
-{['column', 'row', 'list', 'feed', 'toolbar', 'fieldset'].filter((family) => readings[family].variants.length > 1).map((family) => {
+{['grid', 'waterfall'].map((family) => {
   const reading = readings[family];
   return (
     <section className="reading" key={family} aria-labelledby={`oracle-reading-title-${family}`}>
@@ -948,7 +873,7 @@ export const Oracle = () => {
       <ul className="variants">
         {reading.variants.map(([identifier, title, summary]) => (
           <li key={identifier}>
-            <a className="variant-id" href={`./?path=/docs/components-card-view-option-${identifier.toLowerCase()}--docs`} target="_top" aria-label={`Option ${identifier}`}>{identifier}</a>
+            <a className="variant-id" href={`./?path=/docs/components-card-view-${family}-${identifier}--docs`} target="_top" aria-label={`${family} ${identifier} documentation`}>{title.slice(0, 1)}</a>
             <span><strong>{title}</strong>{' '}{summary}</span>
           </li>
         ))}
@@ -960,42 +885,54 @@ export const Oracle = () => {
 
 <section className="reading" aria-labelledby="oracle-other-variations-title">
   <div>
-    <h3 id="oracle-other-variations-title">Other variations</h3>
+    <h3 id="oracle-other-variations-title">The reference shelf</h3>
     <p>
-      Keep the native list as a comparison; the other roles are weaker fits.
+      Six named references preserve the semantic research. They are not another
+      set of options: the keyboard experiments all use the recommended
+      single-row grid.
     </p>
   </div>
   <ul className="variants">
     {[
       [
-        '3A',
+        'single-row-grid',
+        'Single-row grid.',
+        'Recommended for collection-position feedback such as “x of y.”',
+      ],
+      [
+        'single-column-grid',
+        'Single-column grid.',
+        'A contrast for positional-feedback testing, not the current recommendation.',
+      ],
+      [
+        'list',
         'Native list.',
         'Keep as the baseline: familiar semantics, but more tab stops.',
       ],
       [
-        '4A',
+        'feed',
         'Feed.',
         'Poor fit for asset selection: feeds describe reading streams.',
       ],
       [
-        '5A',
+        'toolbar',
         'Toolbar.',
         'Poor fit: toolbars group commands, not content cards.',
       ],
       [
-        '6A',
+        'fieldset',
         'Fieldset.',
         'Lower priority: native grouping does not establish arrow navigation or position announcements.',
       ],
-    ].map(([identifier, title, summary]) => (
+    ].map(([identifier, title, summary], index) => (
       <li key={identifier}>
         <a
           className="variant-id"
-          href={`./?path=/docs/components-card-view-option-${identifier.toLowerCase()}--docs`}
+          href={`./?path=/docs/components-card-view-${identifier}--docs`}
           target="_top"
-          aria-label={`Option ${identifier}`}
+          aria-label={`${title} documentation`}
         >
-          {identifier}
+          {['II', 'I', 'III', 'IV', 'V', 'VI'][index]}
         </a>
         <span>
           <strong>{title}</strong> {summary}
@@ -1027,17 +964,17 @@ export const Oracle = () => {
 <ol className="omens">{" "}
 <li>{" "}
 <div>{" "}
-<strong>{"The vanishing cards"}</strong>
+<strong>{"The unreliable prophecy"}</strong>
 {" "}
-<p>{" Down can stop at a visual column's bottom before every card is visited. Has the collection ended, or is there another route? "}</p>
+<p>{" Users need the current position and total: “7 of 50,” not “1 of 1.” We recommend a single-row grid for that feedback, while verifying actual speech in real screen readers. "}</p>
 {" "}</div>
 {" "}</li>
 {" "}
 <li>{" "}
 <div>{" "}
-<strong>{"The unreliable prophecy"}</strong>
+<strong>{"One sequence. Two dimensions."}</strong>
 {" "}
-<p>{" Reported speech includes “1 of 1” and inconsistent position feedback. ARIA metadata alone cannot promise “7 of 100.” "}</p>
+<p>{" Users relying on semantics know one ordered sequence. Sighted keyboard users see a two-dimensional grid. A route must be understandable from both perspectives, not just whichever map its designer sees. "}</p>
 {" "}</div>
 {" "}</li>
 {" "}
@@ -1045,7 +982,7 @@ export const Oracle = () => {
 <div>{" "}
 <strong>{"The shifting floor"}</strong>
 {" "}
-<p>{" Waterfall changes the geometry. Virtualization adds loading, reading-order, and focus risks. Test those separately. "}</p>
+<p>{" Waterfall cards have no aligned horizontal rows. Several neighbors may overlap vertically. Which card should Left or Right reach, and what happens at an edge? That is a navigation question, not another semantic choice. "}</p>
 {" "}</div>
 {" "}</li>
 {" "}</ol>
@@ -1058,7 +995,7 @@ export const Oracle = () => {
 {" "}
 <h2 id="oracle-lore-title">{"Not all circles lead everywhere."}</h2>
 {" "}
-<p>{" “Wrapping” can mean two very different things. One circles a visual band. The other visits the whole collection. "}</p>
+<p>{" Four keyboard policies share one semantic structure. Compare stopping, looping, advancing, and semantic-order cycling without changing the meaning of the cards. "}</p>
 {" "}</div>
 {" "}
 <div className="spells">{" "}
@@ -1081,7 +1018,7 @@ export const Oracle = () => {
 {" "}
 <p>{" Spatial arrows choose a nearby aligned card. At the edge, stop. Repeating one key will not visit everything. "}</p>
 {" "}
-<span className="pair">{"1B + 2B · Spatial, no wrap"}</span>
+<span className="pair">{"Grid + waterfall · NoWrap"}</span>
 {" "}</article>
 {" "}
 <article className="spell">{" "}
@@ -1103,7 +1040,7 @@ export const Oracle = () => {
 {" "}
 <p>{" At the edge, return to the other end of the same aligned row or column. You can loop without seeing the rest. "}</p>
 {" "}
-<span className="pair">{"1C + 2C · Local wrapping"}</span>
+<span className="pair">{"Grid + waterfall · Loop"}</span>
 {" "}</article>
 {" "}
 <article className="spell">{" "}
@@ -1121,11 +1058,11 @@ export const Oracle = () => {
 <i></i>
 {" "}</div>
 {" "}
-<h3>{"The thread"}</h3>
+<h3>{"The next passage"}</h3>
 {" "}
-<p>{" Left/Right follows collection order; Up/Down follows geometry. The sequential route stops at collection boundaries. "}</p>
+<p>{" Move spatially until an edge, then advance to the next visual row or column, or retreat to the previous one. At the outer boundary, cycle. "}</p>
 {" "}
-<span className="pair">{"1D + 2A · One sequential pair"}</span>
+<span className="pair">{"Grid + waterfall · Advance"}</span>
 {" "}</article>
 {" "}
 <article className="spell">{" "}
@@ -1145,19 +1082,19 @@ export const Oracle = () => {
 {" "}
 <h3>{"The eternal return"}</h3>
 {" "}
-<p>{" Every arrow follows collection order and cycles. Any one repeated arrow visits every enabled item from any start. "}</p>
+<p>{" Right/Down means next; Left/Up means previous. Geometry does not decide the destination. Cycle at the collection edge and visit every enabled item. "}</p>
 {" "}
-<span className="pair">{"1E + 2D · Full cycling"}</span>
+<span className="pair">{"Grid + waterfall · Semantic"}</span>
 {" "}</article>
 {" "}</div>
 {" "}
-<p className="note">{" Spatial alignment uses overlap on the perpendicular axis. In waterfall, a “row” is a visual band, not necessarily a neat horizontal line. Sequential horizontal directions mirror in RTL. "}</p>
+<p className="note">{" Spatial alignment uses perpendicular overlap. A waterfall band is not a horizontal row. The Semantic policy keeps Right/Down as next, even in RTL; its waterfall fills top to bottom, then across visual columns. All eight playgrounds contain 50 Picsum photos with semantic-position image IDs. "}</p>
 {" "}</section>
 {" "}
 <section className="verdict" id="oracle-verdict" aria-labelledby="oracle-verdict-title">{" "}
 <div className="wrap">{" "}
 <div>{" "}
-<p className="eyebrow">{"Your future is not yet selected"}</p>
+<p className="eyebrow">{"The semantics are recommended. The keyboard route is still open."}</p>
 {" "}
 <h2 id="oracle-verdict-title">{" The winning card? "}
 <br />
@@ -1166,14 +1103,14 @@ export const Oracle = () => {
 <p>{" A passing axe scan is not a blessing from the accessibility universe. Neither is “Google does it.” The winner must work for keyboard and screen reader users. "}</p>
 {" "}
 <p>{" "}
-<strong>{" Start with a repaired layout grid versus a native list. "}</strong>
-{" No option is approved yet. "}</p>
+<strong>{" Use a single-row grid for “x of y” feedback. "}</strong>
+{" Hold those semantics fixed while users test the four keyboard policies in both layouts. The remaining decision is navigation, not another vote on semantics. "}</p>
 {" "}</div>
 {" "}
 <ol className="plan">{" "}
 <li>{" "}
 <strong>{"First, a fair reading."}</strong>
-{" Use a fully loaded, uniform layout with identical content and actions. "}</li>
+{" Compare four routes with identical single-row semantics, 50 cards, content, and actions. Verify positional speech. "}</li>
 {" "}
 <li>{" "}
 <strong>{"Make the task real."}</strong>
@@ -1185,7 +1122,7 @@ export const Oracle = () => {
 {" "}
 <li>{" "}
 <strong>{"Then shake the table."}</strong>
-{" Test waterfall, resizing, removal, and focus visibility. Add virtualization last. "}</li>
+{" Test horizontal waterfall neighbors, reverse traversal, RTL, resizing, removal, and focus visibility. Add virtualization last. "}</li>
 {" "}</ol>
 {" "}</div>
 {" "}</section>
@@ -1196,12 +1133,12 @@ export const Oracle = () => {
 {" "}
 <h2 id="oracle-receipts-title">{"Guidance, not gospel."}</h2>
 {" "}
-<p>{" APG permits layout grids and optional wrapping. The original RSP spec informs 1D; current RSP and Piyush's PR inform 1A. Reported Google Drive semantics inspire the single-row experiments. "}</p>
+<p>{" APG permits layout grids and optional wrapping. RSP and Piyush's PR informed the earlier research. Reported single-row positional feedback supports today's recommendation, not a guarantee of speech or a final keyboard policy. "}</p>
 {" "}
 <p>{" Higley and Roselli caution against choosing a grid just because it looks like one or saves tab stops. A feed suits reading; a toolbar suits commands. The role should match the task. "}</p>
 {" "}
 <div className="source-links">{" "}
-<a href="/?path=/docs/contributor-docs-project-planning-strategies-card-view-strategy--docs" target="_top">{"The full strategy"}</a>
+<a href="./?path=/docs/contributor-docs-project-planning-strategies-card-view-strategy--docs" target="_top">{"The full strategy"}</a>
 {" "}
 <a href="https://www.w3.org/WAI/ARIA/apg/patterns/grid/">{" APG grid pattern "}</a>
 {" "}

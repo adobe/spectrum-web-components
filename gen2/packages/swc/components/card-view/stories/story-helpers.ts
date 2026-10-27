@@ -14,21 +14,12 @@ import type { Meta } from '@storybook/web-components';
 
 import type { CardViewItem } from '@adobe/spectrum-wc-core/components/card-view/index.js';
 
-import '../swc-card-view-option-1a.js';
-import '../swc-card-view-option-1b.js';
-import '../swc-card-view-option-1c.js';
-import '../swc-card-view-option-1e.js';
-import '../swc-card-view-option-2c.js';
-import '../swc-card-view-option-2a.js';
-import '../swc-card-view-option-2d.js';
-import '../swc-card-view-option-1d.js';
-import '../swc-card-view-option-1f.js';
-import '../swc-card-view-option-3a.js';
-import '../swc-card-view-option-4a.js';
-import '../swc-card-view-option-2b.js';
-import '../swc-card-view-option-2e.js';
-import '../swc-card-view-option-5a.js';
-import '../swc-card-view-option-6a.js';
+import '../swc-card-view-single-column-grid.js';
+import '../swc-card-view-list.js';
+import '../swc-card-view-feed.js';
+import '../swc-card-view-single-row-grid.js';
+import '../swc-card-view-toolbar.js';
+import '../swc-card-view-fieldset.js';
 import '../swc-card-view-grid-nowrap.js';
 import '../swc-card-view-grid-loop.js';
 import '../swc-card-view-grid-advance.js';
@@ -138,6 +129,24 @@ export const photos: CardViewItem[] = Array.from(
     };
   }
 );
+
+export function navigationMeta(tag: string, subtitle: string): Partial<Meta> {
+  const base = prototypeMeta(tag);
+  return {
+    ...base,
+    args: {
+      ...base.args,
+      layout: tag.includes('-waterfall-') ? 'waterfall' : 'grid',
+      items: photos.slice(0, 50),
+    },
+    argTypes: {
+      ...base.argTypes,
+      layout: { control: false, table: { disable: true } },
+    },
+    parameters: { ...base.parameters, docs: { subtitle } },
+    tags: ['migrated'],
+  };
+}
 
 export function prototypeMeta(tag: string): Partial<Meta> {
   const element = unsafeStatic(tag);

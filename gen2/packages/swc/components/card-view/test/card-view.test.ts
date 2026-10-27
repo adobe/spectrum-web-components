@@ -15,21 +15,12 @@ import type { Meta, StoryObj } from '@storybook/web-components';
 
 import type { CardViewItem } from '@adobe/spectrum-wc-core/components/card-view/index.js';
 
-import '../swc-card-view-option-1a.js';
-import '../swc-card-view-option-1b.js';
-import '../swc-card-view-option-1c.js';
-import '../swc-card-view-option-1e.js';
-import '../swc-card-view-option-2c.js';
-import '../swc-card-view-option-2a.js';
-import '../swc-card-view-option-2d.js';
-import '../swc-card-view-option-1d.js';
-import '../swc-card-view-option-1f.js';
-import '../swc-card-view-option-3a.js';
-import '../swc-card-view-option-4a.js';
-import '../swc-card-view-option-2b.js';
-import '../swc-card-view-option-2e.js';
-import '../swc-card-view-option-5a.js';
-import '../swc-card-view-option-6a.js';
+import '../swc-card-view-single-column-grid.js';
+import '../swc-card-view-list.js';
+import '../swc-card-view-feed.js';
+import '../swc-card-view-single-row-grid.js';
+import '../swc-card-view-toolbar.js';
+import '../swc-card-view-fieldset.js';
 import '../swc-card-view-grid-nowrap.js';
 import '../swc-card-view-grid-loop.js';
 import '../swc-card-view-grid-advance.js';
@@ -42,12 +33,10 @@ import '../swc-card-view-waterfall-semantic.js';
 import { photos } from '../stories/story-helpers.js';
 
 const tags = [
-  'swc-card-view-option-1a',
-  'swc-card-view-option-1d',
-  'swc-card-view-option-1f',
-  'swc-card-view-option-3a',
-  'swc-card-view-option-4a',
-  'swc-card-view-option-2b',
+  'swc-card-view-single-column-grid',
+  'swc-card-view-single-row-grid',
+  'swc-card-view-list',
+  'swc-card-view-feed',
 ];
 
 const items = Array.from({ length: 8 }, (_, index) => ({
@@ -313,170 +302,6 @@ export const WaterfallLayoutNavigation: StoryObj = {
   },
 };
 
-export const GridNavigationMatrix: StoryObj = {
-  render: () => html`
-    <div></div>
-  `,
-  play: async ({ canvasElement }) => {
-    for (const family of [1, 2]) {
-      for (const variation of ['a', 'b', 'c', 'd']) {
-        for (const layout of ['grid', 'waterfall']) {
-          const letter =
-            family === 1
-              ? { a: 'b', b: 'c', c: 'd', d: 'e' }[variation]
-              : { a: 'b', b: 'c', c: 'a', d: 'd' }[variation];
-          const tag = `swc-card-view-option-${family}${letter}`;
-          const view = await mount(canvasElement, tag, layout);
-          Object.defineProperty(view, 'positions', {
-            get: () =>
-              items.map((_, index) => ({
-                left: (index % 3) * 120,
-                top: Math.floor(index / 3) * 120,
-                width: 100,
-                height: 100,
-                column: index % 3,
-              })),
-          });
-          const targets = [
-            ...view.shadowRoot!.querySelectorAll<HTMLElement>('[data-focus]'),
-          ];
-          const move = async (index: number, key: string) => {
-            targets[index].focus();
-            targets[index].dispatchEvent(
-              new KeyboardEvent('keydown', {
-                key,
-                bubbles: true,
-                composed: true,
-              })
-            );
-            await view.updateComplete;
-            return Number(
-              view.shadowRoot!.activeElement?.getAttribute('data-index')
-            );
-          };
-          expect(await move(2, 'ArrowRight')).toBe(
-            variation === 'a' ? 2 : variation === 'b' ? 0 : 3
-          );
-          expect(await move(0, 'ArrowLeft')).toBe(
-            variation === 'b' ? 2 : variation === 'd' ? 7 : 0
-          );
-          expect(await move(7, 'ArrowDown')).toBe(
-            variation === 'b' ? 1 : variation === 'd' ? 0 : 7
-          );
-          expect(await move(0, 'ArrowUp')).toBe(
-            variation === 'b' ? 6 : variation === 'd' ? 7 : 0
-          );
-          expect(
-            view.shadowRoot!.querySelectorAll('[role="row"]')
-          ).toHaveLength(family === 1 ? 8 : 1);
-          if (variation === 'd') {
-            for (const key of [
-              'ArrowLeft',
-              'ArrowRight',
-              'ArrowUp',
-              'ArrowDown',
-            ]) {
-              let current = 3;
-              const visited = new Set([current]);
-              for (let step = 0; step < items.length; step++) {
-                current = await move(current, key);
-                visited.add(current);
-              }
-              expect(visited.size).toBe(items.length);
-              expect(current).toBe(3);
-            }
-          }
-        }
-      }
-    }
-  },
-};
-
-export const SemanticWaterfallNavigation: StoryObj = {
-  render: () => html`
-    <div></div>
-  `,
-  play: async ({ canvasElement }) => {
-    for (const layout of ['grid', 'waterfall']) {
-      const view = await mount(
-        canvasElement,
-        'swc-card-view-option-2e',
-        layout
-      );
-      view.items = items.map((item, index) => ({
-        ...item,
-        disabled: index === 1,
-      }));
-      await view.updateComplete;
-      const root = view.shadowRoot!;
-      const entries = [
-        ...root.querySelectorAll<HTMLElement>('[role="gridcell"]'),
-      ];
-      expect(entries).toHaveLength(8);
-      expect(
-        root.querySelector('[role="grid"]')?.getAttribute('aria-colcount')
-      ).toBe('8');
-      const press = async (key: string, shiftKey = false) => {
-        root.activeElement!.dispatchEvent(
-          new KeyboardEvent('keydown', {
-            key,
-            shiftKey,
-            bubbles: true,
-            composed: true,
-            cancelable: true,
-          })
-        );
-        await view.updateComplete;
-      };
-      entries[0].focus();
-      if (layout === 'waterfall') {
-        await press('ArrowRight');
-        expect(root.activeElement).toBe(entries[0]);
-        await press('ArrowDown');
-        expect(root.activeElement).toBe(entries[2]);
-        await press('ArrowDown');
-        expect(root.activeElement).toBe(entries[3]);
-        await press('ArrowLeft');
-        expect(root.activeElement).toBe(entries[3]);
-        await press('ArrowUp');
-        expect(root.activeElement).toBe(entries[2]);
-        await press('Home');
-        await press('ArrowUp');
-        expect(root.activeElement).toBe(entries[0]);
-        for (const index of [2, 3, 4, 5, 6, 7]) {
-          await press('ArrowDown');
-          expect(root.activeElement).toBe(entries[index]);
-        }
-        await press('ArrowDown');
-        expect(root.activeElement).toBe(entries[7]);
-        view.dir = 'rtl';
-        await press('Home');
-        await press('ArrowDown', true);
-        expect(root.activeElement).toBe(entries[2]);
-        expect(view.selected).toEqual(['photo-0', 'photo-2']);
-        view.style.width = '340px';
-        await view.updateComplete;
-        await waitFor(() => {
-          expect(entries[2].getBoundingClientRect().width).toBe(316);
-        });
-        expect(root.activeElement).toBe(entries[2]);
-        await press('ArrowDown');
-        expect(root.activeElement).toBe(entries[3]);
-      } else {
-        await press('ArrowRight');
-        expect(root.activeElement).toBe(entries[2]);
-        await press('Home');
-        await press('ArrowDown');
-        expect(root.activeElement).toBe(entries[3]);
-      }
-      await press('End');
-      expect(root.activeElement).toBe(entries[7]);
-      await press(' ');
-      expect(view.selected).toContain('photo-7');
-    }
-  },
-};
-
 export const ToolbarControls: StoryObj = {
   render: () => html`
     <div></div>
@@ -485,7 +310,7 @@ export const ToolbarControls: StoryObj = {
     for (const layout of ['grid', 'waterfall']) {
       const toolbar = await mount(
         canvasElement,
-        'swc-card-view-option-5a',
+        'swc-card-view-toolbar',
         layout
       );
       const toolbarRoot = toolbar.shadowRoot!;
@@ -555,7 +380,7 @@ export const CommandNavigationEdges: StoryObj = {
     };
     const toolbar = await mount(
       canvasElement,
-      'swc-card-view-option-5a',
+      'swc-card-view-toolbar',
       'waterfall'
     );
     toolbar.items = items.map((item, index) => ({
@@ -602,11 +427,7 @@ export const ListArrowNavigation: StoryObj = {
   `,
   play: async ({ canvasElement }) => {
     for (const layout of ['grid', 'waterfall']) {
-      const view = await mount(
-        canvasElement,
-        'swc-card-view-option-3a',
-        layout
-      );
+      const view = await mount(canvasElement, 'swc-card-view-list', layout);
       view.items = items.map((item, index) => ({
         ...item,
         disabled: index === 2,
@@ -667,11 +488,7 @@ export const FieldsetNavigation: StoryObj = {
   `,
   play: async ({ canvasElement }) => {
     for (const layout of ['grid', 'waterfall']) {
-      const view = await mount(
-        canvasElement,
-        'swc-card-view-option-6a',
-        layout
-      );
+      const view = await mount(canvasElement, 'swc-card-view-fieldset', layout);
       const root = view.shadowRoot!;
       expect(root.querySelector('fieldset legend')?.textContent).toBe('Photos');
       expect(root.querySelector('[role="toolbar"], [role="grid"]')).toBeNull();
@@ -729,6 +546,37 @@ export const Registration: StoryObj = {
     <div>Card view registration</div>
   `,
   play: async () => {
+    for (const option of [
+      '1a',
+      '1b',
+      '1c',
+      '1d',
+      '1e',
+      '1f',
+      '2a',
+      '2b',
+      '2c',
+      '2d',
+      '2e',
+      '3a',
+      '4a',
+      '5a',
+      '6a',
+    ]) {
+      expect(
+        customElements.get(`swc-card-view-option-${option}`)
+      ).toBeUndefined();
+    }
+    for (const name of [
+      'single-column-grid',
+      'single-row-grid',
+      'list',
+      'feed',
+      'toolbar',
+      'fieldset',
+    ]) {
+      expect(customElements.get(`swc-card-view-${name}`)).toBeDefined();
+    }
     for (const tag of tags) {
       expect(customElements.get(tag), `${tag} is registered`).toBeDefined();
     }
@@ -771,7 +619,7 @@ export const SemanticsAndNavigation: StoryObj = {
     for (const tag of tags) {
       const view = await mount(canvasElement, tag);
       const root = view.shadowRoot!;
-      if (tag === 'swc-card-view-option-3a') {
+      if (tag === 'swc-card-view-list') {
         expect(root.querySelector('ul')).not.toBeNull();
         expect(root.querySelectorAll('li')).toHaveLength(8);
         expect(root.querySelector('[aria-selected]')).toBeNull();
@@ -780,7 +628,7 @@ export const SemanticsAndNavigation: StoryObj = {
             (control) => control.tabIndex === 0
           )
         ).toBe(true);
-      } else if (tag === 'swc-card-view-option-4a') {
+      } else if (tag === 'swc-card-view-feed') {
         expect(root.querySelector('[role="feed"]')).not.toBeNull();
         expect(root.querySelectorAll('article')).toHaveLength(8);
         const first = root.querySelector<HTMLElement>('article')!;
@@ -797,9 +645,9 @@ export const SemanticsAndNavigation: StoryObj = {
       } else {
         expect(
           root.querySelector('[role="grid"]')?.getAttribute('aria-colcount')
-        ).toBe(tag === 'swc-card-view-option-2b' ? '8' : '1');
+        ).toBe(tag === 'swc-card-view-single-row-grid' ? '8' : '1');
         expect(root.querySelectorAll('[role="row"]')).toHaveLength(
-          tag === 'swc-card-view-option-2b' ? 1 : 8
+          tag === 'swc-card-view-single-row-grid' ? 1 : 8
         );
         const first = root.querySelector<HTMLElement>('[data-focus]')!;
         first.focus();
@@ -835,7 +683,7 @@ export const SingleRowSemanticsAndNavigation: StoryObj = {
     for (const layout of ['grid', 'waterfall']) {
       const view = await mount(
         canvasElement,
-        'swc-card-view-option-2b',
+        'swc-card-view-single-row-grid',
         layout
       );
       view.items = items.map((item, index) => ({
@@ -971,57 +819,12 @@ export const SingleRowSemanticsAndNavigation: StoryObj = {
   },
 };
 
-export const WrappingReachesEveryCard: StoryObj = {
-  render: () => html`
-    <div></div>
-  `,
-  play: async ({ canvasElement }) => {
-    for (const layout of ['grid', 'waterfall']) {
-      const view = await mount(
-        canvasElement,
-        'swc-card-view-option-1f',
-        layout
-      );
-      const root = view.shadowRoot!;
-      root.querySelector<HTMLElement>('[data-focus]')!.focus();
-      const visited = new Set<string>();
-      for (let move = 0; move < 8; move++) {
-        const target = root.activeElement as HTMLElement;
-        visited.add(target.dataset.index!);
-        target.dispatchEvent(
-          new KeyboardEvent('keydown', {
-            key: 'ArrowDown',
-            bubbles: true,
-            composed: true,
-          })
-        );
-        await view.updateComplete;
-      }
-      expect(visited.size).toBe(8);
-      const reverse = new Set<string>();
-      for (let move = 0; move < 8; move++) {
-        const target = root.activeElement as HTMLElement;
-        reverse.add(target.dataset.index!);
-        target.dispatchEvent(
-          new KeyboardEvent('keydown', {
-            key: 'ArrowUp',
-            bubbles: true,
-            composed: true,
-          })
-        );
-        await view.updateComplete;
-      }
-      expect(reverse.size).toBe(8);
-    }
-  },
-};
-
 export const FeedExitAndReflow: StoryObj = {
   render: () => html`
     <div></div>
   `,
   play: async ({ canvasElement }) => {
-    const view = await mount(canvasElement, 'swc-card-view-option-4a');
+    const view = await mount(canvasElement, 'swc-card-view-feed');
     const root = view.shadowRoot!;
     const expectArticleMetadata = () => {
       const articles = [...root.querySelectorAll<HTMLElement>('article')];

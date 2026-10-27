@@ -11,19 +11,28 @@
  */
 import AxeBuilder from '@axe-core/playwright';
 import { expect, type Locator, type Page, test } from '@playwright/test';
+import { fileURLToPath } from 'node:url';
 
 import { gotoStory } from '../../../utils/a11y-helpers.js';
 
+test.beforeEach(async ({ page }) => {
+  await page.route('https://picsum.photos/**', (route) =>
+    route.fulfill({
+      path: fileURLToPath(
+        new URL('../../../public/images/card-preview.jpg', import.meta.url)
+      ),
+      contentType: 'image/jpeg',
+    })
+  );
+});
+
 const prototypes = [
-  'option-1a',
-  'option-1d',
-  'option-1f',
-  'option-2b',
-  'option-2e',
-  'option-3a',
-  'option-4a',
-  'option-5a',
-  'option-6a',
+  'single-column-grid',
+  'single-row-grid',
+  'list',
+  'feed',
+  'toolbar',
+  'fieldset',
 ];
 
 async function openPrototype(
@@ -158,7 +167,7 @@ for (const prototype of prototypes) {
         }
       });
 
-      if (prototype === 'option-2b' || prototype === 'option-2e') {
+      if (prototype === 'single-row-grid') {
         test('single semantic row preserves visual arrow navigation', async ({
           page,
         }) => {
@@ -215,55 +224,43 @@ for (const prototype of prototypes) {
               )
               .sort((first, second) => second.left - first.left)[0].index;
             let next = start;
-            if (
-              prototype === 'option-2e' &&
-              (horizontal || layout === 'waterfall')
-            ) {
-              if (!(horizontal && layout === 'waterfall')) {
-                next = forward ? start + 1 : start - 1;
-                while (positions[next]?.disabled) {
-                  next += forward ? 1 : -1;
-                }
-              }
-            } else {
-              const current = positions[start];
-              const candidates = positions
-                .map((position, index) => {
-                  const primary = horizontal
-                    ? position.left - current.left
-                    : position.top - current.top;
-                  const overlap = horizontal
-                    ? Math.min(
-                        current.top + current.height,
-                        position.top + position.height
-                      ) - Math.max(current.top, position.top)
-                    : Math.min(
-                        current.left + current.width,
-                        position.left + position.width
-                      ) - Math.max(current.left, position.left);
-                  const secondary = horizontal
-                    ? position.top +
-                      position.height / 2 -
-                      current.top -
-                      current.height / 2
-                    : position.left - current.left;
-                  return {
-                    index,
-                    position,
-                    primary,
-                    overlap,
-                    score: Math.abs(primary) * 1000 + Math.abs(secondary),
-                  };
-                })
-                .filter(
-                  (candidate) =>
-                    !candidate.position.disabled &&
-                    (forward ? candidate.primary : -candidate.primary) >= 1 &&
-                    candidate.overlap > 0
-                )
-                .sort((first, second) => first.score - second.score);
-              next = candidates[0]?.index ?? start;
-            }
+            const current = positions[start];
+            const candidates = positions
+              .map((position, index) => {
+                const primary = horizontal
+                  ? position.left - current.left
+                  : position.top - current.top;
+                const overlap = horizontal
+                  ? Math.min(
+                      current.top + current.height,
+                      position.top + position.height
+                    ) - Math.max(current.top, position.top)
+                  : Math.min(
+                      current.left + current.width,
+                      position.left + position.width
+                    ) - Math.max(current.left, position.left);
+                const secondary = horizontal
+                  ? position.top +
+                    position.height / 2 -
+                    current.top -
+                    current.height / 2
+                  : position.left - current.left;
+                return {
+                  index,
+                  position,
+                  primary,
+                  overlap,
+                  score: Math.abs(primary) * 1000 + Math.abs(secondary),
+                };
+              })
+              .filter(
+                (candidate) =>
+                  !candidate.position.disabled &&
+                  (forward ? candidate.primary : -candidate.primary) >= 1 &&
+                  candidate.overlap > 0
+              )
+              .sort((first, second) => first.score - second.score);
+            next = candidates[0]?.index ?? start;
             await entries.nth(start).focus();
             await page.keyboard.press(key);
             await expect(entries.nth(next)).toBeFocused();
@@ -271,7 +268,7 @@ for (const prototype of prototypes) {
         });
       }
 
-      if (prototype === 'option-2e') {
+      if (prototype === 'single-row-grid') {
         test('Tab enters grid child controls and exits without a trap', async ({
           page,
         }) => {
@@ -310,7 +307,7 @@ for (const prototype of prototypes) {
         });
       }
 
-      if (['option-5a', 'option-6a'].includes(prototype)) {
+      if (['toolbar', 'fieldset'].includes(prototype)) {
         test('Tab enters the active card actions and exits without a trap', async ({
           page,
         }) => {

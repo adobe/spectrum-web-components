@@ -33,7 +33,7 @@ import '../card/swc-card.js';
 
 import styles from './card-view.css';
 
-export class CardViewOption1A extends CardViewBase {
+export class CardView extends CardViewBase {
   protected readonly model: CardViewModel = 'baseline';
 
   @property({ reflect: true })
@@ -454,84 +454,50 @@ export class CardViewOption1A extends CardViewBase {
   }
 }
 
-export class CardViewOption1B extends CardViewOption1A {
+/** @element swc-card-view-single-column-grid */
+export class CardViewSingleColumnGrid extends CardView {
   protected override readonly navigation: CardViewNavigation = 'spatial';
 }
 
-export class CardViewOption1C extends CardViewOption1B {
-  protected override readonly navigation: CardViewNavigation = 'spatial-wrap';
-}
-
-export class CardViewOption1D extends CardViewOption1A {
-  protected override readonly model: CardViewModel = 'sequential';
-}
-
-export class CardViewOption1E extends CardViewOption1B {
-  protected override readonly navigation: CardViewNavigation = 'cycle';
-}
-
-export class CardViewOption1F extends CardViewOption1A {
-  protected override readonly model: CardViewModel = 'wrapping';
-}
-
-export class CardViewOption3A extends CardViewOption1A {
+/** @element swc-card-view-list */
+export class CardViewList extends CardView {
   protected override readonly model: CardViewModel = 'list';
 }
 
-export class CardViewOption4A extends CardViewOption1A {
+/** @element swc-card-view-feed */
+export class CardViewFeed extends CardView {
   protected override readonly model: CardViewModel = 'feed';
 }
 
 /**
- * Experimental card collection with one semantic row and a cell per card.
+ * Recommended card collection semantics: one row and a cell per card.
  *
- * @element swc-card-view-option-2b
+ * @element swc-card-view-single-row-grid
  */
-export class CardViewOption2B extends CardViewOption1A {
+export class CardViewSingleRowGrid extends CardView {
   protected override readonly model: CardViewModel = 'single-row';
-}
-
-export class CardViewOption2C extends CardViewOption2B {
-  protected override readonly navigation: CardViewNavigation = 'spatial-wrap';
-}
-
-export class CardViewOption2A extends CardViewOption2B {
-  protected override readonly navigation: CardViewNavigation =
-    'sequential-axis';
-}
-
-export class CardViewOption2D extends CardViewOption2B {
-  protected override readonly navigation: CardViewNavigation = 'cycle';
-}
-
-/**
- * Experimental layout grid with sequential vertical waterfall navigation.
- *
- * @element swc-card-view-option-2e
- */
-export class CardViewOption2E extends CardViewOption1A {
-  protected override readonly model: CardViewModel = 'vertical';
 }
 
 /**
  * Experimental toolbar grouping each card's selection and action controls.
  *
- * @element swc-card-view-option-5a
+ * @element swc-card-view-toolbar
  */
-export class CardViewOption5A extends CardViewOption1A {
+export class CardViewToolbar extends CardView {
   protected override readonly model: CardViewModel = 'toolbar';
 }
 
 /**
  * Experimental fieldset grouping card selection and action controls.
  *
- * @element swc-card-view-option-6a
+ * @element swc-card-view-fieldset
  */
-export class CardViewOption6A extends CardViewOption1A {
+export class CardViewFieldset extends CardView {
   protected override readonly model: CardViewModel = 'fieldset';
 }
 
-export class CardViewGridNoWrap extends CardViewOption2B {
+/** @element swc-card-view-grid-nowrap */
+export class CardViewGridNoWrap extends CardViewSingleRowGrid {
   protected override readonly navigation: CardViewNavigation = 'spatial';
 
   protected override get columnMajorWaterfall(): boolean {
@@ -539,31 +505,38 @@ export class CardViewGridNoWrap extends CardViewOption2B {
   }
 }
 
+/** @element swc-card-view-grid-loop */
 export class CardViewGridLoop extends CardViewGridNoWrap {
   protected override readonly navigation: CardViewNavigation = 'spatial-wrap';
 }
 
+/** @element swc-card-view-grid-advance */
 export class CardViewGridAdvance extends CardViewGridNoWrap {
   protected override readonly navigation: CardViewNavigation =
     'spatial-advance';
 }
 
+/** @element swc-card-view-grid-semantic */
 export class CardViewGridSemantic extends CardViewGridNoWrap {
   protected override readonly navigation: CardViewNavigation = 'semantic';
 }
 
+/** @element swc-card-view-waterfall-nowrap */
 export class CardViewWaterfallNoWrap extends CardViewGridNoWrap {
   public override layout: CardViewLayout = 'waterfall';
 }
 
+/** @element swc-card-view-waterfall-loop */
 export class CardViewWaterfallLoop extends CardViewGridLoop {
   public override layout: CardViewLayout = 'waterfall';
 }
 
+/** @element swc-card-view-waterfall-advance */
 export class CardViewWaterfallAdvance extends CardViewGridAdvance {
   public override layout: CardViewLayout = 'waterfall';
 }
 
+/** @element swc-card-view-waterfall-semantic */
 export class CardViewWaterfallSemantic extends CardViewGridSemantic {
   public override layout: CardViewLayout = 'waterfall';
 

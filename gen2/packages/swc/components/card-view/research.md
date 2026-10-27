@@ -110,3 +110,17 @@ The user approved this checkpoint, the distinct waterfall names, full-collection
 - `swc-card-view-option-1a` adapts the PR's default RSP model, not the entire multi-model comparison application.
 - Option 4A uses feed/articles rather than listbox/options, preserving real checkbox and action controls.
 - The first comparison stays fully loaded with virtualization deferred.
+
+## Current scope after the semantic recommendation
+
+This section supersedes the earlier numbered-prototype scope above, which records the initial exploration. The user recommends a single-row grid for collection-position feedback such as "x of y." The remaining primary research compares keyboard navigation with those semantics held fixed, not competing semantic options. Actual positional speech still requires screen reader and browser testing.
+
+The original problems remain explicit: useful position and total feedback; navigation understandable both as one semantic sequence and as a sighted user's two-dimensional grid; and visual horizontal navigation among unequal-height waterfall cards that have no aligned horizontal rows.
+
+The retained reference elements are `swc-card-view-single-column-grid`, `swc-card-view-single-row-grid`, `swc-card-view-list`, `swc-card-view-feed`, `swc-card-view-toolbar`, and `swc-card-view-fieldset`. Their classes, registration modules, stories, docs, and accessibility snapshots use descriptive names. All numbered registrations are removed. Retired navigation variants and tests specific to them are removed; the shared rendering base is `CardView`.
+
+Each of the eight `swc-card-view-grid-*` and `swc-card-view-waterfall-*` elements has a separate Storybook group, a per-component MDX Docs page, and one 50-card Playground. The pages expose interactive controls and manifest-backed API metadata. NoWrap, Loop, Advance, and Semantic retain the approved edge policies and waterfall-placement rules. Semantic Right/Down follows the next semantic item and Left/Up the previous, including in RTL; spatial arrows follow physical geometry.
+
+The retained reference stories keep their existing card counts and use the shared Picsum fixture. Image IDs match one-based semantic positions. Automated accessibility tests intercept Picsum requests with the existing local image fixture to avoid network-dependent failures; live stories retain real Picsum URLs. Virtualization remains deferred.
+
+The strategy and Oracle now recommend single-row semantics, link the six named references and eight navigation Docs pages, and distinguish that recommendation from the keyboard-policy decision that still needs user testing.
