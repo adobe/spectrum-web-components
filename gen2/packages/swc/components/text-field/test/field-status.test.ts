@@ -17,8 +17,11 @@ import type { TextField } from '@adobe/spectrum-wc/text-field';
 
 import '@adobe/spectrum-wc/components/text-field/swc-text-field.js';
 
-import { getComponent, withWarningSpy } from '../../../utils/test-utils.js';
-import { getFormFieldParts, withTextFieldFixture } from './helpers.js';
+import {
+  fixture,
+  getComponent,
+  withWarningSpy,
+} from '../../../utils/test-utils.js';
 
 export default {
   title: 'Text field/Field status tests',
@@ -38,7 +41,15 @@ export const StatusTransitions: Story = {
     </form>
   `,
   play: async ({ canvasElement, step }) => {
-    const { field, input, form } = await getFormFieldParts(canvasElement);
+    const field = await getComponent<TextField>(
+      canvasElement,
+      'swc-text-field'
+    );
+    const form = canvasElement.querySelector('form');
+    const input = field.roleElement;
+    if (!form || !input) {
+      throw new Error('Field status test requires a form and input');
+    }
 
     await step(
       'untouched status is undefined with no legacy properties',
@@ -88,12 +99,6 @@ export const StatusTransitions: Story = {
           );
           expect(field.validity.customError).toBe(status === 'invalid');
           expect(field.checkValidity()).toBe(status !== 'invalid');
-          if (field.willValidate) {
-            expect(
-              field.validationMessage,
-              'only invalid status uses the authored message'
-            ).toBe(status === 'invalid' ? 'This username is unavailable.' : '');
-          }
           expect(
             field.shadowRoot?.querySelector('.swc-FormFieldErrorText') !== null
           ).toBe(status === 'invalid');
@@ -132,7 +137,15 @@ StatusTransitions.storyName = 'Exclusive status transitions';
 export const ResetStatus: Story = {
   ...StatusTransitions,
   play: async ({ canvasElement, step }) => {
-    const { field, input, form } = await getFormFieldParts(canvasElement);
+    const field = await getComponent<TextField>(
+      canvasElement,
+      'swc-text-field'
+    );
+    const form = canvasElement.querySelector('form');
+    const input = field.roleElement;
+    if (!form || !input) {
+      throw new Error('Reset status test requires a form and input');
+    }
     const events: string[] = [];
     field.addEventListener('input', () => events.push('input'));
     field.addEventListener('change', () => events.push('change'));
@@ -352,6 +365,30 @@ export const ValidationSources: Story = {
       canvasElement,
       'swc-text-field'
     );
+    await step('slotted messages apply only while invalid', async () => {
+      for (const status of [
+        'invalid',
+        'disabled',
+        'readonly',
+        'valid',
+        undefined,
+      ] as const) {
+        field.fieldStatus = status;
+        await field.updateComplete;
+        expect(field.validity.customError).toBe(status === 'invalid');
+        expect(field.checkValidity()).toBe(status !== 'invalid');
+        if (field.willValidate) {
+          expect(field.validationMessage).toBe(
+            status === 'invalid' ? 'This username is unavailable.' : ''
+          );
+        }
+        expect(field.roleElement?.getAttribute('aria-invalid')).toBe(
+          status === 'invalid' ? 'true' : null
+        );
+      }
+      expect(field.checkValidity()).toBe(true);
+    });
+
     await step(
       'authored valid does not bypass native required validation',
       async () => {
@@ -379,10 +416,17 @@ export const BarredNativeConstraints: Story = {
     </form>
   `,
   play: async ({ canvasElement, step }) => {
-    const { field, input, form } = await getFormFieldParts(canvasElement);
+    const field = await getComponent<TextField>(
+      canvasElement,
+      'swc-text-field'
+    );
+    const form = canvasElement.querySelector('form');
     const fieldset = canvasElement.querySelector('fieldset');
-    if (!fieldset) {
-      throw new Error('Native constraint test requires a fieldset');
+    const input = field.roleElement;
+    if (!form || !fieldset || !input) {
+      throw new Error(
+        'Native constraint test requires a form, fieldset, and input'
+      );
     }
 
     expect(field.validity.typeMismatch).toBe(true);
@@ -404,6 +448,7 @@ export const BarredNativeConstraints: Story = {
         expect(field.willValidate).toBe(true);
         expect(field.validity.typeMismatch).toBe(true);
         expect(field.validity.customError).toBe(false);
+        expect(field.validity.typeMismatch).toBe(true);
         expect(field.checkValidity()).toBe(false);
         expect(form.checkValidity()).toBe(false);
       });
@@ -436,35 +481,35 @@ export const StatusWarnings: Story = {
   `,
   play: async ({ step }) => {
     await step('undefined is accepted without a warning', () =>
-      withWarningSpy((calls) =>
-        withTextFieldFixture(
-          html`
-            <swc-text-field accessible-label="Username"></swc-text-field>
-          `,
-          () => {
-            expect(calls).toHaveLength(0);
-          }
-        )
-      )
+      withWarningSpy(async (calls) => {
+        const field = await fixture<TextField>(html`
+          <swc-text-field accessible-label="Username"></swc-text-field>
+        `);
+        try {
+          expect(calls).toHaveLength(0);
+        } finally {
+          field.remove();
+        }
+      })
     );
     await step('unsupported authored status produces an enum warning', () =>
-      withWarningSpy((calls) =>
-        withTextFieldFixture(
-          html`
-            <!-- @ts-ignore: Intentionally unsupported status tests the enum warning. -->
-            <swc-text-field
-              accessible-label="Username"
-              field-status="unsupported"
-            ></swc-text-field>
-          `,
-          (field) => {
-            expect(
-              calls.some((call) => String(call[1]).includes('field-status'))
-            ).toBe(true);
-            expect(field.roleElement).not.toHaveAttribute('aria-invalid');
-          }
-        )
-      )
+      withWarningSpy(async (calls) => {
+        const field = await fixture<TextField>(html`
+          <!-- @ts-ignore: Intentionally unsupported status tests the enum warning. -->
+          <swc-text-field
+            accessible-label="Username"
+            field-status="unsupported"
+          ></swc-text-field>
+        `);
+        try {
+          expect(
+            calls.some((call) => String(call[1]).includes('field-status'))
+          ).toBe(true);
+          expect(field.roleElement).not.toHaveAttribute('aria-invalid');
+        } finally {
+          field.remove();
+        }
+      })
     );
   },
 };

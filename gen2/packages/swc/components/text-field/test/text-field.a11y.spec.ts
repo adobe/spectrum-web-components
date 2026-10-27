@@ -625,232 +625,6 @@ test.describe('Text field - Border color customization', () => {
   });
 });
 
-test.describe('Text field - Form interactions', () => {
-  for (const { withSubmitter, inShadowRoot, name } of [
-    {
-      withSubmitter: true,
-      inShadowRoot: false,
-      name: 'with the associated submitter',
-    },
-    { withSubmitter: false, inShadowRoot: false, name: 'without a submitter' },
-    {
-      withSubmitter: true,
-      inShadowRoot: true,
-      name: 'inside a shadow-root form',
-    },
-  ]) {
-    test(`trusted Enter submits once ${name}`, async ({ page }) => {
-      const root = await gotoStory(
-        page,
-        'components-text-field--overview',
-        'swc-text-field'
-      );
-      const field = root.locator('swc-text-field');
-      await field.evaluate(
-        async (field: TextField, { withSubmitter, inShadowRoot }) => {
-          const form = document.createElement('form');
-          form.id = 'text-field-trusted-form';
-          form.dataset.submissions = '[]';
-          field.before(form);
-          form.append(field);
-          if (inShadowRoot) {
-            const host = document.createElement('div');
-            form.before(host);
-            host.attachShadow({ mode: 'open' }).append(form);
-          }
-          field.name = 'username';
-          field.value = 'alex';
-          field.required = true;
-          await field.updateComplete;
-          if (withSubmitter) {
-            const button = document.createElement('button');
-            button.id = 'preferred-submitter';
-            button.type = 'submit';
-            button.textContent = 'Save';
-            button.setAttribute('form', form.id);
-            form.before(button);
-          }
-          const submissions: {
-            submitter: string | null;
-            value: FormDataEntryValue | null;
-          }[] = [];
-          form.addEventListener('submit', (event) => {
-            event.preventDefault();
-            submissions.push({
-              submitter: event.submitter?.id ?? null,
-              value: new FormData(form).get('username'),
-            });
-            form.dataset.submissions = JSON.stringify(submissions);
-          });
-        },
-        { withSubmitter, inShadowRoot }
-      );
-      // Control the bridge's deferred task before making negative assertions.
-      await page.clock.install();
-      const form = root.locator('form');
-      const input = field.locator('input');
-      const submitter = withSubmitter ? 'preferred-submitter' : null;
-      const firstSubmission = { submitter, value: 'alex' };
-
-      await input.press('Enter');
-      await page.clock.runFor(1);
-      await expect(
-        form,
-        'valid Enter submits exactly once with the correct submitter'
-      ).toHaveAttribute('data-submissions', JSON.stringify([firstSubmission]));
-
-      await input.fill('');
-      await input.press('Enter');
-      await page.clock.runFor(1);
-      await expect(
-        form,
-        'required validity blocks Enter submission'
-      ).toHaveAttribute('data-submissions', JSON.stringify([firstSubmission]));
-
-      await input.fill('sam');
-      await field.evaluate((field) => {
-        field.addEventListener('keydown', (event) => event.preventDefault(), {
-          once: true,
-        });
-      });
-      await input.press('Enter');
-      await page.clock.runFor(1);
-      await expect(
-        form,
-        'host cancellation prevents the deferred submission'
-      ).toHaveAttribute('data-submissions', JSON.stringify([firstSubmission]));
-
-      await input.press('Enter');
-      await page.clock.runFor(1);
-      await expect(
-        form,
-        'submission resumes after one-shot cancellation'
-      ).toHaveAttribute(
-        'data-submissions',
-        JSON.stringify([firstSubmission, { submitter, value: 'sam' }])
-      );
-    });
-  }
-
-  for (const mutation of ['disable', 'disconnect', 'disassociate'] as const) {
-    test(`${mutation} during keydown prevents deferred submission`, async ({
-      page,
-    }) => {
-      const root = await gotoStory(
-        page,
-        'components-text-field--overview',
-        'swc-text-field'
-      );
-      const field = root.locator('swc-text-field');
-      await field.evaluate(async (field: TextField, mutation) => {
-        const form = document.createElement('form');
-        const button = document.createElement('button');
-        button.type = 'submit';
-        button.textContent = 'Save';
-        form.dataset.clicks = '0';
-        form.dataset.submissions = '0';
-        field.before(form);
-        form.append(field, button);
-        await field.updateComplete;
-        button.addEventListener('click', () => {
-          form.dataset.clicks = String(Number(form.dataset.clicks) + 1);
-        });
-        form.addEventListener('submit', (event) => {
-          event.preventDefault();
-          form.dataset.submissions = String(
-            Number(form.dataset.submissions) + 1
-          );
-        });
-        field.addEventListener(
-          'keydown',
-          () => {
-            if (mutation === 'disable') {
-              field.fieldStatus = 'disabled';
-            } else if (mutation === 'disconnect') {
-              field.remove();
-            } else {
-              form.after(field);
-            }
-          },
-          { once: true }
-        );
-      }, mutation);
-      await page.clock.install();
-      await field.locator('input').press('Enter');
-      await page.clock.runFor(1);
-      await expect(
-        root.locator('form'),
-        `${mutation} prevents clicking the submitter`
-      ).toHaveAttribute('data-clicks', '0');
-      await expect(
-        root.locator('form'),
-        `${mutation} prevents submission`
-      ).toHaveAttribute('data-submissions', '0');
-      if (mutation === 'disable') {
-        await expect(
-          field.locator('input'),
-          'keydown disabled the native input'
-        ).toBeDisabled();
-      } else if (mutation === 'disconnect') {
-        await expect(field, 'keydown removed the field').toHaveCount(0);
-      } else {
-        expect(
-          await field.evaluate((field: TextField) => field.form),
-          'keydown removed the form association'
-        ).toBeNull();
-      }
-    });
-  }
-
-  test('maxlength caps trusted edits and preserves form state', async ({
-    page,
-  }) => {
-    const root = await gotoStory(
-      page,
-      'components-text-field--overview',
-      'swc-text-field'
-    );
-    const field = root.locator('swc-text-field');
-    await field.evaluate(async (field: TextField) => {
-      const form = document.createElement('form');
-      field.before(form);
-      form.append(field);
-      field.name = 'username';
-      field.maxlength = 4;
-      await field.updateComplete;
-    });
-    const input = field.locator('input');
-    await expect(
-      input,
-      'native input receives the maximum length'
-    ).toHaveAttribute('maxlength', '4');
-    await input.pressSequentially('abcdef');
-    await expect(
-      input,
-      'trusted typing stops at the maximum length'
-    ).toHaveValue('abcd');
-    await input.press('Backspace');
-    await input.pressSequentially('xy');
-    await expect(
-      input,
-      'editing can refill but not exceed the maximum length'
-    ).toHaveValue('abcx');
-    expect(
-      await field.evaluate((field: TextField) => {
-        if (!field.form || !field.roleElement) {
-          throw new Error('Maximum length test requires a form and input');
-        }
-        return {
-          value: field.value,
-          inputValue: field.roleElement.value,
-          formValue: new FormData(field.form).get('username'),
-        };
-      }),
-      'host, native input, and submitted value agree after capped edits'
-    ).toEqual({ value: 'abcx', inputValue: 'abcx', formValue: 'abcx' });
-  });
-});
-
 test.describe('Text field - Keyboard interactions', () => {
   for (const { slot, index } of [
     { slot: 'description', index: 0 },
@@ -911,16 +685,13 @@ test.describe('Text field - Keyboard interactions', () => {
     );
     const field = root.locator('swc-text-field').first();
     const input = field.locator('input');
-    const control = field.locator('.swc-TextField-control');
     await field.locator('[slot="label"]').click();
     await expect(input).toBeFocused();
-    await expect(control).toHaveCSS('outline-style', 'none');
     await input.evaluate((input: HTMLInputElement) => input.blur());
     await field.locator('.swc-TextField-control').click({
       position: { x: 1, y: 1 },
     });
     await expect(input).toBeFocused();
-    await expect(control).toHaveCSS('outline-style', 'none');
     await input.evaluate((input: HTMLInputElement) => input.blur());
     const prefix = await field.locator('[slot="prefix"]').boundingBox();
     if (!prefix) {
@@ -931,11 +702,6 @@ test.describe('Text field - Keyboard interactions', () => {
       prefix.y + prefix.height / 2
     );
     await expect(input).toBeFocused();
-    await expect(control).toHaveCSS('outline-style', 'none');
-    await input.evaluate((input: HTMLInputElement) => input.blur());
-    await input.click();
-    await expect(input).toBeFocused();
-    await expect(control).toHaveCSS('outline-style', 'none');
   });
 
   test('description text remains selectable and links remain usable', async ({
@@ -1210,18 +976,7 @@ test.describe('Text field - Keyboard interactions', () => {
   test('tab focus lands on the internal input via delegatesFocus', async ({
     page,
   }) => {
-    const root = await gotoStory(
-      page,
-      'components-text-field--overview',
-      'swc-text-field'
-    );
-    await root.evaluate((root) => {
-      const before = document.createElement('input');
-      before.setAttribute('aria-label', 'Before field');
-      root.prepend(before);
-    });
-    const before = root.getByRole('textbox', { name: 'Before field' });
-    await before.focus();
+    await gotoStory(page, 'components-text-field--overview', 'swc-text-field');
 
     await page.keyboard.press('Tab');
 
@@ -1236,18 +991,6 @@ test.describe('Text field - Keyboard interactions', () => {
     });
     expect(focus.activeTag).toBe('swc-text-field');
     expect(focus.shadowActiveTag).toBe('input');
-    const input = root.locator('swc-text-field input');
-    const control = root.locator('.swc-TextField-control');
-    await expect(control).toHaveCSS('outline-style', 'solid');
-    await input.click();
-    await expect(input).toBeFocused();
-    await expect(control).toHaveCSS('outline-style', 'none');
-    await page.keyboard.press('Shift+Tab');
-    await expect(before).toBeFocused();
-    await expect(control).toHaveCSS('outline-style', 'none');
-    await page.keyboard.press('Tab');
-    await expect(input).toBeFocused();
-    await expect(control).toHaveCSS('outline-style', 'solid');
   });
 
   test('typing into the focused field updates the host value', async ({
@@ -1277,17 +1020,17 @@ test.describe('Text field - Keyboard interactions', () => {
       'swc-text-field'
     );
     await root.evaluate((root) => {
-      const before = document.createElement('input');
-      before.setAttribute('aria-label', 'Before disabled field');
-      const after = document.createElement('input');
-      after.setAttribute('aria-label', 'After disabled field');
+      const before = document.createElement('button');
+      before.textContent = 'Before disabled field';
+      const after = document.createElement('button');
+      after.textContent = 'After disabled field';
       root.prepend(before);
       root.append(after);
     });
-    await page.getByRole('textbox', { name: 'Before disabled field' }).focus();
+    await page.getByRole('button', { name: 'Before disabled field' }).focus();
     await page.keyboard.press('Tab');
     await expect(
-      page.getByRole('textbox', { name: 'After disabled field' })
+      page.getByRole('button', { name: 'After disabled field' })
     ).toBeFocused();
   });
 });

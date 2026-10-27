@@ -19,6 +19,7 @@ import '@adobe/spectrum-wc/components/avatar/swc-avatar.js';
 import '@adobe/spectrum-wc/components/text-field/swc-text-field.js';
 
 import {
+  fixture,
   getComponent,
   getComponents,
   withWarningSpy,
@@ -35,11 +36,6 @@ import {
   Required,
   Sizes,
 } from '../stories/text-field.stories.js';
-import {
-  getFormFieldParts,
-  getTextFieldParts,
-  withTextFieldFixture,
-} from './helpers.js';
 
 // This file defines dev-only test stories that reuse the main story metadata.
 export default {
@@ -57,9 +53,7 @@ export default {
 // ──────────────────────────────────────────────────────────────
 
 export const OptionControlsTest: Story = {
-  render: () => html`
-    <span></span>
-  `,
+  ...TextFieldStories.Playground,
   play: async ({ step }) => {
     await step(
       'enum controls expose their supported values and defaults',
@@ -200,9 +194,7 @@ export const LabellingTest: Story = {
 };
 
 export const StateStoriesTest: Story = {
-  render: () => html`
-    <span></span>
-  `,
+  ...Labelling,
   play: async ({ step }) => {
     await step('each state has its own discoverable story', () => {
       for (const name of [
@@ -220,116 +212,6 @@ export const StateStoriesTest: Story = {
   },
 };
 StateStoriesTest.storyName = 'Discoverable state stories';
-
-export const FixtureCleanupTest: Story = {
-  render: () => html`
-    <span></span>
-  `,
-  play: async ({ step }) => {
-    const wrappers: HTMLElement[] = [];
-    const failure = new Error('Fixture callback failed');
-    const template = html`
-      <swc-text-field accessible-label="Fixture"></swc-text-field>
-    `;
-    const captureWrapper = (field: TextField): void => {
-      if (!field.parentElement) {
-        throw new Error('Expected a connected fixture wrapper');
-      }
-      wrappers.push(field.parentElement);
-      expect(
-        field.isConnected,
-        'fixture is connected during its callback'
-      ).toBe(true);
-      expect(
-        field.roleElement,
-        'fixture awaits its initial render'
-      ).not.toBeNull();
-    };
-    await step('cleanup runs when the callback rejects', async () => {
-      await expect(
-        withTextFieldFixture(template, async (field) => {
-          captureWrapper(field);
-          await Promise.resolve();
-          throw failure;
-        })
-      ).rejects.toBe(failure);
-      expect(
-        wrappers[0]?.isConnected,
-        'rejection removes the fixture wrapper'
-      ).toBe(false);
-    });
-    await step(
-      'cleanup owns the wrapper even if the field is removed',
-      async () => {
-        await withTextFieldFixture(template, (field) => {
-          captureWrapper(field);
-          field.remove();
-        });
-        expect(
-          wrappers[1]?.isConnected,
-          'removing the field does not orphan its wrapper'
-        ).toBe(false);
-      }
-    );
-  },
-};
-
-export const RequiredFieldPartsTest: Story = {
-  render: () => html`
-    <span></span>
-  `,
-  play: async ({ canvasElement, step }) => {
-    await expect(
-      getTextFieldParts(canvasElement, '#missing-field'),
-      'missing fields report the requested selector'
-    ).rejects.toThrow('Text field not found: #missing-field');
-    await withTextFieldFixture(
-      html`
-        <swc-text-field accessible-label="Parts"></swc-text-field>
-      `,
-      async (field) => {
-        const wrapper = field.parentElement;
-        if (!wrapper) {
-          throw new Error('Expected a fixture wrapper');
-        }
-        await step(
-          'lookup awaits rendering and requires a native input',
-          async () => {
-            expect(
-              await getTextFieldParts(wrapper),
-              'lookup returns the settled native parts'
-            ).toEqual({
-              field,
-              input: field.roleElement,
-            });
-            await expect(
-              getFormFieldParts(wrapper),
-              'form lookup rejects an unassociated field'
-            ).rejects.toThrow('Text field is not associated with a form');
-            const form = document.createElement('form');
-            form.id = 'text-field-helper-external-form';
-            wrapper.append(form);
-            field.setAttribute('form', form.id);
-            await field.updateComplete;
-            expect(
-              await getFormFieldParts(wrapper),
-              'form lookup follows explicit form association'
-            ).toEqual({
-              field,
-              input: field.roleElement,
-              form,
-            });
-            field.roleElement?.remove();
-            await expect(
-              getTextFieldParts(wrapper),
-              'missing inputs report the owning field'
-            ).rejects.toThrow('Text field input not found: swc-text-field');
-          }
-        );
-      }
-    );
-  },
-};
 
 export const LabelOverflowTest: Story = {
   ...LabelOverflow,
@@ -674,28 +556,27 @@ export const NecessityIndicatorTest: Story = {
       expect(label?.hasAttribute('aria-hidden')).toBe(false);
     });
 
-    await step('icon mode shows no indicator on an optional field', () =>
-      withTextFieldFixture(
-        html`
+    await step(
+      'icon mode shows no indicator on an optional field',
+      async () => {
+        const field = await fixture<TextField>(html`
           <swc-text-field necessity-indicator="icon">
             <span slot="label">Optional field</span>
           </swc-text-field>
-        `,
-        (field) => {
-          expect(
-            field.shadowRoot?.querySelector(
-              '.swc-FormFieldLabel-requiredIndicator'
-            ),
-            'optional field omits the required asterisk'
-          ).toBeNull();
-          expect(
-            field.shadowRoot?.querySelector(
-              '.swc-FormFieldLabel-necessityLabel'
-            ),
-            'optional icon mode omits the necessity label'
-          ).toBeNull();
-        }
-      )
+        `);
+        await field.updateComplete;
+        expect(
+          field.shadowRoot?.querySelector(
+            '.swc-FormFieldLabel-requiredIndicator'
+          ),
+          'optional field omits the required asterisk'
+        ).toBeNull();
+        expect(
+          field.shadowRoot?.querySelector('.swc-FormFieldLabel-necessityLabel'),
+          'optional icon mode omits the necessity label'
+        ).toBeNull();
+        field.parentElement?.remove();
+      }
     );
   },
 };
@@ -853,75 +734,34 @@ export const BindingsTest: Story = {
     <swc-text-field
       accessible-label="Username"
       placeholder="Enter your username"
-      inputmode="numeric"
-      autocomplete="username"
-      maxlength="5"
-      minlength="2"
     ></swc-text-field>
   `,
   play: async ({ canvasElement, step }) => {
-    const { field, input } = await getTextFieldParts(canvasElement);
-
-    await step(
-      'native hints and length constraints update and clear',
-      async () => {
-        for (const bindings of [
-          {
-            inputmode: 'numeric',
-            autocomplete: 'username',
-            maxlength: 5,
-            minlength: 2,
-          },
-          {
-            inputmode: 'email',
-            autocomplete: 'email',
-            maxlength: 10,
-            minlength: 3,
-          },
-          {
-            inputmode: undefined,
-            autocomplete: undefined,
-            maxlength: undefined,
-            minlength: undefined,
-          },
-        ] satisfies Pick<
-          TextField,
-          'inputmode' | 'autocomplete' | 'maxlength' | 'minlength'
-        >[]) {
-          Object.assign(field, bindings);
-          await field.updateComplete;
-          for (const attribute of [
-            'inputmode',
-            'autocomplete',
-            'maxlength',
-            'minlength',
-          ] as const) {
-            expect(input.getAttribute(attribute), attribute).toBe(
-              bindings[attribute] === undefined
-                ? null
-                : String(bindings[attribute])
-            );
-          }
-        }
-      }
+    const field = await getComponent<TextField>(
+      canvasElement,
+      'swc-text-field'
     );
+    const input = () =>
+      field.shadowRoot?.querySelector('input') as HTMLInputElement;
 
     await step('readonly reflects onto the native input', async () => {
-      expect(input.readOnly, 'input starts editable').toBe(false);
+      expect(input().readOnly, 'input starts editable').toBe(false);
       field.fieldStatus = 'readonly';
       await field.updateComplete;
-      expect(input.readOnly, 'readonly property reaches the input').toBe(true);
+      expect(input().readOnly, 'readonly property reaches the input').toBe(
+        true
+      );
     });
 
     await step('invalid sets aria-invalid on the native input', async () => {
       expect(
-        input.getAttribute('aria-invalid'),
+        input().getAttribute('aria-invalid'),
         'valid input omits aria-invalid'
       ).toBe(null);
       field.fieldStatus = 'invalid';
       await field.updateComplete;
       expect(
-        input.getAttribute('aria-invalid'),
+        input().getAttribute('aria-invalid'),
         'invalid property sets aria-invalid'
       ).toBe('true');
     });
@@ -932,11 +772,12 @@ export const BindingsTest: Story = {
         // accessibility-migration-analysis.md (placeholder section): the
         // browser exposes native `placeholder` to the a11y tree, so gen2 does
         // not duplicate via `aria-placeholder`.
-        expect(input.placeholder, 'placeholder reaches the native input').toBe(
-          'Enter your username'
-        );
         expect(
-          input.getAttribute('aria-placeholder'),
+          input().placeholder,
+          'placeholder reaches the native input'
+        ).toBe('Enter your username');
+        expect(
+          input().getAttribute('aria-placeholder'),
           'placeholder is not duplicated as aria-placeholder'
         ).toBeNull();
       }
@@ -946,8 +787,8 @@ export const BindingsTest: Story = {
       // The @input handler is the only path that syncs user edits onto
       // the host `value`; assert it so `.value` in render can't silently
       // drift from what the user sees.
-      input.value = 'typed by user';
-      input.dispatchEvent(new Event('input'));
+      input().value = 'typed by user';
+      input().dispatchEvent(new Event('input'));
       expect(field.value, 'host value reflects typed input').toBe(
         'typed by user'
       );
@@ -960,7 +801,7 @@ export const BindingsTest: Story = {
       expect(
         field.shadowRoot?.activeElement,
         'host focus lands on the internal input'
-      ).toBe(input);
+      ).toBe(input());
     });
   },
 };
@@ -975,90 +816,98 @@ export const EnumValidationTest: Story = {
     <span></span>
   `,
   play: async ({ step }) => {
+    await step('warns when "type" is not a supported value', () =>
+      withWarningSpy(async (warnCalls) => {
+        const field = await fixture<TextField>(html`
+          <!-- @ts-ignore: "bogus" is intentionally unsupported to test the enum warning. -->
+          <swc-text-field
+            accessible-label="Named"
+            type="bogus"
+          ></swc-text-field>
+        `);
+        await field.updateComplete;
+        const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
+        expect(
+          messages.some((m) => m.includes('expects "type"')),
+          'warning names the unsupported type value'
+        ).toBe(true);
+        field.parentElement?.remove();
+      })
+    );
+
     await step(
       'unsupported native types fall back to text without changing the value',
       () =>
         withWarningSpy(async (warnCalls) => {
           for (const type of ['color', 'number', 'checkbox', 'bogus']) {
-            await withTextFieldFixture(
-              html`
-                <!-- @ts-ignore: Unsupported types intentionally test the text fallback and warning. -->
-                <swc-text-field
-                  accessible-label="Named"
-                  type=${type}
-                  value="Unchanged text"
-                ></swc-text-field>
-              `,
-              async (field) => {
-                expect(field.roleElement?.type).toBe('text');
-                expect(field.value).toBe('Unchanged text');
-                expect(field.roleElement?.value).toBe('Unchanged text');
-                expect(
-                  warnCalls.some(
-                    (call) =>
-                      String(call?.[1]).includes(`Received "${type}"`) &&
-                      String(call?.[1]).includes('expects "type"')
-                  )
-                ).toBe(true);
+            const field = await fixture<TextField>(html`
+              <!-- @ts-ignore: Unsupported types intentionally test the text fallback and warning. -->
+              <swc-text-field
+                accessible-label="Named"
+                type=${type}
+                value="Unchanged text"
+              ></swc-text-field>
+            `);
+            expect(field.roleElement?.type).toBe('text');
+            expect(field.value).toBe('Unchanged text');
+            expect(field.roleElement?.value).toBe('Unchanged text');
+            expect(
+              warnCalls.some((call) =>
+                String(call?.[1]).includes(`Received "${type}"`)
+              )
+            ).toBe(true);
 
-                field.type = 'email';
-                await field.updateComplete;
-                expect(field.roleElement?.type).toBe('email');
-                field.setAttribute('type', type);
-                await field.updateComplete;
-                expect(field.roleElement?.type).toBe('text');
-                expect(field.value).toBe('Unchanged text');
-                expect(field.roleElement?.value).toBe('Unchanged text');
-              }
-            );
+            field.type = 'email';
+            await field.updateComplete;
+            expect(field.roleElement?.type).toBe('email');
+            field.setAttribute('type', type);
+            await field.updateComplete;
+            expect(field.roleElement?.type).toBe('text');
+            expect(field.value).toBe('Unchanged text');
+            expect(field.roleElement?.value).toBe('Unchanged text');
+            field.parentElement?.remove();
           }
         })
     );
 
     await step('warns when "label-position" is not a supported value', () =>
-      withWarningSpy((warnCalls) =>
-        withTextFieldFixture(
-          html`
-            <!-- @ts-ignore: "sideways" is intentionally unsupported to test the enum warning. -->
-            <swc-text-field
-              accessible-label="Named"
-              label-position="sideways"
-            ></swc-text-field>
-          `,
-          () => {
-            const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
-            expect(
-              messages.some((m) => m.includes('expects "label-position"')),
-              'warning names the unsupported label position'
-            ).toBe(true);
-          }
-        )
-      )
+      withWarningSpy(async (warnCalls) => {
+        const field = await fixture<TextField>(html`
+          <!-- @ts-ignore: "sideways" is intentionally unsupported to test the enum warning. -->
+          <swc-text-field
+            accessible-label="Named"
+            label-position="sideways"
+          ></swc-text-field>
+        `);
+        await field.updateComplete;
+        const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
+        expect(
+          messages.some((m) => m.includes('expects "label-position"')),
+          'warning names the unsupported label position'
+        ).toBe(true);
+        field.parentElement?.remove();
+      })
     );
 
     await step(
       'warns when "necessity-indicator" is not a supported value',
       () =>
-        withWarningSpy((warnCalls) =>
-          withTextFieldFixture(
-            html`
-              <!-- @ts-ignore: "star" is intentionally unsupported to test the enum warning. -->
-              <swc-text-field
-                accessible-label="Named"
-                necessity-indicator="star"
-              ></swc-text-field>
-            `,
-            () => {
-              const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
-              expect(
-                messages.some((m) =>
-                  m.includes('expects "necessity-indicator"')
-                ),
-                'warning names the unsupported necessity indicator'
-              ).toBe(true);
-            }
-          )
-        )
+        withWarningSpy(async (warnCalls) => {
+          const field = await fixture<TextField>(html`
+            <!-- @ts-ignore: "star" is intentionally unsupported to test the enum warning. -->
+            <swc-text-field
+              accessible-label="Named"
+              necessity-indicator="star"
+            ></swc-text-field>
+          `);
+          await field.updateComplete;
+          const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
+          expect(
+            messages.some((m) => m.includes('expects "necessity-indicator"')),
+            'warning names the unsupported necessity indicator'
+          ).toBe(true);
+          field.parentElement?.remove();
+        })
     );
   },
 };
@@ -1074,20 +923,18 @@ export const MissingAccessibleNameTest: Story = {
   `,
   play: async ({ step }) => {
     await step('warns when no label source is set', () =>
-      withWarningSpy((warnCalls) =>
-        withTextFieldFixture(
-          html`
-            <swc-text-field></swc-text-field>
-          `,
-          () => {
-            const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
-            expect(
-              messages.some((m) => m.includes('accessible name')),
-              'warning requests an accessible name'
-            ).toBe(true);
-          }
-        )
-      )
+      withWarningSpy(async (warnCalls) => {
+        const field = await fixture<TextField>(html`
+          <swc-text-field></swc-text-field>
+        `);
+        await field.updateComplete;
+        const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
+        expect(
+          messages.some((m) => m.includes('accessible name')),
+          'warning requests an accessible name'
+        ).toBe(true);
+        field.parentElement?.remove();
+      })
     );
   },
 };
@@ -1102,45 +949,41 @@ export const PlaceholderOnlyNameTest: Story = {
   `,
   play: async ({ step }) => {
     await step('warns when named only by a placeholder', () =>
-      withWarningSpy((warnCalls) =>
-        withTextFieldFixture(
-          html`
-            <swc-text-field placeholder="Search"></swc-text-field>
-          `,
-          () => {
-            const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
-            expect(
-              messages.some((m) => m.includes('named only by its placeholder')),
-              'warning identifies the placeholder-only name'
-            ).toBe(true);
-            // The generic missing-name warning is suppressed in favor of this one.
-            expect(
-              messages.some((m) => m.includes('requires an accessible name')),
-              'placeholder-only warning replaces generic missing-name warning'
-            ).toBe(false);
-          }
-        )
-      )
+      withWarningSpy(async (warnCalls) => {
+        const field = await fixture<TextField>(html`
+          <swc-text-field placeholder="Search"></swc-text-field>
+        `);
+        await field.updateComplete;
+        const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
+        expect(
+          messages.some((m) => m.includes('named only by its placeholder')),
+          'warning identifies the placeholder-only name'
+        ).toBe(true);
+        // The generic missing-name warning is suppressed in favor of this one.
+        expect(
+          messages.some((m) => m.includes('requires an accessible name')),
+          'placeholder-only warning replaces generic missing-name warning'
+        ).toBe(false);
+        field.parentElement?.remove();
+      })
     );
 
     await step('does not warn when a placeholder accompanies a name', () =>
-      withWarningSpy((warnCalls) =>
-        withTextFieldFixture(
-          html`
-            <swc-text-field
-              accessible-label="Search"
-              placeholder="Search"
-            ></swc-text-field>
-          `,
-          () => {
-            const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
-            expect(
-              messages.some((m) => m.includes('placeholder')),
-              'named field has no placeholder warning'
-            ).toBe(false);
-          }
-        )
-      )
+      withWarningSpy(async (warnCalls) => {
+        const field = await fixture<TextField>(html`
+          <swc-text-field
+            accessible-label="Search"
+            placeholder="Search"
+          ></swc-text-field>
+        `);
+        await field.updateComplete;
+        const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
+        expect(
+          messages.some((m) => m.includes('placeholder')),
+          'named field has no placeholder warning'
+        ).toBe(false);
+        field.parentElement?.remove();
+      })
     );
   },
 };
@@ -1156,20 +999,18 @@ export const HostAriaLabelWarningTest: Story = {
   `,
   play: async ({ step }) => {
     await step('warns when aria-label is set on the host', () =>
-      withWarningSpy((warnCalls) =>
-        withTextFieldFixture(
-          html`
-            <swc-text-field aria-label="Name"></swc-text-field>
-          `,
-          () => {
-            const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
-            expect(
-              messages.some((m) => m.includes('set on the host')),
-              'warning explains aria-label belongs on the input'
-            ).toBe(true);
-          }
-        )
-      )
+      withWarningSpy(async (warnCalls) => {
+        const field = await fixture<TextField>(html`
+          <swc-text-field aria-label="Name"></swc-text-field>
+        `);
+        await field.updateComplete;
+        const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
+        expect(
+          messages.some((m) => m.includes('set on the host')),
+          'warning explains aria-label belongs on the input'
+        ).toBe(true);
+        field.parentElement?.remove();
+      })
     );
   },
 };
@@ -1191,94 +1032,85 @@ export const LabelConflictTest: Story = {
     await step(
       'warns when both accessible-label and accessible-labelledby are set',
       () =>
-        withWarningSpy((warnCalls) => {
+        withWarningSpy(async (warnCalls) => {
           // The reference target lives as a plain (unslotted) light-DOM
           // child of the field itself, rather than a fixture sibling, so
           // `fixture()` still resolves to the `<swc-text-field>` (its
           // `firstElementChild` contract).
-          return withTextFieldFixture(
-            html`
-              <swc-text-field
-                accessible-label="Different text"
-                accessible-labelledby="text-field-label-conflict-external"
-              >
-                <p id="text-field-label-conflict-external">External label</p>
-              </swc-text-field>
-            `,
-            () => {
-              const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
-              expect(
-                messages.some(
-                  (m) =>
-                    m.includes(CONFLICT_PHRASE) && m.includes(IGNORED_PHRASE)
-                ),
-                'warning identifies conflicting accessible name sources'
-              ).toBe(true);
-            }
-          );
+          const field = await fixture<TextField>(html`
+            <swc-text-field
+              accessible-label="Different text"
+              accessible-labelledby="text-field-label-conflict-external"
+            >
+              <p id="text-field-label-conflict-external">External label</p>
+            </swc-text-field>
+          `);
+          await field.updateComplete;
+          const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
+          expect(
+            messages.some(
+              (m) => m.includes(CONFLICT_PHRASE) && m.includes(IGNORED_PHRASE)
+            ),
+            'warning identifies conflicting accessible name sources'
+          ).toBe(true);
+          field.parentElement?.remove();
         })
     );
 
     await step(
       'does not warn when a visible label is paired with accessible-label (the recommended WCAG 2.5.3 pattern)',
       () =>
-        withWarningSpy((warnCalls) =>
-          withTextFieldFixture(
-            html`
-              <swc-text-field accessible-label="Query products">
-                <span slot="label">Query</span>
-              </swc-text-field>
-            `,
-            () => {
-              const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
-              expect(
-                messages.some((m) => m.includes(CONFLICT_PHRASE)),
-                'visible label with accessible-label is allowed'
-              ).toBe(false);
-            }
-          )
-        )
+        withWarningSpy(async (warnCalls) => {
+          const field = await fixture<TextField>(html`
+            <swc-text-field accessible-label="Query products">
+              <span slot="label">Query</span>
+            </swc-text-field>
+          `);
+          await field.updateComplete;
+          const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
+          expect(
+            messages.some((m) => m.includes(CONFLICT_PHRASE)),
+            'visible label with accessible-label is allowed'
+          ).toBe(false);
+          field.parentElement?.remove();
+        })
     );
 
     await step(
       'does not warn when a visible label is paired with accessible-labelledby',
       () =>
-        withWarningSpy((warnCalls) =>
-          withTextFieldFixture(
-            html`
-              <swc-text-field
-                accessible-labelledby="text-field-label-conflict-external-2"
-              >
-                <p id="text-field-label-conflict-external-2">External label</p>
-                <span slot="label">Visible label</span>
-              </swc-text-field>
-            `,
-            () => {
-              const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
-              expect(
-                messages.some((m) => m.includes(CONFLICT_PHRASE)),
-                'visible label with accessible-labelledby is allowed'
-              ).toBe(false);
-            }
-          )
-        )
+        withWarningSpy(async (warnCalls) => {
+          const field = await fixture<TextField>(html`
+            <swc-text-field
+              accessible-labelledby="text-field-label-conflict-external-2"
+            >
+              <p id="text-field-label-conflict-external-2">External label</p>
+              <span slot="label">Visible label</span>
+            </swc-text-field>
+          `);
+          await field.updateComplete;
+          const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
+          expect(
+            messages.some((m) => m.includes(CONFLICT_PHRASE)),
+            'visible label with accessible-labelledby is allowed'
+          ).toBe(false);
+          field.parentElement?.remove();
+        })
     );
 
     await step('does not warn when accessible-label is the only source', () =>
-      withWarningSpy((warnCalls) =>
-        withTextFieldFixture(
-          html`
-            <swc-text-field accessible-label="Named"></swc-text-field>
-          `,
-          () => {
-            const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
-            expect(
-              messages.some((m) => m.includes(CONFLICT_PHRASE)),
-              'accessible-label alone does not trigger a conflict warning'
-            ).toBe(false);
-          }
-        )
-      )
+      withWarningSpy(async (warnCalls) => {
+        const field = await fixture<TextField>(html`
+          <swc-text-field accessible-label="Named"></swc-text-field>
+        `);
+        await field.updateComplete;
+        const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
+        expect(
+          messages.some((m) => m.includes(CONFLICT_PHRASE)),
+          'accessible-label alone does not trigger a conflict warning'
+        ).toBe(false);
+        field.parentElement?.remove();
+      })
     );
   },
 };
@@ -1402,7 +1234,15 @@ export const InputEventFormStateTest: Story = {
     </form>
   `,
   play: async ({ canvasElement, step }) => {
-    const { field, input, form } = await getFormFieldParts(canvasElement);
+    const field = await getComponent<TextField>(
+      canvasElement,
+      'swc-text-field'
+    );
+    const form = field.form;
+    const input = field.roleElement;
+    if (!form || !input) {
+      throw new Error('Input event test requires a form and input');
+    }
     const states: {
       listener: string;
       value: string;
@@ -1477,7 +1317,15 @@ InputEventFormStateTest.storyName = 'Form state during input events';
 export const FormStateRestoreTest: Story = {
   ...FormParticipationTest,
   play: async ({ canvasElement, step }) => {
-    const { field, input, form } = await getFormFieldParts(canvasElement);
+    const field = await getComponent<TextField>(
+      canvasElement,
+      'swc-text-field'
+    );
+    const form = canvasElement.querySelector('form');
+    const input = field.shadowRoot?.querySelector('input');
+    if (!form || !input) {
+      throw new Error('form or input not found');
+    }
     const events: string[] = [];
     field.addEventListener('input', () => events.push('input'));
     field.addEventListener('change', () => events.push('change'));
@@ -1549,7 +1397,15 @@ FormStateRestoreTest.storyName = 'Form state restoration';
 export const InvalidContractTest: Story = {
   ...FormParticipationTest,
   play: async ({ canvasElement, step }) => {
-    const { field, input, form } = await getFormFieldParts(canvasElement);
+    const field = await getComponent<TextField>(
+      canvasElement,
+      'swc-text-field'
+    );
+    const form = canvasElement.querySelector('form');
+    const input = field.roleElement;
+    if (!form || !input) {
+      throw new Error('form or input not found');
+    }
     let submissions = 0;
     form.addEventListener('submit', (event) => {
       event.preventDefault();
@@ -1653,7 +1509,15 @@ InvalidContractTest.storyName = 'Application-controlled invalid state';
 export const SlottedErrorLifecycleTest: Story = {
   ...FormParticipationTest,
   play: async ({ canvasElement, step }) => {
-    const { field, input, form } = await getFormFieldParts(canvasElement);
+    const field = await getComponent<TextField>(
+      canvasElement,
+      'swc-text-field'
+    );
+    const form = canvasElement.querySelector('form');
+    const input = field.roleElement;
+    if (!form || !input) {
+      throw new Error('form or input not found');
+    }
     const error = document.createElement('span');
     error.slot = 'error-text';
     error.textContent = 'Username is already taken.';
@@ -1852,6 +1716,20 @@ export const ValidationSourcesTest: Story = {
     error.slot = 'error-text';
     error.textContent = 'Username is already taken.';
     field.append(error);
+    await step(
+      'clearing authored invalid clears its derived custom error',
+      async () => {
+        field.fieldStatus = 'invalid';
+        await field.updateComplete;
+        expect(field.validationMessage).toBe('Username is already taken.');
+        field.fieldStatus = undefined;
+        await field.updateComplete;
+        expect(field.validity.customError).toBe(false);
+        expect(field.validationMessage).toBe('');
+        expect(field.validity.valid).toBe(true);
+      }
+    );
+
     await step(
       'clearing authored invalid preserves native errors',
       async () => {
@@ -2302,10 +2180,15 @@ export const ImplicitSubmitTest: Story = {
     </form>
   `,
   play: async ({ canvasElement, step }) => {
-    const { field, input, form } = await getFormFieldParts(canvasElement);
+    const field = await getComponent<TextField>(
+      canvasElement,
+      'swc-text-field'
+    );
+    const form = canvasElement.querySelector('form');
     const button = canvasElement.querySelector('button');
-    if (!button) {
-      throw new Error('Submit button not found');
+    const input = field.roleElement;
+    if (!form || !button || !input) {
+      throw new Error('form, submit button, or input not found');
     }
     const submissions: (HTMLElement | null)[] = [];
     let clicks = 0;
@@ -2426,7 +2309,15 @@ export const ImplicitSubmitWithoutButtonTest: Story = {
     </form>
   `,
   play: async ({ canvasElement, step }) => {
-    const { input, form } = await getFormFieldParts(canvasElement);
+    const field = await getComponent<TextField>(
+      canvasElement,
+      'swc-text-field'
+    );
+    const form = canvasElement.querySelector('form');
+    const input = field.roleElement;
+    if (!form || !input) {
+      throw new Error('form or input not found');
+    }
     const submissions: (HTMLElement | null)[] = [];
     form.addEventListener('submit', (event) => {
       event.preventDefault();

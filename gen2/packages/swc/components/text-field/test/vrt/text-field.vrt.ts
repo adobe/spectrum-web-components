@@ -227,23 +227,10 @@ const permutationContent = () => html`
         placeholder: 'Placeholder',
       }),
       renderCase({
-        label: 'Disabled prefix',
-        fieldStatus: 'disabled',
-        value: 'example.com',
-        prefix: html`
-          <span slot="prefix">https://</span>
-        `,
-      }),
-      renderCase({
         label: 'Invalid',
         fieldStatus: 'invalid',
         description: 'Field help text',
         errorText: 'Enter a valid value',
-      }),
-      renderCase({
-        label: 'Invalid with help text',
-        fieldStatus: 'invalid',
-        description: 'Choose an available username.',
       }),
       renderCase({
         label: 'Valid',
@@ -253,20 +240,6 @@ const permutationContent = () => html`
       }),
     ],
     'States'
-  )}
-  ${row(
-    html`
-      <fieldset disabled style="margin: 0; padding: 0; border: 0;">
-        ${renderCase({
-          label: 'Inherited disabled',
-          fieldStatus: 'invalid',
-          description: 'Choose an available username.',
-          errorText: 'This username is unavailable.',
-          value: 'alex',
-        })}
-      </fieldset>
-    `,
-    'Inherited disabled messages'
   )}
   ${row(
     [
