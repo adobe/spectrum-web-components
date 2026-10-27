@@ -189,7 +189,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@adobe/spectrum-wc-core@npm:2.0.0-beta.5, @adobe/spectrum-wc-core@workspace:gen2/packages/core":
+"@adobe/spectrum-wc-core@npm:2.0.0-beta.6, @adobe/spectrum-wc-core@workspace:gen2/packages/core":
   version: 0.0.0-use.local
   resolution: "@adobe/spectrum-wc-core@workspace:gen2/packages/core"
   dependencies:
@@ -211,7 +211,7 @@ __metadata:
   resolution: "@adobe/spectrum-wc-icons@workspace:gen2/packages/icons"
   dependencies:
     "@adobe/postcss-token": "workspace:*"
-    "@adobe/spectrum-wc-core": "npm:2.0.0-beta.5"
+    "@adobe/spectrum-wc-core": "npm:2.0.0-beta.6"
     "@adobe/swc-tokens": "workspace:*"
     "@custom-elements-manifest/analyzer": "npm:0.10.8"
     "@storybook/test": "npm:8.6.19"
@@ -238,7 +238,7 @@ __metadata:
   resolution: "@adobe/spectrum-wc@workspace:gen2/packages/swc"
   dependencies:
     "@adobe/postcss-token": "workspace:*"
-    "@adobe/spectrum-wc-core": "npm:2.0.0-beta.5"
+    "@adobe/spectrum-wc-core": "npm:2.0.0-beta.6"
     "@adobe/spectrum-wc-icons": "workspace:*"
     "@adobe/swc-tokens": "workspace:*"
     "@adobe/vite-global-elements-css": "workspace:*"
@@ -266,8 +266,8 @@ __metadata:
     dom-accessibility-api: "npm:0.7.0"
     glob: "npm:11.0.3"
     lit: "npm:^2.5.0 || ^3.1.3"
-    playwright: "npm:1.53.1"
-    playwright-core: "npm:1.53.1"
+    playwright: "npm:1.64.1"
+    playwright-core: "npm:1.64.1"
     postcss: "npm:8.5.9"
     postcss-preset-env: "npm:10.4.0"
     prettier: "npm:3.8.1"
@@ -5872,14 +5872,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@playwright/test@npm:1.53.1":
-  version: 1.53.1
-  resolution: "@playwright/test@npm:1.53.1"
+"@playwright/test@npm:1.64.1":
+  version: 1.64.1
+  resolution: "@playwright/test@npm:1.64.1"
   dependencies:
-    playwright: "npm:1.53.1"
+    playwright: "npm:1.64.1"
   bin:
     playwright: cli.js
-  checksum: 10c0/f2ef7899ca6bc178c9f2ba6c8633d0bbeb5ba135048e9df01ecb949c6f743811ba5ef76d495f619454074c81dbfa28be12e4c0a1224bb2af0d4cb403182c716f
+  checksum: 10c0/0a1a853d76d6c532cafaf0366a5448584b766737ebd39bbd23dc0580f3d3b6ef4c833082af47a792e7fc2501f444debdfaad37a87a76cc5b195f3803fc80ea3c
   languageName: node
   linkType: hard
 
@@ -6916,7 +6916,7 @@ __metadata:
     "@lit/react": "npm:1.0.8"
     "@open-wc/dev-server-hmr": "npm:0.2.0"
     "@open-wc/testing": "npm:4.0.0"
-    "@playwright/test": "npm:1.53.1"
+    "@playwright/test": "npm:1.64.1"
     "@rollup/plugin-commonjs": "npm:25.0.8"
     "@rollup/plugin-json": "npm:6.1.0"
     "@rollup/plugin-node-resolve": "npm:15.3.1"
@@ -26760,6 +26760,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"playwright-core@npm:1.64.1":
+  version: 1.64.1
+  resolution: "playwright-core@npm:1.64.1"
+  bin:
+    playwright-core: cli.js
+  checksum: 10c0/91c4f5ed1cff4b0e18b6ac62f66770f5f1b6c204d4aebd6a321c07466dca18a70822ac692597c6059705a703f9768097ac551df179fb49294d639509148e04f3
+  languageName: node
+  linkType: hard
+
 "playwright-core@npm:>=1.2.0":
   version: 1.56.1
   resolution: "playwright-core@npm:1.56.1"
@@ -26781,6 +26790,17 @@ __metadata:
   bin:
     playwright: cli.js
   checksum: 10c0/3dcbcd3791a7f0d1007db4d3126c8136258a2002c2fbfc8b840086b64cbc1fb628b2e25dd3b345d685fb27ba39790ab0f4ce81a8faade7dc748af3a63bdf3550
+  languageName: node
+  linkType: hard
+
+"playwright@npm:1.64.1, playwright@npm:^1.14.0":
+  version: 1.64.1
+  resolution: "playwright@npm:1.64.1"
+  dependencies:
+    playwright-core: "npm:1.64.1"
+  bin:
+    playwright: cli.js
+  checksum: 10c0/edf52d0a79feca37bf383e841a467aa68750684128218eac560063991c9e4b615a94901f580cd8a088bb05fd53008ab4a0e5e8d976067698b60ae5d1de2459f3
   languageName: node
   linkType: hard
 
@@ -29913,7 +29933,7 @@ __metadata:
     "@commitlint/cli": "npm:19.8.1"
     "@commitlint/config-conventional": "npm:19.8.1"
     "@eslint/js": "npm:9.39.2"
-    "@playwright/test": "npm:1.53.1"
+    "@playwright/test": "npm:1.64.1"
     "@spectrum-web-components/eslint-plugin": "workspace:*"
     "@spectrum-web-components/stylelint-header-plugin": "workspace:*"
     "@typescript-eslint/eslint-plugin": "npm:8.54.0"

@@ -13,7 +13,7 @@ import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
 import { playwright } from '@vitest/browser-playwright';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { defineConfig, mergeConfig } from 'vitest/config';
+import { configDefaults, defineConfig, mergeConfig } from 'vitest/config';
 
 import viteConfig from './vite.config.ts';
 
@@ -65,7 +65,7 @@ export default mergeConfig(
         include: [
           'components/**/*.{ts,js}',
           '**/packages/core/components/**/*.{ts,js}',
-          '**/packages/core/controllers/*.{ts,js}',
+          '**/packages/core/controllers/**/*.{ts,js}',
           '**/packages/core/element/*.{ts,js}',
           '**/packages/core/mixins/*.{ts,js}',
           '**/packages/core/utils/*.{ts,js}',
@@ -74,6 +74,7 @@ export default mergeConfig(
           '**/*.test.ts',
           '**/*.stories.ts',
           '**/*.vrt.ts',
+          '**/test/vrt/**',
           '**/.storybook/**',
           '**/utils/**',
           '**/node_modules/**',
@@ -87,35 +88,39 @@ export default mergeConfig(
 
           // SWC component implementations
           'components/**/*.{ts,js}': {
-            lines: 98,
-            functions: 98,
-            statements: 98,
+            lines: 99,
+            functions: 99,
+            statements: 99,
           },
+
+          // Threshold globs match paths relative to this package's root, so
+          // core files resolve as `../core/...`. A `**/packages/core/...` glob
+          // matches nothing and passes silently.
 
           // Core component logic
-          '**/packages/core/components/**/*.{ts,js}': {
-            lines: 98,
-            functions: 98,
-            statements: 98,
+          '../core/components/**/*.{ts,js}': {
+            lines: 95,
+            functions: 94,
+            statements: 95,
           },
 
-          // Shared utilities (lower bar while starting out)
-          '**/packages/core/controllers/*.{ts,js}': {
-            lines: 70,
-            functions: 70,
-            statements: 70,
+          // Shared controllers, element, mixins, and utils
+          '../core/controllers/**/*.{ts,js}': {
+            lines: 87,
+            functions: 85,
+            statements: 87,
           },
-          '**/packages/core/element/*.{ts,js}': {
-            lines: 70,
-            functions: 70,
-            statements: 70,
+          '../core/element/*.{ts,js}': {
+            lines: 94,
+            functions: 100,
+            statements: 94,
           },
-          '**/packages/core/mixins/*.{ts,js}': {
-            lines: 70,
-            functions: 70,
-            statements: 70,
+          '../core/mixins/*.{ts,js}': {
+            lines: 95,
+            functions: 97,
+            statements: 95,
           },
-          '**/packages/core/utils/*.{ts,js}': {
+          '../core/utils/*.{ts,js}': {
             lines: 70,
             functions: 70,
             statements: 70,
@@ -165,6 +170,15 @@ export default mergeConfig(
           },
           test: {
             name: 'storybook',
+            // .vrt.ts stories are authored for Chromatic snapshots, which
+            // runs their play functions itself; keep them out of Vitest.
+            // `**` doesn't match `..`, so sibling packages (icons) need
+            // their own pattern.
+            exclude: [
+              ...configDefaults.exclude,
+              '**/*.vrt.ts',
+              '../**/*.vrt.ts',
+            ],
             browser: {
               enabled: true,
               provider: playwright(),
