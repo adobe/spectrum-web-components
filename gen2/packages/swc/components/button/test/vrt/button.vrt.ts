@@ -102,17 +102,20 @@ const STATIC_COLOR_PERMUTATION_GROUPS = BUTTON_STATIC_COLORS.map((color) => ({
     {
       'static-color': [color],
       variant: ['primary', 'secondary'],
+      'fill-style': BUTTON_FILL_STYLES,
       'data-force-state': FORCED_STATES,
     },
     // Disabled and pending static-color states.
     {
       'static-color': [color],
       variant: ['primary', 'secondary'],
+      'fill-style': BUTTON_FILL_STYLES,
       disabled: [true],
     },
     {
       'static-color': [color],
       variant: ['primary', 'secondary'],
+      'fill-style': BUTTON_FILL_STYLES,
       pending: [true],
     },
   ]),
