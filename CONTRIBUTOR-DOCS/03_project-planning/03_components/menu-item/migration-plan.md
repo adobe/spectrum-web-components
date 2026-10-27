@@ -67,8 +67,8 @@ Class shape: `MenuItem extends LikeAnchor(ObserveSlotText(ObserveSlotPresence(Fo
 | `disabled` (via `Focusable`) | `disabled` | `boolean` | `false` | **Keep**, remapped to `aria-disabled` ([B20](#must-ship)) |
 | `active` | `active` | `boolean` | `false` | **Drop** — internal pressed state, not public API |
 | `focused` | `focused` | `boolean` | `false` | **Drop** — roving tabindex owns focus state |
-| `selected` | `selected` | `boolean` | `false` | **Defer** — selection is Phase B |
-| `value` | — (getter) | `string` | slot text | **Defer** — selection is Phase B |
+| `selected` | `selected` | `boolean` | `false` | **Drop** — the `menuitem` role does not support `aria-selected`. Selection moves to `swc-menuitem-checkbox` / `swc-menuitem-radio` via `aria-checked`. A "current" affordance, if wanted, is a separate question ([Q24](#blockers-and-open-questions)) |
+| `value` | — (getter) | `string` | slot text | **Drop** — selection-scoped, so it follows `selected` to the checkbox and radio rows |
 | `hasSubmenu` | `has-submenu` | `boolean` | `false` | **Defer** — submenus are Phase B |
 | `open` | `open` | `boolean` | `false` | **Defer** — submenu open state, Phase B |
 | `noWrap` | `no-wrap` | `boolean` | `false` | **Open** ([Q22](#blockers-and-open-questions)) |
@@ -96,7 +96,7 @@ No public `change`/activation event in Phase A: activation is a plain `click` on
 | --- | --- |
 | default | **Replaced** by a named `label` slot ([B22](#must-ship)) |
 | `icon` | **Renamed** to `visual` ([B23](#must-ship)) |
-| `description` | **Defer** — Phase B |
+| `description` | **Defer** — Phase B. Likely needed to tell similarly-named options apart, which is an a11y concern in its own right |
 | `value` | **Defer** — trailing content, Phase B |
 | `submenu` | **Defer** — Phase B |
 
@@ -123,6 +123,7 @@ Two things worth noting against this plan:
 | `DisabledMixin` | Shipped, **no consumers yet** | Maps `disabled` to `aria-disabled` and manages tabindex. See [Q20](#blockers-and-open-questions) |
 | `swc-thumbnail` | Not built | Needed before the `visual` slot accepts a thumbnail ([A4](#additive)) |
 | `swc-menu-link` | Not planned | Owner of link rows ([Q17](#blockers-and-open-questions)) |
+| `swc-menuitem-checkbox`, `swc-menuitem-radio` | Not planned | Owners of selection, exposed as `aria-checked`. Selection never returns to `swc-menu-item` |
 
 ## Changes overview
 
@@ -148,7 +149,7 @@ Two things worth noting against this plan:
 | # | Item |
 | --- | --- |
 | **B26** | Submenus (`hasSubmenu`, `open`, `submenu` slot) |
-| **A21** | Selection (`selected`, `value`, `menuitemcheckbox`/`menuitemradio`) |
+| **A21** | Selection — not a later phase of this component. It belongs to `swc-menuitem-checkbox` and `swc-menuitem-radio`, which expose it as `aria-checked` |
 | **A22** | `description` and trailing `value` slots |
 | **A23** | `swc-thumbnail` in the `visual` slot |
 | **A24** | Highlight badge |
@@ -224,9 +225,10 @@ Red/green TDD. Each item below should fail before the implementation exists.
 
 | # | Question | Blocking? | Status |
 | --- | --- | --- | --- |
-| **Q20** | Does `DisabledMixin` fight `FocusgroupNavigationController`? The mixin writes `tabindex` (saving and restoring a previous value) while the controller owns roving tabindex and, with `skipDisabled: false`, deliberately keeps `aria-disabled` rows in sequence. `DisabledMixin` currently has no consumers, so this combination is untested. Either reuse it and prove the interaction, or hand-roll `disabled` and leave tabindex entirely to the controller. | Yes, for the API | Open |
+| **Q20** | Does `DisabledMixin` fight `FocusgroupNavigationController`? The mixin writes `tabindex` (saving and restoring a previous value) while the controller owns roving tabindex and, with `skipDisabled: false`, deliberately keeps `aria-disabled` rows in sequence. `DisabledMixin` currently has no consumers, so this combination is untested. Resolved in review: if they conflict, skip `DisabledMixin` and map the property by hand, leaving tabindex entirely to the controller. The test still has to run to tell us which path we are on. | Yes, for the API | Path decided, needs the test |
 | **Q21** | The menu epic was specced against Figma file `Mngz9H7WZLbrCvGQf3GnsY`, now named "S2 - Web (Deprecated)". `swc-menu` and `swc-close-button` link to it; `swc-thumbnail` uses `xHBWBBIe2eo5vwoCeNrC4Q`. Which supersedes it, and do the row specs change? | Yes, for styling | Open |
 | **Q22** | Does `noWrap` survive? 1st-gen offers it; `swc-menu` already caps row width at 320px, so wrapping behaviour needs a design answer rather than a carry-forward. | No | Open |
+| **Q24** | Should a row be able to mark itself as the current one? `menuitem` cannot carry `aria-selected`, but `aria-current` is available and would cover "this is where you are" without implying selection. Needs a product answer on whether menus need it at all before any `current` property is designed. | No | Open |
 | **Q23** | Authoring ergonomics of the named `label` slot: `<swc-menu-item><span slot="label">Cut</span></swc-menu-item>` is heavier than the 1st-gen default-slot form, and every existing `swc-menu` story and test uses the lighter one. Confirm the trade is still wanted now that the cost is visible. | No | Open, decided in principle under [B22](#must-ship) |
 
 ## Decision log
