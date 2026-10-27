@@ -426,9 +426,17 @@ jobs:
       - run:
           name: Run gen2 << parameters.browser >> tests (shard $CIRCLE_NODE_INDEX/$CIRCLE_NODE_TOTAL)
           command: |
-            VITEST_BROWSER_INSTANCES=<< parameters.browser >> \
-              yarn workspace @spectrum-web-components/gen2 run test \
-              --shard=$((CIRCLE_NODE_INDEX + 1))/$CIRCLE_NODE_TOTAL
+            if [ "<< parameters.browser >>" = "webkit" ]; then
+              # Exercise animations and smooth scrolling with a virtual display.
+              VITEST_BROWSER_INSTANCES=webkit xvfb-run -a \
+                yarn workspace @spectrum-web-components/gen2 run test \
+                --browser.headless=false \
+                --shard=$((CIRCLE_NODE_INDEX + 1))/$CIRCLE_NODE_TOTAL
+            else
+              VITEST_BROWSER_INSTANCES=<< parameters.browser >> \
+                yarn workspace @spectrum-web-components/gen2 run test \
+                --shard=$((CIRCLE_NODE_INDEX + 1))/$CIRCLE_NODE_TOTAL
+            fi
       - store_test_results:
           path: /root/project/gen2/packages/swc/test-results
 
