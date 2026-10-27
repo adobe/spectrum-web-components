@@ -21,6 +21,7 @@ import * as Stories from './stories/field-description-mixin.stories';
 - **Combined description sources**: unlike accessible-name sources, a slotted `description` and an external `accessibleDescribedby` reference combine rather than override each other. The role element's `ariaDescribedByElements` lists the in-shadow description first, then the resolved external elements.
 - **Invalid-gated error text**: error text is shown only while the host is invalid.
 - **Conditional rendering**: renders nothing when there is no description or active error text.
+- **Optional error icon**: a host with no invalid icon of its own, such as a radio group, can pass `errorIcon` to `renderFieldDescription()`. The icon shows beside the error text or the description while invalid, and on its own when there is neither, so the state never relies on color alone.
 
 ### Basic usage
 
@@ -62,6 +63,10 @@ While invalid, supplied `error-text` replaces the description. Without an `error
 
 <Canvas of={Stories.ErrorTextGating} />
 
+### Error icon
+
+The `core` directive can't import a `swc` icon, so the host supplies a decorative one: `renderFieldDescription({ invalid, errorIcon: html`<swc-icon-alert-triangle></swc-icon-alert-triangle>` })`. Omit it when the control already shows its own invalid icon, as the text field's input does.
+
 ## Accessibility
 
 ### Features
@@ -84,13 +89,13 @@ While invalid, supplied `error-text` replaces the description. Without an `error
 
 ### Members
 
-| Member                      | Description                                                                                                   |
-| --------------------------- | ------------------------------------------------------------------------------------------------------------- |
-| `accessibleDescribedby`     | Space-separated element `id`s that describe the role element. Combines with a slotted `description`.          |
-| `hasDescriptionSlotContent` | Read-only. Whether slotted `description` content is present.                                                  |
-| `hasErrorTextSlotContent`   | Read-only. Whether slotted `error-text` content is present.                                                   |
-| `roleElement`               | `@internal`. The element the resolved description/error relationships are wired onto.                         |
-| `renderFieldDescription()`  | Renders the description/error-text markup for the current state (via the `renderFieldDescription` directive). |
+| Member                      | Description                                                                                                                                       |
+| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `accessibleDescribedby`     | Space-separated element `id`s that describe the role element. Combines with a slotted `description`.                                              |
+| `hasDescriptionSlotContent` | Read-only. Whether slotted `description` content is present.                                                                                      |
+| `hasErrorTextSlotContent`   | Read-only. Whether slotted `error-text` content is present.                                                                                       |
+| `roleElement`               | `@internal`. The element the resolved description/error relationships are wired onto.                                                             |
+| `renderFieldDescription()`  | Renders the description/error-text markup for the current state (via the `renderFieldDescription` directive). Accepts `{ invalid?, errorIcon? }`. |
 
 ### Related primitives
 

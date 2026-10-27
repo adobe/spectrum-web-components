@@ -18,6 +18,12 @@
  * the `label-position` grid so every field lays them out identically. Vertical
  * spacing between the label / control / messages rows is applied as margins on
  * the label and messages, so an empty row never contributes perceived gap.
+ *
+ * Consumer contract: the disabled treatment selects on `:host(:state(disabled))`.
+ * Each consuming component must set the `disabled` custom state from its
+ * effective disabled state (the authored `field-status="disabled"` OR the
+ * `<fieldset disabled>` cascade) with `internals.states.add('disabled')`. Without
+ * it the label, description, and error text won't dim.
  */
 
 /* ── Field template grid ──────────────────────────── */
