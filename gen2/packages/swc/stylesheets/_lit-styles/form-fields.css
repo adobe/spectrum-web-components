@@ -157,7 +157,8 @@
 :host([label-position="side"]) .swc-FormField {
   grid-template-areas:
     "label input"
-    ".     messages";
+    "label messages";
+  grid-template-rows: auto 1fr;
 
   /* `fit-content(50%)` lets the label grow up to half the field width and then
      wrap, preventing a long side label from kicking the input out of view while
