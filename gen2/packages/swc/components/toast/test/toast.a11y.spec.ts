@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { expect, type Page, test } from '@playwright/test';
+import { expect, type Locator, type Page, test } from '@playwright/test';
 
 import { gotoStory } from '../../../utils/a11y-helpers.js';
 
@@ -129,5 +129,39 @@ test.describe('Toast - Keyboard', () => {
     await page.keyboard.press('Enter');
     await expect(toast).not.toHaveAttribute('open');
     await expect(toast).toHaveAttribute('aria-hidden', 'true');
+  });
+});
+
+const surfaceStyle = (
+  toast: Locator,
+  property: 'transitionDuration' | 'transitionDelay'
+): Promise<string> =>
+  toast.evaluate(
+    (element, prop) =>
+      getComputedStyle(element.shadowRoot!.querySelector('.swc-Toast')!)[prop],
+    property
+  );
+
+// Matches "0s" or a list of them, which is how computed styles report it.
+const INSTANT = /^0s(, 0s)*$/;
+
+test.describe('Toast - Reduced motion', () => {
+  test('removes the fade but keeps the two-frame delay', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await gotoStory(page, 'components-toast--overview', 'swc-toast');
+    const toast = page.locator('swc-toast');
+
+    expect(await surfaceStyle(toast, 'transitionDuration')).toMatch(INSTANT);
+    expect(await surfaceStyle(toast, 'transitionDelay')).toBe('0.034s');
+  });
+
+  test('keeps the fade when motion is not reduced', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'no-preference' });
+    await gotoStory(page, 'components-toast--overview', 'swc-toast');
+    const toast = page.locator('swc-toast');
+
+    expect(await surfaceStyle(toast, 'transitionDuration')).not.toMatch(
+      INSTANT
+    );
   });
 });

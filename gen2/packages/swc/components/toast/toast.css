@@ -135,7 +135,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .swc-Toast {
-    --_swc-toast-animation-distance: 0;
+    transition-duration: 0ms;
   }
 }
 
