@@ -331,6 +331,71 @@ export const ErrorWithExternalDescribedbyTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
+// TEST: errorIcon option
+// ──────────────────────────────────────────────────────────────
+
+export const ErrorIconTest: Story = {
+  render: () => html`
+    <demo-field-description-host id="with-error-text" invalid show-error-icon>
+      <span slot="description">Description</span>
+      <span slot="error-text">Enter a valid value</span>
+    </demo-field-description-host>
+    <demo-field-description-host id="with-description" invalid show-error-icon>
+      <span slot="description">Description</span>
+    </demo-field-description-host>
+    <demo-field-description-host
+      id="bare"
+      invalid
+      show-error-icon
+    ></demo-field-description-host>
+    <demo-field-description-host id="no-icon" invalid>
+      <span slot="description">Description</span>
+    </demo-field-description-host>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const get = (id: string) =>
+      canvasElement.querySelector<DemoFieldDescriptionHost>(`#${id}`)!;
+    const icon = (host: DemoFieldDescriptionHost) =>
+      host.shadowRoot?.querySelector('.swc-FormFieldErrorText-icon');
+    const describedBy = (host: DemoFieldDescriptionHost) =>
+      host.roleElement?.ariaDescribedByElements ?? [];
+
+    await step('the icon precedes the error text', () => {
+      const host = get('with-error-text');
+      expect(
+        host.shadowRoot?.querySelector(
+          '.swc-FormFieldErrorText .demo-error-icon'
+        )
+      ).toBeTruthy();
+      expect(describedBy(host)).toHaveLength(1);
+    });
+
+    await step('the icon accompanies a description with no error text', () => {
+      const host = get('with-description');
+      expect(
+        host.shadowRoot?.querySelector(
+          '.swc-FormFieldDescription--invalid .swc-FormFieldErrorText-icon'
+        )
+      ).toBeTruthy();
+      expect(
+        host.shadowRoot?.querySelector('slot[name="description"]')
+      ).toBeTruthy();
+      expect(describedBy(host)).toHaveLength(1);
+    });
+
+    await step('the icon shows alone and describes nothing', () => {
+      const host = get('bare');
+      expect(icon(host)).toBeTruthy();
+      expect(describedBy(host)).toHaveLength(0);
+    });
+
+    await step('without an errorIcon, no icon wrapper renders', () => {
+      expect(icon(get('no-icon'))).toBeNull();
+    });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
 // TEST: Unresolved accessible-describedby DEBUG warning
 // ──────────────────────────────────────────────────────────────
 

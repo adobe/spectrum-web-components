@@ -499,7 +499,7 @@ export const RequiredStateTest: Story = {
       );
       expect(indicator, 'required label renders its asterisk').toBeTruthy();
       expect(
-        indicator?.getAttribute('aria-hidden'),
+        indicator?.querySelector('swc-ui-icon')?.getAttribute('aria-hidden'),
         'required asterisk is hidden from assistive technology'
       ).toBe('true');
     });
@@ -528,7 +528,7 @@ export const NecessityIndicatorTest: Story = {
       ).toBeTruthy();
       expect(
         requiredIcon.shadowRoot?.querySelector(
-          '.swc-FormFieldLabel-requiredIndicator'
+          '.swc-FormFieldLabel-requiredIndicator swc-ui-icon'
         )
       ).toHaveAttribute('aria-hidden', 'true');
     });

@@ -261,7 +261,9 @@ export const NecessityIndicatorTest: Story = {
     const indicator = requiredIcon.shadowRoot?.querySelector(
       '.swc-FormFieldLabel-requiredIndicator'
     );
-    expect(indicator?.getAttribute('aria-hidden')).toBe('true');
+    expect(
+      indicator?.querySelector('swc-ui-icon')?.getAttribute('aria-hidden')
+    ).toBe('true');
     expect(
       requiredLabel.shadowRoot
         ?.querySelector('.swc-FormFieldLabel-necessityLabel')
@@ -272,6 +274,13 @@ export const NecessityIndicatorTest: Story = {
         ?.querySelector('.swc-FormFieldLabel-necessityLabel')
         ?.textContent?.trim()
     ).toBe('(optional)');
+
+    // Text indicators contribute to the group's name; only the icon is hidden.
+    expect(
+      requiredLabel.shadowRoot
+        ?.querySelector('.swc-FormFieldLabel-necessityLabel')
+        ?.hasAttribute('aria-hidden')
+    ).toBe(false);
 
     // The label stays a non-`<label>` element wired by `aria-labelledby`.
     expect(requiredIcon.shadowRoot?.querySelector('label')).toBeNull();
@@ -352,6 +361,12 @@ export const ErrorIconWithoutErrorTextTest: Story = {
     expect(describedBy(withDescription)).toEqual([
       withDescription.shadowRoot?.querySelector('.swc-FormFieldDescription'),
     ]);
+    expect(
+      withDescription.shadowRoot?.querySelector(
+        '.swc-FormFieldDescription--invalid'
+      ),
+      'the visible description takes the invalid styling'
+    ).toBeTruthy();
 
     expect(
       icon(bare),

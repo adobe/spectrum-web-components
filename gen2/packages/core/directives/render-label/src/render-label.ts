@@ -98,8 +98,8 @@ export function renderFieldLabel({
 }
 
 /**
- * The necessity indicator span; only the icon is hidden from assistive
- * technology. With no whitespace text node between the slot and
+ * The necessity indicator span. The icon hides itself from assistive
+ * technology as a decorative icon; text indicators contribute to the label. With no whitespace text node between the slot and
  * this span, the indicator stays on the same wrap line as the last word; its
  * gap from the label text is applied by CSS, not a literal space character.
  */
