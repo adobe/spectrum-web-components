@@ -245,7 +245,12 @@ export abstract class TextFieldBase extends SizedMixin(
 
   /** Whether the field participates in constraint validation. */
   public get willValidate(): boolean {
-    return this.fieldAssoc.willValidate;
+    // Disabled and read-only fields are barred, as native controls are.
+    return (
+      this.fieldStatus !== 'disabled' &&
+      this.fieldStatus !== 'readonly' &&
+      this.fieldAssoc.willValidate
+    );
   }
 
   /** Returns whether the field passes validation. Fires `invalid` on failure. */
@@ -448,10 +453,6 @@ export abstract class TextFieldBase extends SizedMixin(
         valid: TEXT_FIELD_STATUSES,
         url: DOCS_URL,
       });
-    }
-    if (changedProperties.has('fieldStatus')) {
-      this.toggleAttribute('disabled', this.fieldStatus === 'disabled');
-      this.toggleAttribute('readonly', this.fieldStatus === 'readonly');
     }
     super.update(changedProperties);
     // Push the current value into the form; exclude it entirely when disabled.

@@ -2060,7 +2060,13 @@ export const DisabledStateTest: Story = {
       throw new Error('form or fieldset not found');
     }
 
+    const inputColor = (): string =>
+      getComputedStyle(field.shadowRoot!.querySelector('.swc-TextField-input')!)
+        .color;
+    let enabledColor = '';
+
     await step('enabled: not :disabled, value participates', () => {
+      enabledColor = inputColor();
       expect(field.matches(':disabled'), 'not :disabled').toBe(false);
       expect(
         new FormData(form).get('username'),
@@ -2068,11 +2074,15 @@ export const DisabledStateTest: Story = {
       ).toBe('Example');
     });
 
-    await step('own disabled matches native :disabled', async () => {
+    await step('own disabled status styles as disabled', async () => {
       field.fieldStatus = 'disabled';
       await field.updateComplete;
-      expect(field.matches(':disabled'), 'own disabled matches :disabled').toBe(
-        true
+      expect(
+        field.matches(':disabled'),
+        'the authored status does not mirror a host attribute'
+      ).toBe(false);
+      expect(inputColor(), 'the input takes the disabled color').not.toBe(
+        enabledColor
       );
       expect(
         new FormData(form).has('username'),

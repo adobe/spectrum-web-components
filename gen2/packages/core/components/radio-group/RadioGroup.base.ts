@@ -192,7 +192,11 @@ export abstract class RadioGroupBase extends SizedMixin(
 
   /** Whether the group is a candidate for constraint validation. */
   public get willValidate(): boolean {
-    return this.fieldAssoc.willValidate;
+    return !this.isBarredFromValidation && this.fieldAssoc.willValidate;
+  }
+
+  private get isBarredFromValidation(): boolean {
+    return this.fieldStatus === 'disabled' || this.fieldStatus === 'readonly';
   }
 
   /** Runs constraint validation; returns whether the group is valid. */
@@ -511,11 +515,6 @@ export abstract class RadioGroupBase extends SizedMixin(
         url: DOCS_URL,
       });
     }
-    if (changedProperties.has('fieldStatus')) {
-      // Native `:disabled` and the `readonly` hook style the host and its items.
-      this.toggleAttribute('disabled', this.fieldStatus === 'disabled');
-      this.toggleAttribute('readonly', this.fieldStatus === 'readonly');
-    }
     super.update(changedProperties);
     const disabledChanged = this.syncDisabledState();
     if (disabledChanged) {
@@ -528,7 +527,10 @@ export abstract class RadioGroupBase extends SizedMixin(
     // `valueMissing`; an invalid selection is `customError`. The message is
     // required by `setValidity` (it throws if empty); the UI is rendered elsewhere.
     // The role element is the validation anchor, so a blocked submit focuses it.
-    const valueMissing = this.required && !this.selected;
+    // Disabled and read-only groups are barred from validation, as native
+    // controls are.
+    const barred = this.isBarredFromValidation;
+    const valueMissing = !barred && this.required && !this.selected;
     const anchor = this.roleElement;
     const invalid = this.fieldStatus === 'invalid';
     this.internals.setValidity(

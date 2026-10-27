@@ -150,22 +150,22 @@ slot[name="prefix"]::slotted(*) {
 
 /* ── Disabled ─────────────────────────────────────── */
 
-:host(:disabled) {
+:host(:is(:disabled, [field-status="disabled"])) {
   --swc-text-field-border-color-default: token("disabled-border-color");
   --swc-text-field-border-color-hover: token("disabled-border-color");
   --swc-text-field-border-color-focus: token("disabled-border-color");
   --swc-text-field-border-color-focus-hover: token("disabled-border-color");
 }
 
-:host(:disabled) .swc-TextField-input {
+:host(:is(:disabled, [field-status="disabled"])) .swc-TextField-input {
   color: token("disabled-content-color");
 }
 
-:host(:disabled) .swc-TextField-input::placeholder {
+:host(:is(:disabled, [field-status="disabled"])) .swc-TextField-input::placeholder {
   color: token("disabled-content-color");
 }
 
-:host(:disabled) slot[name="prefix"]::slotted(*) {
+:host(:is(:disabled, [field-status="disabled"])) slot[name="prefix"]::slotted(*) {
   color: token("disabled-content-color");
 }
 
@@ -222,13 +222,13 @@ slot[name="prefix"]::slotted(*) {
 @media (forced-colors: active) {
   /* The bordered wrapper is a <div>, not the native :disabled <input>, so the UA
      won't dim it. Force the disabled treatment to the system GrayText. */
-  :host(:disabled) .swc-TextField-control {
+  :host(:is(:disabled, [field-status="disabled"])) .swc-TextField-control {
     border-color: GrayText;
   }
 
-  :host(:disabled) .swc-TextField-input,
-  :host(:disabled) .swc-TextField-input::placeholder,
-  :host(:disabled) slot[name="prefix"]::slotted(*) {
+  :host(:is(:disabled, [field-status="disabled"])) .swc-TextField-input,
+  :host(:is(:disabled, [field-status="disabled"])) .swc-TextField-input::placeholder,
+  :host(:is(:disabled, [field-status="disabled"])) slot[name="prefix"]::slotted(*) {
     color: GrayText;
   }
 
