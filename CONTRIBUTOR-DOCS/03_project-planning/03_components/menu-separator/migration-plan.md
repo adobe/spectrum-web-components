@@ -54,7 +54,7 @@
 
 <!-- Document content (editable) -->
 
-> **Epic [SWC-2668](https://jira.corp.adobe.com/browse/SWC-2668)** · Planning output. Must be reviewed before implementation begins. **Provisional:** the 1st-gen Jira issue list has not been pulled yet (Jira MCP authentication failed). The Figma `S2 / Web` Menu and Divider frames and the Spectrum CSS `spectrum-two` menu source have been reviewed.
+> **Epic [SWC-2668](https://jira.corp.adobe.com/browse/SWC-2668)** · Planning output. Must be reviewed before implementation begins. **Provisional:** the 1st-gen Jira issue list was pulled from Jira (`component = "Menu"`, SWC project only). The Figma `S2 / Web` Menu and Divider frames and the Spectrum CSS `spectrum-two` menu source have been reviewed.
 >
 > This plan migrates `sp-menu-divider` to a standalone **`swc-menu-separator`**, following the [menu separator accessibility migration analysis](./accessibility-migration-analysis.md), which takes precedence. This supersedes the earlier draft recommendation to reuse `swc-divider`, and it conflicts with [Menu plan Q14](../menu/migration-plan.md#blockers-and-open-questions) (see Q1).
 
@@ -135,11 +135,21 @@ This full modifier surface will not be carried forward to gen2.
 
 ## Open gen1 issues
 
-<!-- TODO: populate from Jira with JQL `component = "Menu"`, excluding labels a11y and gen2, Done status, and Epic/Initiative types. Jira was not queried for this draft. -->
-
-| Jira | Type | Status (snapshot) | Summary                            |
-| ---- | ---- | ----------------- | ---------------------------------- |
-| TBD  | n/a  | n/a               | Not yet pulled from Jira (see Q4). |
+| Jira | Type | Status (snapshot) | Summary | Notes |
+| --- | --- | --- | --- | --- |
+| [SWC-266](https://jira.corp.adobe.com/browse/SWC-266) | Story | To Do | [Feat]: Support validation of Picker value without rendered child items | Label `gen2-tbd`. Picker-related. |
+| [SWC-781](https://jira.corp.adobe.com/browse/SWC-781) | Bug | To Do | [Bug]: Submenu flashes and is hard to interact with on iPad | Menu-wide; none is specific to `sp-menu-divider`. |
+| [SWC-856](https://jira.corp.adobe.com/browse/SWC-856) | Bug | To Do | chore: fix linting warnings | Menu-wide; none is specific to `sp-menu-divider`. |
+| [SWC-1080](https://jira.corp.adobe.com/browse/SWC-1080) | Bug | To Do | [Bug]: Scroll-jumping behavior in picker menus on hover #5551 | Menu-wide; none is specific to `sp-menu-divider`. |
+| [SWC-1085](https://jira.corp.adobe.com/browse/SWC-1085) | Bug | To Do | [Bug]: sp-menu is scrolling automatically when the cursor is placed at the bottom of the list #5618 | Menu-wide; none is specific to `sp-menu-divider`. |
+| [SWC-1090](https://jira.corp.adobe.com/browse/SWC-1090) | Bug | To Do | [Bug]: keyboard navigation in scrollable picker menu is interrupted by mouse hover #5693 | Menu-wide; none is specific to `sp-menu-divider`. |
+| [SWC-1223](https://jira.corp.adobe.com/browse/SWC-1223) | Story | To Do | docs(Menu): Create migration documentation | Menu-wide; none is specific to `sp-menu-divider`. |
+| [SWC-1231](https://jira.corp.adobe.com/browse/SWC-1231) | Story | To Do | [Feat]: Add vertical expansion for nested submenus | Label `gen2-tbd`. |
+| [SWC-1386](https://jira.corp.adobe.com/browse/SWC-1386) | Story | To Do | spike: summarize issues with menu, menuitem, etc | Menu-wide; none is specific to `sp-menu-divider`. |
+| [SWC-1517](https://jira.corp.adobe.com/browse/SWC-1517) | Bug | To Do | [Bug]: Menu item with submenu has focus outline when hovered on Safari #5913 | Menu-wide; none is specific to `sp-menu-divider`. |
+| [SWC-1941](https://jira.corp.adobe.com/browse/SWC-1941) | Bug | To Do | [Bug]: Keyboard activation (Space/Enter) does not work for sp-menu-item inside overlay-trigger type="modal" + sp-popover | Menu-wide; none is specific to `sp-menu-divider`. |
+| [SWC-2407](https://jira.corp.adobe.com/browse/SWC-2407) | Bug | To Do | [Bug]: sp-menu - when sp-menu-items are rendered in a lit elements shadow dom, the items are not accessible with the keyboard | Menu-wide; none is specific to `sp-menu-divider`. |
+| [SWC-2408](https://jira.corp.adobe.com/browse/SWC-2408) | Bug | To Do | [Bug]: sp-menu used within an overlay-trigger breaks a11y and does not close via keyboard escape | Menu-wide; none is specific to `sp-menu-divider`. |
 
 ## Migration sequencing and prerequisites
 
@@ -370,7 +380,7 @@ Planned rendering shape:
 
 | #   | Item                                                                                                                                                                                                                                              | Blocking? | Status | Owner                  |
 | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- | ------ | ---------------------- |
-| Q4  | 1st-gen Jira issue table and breaking-change ticket(s) for B1 to B3 are missing.                                                                                                                                                                  | No        | Open   | Ticket owner           |
+| Q4  | Breaking-change ticket(s) for B1 to B3 are missing. The Jira query found no open gen1 issue specific to `sp-menu-divider`. | No        | Open   | Ticket owner           |
 | Q9  | Which tickets and migration order cover `swc-menu-separator` relative to `swc-menu`, `swc-menu-item`, and `swc-menu-group` (Menu plan Q15)?                                                                                                      | No        | Open   | Ticket owner           |
 
 ---
