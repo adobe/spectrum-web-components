@@ -46,5 +46,5 @@ Accumulated lessons from working sessions on this project. Grouped by category. 
 
 ## Documentation
 
-- **Contributor migration-analysis markdown**: Prefer plain sentences with backticks for roles, elements, and code. Bold is fine sparingly for scanning cues; follow `accessibility-migration-analysis` skill (≈30% cap on bold markup for body prose, single spans for multi-word emphasis).
+- **Contributor migration-analysis markdown**: Prefer plain sentences with backticks for roles, elements, and code. Bold is fine sparingly for scanning cues; follow `component-accessibility-specification` skill (≈30% cap on bold markup for body prose, single spans for multi-word emphasis).
 - **Don't hard-wrap prose**: `.prettierrc.yaml` sets `printWidth: 80` but leaves `proseWrap` at its default, `preserve`, so Prettier never reflows Markdown prose. Write each paragraph on one line in `.md` and `.mdx` files, and break lines only for structure: list items, headings, tables, and code. Reviewers have flagged hand-wrapped prose as diff noise.
