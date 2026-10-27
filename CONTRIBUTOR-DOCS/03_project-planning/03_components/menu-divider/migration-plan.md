@@ -54,7 +54,7 @@
 
 <!-- Document content (editable) -->
 
-> **Epic SWC-####** · Planning output. Must be reviewed before implementation begins. **Provisional:** the epic number, Figma reference, and 1st-gen Jira issue list have not been provided yet (see [Blockers and open questions](#blockers-and-open-questions)).
+> **Epic SWC-####** · Planning output. Must be reviewed before implementation begins. **Provisional:** the epic number, Figma reference, and 1st-gen Jira issue list have not been provided yet. The Spectrum CSS `spectrum-two` source has been reviewed (see [Blockers and open questions](#blockers-and-open-questions)).
 >
 > This plan recommends that `sp-menu-divider` is **not** migrated as its own gen2 element. `swc-divider` already ships and the Menu plan confirmed it as the menu separator ([Menu plan Q14](../menu/migration-plan.md#blockers-and-open-questions)). The remaining Phase 1 work is to confirm that decision and scope the menu-specific spacing and docs that replace the element.
 
@@ -73,7 +73,7 @@
 
 - Q1 in [Scope and prerequisites](#scope-and-prerequisites): confirm no standalone element. Every later section depends on it.
 - Q2 in [Scope and prerequisites](#scope-and-prerequisites): the stale `menu-separator` a11y doc and where the work is tracked.
-- Q3 in [Design](#design): Figma `S2 / Web` reference for menu dividers is missing, so spacing and size support are unverified.
+- Q3 in [Design](#design): Figma `S2 / Web` reference for menu dividers is missing, so the spacing and thickness taken from Spectrum CSS are unverified against design.
 
 ---
 
@@ -110,6 +110,8 @@ None.
 ### CSS custom properties
 
 Styles come from `divider.css` plus [`menu-divider.css`](../../../../1st-gen/packages/menu/src/menu-divider.css), `spectrum-menu-divider.css`, and `menu-divider-overrides.css`. Highlights: `--spectrum-menu-divider-thickness` (defaults to `--spectrum-divider-thickness-medium`), `--mod-menu-section-divider-margin-block`, and `--mod-menu-item-label-inline-edge-to-content` for the inline margin. Host is `display: block; flex-shrink: 0; inline-size: auto; overflow: visible`.
+
+Spectrum CSS `spectrum-two` ([`components/menu/index.css`](https://github.com/adobe/spectrum-css/blob/spectrum-two/components/menu/index.css), `.spectrum-Menu-divider`) matches this: thickness defaults to `--spectrum-divider-thickness-medium` and switches to `--spectrum-divider-thickness-small` under `.spectrum-Divider--sizeS`. Block margin is `max(0px, (--spectrum-menu-item-section-divider-height - thickness) / 2)`, and inline margin is `--spectrum-menu-item-label-inline-edge-to-content`.
 
 This full modifier surface will not be carried forward to gen2.
 
@@ -175,13 +177,13 @@ Proceed with no new element. The only dependent work is menu-specific spacing fo
 | #      | What changes                           | 1st-gen behavior                                | gen2 behavior                                                                                                       | Consumer migration path                                                                                                     |
 | ------ | -------------------------------------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
 | **B1** | Tag removed; use `swc-divider` instead | `<sp-menu-divider>` with `size` `s`/`m`/`l`     | No `swc-menu-divider`. `<swc-divider>` inside `swc-menu`.                                                           | Replace `<sp-menu-divider>` with `<swc-divider>`. Keep `size` only if the value is still supported. Source: Menu plan Q14. |
-| **B2** | `size` values on divider               | `s`, `m`, `l` (menu sizes apply via parent CSS) | `swc-divider` `size` (see [Divider.types.ts](../../../../gen2/packages/core/components/divider/Divider.types.ts))   | Verify mapping in Q6; prefer omitting `size` and letting `swc-menu` size it.                                                |
+| **B2** | `size` values on divider               | `s`, `m`, `l`; default `m` (medium thickness)   | `swc-divider` `size` `s`/`m`/`l` ([Divider.types.ts](../../../../gen2/packages/core/components/divider/Divider.types.ts)). Spectrum CSS menu story uses `size: "s"` (small thickness). | Authors set `size="s"` on `swc-divider` in menus, or `swc-menu` forces small thickness (Q6). |
 
 #### Styling and visuals
 
 | #      | What changes                     | 1st-gen behavior                                                                                | gen2 behavior                                                                         | Consumer migration path                                                                                           |
 | ------ | -------------------------------- | ----------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| **B3** | Menu spacing owned by `swc-menu` | Margin-block from `--mod-menu-section-divider-margin-block`; margin-inline from item label edge | `swc-menu` CSS styles slotted `swc-divider` using `--swc-*` / S2 tokens, no `--mod-*` | Remove any `--mod-menu-section-divider-margin-block` overrides; no replacement API unless Q3 shows one is needed. |
+| **B3** | Menu spacing owned by `swc-menu` | Margin-block from `--mod-menu-section-divider-margin-block`; margin-inline from item label edge | `swc-menu` CSS styles slotted `swc-divider` using S2 tokens (`menu-item-section-divider-height`, `menu-item-label-inline-edge-to-content`), no `--mod-*` | Remove any `--mod-menu-section-divider-margin-block` overrides; no replacement API unless Q3 shows one is needed. |
 
 #### Accessibility and behavior
 
@@ -200,7 +202,7 @@ Proceed with no new element. The only dependent work is menu-specific spacing fo
 
 ## gen2 API decisions
 
-Derived from the 1st-gen implementation, the Menu migration plan, the gen2 `swc-divider` source, and the existing menu-separator a11y analysis. The Figma `S2 / Web` spec and the React S2 `Divider` were not reviewed (see Q3). Items are **Inferred** unless noted.
+Derived from the 1st-gen implementation, the Menu migration plan, the gen2 `swc-divider` source, the Spectrum CSS `spectrum-two` menu source, and the existing menu-separator a11y analysis. The Figma `S2 / Web` spec and the React S2 `Divider` were not reviewed (see Q3). Items are **Inferred** unless noted.
 
 ### Public API
 
@@ -212,7 +214,7 @@ Derived from the 1st-gen implementation, the Menu migration plan, the gen2 `swc-
 
 #### Visual matrix (gen2)
 
-N/A: no new element. Menu divider is a horizontal, default-color `swc-divider` only. Verify against Figma (Q3).
+N/A: no new element. Menu divider is a horizontal, default-color `swc-divider` only. Spectrum CSS renders it at small thickness (`size: "s"`) at every menu size. Verify against Figma (Q3).
 
 #### Slots (gen2)
 
@@ -266,7 +268,7 @@ Planned rendering shape:
 ### Setup
 
 - [x] No new core or SWC folders (N/A: no new element)
-- [ ] Check out `spectrum-css` at `spectrum-two` branch as sibling directory (not found next to this repo during prep)
+- [x] Check out `spectrum-css` at `spectrum-two` branch as sibling directory (done at `4df8792e1`)
 
 ### API
 
@@ -283,7 +285,7 @@ Planned rendering shape:
 
 > Follow the [CSS style guide](../../../02_style-guide/01_css/) as the source of truth for all styling work.
 
-- [ ] Port menu divider spacing from spectrum-css `spectrum-two` menu `index.css` into `menu.css`
+- [ ] Port the `.spectrum-Menu-divider` rule from spectrum-css `spectrum-two` menu `index.css` into `menu.css`, targeting slotted `swc-divider`; apply small thickness (`--swc-divider-thickness: token("divider-thickness-small")`) unless Q3 says otherwise
 - [ ] Pass stylelint (property order, `no-descending-specificity`, token validation)
 - [ ] Add VRT of divider inside menu at each menu size (with Menu Phase B)
 
@@ -323,7 +325,7 @@ Planned rendering shape:
 | #   | Item                                                                                                                                                                     | Blocking? | Status | Owner                   |
 | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------- | ------ | ----------------------- |
 | Q3  | No Figma `S2 / Web` PNG for menu dividers. Needed to confirm spacing, thickness, and whether `size` still matters. Next action: provide PNG from the _Component_ frame. | Yes       | Open   | Design + implementation |
-| Q6  | Does 1st-gen `size` (`s`/`m`/`l`) map to `swc-divider` `size` values, or should `swc-menu` size the divider from its own size? Recommend the latter.                      | No        | Open   | Design + implementation |
+| Q6  | Spectrum CSS always uses small divider thickness in menus (`size: "s"` in its story), while 1st-gen defaults to medium. Should `swc-menu` force small thickness on slotted `swc-divider` (recommended) or require authors to set `size="s"`? | No        | Open   | Design + implementation |
 | Q7  | Should `swc-menu` ignore, warn on, or forbid `vertical` and `static-color` on a slotted `swc-divider`? Recommend docs only, plus optional dev warning (A1).               | No        | Open   | Architecture reviewer   |
 
 ### Architecture and behavior
@@ -361,5 +363,5 @@ Planned rendering shape:
 - [Menu rendering and styling migration analysis](../menu/rendering-and-styling-migration-analysis.md)
 - 1st-gen source: [`MenuDivider.ts`](../../../../1st-gen/packages/menu/src/MenuDivider.ts), [`menu-divider.css`](../../../../1st-gen/packages/menu/src/menu-divider.css)
 - gen2 `swc-divider`: [`Divider.ts`](../../../../gen2/packages/swc/components/divider/Divider.ts), [`Divider.base.ts`](../../../../gen2/packages/core/components/divider/Divider.base.ts)
-- Spectrum CSS: `spectrum-css/components/menu/index.css` on `spectrum-two` (not checked out; TODO)
+- Spectrum CSS: [`spectrum-css/components/menu/index.css`](https://github.com/adobe/spectrum-css/blob/spectrum-two/components/menu/index.css) and `stories/template.js` on `spectrum-two` (commit `4df8792e1`)
 - Accessibility migration analysis for `menu-divider`: TODO (covered by the menu-separator doc, see Q2)
