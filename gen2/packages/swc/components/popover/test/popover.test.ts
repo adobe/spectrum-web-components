@@ -620,7 +620,8 @@ export const TipOrientationGateTest: Story = {
     ) as HTMLElement;
     const tip = () =>
       popover.shadowRoot?.querySelector('.swc-Popover-tip') as HTMLElement;
-    const tipVisible = () => getComputedStyle(tip()).visibility === 'visible';
+    const tipVisible = () =>
+      tip().checkVisibility({ visibilityProperty: true });
 
     await step('tip is hidden while closed (no orientation)', () => {
       expect(popover.hasAttribute('actual-placement')).toBe(false);
