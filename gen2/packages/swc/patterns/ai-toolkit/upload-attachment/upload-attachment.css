@@ -110,7 +110,7 @@
 }
 
 .swc-UploadAttachment-surface {
-  --_swc-upload-attachment-tint: light-dark(token("transparent-black-50"), token("transparent-white-50"));
+  --_swc-upload-attachment-tint: light-dark(token("transparent-static-black-75"), token("transparent-static-white-100"));
 
   display: flex;
   background: var(--_swc-upload-attachment-tint);

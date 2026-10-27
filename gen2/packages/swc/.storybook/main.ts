@@ -206,8 +206,7 @@ if (storybookMode !== 'ci-a11y') {
     '@storybook/addon-a11y',
     '@storybook/addon-designs',
     '@storybook/addon-vitest',
-    '@chromatic-com/storybook',
-    resolve(__dirname, './addons/screen-reader-addon')
+    '@chromatic-com/storybook'
   );
 }
 

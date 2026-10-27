@@ -1,6 +1,6 @@
 {
   "name": "@adobe/spectrum-wc-core",
-  "version": "2.0.0-beta.5",
+  "version": "2.0.0-beta.6",
   "description": "Abstract base classes for Spectrum Web Components",
   "license": "Apache-2.0",
   "author": "Adobe",
@@ -207,6 +207,14 @@
       "types": "./dist/components/tabs/index.d.ts",
       "import": "./dist/components/tabs/index.js"
     },
+    "./components/text-field": {
+      "types": "./dist/components/text-field/index.d.ts",
+      "import": "./dist/components/text-field/index.js"
+    },
+    "./components/text-field/index.js": {
+      "types": "./dist/components/text-field/index.d.ts",
+      "import": "./dist/components/text-field/index.js"
+    },
     "./components/thumbnail": {
       "types": "./dist/components/thumbnail/index.d.ts",
       "import": "./dist/components/thumbnail/index.js"
@@ -234,6 +242,14 @@
     "./controllers/drag-and-drop-controller.js": {
       "types": "./dist/controllers/drag-and-drop-controller/index.d.ts",
       "import": "./dist/controllers/drag-and-drop-controller/index.js"
+    },
+    "./controllers/field-association-controller": {
+      "types": "./dist/controllers/field-association-controller/index.d.ts",
+      "import": "./dist/controllers/field-association-controller/index.js"
+    },
+    "./controllers/field-association-controller/index.js": {
+      "types": "./dist/controllers/field-association-controller/index.d.ts",
+      "import": "./dist/controllers/field-association-controller/index.js"
     },
     "./controllers/focus-group-navigation-controller.js": {
       "types": "./dist/controllers/focus-group-navigation-controller/focus-group-navigation-controller.d.ts",
@@ -318,6 +334,22 @@
     "./directives/pending-spinner/index.js": {
       "types": "./dist/directives/pending-spinner/index.d.ts",
       "import": "./dist/directives/pending-spinner/index.js"
+    },
+    "./directives/render-field-description": {
+      "types": "./dist/directives/render-field-description/index.d.ts",
+      "import": "./dist/directives/render-field-description/index.js"
+    },
+    "./directives/render-field-description/index.js": {
+      "types": "./dist/directives/render-field-description/index.d.ts",
+      "import": "./dist/directives/render-field-description/index.js"
+    },
+    "./directives/render-label": {
+      "types": "./dist/directives/render-label/index.d.ts",
+      "import": "./dist/directives/render-label/index.js"
+    },
+    "./directives/render-label/index.js": {
+      "types": "./dist/directives/render-label/index.d.ts",
+      "import": "./dist/directives/render-label/index.js"
     },
     "./element": {
       "types": "./dist/element/index.d.ts",
@@ -533,6 +565,12 @@
       "components/tabs/index.js": [
         "dist/components/tabs/index.d.ts"
       ],
+      "components/text-field": [
+        "dist/components/text-field/index.d.ts"
+      ],
+      "components/text-field/index.js": [
+        "dist/components/text-field/index.d.ts"
+      ],
       "components/thumbnail": [
         "dist/components/thumbnail/index.d.ts"
       ],
@@ -553,6 +591,12 @@
       ],
       "controllers/drag-and-drop-controller.js": [
         "dist/controllers/drag-and-drop-controller/index.d.ts"
+      ],
+      "controllers/field-association-controller": [
+        "dist/controllers/field-association-controller/index.d.ts"
+      ],
+      "controllers/field-association-controller/index.js": [
+        "dist/controllers/field-association-controller/index.d.ts"
       ],
       "controllers/focus-group-navigation-controller/focus-group-navigation-controller.js": [
         "dist/controllers/focus-group-navigation-controller/focus-group-navigation-controller.d.ts"
@@ -616,6 +660,18 @@
       ],
       "directives/pending-spinner/index.js": [
         "dist/directives/pending-spinner/index.d.ts"
+      ],
+      "directives/render-field-description": [
+        "dist/directives/render-field-description/index.d.ts"
+      ],
+      "directives/render-field-description/index.js": [
+        "dist/directives/render-field-description/index.d.ts"
+      ],
+      "directives/render-label": [
+        "dist/directives/render-label/index.d.ts"
+      ],
+      "directives/render-label/index.js": [
+        "dist/directives/render-label/index.d.ts"
       ],
       "element": [
         "dist/element/index.d.ts"

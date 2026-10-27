@@ -201,7 +201,7 @@ export const MediaBadgeTest: Story = {
       <swc-upload-attachment type="media" dismissible>
         <img
           slot="thumbnail"
-          src="https://picsum.photos/id/823/68/68"
+          src="./images/avatar-preview.png"
           alt="Tagged preview"
         />
         <swc-badge slot="badge">PDF</swc-badge>
@@ -209,7 +209,7 @@ export const MediaBadgeTest: Story = {
       <swc-upload-attachment type="media" dismissible>
         <img
           slot="thumbnail"
-          src="https://picsum.photos/id/64/68/68"
+          src="./images/avatar-preview.png"
           alt="Plain preview"
         />
       </swc-upload-attachment>
