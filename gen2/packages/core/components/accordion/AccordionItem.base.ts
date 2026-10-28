@@ -13,8 +13,8 @@
 import { PropertyValues } from 'lit';
 import { property, state } from 'lit/decorators.js';
 
-import { SlotPresenceController } from '@adobe/spectrum-wc-core/controllers/slot-presence-controller/index.js';
-import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
+import { SlotPresenceController } from '@adobe/spectrum-wc-core/controllers/slot-presence-controller.js';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element.js';
 
 import {
   type AccordionHeadingLevel,

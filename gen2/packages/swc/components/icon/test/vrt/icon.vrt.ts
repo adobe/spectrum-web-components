@@ -17,7 +17,7 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import {
   ICON_VALID_SIZES,
   type IconSize,
-} from '@adobe/spectrum-wc-core/components/icon';
+} from '@adobe/spectrum-wc-core/components/icon.js';
 
 import '@adobe/spectrum-wc/components/icon/swc-icon.js';
 

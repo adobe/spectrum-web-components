@@ -17,7 +17,7 @@ import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 import {
   ACTION_BUTTON_STATIC_COLORS,
   ACTION_BUTTON_VALID_SIZES,
-} from '@adobe/spectrum-wc-core/components/action-button';
+} from '@adobe/spectrum-wc-core/components/action-button.js';
 
 import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
 import '@adobe/spectrum-wc-icons/swc-icon-edit.js';

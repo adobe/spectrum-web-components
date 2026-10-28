@@ -11,7 +11,7 @@
  */
 import { CSSResultArray, html, TemplateResult } from 'lit';
 
-import { ThumbnailBase } from '@adobe/spectrum-wc-core/components/thumbnail';
+import { ThumbnailBase } from '@adobe/spectrum-wc-core/components/thumbnail.js';
 
 import opacityCheckerboardStyles from '../../stylesheets/_lit-styles/opacity-checkerboard.css';
 import styles from './thumbnail.css';

@@ -13,10 +13,10 @@
 import { PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
-import { LiveSelectionController } from '@adobe/spectrum-wc-core/controllers/index.js';
-import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
-import { SizedMixin } from '@adobe/spectrum-wc-core/mixins/index.js';
-import { validateEnum } from '@adobe/spectrum-wc-core/utils/index.js';
+import { LiveSelectionController } from '@adobe/spectrum-wc-core/controllers.js';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element.js';
+import { SizedMixin } from '@adobe/spectrum-wc-core/mixins.js';
+import { validateEnum } from '@adobe/spectrum-wc-core/utils.js';
 
 import {
   ACCORDION_DENSITIES,

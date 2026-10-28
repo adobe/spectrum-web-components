@@ -14,7 +14,7 @@ import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import { Dropzone } from '@adobe/spectrum-wc/dropzone';
+import { Dropzone } from '@adobe/spectrum-wc/dropzone.js';
 import {
   DROP_EFFECTS,
   DROPZONE_VALID_SIZES,
@@ -22,7 +22,7 @@ import {
   SWC_DROPZONE_DRAGOVER_EVENT,
   SWC_DROPZONE_DROP_EVENT,
   SWC_DROPZONE_SHOULD_ACCEPT_EVENT,
-} from '@adobe/spectrum-wc-core/components/dropzone';
+} from '@adobe/spectrum-wc-core/components/dropzone.js';
 
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc/components/dropzone/swc-dropzone.js';

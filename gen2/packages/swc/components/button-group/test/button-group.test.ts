@@ -13,12 +13,12 @@ import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import { ButtonGroup } from '@adobe/spectrum-wc/button-group';
+import { ButtonGroup } from '@adobe/spectrum-wc/button-group.js';
 import {
   BUTTON_GROUP_ALIGNMENTS,
   BUTTON_GROUP_ORIENTATIONS,
   BUTTON_GROUP_SIZES,
-} from '@adobe/spectrum-wc-core/components/button-group';
+} from '@adobe/spectrum-wc-core/components/button-group.js';
 
 import '@adobe/spectrum-wc/components/button-group/swc-button-group.js';
 import '@adobe/spectrum-wc/components/button/swc-button.js';

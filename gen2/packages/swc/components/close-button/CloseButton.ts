@@ -18,8 +18,8 @@ import {
   BUTTON_STATIC_COLORS,
   ButtonBase,
   type ButtonStaticColor,
-} from '@adobe/spectrum-wc-core/components/button';
-import { validateEnum } from '@adobe/spectrum-wc-core/utils';
+} from '@adobe/spectrum-wc-core/components/button.js';
+import { validateEnum } from '@adobe/spectrum-wc-core/utils.js';
 
 import '../ui-icons/swc-ui-icon.js';
 

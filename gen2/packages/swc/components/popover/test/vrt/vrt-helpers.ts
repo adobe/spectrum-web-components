@@ -14,7 +14,7 @@ import { html, nothing } from 'lit';
 import { expect, waitFor } from '@storybook/test';
 import type { StoryObj as Story } from '@storybook/web-components';
 
-import { Popover } from '@adobe/spectrum-wc/popover';
+import { Popover } from '@adobe/spectrum-wc/popover.js';
 
 import {
   forcedColorsVrtParameters,

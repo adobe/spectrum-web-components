@@ -779,8 +779,8 @@ export function DisabledMixin<T extends Constructor<ReactiveElement>>(
 Referenced from [§4.2](#42-delegatesfocus-true).
 
 ```typescript
-import { DisabledMixin } from '@adobe/spectrum-wc-core/mixins';
-import { SpectrumElement } from '@adobe/spectrum-wc-core/element';
+import { DisabledMixin } from '@adobe/spectrum-wc-core/mixins.js';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element.js';
 import { html, css } from 'lit';
 
 class SpCheckbox extends DisabledMixin(SpectrumElement) {
@@ -898,8 +898,8 @@ Referenced from [§4.4](#44-focusgroupnavigationcontroller).
 ```typescript
 import {
   FocusgroupNavigationController,
-} from '@adobe/spectrum-wc-core/controllers';
-import { SpectrumElement } from '@adobe/spectrum-wc-core/element';
+} from '@adobe/spectrum-wc-core/controllers.js';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element.js';
 
 class SpTabs extends SpectrumElement {
   private navigation = new FocusgroupNavigationController(this, {

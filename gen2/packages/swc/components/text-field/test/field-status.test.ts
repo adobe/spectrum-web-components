@@ -13,7 +13,7 @@ import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import type { TextField } from '@adobe/spectrum-wc/text-field';
+import type { TextField } from '@adobe/spectrum-wc/text-field.js';
 
 import '@adobe/spectrum-wc/components/text-field/swc-text-field.js';
 

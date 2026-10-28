@@ -14,12 +14,12 @@ import { html } from 'lit';
 import { expect, userEvent, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import { Menu } from '@adobe/spectrum-wc/menu';
+import { Menu } from '@adobe/spectrum-wc/menu.js';
 import {
   MENU_PLACEMENTS,
   MENU_VALID_SIZES,
-} from '@adobe/spectrum-wc-core/components/menu';
-import { isTopDismissible } from '@adobe/spectrum-wc-core/utils/index.js';
+} from '@adobe/spectrum-wc-core/components/menu.js';
+import { isTopDismissible } from '@adobe/spectrum-wc-core/utils.js';
 
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc/components/menu/swc-menu.js';

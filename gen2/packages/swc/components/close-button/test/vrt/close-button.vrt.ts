@@ -16,7 +16,7 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import {
   BUTTON_STATIC_COLORS,
   BUTTON_VALID_SIZES,
-} from '@adobe/spectrum-wc-core/components/button';
+} from '@adobe/spectrum-wc-core/components/button.js';
 
 import '@adobe/spectrum-wc/components/close-button/swc-close-button.js';
 

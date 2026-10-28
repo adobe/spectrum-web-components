@@ -15,27 +15,19 @@
   },
   "type": "module",
   "exports": {
-    "./*": {
-      "types": "./dist/components/*/index.d.ts",
-      "import": "./dist/components/*/index.js"
+    "./*.js": {
+      "types": "./dist/components/*.d.ts",
+      "import": "./dist/components/*.js"
     },
     "./*.css": {
       "types": "./dist/*.css.d.ts",
       "default": "./dist/*.css"
-    },
-    "./components/*": {
-      "types": "./dist/components/*/index.d.ts",
-      "import": "./dist/components/*/index.js"
     },
     "./components/*.js": {
       "types": "./dist/components/*.d.ts",
       "default": "./dist/components/*.js"
     },
     "./customElements": "./dist/custom-elements.json",
-    "./patterns/*": {
-      "types": "./dist/patterns/*/index.d.ts",
-      "import": "./dist/patterns/*/index.js"
-    },
     "./patterns/*.js": {
       "types": "./dist/patterns/*.d.ts",
       "default": "./dist/patterns/*.js"
@@ -52,7 +44,7 @@
     "dev": "vite build --watch",
     "dev:core": "yarn workspace @adobe/spectrum-wc-core dev",
     "generate:contributor-docs": "node .storybook/scripts/generate-contributor-docs.mjs",
-    "generate:ui-icons": "node components/ui-icons/scripts/generate-ui-icons.mjs && prettier --write \"components/ui-icons/icon-set/*.ts\"",
+    "generate:ui-icons": "node components/ui-icons/scripts/generate-ui-icons.mjs && prettier --write \"components/ui-icons/icon-set.ts\" \"components/ui-icons/icon-set/*.ts\"",
     "storybook": "yarn generate:contributor-docs && yarn analyze && storybook dev -p 6006",
     "storybook:build": "yarn generate:contributor-docs && yarn analyze && storybook build",
     "storybook:build:vrt": "yarn analyze && SWC_STORYBOOK_MODE=vrt storybook build",

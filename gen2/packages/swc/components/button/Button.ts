@@ -22,9 +22,9 @@ import {
   type ButtonFillStyle,
   type ButtonStaticColor,
   type ButtonVariant,
-} from '@adobe/spectrum-wc-core/components/button';
-import { PendingMixin } from '@adobe/spectrum-wc-core/mixins';
-import { validateEnum, warnIf } from '@adobe/spectrum-wc-core/utils';
+} from '@adobe/spectrum-wc-core/components/button.js';
+import { PendingMixin } from '@adobe/spectrum-wc-core/mixins.js';
+import { validateEnum, warnIf } from '@adobe/spectrum-wc-core/utils.js';
 
 import pendingSpinnerStyles from '../../stylesheets/_lit-styles/pending-spinner.css';
 import styles from './button.css';

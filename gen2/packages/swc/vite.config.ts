@@ -13,6 +13,7 @@
 import postcssToken from '@adobe/postcss-token';
 import { globalElementCSS } from '@adobe/vite-global-elements-css';
 import autoprefixer from 'autoprefixer';
+import { existsSync } from 'fs';
 import { readFile, writeFile } from 'fs/promises';
 import { glob } from 'glob';
 import { basename, resolve } from 'path';
@@ -77,6 +78,16 @@ function processStylesheets(): Plugin {
   };
 }
 
+// Match case-sensitively on every platform; glob ignores case on macOS by
+// default, so `[A-Z]*.ts` would also pick up lowercase helper modules there.
+const sourceFiles = (pattern: string, options: { ignore?: string[] } = {}) =>
+  glob.sync(resolve(__dirname, pattern), { nocase: false, ...options });
+
+// Barrels are `<name>.ts` files that sit next to a `<name>/` directory and
+// re-export its public API (for example `components/badge.ts`).
+const barrels = (pattern: string) =>
+  sourceFiles(pattern).filter((file) => existsSync(file.replace(/\.ts$/, '')));
+
 export default defineConfig({
   plugins: [
     globalElementCSS({
@@ -130,20 +141,20 @@ export default defineConfig({
   build: {
     lib: {
       entry: [
-        ...glob.sync(resolve(__dirname, 'components/*/[A-Z]*.ts')),
-        ...glob.sync(resolve(__dirname, 'components/*/*/[A-Z]*.ts'), {
+        ...sourceFiles('components/*/[A-Z]*.ts'),
+        ...sourceFiles('components/*/*/[A-Z]*.ts', {
           ignore: ['**/stories/**', '**/test/**'],
         }),
-        ...glob.sync(resolve(__dirname, 'patterns/*/*/[A-Z]*.ts')),
-        ...glob.sync(resolve(__dirname, 'patterns/*/*/*/[A-Z]*.ts'), {
+        ...sourceFiles('patterns/*/*/[A-Z]*.ts'),
+        ...sourceFiles('patterns/*/*/*/[A-Z]*.ts', {
           ignore: ['**/stories/**', '**/test/**'],
         }),
-        ...glob.sync(resolve(__dirname, 'components/*/index.ts')),
-        ...glob.sync(resolve(__dirname, 'components/*/swc-*.ts')),
-        ...glob.sync(resolve(__dirname, 'patterns/*/*/index.ts')),
-        ...glob.sync(resolve(__dirname, 'patterns/*/*/swc-*.ts')),
-        ...glob.sync(resolve(__dirname, 'patterns/*/*/*/index.ts')),
-        ...glob.sync(resolve(__dirname, 'patterns/*/*/*/swc-*.ts')),
+        ...barrels('components/*.ts'),
+        ...sourceFiles('components/*/swc-*.ts'),
+        ...barrels('patterns/*/*.ts'),
+        ...sourceFiles('patterns/*/*/swc-*.ts'),
+        ...barrels('patterns/*/*/*.ts'),
+        ...sourceFiles('patterns/*/*/*/swc-*.ts'),
       ].reduce(
         (entries, file) => {
           const name = file
@@ -202,15 +213,15 @@ export default defineConfig({
         find: '@adobe/spectrum-wc/components',
         replacement: resolve(__dirname, 'components'),
       },
-      // Pattern imports (e.g. `@adobe/spectrum-wc/patterns/ai-toolkit/response-status`)
-      // resolve to `./patterns`, mirroring the published `./patterns/*` export.
+      // Pattern imports (e.g. `@adobe/spectrum-wc/patterns/ai-toolkit/response-status.js`)
+      // resolve to `./patterns`, mirroring the published `./patterns/*.js` export.
       {
         find: '@adobe/spectrum-wc/patterns',
         replacement: resolve(__dirname, 'patterns'),
       },
-      // Short-form imports (e.g. `@adobe/spectrum-wc/badge`) point at the source
+      // Short-form imports (e.g. `@adobe/spectrum-wc/badge.js`) point at the source
       // package layout under `./components`, mirroring the published package's
-      // `./*` export which resolves to `./dist/components/*/index.js`.
+      // `./*.js` export which resolves to `./dist/components/*.js`.
       {
         find: '@adobe/spectrum-wc',
         replacement: resolve(__dirname, 'components'),

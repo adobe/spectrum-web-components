@@ -17,7 +17,7 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import {
   ICON_VALID_SIZES,
   type IconSize,
-} from '@adobe/spectrum-wc-core/components/icon';
+} from '@adobe/spectrum-wc-core/components/icon.js';
 
 // Register only the icons the compact stories render. The full set is loaded lazily by
 // Gallery's loader, so the light story/test pages don't define all ~413 elements — which

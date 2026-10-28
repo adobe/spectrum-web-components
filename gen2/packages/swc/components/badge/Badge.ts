@@ -21,7 +21,7 @@ import {
   BADGE_VARIANTS_COLOR,
   BadgeBase,
   type BadgeVariant,
-} from '@adobe/spectrum-wc-core/components/badge';
+} from '@adobe/spectrum-wc-core/components/badge.js';
 
 import styles from './badge.css';
 

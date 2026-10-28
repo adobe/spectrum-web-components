@@ -9,7 +9,7 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { defineElement } from '@adobe/spectrum-wc-core/element/index.js';
+import { defineElement } from '@adobe/spectrum-wc-core/element.js';
 
 import { TextField } from './TextField.js';
 

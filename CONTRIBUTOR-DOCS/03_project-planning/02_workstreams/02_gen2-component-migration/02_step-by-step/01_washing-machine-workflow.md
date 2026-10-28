@@ -185,8 +185,8 @@ Before you start, know the split:
 <details>
 <summary>File layout</summary>
 
-- Core: `Component.base.ts`, `Component.types.ts`, `index.ts`
-- SWC: `Component.ts`, `component.css`, `index.ts`, `stories/`, `test/`
+- Core: `Component.base.ts`, `Component.types.ts`, plus the sibling barrel `components/<name>.ts`
+- SWC: `Component.ts`, `component.css`, `swc-<tag>.ts`, `stories/`, `test/`, plus the sibling barrel `components/<name>.ts`
 
 </details>
 
@@ -237,11 +237,11 @@ Use the decision tree under **Decision trees** below. If the answer is "split," 
 
 ### What to do
 
-1. **Core:** Create `gen2/packages/core/components/<name>/` with `Component.base.ts`, `Component.types.ts`, `index.ts`.
-2. **SWC:** Create `gen2/packages/swc/components/<name>/` with `Component.ts`, `component.css`, `index.ts`, `swc-<tag>.ts`, `stories/`, `test/`.
-   - `index.ts` — class re-export only (`export * from './Component.js'`). No `defineElement`, no `HTMLElementTagNameMap`.
+1. **Core:** Create `gen2/packages/core/components/<name>/` with `Component.base.ts` and `Component.types.ts`, and add the barrel `gen2/packages/core/components/<name>.ts` next to that folder.
+2. **SWC:** Create `gen2/packages/swc/components/<name>/` with `Component.ts`, `component.css`, `swc-<tag>.ts`, `stories/`, `test/`.
+   - `gen2/packages/swc/components/<name>.ts` — the barrel, next to the folder. Class re-export only (`export * from './<name>/Component.js'`). No `defineElement`, no `HTMLElementTagNameMap`.
    - `swc-<tag>.ts` — side-effect entry point that calls `defineElement('swc-<tag>', Component)` and declares the `HTMLElementTagNameMap` augmentation. Use `gen2/packages/swc/components/badge/swc-badge.ts` as the reference.
-3. **Wire up exports** in `package.json` with a `./components/<name>/swc-<tag>.js` export entry so the side-effect file is importable as `@adobe/spectrum-wc/components/<name>/swc-<tag>.js`.
+3. **Wire up exports:** The SWC wildcard exports already make the side-effect file importable as `@adobe/spectrum-wc/components/<name>/swc-<tag>.js` and the barrel importable as `@adobe/spectrum-wc/<name>.js`. Core exports are explicit: add a `./components/<name>.js` entry to the core `package.json` exports that points at `./dist/components/<name>.js` and `./dist/components/<name>.d.ts`.
 
 See [Step 2](02_factor-rendering-out-of-1st-gen-component.md) and [Step 3](03_move-base-class-to-gen2-core.md) for directory layout, code structure, and reference implementations (Badge).
 
@@ -257,13 +257,13 @@ See [Step 2](02_factor-rendering-out-of-1st-gen-component.md) and [Step 3](03_mo
 | -------- | ---------- |
 | Wrong base or mixin | See Badge and [Step 2](02_factor-rendering-out-of-1st-gen-component.md). |
 | CSS not applied | Add `static override get styles()` and import the CSS module. See Badge. |
-| Package not exporting | Add a `./components/<name>/swc-<tag>.js` entry to the SWC `package.json` exports map. |
-| `defineElement` in `index.ts` | Move it to `swc-<tag>.ts`; `index.ts` should only re-export the class. |
+| Package not exporting | The SWC `./components/*.js` wildcard export covers `swc-<tag>.js`. Check that the build emits `dist/components/<name>/swc-<tag>.js`. |
+| `defineElement` in the barrel | Move it to `swc-<tag>.ts`; the `<name>.ts` barrel should only re-export the class. |
 
 ### Quality gate
 
 - [ ] All files exist, including `swc-<tag>.ts`; `nx build` (or equivalent) for the affected packages succeeds.
-- [ ] `import '@adobe/spectrum-wc/components/<name>/swc-<tag>.js'` registers the element; `import { Class } from '@adobe/spectrum-wc/<name>'` does not.
+- [ ] `import '@adobe/spectrum-wc/components/<name>/swc-<tag>.js'` registers the element; `import { Class } from '@adobe/spectrum-wc/<name>.js'` does not.
 
 ---
 

@@ -14,12 +14,12 @@ import { html } from 'lit';
 import { expect, userEvent } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import { CloseButton } from '@adobe/spectrum-wc/components/close-button';
+import { CloseButton } from '@adobe/spectrum-wc/components/close-button.js';
 import {
   BUTTON_STATIC_COLORS,
   BUTTON_VALID_SIZES,
   ButtonBase,
-} from '@adobe/spectrum-wc-core/components/button';
+} from '@adobe/spectrum-wc-core/components/button.js';
 
 import '@adobe/spectrum-wc/components/close-button/swc-close-button.js';
 

@@ -14,12 +14,12 @@ import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { computeAccessibleName } from 'dom-accessibility-api';
 
-import { Thumbnail } from '@adobe/spectrum-wc/thumbnail';
+import { Thumbnail } from '@adobe/spectrum-wc/thumbnail.js';
 import {
   THUMBNAIL_DEFAULT_FIT,
   THUMBNAIL_DEFAULT_SIZE,
   THUMBNAIL_VALID_FITS,
-} from '@adobe/spectrum-wc-core/components/thumbnail/index.js';
+} from '@adobe/spectrum-wc-core/components/thumbnail.js';
 
 import '@adobe/spectrum-wc/components/thumbnail/swc-thumbnail.js';
 

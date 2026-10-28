@@ -13,7 +13,7 @@
 import { CSSResultArray, html, PropertyValues, TemplateResult } from 'lit';
 import { styleMap } from 'lit/directives/style-map.js';
 
-import { ColorHandleBase } from '@adobe/spectrum-wc-core/components/color-handle';
+import { ColorHandleBase } from '@adobe/spectrum-wc-core/components/color-handle.js';
 
 import '../color-loupe/swc-color-loupe.js';
 

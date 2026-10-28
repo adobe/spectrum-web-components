@@ -25,7 +25,7 @@ import {
   focusgroupNavigationActiveChange,
   type FocusgroupNavigationActiveChangeDetail,
   FocusgroupNavigationController,
-} from '../index.js';
+} from '../../focusgroup-navigation-controller.js';
 
 declare global {
   interface HTMLElementTagNameMap {

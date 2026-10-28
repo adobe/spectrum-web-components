@@ -18,7 +18,7 @@ import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 import {
   INFIELD_BUTTON_VALID_SIZES,
   type InfieldButtonSize,
-} from '@adobe/spectrum-wc-core/components/infield-button';
+} from '@adobe/spectrum-wc-core/components/infield-button.js';
 
 import '@adobe/spectrum-wc/components/infield-button/swc-infield-button.js';
 import '@adobe/spectrum-wc/components/ui-icons/swc-ui-icon.js';

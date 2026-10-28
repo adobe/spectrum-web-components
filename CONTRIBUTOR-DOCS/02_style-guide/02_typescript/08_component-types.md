@@ -62,7 +62,7 @@ Types files serve three goals:
 | ---- | ---------- | ------- |
 | Location | `core/components/{component}/` | `core/components/badge/` |
 | File name | `{Component}.types.ts` | `Badge.types.ts` |
-| Export | Barrel-exported from `index.ts` | `export * from './Badge.types.js';` |
+| Export | Barrel-exported from `core/components/{component}.ts` | `export * from './badge/Badge.types.js';` |
 
 ## Naming conventions
 
@@ -158,7 +158,7 @@ Constants use `as const` to preserve literal types. When a shared constraint typ
 Sizes validate against the shared `ElementSize` union defined in `SizedMixin`. Use `as const satisfies readonly ElementSize[]` to catch typos at compile time:
 
 ```typescript
-import type { ElementSize } from '@adobe/spectrum-wc-core/mixins/index.js';
+import type { ElementSize } from '@adobe/spectrum-wc-core/mixins.js';
 
 export const BADGE_VALID_SIZES = ['s', 'm', 'l', 'xl'] as const satisfies readonly ElementSize[];
 ```
@@ -348,7 +348,7 @@ A complete types file for a component with sized variants and an S1/S2 color spl
  * @todo The S1 types can be removed once we are no longer maintaining 1st-gen.
  */
 
-import type { ElementSize } from '@adobe/spectrum-wc-core/mixins/index.js';
+import type { ElementSize } from '@adobe/spectrum-wc-core/mixins.js';
 
 // ──────────────────
 //     SHARED
@@ -504,7 +504,7 @@ export const STATUS_LIGHT_VARIANTS = [...] as const;
 Use this when creating or reviewing a types file:
 
 - [ ] File is in `core/components/{component}/` and named `{Component}.types.ts`
-- [ ] Barrel-exported from `index.ts`
+- [ ] Barrel-exported from `core/components/{component}.ts`
 - [ ] Constants use `UPPER_SNAKE_CASE` with underscored component prefix
 - [ ] Types use `PascalCase` matching the component class name
 - [ ] No `_S2` suffix on any constant or type

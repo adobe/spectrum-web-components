@@ -16,9 +16,9 @@ import {
   focusgroupNavigationActiveChange,
   type FocusgroupNavigationActiveChangeDetail,
   FocusgroupNavigationController,
-} from '@adobe/spectrum-wc-core/controllers/index.js';
-import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
-import { validateEnum, warnIf } from '@adobe/spectrum-wc-core/utils/index.js';
+} from '@adobe/spectrum-wc-core/controllers.js';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element.js';
+import { validateEnum, warnIf } from '@adobe/spectrum-wc-core/utils.js';
 
 import {
   KEYBOARD_ACTIVATION_DEFAULT,

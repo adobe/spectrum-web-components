@@ -16,7 +16,7 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import {
   AVATAR_VALID_SIZES,
   type AvatarSize,
-} from '@adobe/spectrum-wc-core/components/avatar';
+} from '@adobe/spectrum-wc-core/components/avatar.js';
 
 import '@adobe/spectrum-wc/components/avatar/swc-avatar.js';
 

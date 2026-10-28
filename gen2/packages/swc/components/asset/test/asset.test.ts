@@ -13,11 +13,11 @@ import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import { Asset } from '@adobe/spectrum-wc/asset';
+import { Asset } from '@adobe/spectrum-wc/asset.js';
 import {
   ASSET_BACKGROUND_VALUES,
   ASSET_FIT_VALUES,
-} from '@adobe/spectrum-wc-core/components/asset';
+} from '@adobe/spectrum-wc-core/components/asset.js';
 
 import '@adobe/spectrum-wc/components/asset/swc-asset.js';
 

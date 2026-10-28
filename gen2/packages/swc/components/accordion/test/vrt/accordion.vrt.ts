@@ -16,7 +16,7 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import {
   ACCORDION_DENSITIES,
   ACCORDION_VALID_SIZES,
-} from '@adobe/spectrum-wc-core/components/accordion';
+} from '@adobe/spectrum-wc-core/components/accordion.js';
 
 import '@adobe/spectrum-wc/components/accordion/swc-accordion.js';
 import '@adobe/spectrum-wc/components/accordion/swc-accordion-item.js';

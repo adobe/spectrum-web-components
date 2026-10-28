@@ -13,9 +13,9 @@
 import type { PropertyValues, ReactiveElement } from 'lit';
 import { property } from 'lit/decorators.js';
 
-import { PendingController } from '../controllers/pending-controller/index.js';
-import type { PendingSpinnerResult } from '../directives/pending-spinner/index.js';
-import { warnIf } from '../utils/index.js';
+import { PendingController } from '../controllers/pending-controller.js';
+import type { PendingSpinnerResult } from '../directives/pending-spinner.js';
+import { warnIf } from '../utils.js';
 
 // Abstract-capable so the mixin can be applied over abstract base classes such
 // as `ButtonBase`; `new` alone cannot construct an abstract class.

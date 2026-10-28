@@ -13,11 +13,11 @@ import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import { ColorLoupe } from '@adobe/spectrum-wc/color-loupe';
-import { computeBorderAlpha } from '@adobe/spectrum-wc-core/components/color-handle';
-import { COLOR_LOUPE_ALPHA_FLOOR } from '@adobe/spectrum-wc-core/components/color-loupe';
+import { ColorLoupe } from '@adobe/spectrum-wc/color-loupe.js';
+import { computeBorderAlpha } from '@adobe/spectrum-wc-core/components/color-handle.js';
+import { COLOR_LOUPE_ALPHA_FLOOR } from '@adobe/spectrum-wc-core/components/color-loupe.js';
 
-import '@adobe/spectrum-wc/color-loupe';
+import '@adobe/spectrum-wc/color-loupe.js';
 
 import { getComponent } from '../../../utils/test-utils.js';
 import meta from '../stories/color-loupe.stories.js';

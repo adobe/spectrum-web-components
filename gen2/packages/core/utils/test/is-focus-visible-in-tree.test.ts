@@ -14,7 +14,7 @@ import { html } from 'lit';
 import { expect, userEvent } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import { getActiveElement, isFocusVisibleInTree } from '../index.js';
+import { getActiveElement, isFocusVisibleInTree } from '../../utils.js';
 
 export default {
   title: 'Utils/Is focus visible in tree/Tests',

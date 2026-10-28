@@ -14,7 +14,7 @@ import { CSSResultArray, html, TemplateResult } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { ref } from 'lit/directives/ref.js';
 
-import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element.js';
 
 import '@adobe/spectrum-wc/components/ui-icons/swc-ui-icon.js';
 

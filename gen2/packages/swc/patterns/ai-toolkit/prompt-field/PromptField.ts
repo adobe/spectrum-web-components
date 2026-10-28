@@ -33,14 +33,14 @@ import {
   focusgroupNavigationActiveChange,
   type FocusgroupNavigationActiveChangeDetail,
   FocusgroupNavigationController,
-} from '@adobe/spectrum-wc-core/controllers/index.js';
-import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
+} from '@adobe/spectrum-wc-core/controllers.js';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element.js';
 import {
   deepContains,
   focusableSelector,
   getActiveElement,
   isFocusVisibleInTree,
-} from '@adobe/spectrum-wc-core/utils/index.js';
+} from '@adobe/spectrum-wc-core/utils.js';
 
 import '@adobe/spectrum-wc/components/icon/swc-icon.js';
 import '@adobe/spectrum-wc/components/ui-icons/swc-ui-icon.js';
@@ -50,9 +50,9 @@ import '../pixel-loader/swc-pixel-loader.js';
 import type {
   PixelLoaderIconName,
   PixelLoaderPresetName,
-} from '../pixel-loader/index.js';
-import { PIXEL_LOADER_PRESET_NAMES } from '../pixel-loader/index.js';
-import { ChevronUpIcon, PlusIcon, StopIcon } from '../utils/icons/index.js';
+} from '../pixel-loader.js';
+import { PIXEL_LOADER_PRESET_NAMES } from '../pixel-loader.js';
+import { ChevronUpIcon, PlusIcon, StopIcon } from '../utils/icons.js';
 
 import styles from './prompt-field.css';
 

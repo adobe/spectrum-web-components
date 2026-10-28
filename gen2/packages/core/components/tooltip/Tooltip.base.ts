@@ -12,25 +12,25 @@
 import { PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
-import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element.js';
 import {
   isTopDismissible,
   registerDismissible,
   unregisterDismissible,
   validateEnum,
   warnIf,
-} from '@adobe/spectrum-wc-core/utils/index.js';
+} from '@adobe/spectrum-wc-core/utils.js';
 
 import {
   HoverController,
   type HoverControllerHost,
-} from '../../controllers/hover-controller/index.js';
+} from '../../controllers/hover-controller.js';
 import {
   fromFloatingPlacement,
   type Placement as ControllerPlacement,
   PlacementController,
   toFloatingPlacement,
-} from '../../controllers/placement-controller/index.js';
+} from '../../controllers/placement-controller.js';
 import {
   TOOLTIP_PLACEMENTS,
   TOOLTIP_VARIANTS,

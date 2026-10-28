@@ -27,7 +27,7 @@ import './demo-hosts.js';
  * A slotted `description` and an external `accessible-describedby` reference
  * combine rather than override each other; the in-shadow description comes
  * first. The error message is always same-root and shows only while the host
- * reads as `invalid`. `LabellingMixin` (`@adobe/spectrum-wc-core/mixins`) is
+ * reads as `invalid`. `LabellingMixin` (`@adobe/spectrum-wc-core/mixins.js`) is
  * the companion mixin for accessible-name association.
  */
 const meta: Meta = {

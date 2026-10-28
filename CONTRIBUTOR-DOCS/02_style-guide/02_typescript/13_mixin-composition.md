@@ -240,7 +240,7 @@ When creating a new mixin, follow this pattern:
 1. **Define an interface** for the public API the mixin adds
 2. **Define a `Constructor` type** (or import the shared one)
 3. **Write the mixin function** that takes a constructor and options, returns the extended class
-4. **Export the mixin function and interface** from the barrel `index.ts`
+4. **Export the mixin function and interface** from the `core/mixins.ts` barrel
 
 ```ts
 import { ReactiveElement } from 'lit';
@@ -271,4 +271,4 @@ Key rules:
 - The options object is the second argument (optional)
 - The return type includes `Constructor<MyBehaviorInterface>` so consumers get type safety
 - Define an interface that describes the public API
-- Place the mixin in `core/mixins/` and export from `core/mixins/index.ts`
+- Place the mixin in `core/mixins/` and export from the `core/mixins.ts` barrel

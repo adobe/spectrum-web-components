@@ -13,9 +13,9 @@
 import { CSSResultArray, html, TemplateResult } from 'lit';
 import { queryAssignedElements } from 'lit/decorators.js';
 
-import { FocusgroupNavigationController } from '@adobe/spectrum-wc-core/controllers/index.js';
-import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
-import { getActiveElement } from '@adobe/spectrum-wc-core/utils/index.js';
+import { FocusgroupNavigationController } from '@adobe/spectrum-wc-core/controllers.js';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element.js';
+import { getActiveElement } from '@adobe/spectrum-wc-core/utils.js';
 
 import styles from './conversation-thread.css';
 

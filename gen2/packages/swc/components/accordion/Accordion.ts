@@ -12,7 +12,7 @@
 
 import { CSSResultArray, html, TemplateResult } from 'lit';
 
-import { AccordionBase } from '@adobe/spectrum-wc-core/components/accordion';
+import { AccordionBase } from '@adobe/spectrum-wc-core/components/accordion.js';
 
 import styles from './accordion.css';
 

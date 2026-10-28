@@ -13,7 +13,7 @@
 import { html, nothing } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import type { CardDensity } from '@adobe/spectrum-wc-core/components/card';
+import type { CardDensity } from '@adobe/spectrum-wc-core/components/card.js';
 
 import '@adobe/spectrum-wc/components/card/swc-card.js';
 import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';

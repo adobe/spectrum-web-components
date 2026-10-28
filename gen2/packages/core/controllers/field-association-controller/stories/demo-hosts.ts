@@ -20,7 +20,10 @@ import {
 import { customElement, property, state } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
-import { FieldAssociationController, type FieldFormValue } from '../index.js';
+import {
+  FieldAssociationController,
+  type FieldFormValue,
+} from '../../field-association-controller.js';
 
 declare global {
   interface HTMLElementTagNameMap {
