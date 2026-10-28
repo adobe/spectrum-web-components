@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 import { html, type PropertyValues } from 'lit';
-import { expect, userEvent, waitFor, within } from '@storybook/test';
+import { expect, fn, userEvent, waitFor, within } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import { TextField } from '@adobe/spectrum-wc/text-field';
@@ -2153,6 +2153,55 @@ export const DisabledStateTest: Story = {
   },
 };
 DisabledStateTest.storyName = 'Disabled state';
+
+export const DisabledClickSuppressionTest: Story = {
+  render: () => html`
+    <fieldset>
+      <swc-text-field
+        name="username"
+        accessible-label="Username"
+        field-status="disabled"
+      ></swc-text-field>
+    </fieldset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const field = await getComponent<TextField>(
+      canvasElement,
+      'swc-text-field'
+    );
+    const fieldset = canvasElement.querySelector('fieldset')!;
+    const control = field.shadowRoot!.querySelector<HTMLElement>(
+      '.swc-TextField-control'
+    )!;
+    const hostClick = fn();
+    field.addEventListener('click', hostClick);
+
+    const clickEverywhere = (): void => {
+      field.click();
+      control.click();
+    };
+
+    await step('the authored disabled status drops clicks', () => {
+      clickEverywhere();
+      expect(hostClick).not.toHaveBeenCalled();
+    });
+
+    await step('a disabled fieldset drops clicks', async () => {
+      field.fieldStatus = undefined;
+      fieldset.disabled = true;
+      await field.updateComplete;
+      clickEverywhere();
+      expect(hostClick).not.toHaveBeenCalled();
+    });
+
+    await step('an enabled field still receives clicks', async () => {
+      fieldset.disabled = false;
+      await field.updateComplete;
+      field.click();
+      expect(hostClick).toHaveBeenCalledTimes(1);
+    });
+  },
+};
 
 export const ChangeEventTest: Story = {
   render: () => html`

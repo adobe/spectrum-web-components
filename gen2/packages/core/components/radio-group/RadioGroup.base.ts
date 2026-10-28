@@ -87,7 +87,18 @@ export abstract class RadioGroupBase extends SizedMixin(
     super();
     // Items dispatch a composed `change` on activation.
     this.addEventListener('change', this.handleItemChange);
+    // With no host `disabled` attribute, the browser no longer drops clicks.
+    this.addEventListener('click', this.suppressDisabledClick, {
+      capture: true,
+    });
   }
+
+  private readonly suppressDisabledClick = (event: Event): void => {
+    if (this.effectiveDisabled) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+    }
+  };
 
   /**
    * Size applied to all items. Defaults to `m`.
@@ -196,7 +207,7 @@ export abstract class RadioGroupBase extends SizedMixin(
   }
 
   private get isBarredFromValidation(): boolean {
-    return this.fieldStatus === 'disabled' || this.fieldStatus === 'readonly';
+    return this.effectiveDisabled || this.fieldStatus === 'readonly';
   }
 
   /** Runs constraint validation; returns whether the group is valid. */
@@ -515,6 +526,7 @@ export abstract class RadioGroupBase extends SizedMixin(
         url: DOCS_URL,
       });
     }
+    // Enables `:state(disabled)` for the authored status and the fieldset cascade.
     this.internals.states[this.effectiveDisabled ? 'add' : 'delete'](
       'disabled'
     );

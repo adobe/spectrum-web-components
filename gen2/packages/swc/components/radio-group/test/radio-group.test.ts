@@ -496,6 +496,57 @@ export const DisabledCascadeTest: Story = {
   },
 };
 
+export const DisabledClickSuppressionTest: Story = {
+  render: () => html`
+    <fieldset>
+      <swc-radio-group name="color" field-status="disabled">
+        <span slot="label">Favorite color</span>
+        <swc-radio value="1"><span slot="label">Red</span></swc-radio>
+        <swc-radio value="2"><span slot="label">Green</span></swc-radio>
+      </swc-radio-group>
+    </fieldset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const group = await getComponent<RadioGroup>(
+      canvasElement,
+      'swc-radio-group'
+    );
+    const fieldset = canvasElement.querySelector('fieldset')!;
+    const item = group.querySelector<Radio>('swc-radio[value="2"]')!;
+    const hostClick = fn();
+    group.addEventListener('click', hostClick);
+
+    const clickEverywhere = (): void => {
+      group.click();
+      item.click();
+    };
+
+    await step('the authored disabled status drops clicks', () => {
+      clickEverywhere();
+      expect(hostClick).not.toHaveBeenCalled();
+      expect(group.selected).toBe('');
+    });
+
+    await step('a disabled fieldset drops clicks', async () => {
+      group.fieldStatus = undefined;
+      fieldset.disabled = true;
+      await group.updateComplete;
+      clickEverywhere();
+      expect(hostClick).not.toHaveBeenCalled();
+      expect(group.selected).toBe('');
+    });
+
+    await step('an enabled group still receives clicks', async () => {
+      fieldset.disabled = false;
+      await group.updateComplete;
+      await waitFor(() => expect(item.disabled).toBe(false));
+      item.click();
+      expect(hostClick).toHaveBeenCalledTimes(1);
+      expect(group.selected).toBe('2');
+    });
+  },
+};
+
 export const DisabledStateLifecycleTest: Story = {
   render: () => html`
     <form>
@@ -599,6 +650,28 @@ export const SelectedItemDisabledRovingTabindexTest: Story = {
     await waitFor(() => {
       expect([selected.tabIndex, next.tabIndex]).toEqual([-1, 0]);
     });
+  },
+};
+
+export const FieldsetDisabledValidityTest: Story = {
+  render: () => html`
+    <form>
+      <fieldset disabled>
+        <swc-radio-group name="color" required>
+          <span slot="label">Favorite color</span>
+          <swc-radio value="1"><span slot="label">Red</span></swc-radio>
+        </swc-radio-group>
+      </fieldset>
+    </form>
+  `,
+  play: async ({ canvasElement }) => {
+    const group = await getComponent<RadioGroup>(
+      canvasElement,
+      'swc-radio-group'
+    );
+    expect(group.willValidate).toBe(false);
+    expect(group.validity.valueMissing).toBe(false);
+    expect(group.checkValidity()).toBe(true);
   },
 };
 

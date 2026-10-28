@@ -218,6 +218,17 @@ export abstract class TextFieldBase extends SizedMixin(
       this.#pointerFocus = false;
       this.internals.states.delete('keyboard-focused');
     });
+    // With no host `disabled` attribute, the browser no longer drops clicks.
+    this.addEventListener(
+      'click',
+      (event) => {
+        if (this.effectiveDisabled) {
+          event.preventDefault();
+          event.stopImmediatePropagation();
+        }
+      },
+      { capture: true }
+    );
   }
 
   /**
@@ -247,7 +258,7 @@ export abstract class TextFieldBase extends SizedMixin(
   public get willValidate(): boolean {
     // Disabled and read-only fields are barred, as native controls are.
     return (
-      this.fieldStatus !== 'disabled' &&
+      !this.effectiveDisabled &&
       this.fieldStatus !== 'readonly' &&
       this.fieldAssoc.willValidate
     );
@@ -454,6 +465,7 @@ export abstract class TextFieldBase extends SizedMixin(
         url: DOCS_URL,
       });
     }
+    // Enables `:state(disabled)` for the authored status and the fieldset cascade.
     this.internals.states[this.effectiveDisabled ? 'add' : 'delete'](
       'disabled'
     );

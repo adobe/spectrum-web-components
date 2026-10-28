@@ -10,10 +10,8 @@
  * governing permissions and limitations under the License.
  */
 
-import type {
-  ElementSize,
-  FieldStatus,
-} from '@adobe/spectrum-wc-core/mixins/index.js';
+import type { ElementSize } from '@adobe/spectrum-wc-core/mixins/index.js';
+import type { FieldStatus } from '@adobe/spectrum-wc-core/types/index.js';
 
 // ──────────────────
 //     SHARED

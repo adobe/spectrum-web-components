@@ -15,7 +15,6 @@ export {
   FieldDescriptionMixin,
   type FieldDescriptionInterface,
 } from './field-description-mixin.js';
-export { FIELD_STATUSES, type FieldStatus } from './field-status.js';
 export { LabellingMixin, type LabellingInterface } from './labelling-mixin.js';
 export {
   LINEAR_PROGRESS_LABEL_POSITIONS,
