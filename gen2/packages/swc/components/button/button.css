@@ -120,10 +120,10 @@ slot[name="icon"]::slotted(*) {
 /* ── Variants ────────────────────────────────────── */
 
 :host([variant="accent"]) {
-  --swc-button-content-color-default: token("white");
-  --swc-button-content-color-hover: token("white");
-  --swc-button-content-color-down: token("white");
-  --swc-button-content-color-focus: token("white");
+  --swc-button-content-color-default: token("transparent-static-white-1000");
+  --swc-button-content-color-hover: token("transparent-static-white-1000");
+  --swc-button-content-color-down: token("transparent-static-white-1000");
+  --swc-button-content-color-focus: token("transparent-static-white-1000");
   --swc-button-background-color-default: token("accent-background-color-default");
   --swc-button-background-color-hover: token("accent-background-color-hover");
   --swc-button-background-color-down: token("accent-background-color-down");
@@ -131,10 +131,10 @@ slot[name="icon"]::slotted(*) {
 }
 
 :host([variant="negative"]) {
-  --swc-button-content-color-default: token("white");
-  --swc-button-content-color-hover: token("white");
-  --swc-button-content-color-down: token("white");
-  --swc-button-content-color-focus: token("white");
+  --swc-button-content-color-default: token("transparent-static-white-1000");
+  --swc-button-content-color-hover: token("transparent-static-white-1000");
+  --swc-button-content-color-down: token("transparent-static-white-1000");
+  --swc-button-content-color-focus: token("transparent-static-white-1000");
   --swc-button-background-color-default: token("negative-background-color-default");
   --swc-button-background-color-hover: token("negative-background-color-hover");
   --swc-button-background-color-down: token("negative-background-color-down");
@@ -188,114 +188,114 @@ slot[name="icon"]::slotted(*) {
 
 :host([static-color="white"]) {
   --swc-button-focus-indicator-color: token("static-white-focus-indicator-color");
-  --swc-button-background-color-default: token("transparent-white-800");
-  --swc-button-background-color-hover: token("transparent-white-900");
-  --swc-button-background-color-down: token("transparent-white-900");
-  --swc-button-background-color-focus: token("transparent-white-900");
-  --swc-button-content-color-default: token("black");
-  --swc-button-content-color-hover: token("black");
-  --swc-button-content-color-down: token("black");
-  --swc-button-content-color-focus: token("black");
+  --swc-button-background-color-default: token("transparent-static-white-900");
+  --swc-button-background-color-hover: token("transparent-static-white-950");
+  --swc-button-background-color-down: token("transparent-static-white-950");
+  --swc-button-background-color-focus: token("transparent-static-white-950");
+  --swc-button-content-color-default: token("transparent-static-black-1000");
+  --swc-button-content-color-hover: token("transparent-static-black-1000");
+  --swc-button-content-color-down: token("transparent-static-black-1000");
+  --swc-button-content-color-focus: token("transparent-static-black-1000");
   --swc-button-background-color-disabled: token("disabled-static-white-background-color");
   --swc-button-border-color-disabled: transparent;
   --swc-button-content-color-disabled: token("disabled-static-white-content-color");
 }
 
 :host([static-color="white"][variant="secondary"]) {
-  --swc-button-background-color-default: token("transparent-white-100");
-  --swc-button-background-color-hover: token("transparent-white-200");
-  --swc-button-background-color-down: token("transparent-white-200");
-  --swc-button-background-color-focus: token("transparent-white-200");
-  --swc-button-content-color-default: token("transparent-white-800");
-  --swc-button-content-color-hover: token("transparent-white-900");
-  --swc-button-content-color-down: token("transparent-white-900");
-  --swc-button-content-color-focus: token("transparent-white-900");
+  --swc-button-background-color-default: token("transparent-static-white-200");
+  --swc-button-background-color-hover: token("transparent-static-white-300");
+  --swc-button-background-color-down: token("transparent-static-white-300");
+  --swc-button-background-color-focus: token("transparent-static-white-300");
+  --swc-button-content-color-default: token("transparent-static-white-1000");
+  --swc-button-content-color-hover: token("transparent-static-white-1000");
+  --swc-button-content-color-down: token("transparent-static-white-1000");
+  --swc-button-content-color-focus: token("transparent-static-white-1000");
 }
 
 :host([static-color="white"][fill-style="outline"]) {
-  --swc-button-background-color-default: token("transparent-white-25");
-  --swc-button-background-color-hover: token("transparent-white-100");
-  --swc-button-background-color-down: token("transparent-white-100");
-  --swc-button-background-color-focus: token("transparent-white-100");
-  --swc-button-border-color-default: token("transparent-white-800");
-  --swc-button-border-color-hover: token("transparent-white-900");
-  --swc-button-border-color-down: token("transparent-white-900");
-  --swc-button-border-color-focus: token("transparent-white-900");
-  --swc-button-content-color-default: token("transparent-white-800");
-  --swc-button-content-color-hover: token("transparent-white-900");
-  --swc-button-content-color-down: token("transparent-white-900");
-  --swc-button-content-color-focus: token("transparent-white-900");
-  --swc-button-background-color-disabled: token("transparent-white-25");
+  --swc-button-background-color-default: token("transparent-static-white-0");
+  --swc-button-background-color-hover: token("transparent-static-white-200");
+  --swc-button-background-color-down: token("transparent-static-white-200");
+  --swc-button-background-color-focus: token("transparent-static-white-200");
+  --swc-button-border-color-default: token("transparent-static-white-900");
+  --swc-button-border-color-hover: token("transparent-static-white-950");
+  --swc-button-border-color-down: token("transparent-static-white-950");
+  --swc-button-border-color-focus: token("transparent-static-white-950");
+  --swc-button-content-color-default: token("transparent-static-white-1000");
+  --swc-button-content-color-hover: token("transparent-static-white-1000");
+  --swc-button-content-color-down: token("transparent-static-white-1000");
+  --swc-button-content-color-focus: token("transparent-static-white-1000");
+  --swc-button-background-color-disabled: token("transparent-static-white-0");
   --swc-button-border-color-disabled: token("disabled-static-white-border-color");
   --swc-button-content-color-disabled: token("disabled-static-white-content-color");
 }
 
 :host([static-color="white"][variant="secondary"][fill-style="outline"]) {
-  --swc-button-background-color-default: token("transparent-white-25");
-  --swc-button-background-color-hover: token("transparent-white-100");
-  --swc-button-background-color-down: token("transparent-white-100");
-  --swc-button-background-color-focus: token("transparent-white-100");
-  --swc-button-border-color-default: token("transparent-white-300");
-  --swc-button-border-color-hover: token("transparent-white-400");
-  --swc-button-border-color-down: token("transparent-white-400");
-  --swc-button-border-color-focus: token("transparent-white-400");
+  --swc-button-background-color-default: token("transparent-static-white-0");
+  --swc-button-background-color-hover: token("transparent-static-white-200");
+  --swc-button-background-color-down: token("transparent-static-white-200");
+  --swc-button-background-color-focus: token("transparent-static-white-200");
+  --swc-button-border-color-default: token("transparent-static-white-300");
+  --swc-button-border-color-hover: token("transparent-static-white-350");
+  --swc-button-border-color-down: token("transparent-static-white-350");
+  --swc-button-border-color-focus: token("transparent-static-white-350");
 }
 
 /* ── Static black ─────────────────────────────────── */
 
 :host([static-color="black"]) {
   --swc-button-focus-indicator-color: token("static-black-focus-indicator-color");
-  --swc-button-background-color-default: token("transparent-black-800");
-  --swc-button-background-color-hover: token("transparent-black-900");
-  --swc-button-background-color-down: token("transparent-black-900");
-  --swc-button-background-color-focus: token("transparent-black-900");
-  --swc-button-content-color-default: token("white");
-  --swc-button-content-color-hover: token("white");
-  --swc-button-content-color-down: token("white");
-  --swc-button-content-color-focus: token("white");
+  --swc-button-background-color-default: token("transparent-static-black-900");
+  --swc-button-background-color-hover: token("transparent-static-black-950");
+  --swc-button-background-color-down: token("transparent-static-black-950");
+  --swc-button-background-color-focus: token("transparent-static-black-950");
+  --swc-button-content-color-default: token("transparent-static-white-1000");
+  --swc-button-content-color-hover: token("transparent-static-white-1000");
+  --swc-button-content-color-down: token("transparent-static-white-1000");
+  --swc-button-content-color-focus: token("transparent-static-white-1000");
   --swc-button-background-color-disabled: token("disabled-static-black-background-color");
   --swc-button-border-color-disabled: transparent;
   --swc-button-content-color-disabled: token("disabled-static-black-content-color");
 }
 
 :host([static-color="black"][variant="secondary"]) {
-  --swc-button-background-color-default: token("transparent-black-100");
-  --swc-button-background-color-hover: token("transparent-black-200");
-  --swc-button-background-color-down: token("transparent-black-200");
-  --swc-button-background-color-focus: token("transparent-black-200");
-  --swc-button-content-color-default: token("transparent-black-800");
-  --swc-button-content-color-hover: token("transparent-black-900");
-  --swc-button-content-color-down: token("transparent-black-900");
-  --swc-button-content-color-focus: token("transparent-black-900");
+  --swc-button-background-color-default: token("transparent-static-black-150");
+  --swc-button-background-color-hover: token("transparent-static-black-200");
+  --swc-button-background-color-down: token("transparent-static-black-200");
+  --swc-button-background-color-focus: token("transparent-static-black-200");
+  --swc-button-content-color-default: token("transparent-static-black-1000");
+  --swc-button-content-color-hover: token("transparent-static-black-1000");
+  --swc-button-content-color-down: token("transparent-static-black-1000");
+  --swc-button-content-color-focus: token("transparent-static-black-1000");
 }
 
 :host([static-color="black"][fill-style="outline"]) {
-  --swc-button-background-color-default: token("transparent-black-25");
-  --swc-button-background-color-hover: token("transparent-black-100");
-  --swc-button-background-color-down: token("transparent-black-100");
-  --swc-button-background-color-focus: token("transparent-black-100");
-  --swc-button-border-color-default: token("transparent-black-800");
-  --swc-button-border-color-hover: token("transparent-black-900");
-  --swc-button-border-color-down: token("transparent-black-900");
-  --swc-button-border-color-focus: token("transparent-black-900");
-  --swc-button-content-color-default: token("transparent-black-800");
-  --swc-button-content-color-hover: token("transparent-black-900");
-  --swc-button-content-color-down: token("transparent-black-900");
-  --swc-button-content-color-focus: token("transparent-black-900");
-  --swc-button-background-color-disabled: token("transparent-black-25");
+  --swc-button-background-color-default: token("transparent-static-black-0");
+  --swc-button-background-color-hover: token("transparent-static-black-150");
+  --swc-button-background-color-down: token("transparent-static-black-150");
+  --swc-button-background-color-focus: token("transparent-static-black-150");
+  --swc-button-border-color-default: token("transparent-static-black-900");
+  --swc-button-border-color-hover: token("transparent-static-black-950");
+  --swc-button-border-color-down: token("transparent-static-black-950");
+  --swc-button-border-color-focus: token("transparent-static-black-950");
+  --swc-button-content-color-default: token("transparent-static-black-1000");
+  --swc-button-content-color-hover: token("transparent-static-black-1000");
+  --swc-button-content-color-down: token("transparent-static-black-1000");
+  --swc-button-content-color-focus: token("transparent-static-black-1000");
+  --swc-button-background-color-disabled: token("transparent-static-black-0");
   --swc-button-border-color-disabled: token("disabled-static-black-border-color");
   --swc-button-content-color-disabled: token("disabled-static-black-content-color");
 }
 
 :host([static-color="black"][variant="secondary"][fill-style="outline"]) {
-  --swc-button-background-color-default: token("transparent-black-25");
-  --swc-button-background-color-hover: token("transparent-black-100");
-  --swc-button-background-color-down: token("transparent-black-100");
-  --swc-button-background-color-focus: token("transparent-black-100");
-  --swc-button-border-color-default: token("transparent-black-300");
-  --swc-button-border-color-hover: token("transparent-black-400");
-  --swc-button-border-color-down: token("transparent-black-400");
-  --swc-button-border-color-focus: token("transparent-black-400");
+  --swc-button-background-color-default: token("transparent-static-black-0");
+  --swc-button-background-color-hover: token("transparent-static-black-150");
+  --swc-button-background-color-down: token("transparent-static-black-150");
+  --swc-button-background-color-focus: token("transparent-static-black-150");
+  --swc-button-border-color-default: token("transparent-static-black-300");
+  --swc-button-border-color-hover: token("transparent-static-black-400");
+  --swc-button-border-color-down: token("transparent-static-black-400");
+  --swc-button-border-color-focus: token("transparent-static-black-400");
 }
 
 /* ── Icon only ────────────────────────────────────── */

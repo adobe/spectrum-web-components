@@ -61,11 +61,18 @@ export const OverviewTest: Story = {
       expect(el.disabled).toBe(false);
       expect(el.generating).toBe(false);
       expect(el.collapsed).toBe(false);
-      expect(el.label).toBe('Prompt');
-      expect(el.sendLabel).toBe('Send');
-      expect(el.stopLabel).toBe('Stop generating');
-      expect(el.uploadLabel).toBe('Add attachment');
-      expect(el.accessibleLabel).toBe('');
+      expect('label' in el).toBe(false);
+      expect(el.accessibleLabel).toBe('AI prompt');
+      expect(el.sendAccessibleLabel).toBe('Submit AI prompt');
+      expect(el.stopAccessibleLabel).toBe('Stop generating');
+      expect(el.uploadAccessibleLabel).toBe('Add attachment');
+      expect(el.attachmentScrollPrevAccessibleLabel).toBe(
+        'Show previous attachments'
+      );
+      expect(el.attachmentScrollNextAccessibleLabel).toBe(
+        'Show more attachments'
+      );
+      expect(el.attachmentStripAccessibleLabel).toBe('Uploaded assets strip');
 
       const textarea =
         el.shadowRoot?.querySelector<HTMLTextAreaElement>('textarea');
@@ -106,6 +113,121 @@ export const OverviewTest: Story = {
 
       const footer = el.shadowRoot?.querySelector('.swc-PromptField-footer');
       expect(footer).toBeTruthy();
+    });
+  },
+};
+
+export const AccessibleNameTest: Story = {
+  ...Overview,
+  play: async ({ canvasElement, step }) => {
+    const el = await getComponent<PromptField>(
+      canvasElement,
+      'swc-prompt-field'
+    );
+    const textarea = (): HTMLTextAreaElement | null | undefined =>
+      el.shadowRoot?.querySelector<HTMLTextAreaElement>('textarea');
+    const aiMark = (): HTMLElement | null | undefined =>
+      el.shadowRoot?.querySelector<HTMLElement>('.swc-PromptField-status-icon');
+
+    await step('textarea is named by aria-label', async () => {
+      expect(textarea()?.getAttribute('aria-label')).toBe('AI prompt');
+      expect(textarea()?.hasAttribute('aria-labelledby')).toBe(false);
+    });
+
+    await step('AI mark is decorative', async () => {
+      expect(aiMark()?.getAttribute('aria-hidden')).toBe('true');
+      expect(aiMark()?.hasAttribute('aria-label')).toBe(false);
+      expect(aiMark()?.hasAttribute('id')).toBe(false);
+    });
+
+    await step('no visually hidden label text is rendered', async () => {
+      expect(el.shadowRoot?.querySelector('.swc-PromptField-label')).toBeNull();
+      expect(el.shadowRoot?.querySelector('.swc-VisuallyHidden')).toBeNull();
+    });
+
+    await step('accessible-label renames the textarea', async () => {
+      el.accessibleLabel = 'Ask Firefly';
+      await el.updateComplete;
+      expect(textarea()?.getAttribute('aria-label')).toBe('Ask Firefly');
+      el.accessibleLabel = 'AI prompt';
+      await el.updateComplete;
+    });
+  },
+};
+
+export const ActionButtonStateTest: Story = {
+  ...Overview,
+  args: {
+    ...Overview.args,
+    value: 'Draft a launch plan.',
+  },
+  play: async ({ canvasElement, step }) => {
+    const el = await getComponent<PromptField>(
+      canvasElement,
+      'swc-prompt-field'
+    );
+    const actionButton = (): HTMLElement | null | undefined =>
+      el.shadowRoot?.querySelector<HTMLElement>(
+        '.swc-PromptField-send, .swc-PromptField-stop'
+      );
+    const button = actionButton();
+
+    await step('send state is named "Submit AI prompt"', async () => {
+      expect(button?.classList.contains('swc-PromptField-send')).toBe(true);
+      expect(button?.getAttribute('accessible-label')).toBe('Submit AI prompt');
+    });
+
+    await step(
+      'the same button becomes "Stop generating" and keeps focus while generating',
+      async () => {
+        button?.focus();
+        el.generating = true;
+        await el.updateComplete;
+
+        expect(actionButton()).toBe(button);
+        expect(button?.classList.contains('swc-PromptField-stop')).toBe(true);
+        expect(button?.getAttribute('accessible-label')).toBe(
+          'Stop generating'
+        );
+        expect(el.shadowRoot?.activeElement).toBe(button);
+      }
+    );
+
+    await step(
+      'an empty prompt after generating keeps focus via aria-disabled',
+      async () => {
+        el.value = '';
+        el.generating = false;
+        await el.updateComplete;
+
+        expect(actionButton()).toBe(button);
+        expect(button?.classList.contains('swc-PromptField-send')).toBe(true);
+        expect(button?.getAttribute('aria-disabled')).toBe('true');
+        expect(button?.hasAttribute('disabled')).toBe(false);
+        expect(el.shadowRoot?.activeElement).toBe(button);
+      }
+    );
+
+    await step('the aria-disabled send button does not submit', async () => {
+      let submitted = false;
+      el.addEventListener(
+        'swc-prompt-field-submit',
+        () => {
+          submitted = true;
+        },
+        { once: true }
+      );
+      button?.click();
+      expect(submitted).toBe(false);
+    });
+
+    await step('a disabled field natively disables the button', async () => {
+      el.value = 'Draft a launch plan.';
+      el.disabled = true;
+      await el.updateComplete;
+      expect(button?.hasAttribute('disabled')).toBe(true);
+      el.disabled = false;
+      await el.updateComplete;
     });
   },
 };
@@ -180,10 +302,7 @@ export const LegalMissingWarningTest: Story = {
     await withWarningSpy(async (warnCalls) => {
       render(
         html`
-          <swc-prompt-field
-            label="Prompt"
-            value="No legal disclaimer"
-          ></swc-prompt-field>
+          <swc-prompt-field value="No legal disclaimer"></swc-prompt-field>
         `,
         canvasElement
       );
@@ -218,13 +337,54 @@ export const LegalMissingWarningTest: Story = {
   },
 };
 
+export const EmptyAccessibleLabelWarningTest: Story = {
+  render: () => '',
+  play: async ({ canvasElement, step }) => {
+    await withWarningSpy(async (warnCalls) => {
+      render(
+        html`
+          <swc-prompt-field accessible-label="">
+            <p slot="legal">Approved legal copy.</p>
+          </swc-prompt-field>
+        `,
+        canvasElement
+      );
+
+      const el = await getComponent<PromptField>(
+        canvasElement,
+        'swc-prompt-field'
+      );
+      await el.updateComplete;
+
+      await step(
+        'logs a development warning when accessible-label is empty',
+        async () => {
+          expect(
+            warnCalls.some(([, message]) =>
+              String(message).includes('accessible-label is empty')
+            ),
+            'an empty accessible-label emits a debug warning'
+          ).toBe(true);
+        }
+      );
+
+      el.accessibleLabel = 'AI prompt';
+      await el.updateComplete;
+      expect(
+        warnCalls,
+        'a non-empty accessible-label emits no additional warning'
+      ).toHaveLength(1);
+    });
+  },
+};
+
 export const MixedAttachmentWarningTest: Story = {
   render: () => '',
   play: async ({ canvasElement, step }) => {
     await withWarningSpy(async (warnCalls) => {
       render(
         html`
-          <swc-prompt-field label="Prompt" value="Mixed attachments">
+          <swc-prompt-field value="Mixed attachments">
             <swc-upload-attachment slot="attachment" type="card">
               <span slot="title">Brief</span>
               <span slot="subtitle">PDF</span>
@@ -285,7 +445,7 @@ function renderMultiAttachmentPromptField(
   render(
     html`
       <div style="inline-size:480px;" dir=${direction ?? nothing}>
-        <swc-prompt-field label="Prompt" value="Review attachments.">
+        <swc-prompt-field value="Review attachments.">
           ${Array.from({ length: 14 }, (_, index) => index).map(
             (index) => html`
               <swc-upload-attachment slot="attachment" type="media" dismissible>
@@ -339,8 +499,8 @@ export const AttachmentScrollPaginationTest: Story = {
           )
         ).toBeNull();
 
-        el.attachmentScrollPrevLabel = 'Show earlier attachments';
-        el.attachmentScrollNextLabel = 'Show later attachments';
+        el.attachmentScrollPrevAccessibleLabel = 'Show earlier attachments';
+        el.attachmentScrollNextAccessibleLabel = 'Show later attachments';
         await el.updateComplete;
         expect(nextButton?.getAttribute('accessible-label')).toBe(
           'Show later attachments'
@@ -706,13 +866,18 @@ export const AttachmentFocusOrderTest: Story = {
 };
 
 /**
- * @todo SWC-2528 Flaky on Firefox (smooth-scroll focus-settle timing); skipped there until fixed.
+ * @todo SWC-2528 Flaky on Firefox and WebKit (smooth-scroll focus-settle
+ * timing); skipped there until fixed.
  */
 export const AttachmentChevronPagingFocusTest: Story = {
   render: () => '',
   play: async ({ canvasElement, step }) => {
-    // Skip on Firefox pending SWC-2528.
-    if (navigator.userAgent.includes('Firefox')) {
+    // Skip on Firefox and WebKit pending SWC-2528. WebKit UAs include
+    // "Safari" but not "Chrome" (Chromium UAs include both).
+    const isWebKit =
+      navigator.userAgent.includes('Safari') &&
+      !navigator.userAgent.includes('Chrome');
+    if (navigator.userAgent.includes('Firefox') || isWebKit) {
       return;
     }
 
@@ -870,7 +1035,7 @@ export const SingleAttachmentFocusTest: Story = {
   play: async ({ canvasElement, step }) => {
     render(
       html`
-        <swc-prompt-field label="Prompt" value="Review attachment.">
+        <swc-prompt-field value="Review attachment.">
           <swc-upload-attachment slot="attachment" type="card" dismissible>
             <span slot="title">Brief.pdf</span>
           </swc-upload-attachment>
@@ -1162,7 +1327,6 @@ export const StatusLoaderTest: Story = {
     render(
       html`
         <swc-prompt-field
-          label="Prompt"
           loader="analyze"
           generating
           animate-loader
