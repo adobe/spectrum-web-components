@@ -10,22 +10,17 @@
  * governing permissions and limitations under the License.
  */
 
-import {
-  Controls,
-  HeaderMdx,
-  Primary,
-  useOf,
-} from '@storybook/addon-docs/blocks';
+import { HeaderMdx, useOf } from '@storybook/addon-docs/blocks';
 import React from 'react';
 
 import { ApiTable } from './ApiTable';
 import { SpectrumStories } from './SpectrumStories';
 
 /**
- * The standard bottom of a Storybook docs page: API table, primary story,
- * controls, and the feedback link. Genre-aware via meta tags; controllers
- * (tagged `controller`) skip the API table because they expose a TypeScript
- * class rather than a custom element manifest.
+ * The standard bottom of a Storybook docs page: API table and the feedback
+ * link. Genre-aware via meta tags; controllers (tagged `controller`) skip the
+ * API table because they expose a TypeScript class rather than a custom
+ * element manifest.
  *
  * Authors compose a docs page as:
  *
@@ -86,8 +81,6 @@ export const DocsFooter = () => {
           )}
         </>
       )}
-      <Primary />
-      <Controls />
       {hasCustomApiStories && (
         <>
           <SpectrumStories tag="api" hideTitle={true} />
