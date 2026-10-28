@@ -217,7 +217,10 @@
     color: var(--swc-accent-content-color-default) !important;
   }
 
-  /* Give table of contents links targets of at least 24px (WCAG 2.5.8) */
+  /* Give table of contents links targets of at least 24px (WCAG 2.5.8). The
+     inline padding keeps the focus ring off the text, and the negative start
+     margin keeps the text aligned with the rails. The end margin keeps the
+     ring inside the table of contents, which clips its overflow. */
   .sbdocs-toc--custom .toc-list-item {
     padding-block: 0 !important;
   }
@@ -226,6 +229,15 @@
     display: flex;
     align-items: center;
     min-block-size: 24px;
+    padding-inline: 6px;
+    margin-inline: -6px var(--swc-focus-indicator-thickness);
+    border-radius: var(--swc-corner-radius-100);
+  }
+
+  .sbdocs-toc--custom .toc-link:focus-visible {
+    outline: var(--swc-focus-indicator-thickness) solid
+      var(--swc-focus-indicator-color);
+    outline-offset: 0;
   }
 
   /* Storybook draws the table of contents rails with its own palette */
