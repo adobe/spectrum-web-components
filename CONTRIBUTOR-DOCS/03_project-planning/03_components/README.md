@@ -39,7 +39,6 @@
 - Avatar
     - [Avatar component accessibility specification](avatar/component-accessibility-specification.md)
     - [Avatar — gen2 Migration Plan](avatar/migration-plan.md)
-    - [Avatar component accessibility specification](avatar/rendering-and-styling-migration-analysis.md)
 - Badge
     - [Badge component accessibility specification](badge/component-accessibility-specification.md)
     - [Badge migration roadmap](badge/rendering-and-styling-migration-analysis.md)
@@ -203,7 +202,7 @@
 
 This section provides a **component-centric view** of individual components and how they are affected by multiple workstreams. Use it to understand each component's roadmap and status.
 
-Each component has its own folder (kebab-case). Inside you'll find analysis and planning docs for that component—for example, **rendering-and-styling-migration-analysis.md** for Spectrum 2 CSS-to-SWC migration. The same structure is intended for future peer docs (e.g. a11y analysis, comparative API analysis).
+Each component has its own folder (kebab-case). Inside you'll find analysis and planning docs for that component, such as `rendering-and-styling-migration-analysis.md` for Spectrum 2 CSS-to-SWC migration and `component-accessibility-specification.md` for accessibility requirements. The same structure supports future peer docs, such as comparative API analysis.
 
 For a workstream-centric view of the same work, see [Workstreams](../02_workstreams/README.md). For how the two views fit together, see the [Project planning overview](../README.md).
 

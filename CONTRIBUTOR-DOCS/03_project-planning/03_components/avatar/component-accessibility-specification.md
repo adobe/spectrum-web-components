@@ -19,6 +19,7 @@
 - [ARIA and WCAG context](#aria-and-wcag-context)
     - [Pattern in the APG](#pattern-in-the-apg)
     - [Guidelines that apply](#guidelines-that-apply)
+- [Related 1st-gen accessibility (Jira)](#related-1st-gen-accessibility-jira)
 - [Recommendations: `<swc-avatar>` (non-linked)](#recommendations-swc-avatar-non-linked)
     - [ARIA roles, states, and properties](#aria-roles-states-and-properties)
     - [Accessibility tree expectations](#accessibility-tree-expectations)
@@ -39,7 +40,6 @@ This doc tells you how **`swc-avatar`** should work for **accessibility**. The t
 
 ### Also read
 
-[Avatar migration roadmap](./rendering-and-styling-migration-analysis.md) for DOM structure, CSS selectors, and size mapping.
 [Avatar migration plan](./migration-plan.md) for the full Phase checklist.
 
 ### What an avatar is
@@ -88,6 +88,14 @@ The [APG](https://www.w3.org/WAI/ARIA/apg/) does not list a dedicated "avatar" w
 | [1.1.1 Non-text content](https://www.w3.org/TR/WCAG22/#non-text-content) | The avatar image must have a text alternative, or be explicitly marked decorative. |
 | [1.4.1 Use of color](https://www.w3.org/TR/WCAG22/#use-of-color) | Color alone must not carry meaning. |
 | [2.4.3 Focus order](https://www.w3.org/TR/WCAG22/#focus-order) | Non-linked avatar must not be in the tab order. |
+
+---
+
+## Related 1st-gen accessibility (Jira)
+
+| Jira | Type | Status (snapshot) | Resolution (snapshot) | Summary |
+|------|------|-------------------|-------------------------|---------|
+| [SWC-915](https://jira.corp.adobe.com/browse/SWC-915) | Bug | Done | Done | [Bug][a11y]: Avatar should render an `alt` tag even if no label is specified to avoid a11y violations |
 
 ---
 
@@ -171,6 +179,5 @@ No `aria-labelledby` cross-shadow wiring is required.
 - [WAI-ARIA 1.2](https://www.w3.org/TR/wai-aria-1.2/)
 - [WCAG 2.2](https://www.w3.org/TR/WCAG22/)
 - [Using ARIA (read this first)](https://www.w3.org/WAI/ARIA/apg/practices/read-me-first/)
-- [Avatar migration roadmap](./rendering-and-styling-migration-analysis.md)
 - [Avatar migration plan](./migration-plan.md)
 - [React Aria Avatar](https://react-spectrum.adobe.com/Avatar)

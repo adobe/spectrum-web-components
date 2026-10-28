@@ -131,7 +131,7 @@ Body text under each `###` is normal paragraphs and/or bullets.
   - **Labels:** Do **not** list issues that carry Jira labels **`gen2`** or **`gen-2`** (match your project’s spelling and casing). This section tracks **1st-gen** (`sp-*`) accessibility work, not gen2 program-only tickets.
   - **Audit:** Do **not** list **audit** issues whose **summary begins with Audit and improve** (usually **Epics** for cross-cutting accessibility audits—e.g. primitive components, card and meter). Track those in Jira or program views, not in per-component tables.
   - **Migration consultation:** Do **not** list **stories** whose summary follows **Migration (YYYY-MM-DD): Accessibility consultation for gen2 migration** (program-level gen2 consultation; track in migration/program views, not per-component tables).
-- **Reference:** See **`badge/component-accessibility-specification.md`** (and sibling component docs) for a full example table. **Avatar** currently documents the Jira block in **`avatar/rendering-and-styling-migration-analysis.md`** alongside other accessibility migration content—prefer splitting to **`avatar/component-accessibility-specification.md`** when that file is added.
+- **Reference:** See **`badge/component-accessibility-specification.md`** or **`avatar/component-accessibility-specification.md`** (and sibling component docs) for a full example table.
 
 ### Dual or conditional ARIA roles
 

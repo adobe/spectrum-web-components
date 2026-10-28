@@ -107,7 +107,7 @@ In the section titled "Open gen1 issues" in the [assets/migration-prep-template.
   - **Labels:** Do **not** list issues that carry Jira labels **`a11y`** or **`gen2`**. This section tracks **gen1** (`sp-*`) issues only, not gen2 tickets or a11y issues for the gen1 component.
   - **Resolution:** Do **not** list issues that have been resolved, ie with a Jira Workflow Status of "Done".
   - **Issue types:** Do **not** list issues of the type Epic or Initiative. Track those in Jira or program views, not in per-component tables.
-- **Reference:** See the section "## Related 1st-gen accessibility (Jira)" in **`avatar/rendering-and-styling-migration-analysis.md`** (and sibling component docs) for a full example table. This example only includes accessibility issues. It should follow the same format, but document non-accessibility gen1 issues.
+- **Reference:** See the section "## Related 1st-gen accessibility (Jira)" in **`avatar/component-accessibility-specification.md`** (and sibling component docs) for a full example table. This example only includes accessibility issues. It should follow the same format, but document non-accessibility gen1 issues.
 
 ## Readiness threshold
 
@@ -152,7 +152,7 @@ When a critical input is missing, decide first whether it is materially blocking
 Materially blocking inputs:
 
 - Figma PNG visual references from **`S2 / Web`**, copied from the _Component_ frame that includes the variants
-- accessibility analysis
+- component accessibility specification
 - dependency-order or shared-base decisions
 - breaking-change ticket context
 
@@ -206,7 +206,7 @@ Please provide these to continue:
 
 If you want to proceed provisionally instead, tell me that explicitly and I’ll keep the unresolved areas clearly marked."
 
-For accessibility analysis specifically:
+For component accessibility specifications specifically:
 
 - ask the user to provide the existing component accessibility specification if it exists
 - otherwise ask whether they want to pause until that separate workstream is completed, or proceed with accessibility-dependent recommendations explicitly marked as provisional
