@@ -52,12 +52,15 @@ export default {
 const innerButton = (el: AiButton): HTMLButtonElement =>
   el.shadowRoot!.querySelector<HTMLButtonElement>('.swc-AiButton')!;
 
-/** Design dimensions per size, in pixels. */
+/**
+ * Dimensions per size, in pixels. Small matches the standard button's small
+ * size; the other sizes match the design.
+ */
 const DESIGN_SIZES = {
-  s: { blockSize: 32, iconSize: 16, fontSize: 12 },
-  m: { blockSize: 36, iconSize: 18, fontSize: 14 },
-  l: { blockSize: 40, iconSize: 20, fontSize: 16 },
-  xl: { blockSize: 48, iconSize: 22, fontSize: 18 },
+  s: { blockSize: 24, edgeToText: 10, iconSize: 16, fontSize: 12 },
+  m: { blockSize: 36, edgeToText: 14, iconSize: 18, fontSize: 14 },
+  l: { blockSize: 40, edgeToText: 16, iconSize: 20, fontSize: 16 },
+  xl: { blockSize: 48, edgeToText: 18, iconSize: 22, fontSize: 18 },
 } as const;
 
 // ────────────────────
@@ -166,6 +169,7 @@ export const IconOnlyTest: Story = {
           expect(button.getAttribute('aria-label')).toBe('Ask AI');
           expect(button.offsetWidth).toBe(blockSize);
           expect(button.offsetHeight).toBe(blockSize);
+          expect(el.offsetHeight, `${el.size} host block size`).toBe(blockSize);
         }
       }
     );
@@ -186,14 +190,19 @@ export const SizesTest: Story = {
       'swc-ai-button'
     );
 
-    await step('matches the design dimensions for each size', async () => {
+    await step('matches the expected dimensions for each size', async () => {
       for (const el of buttons) {
         const button = innerButton(el);
         const icon = button.querySelector<HTMLElement>('.swc-AiButton-icon')!;
         const loader = icon.querySelector<HTMLElement>('swc-pixel-loader')!;
-        const { blockSize, iconSize, fontSize } = DESIGN_SIZES[el.size];
+        const { blockSize, edgeToText, iconSize, fontSize } =
+          DESIGN_SIZES[el.size];
 
         expect(button.offsetHeight, `${el.size} block size`).toBe(blockSize);
+        expect(el.offsetHeight, `${el.size} host block size`).toBe(blockSize);
+        expect(getComputedStyle(button).paddingInlineStart).toBe(
+          `${edgeToText}px`
+        );
         expect(icon.offsetWidth, `${el.size} icon size`).toBe(iconSize);
         expect(getComputedStyle(button).fontSize).toBe(`${fontSize}px`);
         expect(loader.getBoundingClientRect().width).toBeCloseTo(

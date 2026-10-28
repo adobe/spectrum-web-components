@@ -58,6 +58,7 @@
   --_swc-ai-button-glow-offset: 0;
   --_swc-ai-button-glow-hover-block-size: 10px;
   --_swc-ai-button-glow-hover-inset-inline: token("spacing-200");
+  --_swc-ai-button-icon-only-glow-inset-inline: token("spacing-200");
   --_swc-ai-button-icon-only-glow-hover-block-size: 22px;
   --_swc-ai-button-icon-only-glow-hover-inset-inline: token("spacing-85");
 
@@ -95,7 +96,7 @@
   --_swc-ai-button-highlight-end: light-dark(token("transparent-static-white-0"), token("transparent-static-black-75"));
 
   -webkit-tap-highlight-color: transparent;
-  display: inline-flex;
+  display: flex; /* Block-level, so the host's line height can't add space around a small button */
   position: relative;
   gap: var(--_swc-ai-button-gap);
   align-items: center;
@@ -285,15 +286,17 @@
    the default, set in the base rule.
    ───────────────────────────────────────────────────────────────────────────── */
 
+/* Small matches the standard button's small size, not the design's 32px.
+   Its glow values keep the design's glow and hover strength at that height. */
 :host([size="s"]) .swc-AiButton {
-  --_swc-ai-button-min-block-size: token("component-height-100");
-  --_swc-ai-button-edge-to-text: token("spacing-200");
-  --_swc-ai-button-gap: token("spacing-75");
+  --_swc-ai-button-min-block-size: token("component-height-75");
+  --_swc-ai-button-edge-to-text: token("base-padding-horizontal-small");
+  --_swc-ai-button-gap: token("base-gap-small");
   --_swc-ai-button-font-size: token("font-size-75");
   --_swc-ai-button-line-height: token("line-height-font-size-75");
   --_swc-ai-button-icon-size: token("workflow-icon-small");
-  --_swc-ai-button-glow-offset: calc(token("spacing-50") * -1);
-  --_swc-ai-button-glow-hover-block-size: 12px;
+  --_swc-ai-button-glow-offset: calc(token("spacing-75") * -1);
+  --_swc-ai-button-icon-only-glow-inset-inline: 9px;
   --_swc-ai-button-icon-only-glow-hover-block-size: 17px;
   --_swc-ai-button-icon-only-glow-hover-inset-inline: token("spacing-75");
 }
@@ -331,6 +334,10 @@
   gap: 0;
   inline-size: var(--_swc-ai-button-min-block-size);
   padding-inline: 0;
+}
+
+.swc-AiButton--iconOnly .swc-AiButton-glow::before {
+  inset-inline: var(--_swc-ai-button-icon-only-glow-inset-inline);
 }
 
 .swc-AiButton--iconOnly .swc-AiButton-glow::after {
