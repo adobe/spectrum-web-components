@@ -776,9 +776,9 @@ workflows:
             branches:
               # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
               ignore: /pull\/[0-9]+/
-      # Posts the required gen1-tests status once the unit tests pass. VRT
-      # (visual, hcm-visual) and beta-docs are left out — they're branch-filtered
-      # (forks skip VRT, beta-docs is main-only) so can't gate uniformly.
+      # Posts the required gen1-tests status once the unit tests and VRT
+      # (visual, hcm-visual) pass. beta-docs is left out because it only runs
+      # on main.
       - report-gen-status:
           name: gen1-tests-status
           gen: gen1
