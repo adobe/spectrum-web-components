@@ -1,6 +1,6 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../../../README.md) / [Project planning](../../README.md) / [Components](../README.md) / Menu Separator / Menu Separator Migration Plan
+[CONTRIBUTOR-DOCS](../../../README.md) / [Project planning](../../README.md) / [Components](../README.md) / Menu Separator / Menu separator migration plan
 
 <!-- Document title (editable) -->
 
@@ -56,7 +56,7 @@
 
 > **Epic [SWC-2668](https://jira.corp.adobe.com/browse/SWC-2668)** · Planning output. Must be reviewed before implementation begins. **Provisional:** the 1st-gen Jira issue list was pulled from Jira (`component = "Menu"`, SWC project only). The Figma `S2 / Web` Menu and Divider frames and the Spectrum CSS `spectrum-two` menu source have been reviewed.
 >
-> This plan migrates `sp-menu-divider` to a standalone **`swc-menu-separator`**, following the [menu separator accessibility migration analysis](./accessibility-migration-analysis.md), which takes precedence. This supersedes the earlier draft recommendation to reuse `swc-divider`, and it conflicts with [Menu plan Q14](../menu/migration-plan.md#blockers-and-open-questions) (see Q1).
+> This plan migrates `sp-menu-divider` to a standalone **`swc-menu-separator`**, following the [menu separator accessibility migration analysis](./accessibility-migration-analysis.md), which takes precedence. The [Menu plan](../menu/migration-plan.md) (Q14, Q15, Q21, Phase B) has been updated to match, so the two plans no longer conflict.
 
 ---
 
@@ -246,7 +246,7 @@ From the [accessibility analysis](./accessibility-migration-analysis.md):
 
 - `role="separator"` on the host, no `aria-valuenow` or splitter semantics, no accessible name by default.
 - Direct child of `swc-menu`, `swc-action-menu`, or `swc-menu-item`; not inside `swc-menu-group`. Light-DOM slotting is fine.
-- Line must meet non-text contrast (WCAG 1.4.11) against the menu background.
+- Line must meet non-text contrast ([WCAG 1.4.11](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html)) against the menu background.
 - Docs favor separators between labelled `swc-menu-group` blocks, and discourage them between loose items.
 
 ---
@@ -319,7 +319,7 @@ Planned rendering shape:
 #### Naming and semantics
 
 - [ ] Host `role="separator"`, no accessible name by default, no splitter value semantics
-- [ ] Contrast of the line versus menu background meets 1.4.11
+- [ ] Contrast of the line versus menu background meets [1.4.11](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html)
 
 #### State verification
 

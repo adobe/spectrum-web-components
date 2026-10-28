@@ -116,6 +116,7 @@
     - [Menu item accessibility migration analysis](menu-item/accessibility-migration-analysis.md)
 - Menu Separator
     - [Menu separator accessibility migration analysis](menu-separator/accessibility-migration-analysis.md)
+    - [Menu separator migration plan](menu-separator/migration-plan.md)
 - Meter
     - [Meter accessibility migration analysis](meter/accessibility-migration-analysis.md)
     - [Meter migration plan](meter/migration-plan.md)
