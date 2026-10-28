@@ -88,8 +88,8 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
    * When no accessible name is provided (no label, aria-label, or
    * aria-labelledby), a default "Loading" label is applied.
    *
-   * @todo Localize the default "Loading" fallback via LanguageResolutionController
-   * once a runtime i18n system for static strings is available.
+   * @todo SWC-2712: Localize the default "Loading" fallback using shared
+   * message localization and the resolved application locale.
    */
   @property({ type: String })
   public label = '';
@@ -114,8 +114,7 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
   // ──────────────────────
 
   /**
-   * @todo Localize via LanguageResolutionController once a runtime i18n
-   * system for static strings is available.
+   * @todo SWC-2712: Replace the English fallback with a shared localized message.
    */
   private static readonly DEFAULT_LABEL = 'Loading';
 

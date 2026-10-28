@@ -32,6 +32,7 @@ import styles from './text-field.css';
  * only needs to be unique within this component's own shadow root.
  */
 const INPUT_ID = 'input';
+// @todo SWC-2712: Localize necessity indicators using shared message localization.
 const NECESSITY_INDICATOR_TEXT = {
   required: '(required)',
   optional: '(optional)',
