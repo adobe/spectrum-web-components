@@ -30,6 +30,12 @@
   }
 }
 
+/* Storybook offsets the sidebar icons for its default font. Adobe Clean sits
+   higher in the line box, so move the icons up to center them on the text. */
+.sidebar-item div:has(> svg[type]) {
+  margin-block-start: 1px;
+}
+
 button[data-action="collapse-root"] {
   margin-block-start: 0;
   margin-block-end: 0;
