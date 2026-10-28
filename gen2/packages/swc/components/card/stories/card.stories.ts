@@ -29,9 +29,9 @@ import '@adobe/spectrum-wc/components/asset/swc-asset.js';
 import '@adobe/spectrum-wc/components/card/swc-card.js';
 import '@adobe/spectrum-wc/components/progress-circle/swc-progress-circle.js';
 import '@adobe/spectrum-wc-icons/swc-icon-more.js';
-import '../../status-light/swc-status-light';
-import '../../badge/swc-badge';
-import '../../avatar/swc-avatar';
+import '../../status-light/swc-status-light.js';
+import '../../badge/swc-badge.js';
+import '../../avatar/swc-avatar.js';
 
 // ────────────────
 //    METADATA

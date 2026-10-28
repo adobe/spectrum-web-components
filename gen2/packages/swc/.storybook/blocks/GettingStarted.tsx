@@ -65,7 +65,7 @@ import '@adobe/spectrum-wc/${resolvedPackagePath}/${tagName}.js';
 To reference the \`${baseClassName}\` type, import it as a type-only import:
 
 \`\`\`typescript
-import type { ${baseClassName} } from '@adobe/spectrum-wc/${resolvedPackagePath}';
+import type { ${baseClassName} } from '@adobe/spectrum-wc/${resolvedPackagePath}.js';
 \`\`\`
 
 > The class is exposed primarily for type purposes. Extending it is possible, but the internal shape is not part of the public API — if you choose to subclass, you do so at your own risk and may need to adjust your code between releases.
