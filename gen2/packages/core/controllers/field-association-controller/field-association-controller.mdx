@@ -58,6 +58,20 @@ class SwcField extends LitElement {
 
 ⚠️ **Important:** For application-controlled inline errors, put fields in a form with the [`novalidate`](https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Forms/Form_validation) attribute and validate in your submit handler. This skips automatic browser validation and submission blocking, so your handler must prevent submission when validation fails. Use `checkValidity()` to check constraints without requesting browser UI; explicitly calling `reportValidity()` can still request it. The demos below use `novalidate`.
 
+With `novalidate`, the browser also does not move focus when validation fails, so the submit handler moves focus to the first invalid field. Use `form.elements`, not `form.querySelector(':invalid')`, which also matches an enclosing `<fieldset>`:
+
+```js
+const firstInvalid = [...form.elements].find(
+  (element) => element.willValidate && !element.validity.valid
+);
+firstInvalid?.focus();
+```
+
+For this to work, the host must meet two requirements:
+
+- **Pass a focusable validation anchor** as the third argument of `internals.setValidity(flags, message, anchor)`. A native inner control, such as `<input>`, is already focusable. A wrapper without a native control, such as a radio group's `role="radiogroup"` element, needs `tabindex="-1"`. The browser focuses the anchor for `reportValidity()` and for forms without `novalidate`.
+- **Make `host.focus()` reach the anchor**, with `delegatesFocus: true` for a native inner control, or a `focus()` override that forwards to the anchor.
+
 The demos below use three unstyled harnesses (`demo-field-text`, `demo-field-radio`, `demo-field-combobox`), not `swc-*` components.
 
 ## Behaviors
@@ -150,5 +164,7 @@ These stay on the element and cannot be delegated:
 | `internals.setValidity(...)`       | Writing validity is per-component logic; the controller only exposes the read side. |
 | Calling `setValue` on value change | The browser does not observe the host's value; the host re-pushes it.               |
 | `formResetCallback()`              | The browser calls it on the host; the host decides how to restore its own state.    |
+| Focusable validation anchor        | Only the host knows which element takes focus; pass it to `setValidity()`.          |
+| `focus()` reaching the anchor      | Through `delegatesFocus: true` or a `focus()` override on the host.                 |
 
 <DocsFooter />
