@@ -31,6 +31,7 @@
     "generate:skills": "node scripts/generate-agent-skills.mjs",
     "generate:ui-icons": "yarn workspace @adobe/spectrum-wc generate:ui-icons",
     "generate:workflow-icons": "yarn workspace @adobe/spectrum-wc-icons generate:workflow-icons",
+    "install:browsers:1st-gen": "yarn dlx playwright@1.53.1 install --with-deps",
     "lint": "run-s --continue-on-error lint:eslint lint:styles lint:prettier lint:ai",
     "lint:1st-gen": "LINT_PATH=1st-gen yarn lint",
     "lint:ai": "node .ai/scripts/validate.js && node --test .ai/scripts/sync.test.js",
@@ -70,9 +71,9 @@
   ],
   "resolutions": {
     "@web/test-runner-coverage-v8": "patch:@web/test-runner-coverage-v8@npm%3A0.8.0#~/.yarn/patches/@web-test-runner-coverage-v8-npm-0.8.0-b19cf60e5f.patch",
+    "@web/test-runner-playwright/playwright": "1.53.1",
     "axe-core": "4.13.0",
-    "basic-ftp": "5.2.0",
-    "playwright": "1.53.1"
+    "basic-ftp": "5.2.0"
   },
   "dependenciesMeta": {
     "keytar@7.9.0": {
@@ -85,7 +86,7 @@
     "@commitlint/cli": "19.8.1",
     "@commitlint/config-conventional": "19.8.1",
     "@eslint/js": "9.39.2",
-    "@playwright/test": "1.53.1",
+    "@playwright/test": "1.64.1",
     "@spectrum-web-components/eslint-plugin": "workspace:*",
     "@spectrum-web-components/stylelint-header-plugin": "workspace:*",
     "@typescript-eslint/eslint-plugin": "8.54.0",

@@ -49,7 +49,6 @@ function renderPromptField(
 ) {
   return html`
     <swc-prompt-field
-      label=${storyArgs.label ?? 'Prompt'}
       placeholder=${storyArgs.placeholder ?? defaultPlaceholder}
       .value=${storyArgs.value ?? ''}
       variant=${storyArgs.variant ?? 'balanced'}
@@ -58,16 +57,25 @@ function renderPromptField(
       ?disabled=${storyArgs.disabled ?? false}
       ?generating=${storyArgs.generating ?? false}
       ?animate-loader=${storyArgs['animate-loader'] ?? false}
-      accessible-label=${storyArgs['accessible-label'] ?? ''}
-      send-label=${storyArgs['send-label'] ?? 'Send'}
-      stop-label=${storyArgs['stop-label'] ?? 'Stop generating'}
-      upload-label=${storyArgs['upload-label'] ?? 'Add attachment'}
-      attachment-scroll-prev-label=${storyArgs[
-        'attachment-scroll-prev-label'
-      ] ?? 'Show previous attachments'}
-      attachment-scroll-next-label=${storyArgs[
-        'attachment-scroll-next-label'
-      ] ?? 'Show more attachments'}
+      accessible-label=${ifDefined(storyArgs['accessible-label'] || undefined)}
+      send-accessible-label=${ifDefined(
+        storyArgs['send-accessible-label'] || undefined
+      )}
+      stop-accessible-label=${ifDefined(
+        storyArgs['stop-accessible-label'] || undefined
+      )}
+      upload-accessible-label=${ifDefined(
+        storyArgs['upload-accessible-label'] || undefined
+      )}
+      attachment-scroll-prev-accessible-label=${ifDefined(
+        storyArgs['attachment-scroll-prev-accessible-label'] || undefined
+      )}
+      attachment-scroll-next-accessible-label=${ifDefined(
+        storyArgs['attachment-scroll-next-accessible-label'] || undefined
+      )}
+      attachment-strip-accessible-label=${ifDefined(
+        storyArgs['attachment-strip-accessible-label'] || undefined
+      )}
       min-rows=${ifDefined(storyArgs['min-rows'] || undefined)}
       max-rows=${ifDefined(storyArgs['max-rows'] || undefined)}
       style=${ifDefined(
@@ -118,7 +126,6 @@ export const Playground: Story = {
     ></swc-prompt-field-behavior-demo>
   `,
   args: {
-    label: 'Prompt',
     placeholder: defaultPlaceholder,
     value: '',
   },
@@ -138,7 +145,6 @@ export const Playground: Story = {
 
 export const Overview: Story = {
   args: {
-    label: 'Prompt',
     placeholder: defaultPlaceholder,
     value: '',
   },
@@ -153,7 +159,7 @@ export const Anatomy: Story = {
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:24px;">
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-prompt-field label="Prompt" placeholder=${defaultPlaceholder}>
+        <swc-prompt-field placeholder=${defaultPlaceholder}>
           ${legalDisclaimerSlot}
         </swc-prompt-field>
         <span class="swc-Detail swc-Detail--sizeS">Base structure</span>
@@ -173,7 +179,6 @@ export const Variant: Story = {
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-prompt-field
           variant="subtle"
-          label="Prompt"
           value="Summarize the API changes in this branch."
         >
           ${legalDisclaimerSlot}
@@ -185,7 +190,6 @@ export const Variant: Story = {
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-prompt-field
           variant="balanced"
-          label="Prompt"
           value="Summarize the API changes in this branch."
         >
           ${legalDisclaimerSlot}
@@ -197,7 +201,6 @@ export const Variant: Story = {
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-prompt-field
           variant="prominent"
-          label="Prompt"
           value="Summarize the API changes in this branch."
         >
           ${legalDisclaimerSlot}
@@ -217,7 +220,6 @@ export const Sizes: Story = {
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-prompt-field
           size="s"
-          label="Prompt"
           value="Summarize the API changes in this branch."
         >
           ${legalDisclaimerSlot}
@@ -229,7 +231,6 @@ export const Sizes: Story = {
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-prompt-field
           size="m"
-          label="Prompt"
           value="Summarize the API changes in this branch."
         >
           ${legalDisclaimerSlot}
@@ -247,7 +248,7 @@ export const Layout: Story = {
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:32px;">
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-prompt-field label="Prompt" placeholder=${defaultPlaceholder}>
+        <swc-prompt-field placeholder=${defaultPlaceholder}>
           ${legalDisclaimerSlot}
         </swc-prompt-field>
         <span class="swc-Detail swc-Detail--sizeS">
@@ -255,11 +256,7 @@ export const Layout: Story = {
         </span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-prompt-field
-          collapsed
-          label="Prompt"
-          placeholder=${defaultPlaceholder}
-        >
+        <swc-prompt-field collapsed placeholder=${defaultPlaceholder}>
           ${legalDisclaimerSlot}
         </swc-prompt-field>
         <span class="swc-Detail swc-Detail--sizeS">
@@ -289,10 +286,7 @@ export const Attachment: Story = {
         on the upload-attachment page.
       </p>
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-prompt-field
-          label="Prompt"
-          value="Use attached assets for a launch plan."
-        >
+        <swc-prompt-field value="Use attached assets for a launch plan.">
           <swc-upload-attachment slot="attachment" type="card" dismissible>
             <div slot="thumbnail" role="img" aria-label="PDF"></div>
             <span slot="title">Brand guidelines</span>
@@ -310,10 +304,7 @@ export const Attachment: Story = {
         </span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-prompt-field
-          label="Prompt"
-          value="Review these storyboard frames."
-        >
+        <swc-prompt-field value="Review these storyboard frames.">
           <swc-upload-attachment slot="attachment" type="media" dismissible>
             <div
               slot="thumbnail"
@@ -338,13 +329,13 @@ export const Attachment: Story = {
         </span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-prompt-field label="Prompt" placeholder=${defaultPlaceholder}>
+        <swc-prompt-field placeholder=${defaultPlaceholder}>
           ${legalDisclaimerSlot}
         </swc-prompt-field>
         <span class="swc-Detail swc-Detail--sizeS">None</span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-prompt-field label="Prompt" placeholder=${defaultPlaceholder}>
+        <swc-prompt-field placeholder=${defaultPlaceholder}>
           <swc-upload-attachment slot="attachment" type="card" dismissible>
             <div slot="thumbnail" role="img" aria-label="PDF"></div>
             <span slot="title">Hilton commercial assets</span>
@@ -355,7 +346,7 @@ export const Attachment: Story = {
         <span class="swc-Detail swc-Detail--sizeS">Single card</span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-prompt-field label="Prompt" placeholder=${defaultPlaceholder}>
+        <swc-prompt-field placeholder=${defaultPlaceholder}>
           <swc-upload-attachment slot="attachment" type="media" dismissible>
             <div
               slot="thumbnail"
@@ -403,7 +394,7 @@ export const MultiAttachmentScroll: Story = {
         width and settles on a tile boundary. Edge fades signal overflow. An
         overflowing strip uses the platform's native scrollbar.
       </p>
-      <swc-prompt-field label="Prompt" value="Review these storyboard frames.">
+      <swc-prompt-field value="Review these storyboard frames.">
         ${multiAttachmentScrollGradients.map(
           (gradient, index) => html`
             <swc-upload-attachment slot="attachment" type="media" dismissible>
@@ -438,16 +429,13 @@ export const States: Story = {
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:32px;">
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-prompt-field label="Prompt" placeholder=${defaultPlaceholder}>
+        <swc-prompt-field placeholder=${defaultPlaceholder}>
           ${legalDisclaimerSlot}
         </swc-prompt-field>
         <span class="swc-Detail swc-Detail--sizeS">Default, empty value</span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-prompt-field
-          label="Prompt"
-          value="Summarize the API changes in this branch."
-        >
+        <swc-prompt-field value="Summarize the API changes in this branch.">
           ${legalDisclaimerSlot}
         </swc-prompt-field>
         <span class="swc-Detail swc-Detail--sizeS">Default, entered value</span>
@@ -455,7 +443,6 @@ export const States: Story = {
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-prompt-field
           generating
-          label="Prompt"
           value="Summarize the API changes in this branch."
         >
           ${legalDisclaimerSlot}
@@ -465,11 +452,7 @@ export const States: Story = {
         </span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-prompt-field
-          disabled
-          label="Prompt"
-          value="This input is disabled."
-        >
+        <swc-prompt-field disabled value="This input is disabled.">
           ${legalDisclaimerSlot}
         </swc-prompt-field>
         <span class="swc-Detail swc-Detail--sizeS">
@@ -686,7 +669,6 @@ export const AnimateLoader: Story = {
       <div style="display:flex;flex-direction:column;gap:8px;">
         <swc-prompt-field
           generating
-          label="Prompt"
           value="Summarize the API changes in this branch."
         >
           ${legalDisclaimerSlot}
@@ -699,7 +681,6 @@ export const AnimateLoader: Story = {
         <swc-prompt-field
           generating
           animate-loader
-          label="Prompt"
           value="Summarize the API changes in this branch."
         >
           ${legalDisclaimerSlot}
@@ -728,7 +709,6 @@ DragAndDrop.storyName = 'Drag and drop';
 
 export const Accessibility: Story = {
   args: {
-    label: 'Prompt',
     placeholder: defaultPlaceholder,
     value: '',
   },
