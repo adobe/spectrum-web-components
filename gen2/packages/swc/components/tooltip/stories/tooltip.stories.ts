@@ -105,6 +105,14 @@ const triggered = (
   }
 };
 
+// Finishes the fade-in before checking opacity so play functions don't depend
+// on transition timing, which CI browsers (notably WebKit) can throttle.
+const expectTooltipShown = (tooltip: HTMLElement): void => {
+  expect(tooltip.matches(':popover-open')).toBe(true);
+  tooltip.getAnimations().forEach((animation) => animation.finish());
+  expect(getComputedStyle(tooltip).opacity).toBe('1');
+};
+
 /**
  * A `<swc-tooltip>` displays a brief, contextual message near a trigger element.
  *
@@ -175,10 +183,7 @@ export const Playground: Story = {
       open: boolean;
     };
     tooltip.open = true;
-    await waitFor(() => {
-      expect(tooltip.matches(':popover-open')).toBe(true);
-      expect(getComputedStyle(tooltip).opacity).toBe('1');
-    });
+    await waitFor(() => expectTooltipShown(tooltip));
   },
   tags: ['dev'],
 };
@@ -203,10 +208,7 @@ export const Overview: Story = {
       open: boolean;
     };
     tooltip.open = true;
-    await waitFor(() => {
-      expect(tooltip.matches(':popover-open')).toBe(true);
-      expect(getComputedStyle(tooltip).opacity).toBe('1');
-    });
+    await waitFor(() => expectTooltipShown(tooltip));
   },
   tags: ['overview'],
 };
@@ -239,10 +241,7 @@ export const Anatomy: Story = {
       open: boolean;
     };
     tooltip.open = true;
-    await waitFor(() => {
-      expect(tooltip.matches(':popover-open')).toBe(true);
-      expect(getComputedStyle(tooltip).opacity).toBe('1');
-    });
+    await waitFor(() => expectTooltipShown(tooltip));
   },
   tags: ['anatomy'],
   parameters: { flexLayout: 'row-wrap' },
@@ -266,10 +265,7 @@ export const Variants: Story = {
     const tooltips = canvasElement.querySelectorAll('swc-tooltip');
     const tooltip = tooltips[1] as HTMLElement & { open: boolean }; // informative
     tooltip.open = true;
-    await waitFor(() => {
-      expect(tooltip.matches(':popover-open')).toBe(true);
-      expect(getComputedStyle(tooltip).opacity).toBe('1');
-    });
+    await waitFor(() => expectTooltipShown(tooltip));
   },
   tags: ['options'],
   parameters: { flexLayout: 'row-wrap' },
@@ -323,10 +319,7 @@ export const Placements: Story = {
     const tooltips = canvasElement.querySelectorAll('swc-tooltip');
     const tooltip = tooltips[3] as HTMLElement & { open: boolean }; // bottom
     tooltip.open = true;
-    await waitFor(() => {
-      expect(tooltip.matches(':popover-open')).toBe(true);
-      expect(getComputedStyle(tooltip).opacity).toBe('1');
-    });
+    await waitFor(() => expectTooltipShown(tooltip));
   },
   tags: ['options'],
   parameters: {
@@ -359,10 +352,7 @@ export const Open: Story = {
       open: boolean;
     };
     tooltip.open = true;
-    await waitFor(() => {
-      expect(tooltip.matches(':popover-open')).toBe(true);
-      expect(getComputedStyle(tooltip).opacity).toBe('1');
-    });
+    await waitFor(() => expectTooltipShown(tooltip));
   },
   tags: ['states'],
 };
@@ -411,10 +401,7 @@ export const Manual: Story = {
     const buttons = canvasElement.querySelectorAll('swc-button');
     const tooltip = canvasElement.querySelector('swc-tooltip') as HTMLElement;
     await userEvent.click(buttons[1] as HTMLElement);
-    await waitFor(() => {
-      expect(tooltip.matches(':popover-open')).toBe(true);
-      expect(getComputedStyle(tooltip).opacity).toBe('1');
-    });
+    await waitFor(() => expectTooltipShown(tooltip));
   },
   tags: ['states'],
   parameters: { flexLayout: 'row-wrap' },
@@ -440,10 +427,7 @@ export const Events: Story = {
       open: boolean;
     };
     tooltip.open = true;
-    await waitFor(() => {
-      expect(tooltip.matches(':popover-open')).toBe(true);
-      expect(getComputedStyle(tooltip).opacity).toBe('1');
-    });
+    await waitFor(() => expectTooltipShown(tooltip));
   },
   tags: ['behaviors'],
 };
@@ -485,10 +469,7 @@ export const TriggerElement: Story = {
       open: boolean;
     };
     tooltip.open = true;
-    await waitFor(() => {
-      expect(tooltip.matches(':popover-open')).toBe(true);
-      expect(getComputedStyle(tooltip).opacity).toBe('1');
-    });
+    await waitFor(() => expectTooltipShown(tooltip));
   },
   tags: ['behaviors'],
 };
@@ -518,10 +499,7 @@ export const Labeling: Story = {
       open: boolean;
     };
     tooltip.open = true;
-    await waitFor(() => {
-      expect(tooltip.matches(':popover-open')).toBe(true);
-      expect(getComputedStyle(tooltip).opacity).toBe('1');
-    });
+    await waitFor(() => expectTooltipShown(tooltip));
   },
   tags: ['behaviors'],
 };
@@ -546,10 +524,7 @@ export const Accessibility: Story = {
       open: boolean;
     };
     tooltip.open = true;
-    await waitFor(() => {
-      expect(tooltip.matches(':popover-open')).toBe(true);
-      expect(getComputedStyle(tooltip).opacity).toBe('1');
-    });
+    await waitFor(() => expectTooltipShown(tooltip));
   },
   tags: ['a11y'],
 };

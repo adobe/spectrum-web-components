@@ -39,7 +39,7 @@
     "lint:eslint": "echo 'Linting with ESLint...' && eslint ${LINT_PATH:-.} --cache",
     "lint:gen2": "LINT_PATH=gen2 yarn lint",
     "lint:prettier": "echo 'Linting with Prettier...' && prettier ${LINT_PATH:-.} --cache --check",
-    "lint:styles": "echo 'Linting with Stylelint...' && stylelint '${LINT_PATH:+$LINT_PATH/**/*.css}${LINT_PATH:-**/*.css}' --cache --allow-empty-input",
+    "lint:styles": "echo 'Linting with Stylelint...' && stylelint \"${LINT_PATH:-.}\"'/**/*.css' --ignore-pattern '1st-gen/**' --cache --allow-empty-input",
     "postinstall": "husky || true",
     "start": "run-p start:gen2 start:1st-gen",
     "start:1st-gen": "yarn workspace @spectrum-web-components/1st-gen start",

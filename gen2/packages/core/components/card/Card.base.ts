@@ -65,6 +65,7 @@ import {
  * @cssprop --swc-card-base-content-padding-regular - Content padding used at the default (regular) density, per size.
  * @cssprop --swc-card-base-content-padding-compact - Content padding used at compact density, per size.
  * @cssprop --swc-card-base-content-padding-spacious - Content padding used at spacious density, per size.
+ * @cssprop --swc-card-base-grid-template-rows - Row track sizes of the card's media, content, and footer grid areas. Defaults to `auto 1fr auto`.
  */
 export abstract class CardBase extends SizedMixin(SpectrumElement, {
   validSizes: CARD_VALID_SIZES,
