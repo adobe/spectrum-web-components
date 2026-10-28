@@ -55,10 +55,10 @@ Index of shared, reusable resources in gen2: controllers, mixins, utilities, and
 
 | Mixin | What it does | Used by |
 | --- | --- | --- |
-| `SizedMixin` | Reactive `size` property with per-component valid-size enforcement | `button`, `button-group`, `badge`, `card`, `accordion`, `status-light`, `divider`, `dropzone`, `icon`, `infield-button`, `meter`, `progress-bar`, `progress-circle`, `action-group`, `menu` |
+| `SizedMixin` | Reactive `size` property with per-component valid-size enforcement | `button`, `button-group`, `badge`, `card`, `accordion`, `status-light`, `divider`, `dropzone`, `icon`, `infield-button`, `meter`, `progress-bar`, `progress-circle`, `action-group`, `menu`, `checkbox` |
 | `LinearProgressMixin` | Shared value/label/percent-format logic for linear-progress components | `progress-bar`, `meter` |
-| `LabellingMixin` | Renders and associates visible or programmatic field labels | `text-field` |
-| `FieldDescriptionMixin` | Renders and associates field descriptions and invalid-state error text | `text-field` |
+| `LabellingMixin` | Renders and associates visible or programmatic field labels | `text-field`, `checkbox` |
+| `FieldDescriptionMixin` | Renders and associates field descriptions and invalid-state error text | `text-field`, `checkbox` |
 | `PendingMixin` | `pending`/`pending-label` properties, click suppression, built on `PendingController` | `button`, `action-button` |
 | `DisabledMixin` | Reactive `disabled` with `aria-disabled` (not native `disabled`), tabindex/blur handling. See [Focus management](14_focus-management.md#disabledmixin) | none (`button` still hand-rolls `disabled`) |
 
@@ -87,7 +87,7 @@ Index of shared, reusable resources in gen2: controllers, mixins, utilities, and
 | Directive | What it does | Used by |
 |---|---|---|
 | `renderPendingSpinner` | Renders the busy-state spinner; called via `PendingController.renderPendingState()` | `button`, `action-button` |
-| `renderFieldLabel` | Renders a form field's visible label and necessity indicator | `text-field` (via `LabellingMixin`) |
+| `renderFieldLabel` | Renders a form field's visible label and necessity indicator | `text-field`, `checkbox` (via `LabellingMixin`) |
 | `renderFieldDescription` | Renders a form field's description or invalid-state error text | `text-field` (via `FieldDescriptionMixin`) |
 
 ## Base class and dev-mode warnings
