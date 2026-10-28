@@ -18,9 +18,9 @@ import { Button, ToggleButton } from 'storybook/internal/components';
 import { GLOBALS_UPDATED, SET_GLOBALS } from 'storybook/internal/core-events';
 import type { ThemeVars } from 'storybook/theming';
 
-import { Icon_Bookmark } from '../../icons/src/Bookmark';
 import { Icon_FileText } from '../../icons/src/FileText';
 import { Icon_Folder } from '../../icons/src/Folder';
+import { Icon_Play } from '../../icons/src/Play';
 import { Icon_ViewGrid } from '../../icons/src/ViewGrid';
 import packageJson from '../package.json';
 import logoDark from './assets/logo-dark.svg';
@@ -181,7 +181,7 @@ const SIDEBAR_ICONS = {
   group: Icon_Folder,
   component: Icon_ViewGrid,
   document: Icon_FileText,
-  story: Icon_Bookmark,
+  story: Icon_Play,
 };
 
 const sidebarIcons = document.createElementNS(

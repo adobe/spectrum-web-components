@@ -145,6 +145,13 @@
       font-size: 0.88em !important;
     }
 
+    /* Inline code uses Storybook's palette; use Spectrum tokens instead */
+    :not(pre) > code:not(.swc-Code) {
+      color: var(--swc-code-color);
+      background-color: var(--swc-gray-75);
+      border-color: var(--swc-gray-200);
+    }
+
     #stories,
     .sbdocs-content h2:not(.sbdocs-subtitle) {
       font-size: var(--swc-heading-size-l) !important;

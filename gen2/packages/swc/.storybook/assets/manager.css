@@ -30,6 +30,12 @@
   }
 }
 
+/* Storybook darkens the selected item's background in dark mode; use the
+   Spectrum accent background in both themes instead. */
+.sidebar-item[data-selected="true"] {
+  background: var(--swc-accent-background-color-default) !important;
+}
+
 /* Storybook offsets the sidebar icons for its default font. Adobe Clean sits
    higher in the line box, so move the icons up to center them on the text. */
 .sidebar-item div:has(> svg[type]) {
@@ -80,4 +86,10 @@ button[data-action="collapse-root"] {
    of the bar, so hide it whenever nothing comes before it. */
 .sb-bar [role="toolbar"] > div > span:first-child:empty {
   display: none;
+}
+
+/* Storybook's layout sets `color-scheme: light dark`, which makes tokens follow
+   the OS instead of the Theme toolbar's `.swc-theme--*` class on the root. */
+#root > div {
+  color-scheme: inherit;
 }
