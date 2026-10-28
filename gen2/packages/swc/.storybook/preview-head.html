@@ -217,6 +217,26 @@
     color: var(--swc-accent-content-color-default) !important;
   }
 
+  /* Give table of contents links targets of at least 24px (WCAG 2.5.8) */
+  .sbdocs-toc--custom .toc-list-item {
+    padding-block: 0 !important;
+  }
+
+  .sbdocs-toc--custom .toc-link {
+    display: flex;
+    align-items: center;
+    min-block-size: 24px;
+  }
+
+  /* Storybook draws the table of contents rails with its own palette */
+  .sbdocs-toc--custom .toc-list {
+    border-left-color: var(--swc-gray-200) !important;
+  }
+
+  .sbdocs-toc--custom .toc-list-item::before {
+    border-left-color: var(--swc-accent-content-color-default) !important;
+  }
+
   /* Storybook colors links with the accent background token, which is too
      low-contrast for text on dark backgrounds. */
   .sbdocs.sbdocs-a {
