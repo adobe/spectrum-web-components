@@ -16,25 +16,48 @@ export default {
     type: 'problem',
     docs: {
       description:
-        'Disallow duplicate CSS custom property names in a JSDoc block, including @cssprop and @cssproperty aliases, to prevent duplicate API table rows.',
+        'Disallow duplicate CSS custom property names within a JSDoc block or across leading JSDoc blocks on the same class, including @cssprop and @cssproperty aliases, to prevent duplicate API table rows.',
     },
     schema: [],
     messages: {
-      duplicate:
-        'CSS custom property "{{name}}" is documented more than once in this JSDoc block.',
+      duplicate: 'CSS custom property "{{name}}" is documented more than once.',
     },
   },
   create(context) {
     const sourceCode = context.sourceCode;
+    const namesByComment = new Map();
 
     return {
-      Program() {
+      ClassDeclaration(node) {
+        let declaration =
+          node.parent.type === 'ExportNamedDeclaration' ||
+          node.parent.type === 'ExportDefaultDeclaration'
+            ? node.parent
+            : node;
+        const firstDecorator = node.decorators?.[0];
+        if (firstDecorator && firstDecorator.range[0] < declaration.range[0]) {
+          declaration = firstDecorator;
+        }
+
+        const names = new Set();
+        const previousToken = sourceCode.getTokenBefore(declaration);
+        for (const comment of sourceCode.getCommentsBefore(declaration)) {
+          if (
+            previousToken?.loc.end.line === comment.loc.start.line ||
+            /^[ \t]*\*?[ \t]*@typedef\b/m.test(comment.value)
+          ) {
+            continue;
+          }
+          namesByComment.set(comment, names);
+        }
+      },
+      'Program:exit'() {
         for (const comment of sourceCode.getAllComments()) {
           if (comment.type !== 'Block' || !comment.value.startsWith('*')) {
             continue;
           }
 
-          const names = new Set();
+          const names = namesByComment.get(comment) ?? new Set();
           const tags =
             /^[ \t]*\*?[ \t]*@cssprop(?:erty)?[ \t]+(?:\{[^}\r\n]*\}[ \t]*)?\[?(--[^\s=\]]+)/gm;
 

@@ -10,6 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
+import tsparser from '@typescript-eslint/parser';
 import { ESLint, Linter } from 'eslint';
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
@@ -27,6 +28,62 @@ const cases = [
   {
     name: 'allows the same property in separate JSDoc blocks',
     code: '/** @cssprop --first - First. */\n/** @cssprop --first - Other component. */',
+    duplicates: [],
+  },
+  {
+    name: 'reports duplicates across JSDoc blocks on one class',
+    code: '/** @cssprop --first - Original. */\n/** @cssprop --first - Duplicate. */\nclass Example {}',
+    duplicates: ['--first'],
+    location: { line: 2, column: 14, endLine: 2, endColumn: 21 },
+  },
+  {
+    name: 'reports duplicates across blocks on an exported class',
+    code: '/** @cssprop --first */\n/** @cssproperty --first */\nexport class Example {}',
+    duplicates: ['--first'],
+  },
+  {
+    name: 'reports duplicates across blocks on a default-exported class',
+    code: '/** @cssprop --first */\n/** @cssprop --first */\nexport default class Example {}',
+    duplicates: ['--first'],
+  },
+  {
+    name: 'reports each duplicate across three blocks on one class',
+    code: '/** @cssprop --first */\n/** @cssprop --first */\n/** @cssprop --first */\nclass Example {}',
+    duplicates: ['--first', '--first'],
+  },
+  {
+    name: 'reports duplicates before class decorators',
+    code: '/** @cssprop --first */\n/** @cssprop --first */\n@customElement("swc-example")\nexport class Example {}',
+    duplicates: ['--first'],
+  },
+  {
+    name: 'reports duplicates before an export followed by a decorator',
+    code: '/** @cssprop --first */\n/** @cssprop --first */\nexport @customElement("swc-example") class Example {}',
+    duplicates: ['--first'],
+  },
+  {
+    name: 'allows the same property on separate classes',
+    code: '/** @cssprop --first */\nexport class First {}\n/** @cssprop --first */\nexport class Second {}',
+    duplicates: [],
+  },
+  {
+    name: 'does not combine class and member documentation',
+    code: '/** @cssprop --first */\nclass Example {\n/** @cssprop --first */\nmethod() {}\n}',
+    duplicates: [],
+  },
+  {
+    name: 'does not combine comments separated by another declaration',
+    code: '/** @cssprop --first */\nconst unrelated = 1;\n/** @cssprop --first */\nclass Example {}',
+    duplicates: [],
+  },
+  {
+    name: 'does not combine a previous class trailing comment with the next class',
+    code: 'class First {} /** @cssprop --first */\n/** @cssprop --first */\nclass Second {}',
+    duplicates: [],
+  },
+  {
+    name: 'does not combine typedef documentation with class documentation',
+    code: '/**\n * @typedef {object} Options\n * @cssprop --first\n */\n/** @cssprop --first */\nexport class Example {}',
     duplicates: [],
   },
   {
@@ -90,6 +147,7 @@ for (const { name, code, duplicates, location } of cases) {
       'The duplicate @cssprop rule must be registered'
     );
     const messages = new Linter().verify(code, {
+      languageOptions: { parser: tsparser },
       plugins: { swc: swcPlugin },
       rules: { [ruleName]: 'warn' },
     });
@@ -105,7 +163,7 @@ for (const { name, code, duplicates, location } of cases) {
         ruleId: ruleName,
         severity: 1,
         messageId: 'duplicate',
-        message: `CSS custom property "${name}" is documented more than once in this JSDoc block.`,
+        message: `CSS custom property "${name}" is documented more than once.`,
       }))
     );
     if (location) {
@@ -121,7 +179,7 @@ test('enables IDE warnings for TypeScript components in the repository config', 
     cwd: fileURLToPath(new URL('../../../', import.meta.url)),
   });
   const [result] = await eslint.lintText(
-    '/**\n * @cssprop --first\n * @cssprop --first\n */\nexport class Example {}',
+    '/** @cssprop --first */\n/** @cssprop --first */\nexport class Example {}',
     { filePath: 'gen2/packages/swc/components/tabs/Tab.ts' }
   );
   const messages = result.messages.filter(
@@ -130,5 +188,5 @@ test('enables IDE warnings for TypeScript components in the repository config', 
 
   assert.equal(messages.length, 1);
   assert.equal(messages[0].severity, 1);
-  assert.equal(messages[0].line, 3);
+  assert.equal(messages[0].line, 2);
 });
