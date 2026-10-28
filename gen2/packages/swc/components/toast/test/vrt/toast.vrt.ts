@@ -176,7 +176,10 @@ const settleAndForceFocus = async ({
   await waitFor(() => {
     toasts.forEach((el) => {
       const surface = el.shadowRoot?.querySelector('.swc-Toast');
-      expect(surface && getComputedStyle(surface).opacity).toBe('1');
+      expect(
+        surface && getComputedStyle(surface).opacity,
+        `opacity of "${el.textContent?.trim()}" toast`
+      ).toBe('1');
     });
   });
 

@@ -68,9 +68,9 @@ const cancelClose = (
   return () => controller.abort();
 };
 
-// ──────────────────────────
-//    API
-// ──────────────────────────
+// ──────────────────────────────────────────────────────────────
+// TEST: API
+// ──────────────────────────────────────────────────────────────
 
 export const OverviewTest: Story = {
   ...Overview,
@@ -81,15 +81,15 @@ export const OverviewTest: Story = {
   play: async ({ canvasElement, step }) => {
     const toast = await getComponent<Toast>(canvasElement, 'swc-toast');
 
-    await step('the custom element is registered', () => {
+    await step('registers the custom element', () => {
       expect(customElements.get('swc-toast'), 'registered element').toBe(Toast);
     });
 
-    await step('the element is an instance of Toast', () => {
+    await step('creates an instance of Toast', () => {
       expect(toast, 'swc-toast instance').toBeInstanceOf(Toast);
     });
 
-    await step('it exposes reflected open and variant properties', async () => {
+    await step('exposes reflected open and variant properties', async () => {
       expect(toast.open, 'default open').toBe(false);
       expect(toast.hasAttribute('open'), 'default open attribute').toBe(false);
       expect(toast.variant, 'default variant').toBe('neutral');
@@ -105,29 +105,6 @@ export const OverviewTest: Story = {
       expect(toast.getAttribute('variant'), 'reflected variant attribute').toBe(
         'positive'
       );
-    });
-
-    await step('it does not warn for valid variants', async () => {
-      await withWarningSpy(async (warnCalls) => {
-        for (const variant of TOAST_VARIANTS) {
-          toast.variant = variant;
-          await toast.updateComplete;
-        }
-
-        expect(warnCalls, 'warnings for valid variants').toHaveLength(0);
-      });
-    });
-
-    await step('it warns when variant is invalid', async () => {
-      await withWarningSpy(async (warnCalls) => {
-        toast.variant = 'invalid' as ToastVariant;
-        await toast.updateComplete;
-
-        expect(warnCalls, 'warning count for invalid variant').toHaveLength(1);
-        expect(warnCalls[0][1], 'invalid variant warning message').toContain(
-          'expects "variant" to be one of: neutral, info, positive, negative'
-        );
-      });
     });
   },
 };
@@ -157,7 +134,7 @@ export const VariantIconTest: Story = {
       }
     });
 
-    await step('the icon is decorative without icon-label', async () => {
+    await step('renders a decorative icon without icon-label', async () => {
       toast.variant = 'info';
       await toast.updateComplete;
 
@@ -177,15 +154,18 @@ export const VariantIconTest: Story = {
       ).toBe('Information');
     });
 
-    await step('an empty icon-label makes the icon decorative', async () => {
-      toast.iconLabel = '';
-      await toast.updateComplete;
+    await step(
+      'renders a decorative icon for an empty icon-label',
+      async () => {
+        toast.iconLabel = '';
+        await toast.updateComplete;
 
-      expect(
-        icon()?.hasAttribute('accessible-label'),
-        'icon accessible-label presence'
-      ).toBe(false);
-    });
+        expect(
+          icon()?.hasAttribute('accessible-label'),
+          'icon accessible-label presence'
+        ).toBe(false);
+      }
+    );
   },
 };
 
@@ -206,14 +186,14 @@ export const ActionButtonTest: Story = {
       ).toBeNull();
     });
 
-    await step('the action is rendered and receives its label', async () => {
+    await step('renders the action with its label', async () => {
       toast.actionLabel = 'Undo';
       await toast.updateComplete;
 
       expect(action()?.textContent?.trim(), 'action label').toBe('Undo');
     });
 
-    await step('the action receives the fixed Spectrum 2 treatment', () => {
+    await step('applies the fixed Spectrum 2 treatment to the action', () => {
       expect(action()?.getAttribute('size'), 'action size').toBe('m');
       expect(action()?.getAttribute('variant'), 'action variant').toBe(
         'secondary'
@@ -227,7 +207,7 @@ export const ActionButtonTest: Story = {
       ).toBe('white');
     });
 
-    await step('the action emits an event without closing the toast', () => {
+    await step('emits an action event without closing the toast', () => {
       let actionEvent: Event | undefined;
       canvasElement.addEventListener(
         SWC_TOAST_ACTION_EVENT,
@@ -255,9 +235,9 @@ export const ActionButtonTest: Story = {
   },
 };
 
-// ──────────────────────────
-//    ACCESSIBILITY
-// ──────────────────────────
+// ──────────────────────────────────────────────────────────────
+// TEST: Accessibility
+// ──────────────────────────────────────────────────────────────
 
 export const AccessibilitySemanticsTest: Story = {
   render: () => html`
@@ -266,7 +246,7 @@ export const AccessibilitySemanticsTest: Story = {
   play: async ({ canvasElement, step }) => {
     const toast = await getComponent<Toast>(canvasElement, 'swc-toast');
 
-    await step('the closed host exposes alert dialog semantics', () => {
+    await step('exposes alert dialog semantics on the closed host', () => {
       expect(toast.getAttribute('role'), 'host role').toBe('alertdialog');
       expect(toast.getAttribute('aria-modal'), 'host aria-modal').toBe('false');
       expect(toast.getAttribute('tabindex'), 'host tabindex').toBe('0');
@@ -278,7 +258,7 @@ export const AccessibilitySemanticsTest: Story = {
       );
     });
 
-    await step('the inner wrapper exposes an atomic alert', () => {
+    await step('exposes an atomic alert on the inner wrapper', () => {
       const alert = toast.shadowRoot?.querySelector('[role="alert"]');
       expect(alert, 'inner alert wrapper').toBeTruthy();
       expect(alert?.getAttribute('aria-atomic'), 'alert aria-atomic').toBe(
@@ -286,15 +266,18 @@ export const AccessibilitySemanticsTest: Story = {
       );
     });
 
-    await step('the accessible name follows message changes', async () => {
-      toast.textContent = 'Upload complete';
-      await Promise.resolve();
-      await toast.updateComplete;
+    await step(
+      'updates the accessible name when the message changes',
+      async () => {
+        toast.textContent = 'Upload complete';
+        await Promise.resolve();
+        await toast.updateComplete;
 
-      expect(toast.getAttribute('aria-label'), 'host aria-label').toBe(
-        'Upload complete'
-      );
-    });
+        expect(toast.getAttribute('aria-label'), 'host aria-label').toBe(
+          'Upload complete'
+        );
+      }
+    );
   },
 };
 
@@ -305,7 +288,7 @@ export const LabelledMessageTest: Story = {
   play: async ({ canvasElement, step }) => {
     const toast = await getComponent<Toast>(canvasElement, 'swc-toast');
 
-    await step('an ID-bearing message labels the host by reference', () => {
+    await step('labels the host by reference for an ID-bearing message', () => {
       expect(
         toast.getAttribute('aria-labelledby'),
         'host aria-labelledby'
@@ -360,7 +343,7 @@ export const EmptySlotMessageTest: Story = {
     const toast = await getComponent<Toast>(canvasElement, 'swc-toast');
 
     await step(
-      'a slot="" text element labels the host like default-slot content',
+      'labels the host from a slot="" text element like default-slot content',
       () => {
         expect(toast.getAttribute('aria-label'), 'host aria-label').toBe(
           'File saved'
@@ -384,7 +367,7 @@ export const EmptySlotLabelledMessageTest: Story = {
     const toast = await getComponent<Toast>(canvasElement, 'swc-toast');
 
     await step(
-      'a slot="" ID-bearing element labels the host by reference',
+      'labels the host by reference from a slot="" ID-bearing element',
       () => {
         expect(
           toast.getAttribute('aria-labelledby'),
@@ -399,9 +382,9 @@ export const EmptySlotLabelledMessageTest: Story = {
   },
 };
 
-// ──────────────────────────
-//    LIFECYCLE
-// ──────────────────────────
+// ──────────────────────────────────────────────────────────────
+// TEST: Lifecycle
+// ──────────────────────────────────────────────────────────────
 
 export const OpenLifecycleTest: Story = {
   render: () => html`
@@ -439,7 +422,7 @@ export const OpenLifecycleTest: Story = {
 
     // TODO(SWC-2567): confirm the container connects toasts closed and opens them after the first update (Q11).
     await step(
-      'the live region stays empty for two frames, then receives the message (Q10, Q11)',
+      'keeps the live region empty for two frames, then adds the message (Q10, Q11)',
       async () => {
         expect(
           messageSlot(toast),
@@ -493,7 +476,7 @@ export const InitiallyOpenTest: Story = {
   play: async ({ canvasElement, step }) => {
     const toast = await getComponent<Toast>(canvasElement, 'swc-toast');
 
-    await step('a toast rendered open shows its message at once', () => {
+    await step('shows the message at once when rendered open', () => {
       expect(
         toast.hasAttribute('aria-hidden'),
         'host aria-hidden presence'
@@ -501,7 +484,7 @@ export const InitiallyOpenTest: Story = {
       expect(messageSlot(toast), 'message slot').not.toBeNull();
     });
 
-    await step('the open host is focusable', () => {
+    await step('makes the open host focusable', () => {
       toast.focus();
       expect(document.activeElement, 'focused element').toBe(toast);
       toast.blur();
@@ -515,7 +498,7 @@ export const SameTurnOpenTest: Story = {
   `,
   play: async ({ canvasElement, step }) => {
     await step(
-      'a toast opened in the turn it is created skips the delay (Q11)',
+      'skips the delay when opened in the turn it is created (Q11)',
       async () => {
         const toast = document.createElement('swc-toast') as Toast;
         toast.textContent = 'File saved';
@@ -539,17 +522,20 @@ export const CloseInteractionTest: Story = {
       'swc-close-button'
     ) as HTMLElement;
 
-    await step('the close button has an accessible name and treatment', () => {
-      expect(closeButton, 'close button').toBeTruthy();
-      expect(
-        closeButton.getAttribute('accessible-label'),
-        'close button accessible-label'
-      ).toBe('Close');
-      expect(
-        closeButton.getAttribute('static-color'),
-        'close button static-color'
-      ).toBe('white');
-    });
+    await step(
+      'gives the close button an accessible name and treatment',
+      () => {
+        expect(closeButton, 'close button').toBeTruthy();
+        expect(
+          closeButton.getAttribute('accessible-label'),
+          'close button accessible-label'
+        ).toBe('Close');
+        expect(
+          closeButton.getAttribute('static-color'),
+          'close button static-color'
+        ).toBe('white');
+      }
+    );
 
     await step('swc-close can cancel dismissal', async () => {
       const restoreClose = cancelClose(toast);
@@ -658,5 +644,50 @@ export const ReconnectTest: Story = {
         ).not.toBeNull();
       }
     );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Dev mode warnings
+// ──────────────────────────────────────────────────────────────
+
+export const InvalidVariantWarningTest: Story = {
+  render: () => html`
+    <swc-toast>File saved</swc-toast>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const toast = await getComponent<Toast>(canvasElement, 'swc-toast');
+
+    await step('warns when variant is invalid', async () => {
+      await withWarningSpy(async (warnCalls) => {
+        toast.variant = 'invalid' as ToastVariant;
+        await toast.updateComplete;
+
+        expect(warnCalls, 'warning count for invalid variant').toHaveLength(1);
+        expect(warnCalls[0][1], 'invalid variant warning message').toContain(
+          'expects "variant" to be one of: neutral, info, positive, negative'
+        );
+      });
+    });
+  },
+};
+
+export const ValidVariantNoWarningTest: Story = {
+  render: () => html`
+    <swc-toast>File saved</swc-toast>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const toast = await getComponent<Toast>(canvasElement, 'swc-toast');
+
+    await step('does not warn for valid variants', async () => {
+      await withWarningSpy(async (warnCalls) => {
+        for (const variant of TOAST_VARIANTS) {
+          toast.variant = variant;
+          await toast.updateComplete;
+        }
+
+        expect(warnCalls, 'warnings for valid variants').toHaveLength(0);
+      });
+    });
   },
 };
