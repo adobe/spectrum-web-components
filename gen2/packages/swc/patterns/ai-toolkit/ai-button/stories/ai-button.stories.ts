@@ -244,24 +244,6 @@ export const Icons: Story = {
   tags: ['options'],
 };
 
-// ──────────────────────────
-//    STATES STORY
-// ──────────────────────────
-
-export const States: Story = {
-  render: (args) => html`
-    ${(Object.keys(STATE_LABELS) as AiButtonState[]).map((state) =>
-      captioned(renderState(args, state), STATE_LABELS[state])
-    )}
-  `,
-  play: forceHover,
-  parameters: {
-    flexLayout: 'row-wrap',
-    docs: { story: { autoplay: true } },
-  },
-  tags: ['states'],
-};
-
 // ──────────────────────────────
 //    BEHAVIORS STORIES
 // ──────────────────────────────
