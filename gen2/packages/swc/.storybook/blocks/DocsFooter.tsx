@@ -18,9 +18,9 @@ import { SpectrumStories } from './SpectrumStories';
 
 /**
  * The standard bottom of a Storybook docs page: API table and the feedback
- * link. Genre-aware via meta tags; controllers (tagged `controller`) skip the
- * API table because they expose a TypeScript class rather than a custom
- * element manifest.
+ * link. Genre-aware via meta tags; controllers
+ * (tagged `controller`) skip the API table because they expose a TypeScript
+ * class rather than a custom element manifest.
  *
  * Authors compose a docs page as:
  *
