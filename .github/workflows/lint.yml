@@ -78,7 +78,8 @@ jobs:
     name: Lint
     runs-on: ubuntu-26.04
     needs: [changed_files]
-    timeout-minutes: 5
+    # Push runs also lint the whole repo, which adds about a minute.
+    timeout-minutes: 10
     steps:
       # install but don't build - we're linting pre-compiled assets
       - name: Check out code
@@ -115,8 +116,10 @@ jobs:
       - name: Validate generated version files
         run: node scripts/generate-versions.js --check
 
+      # Reviewdog's github-pr-review reporter only works on pull requests. On
+      # push it exits without reading stdin, so the linter crashes with EPIPE.
       - name: Lint styles
-        # if: ${{ needs.changed_files.outputs.styles_added_files != '' || needs.changed_files.outputs.styles_modified_files != '' }}
+        if: ${{ github.event_name == 'pull_request' && (needs.changed_files.outputs.styles_added_files != '' || needs.changed_files.outputs.styles_modified_files != '') }}
         uses: reviewdog/action-stylelint@v1.33.0
         with:
           fail_level: warning
@@ -126,14 +129,25 @@ jobs:
           stylelint_input: '${{ needs.changed_files.outputs.styles_added_files }} ${{ needs.changed_files.outputs.styles_modified_files }} --allow-empty-input'
 
       - name: ESLint
+        if: ${{ github.event_name == 'pull_request' && (needs.changed_files.outputs.eslint_added_files != '' || needs.changed_files.outputs.eslint_modified_files != '') }}
         uses: reviewdog/action-eslint@v1.36.1
-        # if: ${{ needs.changed_files.outputs.eslint_added_files != '' || needs.changed_files.outputs.eslint_modified_files != '' }}
         with:
           fail_level: warning
           level: warning
           reporter: github-pr-review
           filter_mode: diff_context
           eslint_flags: '${{ needs.changed_files.outputs.eslint_added_files }} ${{ needs.changed_files.outputs.eslint_modified_files }}'
+
+      # Post-merge smoke test: lint the repo on main, skipping 1st-gen to match
+      # the pull request scope. Fails on errors only; existing warnings are
+      # reported but don't fail the run.
+      - name: ESLint (whole repo)
+        if: ${{ github.event_name == 'push' }}
+        run: yarn lint:eslint --ignore-pattern '1st-gen/**'
+
+      - name: Stylelint (whole repo)
+        if: ${{ github.event_name == 'push' }}
+        run: yarn lint:styles
 
       - name: Prettier
         if: ${{ needs.changed_files.outputs.prettier_added_files != '' || needs.changed_files.outputs.prettier_modified_files != '' }}
