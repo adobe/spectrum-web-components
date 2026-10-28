@@ -87,7 +87,7 @@ Popover-style chrome (`swc-popover`, etc.) may still wrap the visuals—see [pop
 ### Also read
 
 - Spectrum 2 visuals and markup: [Tooltip rendering and styling roadmap](./rendering-and-styling-migration-analysis.md)
-- Nearby overlay pattern: [Popover accessibility migration](../popover/component-accessibility-specification.md) — Tooltip may reuse shell geometry; Tooltip still owns `role`, `aria` wiring, delays, **`Escape`**, keyboard/touch
+- Nearby overlay pattern: [Popover component accessibility specification](../popover/component-accessibility-specification.md) — Tooltip may reuse shell geometry; Tooltip still owns `role`, `aria` wiring, delays, **`Escape`**, keyboard/touch
 
 ### What a tooltip is
 
