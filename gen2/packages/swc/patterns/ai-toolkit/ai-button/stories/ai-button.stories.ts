@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { html } from 'lit';
+import { html, nothing } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
@@ -21,7 +21,9 @@ import '../swc-ai-button.js';
 import {
   captioned,
   forcePseudoState,
+  row,
   SIZE_LABELS,
+  theme,
 } from '../../../../.storybook/helpers/index.js';
 import {
   PIXEL_LOADER_ICON_NAMES,
@@ -55,6 +57,9 @@ args.icon = 'aiLogo';
  * AI buttons start an AI action, such as asking an assistant about the current
  * context. They show a pixel-art icon from the pixel loader, in its static
  * state, before a short label. The icon is the AI mark by default.
+ *
+ * The surface of the button is translucent glass. The content behind the
+ * button shows through it, blurred and tinted.
  */
 const meta: Meta = {
   title: 'AI Toolkit/AI button',
@@ -128,6 +133,41 @@ const forceHover = async ({
     forcePseudoState(host, 'hover', '.swc-AiButton');
   }
 };
+
+const THEME_LABELS = { light: 'Light theme', dark: 'Dark theme' } as const;
+
+/**
+ * Backdrops for the backgrounds story. They don't change with the theme, so
+ * the light and dark glass show over the same content.
+ */
+const BACKGROUNDS = [
+  ['White', 'rgb(255 255 255)'],
+  ['Black', 'rgb(0 0 0)'],
+  ['Blue', 'rgb(45 91 255)'],
+  ['Yellow', 'rgb(255 212 0)'],
+  ['Green', 'rgb(26 163 100)'],
+  ['Gradient', 'url(./images/card-preview.jpg) center / cover'],
+  ['Painting', 'url(./images/landscape-art.jpg) 40% 70% / 900px auto'],
+  ['Photo', 'url(./images/avatar-preview.png) 50% 30% / 260px auto'],
+] as const;
+
+/** Document text set behind the AI buttons in the backgrounds story. */
+const DOCUMENT_TEXT =
+  'The spring campaign launches in March with a hero video, three social cuts, and a new landing page. Review the brief and send your feedback by Friday, so that the team can lock the schedule.';
+
+/** Shows a default and a disabled AI button over a background. */
+const backgroundTile = (
+  storyArgs: Record<string, unknown>,
+  background: string,
+  behind: unknown = nothing
+) => html`
+  <div
+    style="position: relative; display: flex; gap: var(--swc-spacing-200); align-items: center; justify-content: center; box-sizing: border-box; min-inline-size: 240px; min-block-size: 120px; padding: var(--swc-spacing-300); overflow: hidden; border: 1px solid var(--swc-gray-300); border-radius: var(--swc-corner-radius-500); background: ${background};"
+  >
+    ${behind} ${template(storyArgs)}
+    ${template({ ...storyArgs, disabled: true })}
+  </div>
+`;
 
 // ────────────────────
 //    PLAYGROUND STORY
@@ -220,6 +260,52 @@ export const States: Story = {
     docs: { story: { autoplay: true } },
   },
   tags: ['states'],
+};
+
+// ──────────────────────────────
+//    BEHAVIORS STORIES
+// ──────────────────────────────
+
+export const Backgrounds: Story = {
+  render: (args) => html`
+    ${(['light', 'dark'] as const).map((mode) =>
+      theme(
+        row(
+          html`
+            ${BACKGROUNDS.map(([label, background]) =>
+              captioned(backgroundTile(args, background), label)
+            )}
+            ${captioned(
+              backgroundTile(
+                args,
+                'transparent',
+                html`
+                  <p
+                    class="swc-Body swc-Body--sizeXS"
+                    style="position: absolute; inset: 0; margin: 0; padding: var(--swc-spacing-200);"
+                  >
+                    ${DOCUMENT_TEXT}
+                  </p>
+                `
+              ),
+              'Text'
+            )}
+          `,
+          THEME_LABELS[mode]
+        ),
+        mode
+      )
+    )}
+  `,
+  parameters: {
+    layout: 'padded',
+    styles: {
+      display: 'flex',
+      'flex-direction': 'column',
+      gap: 'var(--swc-spacing-400)',
+    },
+  },
+  tags: ['behaviors'],
 };
 
 // ────────────────────────────────
