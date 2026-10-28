@@ -2,7 +2,7 @@
   "name": "@spectrum-web-components/eslint-plugin",
   "version": "1.12.2",
   "private": true,
-  "description": "ESLint plugin for Spectrum Web Components (prevent-argument-names, document-active-element)",
+  "description": "ESLint plugin for Spectrum Web Components (prevent-argument-names, document-active-element, no-duplicate-cssprop)",
   "license": "Apache-2.0",
   "author": "Adobe",
   "homepage": "https://spectrum-web-components.adobe.com/",
@@ -30,6 +30,9 @@
     "index.js",
     "notice-utils.js"
   ],
+  "scripts": {
+    "test": "node --test *.test.js"
+  },
   "keywords": [
     "design-system",
     "spectrum",

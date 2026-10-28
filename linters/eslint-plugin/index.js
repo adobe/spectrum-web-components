@@ -19,6 +19,57 @@ const swcPlugin = {
     version: '1.0.0',
   },
   rules: {
+    'no-duplicate-cssprop': {
+      meta: {
+        type: 'problem',
+        docs: {
+          description:
+            'Disallow duplicate CSS custom property names in a JSDoc block, including @cssprop and @cssproperty aliases, to prevent duplicate API table rows.',
+        },
+        schema: [],
+        messages: {
+          duplicate:
+            'CSS custom property "{{name}}" is documented more than once in this JSDoc block.',
+        },
+      },
+      create(context) {
+        const sourceCode = context.sourceCode;
+
+        return {
+          Program() {
+            for (const comment of sourceCode.getAllComments()) {
+              if (comment.type !== 'Block' || !comment.value.startsWith('*')) {
+                continue;
+              }
+
+              const names = new Set();
+              const tags =
+                /^[ \t]*\*?[ \t]*@cssprop(?:erty)?[ \t]+(?:\{[^}\r\n]*\}[ \t]*)?\[?(--[^\s=\]]+)/gm;
+
+              for (const match of comment.value.matchAll(tags)) {
+                const name = match[1];
+                if (names.has(name)) {
+                  const start =
+                    comment.range[0] +
+                    2 +
+                    match.index +
+                    match[0].lastIndexOf(name);
+                  context.report({
+                    loc: {
+                      start: sourceCode.getLocFromIndex(start),
+                      end: sourceCode.getLocFromIndex(start + name.length),
+                    },
+                    messageId: 'duplicate',
+                    data: { name },
+                  });
+                }
+                names.add(name);
+              }
+            }
+          },
+        };
+      },
+    },
     'notice-after-shebang': {
       meta: {
         type: 'layout',
