@@ -58,7 +58,7 @@ Review these sources before filling out the plan:
 - The Phase 1 workflow guidance in **[Phase 1: Preparation](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-1-preparation)**
 - The gen2 migration status table in `CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_gen2-component-migration/01_status.md`
 - The component's rendering and styling analysis doc in `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/`
-- The component's component accessibility specification doc in `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/`, if available
+- The component's component accessibility specification in `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/`, if available
 - The 1st-gen source, tests, README, and any shared mixins or helpers it depends on
 - Relevant gen1 bug tickets and prior migration decisions
 - Relevant Figma and React Spectrum references for naming, variants, and expected behavior
