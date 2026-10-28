@@ -121,6 +121,8 @@ export class SlotPresenceController implements ReactiveController {
     this.observer.observe(this.host, {
       childList: true,
       subtree: true,
+      attributes: true,
+      attributeFilter: ['slot'],
     });
     this.checkPresence();
   }

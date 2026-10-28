@@ -29,7 +29,7 @@ permissions:
 jobs:
   chromatic:
     name: Chromatic
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     timeout-minutes: 20
     if: ${{ github.event_name == 'push' || github.event_name == 'workflow_dispatch' || github.event_name == 'workflow_call' || contains(github.event.pull_request.labels.*.name, 'run_vrt') || contains(github.event.pull_request.labels.*.name, 'skip_vrt') }}
     env:
@@ -41,7 +41,7 @@ jobs:
 
     steps:
       - name: Check out code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
@@ -58,7 +58,7 @@ jobs:
 
       - name: Publish to Chromatic
         id: chromatic
-        uses: chromaui/action@v15
+        uses: chromaui/action@v18
         with:
           projectToken: ${{ secrets.CHROMATIC_TOKEN }}
           workingDir: gen2/packages/swc
