@@ -81,24 +81,15 @@ export abstract class RadioGroupBase extends SizedMixin(
 
   private readonly fieldAssoc = new FieldAssociationController(this.internals, {
     onDisabledChange: () => this.requestUpdate(),
+    getStatus: () => this.fieldStatus,
+    host: this,
   });
 
   constructor() {
     super();
     // Items dispatch a composed `change` on activation.
     this.addEventListener('change', this.handleItemChange);
-    // With no host `disabled` attribute, the browser no longer drops clicks.
-    this.addEventListener('click', this.suppressDisabledClick, {
-      capture: true,
-    });
   }
-
-  private readonly suppressDisabledClick = (event: Event): void => {
-    if (this.effectiveDisabled) {
-      event.preventDefault();
-      event.stopImmediatePropagation();
-    }
-  };
 
   /**
    * Size applied to all items. Defaults to `m`.
@@ -183,7 +174,7 @@ export abstract class RadioGroupBase extends SizedMixin(
    * state. Cascaded to every slotted item while preserving its own disabled state.
    */
   protected get effectiveDisabled(): boolean {
-    return this.fieldStatus === 'disabled' || this.fieldAssoc.formDisabled;
+    return this.fieldAssoc.disabled;
   }
 
   /** The form the group participates in, or `null`. */
@@ -203,11 +194,7 @@ export abstract class RadioGroupBase extends SizedMixin(
 
   /** Whether the group is a candidate for constraint validation. */
   public get willValidate(): boolean {
-    return !this.isBarredFromValidation && this.fieldAssoc.willValidate;
-  }
-
-  private get isBarredFromValidation(): boolean {
-    return this.effectiveDisabled || this.fieldStatus === 'readonly';
+    return this.fieldAssoc.willValidate;
   }
 
   /** Runs constraint validation; returns whether the group is valid. */
@@ -526,10 +513,7 @@ export abstract class RadioGroupBase extends SizedMixin(
         url: DOCS_URL,
       });
     }
-    // Enables `:state(disabled)` for the authored status and the fieldset cascade.
-    this.internals.states[this.effectiveDisabled ? 'add' : 'delete'](
-      'disabled'
-    );
+    this.fieldAssoc.syncDisabledState();
     super.update(changedProperties);
     const disabledChanged = this.syncDisabledState();
     if (disabledChanged) {
@@ -544,7 +528,7 @@ export abstract class RadioGroupBase extends SizedMixin(
     // The role element is the validation anchor, so a blocked submit focuses it.
     // Disabled and read-only groups are barred from validation, as native
     // controls are.
-    const barred = this.isBarredFromValidation;
+    const barred = this.fieldAssoc.barred;
     const valueMissing = !barred && this.required && !this.selected;
     const anchor = this.roleElement;
     const invalid = this.fieldStatus === 'invalid';

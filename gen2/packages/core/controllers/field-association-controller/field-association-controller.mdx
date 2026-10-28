@@ -17,7 +17,7 @@ It handles:
 - **Disabled cascade**: the host forwards `formDisabledCallback` here; the controller tracks it as `formDisabled` and fires `onDisabledChange` so the host re-syncs.
 - **Validity**: `validity`, `validationMessage`, `willValidate`, `checkValidity()`, and `reportValidity()` pass through to `ElementInternals`.
 
-The host keeps what cannot be delegated: `static formAssociated = true`, its own `attachInternals()`, writing validity via `internals.setValidity()`, and calling `setValue()` whenever the value changes. Compute effective disabled as the host's own disabled state OR `fieldAssoc.formDisabled`, never the host's own state alone. If the host disables or read-only-ifies itself through a property such as `field-status` instead of a `disabled` or `readonly` host attribute, the browser does not bar it from validation: override `willValidate` and pass empty flags to `setValidity()` while barred. Expose the combined disabled state for styling with a custom state (`internals.states.add('disabled')`) rather than mirroring a second attribute.
+The host keeps what cannot be delegated: `static formAssociated = true`, its own `attachInternals()`, writing validity via `internals.setValidity()`, and calling `setValue()` whenever the value changes. For a host driven by `field-status` rather than reflected `disabled` or `readonly` attributes, pass `getStatus: () => this.fieldStatus` and `host: this`. The controller then provides what those attributes used to do for free: `disabled` (the authored status OR the fieldset cascade), `barred` (disabled or read-only, so `willValidate` is `false`), `syncDisabledState()` (the `disabled` custom state, the one styling hook for both cases; call it from `update()`), and capture-phase click suppression while disabled. Pass empty flags to `setValidity()` while `barred`.
 
 ```typescript
 import { LitElement, type PropertyValues } from 'lit';
@@ -96,11 +96,17 @@ A `<fieldset disabled>` or disabled form disables descendant fields via `formDis
 
 ### Validity pass-throughs
 
-The validity members read straight off `ElementInternals`; writing validity stays with the host (`internals.setValidity`). A `required` field left empty reports `checkValidity()` as `false`. A field the browser bars, disabled through the cascade or a host `disabled` attribute, reports `willValidate` as `false` and is skipped by validation entirely. A host that is disabled or read-only through another API must apply the same rule itself, as described above.
+The validity members read straight off `ElementInternals`; writing validity stays with the host (`internals.setValidity`). A `required` field left empty reports `checkValidity()` as `false`. A field the browser bars, disabled through the cascade or a host `disabled` attribute, reports `willValidate` as `false` and is skipped by validation entirely. With `getStatus` provided, the controller applies the same rule to `field-status="disabled"` and `"readonly"`.
 
 `internals.setValidity()` throws a `TypeError` when any flag is `true` and the message is empty. A host with a native control copies the control's `validationMessage` (as `swc-text-field` does). A host with no native control, such as a radio group, must pass a non-empty message itself. Otherwise the call throws inside the host's `update()`. That render still happens, but `firstUpdated()` and `updated()` are skipped for that update, `updateComplete` rejects with the `TypeError`, and it repeats on every update while the invalid state holds. Any post-render work in those hooks (for example accessible-name wiring) silently does not run. The message is not rendered by the controller; it only surfaces if the host calls `reportValidity()`.
 
 <Canvas of={Stories.Validity} />
+
+### Field status barring
+
+When the host passes `getStatus` and `host`, the controller treats `field-status="disabled"` like a disabled field and `"readonly"` as barred from validation. `disabled` and `barred` report the combined state, `syncDisabledState()` mirrors it into the `disabled` custom state, and clicks on the host are suppressed while disabled. A readonly field keeps receiving clicks and does not get the `disabled` state.
+
+<Canvas of={Stories.FieldStatusBarring} />
 
 ## Accessibility
 
@@ -128,7 +134,7 @@ The validity members read straight off `ElementInternals`; writing validity stay
 | Member                           | Description                                                                                                                                                                                                                                                                                                               |
 | -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `setValue(value, state?)`        | Sets the form value via `internals.setFormValue`. Pass `null` to exclude the field from `FormData`. The optional `state` mirrors [`ElementInternals.setFormValue`'s state argument](https://developer.mozilla.org/en-US/docs/Web/API/ElementInternals/setFormValue) for autofill and back-forward navigation restoration. |
-| `formDisabled`                   | Read-only. `true` when an ancestor form or `<fieldset disabled>` has disabled the field. Excludes the host's own authored disabled state.                                                                                                                                                                                 |
+| `formDisabled`                   | Read-only. `true` when an ancestor form or `<fieldset disabled>` has disabled the field. Excludes the host's authored disabled status; use `disabled` for the combined state when `getStatus` is provided.                                                                                                                |
 | `formDisabledCallback(disabled)` | Delegate target for the host's `formDisabledCallback`. Records the cascaded state and fires `onDisabledChange` on a real change.                                                                                                                                                                                          |
 | `form`                           | Read-only. The associated `HTMLFormElement`, or `null`.                                                                                                                                                                                                                                                                   |
 | `validity`                       | Read-only. The field's `ValidityState`.                                                                                                                                                                                                                                                                                   |

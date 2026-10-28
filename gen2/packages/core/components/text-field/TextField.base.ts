@@ -182,6 +182,8 @@ export abstract class TextFieldBase extends SizedMixin(
 
   private fieldAssoc = new FieldAssociationController(this.internals, {
     onDisabledChange: () => this.requestUpdate(),
+    getStatus: () => this.fieldStatus,
+    host: this,
   });
 
   // Slot-presence tracking does not notify when only the message text changes.
@@ -218,17 +220,6 @@ export abstract class TextFieldBase extends SizedMixin(
       this.#pointerFocus = false;
       this.internals.states.delete('keyboard-focused');
     });
-    // With no host `disabled` attribute, the browser no longer drops clicks.
-    this.addEventListener(
-      'click',
-      (event) => {
-        if (this.effectiveDisabled) {
-          event.preventDefault();
-          event.stopImmediatePropagation();
-        }
-      },
-      { capture: true }
-    );
   }
 
   /**
@@ -236,7 +227,7 @@ export abstract class TextFieldBase extends SizedMixin(
    * The subclass render reads it to disable the inner control.
    */
   protected get effectiveDisabled(): boolean {
-    return this.fieldStatus === 'disabled' || this.fieldAssoc.formDisabled;
+    return this.fieldAssoc.disabled;
   }
 
   /** Associated form, or `null` when the field is not associated with a form. */
@@ -256,12 +247,7 @@ export abstract class TextFieldBase extends SizedMixin(
 
   /** Whether the field participates in constraint validation. */
   public get willValidate(): boolean {
-    // Disabled and read-only fields are barred, as native controls are.
-    return (
-      !this.effectiveDisabled &&
-      this.fieldStatus !== 'readonly' &&
-      this.fieldAssoc.willValidate
-    );
+    return this.fieldAssoc.willValidate;
   }
 
   /** Returns whether the field passes validation. Fires `invalid` on failure. */
@@ -465,10 +451,7 @@ export abstract class TextFieldBase extends SizedMixin(
         url: DOCS_URL,
       });
     }
-    // Enables `:state(disabled)` for the authored status and the fieldset cascade.
-    this.internals.states[this.effectiveDisabled ? 'add' : 'delete'](
-      'disabled'
-    );
+    this.fieldAssoc.syncDisabledState();
     super.update(changedProperties);
     // Push the current value into the form; exclude it entirely when disabled.
     this.fieldAssoc.setValue(this.effectiveDisabled ? null : this.value);
