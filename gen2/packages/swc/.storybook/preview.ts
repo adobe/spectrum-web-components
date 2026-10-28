@@ -558,7 +558,12 @@ const preview = {
     VERSION: { table: { disable: true } },
     CORE_VERSION: { table: { disable: true } },
   },
-  tags: ['!autodocs', '!dev'], // We only want the playground stories to be visible in the docs and sidenav. Since a majority of our stories are tagged with '!autodocs' and '!dev', we set those tags globally. We can opt in to visibility by adding the 'autodocs' or 'dev' tags to individual stories.
+  // We only want the playground stories to be visible in the docs and sidenav. Since a majority of our stories are tagged with '!autodocs' and '!dev', we set those tags globally. We can opt in to visibility by adding the 'autodocs' or 'dev' tags to individual stories.
+  // Since Storybook 10.4.3, MDX docs pages without 'dev' are hidden too. The
+  // Storybook patch (.yarn/patches/storybook-npm-10.6.3.patch) restores the
+  // earlier behavior so every docs page stays in the sidebar; reapply it on
+  // each Storybook upgrade.
+  tags: ['!autodocs', '!dev'],
   loaders: [FontLoader],
 };
 
