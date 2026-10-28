@@ -84,7 +84,9 @@ Pre-commit hooks via `lint-staged` run linting and formatting on staged files au
 
 The local `@spectrum-web-components/eslint-plugin` also provides `swc/no-duplicate-cssprop`. This rule warns when a CSS custom property name appears more than once in a single JSDoc block, including mixed `@cssprop` and `@cssproperty` tags. Duplicate tags produce duplicate rows in Storybook API tables. Keep one tag per property and merge any useful description details manually; the rule does not autofix conflicting descriptions. Warnings appear in the IDE through the ESLint extension and in `yarn lint:eslint` output.
 
-Run the custom rule tests with `yarn workspace @spectrum-web-components/eslint-plugin test`.
+The local plugin keeps rule implementations in `linters/eslint-plugin/rules/`, supporting utilities in `utils/`, and tests in `test/`. Its `index.js` only registers the rules. Add new rules and their tests to the corresponding folders.
+
+Run the custom rule tests with `yarn test:linters` or `yarn workspace @spectrum-web-components/eslint-plugin test`. They also run through `yarn test` and the Lint CI workflow.
 
 ### Stylelint plugins
 

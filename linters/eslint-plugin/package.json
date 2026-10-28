@@ -21,17 +21,18 @@
       "default": "./index.js"
     },
     "./notice-utils": {
-      "import": "./notice-utils.js",
-      "default": "./notice-utils.js"
+      "import": "./utils/notice-utils.js",
+      "default": "./utils/notice-utils.js"
     }
   },
   "main": "index.js",
   "files": [
     "index.js",
-    "notice-utils.js"
+    "rules/",
+    "utils/"
   ],
   "scripts": {
-    "test": "node --test *.test.js"
+    "test": "node --test test/*.test.js"
   },
   "keywords": [
     "design-system",

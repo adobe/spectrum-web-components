@@ -15,7 +15,7 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { fileURLToPath } from 'node:url';
 
-import { swcPlugin } from './index.js';
+import { swcPlugin } from '../index.js';
 
 const ruleName = 'swc/no-duplicate-cssprop';
 const cases = [
@@ -118,7 +118,7 @@ for (const { name, code, duplicates, location } of cases) {
 
 test('enables IDE warnings for TypeScript components in the repository config', async () => {
   const eslint = new ESLint({
-    cwd: fileURLToPath(new URL('../../', import.meta.url)),
+    cwd: fileURLToPath(new URL('../../../', import.meta.url)),
   });
   const [result] = await eslint.lintText(
     '/**\n * @cssprop --first\n * @cssprop --first\n */\nexport class Example {}',
