@@ -883,8 +883,9 @@
 
 /* The scroll position shows and hides the chevrons, as in React Spectrum.
  * Each fades in with its edge fade and is `visibility: hidden` at its end, so
- * it can't be clicked or focused there. A chevron with keyboard focus
- * (.is-focus-visible) stays visible. */
+ * it can't be clicked or focused there. `pointer-events` changes at the
+ * midpoint of the fade, so a faint chevron doesn't block clicks on the tile
+ * under it. A chevron with keyboard focus (.is-focus-visible) stays visible. */
 @supports (animation-timeline: scroll()) {
   .swc-PromptField-attachments-scroll-prev,
   .swc-PromptField-attachments-scroll-next {
@@ -913,11 +914,13 @@
   @keyframes swc-prompt-field-attachment-chevron-in {
     from {
       visibility: hidden;
+      pointer-events: none;
       opacity: 0;
     }
 
     to {
       visibility: visible;
+      pointer-events: auto;
       opacity: 1;
     }
   }

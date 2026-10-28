@@ -116,8 +116,8 @@ Attachments own dismiss behavior via **`dismissible`** and emit **`swc-upload-at
 
 When the attachments don't fit, the strip scrolls horizontally. This works the same for `type="card"` and `type="media"` tiles.
 
-- Round chevron buttons show on each side when there is more content in that direction. `>` moves the tile that is partly hidden at the end to the start of the strip; `<` does the reverse.
-- Edge fades show that more content is off screen. The fades and chevrons come in as soon as the strip scrolls.
+- Round chevron buttons show on each side when there is more content in that direction. `>` moves the tile that is partly hidden at the end to the start of the strip; `<` does the reverse. When no tile is left to move, a chevron scrolls to that end of the strip.
+- Edge fades show that more content is off screen. The fades and chevrons come in as soon as the strip scrolls. While a chevron fades in with the scroll, it takes clicks only once it is at least half visible.
 - Users can also scroll with a trackpad, mouse wheel, or touch. The strip has no visible scrollbar and doesn't snap to tile edges.
 
 <Canvas of={PromptFieldStories.MultiAttachmentScroll} />
@@ -186,9 +186,9 @@ The `<swc-prompt-field>` element implements the following accessibility features
 The attachment strip is a `role="region"` landmark (labeled by `attachment-strip-label`, default "Uploaded assets strip") that contains roving-tabindex thumbnails. The landmark itself is not a tab stop.
 
 - **Tab**: moves to the previous chevron (when shown), the active thumbnail (the first one until the arrow keys move it), that thumbnail's Close button, the next chevron (when shown), and then out of the strip
-- **Arrow Left/Right**: move to the previous or next thumbnail and scroll it into view
+- **Arrow Left/Right**: move to the previous or next thumbnail and scroll it fully into view, clear of the chevrons. A thumbnail that gets focus with **Tab** also scrolls fully into view
 - **Shift+Tab** from a Close button returns to its thumbnail; **Shift+Tab** from a thumbnail leaves the strip
-- Activating a chevron (click, Enter, or Space) scrolls the strip and keeps focus on the chevron. **Shift+Tab** from `>`, or **Tab** from `<`, moves into the tiles that are now shown
+- Activating a chevron (click, Enter, or Space) scrolls the strip and keeps focus on the chevron. The first thumbnail that is now shown becomes the active thumbnail: **Shift+Tab** from `>` moves to its Close button (or to the thumbnail, if it has no Close button), and **Tab** from `<` moves to the thumbnail
 - At the end of the strip, the chevron for that direction is hidden. If it had focus, focus moves to the thumbnail at that end: the last one for `>`, the first one for `<`
 
 ### Best practices

@@ -31,8 +31,6 @@ import { ResizeController } from '@lit-labs/observers/resize-controller.js';
 
 import {
   DragAndDropController,
-  focusgroupNavigationActiveChange,
-  type FocusgroupNavigationActiveChangeDetail,
   FocusgroupNavigationController,
 } from '@adobe/spectrum-wc-core/controllers/index.js';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
@@ -237,6 +235,10 @@ export class PromptField extends SpectrumElement {
   // of firing late.
   private _attachmentScrollFallbackGeneration = 0;
 
+  // Set by chevron paging. When that scroll ends, the first visible tile
+  // becomes the Tab stop (see `_syncAttachmentActiveItemToVisible`).
+  private _attachmentPagedScroll = false;
+
   // Observed targets accumulate across slot changes (dismissed tiles are
   // never explicitly unobserved); the browser drops a target's callbacks
   // once it leaves the DOM, so this is a bounded, harmless handful of
@@ -321,19 +323,7 @@ export class PromptField extends SpectrumElement {
     return [styles, visuallyHiddenStyles];
   }
 
-  public override connectedCallback(): void {
-    super.connectedCallback();
-    this.addEventListener(
-      focusgroupNavigationActiveChange,
-      this._handleAttachmentActiveChange as EventListener
-    );
-  }
-
   public override disconnectedCallback(): void {
-    this.removeEventListener(
-      focusgroupNavigationActiveChange,
-      this._handleAttachmentActiveChange as EventListener
-    );
     this._attachmentScrollFallbackGeneration++;
     super.disconnectedCallback();
   }
@@ -583,8 +573,14 @@ export class PromptField extends SpectrumElement {
    * visible, having scrolled out from under it. Re-point the roving stop
    * at a currently visible tile whenever the strip scrolls, so Tab always
    * lands somewhere the user can see.
+   *
+   * After chevron paging, the stop always moves to the first visible tile.
+   * The paged-to tile can end up mid-strip, because the scroll stops at
+   * either end of the strip. A tile that has focus keeps the stop.
    */
   private _syncAttachmentActiveItemToVisible(): void {
+    const afterPaging = this._attachmentPagedScroll;
+    this._attachmentPagedScroll = false;
     const scrollEl = this._attachmentScrollEl;
     const attachments = this._assignedAttachmentElements ?? [];
     if (!scrollEl || attachments.length < 2) {
@@ -604,7 +600,10 @@ export class PromptField extends SpectrumElement {
       return rect.right > left + tolerance && rect.left < right - tolerance;
     };
     const active = this._attachmentNavigation.getActiveItem();
-    if (active && fullyVisible(active)) {
+    const focused = getActiveElement();
+    const focusInTile =
+      !!focused && attachments.some((tile) => deepContains(tile, focused));
+    if (active && fullyVisible(active) && (!afterPaging || focusInTile)) {
       return;
     }
     const target =
@@ -646,10 +645,6 @@ export class PromptField extends SpectrumElement {
 
   private _focusAttachment(el: HTMLElement): void {
     this._attachmentNavigation.setActiveItem(el);
-    el.scrollIntoView({
-      block: 'nearest',
-      inline: 'nearest',
-    });
     el.focus();
   }
 
@@ -657,27 +652,39 @@ export class PromptField extends SpectrumElement {
   private _prepareAttachmentDropTarget(el: HTMLElement): void {
     this._attachmentNavigation.setActiveItem(el);
     if (isFocusVisibleInTree()) {
-      el.scrollIntoView({
-        block: 'nearest',
-        inline: 'nearest',
-      });
       el.focus();
     }
   }
 
-  /** Reacts to `swc-focusgroup-navigation-active-change` from `_attachmentNavigation`. */
-  private _handleAttachmentActiveChange = (
-    event: CustomEvent<FocusgroupNavigationActiveChangeDetail>
-  ): void => {
-    const { activeElement, source } = event.detail;
-    if (!activeElement || (source !== 'keyboard' && source !== 'focus')) {
+  /**
+   * Scrolls a tile fully into view, clear of the chevrons, when the tile or
+   * its Close button gets focus: from the arrow keys, Tab, or script. This
+   * waits a frame because `focus()` does its own scroll, which stops a
+   * smooth scroll that started before it. If focus has left the tile by
+   * then, the strip doesn't move.
+   */
+  private _handleAttachmentFocusIn(event: FocusEvent): void {
+    const attachments = this._assignedAttachmentElements ?? [];
+    const tile = event
+      .composedPath()
+      .find(
+        (node): node is HTMLElement =>
+          node instanceof HTMLElement && attachments.includes(node)
+      );
+    if (!tile) {
       return;
     }
-    activeElement.scrollIntoView({
-      block: 'nearest',
-      inline: 'nearest',
+    requestAnimationFrame(() => {
+      const focused = getActiveElement();
+      if (!focused || !deepContains(tile, focused)) {
+        return;
+      }
+      tile.scrollIntoView({
+        block: 'nearest',
+        inline: 'nearest',
+      });
     });
-  };
+  }
 
   private _handleAttachmentRowKeydown(event: KeyboardEvent): void {
     if (event.key !== 'Tab') {
@@ -750,11 +757,11 @@ export class PromptField extends SpectrumElement {
     }
 
     // From the Next chevron: Shift+Tab moves backward into the roving
-    // controller's current active tile (updated by `_scrollAttachmentsByPage`
-    // after paging, so this lands in the newly displayed set rather than
-    // wherever focus was before the page turned) — its Close button when
-    // visible, mirroring the forward tile -> Close -> Next chain in reverse,
-    // otherwise the tile itself.
+    // controller's current active tile (after paging, the first tile that is
+    // shown; see `_syncAttachmentActiveItemToVisible`, so this lands in the
+    // newly displayed set rather than wherever focus was before the page
+    // turned) — its Close button when visible, mirroring the forward
+    // tile -> Close -> Next chain in reverse, otherwise the tile itself.
     if (active === nextButton && event.shiftKey) {
       const activeTile = this._attachmentNavigation.getActiveItem();
       if (activeTile) {
@@ -852,6 +859,7 @@ export class PromptField extends SpectrumElement {
   /**
    * Next moves the tile that is partly hidden at the end to the start.
    * Prev moves the tile that is partly hidden at the start to the end.
+   * When no tile is left to move, it scrolls to that end of the strip.
    */
   private _scrollAttachmentsByPage(direction: -1 | 1): void {
     // The strip can still be moving (a scroll-driven chevron shows before
@@ -868,33 +876,54 @@ export class PromptField extends SpectrumElement {
     }
 
     const { left, right } = this._attachmentVisibleBounds(scrollEl);
+    // scrollIntoView() aligns a tile to the scroll-padding edges. Near an end
+    // of the strip, a hidden chevron puts the visible edge outside them.
+    const scrollRect = scrollEl.getBoundingClientRect();
+    const scrollStyle = getComputedStyle(scrollEl);
+    const alignLeft =
+      scrollRect.left + (parseFloat(scrollStyle.scrollPaddingLeft) || 0);
+    const alignRight =
+      scrollRect.right - (parseFloat(scrollStyle.scrollPaddingRight) || 0);
     const tolerance = 1;
     const rtl = this._isRtl();
-    // Skip a tile that is already aligned at the target edge. In a narrow
-    // strip a tile can be wider than the clear area, so it stays partly
-    // hidden, and paging would select it again and not move.
+    // Skip a tile that is already at the edge it would be aligned to. In a
+    // narrow strip a tile can be wider than the clear area, so it stays
+    // partly hidden, and paging would select it again and not move.
     const nextTarget = (child: HTMLElement): boolean => {
       const rect = child.getBoundingClientRect();
       return rtl
-        ? rect.left < left - tolerance && rect.right < right - tolerance
-        : rect.right > right + tolerance && rect.left > left + tolerance;
+        ? rect.left < left - tolerance && rect.right < alignRight - tolerance
+        : rect.right > right + tolerance && rect.left > alignLeft + tolerance;
     };
     const prevTarget = (child: HTMLElement): boolean => {
       const rect = child.getBoundingClientRect();
       return rtl
-        ? rect.right > right + tolerance && rect.left > left + tolerance
-        : rect.left < left - tolerance && rect.right < right - tolerance;
+        ? rect.right > right + tolerance && rect.left > alignLeft + tolerance
+        : rect.left < left - tolerance && rect.right < alignRight - tolerance;
     };
-    const target =
+    const found =
       direction === 1
-        ? (children.find(nextTarget) ?? children[children.length - 1]!)
-        : ([...children].reverse().find(prevTarget) ?? children[0]!);
+        ? children.find(nextTarget)
+        : [...children].reverse().find(prevTarget);
+    const target =
+      found ??
+      (direction === 1 ? children[children.length - 1]! : children[0]!);
 
     this._attachmentNavigation.setActiveItem(target);
-    target.scrollIntoView({
-      block: 'nearest',
-      inline: direction === 1 ? 'start' : 'end',
-    });
+    this._attachmentPagedScroll = true;
+    if (found) {
+      target.scrollIntoView({
+        block: 'nearest',
+        inline: direction === 1 ? 'start' : 'end',
+      });
+      return;
+    }
+    // No tile is left to move in. The end tile can still be partly hidden,
+    // when it is wider than the space next to the chevron, and aligning it
+    // again does not move the strip. So scroll to the end of the strip.
+    const end =
+      direction === 1 ? scrollEl.scrollWidth - scrollEl.clientWidth : 0;
+    scrollEl.scrollTo({ left: rtl ? -end : end });
   }
 
   /**
@@ -1164,6 +1193,7 @@ export class PromptField extends SpectrumElement {
               tabindex="-1"
               @scroll=${this._handleAttachmentScroll}
               @scrollend=${this._handleAttachmentScrollEnd}
+              @focusin=${this._handleAttachmentFocusIn}
             >
               <div class="swc-PromptField-attachments-tiles">
                 <slot

@@ -294,6 +294,30 @@ const describeChevron = (button: Element | null | undefined): string =>
       }, focus-visible-pin=${button.classList.contains('is-focus-visible')}`
     : 'not rendered';
 
+// Whether `tile` is fully visible: inside the strip and clear of each shown
+// chevron and its edge fade. That clearance is the strip's scroll-padding.
+const isTileFullyVisible = (field: PromptField, tile: HTMLElement): boolean => {
+  const part = (selector: string): HTMLElement | null =>
+    field.shadowRoot!.querySelector<HTMLElement>(selector);
+  const scrollEl = part('.swc-PromptField-attachments-scroll')!;
+  const scrollRect = scrollEl.getBoundingClientRect();
+  const scrollStyle = getComputedStyle(scrollEl);
+  const prevShown = !isChevronHidden(
+    part('.swc-PromptField-attachments-scroll-prev')
+  );
+  const nextShown = !isChevronHidden(
+    part('.swc-PromptField-attachments-scroll-next')
+  );
+  const left =
+    scrollRect.left +
+    (prevShown ? parseFloat(scrollStyle.scrollPaddingLeft) : 0);
+  const right =
+    scrollRect.right -
+    (nextShown ? parseFloat(scrollStyle.scrollPaddingRight) : 0);
+  const rect = tile.getBoundingClientRect();
+  return rect.left >= left - 1 && rect.right <= right + 1;
+};
+
 function renderMultiAttachmentPromptField(
   canvasElement: HTMLElement,
   direction?: 'rtl'
@@ -378,6 +402,39 @@ export const AttachmentScrollPaginationTest: Story = {
         expect(scrollEl!.getAnimations().length).toBeGreaterThan(0);
       }
     });
+
+    await step(
+      'a fading-in chevron takes clicks only once it is at least half opaque',
+      async () => {
+        if (!CSS.supports('animation-timeline: scroll()')) {
+          return;
+        }
+        const prevButton = el.shadowRoot!.querySelector<HTMLElement>(
+          '.swc-PromptField-attachments-scroll-prev'
+        )!;
+
+        // Just past the start, Prev is shown but faint: clicks go to the
+        // tile under it.
+        scrollEl!.scrollTo({ left: 2, behavior: 'instant' });
+        await waitFor(() => {
+          const style = getComputedStyle(prevButton);
+          expect(style.visibility).toBe('visible');
+          expect(Number(style.opacity)).toBeLessThan(0.5);
+          expect(style.pointerEvents).toBe('none');
+        });
+
+        // Past the fade range, Prev is opaque and takes clicks.
+        scrollEl!.scrollTo({ left: 100, behavior: 'instant' });
+        await waitFor(() => {
+          const style = getComputedStyle(prevButton);
+          expect(Number(style.opacity)).toBe(1);
+          expect(style.pointerEvents).toBe('auto');
+        });
+
+        scrollEl!.scrollTo({ left: 0, behavior: 'instant' });
+        await waitFor(() => expect(isChevronHidden(prevButton)).toBe(true));
+      }
+    );
 
     await step(
       'a chevron with keyboard focus stays shown; blurring it releases it',
@@ -608,10 +665,12 @@ export const AttachmentScrollNarrowCardsTest: Story = {
   render: () => '',
   play: async ({ canvasElement, step }) => {
     // Cards wider than the space between the chevrons, as in a narrow
-    // composer, so a card can't ever be fully visible.
+    // composer, so a card can't ever be fully visible. The end cards are
+    // also wider than the space next to one chevron, so aligning them again
+    // would not move the strip: paging must still reach both ends.
     render(
       html`
-        <div style="inline-size:380px;">
+        <div style="inline-size:300px;">
           <swc-prompt-field label="Prompt" value="Use these files.">
             ${Array.from(
               { length: 4 },
@@ -798,6 +857,21 @@ async function waitForScrollSettled(
   }
   for (let frame = 0; frame < 5; frame++) {
     await new Promise((resolve) => requestAnimationFrame(resolve));
+  }
+}
+
+/**
+ * Waits for a smooth scroll in `scrollEl` to stop: `scrollLeft` holds steady
+ * for several frames in a row.
+ */
+async function waitForScrollStopped(scrollEl: HTMLElement): Promise<void> {
+  let lastScrollLeft = Number.NaN;
+  let stableFrames = 0;
+  for (let frame = 0; frame < 300 && stableFrames < 5; frame++) {
+    await new Promise((resolve) => requestAnimationFrame(resolve));
+    stableFrames =
+      scrollEl.scrollLeft === lastScrollLeft ? stableFrames + 1 : 0;
+    lastScrollLeft = scrollEl.scrollLeft;
   }
 }
 
@@ -1017,6 +1091,89 @@ export const AttachmentFocusOrderTest: Story = {
   },
 };
 
+export const AttachmentArrowKeyScrollTest: Story = {
+  render: () => '',
+  play: async ({ canvasElement, step }) => {
+    // Each card fits between the chevrons, but the next card is mostly
+    // hidden. Smooth scrolling stays on: `focus()` stops a smooth scroll
+    // that starts before it.
+    render(
+      html`
+        <div style="inline-size:480px;">
+          <swc-prompt-field label="Prompt" value="Use these files.">
+            ${Array.from(
+              { length: 4 },
+              (_, index) => html`
+                <swc-upload-attachment
+                  slot="attachment"
+                  type="card"
+                  dismissible
+                >
+                  <span slot="title">File ${index + 1}</span>
+                  <span slot="subtitle">PDF</span>
+                </swc-upload-attachment>
+              `
+            )}
+          </swc-prompt-field>
+        </div>
+      `,
+      canvasElement
+    );
+
+    const el = await getComponent<PromptField>(
+      canvasElement,
+      'swc-prompt-field'
+    );
+    await el.updateComplete;
+    await new Promise((resolve) => requestAnimationFrame(resolve));
+    await el.updateComplete;
+
+    const attachments = Array.from(
+      el.querySelectorAll<HTMLElement>('[slot="attachment"]')
+    );
+    const scrollEl = el.shadowRoot!.querySelector<HTMLDivElement>(
+      '.swc-PromptField-attachments-scroll'
+    )!;
+
+    const moveFocus = async (
+      key: 'ArrowLeft' | 'ArrowRight',
+      tile: HTMLElement
+    ): Promise<void> => {
+      dispatchKeydown(getActiveElement()!, key);
+      expect(getActiveElement()).toBe(tile);
+      await waitFor(
+        () =>
+          expect(
+            isTileFullyVisible(el, tile),
+            `card ${attachments.indexOf(tile) + 1} is fully visible`
+          ).toBe(true),
+        { timeout: 3000 }
+      );
+      await waitForScrollStopped(scrollEl);
+    };
+
+    await step(
+      'Arrow Right scrolls each focused card fully into view',
+      async () => {
+        attachments[0]!.focus();
+        await waitForScrollStopped(scrollEl);
+        for (const tile of attachments.slice(1)) {
+          await moveFocus('ArrowRight', tile);
+        }
+      }
+    );
+
+    await step(
+      'Arrow Left scrolls each focused card fully into view',
+      async () => {
+        for (const tile of attachments.slice(0, -1).reverse()) {
+          await moveFocus('ArrowLeft', tile);
+        }
+      }
+    );
+  },
+};
+
 /**
  * @todo SWC-2528 Flaky on Firefox (smooth-scroll focus-settle timing); skipped there until fixed.
  */
@@ -1188,6 +1345,80 @@ export const AttachmentChevronPagingFocusTest: Story = {
           await el.updateComplete;
         }
         expect(tilesAfterPagingBack).toContain(activeTile());
+      }
+    );
+  },
+};
+
+export const AttachmentChevronPagingTabStopTest: Story = {
+  render: () => '',
+  play: async ({ canvasElement, step }) => {
+    renderMultiAttachmentPromptField(canvasElement);
+
+    const el = await getComponent<PromptField>(
+      canvasElement,
+      'swc-prompt-field'
+    );
+    await el.updateComplete;
+    await new Promise((resolve) => requestAnimationFrame(resolve));
+    await el.updateComplete;
+
+    const attachments = Array.from(
+      el.querySelectorAll<HTMLElement>('[slot="attachment"]')
+    );
+    const scrollEl = el.shadowRoot!.querySelector<HTMLDivElement>(
+      '.swc-PromptField-attachments-scroll'
+    )!;
+    useInstantScroll(scrollEl);
+    const chevron = (side: 'prev' | 'next'): HTMLElement =>
+      el.shadowRoot!.querySelector<HTMLElement>(
+        `.swc-PromptField-attachments-scroll-${side}`
+      )!;
+    const tabStop = (): HTMLElement | undefined =>
+      attachments.find((tile) => tile.tabIndex === 0);
+    const firstVisibleTile = (): HTMLElement | undefined =>
+      attachments.find((tile) => isTileFullyVisible(el, tile));
+    const page = async (side: 'prev' | 'next'): Promise<void> => {
+      for (
+        let count = 0;
+        count < 10 && !isChevronHidden(chevron(side));
+        count++
+      ) {
+        chevron(side).click();
+        await waitForScrollSettled(scrollEl);
+        await el.updateComplete;
+      }
+      expect(
+        isChevronHidden(chevron(side)),
+        describeChevron(chevron(side))
+      ).toBe(true);
+    };
+
+    await step(
+      'after paging to the end, Tab moves to the first visible tile, not a tile mid-strip',
+      async () => {
+        await page('next');
+        await waitFor(() => expect(tabStop()).toBe(firstVisibleTile()));
+        expect(
+          tabStop(),
+          'sanity check: paging moved past the first tile'
+        ).not.toBe(attachments[0]);
+
+        chevron('prev').focus();
+        const event = dispatchKeydown(chevron('prev'), 'Tab');
+        expect(event.defaultPrevented).toBe(true);
+        expect(getActiveElement()).toBe(firstVisibleTile());
+      }
+    );
+
+    await step(
+      'after paging back to the start, the first tile is the Tab stop',
+      async () => {
+        el.shadowRoot!.querySelector<HTMLElement>(
+          '.swc-PromptField-textarea'
+        )!.focus();
+        await page('prev');
+        await waitFor(() => expect(tabStop()).toBe(attachments[0]));
       }
     );
   },
