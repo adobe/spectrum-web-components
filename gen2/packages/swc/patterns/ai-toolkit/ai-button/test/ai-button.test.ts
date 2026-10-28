@@ -93,6 +93,58 @@ export const OverviewTest: Story = {
   },
 };
 
+export const IconTest: Story = {
+  render: () => html`
+    <swc-ai-button>Ask AI</swc-ai-button>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const el = await getComponent<AiButton>(canvasElement, 'swc-ai-button');
+    const loader = (): PixelLoader =>
+      innerButton(el).querySelector<PixelLoader>('swc-pixel-loader')!;
+
+    await step('defaults to the AI mark', async () => {
+      expect(el.icon).toBe('aiLogo');
+      expect(el.getAttribute('icon')).toBe('aiLogo');
+      expect(loader().icon).toBe('aiLogo');
+    });
+
+    await step('forwards a new icon to the paused pixel loader', async () => {
+      el.icon = 'wand';
+      await el.updateComplete;
+      expect(el.getAttribute('icon')).toBe('wand');
+      expect(loader().icon).toBe('wand');
+      expect(loader().paused).toBe(true);
+    });
+
+    await step(
+      'warns once and shows the AI mark for an unknown icon',
+      async () => {
+        await withWarningSpy(async (warnCalls) => {
+          el.icon = 'not-an-icon' as AiButton['icon'];
+          await el.updateComplete;
+          await loader().updateComplete;
+          expect(warnCalls).toHaveLength(1);
+          expect(warnCalls[0]?.[0]).toBe(el);
+          expect(String(warnCalls[0]?.[1] ?? '')).toContain('"icon"');
+          expect(loader().icon).toBe('aiLogo');
+        });
+      }
+    );
+
+    await step(
+      'shows the AI mark without a warning when the attribute is removed',
+      async () => {
+        await withWarningSpy(async (warnCalls) => {
+          el.removeAttribute('icon');
+          await el.updateComplete;
+          expect(warnCalls).toHaveLength(0);
+          expect(loader().icon).toBe('aiLogo');
+        });
+      }
+    );
+  },
+};
+
 export const IconOnlyTest: Story = {
   ...IconOnly,
   play: async ({ canvasElement, step }) => {

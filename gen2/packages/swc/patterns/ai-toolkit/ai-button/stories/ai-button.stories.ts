@@ -23,6 +23,10 @@ import {
   forcePseudoState,
   SIZE_LABELS,
 } from '../../../../.storybook/helpers/index.js';
+import {
+  PIXEL_LOADER_ICON_NAMES,
+  type PixelLoaderIconName,
+} from '../../pixel-loader/index.js';
 import type { AiButton } from '../AiButton.js';
 
 // ────────────────
@@ -37,13 +41,20 @@ argTypes.size = {
   options: BUTTON_VALID_SIZES,
 };
 
+argTypes.icon = {
+  ...argTypes.icon,
+  control: { type: 'select' },
+  options: PIXEL_LOADER_ICON_NAMES,
+};
+
 args['default-slot'] = 'Ask AI';
 args.size = 'm';
+args.icon = 'aiLogo';
 
 /**
  * AI buttons start an AI action, such as asking an assistant about the current
- * context. They show the AI mark from the pixel loader, in its static state,
- * before a short label.
+ * context. They show a pixel-art icon from the pixel loader, in its static
+ * state, before a short label. The icon is the AI mark by default.
  */
 const meta: Meta = {
   title: 'AI Toolkit/AI button',
@@ -74,6 +85,16 @@ const ICON_ONLY_ARGS = {
   'default-slot': '',
   'accessible-label': 'Ask AI',
 };
+
+/** Example labels for a few pixel loader icons. */
+const ICON_EXAMPLES = [
+  ['aiLogo', 'Ask AI'],
+  ['wand', 'Generate'],
+  ['image', 'Create image'],
+  ['brush', 'Edit with AI'],
+  ['comment', 'Summarize'],
+  ['microphone', 'Dictate'],
+] as const satisfies ReadonlyArray<readonly [PixelLoaderIconName, string]>;
 
 const STATE_LABELS = {
   default: 'Default',
@@ -172,6 +193,16 @@ export const IconOnly: Story = {
   tags: ['options'],
 };
 IconOnly.storyName = 'Icon only';
+
+export const Icons: Story = {
+  render: (args) => html`
+    ${ICON_EXAMPLES.map(([icon, label]) =>
+      captioned(template({ ...args, icon, 'default-slot': label }), icon)
+    )}
+  `,
+  parameters: { flexLayout: 'row-wrap' },
+  tags: ['options'],
+};
 
 // ──────────────────────────
 //    STATES STORY
