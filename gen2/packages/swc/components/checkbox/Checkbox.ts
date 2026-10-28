@@ -41,6 +41,13 @@ export class Checkbox extends CheckboxBase {
     return [styles];
   }
 
+  /**
+   * Native input element, or `null` before rendering.
+   */
+  public override get roleElement(): HTMLInputElement | null {
+    return this.renderRoot?.querySelector(`input#${INPUT_ID}`) ?? null;
+  }
+
   protected override render(): TemplateResult {
     return html`
       <div class="swc-Checkbox">

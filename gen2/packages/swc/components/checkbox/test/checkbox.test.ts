@@ -74,3 +74,30 @@ export const RegistrationTest: Story = {
   },
 };
 RegistrationTest.storyName = 'Registration and stub render';
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Properties / Attributes
+// ──────────────────────────────────────────────────────────────
+
+export const AccessibleNameTest: Story = {
+  ...Playground,
+  play: async ({ canvasElement, step }) => {
+    const checkbox = await getComponent<Checkbox>(
+      canvasElement,
+      'swc-checkbox'
+    );
+    const input = checkbox.shadowRoot?.querySelector('input');
+
+    await step('roleElement is the native input', () => {
+      expect(checkbox.roleElement).toBe(input);
+    });
+
+    await step('accessible-label sets aria-label on the input', async () => {
+      checkbox.setAttribute('accessible-label', 'Product updates');
+      await checkbox.updateComplete;
+      expect(input).toHaveAttribute('aria-label', 'Product updates');
+      expect(checkbox).not.toHaveAttribute('aria-label');
+    });
+  },
+};
+AccessibleNameTest.storyName = 'Accessible name on the input';

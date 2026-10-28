@@ -10,7 +10,6 @@
  * governing permissions and limitations under the License.
  */
 
-import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
@@ -33,7 +32,7 @@ argTypes.size = {
 
 /**
  * A checkbox selects or marks an item, or gives consent. Each checkbox is an
- * independent control with its own form value.
+ * independent control.
  */
 const meta: Meta = {
   title: 'Checkbox',
@@ -63,7 +62,4 @@ export const Playground: Story = {
   args: {
     'label-slot': 'Send me product updates',
   },
-  render: (args) => html`
-    ${template({ ...args })}
-  `,
 };
