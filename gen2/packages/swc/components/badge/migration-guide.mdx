@@ -85,7 +85,7 @@ Always set `variant` explicitly — omitting it produces a dev-mode warning and 
 
 ### 3. Fix consumer-facing accessibility gaps
 
-Add `aria-label` to icon-only badges so assistive tech announces a name:
+Add both `role="img"` and `aria-label` to icon-only badges so assistive technology can announce a name:
 
 ```html
 <!-- Before -->
@@ -93,7 +93,7 @@ Add `aria-label` to icon-only badges so assistive tech announces a name:
   <sp-icon-checkmark-circle slot="icon"></sp-icon-checkmark-circle>
 </sp-badge>
 <!-- After (default size is `s`; use `size="m"` if you need medium) -->
-<swc-badge aria-label="Approved">
+<swc-badge role="img" aria-label="Approved">
   <sp-icon-checkmark-circle slot="icon"></sp-icon-checkmark-circle>
 </swc-badge>
 ```
@@ -131,7 +131,7 @@ The `outline` attribute can only be used with semantic variants (`accent`, `info
 
 ## Accessibility
 
-- **Icon-only badges** must have `aria-label` on the host. See [step 3](#3-fix-consumer-facing-accessibility-gaps).
+- **Icon-only badges** must have both `role="img"` and `aria-label` on the host. See [step 3](#3-fix-consumer-facing-accessibility-gaps).
 - **Decorative icons** paired with text should use `aria-hidden="true"` so screen readers don't announce duplicate content. See [step 3](#3-fix-consumer-facing-accessibility-gaps).
 - Badges are non-interactive. Refactor any focusable or clickable badges to `<swc-action-button>`, `<swc-tag>`, or a native button.
 
@@ -223,6 +223,6 @@ Replace every `--mod-badge-*` property with its `--swc-badge-*` equivalent:
 - [ ] Rename all `<sp-badge>` to `<swc-badge>`
 - [ ] Add an explicit `variant` to every `<swc-badge>` — use `variant="informative"` if that was the Spectrum 1 default intent
 - [ ] Replace `--mod-badge-*` overrides on semantic variants with `--swc-badge-*`; retoken globally for non-semantic color variants
-- [ ] Add `aria-label` to icon-only badges
+- [ ] Add both `role="img"` and `aria-label` to icon-only badges
 - [ ] Add `aria-hidden="true"` to decorative icons
 - [ ] Refactor any interactive badges
