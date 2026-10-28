@@ -54,6 +54,7 @@
     - [Card family plan](card/migration-plan.md)
 - Checkbox
     - [Checkbox component accessibility specification](checkbox/component-accessibility-specification.md)
+    - [Checkbox migration plan](checkbox/migration-plan.md)
     - [Checkbox migration roadmap](checkbox/rendering-and-styling-migration-analysis.md)
 - Checkbox Group
     - [Checkbox group component accessibility specification](checkbox-group/component-accessibility-specification.md)
