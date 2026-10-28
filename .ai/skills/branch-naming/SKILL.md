@@ -13,7 +13,7 @@ Suggests the ideal branch naming format for Spectrum Web Components contribution
 ^[a-z0-9]+\/(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)-[a-z0-9-]+(-swc-[0-9]+)?$
 ```
 
-The canonical list of types and the validation pattern are defined in `.ai/config.json` under `git.types` and `validationPattern`.
+The types are the conventional commit types that commitlint enforces (`@commitlint/config-conventional`, extended by `commitlint.config.cjs`). `yarn lint:ai` fails if this pattern and commitlint's type list disagree.
 
 ## Message
 
@@ -25,7 +25,7 @@ Username will be automatically pulled from your git config settings.
 
 - Use lowercase letters and numbers only
 - Separate words with dashes (not camelCase)
-- Use conventional commit types from `.ai/config.json` (`git.types`). Descriptions below are for quick reference:
+- Use a conventional commit type. Descriptions below are for quick reference:
   • **feat**: New feature
   • **fix**: Bug fix
   • **docs**: Documentation only

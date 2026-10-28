@@ -1,0 +1,243 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
+
+import * as TextFieldStories from './stories/text-field.stories';
+
+<Meta of={TextFieldStories} />
+
+<DocsHeader />
+
+## Anatomy
+
+A text field consists of:
+
+- **Input**: the real, focusable `<input>` that carries the value and native `textbox` role
+- **Label** (optional), provided through the `label` slot: visible text rendered as a real, same-root `<label for>`
+- **Necessity indicator** (optional): an asterisk (`icon`) or `(required)`/`(optional)` text (`label`) appended to the label, controlled by `necessity-indicator` (see [Necessity indicator](#necessity-indicator))
+- **Validation icon**: a decorative alert icon shown at the trailing edge of the input while `field-status="invalid"`
+- **Description** (optional), provided through the `description` slot: guidance text associated via `aria-describedby`
+- **Error text** (optional), provided through the `error-text` slot: shown in place of the description and associated via `aria-describedby` only while `field-status="invalid"`
+
+<Canvas of={TextFieldStories.Anatomy} />
+
+## Options
+
+### Type
+
+The default input type is `text`, with support for `url`, `tel`, `email`, and `password`. Unsupported values render as `text` and produce a warning in debug mode.
+
+### Labelling
+
+Three sources can provide the field's accessible name. When more than one is set, the browser's [accessible-name computation](https://www.w3.org/TR/accname-1.2/) decides which one is announced, in this order:
+
+1. **`accessible-labelledby`** (highest precedence): space-separated element `id`s, resolved against the field's root node, for composing a name from elements the field does not own (for example, a grid cell named by its row and column headers).
+2. **`accessible-label`**: a string accessible name for a field with no visible label of its own.
+3. **A slotted `label`** (lowest precedence): the default, recommended path for an ordinary standalone field. Renders as a real, same-root `<label for>`, giving native click-to-focus.
+
+The examples follow precedence order. Each table input combines its row and column headers: Billing and City produce "Billing City".
+
+<Canvas of={TextFieldStories.Labelling} />
+
+Avoid using `placeholder` by itself without an accompanying label. Use of `accessible-labelledby` or `accessible-label` is required if there is no visible label.
+
+### Sizes
+
+Text fields come in four sizes which affect font sizes, field height, and the default maximum width. When visible, the validation icon does not change the field width.
+
+<Canvas of={TextFieldStories.Sizes} />
+
+### Label positions
+
+The `label-position` attribute places the label above the input (`top`, the default) or beside it (`side`).
+
+In `side` position, the input stays aligned with the first line of the label. Short labels appear vertically centered with the input, and longer labels extend below it.
+
+<Canvas of={TextFieldStories.LabelPositions} />
+
+### Necessity indicator
+
+Use `necessity-indicator` to choose how the visible label marks necessity:
+
+- `icon` (default): A decorative asterisk on required fields only.
+- `label`: "(required)" or "(optional)" on every field. Best when most fields in a form share the opposite state ([Spectrum guidance](https://spectrum.adobe.com/web/rsp/components/text-field#usage-guidelines)).
+
+Requires a visible label. Text indicators contribute to the accessible name, and the requirement is conveyed to assistive technology in both modes.
+
+<Canvas of={TextFieldStories.NecessityIndicator} />
+
+### Prefix
+
+The `prefix` slot places non-interactive content before the input, inside the field: a symbol (like a currency `$`), an icon, or an avatar. Slotted [workflow icons](../?path=/docs/icons-workflow-icons--docs) and [avatars](../?path=/docs/components-avatar--docs) auto-size to the field; other content keeps its own size. Clicking the prefix focuses the input.
+
+<Canvas of={TextFieldStories.Prefix} />
+
+### Native input attributes
+
+These additional properties configure the internal `<input>` and follow the browser's native behavior:
+
+- [`autocomplete`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/autocomplete) identifies the kind of information the field collects, helping browsers offer relevant autofill suggestions. It does not validate the value.
+- [`inputmode`](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/inputmode) suggests a virtual keyboard layout on supported devices; it does not validate or restrict the value.
+- [`pattern`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/pattern) requires a nonempty value to match the supplied regular expression to pass native validation.
+- [`maxlength`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/maxlength) limits user input by UTF-16 code units.
+- [`minlength`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/minlength) sets the minimum length for user-entered values. It does not make programmatically assigned values fail native validation.
+
+## States
+
+### Default
+
+The default state is editable and accepts keyboard input.
+
+<Canvas of={TextFieldStories.Default} />
+
+### Required
+
+`required` sets the native input's required state and prevents an empty field from passing constraint validation. With a visible label, the default [necessity indicator](#necessity-indicator) adds a decorative asterisk. The input uses native `required`.
+
+<Canvas of={TextFieldStories.Required} />
+
+### Field status
+
+The `field-status` attribute (`fieldStatus` property) accepts one status at a time: `disabled`, `invalid`, `valid`, or `readonly`. The default is `undefined`. Assign `undefined` or remove the attribute to clear the status. `required` remains independent.
+
+#### Read-only
+
+`field-status="readonly"` keeps the field focusable and its value selectable, but not editable. Unlike a disabled field, it remains in the tab order and in `FormData`. It does not block validation. Screen readers can announce the field during [focus-mode navigation](../?path=/docs/guides-accessibility-screen-reader-testing--docs#screen-reader-modes). Prefer read-only when users need access to a non-editable value.
+
+<Canvas of={TextFieldStories.ReadOnly} />
+
+#### Disabled
+
+`field-status="disabled"` may retain the field's value but prevents editing and <kbd>Tab</kbd> access. The field does not block form validation and is excluded from `FormData`. Because it cannot receive focus, it is skipped during [focus-mode navigation](../?path=/docs/guides-accessibility-screen-reader-testing--docs#screen-reader-modes).
+
+Use `field-status="readonly"` instead when users need to review or copy the value.
+
+<Canvas of={TextFieldStories.Disabled} />
+
+#### Invalid
+
+`field-status="invalid"` shows supplied `error-text` instead of the description. Without an `error-text` slot, the description stays visible in the error color. The input shows an invalid border and icon. Eligible fields fail validation and block submission.
+
+Native validation through constraints such as `required` or `pattern` does not set `field-status="invalid"` automatically. Set this status in your application as described in [showing and clearing errors](#showing-and-clearing-errors).
+
+<Canvas of={TextFieldStories.Invalid} />
+
+#### Valid
+
+Set `field-status="valid"` to record that your application has validated the value. Native constraints still apply. No visual changes are applied.
+
+<Canvas of={TextFieldStories.Valid} />
+
+## Behaviors
+
+### Label overflow
+
+A long visible label wraps onto multiple lines instead of clipping. The top-label example constrains one field inside a `180px` container. The side-label examples each use a `260px` host and their labels wrap within a column capped at `50%` of the host width by default, or at the value of `--swc-field-label-max-inline-size`.
+
+The host's `inline-size` controls the space available to the layout, not the control's maximum width. The control can shrink with a narrower container, but stops growing at the default maximum for its size. To let it fill a wider host, also set `--swc-field-input-max-inline-size: 100%`.
+
+<Canvas of={TextFieldStories.LabelOverflow} />
+
+### Form participation
+
+`swc-text-field` works with native forms, including validation, reset, and `FormData`.
+
+#### Showing and clearing errors
+
+Set `fieldStatus = 'invalid'` and provide `error-text` to show an inline error; neither happens automatically, and error text alone does not make the field invalid. Its plain text also becomes `validationMessage` and updates automatically when the content changes. Clear the status explicitly when the error is resolved. Native constraints still affect `checkValidity()`, but do not set `fieldStatus` or show inline errors. Await `field.updateComplete` after changes before checking validity.
+
+<details>
+<summary>Validation and error code example</summary>
+
+```html
+<swc-text-field id="username" name="username" required>
+  <span slot="label">Username</span>
+  <span slot="error-text">Enter a username.</span>
+</swc-text-field>
+```
+
+```js
+const field = document.querySelector('#username');
+const errorText = field.querySelector('[slot="error-text"]');
+
+async function validateUsername() {
+  field.fieldStatus = undefined;
+  errorText.textContent = '';
+  await field.updateComplete;
+
+  if (!field.checkValidity()) {
+    errorText.textContent = field.validationMessage;
+    field.fieldStatus = 'invalid';
+    await field.updateComplete;
+    return false;
+  }
+
+  const usernameIsTaken = await isUsernameTaken(field.value);
+
+  if (usernameIsTaken) {
+    errorText.textContent = 'Username is already taken.';
+    field.fieldStatus = 'invalid';
+    await field.updateComplete;
+    return false;
+  }
+
+  return true;
+}
+
+async function isUsernameTaken(username) {
+  // Replace this demo check with the application's username-availability check.
+  return ['admin', 'support'].includes(username);
+}
+```
+
+Call `await validateUsername()` from your application and block submission when it returns `false`. The demo treats "admin" and "support" as taken usernames.
+
+</details>
+
+#### Validating a form
+
+Use `novalidate` on the form and `checkValidity()` in your submit handler for inline errors instead of browser validation bubbles. Your handler must block submission when validation fails and set `fieldStatus` to show the error, as demonstrated in the previous section. Disabled and read-only fields do not block validation.
+
+In this example, **Submit** clears the previous error and rechecks native rules. Accepted submissions display `FormData` only; no data is sent. **Reset** clears the value, error, and submission result. Use **Disable** to toggle the fieldset's disabled state; disabled fields are excluded from validation and submitted data.
+
+<Canvas of={TextFieldStories.FormBehavior} />
+
+#### Reset
+
+Reset restores the initial value from the `value` attribute and clears `valid` or `invalid` status. Disabled and read-only status are preserved, and native validation rules still apply. This example also resets its results.
+
+<details>
+<summary>Additional form behavior</summary>
+
+- **Validation methods**: `checkValidity()` fires `invalid` on failure without changing `fieldStatus` or showing browser validation UI. `reportValidity()` also requests that UI, even with `novalidate`. Canceling `invalid` suppresses reporting without making validation pass. An invalid status sets `validity.customError`.
+- **Submitting with the keyboard**: <kbd>Enter</kbd> activates the form's first associated submit button, including one outside the form linked by its `form` attribute. If that button is disabled, submission is blocked. Without a submit button, <kbd>Enter</kbd> submits only when no other `swc-text-field` or native input with a supported text-field type (`text`, `url`, `tel`, `email`, or `password`) is present. Other native input types do not count as blockers. Text composition does not trigger submission; your application can also cancel it with `preventDefault()` on the `keydown` event.
+- **Value formatting**: Single-line inputs remove line breaks. Email and URL inputs also remove leading and trailing ASCII whitespace. After an update, the `value` property, displayed text, and submitted value agree.
+- **Restoring saved values**: When the browser restores a saved value during navigation or autofill, the field applies the same formatting rules. Restoration does not change the initial `value` attribute, so reset still returns to that initial value. Browser support for restoring saved values varies.
+
+Setting `value` in code, resetting the form, and restoring a saved value do not fire `input` or `change` events.
+
+</details>
+
+## Accessibility
+
+### Features
+
+- **Native role**: the host sets no ARIA role; the real `<input>` supplies the implicit `textbox` role.
+- **Browser-resolved name**: each source is wired independently, and the browser's accessible-name computation picks the one that is announced, in the order `accessible-labelledby` &gt; `accessible-label` &gt; slotted label. A slotted visible label always renders as a real `<label for>`, keeping native click-to-focus.
+- **Combining descriptions**: a slotted `description` and an external `accessible-describedby` reference combine rather than override each other; the in-shadow description comes first.
+- **Visible-message association**: `aria-describedby` references the visible description or error text. `aria-errormessage` is not used because assistive technology support is inconsistent.
+- **Dev-mode warnings**: a field with no visible label, no `accessible-label`, and no `accessible-labelledby` triggers a console warning, and so does a field that sets both `accessible-labelledby` and `accessible-label`.
+
+> **Known axe-core false positive.** A field named only via `accessible-labelledby` fails automated axe-core scans with a "Form element does not have a label" (`label` rule) violation, even though the name resolves correctly in real browsers and assistive technology. axe-core inspects DOM attributes and has no standardized way to read `ariaLabelledByElements`, the ARIA element-reflection API in use.
+
+### Best practices
+
+- Prefer a slotted `label` for ordinary fields; reserve `accessible-label`/`accessible-labelledby` for fields with no visible label of their own or a name composed from elements the field doesn't own.
+- When a field has both a visible label and a programmatic name, make sure the programmatic name contains the visible text, per [Label in Name (2.5.3)](https://www.w3.org/WAI/WCAG22/Understanding/label-in-name.html). Do not set both `accessible-label` and `accessible-labelledby`; a dev-mode warning flags that combination.
+- Set `autocomplete` when a field collects a recognized personal-data type, such as `email` or `billing street-address`, so browsers and assistive technology can identify its purpose and offer appropriate autofill. See [`autocomplete` HTML attribute (MDN)](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/autocomplete).
+- Always pair `field-status="invalid"` with slotted `error-text` so the invalid state is not conveyed by color or the validation icon alone. Explain what happened, why (if known), and how to fix it. See [Spectrum's writing for errors](https://spectrum.adobe.com/content/writing-for-errors).
+- Avoid disabling a `<fieldset>` containing invalid fields if users need to correct them. Disabled fields do not block form submission, but they are also excluded from validation and submitted data. Their invalid status remains when the fieldset is re-enabled.
+- Use `accessible-describedby` for a description composed from light-DOM content the field doesn't own; it combines with, rather than replaces, a slotted `description`.
+
+<Canvas of={TextFieldStories.Accessibility} />
+
+<DocsFooter />

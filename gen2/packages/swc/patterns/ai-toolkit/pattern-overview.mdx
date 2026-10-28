@@ -2,6 +2,7 @@ import { Meta, Canvas } from '@storybook/addon-docs/blocks';
 import { addons } from '@storybook/preview-api';
 
 import * as ConversationThreadStories from './conversation-thread/stories/conversation-thread.stories';
+import * as ConversationalPatternStories from './stories/conversational-pattern-playground.stories';
 import * as ConversationTurnStories from './conversation-turn/stories/conversation-turn.stories';
 import * as PromptFieldStories from './prompt-field/stories/prompt-field.stories';
 import * as UploadAttachmentStories from './upload-attachment/stories/upload-attachment.stories';
@@ -25,19 +26,20 @@ A composable set of web components for building AI interfaces with Spectrum. The
 
 An end-to-end conversation with streaming generation, file upload, feedback, and follow-up suggestions. This example illustrates interactions like sending prompts, attaching files (via the upload button or by dropping them directly onto the field), and selecting suggestions.
 
-<Canvas of={ConversationThreadStories.FullPattern} sourceState="none" />
+<Canvas of={ConversationalPatternStories.Playground} sourceState="none" />
 
 ---
 
 ## Anatomy of a conversation
 
-A complete chat surface composes three layers:
+A complete chat surface composes four layers:
 
-1. **Thread**: `swc-conversation-thread` wraps the running conversation and provides arrow-key navigation across turns.
-2. **Turns**: each `swc-conversation-turn` is one column-aligned message group, typed `user` or `system`.
-3. **Messages and supporting parts**: turns contain `swc-user-message` or `swc-system-message`, plus optional response status, feedback, sources, and follow-up suggestions.
+1. **Input**: [`swc-prompt-field`](/docs/patterns-ai-toolkit-prompt-field--docs) sits below the thread and is where the user types a prompt, stops generation, and stages files. Each staged file is an [`swc-upload-attachment`](/docs/patterns-ai-toolkit-upload-attachment--docs) in the `attachment` slot. The field's AI mark is an [`swc-pixel-loader`](/docs/patterns-ai-toolkit-pixel-loader--docs) that can animate while generating.
+2. **Thread**: [`swc-conversation-thread`](/docs/patterns-ai-toolkit-conversation-thread--docs) wraps the running conversation and provides arrow-key navigation across turns.
+3. **Turns**: each [`swc-conversation-turn`](/docs/patterns-ai-toolkit-conversation-turn--docs) is one column-aligned message group, typed `user` or `system`.
+4. **Messages and supporting parts**: turns contain [`swc-user-message`](/docs/patterns-ai-toolkit-user-message--docs) or [`swc-system-message`](/docs/patterns-ai-toolkit-system-message--docs), plus optional [response status](/docs/patterns-ai-toolkit-response-status--docs), [feedback](/docs/patterns-ai-toolkit-message-feedback--docs), [sources](/docs/patterns-ai-toolkit-message-sources--docs), and [follow-up suggestions](/docs/patterns-ai-toolkit-suggestion-group--docs).
 
-A minimal composition tree:
+A minimal composition tree, in DOM order:
 
 ```html
 <swc-conversation-thread>
@@ -59,7 +61,10 @@ A minimal composition tree:
 </swc-conversation-thread>
 
 <swc-prompt-field>
-  <p slot="legal" class="swc-PromptField-legal-disclaimer">
+  <swc-upload-attachment slot="attachment" type="card" dismissible>
+    <span slot="title">…</span>
+  </swc-upload-attachment>
+  <p slot="legal" class="swc-Typography--links">
     Responses are generated using AI, and may be inaccurate. Check before using.
     <a
       href="https://www.adobe.com/legal/licenses-terms/adobe-gen-ai-user-guidelines.html"
@@ -74,7 +79,7 @@ A minimal composition tree:
 
 ## Building blocks
 
-The pattern groups its components by their role in the lifecycle. Each section below renders a live preview; visit the sibling docs pages for the full API.
+The pattern groups its components by their role in the lifecycle. Each section below renders a live preview and links to the component's docs page for its full API, slots, and accessibility guidance.
 
 ### Input
 
@@ -85,6 +90,8 @@ The composer surface where the user types a prompt and attaches files.
 Text input with built-in `default`, `loading`, and `generation-complete` modes. Emits submit, input, stop, and upload-click events so products can drive their own generation pipeline.
 
 The **`+`** button should open a menu with, at minimum, **Add from Adobe cloud storage** and **Attach files**. See [Upload action menu](/docs/patterns-ai-toolkit-prompt-field--docs#upload-action-menu) for the full guidance.
+
+Read the [prompt field docs](/docs/patterns-ai-toolkit-prompt-field--docs).
 
 <Canvas
   of={PromptFieldStories.Overview}
@@ -105,6 +112,8 @@ The **`+`** button should open a menu with, at minimum, **Add from Adobe cloud s
 #### `swc-upload-attachment`
 
 Renders a staged attachment inside `swc-prompt-field` before the message is sent. Use one layout type per strip (`card` or `media`). For mixed image and document uploads, normalize to media tiles with thumbnails and optional badges.
+
+Read the [upload attachment docs](/docs/patterns-ai-toolkit-upload-attachment--docs).
 
 <Canvas
   of={UploadAttachmentStories.MediaWithBadge}
@@ -132,6 +141,8 @@ How turns are stacked, aligned, and navigated with the keyboard.
 
 Vertical thread wrapper. Applies a roving `tabindex` so <kbd>ArrowUp</kbd> / <kbd>ArrowDown</kbd> move between turns and <kbd>Home</kbd> / <kbd>End</kbd> jump to the first or last turn.
 
+Read the [conversation thread docs](/docs/patterns-ai-toolkit-conversation-thread--docs).
+
 <Canvas
   of={ConversationThreadStories.Overview}
   additionalActions={[
@@ -151,6 +162,8 @@ Vertical thread wrapper. Applies a roving `tabindex` so <kbd>ArrowUp</kbd> / <kb
 #### `swc-conversation-turn`
 
 A column-aligned slot for one participant. Set `type="user"` or `type="system"` to align right or left, and stack consecutive messages in a single turn for grouped spacing.
+
+Read the [conversation turn docs](/docs/patterns-ai-toolkit-conversation-turn--docs).
 
 <Canvas
   of={ConversationTurnStories.Overview}
@@ -175,6 +188,8 @@ A column-aligned slot for one participant. Set `type="user"` or `type="system"` 
 #### `swc-user-message`
 
 The user's message bubble. Explicit `type="copy"`, `type="card"`, or `type="media"` controls the rendering for text, file attachments, and image attachments respectively.
+
+Read the [user message docs](/docs/patterns-ai-toolkit-user-message--docs).
 
 <Canvas
   of={UserMessageStories.Content}
@@ -202,6 +217,8 @@ The system reply is a stack of optional parts inside a single `swc-system-messag
 
 Container for the system reply. The default slot holds the response prose; named slots (`status`, `feedback`, `sources`, `suggestions`) attach the supporting parts below in a consistent order.
 
+Read the [system message docs](/docs/patterns-ai-toolkit-system-message--docs).
+
 <Canvas
   of={SystemMessageStories.Overview}
   additionalActions={[
@@ -221,6 +238,8 @@ Container for the system reply. The default slot holds the response prose; named
 #### `swc-response-status`
 
 A status indicator while the response is generating and an optional collapsible execution trace when steps are provided.
+
+Read the [response status docs](/docs/patterns-ai-toolkit-response-status--docs).
 
 <Canvas
   of={ResponseStatusStories.Overview}
@@ -242,6 +261,8 @@ A status indicator while the response is generating and an optional collapsible 
 
 Positive / negative feedback control. Emits a bubbled status event so products can capture sentiment.
 
+Read the [message feedback docs](/docs/patterns-ai-toolkit-message-feedback--docs).
+
 <Canvas
   of={MessageFeedbackStories.Overview}
   additionalActions={[
@@ -261,6 +282,8 @@ Positive / negative feedback control. Emits a bubbled status event so products c
 #### `swc-message-sources`
 
 Collapsible numbered list of the sources used to generate the response.
+
+Read the [message sources docs](/docs/patterns-ai-toolkit-message-sources--docs).
 
 <Canvas
   of={MessageSourcesStories.Overview}
@@ -282,11 +305,13 @@ Collapsible numbered list of the sources used to generate the response.
 
 ### Follow-ups
 
-After a reply, offer the user a curated list of next prompts.
+After a reply, offer the user a curated list of next prompts. The pattern has no built-in sense of conversation history, so it's up to the product to slot a `swc-suggestion-group` only into the latest system turn, clearing or omitting the `suggestions` slot from earlier ones as the conversation moves forward.
 
 #### `swc-suggestion-group`
 
 Wraps follow-up suggestions with an optional heading.
+
+Read the [suggestion group docs](/docs/patterns-ai-toolkit-suggestion-group--docs).
 
 <Canvas
   of={SuggestionGroupStories.Overview}
@@ -307,6 +332,8 @@ Wraps follow-up suggestions with an optional heading.
 #### `swc-suggestion-item`
 
 Interactive chip used inside the group. Emits a bubbled `swc-suggestion` event when activated; products can route this back into their submit pipeline.
+
+Read the [suggestion item docs](/docs/patterns-ai-toolkit-suggestion-group-suggestion-item--docs).
 
 <Canvas
   of={SuggestionItemStories.Overview}

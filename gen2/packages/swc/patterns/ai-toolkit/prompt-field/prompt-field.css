@@ -57,8 +57,13 @@
 
 .swc-PromptField-box {
   --_swc-prompt-field-recede-surface: token("background-layer-2-color");
+
+  /* Receded (subtle idle and focused) contrast treatment: transparent-neutral-125 border and transparent-static-black-75 drop shadow. Built from opacity-* on purpose: the legacy transparent-black-75 token is 5%, not the design's 3%. */
+  --_swc-prompt-field-recede-border-color: light-dark(rgb(0 0 0 / token("opacity-125")), rgb(255 255 255 / token("opacity-125")));
+  --_swc-prompt-field-recede-shadow-color: rgb(0 0 0 / token("opacity-75"));
   --_swc-prompt-field-border-color: light-dark(oklch(from var(--swc-prompt-field-brand-color) 73.58% 0.2376 h / 10%), rgb(255 255 255 / 5%));
   --_swc-prompt-field-drop-shadow-color: light-dark(oklch(from var(--swc-prompt-field-brand-color) 58.26% 0.2265 calc(h - 0.4) / 5%), oklch(from var(--swc-prompt-field-brand-color) 66.17% 0.2508 calc(h - 0.5) / 5%));
+  --_swc-prompt-field-container-shadow-color: transparent;
   --_swc-prompt-field-inset-shadow-color: rgb(255 255 255 / token("opacity-100"));
 
   display: flex;
@@ -72,7 +77,8 @@
   border-radius: var(--_swc-prompt-field-box-corner-radius, 24px);
   box-shadow:
     0 20px 20px -24px var(--_swc-prompt-field-prominent-outer-glow-color, transparent),
-    0 -3px 10px 1px var(--_swc-prompt-field-drop-shadow-color);
+    0 -3px 10px 1px var(--_swc-prompt-field-drop-shadow-color),
+    0 8px 32px 0 var(--_swc-prompt-field-container-shadow-color);
   overflow: clip;
   cursor: text;
   transition:
@@ -345,8 +351,9 @@
   --_swc-prompt-field-bg-stop-2: var(--_swc-prompt-field-recede-surface);
   --_swc-prompt-field-bg-stop-3: var(--_swc-prompt-field-recede-surface);
   --_swc-prompt-field-bg-stop-4: var(--_swc-prompt-field-recede-surface);
-  --_swc-prompt-field-border-color: light-dark(rgb(0 0 0 / 5%), rgb(255 255 255 / 5%));
+  --_swc-prompt-field-border-color: var(--_swc-prompt-field-recede-border-color);
   --_swc-prompt-field-drop-shadow-color: transparent;
+  --_swc-prompt-field-container-shadow-color: var(--_swc-prompt-field-recede-shadow-color);
 }
 
 :host([variant="subtle"]:not([generating])) :where(.swc-PromptField-outer-border:hover) .swc-PromptField-box {
@@ -357,9 +364,10 @@
   --_swc-prompt-field-bg-stop-4: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 95.08% 0.0433 calc(h - 243.9)) 30%), color-mix(in oklch, token("gray-75"), oklch(from var(--swc-prompt-field-brand-color) 22.42% 0.072 calc(h - 288.8)) 40%));
   --_swc-prompt-field-border-color: light-dark(oklch(from var(--swc-prompt-field-brand-color) 73.58% 0.2376 h / 10%), rgb(255 255 255 / 5%));
   --_swc-prompt-field-drop-shadow-color: light-dark(oklch(from var(--swc-prompt-field-brand-color) 58.26% 0.2265 calc(h - 0.4) / 5%), oklch(from var(--swc-prompt-field-brand-color) 66.17% 0.2508 calc(h - 0.5) / 5%));
+  --_swc-prompt-field-container-shadow-color: transparent;
 }
 
-/* Unlike subtle, balanced/prominent never override border-color/drop-shadow-color -- always the box's own base values. */
+/* Unlike subtle, balanced/prominent never override border-color/drop-shadow-color/container-shadow-color -- always the box's own base values. */
 :host([variant="balanced"]:not([generating])) .swc-PromptField-box {
   --_swc-prompt-field-con-hue-opacity: 12.5%;
   --_swc-prompt-field-bg-stop-1: light-dark(color-mix(in oklch, white, oklch(from var(--swc-prompt-field-brand-color) 95.18% 0.0231 calc(h - 44.5)) 12.5%), color-mix(in oklch, token("gray-75"), rgb(0 0 0) 20%));
@@ -459,9 +467,10 @@
   --_swc-prompt-field-bg-stop-2: var(--_swc-prompt-field-recede-surface);
   --_swc-prompt-field-bg-stop-3: var(--_swc-prompt-field-recede-surface);
   --_swc-prompt-field-bg-stop-4: var(--_swc-prompt-field-recede-surface);
-  --_swc-prompt-field-border-color: light-dark(rgb(0 0 0 / 5%), rgb(255 255 255 / 5%));
+  --_swc-prompt-field-border-color: var(--_swc-prompt-field-recede-border-color);
   --_swc-prompt-field-inset-shadow-color: transparent;
   --_swc-prompt-field-drop-shadow-color: transparent;
+  --_swc-prompt-field-container-shadow-color: var(--_swc-prompt-field-recede-shadow-color);
   --_swc-prompt-field-prominent-outer-glow-color: transparent;
   --_swc-prompt-field-prominent-inset-glow-color: transparent;
 }
@@ -473,6 +482,7 @@
   box-shadow:
     0 20px 20px -24px var(--_swc-prompt-field-prominent-outer-glow-color, transparent),
     0 -3px 10px 1px var(--_swc-prompt-field-drop-shadow-color),
+    0 8px 32px 0 var(--_swc-prompt-field-container-shadow-color),
     var(--_swc-prompt-field-generating-glow);
 }
 
@@ -584,7 +594,7 @@
   block-size: token("spacing-400");
 
   /* Match the upload button's static content color: black on light cards, white on dark. */
-  color: light-dark(token("transparent-black-800"), token("transparent-white-800"));
+  color: light-dark(token("transparent-static-black-900"), token("transparent-static-white-900"));
 }
 
 .swc-PromptField-status-icon swc-pixel-loader {
@@ -595,11 +605,6 @@
 /* ─────────────────────────────────────
    Uploaded attachments
    ───────────────────────────────────── */
-
-/* Match the composer buttons: tile and dismiss focus rings track the themed card (black on light, white on dark) instead of the attachment's default accent. */
-::slotted(swc-upload-attachment) {
-  --swc-upload-attachment-focus-indicator-color: light-dark(token("static-black-focus-indicator-color"), token("static-white-focus-indicator-color"));
-}
 
 /* A click on the strip does not focus the textarea, so show no text cursor. */
 .swc-PromptField-attachments {
@@ -852,10 +857,10 @@
 
   /* Translucent, as in React Spectrum's carousel button, with the same
    * color in every state. */
-  --swc-action-button-background-color-default: light-dark(token("transparent-black-100"), token("transparent-white-100"));
-  --swc-action-button-background-color-hover: light-dark(token("transparent-black-100"), token("transparent-white-100"));
-  --swc-action-button-background-color-focus: light-dark(token("transparent-black-100"), token("transparent-white-100"));
-  --swc-action-button-background-color-down: light-dark(token("transparent-black-100"), token("transparent-white-100"));
+  --swc-action-button-background-color-default: light-dark(token("transparent-static-black-150"), token("transparent-static-white-200"));
+  --swc-action-button-background-color-hover: light-dark(token("transparent-static-black-150"), token("transparent-static-white-200"));
+  --swc-action-button-background-color-focus: light-dark(token("transparent-static-black-150"), token("transparent-static-white-200"));
+  --swc-action-button-background-color-down: light-dark(token("transparent-static-black-150"), token("transparent-static-white-200"));
 
   /* Centered on the tile, below the badge clearance. */
   position: absolute;
@@ -1028,11 +1033,11 @@
 .swc-PromptField-upload {
   /* Focus ring tracks the themed card (black on light, white on dark), not the default blue accent. */
   --swc-action-button-focus-indicator-color: light-dark(token("static-black-focus-indicator-color"), token("static-white-focus-indicator-color"));
-  --swc-action-button-content-color-default: light-dark(token("transparent-black-800"), token("transparent-white-800"));
-  --swc-action-button-content-color-hover: light-dark(token("transparent-black-900"), token("transparent-white-900"));
-  --swc-action-button-background-color-hover: light-dark(token("transparent-black-200"), token("transparent-white-200"));
-  --swc-action-button-background-color-focus: light-dark(token("transparent-black-200"), token("transparent-white-200"));
-  --swc-action-button-background-color-down: light-dark(token("transparent-black-200"), token("transparent-white-200"));
+  --swc-action-button-content-color-default: light-dark(token("transparent-static-black-900"), token("transparent-static-white-900"));
+  --swc-action-button-content-color-hover: light-dark(token("transparent-static-black-950"), token("transparent-static-white-950"));
+  --swc-action-button-background-color-hover: light-dark(token("transparent-static-black-200"), token("transparent-static-white-300"));
+  --swc-action-button-background-color-focus: light-dark(token("transparent-static-black-200"), token("transparent-static-white-300"));
+  --swc-action-button-background-color-down: light-dark(token("transparent-static-black-200"), token("transparent-static-white-300"));
 }
 
 /* Send/stop anchored to .controls's own bottom-right, so they re-align as
@@ -1056,8 +1061,8 @@
 
 .swc-PromptField-send {
   /* Static black-on-light / white-on-dark fill, icon takes the opposite, so the gradient shows through. */
-  --_swc-prompt-field-send-fill: light-dark(token("black"), token("white"));
-  --_swc-prompt-field-send-icon: light-dark(token("white"), token("black"));
+  --_swc-prompt-field-send-fill: light-dark(token("transparent-static-black-1000"), token("transparent-static-white-1000"));
+  --_swc-prompt-field-send-icon: light-dark(token("transparent-static-white-1000"), token("transparent-static-black-1000"));
   --swc-action-button-background-color-default: color-mix(in oklch, var(--_swc-prompt-field-send-fill), transparent 15%);
   --swc-action-button-background-color-hover: color-mix(in oklch, var(--_swc-prompt-field-send-fill), transparent 5%);
   --swc-action-button-background-color-focus: color-mix(in oklch, var(--_swc-prompt-field-send-fill), transparent 15%);

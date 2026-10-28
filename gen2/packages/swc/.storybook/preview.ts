@@ -137,7 +137,7 @@ const preview = {
   ],
   parameters: {
     layout: 'centered',
-    // The Storybook patch (.yarn/patches/storybook-npm-10.4.1.patch) gates play
+    // The Storybook patch (.yarn/patches/storybook-npm-10.6.3.patch) gates play
     // functions on initial render behind `parameters.autoplay` so they do not run
     // automatically while browsing the dev UI. Chromatic renders each story via that
     // same initial path, so without this it would snapshot the pre-play state. Enable
@@ -237,8 +237,177 @@ const preview = {
           'Patterns',
           [
             'AI Toolkit',
+            // Implementation order: input, structure, turns, follow-ups, then
+            // shared primitives. storySort is parsed statically, so each child
+            // order must be repeated inline rather than shared via a constant.
             [
               'Conversational pattern overview',
+              'Conversational pattern playground',
+              'Prompt field',
+              [
+                'Docs',
+                'Playground',
+                'Tests',
+                '*',
+                'VRT',
+                [
+                  'Permutations',
+                  'Forced Colors',
+                  'Global Styles',
+                  'Custom Properties',
+                  '*',
+                ],
+              ],
+              'Upload attachment',
+              [
+                'Docs',
+                'Playground',
+                'Tests',
+                '*',
+                'VRT',
+                [
+                  'Permutations',
+                  'Forced Colors',
+                  'Global Styles',
+                  'Custom Properties',
+                  '*',
+                ],
+              ],
+              'Conversation thread',
+              [
+                'Docs',
+                'Playground',
+                'Tests',
+                '*',
+                'VRT',
+                [
+                  'Permutations',
+                  'Forced Colors',
+                  'Global Styles',
+                  'Custom Properties',
+                  '*',
+                ],
+              ],
+              'Conversation turn',
+              [
+                'Docs',
+                'Playground',
+                'Tests',
+                '*',
+                'VRT',
+                [
+                  'Permutations',
+                  'Forced Colors',
+                  'Global Styles',
+                  'Custom Properties',
+                  '*',
+                ],
+              ],
+              'User message',
+              [
+                'Docs',
+                'Playground',
+                'Tests',
+                '*',
+                'VRT',
+                [
+                  'Permutations',
+                  'Forced Colors',
+                  'Global Styles',
+                  'Custom Properties',
+                  '*',
+                ],
+              ],
+              'System message',
+              [
+                'Docs',
+                'Playground',
+                'Tests',
+                '*',
+                'VRT',
+                [
+                  'Permutations',
+                  'Forced Colors',
+                  'Global Styles',
+                  'Custom Properties',
+                  '*',
+                ],
+              ],
+              'Response status',
+              [
+                'Docs',
+                'Playground',
+                'Tests',
+                '*',
+                'VRT',
+                [
+                  'Permutations',
+                  'Forced Colors',
+                  'Global Styles',
+                  'Custom Properties',
+                  '*',
+                ],
+              ],
+              'Message feedback',
+              [
+                'Docs',
+                'Playground',
+                'Tests',
+                '*',
+                'VRT',
+                [
+                  'Permutations',
+                  'Forced Colors',
+                  'Global Styles',
+                  'Custom Properties',
+                  '*',
+                ],
+              ],
+              'Message sources',
+              [
+                'Docs',
+                'Playground',
+                'Tests',
+                '*',
+                'VRT',
+                [
+                  'Permutations',
+                  'Forced Colors',
+                  'Global Styles',
+                  'Custom Properties',
+                  '*',
+                ],
+              ],
+              'Suggestion group',
+              [
+                'Docs',
+                'Playground',
+                'Tests',
+                '*',
+                'VRT',
+                [
+                  'Permutations',
+                  'Forced Colors',
+                  'Global Styles',
+                  'Custom Properties',
+                  '*',
+                ],
+              ],
+              'Pixel loader',
+              [
+                'Docs',
+                'Playground',
+                'Tests',
+                '*',
+                'VRT',
+                [
+                  'Permutations',
+                  'Forced Colors',
+                  'Global Styles',
+                  'Custom Properties',
+                  '*',
+                ],
+              ],
               '*',
               [
                 'Docs',
@@ -389,7 +558,12 @@ const preview = {
     VERSION: { table: { disable: true } },
     CORE_VERSION: { table: { disable: true } },
   },
-  tags: ['!autodocs', '!dev'], // We only want the playground stories to be visible in the docs and sidenav. Since a majority of our stories are tagged with '!autodocs' and '!dev', we set those tags globally. We can opt in to visibility by adding the 'autodocs' or 'dev' tags to individual stories.
+  // We only want the playground stories to be visible in the docs and sidenav. Since a majority of our stories are tagged with '!autodocs' and '!dev', we set those tags globally. We can opt in to visibility by adding the 'autodocs' or 'dev' tags to individual stories.
+  // Since Storybook 10.4.3, MDX docs pages without 'dev' are hidden too. The
+  // Storybook patch (.yarn/patches/storybook-npm-10.6.3.patch) restores the
+  // earlier behavior so every docs page stays in the sidebar; reapply it on
+  // each Storybook upgrade.
+  tags: ['!autodocs', '!dev'],
   loaders: [FontLoader],
 };
 

@@ -15,6 +15,8 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import '../../swc-prompt-field.js';
 import '../../../upload-attachment/swc-upload-attachment.js';
+import '@adobe/spectrum-wc/components/asset/swc-asset.js';
+import '@adobe/spectrum-wc/components/badge/swc-badge.js';
 
 import {
   createPermutations,
@@ -82,34 +84,32 @@ const legalDisclaimerSlot = html`
 
 const cardAttachment = (title: string, subtitle: string) => html`
   <swc-upload-attachment slot="attachment" type="card" dismissible>
-    <div slot="thumbnail" role="img" aria-label=${subtitle}></div>
+    <swc-asset slot="thumbnail">
+      <img src="images/landscape-asset.jpg" alt=${subtitle} />
+    </swc-asset>
     <span slot="title">${title}</span>
     <span slot="subtitle">${subtitle}</span>
   </swc-upload-attachment>
 `;
 
-// Static gradients stand in for real thumbnails so VRT snapshots don't depend
-// on a network image request.
-const THUMBNAIL_GRADIENTS: Record<number, string> = {
-  64: 'linear-gradient(135deg, #a78bfa, #f472b6)',
-  56: 'linear-gradient(135deg, #f472b6, #facc15)',
-  823: 'linear-gradient(135deg, #38bdf8, #a78bfa)',
+// Local, network-free images stand in for real thumbnails so VRT snapshots
+// don't depend on an external request. Distinct images keep tiles visually
+// distinguishable in multi-attachment permutations.
+const THUMBNAIL_IMAGES: Record<number, string> = {
+  64: 'images/landscape-asset.jpg',
+  56: 'images/card-preview.jpg',
+  823: 'images/portrait-asset.jpg',
 };
 
 const mediaAttachment = (id: number, alt: string, badge?: string) => html`
   <swc-upload-attachment slot="attachment" type="media" dismissible>
-    <div
-      slot="thumbnail"
-      role="img"
-      aria-label=${alt}
-      style="inline-size: 100%; block-size: 100%; background: ${THUMBNAIL_GRADIENTS[
-        id
-      ]};"
-    ></div>
+    <swc-asset slot="thumbnail">
+      <img src=${THUMBNAIL_IMAGES[id]} alt=${alt} />
+    </swc-asset>
     <span slot="title">${alt}</span>
     ${badge
       ? html`
-          <span slot="badge">${badge}</span>
+          <swc-badge slot="badge" size="s" subtle>${badge}</swc-badge>
         `
       : nothing}
   </swc-upload-attachment>
@@ -165,6 +165,7 @@ type FieldCase = {
   attachment?: AttachmentKind;
   buttonState?: ButtonState;
   fieldHover?: boolean;
+  fieldFocus?: boolean;
 };
 
 // Fields render at a roomy composer width by default. Long prompts and the
@@ -181,6 +182,7 @@ const renderField = ({
   attachment = 'none',
   buttonState,
   fieldHover = false,
+  fieldFocus = false,
 }: FieldCase) => {
   const constrained =
     value === LONG_PROMPT ||
@@ -203,6 +205,7 @@ const renderField = ({
         value=${value}
         data-button-state=${buttonState ?? nothing}
         data-field-hover=${fieldHover ? '' : nothing}
+        data-field-focus=${fieldFocus ? '' : nothing}
       >
         ${attachmentSlot(attachment)} ${legalDisclaimerSlot}
       </swc-prompt-field>
@@ -233,6 +236,15 @@ const ANATOMY_PERMUTATIONS = createPermutations([
     generating: [false, true],
     value: [SHORT_PROMPT],
     fieldHover: [true],
+  },
+  // Focus recedes the treatment to the contrast border and drop shadow on
+  // every variant while idle; generating keeps its wash through focus.
+  {
+    group: ['Focus'],
+    variant: VARIANTS,
+    generating: [false, true],
+    value: [SHORT_PROMPT],
+    fieldFocus: [true],
   },
   {
     group: ['Content'],
@@ -307,6 +319,12 @@ const SIZE_PERMUTATIONS = createPermutations([
     value: [SHORT_PROMPT],
     attachment: ['manyMedia'],
     buttonState: ['hover'],
+  },
+  {
+    group: ['Small size — focus'],
+    size: ['s'],
+    value: [SHORT_PROMPT],
+    fieldFocus: [true],
   },
 ]);
 
@@ -414,6 +432,18 @@ const forceFieldHover = ({ canvasElement }: { canvasElement: HTMLElement }) => {
     );
 };
 
+// Forces the composer's :focus-within treatment. The box and the ring each
+// key their own recede rules off :focus-within, so both get the forced
+// attribute.
+const forceFieldFocus = ({ canvasElement }: { canvasElement: HTMLElement }) => {
+  canvasElement
+    .querySelectorAll<HTMLElement>('swc-prompt-field[data-field-focus]')
+    .forEach((field) => {
+      forcePseudoState(field, 'focus-within', '.swc-PromptField-box');
+      forcePseudoState(field, 'focus-within', '.swc-PromptField-outer-border');
+    });
+};
+
 // Stack a group's fields vertically instead of packing them side by side.
 const stack = (cases: FieldCase[]) => html`
   <div
@@ -447,6 +477,7 @@ export const Permutations: Story = {
     await forceButtonStates(context);
     await forceDraggedStates(context);
     forceFieldHover(context);
+    forceFieldFocus(context);
     await pauseLoaders(context);
   },
 };

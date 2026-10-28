@@ -1,6 +1,6 @@
 ---
 name: session-retrospective
-description: Document lessons learned after completing work, especially when the user corrected planning documents or implementation. Creates and maintains a persistent lessons file in .ai/memory/ that future agents read at session start.
+description: Document lessons learned after completing work, especially when the user corrected planning documents or implementation. Creates and maintains topic lessons files in .ai/memory/ that load as path-scoped instructions. Use when the user says "remember this", "log this lesson", "save this for next time", "add to memory", or "review the session and update memory", when the user corrects your work, or after substantial work.
 ---
 
 # Session retrospective
@@ -46,9 +46,9 @@ Skip corrections that are one-offs or already obvious from the error message.
 
 ### 2. Check existing lessons first
 
-Read `.ai/memory/lessons.md` before writing. Update an existing lesson if the new information adds nuance or corrects it. Never create a duplicate entry.
+Read every file in `.ai/memory/` before writing. Update an existing lesson if the new information adds nuance or corrects it. Never create a duplicate entry.
 
-### 3. Write to `.ai/memory/lessons.md`
+### 3. Write to the matching `.ai/memory/<descriptor>-lessons.md` file
 
 Group lessons by **category**, not by date. Categories:
 
@@ -92,11 +92,25 @@ Lessons should be actionable. A future agent reading them should know exactly wh
 
 **`.ai/memory/<descriptor>-lessons.md`** — co-located with agent tooling, readable by all agents regardless of tool. Use a descriptor that reflects the theme of the lessons (e.g. `agnostic-lessons.md` for tool-agnostic AI setup work, `migration-lessons.md` for migration-specific patterns). Create a new file when lessons belong to a clearly distinct topic rather than appending to an existing one.
 
+Every lessons file needs instruction frontmatter so it loads automatically for matching files, and `yarn lint:ai` fails without it:
+
+```yaml
+---
+description: Accumulated lessons about <topic> in this repository.
+paths:
+  - '**' # or a narrower glob, such as '**/*.css'
+excludeAgent: code-review # optional; omit it if code review should use the lessons
+---
+```
+
+After editing, run `yarn ai:sync` (the pre-commit hook does this) to regenerate the `memory-<descriptor>` instruction files.
+
 ---
 
 ## Checklist
 
 - [ ] Lessons are in `.ai/memory/<descriptor>-lessons.md`, not in a session-specific file
+- [ ] The file has instruction frontmatter (`description`, quoted `paths`) and `yarn lint:ai` passes
 - [ ] Each lesson is in the correct category
 - [ ] Each lesson is 1–2 sentences and actionable
 - [ ] No duplicates — existing entries were checked and updated if needed

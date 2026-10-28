@@ -35,7 +35,7 @@ jobs:
   # Returns all changed pull request files.
   # --------------------------------------------------------------
   changed_files:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     name: Capture changed-files
     outputs:
       styles_added_files: ${{ steps.changed-files.outputs.styles_added_files }}
@@ -49,11 +49,11 @@ jobs:
 
     steps:
       - name: Check out code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Get changed files
         id: changed-files
-        uses: step-security/changed-files@v46
+        uses: step-security/changed-files@v47
         with:
           files_yaml: |
             styles:
@@ -76,18 +76,19 @@ jobs:
   # --- Lint pre-compiled assets for consistency --- #
   lint:
     name: Lint
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     needs: [changed_files]
-    timeout-minutes: 5
+    # Push runs also lint the whole repo, which adds about a minute.
+    timeout-minutes: 10
     steps:
       # install but don't build - we're linting pre-compiled assets
       - name: Check out code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
       - name: Use Node version from .nvmrc
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version-file: '.nvmrc'
           cache: yarn
@@ -99,12 +100,12 @@ jobs:
       - name: Check for cached dependencies
         continue-on-error: true
         id: cache-dependencies
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: |
             .cache/yarn
             node_modules
-          key: ubuntu-latest-${{ hashFiles('.nvmrc', 'package.json', 'yarn.lock') }}
+          key: ubuntu-26.04-${{ hashFiles('.nvmrc', 'package.json', 'yarn.lock') }}
 
       ## --- INSTALL --- ##
       # If statement isn't needed here b/c yarn will leverage the cache if it exists
@@ -115,9 +116,11 @@ jobs:
       - name: Validate generated version files
         run: node scripts/generate-versions.js --check
 
+      # Reviewdog's github-pr-review reporter only works on pull requests. On
+      # push it exits without reading stdin, so the linter crashes with EPIPE.
       - name: Lint styles
-        # if: ${{ needs.changed_files.outputs.styles_added_files != '' || needs.changed_files.outputs.styles_modified_files != '' }}
-        uses: reviewdog/action-stylelint@v1.30.2
+        if: ${{ github.event_name == 'pull_request' && (needs.changed_files.outputs.styles_added_files != '' || needs.changed_files.outputs.styles_modified_files != '') }}
+        uses: reviewdog/action-stylelint@v1.33.0
         with:
           fail_level: warning
           filter_mode: diff_context
@@ -126,14 +129,25 @@ jobs:
           stylelint_input: '${{ needs.changed_files.outputs.styles_added_files }} ${{ needs.changed_files.outputs.styles_modified_files }} --allow-empty-input'
 
       - name: ESLint
-        uses: reviewdog/action-eslint@v1.33.2
-        # if: ${{ needs.changed_files.outputs.eslint_added_files != '' || needs.changed_files.outputs.eslint_modified_files != '' }}
+        if: ${{ github.event_name == 'pull_request' && (needs.changed_files.outputs.eslint_added_files != '' || needs.changed_files.outputs.eslint_modified_files != '') }}
+        uses: reviewdog/action-eslint@v1.36.1
         with:
           fail_level: warning
           level: warning
           reporter: github-pr-review
           filter_mode: diff_context
           eslint_flags: '${{ needs.changed_files.outputs.eslint_added_files }} ${{ needs.changed_files.outputs.eslint_modified_files }}'
+
+      # Post-merge smoke test: lint the repo on main, skipping 1st-gen to match
+      # the pull request scope. Fails on errors only; existing warnings are
+      # reported but don't fail the run.
+      - name: ESLint (whole repo)
+        if: ${{ github.event_name == 'push' }}
+        run: yarn lint:eslint --ignore-pattern '1st-gen/**'
+
+      - name: Stylelint (whole repo)
+        if: ${{ github.event_name == 'push' }}
+        run: yarn lint:styles
 
       - name: Prettier
         if: ${{ needs.changed_files.outputs.prettier_added_files != '' || needs.changed_files.outputs.prettier_modified_files != '' }}

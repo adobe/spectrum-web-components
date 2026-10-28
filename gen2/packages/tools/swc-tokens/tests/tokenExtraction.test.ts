@@ -12,7 +12,7 @@
 
 import { describe, expect, it } from 'vitest';
 
-import { __test__, generateCSS } from '../src/tokens.js';
+import { __test__, allTokenData, generateCSS } from '../src/tokens.js';
 
 describe('extractTokenValues', () => {
   const { extractTokenValues } = __test__;
@@ -347,6 +347,31 @@ describe('deriveZeroValueEntries', () => {
 
   it('returns an empty object when there are no deprecated comments', () => {
     expect(deriveZeroValueEntries({}, {})).toEqual({});
+  });
+});
+
+describe('removeActiveTokensFromDeleted', () => {
+  const { removeActiveTokensFromDeleted } = __test__;
+
+  it('removes deleted metadata for tokens present in the active token set', () => {
+    expect(
+      removeActiveTokensFromDeleted(
+        {
+          'banner-gap-horizontal': null,
+          'removed-token': null,
+        },
+        new Set(['banner-gap-horizontal'])
+      )
+    ).toEqual({
+      'removed-token': null,
+    });
+  });
+
+  it('keeps active tokens out of deleted metadata', async () => {
+    const { tokens, deleted } = await allTokenData();
+
+    expect(tokens['banner-gap-horizontal']).toBe('24px');
+    expect(deleted).not.toHaveProperty('banner-gap-horizontal');
   });
 });
 

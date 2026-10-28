@@ -25,7 +25,7 @@ concurrency:
 
 jobs:
   check-changesets:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     # Always runs - on push to main and on manual dispatch from any branch - so the
     # snapshot job (dispatchable from any branch) can read its outputs. The main-only
     # restriction lives on version-pr/publish instead, since only those must be limited
@@ -35,7 +35,7 @@ jobs:
       needs_publish: ${{ steps.check.outputs.needs_publish }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0 # need tags so the needs_publish idempotency check below can see them
 
@@ -79,7 +79,7 @@ jobs:
     if: >-
       github.event_name == 'workflow_dispatch' &&
       needs.check-changesets.outputs.has_changesets == 'true'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     environment: npm-publish
     permissions:
       id-token: write # Required for OIDC trusted publishing (1st-gen)
@@ -87,7 +87,7 @@ jobs:
       YARN_ENABLE_IMMUTABLE_INSTALLS: false
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
@@ -228,7 +228,7 @@ jobs:
     if: >-
       github.ref == 'refs/heads/main' &&
       needs.check-changesets.outputs.has_changesets == 'true'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     permissions:
       contents: write # commits the Version PR branch
       pull-requests: write # opens/updates the Version PR
@@ -236,7 +236,7 @@ jobs:
       YARN_ENABLE_IMMUTABLE_INSTALLS: false
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
@@ -266,6 +266,7 @@ jobs:
           branch: changeset-release/1st-gen
           base: main
           delete-branch: true
+          labels: skip_vrt
           add-paths: |
             1st-gen
             yarn.lock
@@ -288,7 +289,7 @@ jobs:
       github.ref == 'refs/heads/main' &&
       needs.check-changesets.outputs.has_changesets == 'false' &&
       needs.check-changesets.outputs.needs_publish == 'true'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     environment: npm-publish
     permissions:
       id-token: write # Required for OIDC trusted publishing (1st-gen)
@@ -297,7 +298,7 @@ jobs:
       YARN_ENABLE_IMMUTABLE_INSTALLS: false
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
