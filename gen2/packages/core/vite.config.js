@@ -95,6 +95,10 @@ function getEntries() {
     entries,
     scanTsFiles(resolve(__dirname, 'directives'), 'directives')
   );
+  Object.assign(
+    entries,
+    scanSubdirIndexes(resolve(__dirname, 'directives'), 'directives')
+  );
 
   // Find all utils/*.ts files
   Object.assign(entries, scanTsFiles(resolve(__dirname, 'utils'), 'utils'));
