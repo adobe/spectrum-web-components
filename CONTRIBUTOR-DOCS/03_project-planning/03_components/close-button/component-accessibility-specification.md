@@ -80,7 +80,7 @@ All three are **`role="button"`** surfaces in Spectrum: **native** **`<button ty
 ### When to use something else
 
 - **Primary actions** or **non-dismiss** work → [Button](../button/component-accessibility-specification.md) or [Action button](../action-button/rendering-and-styling-migration-analysis.md).
-- **Clear field** or **reset input value** without dismissing a dialog, banner, or action bar → **`swc-clear-button`** (see [Button, close button, and clear button (compared)](#button-close-button-and-clear-button-compared); dedicated **`swc-clear-button`** a11y migration analysis when that workstream lands).
+- **Clear field** or **reset input value** without dismissing a dialog, banner, or action bar → **`swc-clear-button`** (see [Button, close button, and clear button (compared)](#button-close-button-and-clear-button-compared); dedicated **`swc-clear-button`** component accessibility specification when that workstream lands).
 
 ### What it is not
 
