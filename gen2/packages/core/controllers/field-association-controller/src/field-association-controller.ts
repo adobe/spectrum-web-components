@@ -10,6 +10,8 @@
  * governing permissions and limitations under the License.
  */
 
+import type { FieldStatus } from '../../../types/index.js';
+
 // ─────────────────────────
 //     TYPES
 // ─────────────────────────
@@ -24,6 +26,21 @@ export interface FieldAssociationControllerOptions {
    * host can re-sync (typically via `requestUpdate()`).
    */
   onDisabledChange?: (disabled: boolean) => void;
+
+  /**
+   * Returns the host's authored `field-status`. Enables the status-aware
+   * members: {@link FieldAssociationController.disabled},
+   * {@link FieldAssociationController.barred}, and a `willValidate` that
+   * reports `false` while the field is disabled or read-only.
+   */
+  getStatus?: () => FieldStatus | undefined;
+
+  /**
+   * The host element. When provided, clicks are suppressed in the capture phase
+   * while the field is disabled, which a reflected `disabled` attribute used to
+   * do for free.
+   */
+  host?: HTMLElement;
 }
 
 // ─────────────────────────
@@ -49,6 +66,7 @@ export interface FieldAssociationControllerOptions {
 export class FieldAssociationController {
   private readonly _internals: ElementInternals;
   private readonly _onDisabledChange?: (disabled: boolean) => void;
+  private readonly _getStatus?: () => FieldStatus | undefined;
 
   private _formDisabled = false;
 
@@ -58,6 +76,17 @@ export class FieldAssociationController {
   ) {
     this._internals = internals;
     this._onDisabledChange = options.onDisabledChange;
+    this._getStatus = options.getStatus;
+    options.host?.addEventListener(
+      'click',
+      (event) => {
+        if (this.disabled) {
+          event.preventDefault();
+          event.stopImmediatePropagation();
+        }
+      },
+      { capture: true }
+    );
   }
 
   // ─────────────────────────
@@ -82,6 +111,33 @@ export class FieldAssociationController {
   /** `true` when an ancestor `<form>`/`<fieldset disabled>` cascaded down. Excludes the host's own `disabled` (see host `effectiveDisabled`). */
   public get formDisabled(): boolean {
     return this._formDisabled;
+  }
+
+  /**
+   * Effective disabled: the authored `field-status="disabled"` OR the cascaded
+   * form state. Use it to disable the inner control and exclude the value.
+   */
+  public get disabled(): boolean {
+    return this._getStatus?.() === 'disabled' || this._formDisabled;
+  }
+
+  /**
+   * Barred from constraint validation: disabled, or `field-status="readonly"`.
+   * A reflected `disabled` or `readonly` host attribute used to bar the field
+   * for free; without one the host must apply the same rule itself, and this
+   * is that rule.
+   */
+  public get barred(): boolean {
+    return this.disabled || this._getStatus?.() === 'readonly';
+  }
+
+  /**
+   * Mirrors {@link FieldAssociationController.disabled} into the `disabled`
+   * custom state, the single styling hook for both the authored status and the
+   * fieldset cascade. Call it from the host's `update()`.
+   */
+  public syncDisabledState(): void {
+    this._internals.states[this.disabled ? 'add' : 'delete']('disabled');
   }
 
   /** Host delegates its `formDisabledCallback` here; fires `onDisabledChange` only on a change. */
@@ -112,9 +168,9 @@ export class FieldAssociationController {
     return this._internals.validationMessage;
   }
 
-  /** Whether the field is a candidate for constraint validation. */
+  /** Whether the field is a candidate for constraint validation; `false` while {@link FieldAssociationController.barred}. */
   public get willValidate(): boolean {
-    return this._internals.willValidate;
+    return !this.barred && this._internals.willValidate;
   }
 
   /** Returns whether the field is valid, firing an `invalid` event if not. */

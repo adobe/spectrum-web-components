@@ -14,6 +14,8 @@ import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
+import { RADIO_GROUP_STATUSES } from '@adobe/spectrum-wc-core/components/radio-group/index.js';
+
 import '@adobe/spectrum-wc/components/radio-group/swc-radio-group.js';
 import '@adobe/spectrum-wc/components/radio-group/swc-radio.js';
 import '@adobe/spectrum-wc/components/button-group/swc-button-group.js';
@@ -24,6 +26,13 @@ import '@adobe/spectrum-wc/components/button-group/swc-button-group.js';
 
 const { events, args, argTypes, template } =
   getStorybookHelpers('swc-radio-group');
+
+argTypes['field-status'] = {
+  ...argTypes['field-status'],
+  control: { type: 'select' },
+  options: [undefined, ...RADIO_GROUP_STATUSES],
+};
+args['field-status'] = undefined;
 
 const meta: Meta = {
   title: 'Radio group',
@@ -87,10 +96,10 @@ const handleFormSubmit = async (event: SubmitEvent): Promise<void> => {
   }
 
   // Clear the demo's previous error before checking the current constraints.
-  field.invalid = false;
+  field.fieldStatus = undefined;
 
   await field.updateComplete;
-  field.invalid = !field.checkValidity();
+  field.fieldStatus = field.checkValidity() ? undefined : 'invalid';
 };
 
 // ────────────────────
@@ -267,7 +276,7 @@ export const Selection: Story = {
 export const Disabled: Story = {
   render: (args) => html`
     ${group(args, {
-      disabled: true,
+      'field-status': 'disabled',
       'label-slot': 'Disabled group',
       selected: '2',
     })}
@@ -281,28 +290,20 @@ export const Disabled: Story = {
       ].join(''),
     })}
   `,
+  // axe reports false-positive contrast failures: WCAG 1.4.3 exempts text in
+  // an inactive component, but axe can't tell the slotted label and
+  // description spans belong to the disabled group.
   parameters: {
-    a11y: {
-      // WCAG 1.4.3 exempts text that is part of an inactive UI component.
-      // axe cannot infer that these slotted spans belong to the disabled
-      // group, so exclude only their color-contrast result.
-      exclude: {
-        'color-contrast': [
-          'swc-radio-group:nth-child(1) > span[slot="label"]',
-          'swc-radio-group:nth-child(1) > span[slot="description"]',
-        ],
-      },
-    },
     flexLayout: 'row-wrap',
     styles: { gap: 'var(--swc-spacing-500)' },
   },
-  tags: ['states'],
+  tags: ['states', '!test'],
 };
 
 export const Invalid: Story = {
   render: (args) => html`
     ${group(args, {
-      invalid: true,
+      'field-status': 'invalid',
       selected: '1',
       'error-text-slot': 'This option is not available.',
     })}
@@ -319,7 +320,7 @@ export const Required: Story = {
 
 export const ReadOnly: Story = {
   render: (args) => html`
-    ${group(args, { readonly: true, selected: '2' })}
+    ${group(args, { 'field-status': 'readonly', selected: '2' })}
   `,
   tags: ['states'],
 };

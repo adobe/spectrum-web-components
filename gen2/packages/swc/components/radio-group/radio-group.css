@@ -72,6 +72,6 @@
 
 /* ── States ───────────────────────────────────────── */
 
-:host([readonly]) {
+:host([field-status="readonly"]) {
   --_swc-radio-group-is-readonly: true;
 }

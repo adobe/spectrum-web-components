@@ -11,6 +11,10 @@
  */
 
 import type { ElementSize } from '@adobe/spectrum-wc-core/mixins/index.js';
+import {
+  FIELD_STATUSES,
+  type FieldStatus,
+} from '@adobe/spectrum-wc-core/types/index.js';
 
 // ──────────────────
 //     SHARED
@@ -35,12 +39,7 @@ export const TEXT_FIELD_LABEL_POSITIONS = ['top', 'side'] as const;
 
 export const TEXT_FIELD_NECESSITY_INDICATORS = ['icon', 'label'] as const;
 
-export const TEXT_FIELD_STATUSES = [
-  'disabled',
-  'invalid',
-  'valid',
-  'readonly',
-] as const;
+export const TEXT_FIELD_STATUSES = FIELD_STATUSES;
 
 // ──────────────────
 //     TYPES
@@ -52,7 +51,7 @@ export type TextFieldLabelPosition =
   (typeof TEXT_FIELD_LABEL_POSITIONS)[number];
 export type TextFieldNecessityIndicator =
   (typeof TEXT_FIELD_NECESSITY_INDICATORS)[number];
-export type TextFieldStatus = (typeof TEXT_FIELD_STATUSES)[number];
+export type TextFieldStatus = FieldStatus;
 
 /**
  * Valid `autocomplete` tokens for the text field. Aliases the platform `AutoFill` union
