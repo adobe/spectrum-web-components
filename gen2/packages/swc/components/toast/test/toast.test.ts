@@ -17,6 +17,7 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { Toast } from '@adobe/spectrum-wc/toast';
 import {
   SWC_TOAST_ACTION_EVENT,
+  TOAST_VARIANTS,
   type ToastVariant,
 } from '@adobe/spectrum-wc-core/components/toast';
 
@@ -50,6 +51,23 @@ const nextFrame = (): Promise<void> =>
 const messageSlot = (toast: Toast): HTMLSlotElement | null =>
   toast.shadowRoot?.querySelector('.swc-Toast-text slot') ?? null;
 
+// Cancels every swc-close on the toast until the returned function is called.
+const cancelClose = (
+  toast: Toast,
+  onClose?: (event: Event) => void
+): (() => void) => {
+  const controller = new AbortController();
+  toast.addEventListener(
+    'swc-close',
+    (event) => {
+      onClose?.(event);
+      event.preventDefault();
+    },
+    { signal: controller.signal }
+  );
+  return () => controller.abort();
+};
+
 // ──────────────────────────
 //    API
 // ──────────────────────────
@@ -64,35 +82,39 @@ export const OverviewTest: Story = {
     const toast = await getComponent<Toast>(canvasElement, 'swc-toast');
 
     await step('the custom element is registered', () => {
-      expect(customElements.get('swc-toast')).toBe(Toast);
+      expect(customElements.get('swc-toast'), 'registered element').toBe(Toast);
     });
 
     await step('the element is an instance of Toast', () => {
-      expect(toast).toBeInstanceOf(Toast);
+      expect(toast, 'swc-toast instance').toBeInstanceOf(Toast);
     });
 
     await step('it exposes reflected open and variant properties', async () => {
-      expect(toast.open).toBe(false);
-      expect(toast.hasAttribute('open')).toBe(false);
-      expect(toast.variant).toBe('neutral');
-      expect(toast.getAttribute('variant')).toBe('neutral');
+      expect(toast.open, 'default open').toBe(false);
+      expect(toast.hasAttribute('open'), 'default open attribute').toBe(false);
+      expect(toast.variant, 'default variant').toBe('neutral');
+      expect(toast.getAttribute('variant'), 'default variant attribute').toBe(
+        'neutral'
+      );
 
       toast.open = true;
       toast.variant = 'positive';
       await toast.updateComplete;
 
-      expect(toast.hasAttribute('open')).toBe(true);
-      expect(toast.getAttribute('variant')).toBe('positive');
+      expect(toast.hasAttribute('open'), 'reflected open attribute').toBe(true);
+      expect(toast.getAttribute('variant'), 'reflected variant attribute').toBe(
+        'positive'
+      );
     });
 
     await step('it does not warn for valid variants', async () => {
       await withWarningSpy(async (warnCalls) => {
-        for (const variant of ['neutral', 'info', 'positive', 'negative']) {
-          toast.variant = variant as ToastVariant;
+        for (const variant of TOAST_VARIANTS) {
+          toast.variant = variant;
           await toast.updateComplete;
         }
 
-        expect(warnCalls).toHaveLength(0);
+        expect(warnCalls, 'warnings for valid variants').toHaveLength(0);
       });
     });
 
@@ -101,8 +123,8 @@ export const OverviewTest: Story = {
         toast.variant = 'invalid' as ToastVariant;
         await toast.updateComplete;
 
-        expect(warnCalls).toHaveLength(1);
-        expect(warnCalls[0][1]).toContain(
+        expect(warnCalls, 'warning count for invalid variant').toHaveLength(1);
+        expect(warnCalls[0][1], 'invalid variant warning message').toContain(
           'expects "variant" to be one of: neutral, info, positive, negative'
         );
       });
@@ -131,7 +153,7 @@ export const VariantIconTest: Story = {
         toast.variant = variant as ToastVariant;
         await toast.updateComplete;
 
-        expect(icon()?.localName ?? null).toBe(tagName);
+        expect(icon()?.localName ?? null, `icon for ${variant}`).toBe(tagName);
       }
     });
 
@@ -139,21 +161,30 @@ export const VariantIconTest: Story = {
       toast.variant = 'info';
       await toast.updateComplete;
 
-      expect(icon()?.hasAttribute('accessible-label')).toBe(false);
+      expect(
+        icon()?.hasAttribute('accessible-label'),
+        'icon accessible-label presence'
+      ).toBe(false);
     });
 
     await step('icon-label is forwarded to the icon', async () => {
       toast.iconLabel = 'Information';
       await toast.updateComplete;
 
-      expect(icon()?.getAttribute('accessible-label')).toBe('Information');
+      expect(
+        icon()?.getAttribute('accessible-label'),
+        'forwarded icon label'
+      ).toBe('Information');
     });
 
     await step('an empty icon-label makes the icon decorative', async () => {
       toast.iconLabel = '';
       await toast.updateComplete;
 
-      expect(icon()?.hasAttribute('accessible-label')).toBe(false);
+      expect(
+        icon()?.hasAttribute('accessible-label'),
+        'icon accessible-label presence'
+      ).toBe(false);
     });
   },
 };
@@ -168,22 +199,32 @@ export const ActionButtonTest: Story = {
       toast.shadowRoot?.querySelector('swc-button') ?? null;
 
     await step('no action renders without action-label', () => {
-      expect(action()).toBeNull();
-      expect(toast.shadowRoot?.querySelector('slot[name="action"]')).toBeNull();
+      expect(action(), 'action button').toBeNull();
+      expect(
+        toast.shadowRoot?.querySelector('slot[name="action"]'),
+        'action slot'
+      ).toBeNull();
     });
 
     await step('the action is rendered and receives its label', async () => {
       toast.actionLabel = 'Undo';
       await toast.updateComplete;
 
-      expect(action()?.textContent?.trim()).toBe('Undo');
+      expect(action()?.textContent?.trim(), 'action label').toBe('Undo');
     });
 
     await step('the action receives the fixed Spectrum 2 treatment', () => {
-      expect(action()?.getAttribute('size')).toBe('m');
-      expect(action()?.getAttribute('variant')).toBe('secondary');
-      expect(action()?.getAttribute('fill-style')).toBe('outline');
-      expect(action()?.getAttribute('static-color')).toBe('white');
+      expect(action()?.getAttribute('size'), 'action size').toBe('m');
+      expect(action()?.getAttribute('variant'), 'action variant').toBe(
+        'secondary'
+      );
+      expect(action()?.getAttribute('fill-style'), 'action fill-style').toBe(
+        'outline'
+      );
+      expect(
+        action()?.getAttribute('static-color'),
+        'action static-color'
+      ).toBe('white');
     });
 
     await step('the action emits an event without closing the toast', () => {
@@ -198,18 +239,18 @@ export const ActionButtonTest: Story = {
 
       action()?.click();
 
-      expect(actionEvent).toBeInstanceOf(Event);
-      expect(actionEvent?.target).toBe(toast);
-      expect(actionEvent?.bubbles).toBe(true);
-      expect(actionEvent?.composed).toBe(true);
-      expect(toast.open).toBe(true);
+      expect(actionEvent, 'action event').toBeInstanceOf(Event);
+      expect(actionEvent?.target, 'action event target').toBe(toast);
+      expect(actionEvent?.bubbles, 'action event bubbles').toBe(true);
+      expect(actionEvent?.composed, 'action event composed').toBe(true);
+      expect(toast.open, 'open after action').toBe(true);
     });
 
     await step('clearing action-label removes the action', async () => {
       toast.actionLabel = undefined;
       await toast.updateComplete;
 
-      expect(action()).toBeNull();
+      expect(action(), 'action button').toBeNull();
     });
   },
 };
@@ -226,17 +267,23 @@ export const AccessibilitySemanticsTest: Story = {
     const toast = await getComponent<Toast>(canvasElement, 'swc-toast');
 
     await step('the closed host exposes alert dialog semantics', () => {
-      expect(toast.getAttribute('role')).toBe('alertdialog');
-      expect(toast.getAttribute('aria-modal')).toBe('false');
-      expect(toast.getAttribute('tabindex')).toBe('0');
-      expect(toast.getAttribute('aria-label')).toBe('File saved');
-      expect(toast.getAttribute('aria-hidden')).toBe('true');
+      expect(toast.getAttribute('role'), 'host role').toBe('alertdialog');
+      expect(toast.getAttribute('aria-modal'), 'host aria-modal').toBe('false');
+      expect(toast.getAttribute('tabindex'), 'host tabindex').toBe('0');
+      expect(toast.getAttribute('aria-label'), 'host aria-label').toBe(
+        'File saved'
+      );
+      expect(toast.getAttribute('aria-hidden'), 'host aria-hidden').toBe(
+        'true'
+      );
     });
 
     await step('the inner wrapper exposes an atomic alert', () => {
       const alert = toast.shadowRoot?.querySelector('[role="alert"]');
-      expect(alert).toBeTruthy();
-      expect(alert?.getAttribute('aria-atomic')).toBe('true');
+      expect(alert, 'inner alert wrapper').toBeTruthy();
+      expect(alert?.getAttribute('aria-atomic'), 'alert aria-atomic').toBe(
+        'true'
+      );
     });
 
     await step('the accessible name follows message changes', async () => {
@@ -244,7 +291,9 @@ export const AccessibilitySemanticsTest: Story = {
       await Promise.resolve();
       await toast.updateComplete;
 
-      expect(toast.getAttribute('aria-label')).toBe('Upload complete');
+      expect(toast.getAttribute('aria-label'), 'host aria-label').toBe(
+        'Upload complete'
+      );
     });
   },
 };
@@ -257,8 +306,13 @@ export const LabelledMessageTest: Story = {
     const toast = await getComponent<Toast>(canvasElement, 'swc-toast');
 
     await step('an ID-bearing message labels the host by reference', () => {
-      expect(toast.getAttribute('aria-labelledby')).toBe('toast-message');
-      expect(toast.hasAttribute('aria-label')).toBe(false);
+      expect(
+        toast.getAttribute('aria-labelledby'),
+        'host aria-labelledby'
+      ).toBe('toast-message');
+      expect(toast.hasAttribute('aria-label'), 'host aria-label presence').toBe(
+        false
+      );
     });
 
     // TODO(SWC-2567): drop the bare-text fallback steps if the container becomes the only creator of toasts.
@@ -267,8 +321,13 @@ export const LabelledMessageTest: Story = {
       await Promise.resolve();
       await toast.updateComplete;
 
-      expect(toast.getAttribute('aria-label')).toBe('Upload complete');
-      expect(toast.hasAttribute('aria-labelledby')).toBe(false);
+      expect(toast.getAttribute('aria-label'), 'host aria-label').toBe(
+        'Upload complete'
+      );
+      expect(
+        toast.hasAttribute('aria-labelledby'),
+        'host aria-labelledby presence'
+      ).toBe(false);
     });
 
     await step(
@@ -279,8 +338,13 @@ export const LabelledMessageTest: Story = {
         await Promise.resolve();
         await toast.updateComplete;
 
-        expect(toast.getAttribute('aria-label')).toBe('File saved');
-        expect(toast.hasAttribute('aria-labelledby')).toBe(false);
+        expect(toast.getAttribute('aria-label'), 'host aria-label').toBe(
+          'File saved'
+        );
+        expect(
+          toast.hasAttribute('aria-labelledby'),
+          'host aria-labelledby presence'
+        ).toBe(false);
       }
     );
   },
@@ -298,8 +362,13 @@ export const EmptySlotMessageTest: Story = {
     await step(
       'a slot="" text element labels the host like default-slot content',
       () => {
-        expect(toast.getAttribute('aria-label')).toBe('File saved');
-        expect(toast.hasAttribute('aria-labelledby')).toBe(false);
+        expect(toast.getAttribute('aria-label'), 'host aria-label').toBe(
+          'File saved'
+        );
+        expect(
+          toast.hasAttribute('aria-labelledby'),
+          'host aria-labelledby presence'
+        ).toBe(false);
       }
     );
   },
@@ -317,8 +386,14 @@ export const EmptySlotLabelledMessageTest: Story = {
     await step(
       'a slot="" ID-bearing element labels the host by reference',
       () => {
-        expect(toast.getAttribute('aria-labelledby')).toBe('toast-message');
-        expect(toast.hasAttribute('aria-label')).toBe(false);
+        expect(
+          toast.getAttribute('aria-labelledby'),
+          'host aria-labelledby'
+        ).toBe('toast-message');
+        expect(
+          toast.hasAttribute('aria-label'),
+          'host aria-label presence'
+        ).toBe(false);
       }
     );
   },
@@ -350,30 +425,45 @@ export const OpenLifecycleTest: Story = {
       toast.open = true;
       await toast.updateComplete;
 
-      expect(toast.hasAttribute('aria-hidden')).toBe(false);
-      expect(document.activeElement).toBe(activeElement);
-      expect(openAttributesDuringEvent).toEqual([false]);
-      expect(events).toEqual(['swc-open']);
+      expect(
+        toast.hasAttribute('aria-hidden'),
+        'host aria-hidden presence'
+      ).toBe(false);
+      expect(document.activeElement, 'focused element').toBe(activeElement);
+      expect(
+        openAttributesDuringEvent,
+        'open attribute during swc-open'
+      ).toEqual([false]);
+      expect(events, 'events after opening').toEqual(['swc-open']);
     });
 
     // TODO(SWC-2567): confirm the container connects toasts closed and opens them after the first update (Q11).
     await step(
       'the live region stays empty for two frames, then receives the message (Q10, Q11)',
       async () => {
-        expect(messageSlot(toast)).toBeNull();
+        expect(
+          messageSlot(toast),
+          'message slot before first frame'
+        ).toBeNull();
 
         await nextFrame();
-        expect(messageSlot(toast)).toBeNull();
+        expect(messageSlot(toast), 'message slot after one frame').toBeNull();
 
         await nextFrame();
         await toast.updateComplete;
-        expect(messageSlot(toast)).not.toBeNull();
+        expect(
+          messageSlot(toast),
+          'message slot after two frames'
+        ).not.toBeNull();
       }
     );
 
     await step('swc-after-open follows swc-open', async () => {
       await afterOpen;
-      expect(events).toEqual(['swc-open', 'swc-after-open']);
+      expect(events, 'events after swc-after-open').toEqual([
+        'swc-open',
+        'swc-after-open',
+      ]);
     });
 
     await step('reopening repeats the two-frame delay', async () => {
@@ -383,12 +473,15 @@ export const OpenLifecycleTest: Story = {
 
       toast.open = true;
       await toast.updateComplete;
-      expect(messageSlot(toast)).toBeNull();
+      expect(messageSlot(toast), 'message slot after reopening').toBeNull();
 
       await nextFrame();
       await nextFrame();
       await toast.updateComplete;
-      expect(messageSlot(toast)).not.toBeNull();
+      expect(
+        messageSlot(toast),
+        'message slot after two frames on reopen'
+      ).not.toBeNull();
     });
   },
 };
@@ -401,13 +494,16 @@ export const InitiallyOpenTest: Story = {
     const toast = await getComponent<Toast>(canvasElement, 'swc-toast');
 
     await step('a toast rendered open shows its message at once', () => {
-      expect(toast.hasAttribute('aria-hidden')).toBe(false);
-      expect(messageSlot(toast)).not.toBeNull();
+      expect(
+        toast.hasAttribute('aria-hidden'),
+        'host aria-hidden presence'
+      ).toBe(false);
+      expect(messageSlot(toast), 'message slot').not.toBeNull();
     });
 
     await step('the open host is focusable', () => {
       toast.focus();
-      expect(document.activeElement).toBe(toast);
+      expect(document.activeElement, 'focused element').toBe(toast);
       toast.blur();
     });
   },
@@ -427,7 +523,7 @@ export const SameTurnOpenTest: Story = {
         toast.open = true;
         await toast.updateComplete;
 
-        expect(messageSlot(toast)).not.toBeNull();
+        expect(messageSlot(toast), 'message slot').not.toBeNull();
       }
     );
   },
@@ -444,48 +540,56 @@ export const CloseInteractionTest: Story = {
     ) as HTMLElement;
 
     await step('the close button has an accessible name and treatment', () => {
-      expect(closeButton).toBeTruthy();
-      expect(closeButton.getAttribute('accessible-label')).toBe('Close');
-      expect(closeButton.getAttribute('static-color')).toBe('white');
+      expect(closeButton, 'close button').toBeTruthy();
+      expect(
+        closeButton.getAttribute('accessible-label'),
+        'close button accessible-label'
+      ).toBe('Close');
+      expect(
+        closeButton.getAttribute('static-color'),
+        'close button static-color'
+      ).toBe('white');
     });
 
     await step('swc-close can cancel dismissal', async () => {
-      const preventClose = (event: Event): void => event.preventDefault();
-      toast.addEventListener('swc-close', preventClose);
+      const restoreClose = cancelClose(toast);
       closeButton.click();
       await toast.updateComplete;
 
-      expect(toast.open).toBe(true);
-      toast.removeEventListener('swc-close', preventClose);
+      expect(toast.open, 'open after canceled swc-close').toBe(true);
+      restoreClose();
     });
 
     await step('close() can be canceled the same way', async () => {
-      const preventClose = (event: Event): void => event.preventDefault();
-      toast.addEventListener('swc-close', preventClose);
+      const restoreClose = cancelClose(toast);
       toast.close();
       await toast.updateComplete;
 
-      expect(toast.open).toBe(true);
-      toast.removeEventListener('swc-close', preventClose);
+      expect(toast.open, 'open after canceled close()').toBe(true);
+      restoreClose();
     });
 
     await step(
       'assigning open = false fires a cancelable swc-close before state changes',
       async () => {
         const openAttributesDuringEvent: boolean[] = [];
-        const preventClose = (event: Event): void => {
-          openAttributesDuringEvent.push(toast.hasAttribute('open'));
-          event.preventDefault();
-        };
-        toast.addEventListener('swc-close', preventClose);
+        const restoreClose = cancelClose(toast, () =>
+          openAttributesDuringEvent.push(toast.hasAttribute('open'))
+        );
 
         toast.open = false;
         await toast.updateComplete;
 
-        expect(openAttributesDuringEvent).toEqual([true]);
-        expect(toast.open).toBe(true);
-        expect(toast.hasAttribute('open')).toBe(true);
-        toast.removeEventListener('swc-close', preventClose);
+        expect(
+          openAttributesDuringEvent,
+          'open attribute during swc-close'
+        ).toEqual([true]);
+        expect(toast.open, 'open after canceled swc-close').toBe(true);
+        expect(
+          toast.hasAttribute('open'),
+          'open attribute after canceled swc-close'
+        ).toBe(true);
+        restoreClose();
       }
     );
 
@@ -500,12 +604,18 @@ export const CloseInteractionTest: Story = {
       closeButton.click();
       await toast.updateComplete;
 
-      expect(toast.open).toBe(false);
-      expect(toast.getAttribute('aria-hidden')).toBe('true');
-      expect(events).toEqual(['swc-close']);
+      expect(toast.open, 'open after accepted dismissal').toBe(false);
+      expect(
+        toast.getAttribute('aria-hidden'),
+        'host aria-hidden after accepted dismissal'
+      ).toBe('true');
+      expect(events, 'events after swc-close').toEqual(['swc-close']);
 
       await afterClose;
-      expect(events).toEqual(['swc-close', 'swc-after-close']);
+      expect(events, 'events after swc-after-close').toEqual([
+        'swc-close',
+        'swc-after-close',
+      ]);
     });
   },
 };
@@ -522,9 +632,11 @@ export const ReconnectTest: Story = {
       canvasElement.append(toast);
       await toast.updateComplete;
 
-      expect(toast.getAttribute('variant')).toBe('positive');
-      expect(toast.getAttribute('role')).toBe('alertdialog');
-      expect(toast.getAttribute('aria-label')).toBe('File saved');
+      expect(toast.getAttribute('variant'), 'host variant').toBe('positive');
+      expect(toast.getAttribute('role'), 'host role').toBe('alertdialog');
+      expect(toast.getAttribute('aria-label'), 'host aria-label').toBe(
+        'File saved'
+      );
     });
 
     await step(
@@ -532,7 +644,7 @@ export const ReconnectTest: Story = {
       async () => {
         toast.open = true;
         await toast.updateComplete;
-        expect(messageSlot(toast)).toBeNull();
+        expect(messageSlot(toast), 'message slot after opening').toBeNull();
 
         toast.remove();
         canvasElement.append(toast);
@@ -540,7 +652,10 @@ export const ReconnectTest: Story = {
         await nextFrame();
         await toast.updateComplete;
 
-        expect(messageSlot(toast)).not.toBeNull();
+        expect(
+          messageSlot(toast),
+          'message slot after reconnection'
+        ).not.toBeNull();
       }
     );
   },
