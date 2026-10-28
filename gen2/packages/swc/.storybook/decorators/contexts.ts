@@ -13,18 +13,13 @@
 import { html } from 'lit';
 import type { DecoratorFunction } from '@storybook/types';
 
+import { applyThemeClass } from '../utils/color-scheme.js';
+
 /**
  * Decorator that applies selected theme context.
  */
 export const withContext: DecoratorFunction = (Story, context) => {
-  const theme = context.globals.theme;
-
-  document.documentElement.classList.remove(
-    'swc-theme--light',
-    'swc-theme--dark',
-    'swc-theme--adaptive'
-  );
-  document.documentElement.classList.add(`swc-theme--${theme}`);
+  applyThemeClass(document.documentElement, context.globals.theme);
 
   return html`
     ${Story(context)}

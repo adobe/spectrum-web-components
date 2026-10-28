@@ -10,6 +10,26 @@
  * governing permissions and limitations under the License.
  */
 
+/* Sidebar icons use Spectrum visual colors. Selected items keep Storybook's
+   white icons for contrast against the accent background. */
+.sidebar-item:not([data-selected="true"]) {
+  svg[type="group"] {
+    color: var(--swc-indigo-visual-color);
+  }
+
+  svg[type="component"] {
+    color: var(--swc-accent-visual-color);
+  }
+
+  svg[type="document"] {
+    color: var(--swc-orange-visual-color);
+  }
+
+  svg[type="story"] {
+    color: var(--swc-seafoam-visual-color);
+  }
+}
+
 button[data-action="collapse-root"] {
   margin-block-start: 0;
   margin-block-end: 0;

@@ -29,6 +29,7 @@
     ".storybook/storybook-env.d.ts",
     ".storybook/helpers/**/*.ts",
     ".storybook/decorators/**/*.ts",
+    ".storybook/utils/**/*.ts",
     ".storybook/intl/**/*.json",
     "dist/custom-elements.json"
   ],

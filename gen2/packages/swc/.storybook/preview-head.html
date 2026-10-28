@@ -126,11 +126,11 @@
       white-space: nowrap;
       border-radius: 3px;
       font-size: 12px;
-      border: 1px solid rgb(147, 158, 172);
+      border: 1px solid var(--swc-gray-400);
       border-inline-end-width: 2px;
       border-block-end-width: 2px;
-      color: rgba(46, 51, 56, 0.9);
-      background-color: rgb(246, 249, 252);
+      color: var(--swc-neutral-content-color-default);
+      background-color: var(--swc-gray-75);
       font-family:
         ui-monospace, Menlo, Monaco, 'Roboto Mono', 'Oxygen Mono',
         'Ubuntu Monospace', 'Source Code Pro', 'Droid Sans Mono', 'Courier New',
@@ -154,8 +154,8 @@
       padding: 0px 0px 4px;
       cursor: text;
       position: relative;
-      color: rgb(46, 52, 56);
-      border-bottom: 1px solid rgba(38, 85, 115, 0.15);
+      color: var(--swc-heading-color);
+      border-bottom: 1px solid var(--swc-gray-200);
       letter-spacing: unset;
       line-height: unset;
     }
@@ -207,7 +207,13 @@
   }
 
   .toc-list-item.is-active-li > a {
-    color: rgb(2, 101, 220) !important;
+    color: var(--swc-accent-content-color-default) !important;
+  }
+
+  /* Storybook colors links with the accent background token, which is too
+     low-contrast for text on dark backgrounds. */
+  .sbdocs.sbdocs-a {
+    color: var(--swc-accent-content-color-default);
   }
 
   .sbdocs-wrapper {
@@ -234,7 +240,7 @@
     }
 
     sp-accordion-item {
-      border-block-end: 1px solid rgba(38, 85, 115, 0.15) !important;
+      border-block-end: 1px solid var(--swc-gray-200) !important;
     }
   }
 
