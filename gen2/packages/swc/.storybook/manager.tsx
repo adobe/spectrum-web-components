@@ -20,6 +20,7 @@ import type { ThemeVars } from 'storybook/theming';
 
 import { Icon_FileText } from '../../icons/src/FileText';
 import { Icon_Folder } from '../../icons/src/Folder';
+import { Icon_InfoCircle } from '../../icons/src/InfoCircle';
 import { Icon_Play } from '../../icons/src/Play';
 import { Icon_ViewGrid } from '../../icons/src/ViewGrid';
 import packageJson from '../package.json';
@@ -200,6 +201,13 @@ sidebarIcons.innerHTML = Object.entries(SIDEBAR_ICONS)
   )
   .join('');
 document.body.prepend(sidebarIcons);
+
+// Storybook picks sidebar icons by node type only, so overview pages swap in
+// their own icon through a CSS mask (see manager.css).
+document.documentElement.style.setProperty(
+  '--_swc-storybook-overview-icon',
+  `url("data:image/svg+xml,${encodeURIComponent(Icon_InfoCircle())}")`
+);
 
 addons.setConfig({
   toolbar: {

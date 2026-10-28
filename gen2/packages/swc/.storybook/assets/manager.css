@@ -30,6 +30,16 @@
   }
 }
 
+/* Overview pages use their own icon. manager.tsx sets the icon image. */
+.sidebar-item[data-item-id$="overview--docs"] svg[type="document"] {
+  background-color: currentcolor;
+  mask: var(--_swc-storybook-overview-icon) center / contain no-repeat;
+
+  use {
+    display: none;
+  }
+}
+
 /* Storybook darkens the selected item's background in dark mode; use the
    Spectrum accent background in both themes instead. */
 .sidebar-item[data-selected="true"] {
