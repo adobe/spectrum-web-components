@@ -193,6 +193,7 @@ gen2/packages/core/
 │   ├── focusable-selectors.ts    NEW (migrated + simplified)
 │   ├── first-focusable-in.ts     NEW (migrated, low priority)
 │   └── get-active-element.ts     NEW (migrated)
+├── element.ts                    barrel
 └── element/
     └── spectrum-element.ts       existing (cleanup only)
 ```

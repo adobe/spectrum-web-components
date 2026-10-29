@@ -277,7 +277,7 @@ See [Step 2](02_factor-rendering-out-of-1st-gen-component.md) and [Step 3](03_mo
 2. **Define types** in `Component.types.ts`; put shared API in base (core), SWC-only in concrete class.
 3. **Mark internal API** with JSDoc `@internal`; add JSDoc for public props/slots.
 4. **Implement static readonly arrays and debug warnings** — follow [API patterns (statics and warnings)](#api-patterns-statics-and-warnings) below; reference implementation: gen2 Badge (`Badge.base.ts`, `Badge.ts`).
-5. **Apply dev-warning validation for every applicable category**: union/enum values, required properties, conditionally required properties, mutually exclusive/no-effect property combinations, required slots, and allowed children. Use the shared helpers in `@spectrum-web-components/core/utils` (`validateEnum`, `warnIf`, `validateRequiredSlot`, `validateAllowedChildren`) rather than hand-rolled `window.__swc.warn()` checks. See [Debug and validation](../../../../02_style-guide/02_typescript/17_debug-validation.md#reusable-validation-helpers).
+5. **Apply dev-warning validation for every applicable category**: union/enum values, required properties, conditionally required properties, mutually exclusive/no-effect property combinations, required slots, and allowed children. Use the shared helpers in `@adobe/spectrum-wc-core/utils.js` (`validateEnum`, `warnIf`, `validateRequiredSlot`, `validateAllowedChildren`) rather than hand-rolled `window.__swc.warn()` checks. See [Debug and validation](../../../../02_style-guide/02_typescript/17_debug-validation.md#reusable-validation-helpers).
 
 ### Property migration scenarios
 
@@ -309,7 +309,7 @@ Follow team **TypeScript conventions** for naming and structure; use **Badge** a
 **Dev-warning validation categories (use the shared helpers)**
 
 Do not write `includes()` + `window.__swc.warn()` checks by hand. Import the
-shared helpers from `@spectrum-web-components/core/utils` instead
+shared helpers from `@adobe/spectrum-wc-core/utils.js` instead
 (`validateEnum`, `warnIf`, `validateRequiredSlot`, `validateAllowedChildren`).
 Every component should be checked against each applicable category:
 

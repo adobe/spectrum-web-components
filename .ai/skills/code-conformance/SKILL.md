@@ -60,7 +60,7 @@ Reference: [Linting tools](../../../CONTRIBUTOR-DOCS/02_style-guide/03_linting-t
 - Methods follow visibility and naming conventions
 - JSDoc is present and well-formed on public API members
 - No patterns listed as anti-patterns or discouraged in the guide
-- Dev-warning validation (enum values, required/conditionally required properties, mutually exclusive combinations, required slots, allowed children) uses the shared helpers in `@spectrum-web-components/core/utils` (`validateEnum`, `warnIf`, `validateRequiredSlot`, `validateAllowedChildren`), not hand-rolled `includes()` + `window.__swc.warn()` checks. See [Debug and validation](../../../CONTRIBUTOR-DOCS/02_style-guide/02_typescript/17_debug-validation.md#reusable-validation-helpers).
+- Dev-warning validation (enum values, required/conditionally required properties, mutually exclusive combinations, required slots, allowed children) uses the shared helpers in `@adobe/spectrum-wc-core/utils.js` (`validateEnum`, `warnIf`, `validateRequiredSlot`, `validateAllowedChildren`), not hand-rolled `includes()` + `window.__swc.warn()` checks. See [Debug and validation](../../../CONTRIBUTOR-DOCS/02_style-guide/02_typescript/17_debug-validation.md#reusable-validation-helpers).
 
 ## CSS
 

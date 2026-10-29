@@ -24,10 +24,10 @@
 
 | Purpose | Command | Notes |
 | --- | --- | --- |
-| Run Storybook tests (headless) | `yarn workspace @adobe/swc test` | Runs play function tests with browser |
-| Run tests in UI mode | `yarn workspace @adobe/swc test:ui` | Interactive Vitest UI for debugging |
-| Run tests in visible browser | `yarn workspace @adobe/swc test:browser` | Browser window for live debugging |
-| Run tests with coverage | `yarn workspace @adobe/swc test:coverage` | Generates V8 coverage report |
+| Run Storybook tests (headless) | `yarn workspace @adobe/spectrum-wc test` | Runs play function tests with browser |
+| Run tests in UI mode | `yarn workspace @adobe/spectrum-wc test:ui` | Interactive Vitest UI for debugging |
+| Run tests in visible browser | `yarn workspace @adobe/spectrum-wc test:browser` | Browser window for live debugging |
+| Run tests with coverage | `yarn workspace @adobe/spectrum-wc test:coverage` | Generates V8 coverage report |
 | Run all a11y tests | `yarn test:a11y` | Both 1st-gen and gen2 |
 | Run gen2 a11y tests | `yarn test:a11y:gen2` | gen2 only |
 | Run a11y tests with UI | `yarn test:a11y:ui` | Interactive Playwright UI |
@@ -55,7 +55,7 @@
 
 ### Coverage below threshold
 
-1. Run `yarn workspace @adobe/swc test:coverage` to see the report.
+1. Run `yarn workspace @adobe/spectrum-wc test:coverage` to see the report.
 2. Look for uncovered lines, functions, or branches.
 3. Add test stories that exercise the uncovered code paths.
 4. Re-run coverage to confirm.

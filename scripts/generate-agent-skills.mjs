@@ -895,11 +895,7 @@ function buildGettingStarted(unit, meta) {
   const packageName = unit.dir;
 
   if (meta.tags.includes('migrated')) {
-    // The story's `component` is the element tag; the folder name can differ
-    // (for example `ui-icons/` defines `swc-ui-icon`).
-    const tagName = meta.component?.startsWith('swc-')
-      ? meta.component
-      : (unit.tagName ?? `swc-${packageName}`);
+    const tagName = unit.tagName ?? `swc-${packageName}`;
     const baseClassName = toPascalCase(tagName.replace(/^swc-/, ''));
     const resolvedPackagePath = meta.packagePath || `components/${packageName}`;
     // Component barrels use the short form (`@adobe/spectrum-wc/badge.js`).
@@ -1230,6 +1226,15 @@ function buildGen2DocsSkill(skillDir) {
 
   const components = listGen2Units(GEN2_COMPONENTS);
   const patterns = listGen2Patterns();
+
+  // The folder name is not always the element tag (for example `ui-icons/`
+  // defines `swc-ui-icon`), so prefer the `component` declared in the story meta.
+  for (const unit of [...components, ...patterns]) {
+    const component = readStoriesMeta(unit)?.component;
+    if (component?.startsWith('swc-')) {
+      unit.tagName = component;
+    }
+  }
   const patternOverviews = listGen2PatternOverviews();
 
   // Map each unit's Storybook docs id → its generated reference path, so

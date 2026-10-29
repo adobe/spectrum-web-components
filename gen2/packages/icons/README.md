@@ -55,7 +55,7 @@ import { Icon_Star, Icon_Folder } from '@adobe/spectrum-wc-icons';
 
 ## API
 
-Every element extends `IconBase` from `@adobe/spectrum-wc-core`:
+Every element extends `IconBase` from `@adobe/spectrum-wc-core/components/icon.js`:
 
 | Member                 | Type                                | Default        | Notes                                                                                  |
 | ---------------------- | ----------------------------------- | -------------- | -------------------------------------------------------------------------------------- |

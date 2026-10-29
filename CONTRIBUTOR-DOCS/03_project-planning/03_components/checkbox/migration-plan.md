@@ -232,9 +232,9 @@ gen2 (planned; see [Architecture](#architecture-core-vs-swc-split)):
 
 | Package | Version | Role |
 | ------- | ------- | ---- |
-| `@spectrum-web-components/base` | 1.12.4 | 1st-gen: `SpectrumElement`, `SizedMixin`, decorators, `ifDefined`. gen2 equivalents: `SpectrumElement` and `SizedMixin` from `@adobe/spectrum-wc-core`. |
+| `@spectrum-web-components/base` | 1.12.4 | 1st-gen: `SpectrumElement`, `SizedMixin`, decorators, `ifDefined`. gen2 equivalents: `SpectrumElement` from `@adobe/spectrum-wc-core/element.js` and `SizedMixin` from `@adobe/spectrum-wc-core/mixins.js`. |
 | `@spectrum-web-components/icon` | 1.12.4 | 1st-gen: checkmark/dash icon CSS. **Dropped**; gen2 renders inline UI icon SVGs. |
-| `@spectrum-web-components/icons-ui` | 1.12.4 | 1st-gen: `sp-icon-checkmark75`–`300`, `sp-icon-dash75`–`300` elements. **Replaced** by gen2 `Checkmark` and `Dash` from [`gen2/packages/swc/components/ui-icons/icon-set/`](../../../../gen2/packages/swc/components/ui-icons/icon-set.ts) (already built). Size mapping follows the Spectrum CSS S2 template: `s` → 50, `m` → 75, `l` → 100, `xl` → 200. |
+| `@spectrum-web-components/icons-ui` | 1.12.4 | 1st-gen: `sp-icon-checkmark75`–`300`, `sp-icon-dash75`–`300` elements. **Replaced** by gen2 `Checkmark` and `Dash` from [`gen2/packages/swc/components/ui-icons/icon-set.ts`](../../../../gen2/packages/swc/components/ui-icons/icon-set.ts) (already built). Size mapping follows the Spectrum CSS S2 template: `s` → 50, `m` → 75, `l` → 100, `xl` → 200. |
 | `@spectrum-web-components/shared` | 1.12.4 | 1st-gen: `Focusable`, used only by `CheckboxBase` for `sp-switch`. **Dropped.** |
 | `SizedMixin` (gen2 core) | already built | `size` with explicit default `m`. |
 | `LabellingMixin` (gen2 core) | already built (text field migration) | `label` slot presence, `renderLabel()` (`<label for>`), `accessible-label`, `accessible-labelledby`, `ariaLabelledByElements` wiring for `accessible-labelledby`, missing-name dev warnings. See Q3, Q13. |

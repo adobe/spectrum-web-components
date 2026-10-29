@@ -71,7 +71,7 @@ if (window.__swc?.DEBUG) {
 
 ## Reusable validation helpers
 
-`@spectrum-web-components/core/utils` exports four helpers that wrap `window.__swc.warn` for the most common validation shapes. **Use these instead of hand-writing an `includes()` + `warn()` check.** Doing so keeps message wording and the `DEBUG` gate consistent across components. Internally all four defer the actual gate-and-emit step to one private `emitWarning` primitive, so that is the single place that needs to change if the underlying warning engine is ever reworked.
+`@adobe/spectrum-wc-core/utils.js` exports four helpers that wrap `window.__swc.warn` for the most common validation shapes. **Use these instead of hand-writing an `includes()` + `warn()` check.** Doing so keeps message wording and the `DEBUG` gate consistent across components. Internally all four defer the actual gate-and-emit step to one private `emitWarning` primitive, so that is the single place that needs to change if the underlying warning engine is ever reworked.
 
 ```ts
 import {
@@ -79,7 +79,7 @@ import {
   validateEnum,
   validateRequiredSlot,
   warnIf,
-} from '@spectrum-web-components/core/utils';
+} from '@adobe/spectrum-wc-core/utils.js';
 ```
 
 None of the four require an outer `if (window.__swc?.DEBUG)` check. They gate on `DEBUG` internally. **They do not manage lifecycle timing for you.** Calling the right helper from the wrong place can check stale data (a property that hasn't updated yet) or DOM that doesn't exist yet (slot content before it's assigned). Which hook to call each helper from:

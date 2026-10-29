@@ -87,6 +87,7 @@ const meta: Meta = {
     docs: {
       subtitle:
         'Roving tabindex and directional keys for composite widgets (APG-aligned, focusgroup-like).',
+      packagePath: 'controllers/focusgroup-navigation-controller',
       canvas: { sourceState: 'none' },
     },
   },
