@@ -148,6 +148,75 @@ The status loader stays static by default. Set `animate-loader` to animate it wh
 
 Dragging a file anywhere over `swc-prompt-field` applies a high-intensity solid fill to the container surface and a blue focus ring around the drop target, regardless of the field's own `variant` or `generating` state: a drop target should be unmistakable even on a `subtle` field. Text and URL drags, plus fields in `disabled` mode, are rejected (the OS cursor shows "not allowed"). Dropping fires **`swc-prompt-field-drop`** with `detail: { files: File[] }`; consumers build and slot `<swc-upload-attachment>` elements from those files the same way they do for the **`+`** button's external picker flow.
 
+`swc-prompt-field` doesn't create attachment tiles itself, so your app stays in control of its markup, uploads, and validation. To turn the files into tile data, use `filesToAttachments()` from the upload attachment pattern. It returns one plain object per file with an `id`, the original `file`, a `name`, a localized `sizeLabel`, a `thumbnailUrl` object URL for images, and a `badgeLabel` (for example, "PDF") for other files. Pass `{ locale }` as the second argument to format `sizeLabel` for a specific locale. Image thumbnails hold file data in memory until you call `revokeAttachment()`, so call it when a tile is dismissed, when the prompt is submitted (unless you keep showing the thumbnail, for example in the conversation thread), and when your view is torn down. Calling it twice is safe.
+
+```ts
+import {
+  filesToAttachments,
+  revokeAttachment,
+  revokeAttachments,
+} from '@adobe/spectrum-wc/patterns/ai-toolkit/upload-attachment/files-to-attachments.js';
+
+let attachments = [];
+
+field.addEventListener('swc-prompt-field-drop', (event) => {
+  attachments = [...attachments, ...filesToAttachments(event.detail.files)];
+  render();
+});
+
+field.addEventListener('swc-upload-attachment-dismiss', (event) => {
+  const id = event.target.dataset.attachmentId;
+  const removed = attachments.find((item) => item.id === id);
+  if (removed) revokeAttachment(removed);
+  attachments = attachments.filter((item) => item.id !== id);
+  render();
+});
+
+field.addEventListener('swc-prompt-field-submit', () => {
+  revokeAttachments(attachments);
+  attachments = [];
+  render();
+});
+```
+
+Render one tile per item, for example with Lit:
+
+```ts
+html`
+  ${attachments.map(
+    (item) => html`
+      <swc-upload-attachment
+        slot="attachment"
+        type="media"
+        size="l"
+        dismissible
+        data-attachment-id=${item.id}
+        accessible-label=${`${item.name}, ${item.sizeLabel}`}
+      >
+        <swc-asset slot="thumbnail">
+          ${item.thumbnailUrl
+            ? html`
+                <img src=${item.thumbnailUrl} alt=${item.name} />
+              `
+            : html`
+                <svg role="img" aria-label=${item.name}></svg>
+              `}
+        </swc-asset>
+        ${item.badgeLabel
+          ? html`
+              <swc-badge slot="badge" size="s" subtle>
+                ${item.badgeLabel}
+              </swc-badge>
+            `
+          : nothing}
+      </swc-upload-attachment>
+    `
+  )}
+`;
+```
+
+Use the same helper for files from the **`+`** button's file picker (`Array.from(input.files)`). The helper is also exported from `@adobe/spectrum-wc/patterns/ai-toolkit/upload-attachment`; the `files-to-attachments.js` path above doesn't load any element code, so it's safe to import during server-side rendering.
+
 Once those tiles land in the `attachment` slot, `swc-prompt-field` manages focus for the drop automatically. If the textarea had focus at drop time, focus stays there. Otherwise, the new tile becomes the attachment strip's roving-tabindex entry point either way, but focus only jumps there immediately when the document is already in a keyboard-driven focus state (checked via `:focus-visible`); a plain mouse drag from the file system leaves focus untouched at drop time, and a later Tab into the strip lands on that same new tile instead of the previous entry point.
 
 <Canvas of={PromptFieldStories.DragAndDrop} />

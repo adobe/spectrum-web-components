@@ -27,11 +27,16 @@ import '../prompt-field/swc-prompt-field.js';
 import '../upload-attachment/swc-upload-attachment.js';
 import '@adobe/spectrum-wc/components/badge/swc-badge.js';
 
-import { uniqueId } from '../../../utils/id.js';
 import {
   PIXEL_LOADER_ICON_NAMES,
   PIXEL_LOADER_PRESET_NAMES,
 } from '../pixel-loader/index.js';
+import {
+  filesToAttachments,
+  revokeAttachment,
+  revokeAttachments,
+  type UploadAttachmentData,
+} from '../upload-attachment/index.js';
 
 // ────────────────
 //    METADATA
@@ -109,44 +114,15 @@ const meta: Meta<PlaygroundArgs> = {
 export { meta };
 export default meta;
 
-type DemoAttachment = {
-  id: string;
-  title: string;
-  subtitle: string;
-  /** Image preview URL when the attachment is a visual file. */
-  thumbnailUrl?: string;
-  objectUrl?: string;
-  /** File-type label for non-image media tiles (for example, "PDF"). */
-  badge?: string;
-};
-
-const getFileBadge = (fileName: string): string | undefined => {
-  const match = fileName.toLowerCase().match(/\.([a-z0-9]+)$/);
-  if (!match) {
-    return 'FILE';
-  }
-
-  const extension = match[1];
-  if (/^(png|jpe?g|gif|webp|bmp|svg|avif)$/.test(extension)) {
-    return undefined;
-  }
-
-  if (extension === 'pdf') {
-    return 'PDF';
-  }
-
-  return extension.toUpperCase();
-};
-
 const renderDemoAttachmentThumbnail = (
-  attachment: DemoAttachment
+  attachment: UploadAttachmentData
 ): ReturnType<typeof html> =>
   attachment.thumbnailUrl
     ? html`
         <img
           slot="thumbnail"
           src=${attachment.thumbnailUrl}
-          alt=${attachment.title}
+          alt=${attachment.name}
           style="inline-size:100%;block-size:100%;object-fit:cover;"
         />
       `
@@ -154,7 +130,7 @@ const renderDemoAttachmentThumbnail = (
         <div
           slot="thumbnail"
           role="img"
-          aria-label=${attachment.title}
+          aria-label=${attachment.name}
           style="inline-size:100%;block-size:100%;background:#f3f3f3;"
         ></div>
       `;
@@ -163,7 +139,7 @@ type DemoTurn = {
   id: string;
   role: 'user' | 'system';
   text: string;
-  attachments?: DemoAttachment[];
+  attachments?: UploadAttachmentData[];
   loading?: boolean;
 
   /** Index of the step currently active while `loading`. Advances on a timer
@@ -268,7 +244,7 @@ class ConversationFullPatternDemo extends LitElement {
   ];
 
   @state()
-  private attachments: DemoAttachment[] = [];
+  private attachments: UploadAttachmentData[] = [];
 
   @state()
   private promptValue = '';
@@ -288,6 +264,12 @@ class ConversationFullPatternDemo extends LitElement {
       this.responseTimer = null;
     }
     this.clearStepTimer();
+    // Submitted attachments stay visible in the thread, so their thumbnails
+    // are released here rather than on submit.
+    revokeAttachments(this.attachments);
+    for (const turn of this.turns) {
+      revokeAttachments(turn.attachments ?? []);
+    }
     super.disconnectedCallback();
   }
 
@@ -339,14 +321,9 @@ class ConversationFullPatternDemo extends LitElement {
     this.isGenerating = true;
     this.lastPrompt =
       value ||
-      (hasAttachments ? this.attachments.map((a) => a.title).join(', ') : '');
+      (hasAttachments ? this.attachments.map((a) => a.name).join(', ') : '');
     this.responseTargetId = systemTurn.id;
     this.promptValue = '';
-    for (const attachment of this.attachments) {
-      if (attachment.objectUrl) {
-        URL.revokeObjectURL(attachment.objectUrl);
-      }
-    }
     this.attachments = [];
 
     // How long each step stays active before the next one takes over. The
@@ -440,33 +417,10 @@ class ConversationFullPatternDemo extends LitElement {
   };
 
   private appendFiles(files: File[]): void {
-    const nextAttachments = files.map((file, index) => {
-      const mimeType = file.type || '';
-      const lowerName = file.name.toLowerCase();
-      const isImage =
-        mimeType.startsWith('image/') ||
-        /\.(png|jpe?g|gif|webp|bmp|svg|avif)$/.test(lowerName);
-      const objectUrl = isImage ? URL.createObjectURL(file) : undefined;
-      const sizeLabel =
-        typeof file.size === 'number'
-          ? `${Math.max(1, Math.round(file.size / 1024))} KB`
-          : 'Attachment';
-      const fileName = file.name || 'Attachment';
-
-      return {
-        id: uniqueId(`attachment-${index}`),
-        title: fileName,
-        subtitle: sizeLabel,
-        thumbnailUrl: objectUrl,
-        objectUrl,
-        badge: isImage ? undefined : getFileBadge(fileName),
-      } satisfies DemoAttachment;
-    });
-
-    if (!nextAttachments.length) {
+    if (!files.length) {
       return;
     }
-    this.attachments = [...this.attachments, ...nextAttachments];
+    this.attachments = [...this.attachments, ...filesToAttachments(files)];
   }
 
   private handleUploadClick = (event: Event): void => {
@@ -522,8 +476,8 @@ class ConversationFullPatternDemo extends LitElement {
       return;
     }
     const removed = this.attachments.find((item) => item.id === attachmentId);
-    if (removed?.objectUrl) {
-      URL.revokeObjectURL(removed.objectUrl);
+    if (removed) {
+      revokeAttachment(removed);
     }
     this.attachments = this.attachments.filter(
       (item) => item.id !== attachmentId
@@ -553,8 +507,8 @@ class ConversationFullPatternDemo extends LitElement {
               <swc-conversation-turn type="user">
                 <swc-user-message type="media">
                   ${renderDemoAttachmentThumbnail(attachment)}
-                  <span slot="title">${attachment.title}</span>
-                  <span slot="subtitle">${attachment.subtitle}</span>
+                  <span slot="title">${attachment.name}</span>
+                  <span slot="subtitle">${attachment.sizeLabel}</span>
                 </swc-user-message>
               </swc-conversation-turn>
             `
@@ -644,10 +598,10 @@ class ConversationFullPatternDemo extends LitElement {
           data-attachment-id=${attachment.id}
         >
           ${renderDemoAttachmentThumbnail(attachment)}
-          ${attachment.badge
+          ${attachment.badgeLabel
             ? html`
                 <swc-badge slot="badge" size="s" subtle>
-                  ${attachment.badge}
+                  ${attachment.badgeLabel}
                 </swc-badge>
               `
             : ''}
