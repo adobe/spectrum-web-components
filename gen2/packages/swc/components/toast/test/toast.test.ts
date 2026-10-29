@@ -30,8 +30,7 @@ import {
 } from '../../../utils/test-utils.js';
 import meta, { Overview } from '../stories/toast.internal.stories.js';
 
-// These tests cover standalone Toast only; queue and container behavior gets separate tests.
-// TODO(SWC-2567): add queue tests: timeout floor, action disables timeout with its dev warning, pause and resume.
+// These tests cover standalone Toast only; queue and container behavior is tested in toast-container.
 // TODO(SWC-2655): add collapsed-stack tests: peek layers, Show all, front-toast countdown.
 // TODO(SWC-2654): add expanded-view tests: scrim, Escape, Collapse, Clear all, focus management.
 
@@ -339,15 +338,26 @@ export const LabelledMessageTest: Story = {
         await Promise.resolve();
         await toast.updateComplete;
 
-        expect(toast.getAttribute('aria-labelledby')).toBe('updated-message');
-        expect(toast.getAttribute('aria-label')).toBe('Caller label');
+        expect(
+          toast.getAttribute('aria-labelledby'),
+          'host aria-labelledby'
+        ).toBe('updated-message');
+        expect(toast.getAttribute('aria-label'), 'host aria-label').toBe(
+          'Caller label'
+        );
 
         toast.replaceChildren();
         await Promise.resolve();
         await toast.updateComplete;
 
-        expect(toast.hasAttribute('aria-labelledby')).toBe(false);
-        expect(toast.getAttribute('aria-label')).toBe('Caller label');
+        expect(
+          toast.hasAttribute('aria-labelledby'),
+          'host aria-labelledby presence after clearing'
+        ).toBe(false);
+        expect(
+          toast.getAttribute('aria-label'),
+          'host aria-label after clearing'
+        ).toBe('Caller label');
       }
     );
   },
@@ -441,7 +451,6 @@ export const OpenLifecycleTest: Story = {
       expect(events, 'events after opening').toEqual(['swc-open']);
     });
 
-    // TODO(SWC-2567): confirm the container connects toasts closed and opens them after the first update (Q11).
     await step(
       'keeps the live region empty for two frames, then adds the message (Q10, Q11)',
       async () => {

@@ -36,8 +36,8 @@ export default {
 const getFront = async (container: ToastContainer): Promise<Toast> => {
   await container.updateComplete;
   const toast = container.shadowRoot?.querySelector<Toast>('swc-toast');
-  expect(toast).not.toBeNull();
-  await waitFor(() => expect(toast?.open).toBe(true));
+  expect(toast, 'front toast').not.toBeNull();
+  await waitFor(() => expect(toast?.open, 'front toast open').toBe(true));
   return toast!;
 };
 
@@ -56,9 +56,11 @@ export const QueueOperations: Story = {
         for (let index = 0; index < 12; index += 1) {
           ToastQueue.add(`Notification ${index}`);
         }
-        expect(ToastQueue.entries).toHaveLength(12);
-        expect(ToastQueue.entries[0].message).toBe('Notification 11');
-        expect(changed).toHaveBeenCalledTimes(12);
+        expect(ToastQueue.entries, 'queue entries').toHaveLength(12);
+        expect(ToastQueue.entries[0].message, 'front entry message').toBe(
+          'Notification 11'
+        );
+        expect(changed, 'change notifications').toHaveBeenCalledTimes(12);
       });
 
       await step('waiting entries close directly and notify once', () => {
@@ -66,24 +68,28 @@ export const QueueOperations: Story = {
         ToastQueue.add('Front notification');
         ToastQueue.close(key);
         ToastQueue.close(key);
-        expect(ToastQueue.entries.some((entry) => entry.key === key)).toBe(
-          false
-        );
-        expect(onClose).toHaveBeenCalledTimes(1);
+        expect(
+          ToastQueue.entries.some((entry) => entry.key === key),
+          'closed entry still queued'
+        ).toBe(false);
+        expect(onClose, 'onClose calls').toHaveBeenCalledTimes(1);
       });
 
       await step('clear empties the queue without calling onClose', () => {
         ToastQueue.add('Cleared notification', { onClose });
         ToastQueue.clear();
-        expect(ToastQueue.entries).toHaveLength(0);
-        expect(onClose).toHaveBeenCalledTimes(1);
+        expect(ToastQueue.entries, 'queue entries after clear').toHaveLength(0);
+        expect(onClose, 'onClose calls after clear').toHaveBeenCalledTimes(1);
       });
 
       await step('unsubscribing stops change notifications', () => {
         unsubscribe();
         changed.mockClear();
         ToastQueue.add('No subscriber');
-        expect(changed).not.toHaveBeenCalled();
+        expect(
+          changed,
+          'change notifications after unsubscribe'
+        ).not.toHaveBeenCalled();
       });
     } finally {
       unsubscribe();
@@ -95,7 +101,7 @@ export const QueueOperations: Story = {
 export const RenderingAndClosure: Story = {
   play: async ({ canvasElement, step }) => {
     await step('core and SWC expose the same queue instance', () => {
-      expect(RenderingToastQueue).toBe(ToastQueue);
+      expect(RenderingToastQueue, 'SWC queue export').toBe(ToastQueue);
     });
     ToastQueue.clear();
     const container = await getComponent<ToastContainer>(
@@ -113,22 +119,38 @@ export const RenderingAndClosure: Story = {
         'only the newest toast renders and the region counts all entries',
         () => {
           expect(
-            container.shadowRoot?.querySelectorAll('swc-toast')
+            container.shadowRoot?.querySelectorAll('swc-toast'),
+            'rendered toasts'
           ).toHaveLength(1);
-          expect(toast.textContent).toBe('Newest notification');
+          expect(toast.textContent, 'front toast message').toBe(
+            'Newest notification'
+          );
           const region = container.shadowRoot?.querySelector('[role="region"]');
-          expect(region?.getAttribute('aria-label')).toBe('2 notifications.');
-          expect(region?.getAttribute('tabindex')).toBe('-1');
-          expect(toast.hasUpdated).toBe(true);
+          expect(region?.getAttribute('aria-label'), 'region aria-label').toBe(
+            '2 notifications.'
+          );
+          expect(region?.getAttribute('tabindex'), 'region tabindex').toBe(
+            '-1'
+          );
+          expect(toast.hasUpdated, 'toast has updated').toBe(true);
         }
       );
 
       await step('the container creates the default-slot naming target', () => {
         const message = toast.firstElementChild;
-        expect(message?.id).toBeTruthy();
-        expect(toast.getAttribute('aria-labelledby')).toBe(message?.id);
-        expect(toast.hasAttribute('aria-label')).toBe(false);
-        expect(message?.hasAttribute('slot')).toBe(false);
+        expect(message?.id, 'message id').toBeTruthy();
+        expect(
+          toast.getAttribute('aria-labelledby'),
+          'host aria-labelledby'
+        ).toBe(message?.id);
+        expect(
+          toast.hasAttribute('aria-label'),
+          'host aria-label presence'
+        ).toBe(false);
+        expect(
+          message?.hasAttribute('slot'),
+          'message slot attribute presence'
+        ).toBe(false);
       });
 
       await step(
@@ -138,9 +160,15 @@ export const RenderingAndClosure: Story = {
           toast.addEventListener('swc-close', cancel);
           ToastQueue.close(newestKey);
           await toast.updateComplete;
-          expect(toast.open).toBe(true);
-          expect(ToastQueue.entries[0].key).toBe(newestKey);
-          expect(onClose).not.toHaveBeenCalled();
+          expect(toast.open, 'open after canceled close').toBe(true);
+          expect(
+            ToastQueue.entries[0].key,
+            'front entry key after canceled close'
+          ).toBe(newestKey);
+          expect(
+            onClose,
+            'onClose after canceled close'
+          ).not.toHaveBeenCalled();
           toast.removeEventListener('swc-close', cancel);
         }
       );
@@ -151,20 +179,34 @@ export const RenderingAndClosure: Story = {
           const afterClose = fn();
           toast.addEventListener('swc-after-close', afterClose);
           ToastQueue.close(newestKey);
-          expect(ToastQueue.entries[0].key).toBe(newestKey);
-          expect(onClose).not.toHaveBeenCalled();
-          await waitFor(() => expect(afterClose).toHaveBeenCalledTimes(1));
+          expect(
+            ToastQueue.entries[0].key,
+            'front entry key before after-close'
+          ).toBe(newestKey);
+          expect(onClose, 'onClose before after-close').not.toHaveBeenCalled();
           await waitFor(() =>
-            expect(ToastQueue.entries[0]?.key).toBe(olderKey)
+            expect(afterClose, 'swc-after-close events').toHaveBeenCalledTimes(
+              1
+            )
+          );
+          await waitFor(() =>
+            expect(ToastQueue.entries[0]?.key, 'promoted entry key').toBe(
+              olderKey
+            )
           );
           const promoted = await getFront(container);
-          expect(promoted.textContent).toBe('Older notification');
-          expect(promoted.firstElementChild?.id).not.toBe(
-            toast.firstElementChild?.id
+          expect(promoted.textContent, 'promoted toast message').toBe(
+            'Older notification'
           );
-          expect(onClose).toHaveBeenCalledTimes(1);
+          expect(
+            promoted.firstElementChild?.id,
+            'promoted message id'
+          ).not.toBe(toast.firstElementChild?.id);
+          expect(onClose, 'onClose after removal').toHaveBeenCalledTimes(1);
           const region = container.shadowRoot?.querySelector('[role="region"]');
-          expect(region?.getAttribute('aria-label')).toBe('1 notification.');
+          expect(region?.getAttribute('aria-label'), 'region aria-label').toBe(
+            '1 notification.'
+          );
         }
       );
 
@@ -174,13 +216,63 @@ export const RenderingAndClosure: Story = {
           ToastQueue.add('Cleared toast', { onClose });
           await getFront(container);
           ToastQueue.clear();
-          await waitFor(() => expect(ToastQueue.entries).toHaveLength(0));
+          await waitFor(() =>
+            expect(
+              ToastQueue.entries,
+              'queue entries after clear'
+            ).toHaveLength(0)
+          );
           await container.updateComplete;
-          expect(container.shadowRoot?.querySelector('swc-toast')).toBeNull();
-          expect(onClose).toHaveBeenCalledTimes(1);
+          expect(
+            container.shadowRoot?.querySelector('swc-toast'),
+            'rendered toast after clear'
+          ).toBeNull();
+          expect(onClose, 'onClose after clear').toHaveBeenCalledTimes(1);
         }
       );
     } finally {
+      ToastQueue.clear();
+    }
+  },
+};
+
+export const ConnectsClosedThenOpens: Story = {
+  play: async ({ canvasElement, step }) => {
+    ToastQueue.clear();
+    const container = await getComponent<ToastContainer>(
+      canvasElement,
+      'swc-toast-container'
+    );
+    const root = container.shadowRoot!;
+    const openAtInsertion: boolean[] = [];
+    const updatedAtOpen: boolean[] = [];
+    const observer = new MutationObserver(() => {
+      const toast = root.querySelector<Toast>('swc-toast');
+      if (toast && openAtInsertion.length === 0) {
+        openAtInsertion.push(toast.open);
+      }
+    });
+    const recordOpen = (event: Event): void => {
+      updatedAtOpen.push((event.target as Toast).hasUpdated);
+    };
+    observer.observe(root, { childList: true, subtree: true });
+    root.addEventListener('swc-open', recordOpen);
+
+    try {
+      ToastQueue.add('Connected closed notification');
+      const toast = await getFront(container);
+
+      await step('the toast connects closed', () => {
+        expect(openAtInsertion, 'open when connected').toEqual([false]);
+      });
+
+      await step('the toast opens only after its first update', () => {
+        expect(updatedAtOpen, 'hasUpdated when swc-open fired').toEqual([true]);
+        expect(toast.open, 'open after first update').toBe(true);
+      });
+    } finally {
+      observer.disconnect();
+      root.removeEventListener('swc-open', recordOpen);
       ToastQueue.clear();
     }
   },
@@ -199,9 +291,9 @@ export const TimeoutConfiguration: Story = {
       await step(
         'positive timeouts floor to 6000ms and longer values remain valid',
         () => {
-          expect(toast.timeout).toBe(6000);
+          expect(toast.timeout, 'floored timeout').toBe(6000);
           toast.timeout = 8000;
-          expect(toast.timeout).toBe(8000);
+          expect(toast.timeout, 'longer timeout').toBe(8000);
         }
       );
       await step(
@@ -209,7 +301,10 @@ export const TimeoutConfiguration: Story = {
         () => {
           for (const timeout of [null, 0, -1]) {
             toast.timeout = timeout;
-            expect(toast.timeout).toBeNull();
+            expect(
+              toast.timeout,
+              `timeout after setting ${timeout}`
+            ).toBeNull();
           }
         }
       );
@@ -218,10 +313,10 @@ export const TimeoutConfiguration: Story = {
         async () => {
           toast.setAttribute('timeout', '3000');
           await toast.updateComplete;
-          expect(toast.timeout).toBe(6000);
+          expect(toast.timeout, 'timeout from attribute').toBe(6000);
           toast.removeAttribute('timeout');
           await toast.updateComplete;
-          expect(toast.timeout).toBeNull();
+          expect(toast.timeout, 'timeout after removing attribute').toBeNull();
         }
       );
       await step(
@@ -229,9 +324,15 @@ export const TimeoutConfiguration: Story = {
         async () => {
           toast.textContent = 'Unsupported bare text';
           await waitFor(() =>
-            expect(toast.hasAttribute('aria-labelledby')).toBe(false)
+            expect(
+              toast.hasAttribute('aria-labelledby'),
+              'host aria-labelledby presence'
+            ).toBe(false)
           );
-          expect(toast.hasAttribute('aria-label')).toBe(false);
+          expect(
+            toast.hasAttribute('aria-label'),
+            'host aria-label presence'
+          ).toBe(false);
         }
       );
     } finally {
@@ -263,13 +364,17 @@ export const Actions: Story = {
             expect(
               warnings.some((warning) =>
                 String(warning[1]).includes('auto-dismiss')
-              )
+              ),
+              'auto-dismiss warning'
             ).toBe(true);
-            expect(ToastQueue.entries).toHaveLength(1);
+            expect(ToastQueue.entries, 'queue entries').toHaveLength(1);
             toast.shadowRoot!.querySelector<HTMLElement>('swc-button')!.click();
-            expect(onAction).toHaveBeenCalledTimes(1);
-            expect(toast.open).toBe(true);
-            expect(ToastQueue.entries).toHaveLength(1);
+            expect(onAction, 'onAction calls').toHaveBeenCalledTimes(1);
+            expect(toast.open, 'open after action').toBe(true);
+            expect(
+              ToastQueue.entries,
+              'queue entries after action'
+            ).toHaveLength(1);
           });
         }
       );
@@ -285,13 +390,14 @@ export const Actions: Story = {
           });
           const toast = await getFront(container);
           toast.shadowRoot!.querySelector<HTMLElement>('swc-button')!.click();
-          expect(onAction).toHaveBeenCalledTimes(2);
+          expect(onAction, 'onAction calls').toHaveBeenCalledTimes(2);
           await waitFor(() =>
-            expect(ToastQueue.entries.some((entry) => entry.key === key)).toBe(
-              false
-            )
+            expect(
+              ToastQueue.entries.some((entry) => entry.key === key),
+              'closed entry still queued'
+            ).toBe(false)
           );
-          expect(onClose).toHaveBeenCalledTimes(1);
+          expect(onClose, 'onClose calls').toHaveBeenCalledTimes(1);
         }
       );
     } finally {
@@ -316,13 +422,15 @@ export const FocusAndWarnings: Story = {
           trigger.focus();
           const key = ToastQueue.add('Focused notification');
           const toast = await getFront(container);
-          expect(getActiveElement()).toBe(trigger);
+          expect(getActiveElement(), 'focus after opening').toBe(trigger);
           const closeButton =
             toast.shadowRoot!.querySelector<HTMLElement>('swc-close-button')!;
           closeButton.focus();
           ToastQueue.close(key);
-          await waitFor(() => expect(ToastQueue.entries).toHaveLength(0));
-          expect(getActiveElement()).toBe(trigger);
+          await waitFor(() =>
+            expect(ToastQueue.entries, 'queue entries').toHaveLength(0)
+          );
+          expect(getActiveElement(), 'focus after closing').toBe(trigger);
         }
       );
 
@@ -335,8 +443,12 @@ export const FocusAndWarnings: Story = {
           toast.focus();
           outside.focus();
           ToastQueue.close(key);
-          await waitFor(() => expect(ToastQueue.entries).toHaveLength(0));
-          expect(getActiveElement()).toBe(outside);
+          await waitFor(() =>
+            expect(ToastQueue.entries, 'queue entries').toHaveLength(0)
+          );
+          expect(getActiveElement(), 'focus after leaving region').toBe(
+            outside
+          );
         }
       );
 
@@ -348,8 +460,10 @@ export const FocusAndWarnings: Story = {
           const toast = await getFront(container);
           toast.focus();
           ToastQueue.clear();
-          await waitFor(() => expect(ToastQueue.entries).toHaveLength(0));
-          expect(getActiveElement()).toBe(trigger);
+          await waitFor(() =>
+            expect(ToastQueue.entries, 'queue entries').toHaveLength(0)
+          );
+          expect(getActiveElement(), 'focus after clear').toBe(trigger);
         }
       );
 
@@ -361,16 +475,28 @@ export const FocusAndWarnings: Story = {
           const first = await getFront(container);
           first.focus();
           ToastQueue.clear();
-          await waitFor(() => expect(ToastQueue.entries).toHaveLength(0));
-          expect(getActiveElement()).toBe(trigger);
+          await waitFor(() =>
+            expect(
+              ToastQueue.entries,
+              'queue entries after first session'
+            ).toHaveLength(0)
+          );
+          expect(getActiveElement(), 'focus after first session').toBe(trigger);
 
           trigger.blur();
           ToastQueue.add('Second session notification');
           const second = await getFront(container);
           second.focus();
           ToastQueue.clear();
-          await waitFor(() => expect(ToastQueue.entries).toHaveLength(0));
-          expect(getActiveElement()).not.toBe(trigger);
+          await waitFor(() =>
+            expect(
+              ToastQueue.entries,
+              'queue entries after second session'
+            ).toHaveLength(0)
+          );
+          expect(getActiveElement(), 'focus after second session').not.toBe(
+            trigger
+          );
         }
       );
 
@@ -385,7 +511,8 @@ export const FocusAndWarnings: Story = {
               expect(
                 warnings.some((warning) =>
                   String(warning[1]).includes('Only one')
-                )
+                ),
+                'second container warning'
               ).toBe(true);
             } finally {
               second.remove();
@@ -416,10 +543,11 @@ export const InterruptedClosure: Story = {
           ToastQueue.close(key);
           const newerKey = ToastQueue.add('Newer notification');
           await getFront(container);
-          expect(ToastQueue.entries.map((entry) => entry.key)).toEqual([
-            newerKey,
-          ]);
-          expect(onClose).toHaveBeenCalledTimes(1);
+          expect(
+            ToastQueue.entries.map((entry) => entry.key),
+            'queue keys after demotion'
+          ).toEqual([newerKey]);
+          expect(onClose, 'onClose after demotion').toHaveBeenCalledTimes(1);
         }
       );
 
@@ -428,8 +556,11 @@ export const InterruptedClosure: Story = {
         async () => {
           ToastQueue.clear();
           container.remove();
-          expect(ToastQueue.entries).toHaveLength(0);
-          expect(onClose).toHaveBeenCalledTimes(1);
+          expect(
+            ToastQueue.entries,
+            'queue entries after disconnect'
+          ).toHaveLength(0);
+          expect(onClose, 'onClose after disconnect').toHaveBeenCalledTimes(1);
           canvasElement.append(container);
           await container.updateComplete;
         }
@@ -446,11 +577,15 @@ export const InterruptedClosure: Story = {
             .click();
           const newerKey = ToastQueue.add('Notification after dismissal');
           await getFront(container);
-          expect(ToastQueue.entries.some((entry) => entry.key === key)).toBe(
-            false
-          );
-          expect(ToastQueue.entries[0]?.key).toBe(newerKey);
-          expect(onClose).toHaveBeenCalledTimes(2);
+          expect(
+            ToastQueue.entries.some((entry) => entry.key === key),
+            'dismissed entry still queued'
+          ).toBe(false);
+          expect(
+            ToastQueue.entries[0]?.key,
+            'front entry key after dismissal'
+          ).toBe(newerKey);
+          expect(onClose, 'onClose after dismissal').toHaveBeenCalledTimes(2);
         }
       );
     } finally {

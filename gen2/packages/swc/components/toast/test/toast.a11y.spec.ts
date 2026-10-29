@@ -22,7 +22,6 @@ import { gotoStory } from '../../../utils/a11y-helpers.js';
  * .storybook/test-runner.ts). Both are included in the `test:a11y` command.
  */
 
-// TODO(SWC-2567): add container region, landmark, and focus-on-close snapshots.
 // TODO(SWC-2654, SWC-2655): add peek-stack and expanded-view snapshots.
 
 test.describe('Toast - ARIA Snapshots', () => {
@@ -85,7 +84,6 @@ test.describe('Toast - ARIA Snapshots', () => {
   test('ID-bearing message names the alertdialog by reference', async ({
     page,
   }) => {
-    // TODO(SWC-2567): once the aria-label fallback is removed, this snapshot also proves the aria-labelledby path.
     const root = await gotoStory(
       page,
       'components-toast--accessibility',
