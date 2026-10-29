@@ -159,14 +159,6 @@
       "types": "./dist/components/menu/index.d.ts",
       "import": "./dist/components/menu/index.js"
     },
-    "./components/menu-item": {
-      "types": "./dist/components/menu-item/index.d.ts",
-      "import": "./dist/components/menu-item/index.js"
-    },
-    "./components/menu-item/index.js": {
-      "types": "./dist/components/menu-item/index.d.ts",
-      "import": "./dist/components/menu-item/index.js"
-    },
     "./components/meter": {
       "types": "./dist/components/meter/index.d.ts",
       "import": "./dist/components/meter/index.js"
@@ -504,12 +496,6 @@
       ],
       "components/menu/index.js": [
         "dist/components/menu/index.d.ts"
-      ],
-      "components/menu-item": [
-        "dist/components/menu-item/index.d.ts"
-      ],
-      "components/menu-item/index.js": [
-        "dist/components/menu-item/index.d.ts"
       ],
       "components/meter": [
         "dist/components/meter/index.d.ts"

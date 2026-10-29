@@ -13,7 +13,7 @@ A `<swc-menu>` consists of:
 
 - An externally-referenced **trigger**, set via the `for` or `triggerElement` property. `swc-menu` does not render a trigger of its own.
 - A shadow-internal surface carrying `role="menu"`, anchored to the trigger.
-- **Default slot**: the menu's rows. `swc-menu-item` has not shipped yet, so these examples slot placeholder rows with `role="menuitem"` until it does.
+- **Default slot**: the menu's rows, as `swc-menu-item` elements.
 
 <Canvas of={MenuStories.Anatomy} />
 
@@ -42,6 +42,12 @@ The menu's `PlacementController` handles pixel positioning automatically. When t
 Because `<swc-menu>` uses `popover="auto"`, opening it dismisses any other open auto popover in the document, including other menus, popovers, and pickers.
 
 <Canvas of={MenuStories.States} />
+
+### Item states
+
+A row is either default or `disabled`. A disabled row is exposed with `aria-disabled="true"` rather than removed from the tab order, so arrow keys still reach it and a screen reader can announce that the option exists but is unavailable. It does not activate on click, <kbd>Enter</kbd>, or <kbd>Space</kbd>, and it does not close the menu.
+
+<Canvas of={MenuStories.ItemStates} />
 
 ## Behaviors
 

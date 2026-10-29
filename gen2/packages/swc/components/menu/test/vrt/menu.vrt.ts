@@ -19,6 +19,7 @@ import { MENU_PLACEMENTS } from '@adobe/spectrum-wc-core/components/menu';
 
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc/components/menu/swc-menu.js';
+import '@adobe/spectrum-wc/components/menu/swc-menu-item.js';
 
 import {
   forcedColorsVrtParameters,
@@ -67,9 +68,9 @@ const menuForcedColorsVrtParameters = {
 };
 
 const DEFAULT_ROWS = html`
-  <swc-menu-item role="menuitem">Cut</swc-menu-item>
-  <swc-menu-item role="menuitem">Copy</swc-menu-item>
-  <swc-menu-item role="menuitem">Paste</swc-menu-item>
+  <swc-menu-item>Cut</swc-menu-item>
+  <swc-menu-item>Copy</swc-menu-item>
+  <swc-menu-item>Paste</swc-menu-item>
 `;
 
 // The trigger carries the permutation's name: an open surface can cover or
@@ -147,11 +148,11 @@ const placementRows = (prefix: string) =>
 // The label must be long enough to actually wrap at the 320px cap; one that
 // merely looks long still fits on a line and proves nothing.
 const LONG_LABEL_ROWS = html`
-  <swc-menu-item role="menuitem">
+  <swc-menu-item>
     Export the current selection as a flattened layered composite file with
     embedded colour profiles
   </swc-menu-item>
-  <swc-menu-item role="menuitem">Copy</swc-menu-item>
+  <swc-menu-item>Copy</swc-menu-item>
 `;
 
 const MANY_ROWS = html`
@@ -173,7 +174,7 @@ const MANY_ROWS = html`
     'Send backward',
   ].map(
     (label) => html`
-      <swc-menu-item role="menuitem">${label}</swc-menu-item>
+      <swc-menu-item>${label}</swc-menu-item>
     `
   )}
 `;

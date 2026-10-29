@@ -170,11 +170,14 @@ Role: `menuitem`, set on the host before the owning menu's first discovery pass.
 
 ## Architecture: core vs SWC split
 
-Mirrors `swc-menu`:
+Rows ship **inside the menu component folder**, not as a folder of their own. `swc-accordion-item` and `swc-tab` set the precedent: a sub-element that only exists inside its parent lives beside it and shares one Storybook entry and one docs page. `swc-close-button` and `swc-infield-button` get their own folders because they are reusable across parents; a menu row is not. The rest of the family (`swc-menu-link`, `swc-menuitem-checkbox`, `swc-menuitem-radio`, `swc-menu-group`, `swc-menu-divider`) should land the same way, which also matches 1st-gen's single `packages/menu` package.
 
-- `core/components/menu-item/MenuItem.base.ts` — role, disabled semantics, size, roving-tabindex participation
-- `core/components/menu-item/MenuItem.types.ts` — `MENU_ITEM_VALID_SIZES`, `MenuItemSize`
-- `swc/components/menu-item/MenuItem.ts` + `menu-item.css` — render template and row chrome
+- `core/components/menu/MenuItem.base.ts`: role, disabled semantics, size, roving-tabindex participation
+- `core/components/menu/MenuItem.types.ts`: `MENU_ITEM_VALID_SIZES`, `MenuItemSize`
+- `swc/components/menu/MenuItem.ts` + `menu-item.css`: render template and row chrome
+- Stories, tests and docs extend the menu's own (`Menu/Tests`, `menu.mdx`); there is no separate `Menu item` Storybook entry
+
+The Jira ticket's `menu/menu-item/` nested directory is not the convention; no gen2 component nests a sub-element in its own subdirectory.
 
 Row chrome belongs here, not in `swc-menu`: in `spectrum-css`, `.spectrum-Menu` carries no background, border, radius or shadow, and every visual property is scoped under `.spectrum-Menu-item`.
 
@@ -185,7 +188,7 @@ Row chrome belongs here, not in `swc-menu`: in `spectrum-css`, `.spectrum-Menu` 
 - [x] `MenuItem.types.ts` with `MENU_ITEM_VALID_SIZES` and `MenuItemSize`
 - [x] `MenuItemBase` with `size`, `disabled`, and `role="menuitem"` on the host
 - [x] Resolve [Q20](#blockers-and-open-questions) before settling the `disabled` implementation
-- [x] `index.ts` exports and `core/package.json` subpath exports
+- [x] `index.ts` exports and `core/package.json` subpath exports (re-exported from `components/menu`, no separate subpath)
 
 ### CSS
 
@@ -220,9 +223,9 @@ Red/green TDD. Each item below should fail before the implementation exists.
 
 ### Documentation
 
-- [ ] `menu-item.mdx` docs page and stories
+- [x] Rows documented in `menu.mdx` and storied in `menu.stories.ts`, per the shared-folder decision above
 - [ ] Consumer migration guide covering the dropped `href` surface and the slot renames
-- [ ] Update `swc-menu`'s stories, tests and VRT to use real rows instead of placeholders
+- [x] Update `swc-menu`'s stories, tests and VRT to use real rows instead of placeholders
 
 ## Blockers and open questions
 

@@ -14,8 +14,9 @@ import { html } from 'lit';
 import { expect, userEvent, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import { Menu } from '@adobe/spectrum-wc/menu';
+import { Menu, MenuItem } from '@adobe/spectrum-wc/menu';
 import {
+  MENU_ITEM_VALID_SIZES,
   MENU_PLACEMENTS,
   MENU_VALID_SIZES,
 } from '@adobe/spectrum-wc-core/components/menu';
@@ -23,6 +24,7 @@ import { isTopDismissible } from '@adobe/spectrum-wc-core/utils/index.js';
 
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc/components/menu/swc-menu.js';
+import '@adobe/spectrum-wc/components/menu/swc-menu-item.js';
 
 import {
   getComponent,
@@ -44,13 +46,25 @@ export default {
 
 // ─── Test helpers ─────────────────────────────────────────────────────────────
 
-// Placeholders for `swc-menu-item`, which doesn't exist yet; matches its
-// eventual tag name and `role="menuitem"` so tests stay aXe-clean.
 const defaultItems = html`
-  <swc-menu-item role="menuitem">Cut</swc-menu-item>
-  <swc-menu-item role="menuitem">Copy</swc-menu-item>
-  <swc-menu-item role="menuitem">Paste</swc-menu-item>
+  <swc-menu-item>Cut</swc-menu-item>
+  <swc-menu-item>Copy</swc-menu-item>
+  <swc-menu-item>Paste</swc-menu-item>
 `;
+
+// `userEvent.keyboard` tracks its own notion of focus and stops reaching the
+// menu once a row has a shadow root, landing the key on `body`. Dispatching
+// from the focused row is what a real key press does.
+const pressFromActiveRow = (key: string): KeyboardEvent => {
+  const event = new KeyboardEvent('keydown', {
+    key,
+    bubbles: true,
+    composed: true,
+    cancelable: true,
+  });
+  (document.activeElement ?? document.body).dispatchEvent(event);
+  return event;
+};
 
 const getItems = (canvasElement: HTMLElement): HTMLElement[] =>
   Array.from(canvasElement.querySelectorAll('swc-menu-item')) as HTMLElement[];
@@ -244,7 +258,7 @@ export const StartsOpenNoPhantomEventTest: Story = {
         menu.addEventListener('swc-open', () => (openFired = true));
         menu.setAttribute('for', 'starts-open-trigger');
         menu.open = true;
-        menu.innerHTML = '<swc-menu-item role="menuitem">Cut</swc-menu-item>';
+        menu.innerHTML = '<swc-menu-item>Cut</swc-menu-item>';
         mount.appendChild(menu);
 
         await menu.updateComplete;
@@ -560,7 +574,7 @@ export const ShadowRootScopeTest: Story = {
     trigger.textContent = 'Trigger';
 
     const menu = document.createElement('swc-menu') as Menu;
-    menu.innerHTML = '<swc-menu-item role="menuitem">Cut</swc-menu-item>';
+    menu.innerHTML = '<swc-menu-item>Cut</swc-menu-item>';
 
     shadow.append(trigger, menu);
 
@@ -675,6 +689,13 @@ export const TabTrapAndEnterClosesTest: Story = {
 
     await step('Tab does not move focus out of the menu', async () => {
       const active = document.activeElement;
+      // The trap is `preventDefault()` on the row's keydown, so assert that
+      // directly; `userEvent.tab()` moves focus itself and would pass here
+      // even if the menu stopped trapping.
+      expect(
+        pressFromActiveRow('Tab').defaultPrevented,
+        'Tab is trapped on the row'
+      ).toBe(true);
       await userEvent.tab();
       expect(document.activeElement, 'focus stays on the active row').toBe(
         active
@@ -692,7 +713,7 @@ export const TabTrapAndEnterClosesTest: Story = {
     await step('Enter on the focused row closes the menu', async () => {
       let closeCount = 0;
       menu.addEventListener('swc-close', () => closeCount++);
-      await userEvent.keyboard('{Enter}');
+      pressFromActiveRow('Enter');
       await waitFor(() => expect(isMenuOpen(menu)).toBe(false));
       expect(menu.open, 'menu closes on Enter').toBe(false);
       expect(closeCount, 'swc-close fires exactly once').toBe(1);
@@ -718,25 +739,25 @@ export const ArrowKeyNavigationTest: Story = {
     });
 
     await step('ArrowDown moves focus to the next row', async () => {
-      await userEvent.keyboard('{ArrowDown}');
+      pressFromActiveRow('ArrowDown');
       expect(document.activeElement, 'focus on second row').toBe(
         getItems(canvasElement)[1]
       );
     });
 
     await step('ArrowDown wraps from the last row to the first', async () => {
-      await userEvent.keyboard('{ArrowDown}');
+      pressFromActiveRow('ArrowDown');
       expect(document.activeElement, 'focus on third row').toBe(
         getItems(canvasElement)[2]
       );
-      await userEvent.keyboard('{ArrowDown}');
+      pressFromActiveRow('ArrowDown');
       expect(document.activeElement, 'focus wraps to first row').toBe(
         getItems(canvasElement)[0]
       );
     });
 
     await step('ArrowUp wraps from the first row to the last', async () => {
-      await userEvent.keyboard('{ArrowUp}');
+      pressFromActiveRow('ArrowUp');
       expect(document.activeElement, 'focus wraps to last row').toBe(
         getItems(canvasElement)[2]
       );
@@ -745,11 +766,11 @@ export const ArrowKeyNavigationTest: Story = {
     await step(
       'End moves focus to the last row, Home to the first',
       async () => {
-        await userEvent.keyboard('{Home}');
+        pressFromActiveRow('Home');
         expect(document.activeElement, 'focus on first row').toBe(
           getItems(canvasElement)[0]
         );
-        await userEvent.keyboard('{End}');
+        pressFromActiveRow('End');
         expect(document.activeElement, 'focus on last row').toBe(
           getItems(canvasElement)[2]
         );
@@ -766,7 +787,7 @@ export const ArrowKeyNavigationTest: Story = {
         menu.appendChild(newRow);
         await new Promise((r) => requestAnimationFrame(r));
 
-        await userEvent.keyboard('{End}');
+        pressFromActiveRow('End');
         expect(
           document.activeElement,
           'End moves focus to the newly added row'
@@ -775,7 +796,7 @@ export const ArrowKeyNavigationTest: Story = {
         // Move focus off the row before removing it, so this exercises the
         // roving set picking up the removal rather than focus recovery for
         // a removed-while-focused row (a separate, untested concern).
-        await userEvent.keyboard('{Home}');
+        pressFromActiveRow('Home');
         expect(document.activeElement, 'focus back on the first row').toBe(
           getItems(canvasElement)[0]
         );
@@ -783,7 +804,7 @@ export const ArrowKeyNavigationTest: Story = {
         newRow.remove();
         await new Promise((r) => requestAnimationFrame(r));
 
-        await userEvent.keyboard('{End}');
+        pressFromActiveRow('End');
         expect(
           document.activeElement,
           'End moves focus to the last row again once the added row is removed'
@@ -1270,7 +1291,7 @@ export const DisconnectCleanupTest: Story = {
     ) as HTMLElement;
     const menu = document.createElement('swc-menu') as Menu;
     menu.setAttribute('for', 'disconnect-trigger');
-    menu.innerHTML = '<swc-menu-item role="menuitem">Cut</swc-menu-item>';
+    menu.innerHTML = '<swc-menu-item>Cut</swc-menu-item>';
     mount.appendChild(menu);
     await menu.updateComplete;
 
@@ -1309,7 +1330,7 @@ export const DisconnectCleanupTest: Story = {
 
         const menu2 = document.createElement('swc-menu') as Menu;
         menu2.setAttribute('for', 'disconnect-trigger-2');
-        menu2.innerHTML = '<swc-menu-item role="menuitem">Cut</swc-menu-item>';
+        menu2.innerHTML = '<swc-menu-item>Cut</swc-menu-item>';
         canvasElement.appendChild(menu2);
         await menu2.updateComplete;
 
@@ -1343,7 +1364,7 @@ export const DisconnectCleanupTest: Story = {
 
         const menu3 = document.createElement('swc-menu') as Menu;
         menu3.setAttribute('for', 'disconnect-trigger-3');
-        menu3.innerHTML = '<swc-menu-item role="menuitem">Cut</swc-menu-item>';
+        menu3.innerHTML = '<swc-menu-item>Cut</swc-menu-item>';
         canvasElement.appendChild(menu3);
         await menu3.updateComplete;
 
@@ -1372,5 +1393,263 @@ export const DisconnectCleanupTest: Story = {
         ).toBe(false);
       }
     );
+  },
+};
+
+// ══════════════════════════════════════════════════════════════
+// swc-menu-item
+// ══════════════════════════════════════════════════════════════
+
+const getRows = (canvasElement: HTMLElement): MenuItem[] =>
+  Array.from(canvasElement.querySelectorAll('swc-menu-item'));
+
+const rowsInMenu = (rows: unknown, id: string) => html`
+  <swc-button id=${id}>Edit</swc-button>
+  <swc-menu for=${id}>${rows}</swc-menu>
+`;
+
+const threeRows = html`
+  <swc-menu-item>Cut</swc-menu-item>
+  <swc-menu-item disabled>Copy</swc-menu-item>
+  <swc-menu-item>Paste</swc-menu-item>
+`;
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Defaults
+// ──────────────────────────────────────────────────────────────
+
+export const ItemDefaultsTest: Story = {
+  render: () => html`
+    <swc-menu-item>Cut</swc-menu-item>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const item = await getComponent<MenuItem>(canvasElement, 'swc-menu-item');
+
+    await step('renders expected default property values', async () => {
+      expect(item.size, 'default size is m').toBe('m');
+      expect(item.disabled, 'default disabled is false').toBe(false);
+    });
+
+    await step('carries role="menuitem" on the host', async () => {
+      expect(item.getAttribute('role'), 'host role').toBe('menuitem');
+    });
+
+    await step('exposes no aria-disabled when enabled', async () => {
+      expect(item.hasAttribute('aria-disabled'), 'no aria-disabled').toBe(
+        false
+      );
+    });
+
+    // Order is the reading order the row is announced in, so a swap is a
+    // regression even though both slots still render.
+    await step('renders the visual slot ahead of the label', async () => {
+      const slots = Array.from(
+        item.shadowRoot?.querySelectorAll('slot') ?? []
+      ).map((slot) => slot.name);
+      expect(slots, 'visual slot, then the default label slot').toEqual([
+        'visual',
+        '',
+      ]);
+    });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Properties / Attributes
+// ──────────────────────────────────────────────────────────────
+
+export const ItemPropertyMutationTest: Story = {
+  render: () => html`
+    <swc-menu-item>Cut</swc-menu-item>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const item = await getComponent<MenuItem>(canvasElement, 'swc-menu-item');
+
+    await step('renders in every valid size', async () => {
+      for (const size of MENU_ITEM_VALID_SIZES) {
+        item.size = size;
+        await item.updateComplete;
+        expect(item.getAttribute('size'), `size attribute is "${size}"`).toBe(
+          size
+        );
+      }
+    });
+
+    await step('reflects disabled and maps it to aria-disabled', async () => {
+      item.disabled = true;
+      await item.updateComplete;
+      expect(item.hasAttribute('disabled'), 'disabled reflects').toBe(true);
+      expect(item.getAttribute('aria-disabled'), 'aria-disabled set').toBe(
+        'true'
+      );
+
+      item.disabled = false;
+      await item.updateComplete;
+      expect(item.hasAttribute('aria-disabled'), 'aria-disabled cleared').toBe(
+        false
+      );
+    });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Role
+// ──────────────────────────────────────────────────────────────
+
+export const ItemAuthoredRoleWinsTest: Story = {
+  render: () => html`
+    <swc-menu-item role="menuitemcheckbox">Wrap</swc-menu-item>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const item = await getComponent<MenuItem>(canvasElement, 'swc-menu-item');
+
+    await step('does not overwrite an author-supplied role', async () => {
+      expect(item.getAttribute('role'), 'authored role survives').toBe(
+        'menuitemcheckbox'
+      );
+    });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Menu integration
+// ──────────────────────────────────────────────────────────────
+
+export const ItemDiscoveryTest: Story = {
+  render: () => rowsInMenu(threeRows, 'discovery-trigger'),
+  play: async ({ canvasElement, step }) => {
+    const trigger = canvasElement.querySelector(
+      '#discovery-trigger'
+    ) as HTMLElement;
+
+    await step('opening focuses the first row', async () => {
+      await userEvent.click(trigger);
+      await waitFor(() =>
+        expect(document.activeElement, 'focus on the first row').toBe(
+          getRows(canvasElement)[0]
+        )
+      );
+    });
+
+    // Raised in review from a screen recording: after a mouse open, the
+    // first arrow press appears to land on row two. Focus is on row one
+    // either way; what differs is whether the browser paints a ring for
+    // programmatic focus, which `:focus-visible` withholds after a pointer
+    // interaction. Asserting both open paths keeps that an appearance
+    // question for the row chrome story rather than a focus bug.
+    await step('opening from the keyboard focuses the first row', async () => {
+      // Closed directly: native popover light-dismiss ignores a synthetic
+      // Escape, so `userEvent` cannot drive that path here.
+      const menu = canvasElement.querySelector('swc-menu') as HTMLElement & {
+        open: boolean;
+      };
+      menu.open = false;
+      await waitFor(() => expect(menu.open, 'menu closed').toBe(false));
+
+      trigger.focus();
+      await userEvent.keyboard('{Enter}');
+
+      await waitFor(() =>
+        expect(document.activeElement, 'focus on the first row').toBe(
+          getRows(canvasElement)[0]
+        )
+      );
+    });
+
+    // B20/Q20: disabled rows keep their place in the roving set. This is the
+    // test the plan named as the one that settles whether the hand-rolled
+    // mapping is enough.
+    await step('arrow keys still reach a disabled row', async () => {
+      await waitFor(() =>
+        expect(
+          getRows(canvasElement)[0].getAttribute('tabindex'),
+          'first row holds the tab stop before navigating'
+        ).toBe('0')
+      );
+
+      // Dispatched from the row rather than through `userEvent.keyboard`:
+      // that helper tracks its own notion of focus and stops reaching the
+      // menu once the row has a shadow root, landing the key on `body`.
+      getRows(canvasElement)[0].dispatchEvent(
+        new KeyboardEvent('keydown', {
+          key: 'ArrowDown',
+          bubbles: true,
+          composed: true,
+          cancelable: true,
+        })
+      );
+
+      await waitFor(() =>
+        expect(
+          document.activeElement,
+          'ArrowDown reaches the disabled row rather than skipping it'
+        ).toBe(getRows(canvasElement)[1])
+      );
+      expect(
+        getRows(canvasElement)[1].getAttribute('aria-disabled'),
+        'the row it reached is genuinely the disabled one'
+      ).toBe('true');
+    });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Keyboard activation
+// ──────────────────────────────────────────────────────────────
+
+// Dispatched from the row for the same reason as the arrow-key step above.
+const pressRowKey = (row: MenuItem, key: string): KeyboardEvent => {
+  const event = new KeyboardEvent('keydown', {
+    key,
+    bubbles: true,
+    composed: true,
+    cancelable: true,
+  });
+  row.dispatchEvent(event);
+  return event;
+};
+
+export const ItemKeyboardActivationTest: Story = {
+  render: () => rowsInMenu(threeRows, 'activation-trigger'),
+  play: async ({ canvasElement, step }) => {
+    const trigger = canvasElement.querySelector(
+      '#activation-trigger'
+    ) as HTMLElement;
+    const menu = canvasElement.querySelector('swc-menu') as HTMLElement & {
+      open: boolean;
+    };
+
+    await step('Enter on a disabled row does nothing', async () => {
+      await userEvent.click(trigger);
+      await waitFor(() => expect(menu.open).toBe(true));
+
+      const [, disabledRow] = getRows(canvasElement);
+      let clicked = false;
+      disabledRow.addEventListener('click', () => {
+        clicked = true;
+      });
+
+      const event = pressRowKey(disabledRow, 'Enter');
+
+      expect(event.defaultPrevented, 'the key is still swallowed').toBe(true);
+      expect(clicked, 'no activation reaches the consumer').toBe(false);
+      expect(menu.open, 'the menu stays open').toBe(true);
+    });
+
+    // The a11y analysis requires Enter *and* Space (WCAG 2.1.1). Space is
+    // the one that was missing: the row never turned it into a click.
+    await step('Space on an enabled row activates and closes', async () => {
+      const [firstRow] = getRows(canvasElement);
+      let clicked = false;
+      firstRow.addEventListener('click', () => {
+        clicked = true;
+      });
+
+      const event = pressRowKey(firstRow, ' ');
+
+      expect(event.defaultPrevented, 'the page does not scroll').toBe(true);
+      expect(clicked, 'the consumer click handler runs').toBe(true);
+      await waitFor(() => expect(menu.open, 'the menu closes').toBe(false));
+    });
   },
 };

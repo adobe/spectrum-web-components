@@ -20,6 +20,7 @@ import { MENU_PLACEMENTS } from '@adobe/spectrum-wc-core/components/menu';
 
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc/components/menu/swc-menu.js';
+import '@adobe/spectrum-wc/components/menu/swc-menu-item.js';
 
 // ────────────────
 //    METADATA
@@ -76,12 +77,10 @@ export default meta;
 //    HELPERS
 // ────────────────────
 
-// Placeholders for `swc-menu-item`, which doesn't exist yet; matches its
-// eventual tag name and `role="menuitem"` so the story stays aXe-clean.
 const defaultItems = html`
-  <swc-menu-item role="menuitem">Cut</swc-menu-item>
-  <swc-menu-item role="menuitem">Copy</swc-menu-item>
-  <swc-menu-item role="menuitem">Paste</swc-menu-item>
+  <swc-menu-item>Cut</swc-menu-item>
+  <swc-menu-item>Copy</swc-menu-item>
+  <swc-menu-item>Paste</swc-menu-item>
 `;
 
 // ────────────────────
@@ -229,6 +228,25 @@ export const States: Story = {
   `,
   tags: ['states'],
 };
+
+export const ItemStates: Story = {
+  args: {
+    for: 'item-states-trigger',
+    'actual-placement': null,
+  },
+  render: (args) => html`
+    <swc-button id="item-states-trigger">Edit</swc-button>
+    ${template(
+      args,
+      html`
+        <swc-menu-item>Default</swc-menu-item>
+        <swc-menu-item disabled>Disabled</swc-menu-item>
+      `
+    )}
+  `,
+  tags: ['states'],
+};
+ItemStates.storyName = 'Item states';
 
 // ──────────────────────────────
 //    BEHAVIORS STORIES
