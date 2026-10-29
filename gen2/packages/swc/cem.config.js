@@ -14,18 +14,9 @@ import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { getTsProgram, typeParserPlugin } from '@wc-toolkit/type-parser';
 
-// type-parser logs an ungated `console.warn` for every deep or recursive type
-// it declines to expand — 55 lines per run here. Almost none of them are
-// actionable: they are raised while expanding *structural* types, and
-// `expandRemainingTypeAliases` below drops every structural expansion from the
-// manifest anyway, so the bail changes nothing. They also cannot be filtered by
-// path, because the reported location is where traversal started rather than
-// where the type lives: 15 of them name DOM `CSSRule` constants but point at
-// `components/accordion/Accordion.ts`.
-//
-// So rather than deciding which lines to discard, collect them all and report
-// a count plus the one thing that is genuinely actionable — properties left
-// with no usable `parsedType`. `CEM_VERBOSE=1` replays the raw lines.
+// type-parser warns for each deep or recursive type that it skips. The skips
+// occur in structural types, which this config drops from the manifest, so
+// collect them and print one summary line. `CEM_VERBOSE=1` prints them all.
 const originalWarn = console.warn;
 const skippedExpansions = [];
 const isBail = (arg) =>
@@ -136,20 +127,24 @@ let tsChecker;
 let typeScript;
 
 /**
- * CEM plugin that expands referenced type aliases that `type-parser` leaves
- * untouched.
+ * Deletes every structural `parsedType` (an object-shaped dump such as
+ * `ColorTypes`) from the manifest, wherever type-parser wrote it: members,
+ * attributes, events, and parameters. The dumps contain compiler symbol ids
+ * such as `__@iterator@87`, which change when unrelated files join the
+ * program. Storybook shows them as `object` controls anyway.
  *
- * `type-parser` only consults the type checker for members a class *declares
- * itself*; for inherited members it falls back to resolving the type name
- * inside that same source file. Properties contributed by a mixin (a class
- * *expression*, which `type-parser` skips entirely) therefore keep their alias
- * name — e.g. `label-position` stays `LinearProgressLabelPosition` instead of
- * `'top' | 'side'`, so Storybook renders a text input instead of a select.
- *
- * This fills the gap by resolving any remaining alias name against a
- * program-wide map. Only unions of literals are written back, so object-ish and
- * recursive types keep their alias name rather than exploding into the
- * manifest.
+ * @param {unknown} node A manifest node.
+ */
+function dropStructuralTypes(node) {
+  if (!node || typeof node !== 'object') return;
+  if (node.parsedType?.text?.includes('{')) delete node.parsedType;
+  Object.values(node).forEach(dropStructuralTypes);
+}
+
+/**
+ * CEM plugin that expands the type aliases that `type-parser` cannot reach,
+ * such as the members that a mixin provides (`label-position` on meter). Only
+ * unions of literals are expanded; other aliases keep their name.
  *
  * @returns {object} The CEM plugin.
  */
@@ -243,6 +238,8 @@ function expandRemainingTypeAliases() {
   return {
     name: 'cem-plugin-expand-remaining-type-aliases',
     packageLinkPhase({ customElementsManifest }) {
+      dropStructuralTypes(customElementsManifest);
+
       if (!tsProgram || !tsChecker) {
         reportSkippedExpansions([]);
         return;
@@ -260,16 +257,6 @@ function expandRemainingTypeAliases() {
           ];
 
           for (const entry of entries) {
-            // Structural expansions (`ColorTypes`, `ReturnType<typeof
-            // setTimeout>`) carry compiler-internal symbol ids such as
-            // `__@iterator@126` that shift with program composition, so the
-            // published manifest is not reproducible. Storybook treats them as
-            // `object` controls either way, so the alias name in `type` is
-            // strictly more useful than the dump.
-            if (entry.parsedType?.text.includes('{')) {
-              delete entry.parsedType;
-            }
-
             if (entry.parsedType || !entry.type?.text) continue;
             const expanded = expand(entry.type.text);
             if (expanded) {
@@ -277,9 +264,8 @@ function expandRemainingTypeAliases() {
               continue;
             }
 
-            // A union alias of ours that stayed unexpanded is the one case a
-            // human needs to look at: the property should offer a select and
-            // will not.
+            // An enum-like alias that stayed unexpanded gets a text input
+            // instead of a select, so report it.
             const alias = expansions.get(namedPart(entry.type.text) ?? '');
             if (
               alias?.isEnumLike &&
@@ -298,13 +284,9 @@ function expandRemainingTypeAliases() {
 }
 
 /**
- * CEM plugin that recovers the default value of accessor-backed properties.
- *
- * The analyzer reads `default` from a field initializer, so a property exposed
- * through a getter/setter pair (Tabs’ `density`, `keyboard-activation`) lands in
- * the manifest with no default at all. Storybook then seeds no initial arg and
- * the API table shows an empty default. This reads the initializer of the
- * private backing field the getter returns and records it.
+ * CEM plugin that records the default value of accessor-backed properties
+ * (Tabs’ `density`). The analyzer reads defaults only from field initializers,
+ * so this reads the initializer of the backing field that the getter returns.
  *
  * @returns {object} The CEM plugin.
  */
@@ -389,17 +371,10 @@ function accessorDefaults() {
 }
 
 /**
- * CEM plugin that makes each attribute agree with the field it reflects.
- *
- * The field is the reliable side: type-parser resolves it with the checker in
- * the context of its own class, so a `SizedMixin` `size` narrows to that
- * component's valid sizes. The attribute is resolved by alias name alone, and
- * type-parser caches the first result per name, so `swc-action-button` lost
- * `'xs'` and `swc-menu` listed all seven `ElementSize` values. The analyzer
- * also records inherited field defaults on the field only. Copy both across
- * whenever the two sides declare the same type.
- *
- * Runs last, after the other plugins have settled field types and defaults.
+ * CEM plugin that copies each field's `parsedType` and default to the
+ * attribute it reflects, when both declare the same type. type-parser resolves
+ * attributes by alias name only, so without this a `SizedMixin` `size`
+ * attribute can list the sizes of a different component. Runs last.
  *
  * @returns {object} The CEM plugin.
  */
@@ -446,21 +421,14 @@ export default {
   // type aliases (e.g. `(typeof ARRAY)[number]` unions) into literal values.
   overrideModuleCreation({ ts, globs }) {
     captureSkippedExpansions();
-    // Pass the glob *patterns*, not CEM's resolved file list: `getTsProgram`
-    // feeds this argument to `ts.parseJsonConfigFileContent` as `include`, and
-    // several hundred absolute paths there compile into a huge matcher that
-    // walks the tree for ~10s. `tsconfig.cem.json` covers the same sources, so
-    // the program still contains every file (including core-only modules that
-    // no swc file imports).
+    // Pass the glob patterns, not CEM's resolved file list: hundreds of
+    // absolute paths in `include` make TypeScript walk the tree for ~10s.
     const program = getTsProgram(ts, SOURCE_GLOBS, 'tsconfig.cem.json');
     tsProgram = program;
     tsChecker = program.getTypeChecker();
     typeScript = ts;
-    // `globs` here are resolved file paths, some relative with a `../` prefix
-    // (core-package files referenced from this swc-package config). Comparing
-    // raw strings with `includes()` never matches those against the program's
-    // absolute `fileName`s, silently dropping every core-package module (and
-    // with it, most components' base-class attributes); resolve both sides.
+    // Core files arrive as `../core/...` paths; resolve both sides so they
+    // match the program's absolute file names.
     const resolvedGlobs = new Set(globs.map((glob) => path.resolve(glob)));
     return program
       .getSourceFiles()
