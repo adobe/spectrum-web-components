@@ -201,8 +201,6 @@ export abstract class CheckboxBase extends SizedMixin(
     this.syncValidity();
   });
 
-  // Set once the user or a script changes `checked`, after which the `checked`
-  // attribute is only the reset default, as on a native checkbox.
   #checkedDirty = false;
 
   #applyingCheckedAttribute = false;

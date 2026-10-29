@@ -19,9 +19,8 @@ import '@adobe/spectrum-wc-icons/swc-icon-alert-triangle.js';
 import styles from './checkbox.css';
 
 /**
- * The `<input>`'s `id`, referenced by the rendered `<label for>`. A fixed
- * string stays stable across SSR/hydration; it only needs to be unique within
- * this component's own shadow root.
+ * The `<input>`'s `id`, referenced by the rendered `<label for>`. It only
+ * needs to be unique within this component's own shadow root.
  */
 const INPUT_ID = 'input';
 
@@ -52,17 +51,15 @@ export class Checkbox extends CheckboxBase {
   /**
    * @internal
    *
-   * Native checkbox input, or `null` before rendering. Internal: the inner
-   * input is not public API.
+   * Native checkbox input, or `null` before rendering.
    */
   public override get roleElement(): HTMLInputElement | null {
     return this.renderRoot?.querySelector(`input#${INPUT_ID}`) ?? null;
   }
 
   protected override render(): TemplateResult {
-    // `checked` and `indeterminate` are written to the input by the base class
-    // only when they change, never by a binding: a binding would re-apply the
-    // previous value if the element re-renders during a user click.
+    // `checked` and `indeterminate` aren't bound here: the base class writes
+    // them in `updated()`, only when they change.
     return html`
       <div class="swc-Checkbox">
         <input
@@ -90,9 +87,8 @@ export class Checkbox extends CheckboxBase {
   /**
    * Re-dispatch `change` from the host: the native `change` event is
    * `composed: false`, so it never crosses the shadow boundary and a consumer's
-   * `<swc-checkbox @change=…>` would otherwise never fire. While read-only, a
-   * toggle only gets here if the base class guard was bypassed; the input
-   * handler already undid it, so no `change` is sent.
+   * `<swc-checkbox @change=…>` would otherwise never fire. Nothing is sent
+   * while read-only, because the base class has already undone the toggle.
    */
   private handleChange(): void {
     if (this.fieldStatus === 'readonly') {
