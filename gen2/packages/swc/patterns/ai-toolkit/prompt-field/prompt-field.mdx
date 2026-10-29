@@ -118,6 +118,7 @@ When the attachments don't fit, the strip scrolls horizontally. This works the s
 
 - Round chevron buttons show on each side when there is more content in that direction. `>` moves the tile that is partly hidden at the end to the start of the strip; `<` does the reverse. When no tile is left to move, a chevron scrolls to that end of the strip.
 - Edge fades show that more content is off screen, and grow in as soon as the strip scrolls. Each chevron shows once the strip has scrolled past its fade, so it's never partly transparent over a tile.
+- When a tile is added to a strip that already has tiles, the strip scrolls to show it, so a new upload is visible even when the strip overflows. Focus doesn't move, and while focus is in the strip, the strip stays where it is.
 - Users can also scroll with a trackpad, mouse wheel, or touch. The strip has no visible scrollbar and doesn't snap to tile edges.
 
 <Canvas of={PromptFieldStories.MultiAttachmentScroll} />

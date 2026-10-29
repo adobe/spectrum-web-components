@@ -289,6 +289,9 @@ export class PromptField extends SpectrumElement {
   // Attachment tiles present at drop time; diffed on the next slotchange to find the new one(s) to focus.
   private _pendingAttachmentDropFocus?: HTMLElement[];
 
+  // Attachment tiles at the last slotchange; diffed to find added tiles.
+  private _knownAttachments: HTMLElement[] = [];
+
   /** Whether a file is currently being dragged over the field. Drives the same visual as the textarea's own focus ring. */
   @state()
   private _dragged = false;
@@ -487,13 +490,50 @@ export class PromptField extends SpectrumElement {
         this._prepareAttachmentDropTarget(droppedAttachment);
       }
     }
+    // Only when some earlier tiles are still there, so the first render,
+    // restoring a draft, or replacing every tile doesn't scroll.
+    const known = this._knownAttachments;
+    this._knownAttachments = [...attachments];
+    const addedAttachment = attachments.some((tile) => known.includes(tile))
+      ? attachments.find((tile) => !known.includes(tile))
+      : undefined;
     this.requestUpdate();
     void this.updateComplete.then(() => {
       requestAnimationFrame(() => {
         this._observeAttachmentScrollViewport();
         this._updateAttachmentScrollState();
+        if (addedAttachment) {
+          void this.updateComplete.then(() =>
+            this._revealAddedAttachment(addedAttachment)
+          );
+        }
       });
     });
+  }
+
+  /**
+   * Scrolls a newly added tile into view, so a new upload shows even when
+   * the strip already overflows. Focus doesn't move. While focus is in the
+   * strip, the strip doesn't move either, so the focused control stays in
+   * view.
+   */
+  private _revealAddedAttachment(tile: HTMLElement): void {
+    const scrollEl = this._attachmentScrollEl;
+    const attachments = this._assignedAttachmentElements ?? [];
+    if (!scrollEl || !attachments.includes(tile)) {
+      return;
+    }
+    const focused = getActiveElement();
+    const focusInStrip =
+      this._focusedChevronDirection() !== null ||
+      (!!focused && attachments.some((item) => deepContains(item, focused)));
+    if (focusInStrip) {
+      return;
+    }
+    this._scrollAttachmentsTo(
+      this._attachmentOffsetFor(scrollEl, tile, 'nearest'),
+      this._attachmentScrollOffset()
+    );
   }
 
   private _handleAttachmentDismiss(event: Event): void {

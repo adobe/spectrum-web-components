@@ -1730,6 +1730,110 @@ export const AttachmentFocusScrollTest: Story = {
   },
 };
 
+export const AttachmentAddScrollTest: Story = {
+  render: () => '',
+  play: async ({ canvasElement, step }) => {
+    renderMultiAttachmentPromptField(canvasElement);
+
+    const el = await getComponent<PromptField>(
+      canvasElement,
+      'swc-prompt-field'
+    );
+    await el.updateComplete;
+    await new Promise((resolve) => requestAnimationFrame(resolve));
+    await el.updateComplete;
+
+    const scrollEl = el.shadowRoot!.querySelector<HTMLDivElement>(
+      '.swc-PromptField-attachments-scroll'
+    )!;
+    useInstantScroll(scrollEl);
+    const textarea = el.shadowRoot!.querySelector<HTMLTextAreaElement>(
+      '.swc-PromptField-textarea'
+    )!;
+    const tiles = (): HTMLElement[] =>
+      Array.from(el.querySelectorAll<HTMLElement>('[slot="attachment"]'));
+    const createTile = (fileName: string): HTMLElement => {
+      const tile = document.createElement('swc-upload-attachment');
+      tile.slot = 'attachment';
+      tile.setAttribute('type', 'media');
+      tile.toggleAttribute('dismissible', true);
+      const title = document.createElement('span');
+      title.slot = 'title';
+      title.textContent = fileName;
+      tile.append(title);
+      return tile;
+    };
+    // The reveal runs after the strip re-renders, a frame later.
+    const settle = async (): Promise<void> => {
+      await el.updateComplete;
+      await waitForScrollStopped(scrollEl);
+      await el.updateComplete;
+      await waitForScrollStopped(scrollEl);
+    };
+
+    await step(
+      'the first render starts at the start of the strip',
+      async () => {
+        expect(scrollEl.scrollLeft).toBe(0);
+      }
+    );
+
+    await step(
+      'a tile added at the end scrolls into view, and focus stays put',
+      async () => {
+        textarea.focus();
+        const tile = createTile('new-upload.png');
+        el.append(tile);
+        await settle();
+        expect(isTileFullyVisible(el, tile)).toBe(true);
+        expect(getActiveElement()).toBe(textarea);
+      }
+    );
+
+    await step('a tile added at the start scrolls into view', async () => {
+      const tile = createTile('first-upload.png');
+      el.insertBefore(tile, tiles()[0]!);
+      await settle();
+      expect(isTileFullyVisible(el, tile)).toBe(true);
+    });
+
+    await step(
+      'while focus is in the strip, adding a tile does not move the strip',
+      async () => {
+        const focused = tiles()[1]!;
+        focused.focus();
+        await settle();
+        const before = scrollEl.scrollLeft;
+        el.append(createTile('another-upload.png'));
+        await settle();
+        expect(scrollEl.scrollLeft).toBe(before);
+        expect(isTileFullyVisible(el, focused)).toBe(true);
+      }
+    );
+
+    await step(
+      'replacing every tile, as when restoring a draft, does not scroll',
+      async () => {
+        textarea.focus();
+        scrollEl.scrollTo({
+          left: scrollEl.scrollWidth - scrollEl.clientWidth,
+          behavior: 'instant',
+        });
+        await settle();
+        const before = scrollEl.scrollLeft;
+        expect(before, 'sanity check: the strip is scrolled').toBeGreaterThan(
+          0
+        );
+        el.replaceChildren(
+          ...tiles().map((_, index) => createTile(`draft-${index + 1}.png`))
+        );
+        await settle();
+        expect(scrollEl.scrollLeft).toBe(before);
+      }
+    );
+  },
+};
+
 export const SingleAttachmentFocusTest: Story = {
   render: () => '',
   play: async ({ canvasElement, step }) => {
