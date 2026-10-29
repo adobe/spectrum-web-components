@@ -6,8 +6,8 @@
 
 Gen2 package imports now always end in `.js`, and every subpath export points at a file that exists in the published package.
 
-- Barrels are sibling files instead of `index.js` files inside a folder. Import `@adobe/spectrum-wc/badge.js` (or `@adobe/spectrum-wc/components/badge.js`), `@adobe/spectrum-wc/patterns/ai-toolkit/response-status.js`, and `@adobe/spectrum-wc-core/components/badge.js`.
-- Core folders use the same form: `@adobe/spectrum-wc-core/element.js`, `mixins.js`, `utils.js`, `controllers.js`, `directives.js`, `controllers/<name>.js`, and `directives/<name>.js`.
+- Barrels are sibling files instead of `index.js` files inside a folder. Import `@adobe/spectrum-wc/badge.js`, `@adobe/spectrum-wc/patterns/ai-toolkit/response-status.js`, and `@adobe/spectrum-wc-core/components/badge.js`.
+- Core folders use the same form: `@adobe/spectrum-wc-core/element.js`, `mixins.js`, `utils.js`, `controllers.js`, `directives.js`, and one file for each controller or directive, such as `controllers/placement-controller.js` and `directives/pending-spinner.js`.
 - Class files and registration modules keep their paths, for example `@adobe/spectrum-wc/components/badge/Badge.js` and `@adobe/spectrum-wc/components/badge/swc-badge.js`.
 - Extensionless subpaths (such as `@adobe/spectrum-wc/badge` and `@adobe/spectrum-wc-core/element`) and `/index.js` subpaths no longer resolve.
 - Core no longer exports individual files inside its folders (such as `element/define-element.js` or `utils/capitalize.js`); import them from the folder barrel. The internal warning helpers in `element/spectrum-element.js` are no longer public.

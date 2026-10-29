@@ -223,7 +223,7 @@ Import groups are ordered as:
 1. Side-effect imports (e.g., `import './styles.css'`)
 2. External packages (e.g., `import { html } from 'lit'`)
 3. Internal packages (e.g., `import { Button } from '@spectrum-web-components/button'`)
-4. Relative imports (e.g., `import { helper } from './utils'`)
+4. Relative imports (e.g., `import { helper } from './utils.js'`)
 
 ### CSS property ordering
 

@@ -234,7 +234,7 @@ gen2 (planned; see [Architecture](#architecture-core-vs-swc-split)):
 | ------- | ------- | ---- |
 | `@spectrum-web-components/base` | 1.12.4 | 1st-gen: `SpectrumElement`, `SizedMixin`, decorators, `ifDefined`. gen2 equivalents: `SpectrumElement` and `SizedMixin` from `@adobe/spectrum-wc-core`. |
 | `@spectrum-web-components/icon` | 1.12.4 | 1st-gen: checkmark/dash icon CSS. **Dropped**; gen2 renders inline UI icon SVGs. |
-| `@spectrum-web-components/icons-ui` | 1.12.4 | 1st-gen: `sp-icon-checkmark75`–`300`, `sp-icon-dash75`–`300` elements. **Replaced** by gen2 `Checkmark` and `Dash` from [`gen2/packages/swc/components/ui-icons/icon-set/`](../../../../gen2/packages/swc/components/ui-icons/icon-set/index.ts) (already built). Size mapping follows the Spectrum CSS S2 template: `s` → 50, `m` → 75, `l` → 100, `xl` → 200. |
+| `@spectrum-web-components/icons-ui` | 1.12.4 | 1st-gen: `sp-icon-checkmark75`–`300`, `sp-icon-dash75`–`300` elements. **Replaced** by gen2 `Checkmark` and `Dash` from [`gen2/packages/swc/components/ui-icons/icon-set/`](../../../../gen2/packages/swc/components/ui-icons/icon-set.ts) (already built). Size mapping follows the Spectrum CSS S2 template: `s` → 50, `m` → 75, `l` → 100, `xl` → 200. |
 | `@spectrum-web-components/shared` | 1.12.4 | 1st-gen: `Focusable`, used only by `CheckboxBase` for `sp-switch`. **Dropped.** |
 | `SizedMixin` (gen2 core) | already built | `size` with explicit default `m`. |
 | `LabellingMixin` (gen2 core) | already built (text field migration) | `label` slot presence, `renderLabel()` (`<label for>`), `accessible-label`, `accessible-labelledby`, `ariaLabelledByElements` wiring for `accessible-labelledby`, missing-name dev warnings. See Q3, Q13. |
@@ -448,8 +448,8 @@ Follow the [Badge migration reference](../../02_workstreams/02_gen2-component-mi
 
 | Layer    | Path                                         | Contains                                                                                                                                                                                                                                          |
 | -------- | -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Core** | `gen2/packages/core/components/checkbox/` | `Checkbox.base.ts`, `Checkbox.types.ts`, `index.ts`. Composes `SizedMixin`, `LabellingMixin`, `FieldDescriptionMixin`; owns `formAssociated`, `attachInternals()`, `FieldAssociationController`, validity, reset/restore callbacks, `checked`, `indeterminate`, and `fieldStatus` state, and `change` dispatch. Overrides `roleElement` to return the inner input. No rendering. |
-| **SWC**  | `gen2/packages/swc/components/checkbox/`  | `Checkbox.ts`, `checkbox.css`, `swc-checkbox.ts`, `index.ts`, `checkbox.mdx`, `migration-guide.mdx`, stories, tests, and the S2 rendering/styling for `swc-checkbox`.                                                                                                            |
+| **Core** | `gen2/packages/core/components/checkbox/` | `Checkbox.base.ts`, `Checkbox.types.ts`, plus the `core/components/checkbox.ts` barrel. Composes `SizedMixin`, `LabellingMixin`, `FieldDescriptionMixin`; owns `formAssociated`, `attachInternals()`, `FieldAssociationController`, validity, reset/restore callbacks, `checked`, `indeterminate`, and `fieldStatus` state, and `change` dispatch. Overrides `roleElement` to return the inner input. No rendering. |
+| **SWC**  | `gen2/packages/swc/components/checkbox/`  | `Checkbox.ts`, `checkbox.css`, `swc-checkbox.ts`, the `swc/components/checkbox.ts` barrel, `checkbox.mdx`, `migration-guide.mdx`, stories, tests, and the S2 rendering/styling for `swc-checkbox`.                                                                                                            |
 
 Planned rendering shape:
 
@@ -748,7 +748,7 @@ A2–A4 have no tickets by decision (Q11): they are on-request or follow from sh
 - [React Spectrum S2 Checkbox docs](https://react-spectrum.adobe.com/Checkbox)
 - [React Spectrum S2 Checkbox source](https://github.com/adobe/react-spectrum/blob/main/packages/%40react-spectrum/s2/src/Checkbox.tsx)
 - [Spectrum CSS `spectrum-two`, `components/checkbox/index.css`](https://github.com/adobe/spectrum-css/blob/spectrum-two/components/checkbox/index.css): reviewed via sibling checkout, along with `components/checkbox/stories/template.js`
-- gen2 UI icons: [`Checkmark` and `Dash`](../../../../gen2/packages/swc/components/ui-icons/icon-set/index.ts)
+- gen2 UI icons: [`Checkmark` and `Dash`](../../../../gen2/packages/swc/components/ui-icons/icon-set.ts)
 - [Figma `S2 / Web` checkbox component frame](https://www.figma.com/design/xHBWBBIe2eo5vwoCeNrC4Q/S2---Web?node-id=9961-2510): size × selection × emphasis × state × text wrap
 - [Badge migration reference](../../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md#reference-badge-migration)
 - Epic: SWC-2340, Checkbox migration epic

@@ -173,6 +173,7 @@ class MyTextfield extends DisabledMixin(SpectrumElement) {
 
 ```
 gen2/packages/core/
+├── controllers.ts                barrel
 ├── controllers/
 │   ├── focus-group-navigation-controller/
 │   │   ├── src/focus-group-navigation-controller.ts   NEW
@@ -182,17 +183,16 @@ gen2/packages/core/
 │   ├── focus-group-navigation-controller.ts           NEW (re-export entry)
 │   ├── slot-presence.ts          NEW (converted from mixin)
 │   ├── slot-text.ts              NEW (converted from mixin)
-│   ├── language-resolution.ts    existing
-│   └── index.ts
+│   └── language-resolution.ts    existing
+├── mixins.ts                     barrel
 ├── mixins/
 │   ├── disabled-mixin.ts         NEW
-│   ├── sized-mixin.ts            existing
-│   └── index.ts
+│   └── sized-mixin.ts            existing
+├── utils.ts                      barrel
 ├── utils/
 │   ├── focusable-selectors.ts    NEW (migrated + simplified)
 │   ├── first-focusable-in.ts     NEW (migrated, low priority)
-│   ├── get-active-element.ts     NEW (migrated)
-│   └── index.ts
+│   └── get-active-element.ts     NEW (migrated)
 └── element/
     └── spectrum-element.ts       existing (cleanup only)
 ```

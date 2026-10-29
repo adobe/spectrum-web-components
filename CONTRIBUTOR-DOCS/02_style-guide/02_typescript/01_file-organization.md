@@ -57,10 +57,9 @@ import { when } from 'lit/directives/when.js';
 Imports from `@adobe/spectrum-wc` or `@spectrum-web-components`.
 
 ```ts
+import { SlotPresenceController } from '@adobe/spectrum-wc-core/controllers/slot-presence-controller.js';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element.js';
 import { SizedMixin } from '@adobe/spectrum-wc-core/mixins.js';
-import { ObserveSlotPresence } from '@adobe/spectrum-wc-core/mixins/observe-slot-presence.js';
-import { ObserveSlotText } from '@adobe/spectrum-wc-core/mixins/observe-slot-text.js';
 ```
 
 ### Group 3: Side-effect imports
@@ -118,10 +117,11 @@ import { PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
 // Group 2: Internal packages
+import { SlotPresenceController } from '@adobe/spectrum-wc-core/controllers/slot-presence-controller.js';
+import { SlotTextController } from '@adobe/spectrum-wc-core/controllers/slot-text-controller.js';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element.js';
 import { SizedMixin } from '@adobe/spectrum-wc-core/mixins.js';
-import { ObserveSlotPresence } from '@adobe/spectrum-wc-core/mixins/observe-slot-presence.js';
-import { ObserveSlotText } from '@adobe/spectrum-wc-core/mixins/observe-slot-text.js';
+import { validateEnum, warnIf } from '@adobe/spectrum-wc-core/utils.js';
 
 // Group 4: Relative imports
 import {

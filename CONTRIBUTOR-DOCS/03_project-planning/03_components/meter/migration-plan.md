@@ -148,8 +148,8 @@ gen2 equivalents:
 
 | 1st-gen import | gen2 equivalent | Status |
 | --- | --- | --- |
-| `SpectrumElement` from `@spectrum-web-components/base` | `@adobe/spectrum-wc-core/element/index.js` | Available |
-| `SizedMixin` from `@spectrum-web-components/base` | `@adobe/spectrum-wc-core/mixins/index.js` | Available |
+| `SpectrumElement` from `@spectrum-web-components/base` | `@adobe/spectrum-wc-core/element.js` | Available |
+| `SizedMixin` from `@spectrum-web-components/base` | `@adobe/spectrum-wc-core/mixins.js` | Available |
 | `LanguageResolutionController` from `reactive-controllers` | `@adobe/spectrum-wc-core/controllers/language-resolution.js` | Available |
 | `getLabelFromSlot` from `shared` | Not needed in gen2 — the named `label` slot with `aria-labelledby` requires no text extraction | N/A |
 | `ObserveSlotText` from `shared` | Not needed in gen2 — `label`-slot presence tracked via `slotchange` in `LinearProgressMixin`; no text extraction | N/A |
