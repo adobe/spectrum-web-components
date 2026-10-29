@@ -1,5 +1,35 @@
 # @adobe/spectrum-wc
 
+## 2.0.0-beta.7
+
+### Minor Changes
+
+- **card**:
+  - [#6767](https://github.com/adobe/spectrum-web-components/pull/6767) [`258169d`](https://github.com/adobe/spectrum-web-components/commit/258169d6267ef4ba804986ee757b43a383b7afe5) Thanks [@aramos-adobe](https://github.com/aramos-adobe)! - **feat(card):** `<swc-card>` now exposes `--swc-card-base-grid-template-rows` to override the row track sizes of its media, content, and footer grid areas. Defaults to `auto 1fr auto`.
+
+- **upload-attachment**:
+  - [#6767](https://github.com/adobe/spectrum-web-components/pull/6767) [`258169d`](https://github.com/adobe/spectrum-web-components/commit/258169d6267ef4ba804986ee757b43a383b7afe5) Thanks [@aramos-adobe](https://github.com/aramos-adobe)! - **feat(upload-attachment):** `type="media"` now composes [`swc-card`](../gen2/packages/swc/components/card) (`variant="quiet"`) internally instead of hand-rolled surface markup, reusing its `preview`/`media` slot and grid machinery. The public slot API (`thumbnail`, `badge`, `title`, `subtitle`, `actions`) is unchanged.
+
+    Added:
+    - `progress` (0-100): shows a `swc-progress-circle` overlay on the `type="media"` preview while an upload is in flight. Hidden when unset or at 100 (complete); the `thumbnail` slot is hidden while loading so the overlay reads against a plain background instead of stacking on the image. The overlay itself is delayed by 1 second after `progress` is first set, so a fast upload doesn't flash the loading state.
+    - `size` (`m`/`l`, default `m`): 64px vs. 96px tile for `type="media"`. Has no effect on `type="card"`.
+
+    Removed/renamed custom properties (`type="media"` sizing is now driven by `size` instead):
+    - `--swc-upload-attachment-preview-size` removed; use `size="m"`/`size="l"`.
+    - `--swc-upload-attachment-card-thumbnail-inline-size` and `--swc-upload-attachment-card-thumbnail-block-size` merged into `--swc-upload-attachment-card-thumbnail-size`.
+    - `--swc-upload-attachment-dismiss-icon-inline-size` and `--swc-upload-attachment-dismiss-icon-block-size` merged into `--swc-upload-attachment-dismiss-icon-size`.
+
+    Also composes [`swc-asset`](../gen2/packages/swc/components/asset) into the `thumbnail` slot in docs/examples for image loading, fit, and background handling, and documents that `badge` should only be used at `size="l"` and above (it crowds the default 64px `size="m"` tile).
+
+    Added VRT coverage (`test/vrt/upload-attachment.vrt.ts`, `test/vrt/upload-attachment-custom-properties.vrt.ts`) for both types, both sizes, the badge and progress overlays, title truncation/subtitle overflow, forced `:focus-visible`, forced colors, and CJK text.
+
+### Patch Changes
+
+- **button, close-button**:
+  - [#6846](https://github.com/adobe/spectrum-web-components/pull/6846) [`5126fec`](https://github.com/adobe/spectrum-web-components/commit/5126fecfe42dc90fec0f3438a2f5f3873fc6c67f) Thanks [@rise-erpelding](https://github.com/rise-erpelding)! - **fix(button, close-button):** Fixed static-white and static-black secondary and outline `swc-button` labels and `swc-close-button` icons to use opaque white or black in default, hover, pressed, and focus-visible states, improving contrast and keeping their colors consistent. Border, background, focus-indicator, and disabled-state colors are unchanged.
+
+- [#6880](https://github.com/adobe/spectrum-web-components/pull/6880) [`e9fd2c0`](https://github.com/adobe/spectrum-web-components/commit/e9fd2c0929f928adce0d65a8588ed355b7d251f4) Thanks [@miwha-adobe](https://github.com/miwha-adobe)! - Remove duplicate CSS custom property entries from the published Custom Elements Manifest for Button, Illustrated message, Tab, and Tabs so API reference tables show each property once. Component runtime behavior does not change.
+
 ## 2.0.0-beta.6
 
 ### Minor Changes
