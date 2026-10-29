@@ -58,7 +58,7 @@ Review these sources before filling out the plan:
 - The Phase 1 workflow guidance in **[Phase 1: Preparation](../../../CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-1-preparation)**
 - The gen2 migration status table in `CONTRIBUTOR-DOCS/03_project-planning/02_workstreams/02_gen2-component-migration/01_status.md`
 - The component's rendering and styling analysis doc in `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/`
-- The component's accessibility migration analysis doc in `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/`, if available
+- The component's component accessibility specification in `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/`, if available
 - The 1st-gen source, tests, README, and any shared mixins or helpers it depends on
 - Relevant gen1 bug tickets and prior migration decisions
 - Relevant Figma and React Spectrum references for naming, variants, and expected behavior
@@ -91,7 +91,7 @@ Use the status table, existing component analyses, and source relationships to m
 
 Do not jump straight to in-scope work without first inventorying what exists today or is expected in gen2.
 
-Treat the accessibility migration analysis as a separate-workstream input. If it is missing, do not create it as part of `migration-prep`. Instead, ask the user to provide the existing analysis, or proceed only with clearly provisional accessibility-dependent notes if the user explicitly wants that.
+Treat the component accessibility specification as a separate-workstream input. If it is missing, do not create it as part of `migration-prep`. Instead, ask the user to provide the existing analysis, or proceed only with clearly provisional accessibility-dependent notes if the user explicitly wants that.
 
 ### Generating a table of open gen1 issues
 
@@ -107,7 +107,7 @@ In the section titled "Open gen1 issues" in the [assets/migration-prep-template.
   - **Labels:** Do **not** list issues that carry Jira labels **`a11y`** or **`gen2`**. This section tracks **gen1** (`sp-*`) issues only, not gen2 tickets or a11y issues for the gen1 component.
   - **Resolution:** Do **not** list issues that have been resolved, ie with a Jira Workflow Status of "Done".
   - **Issue types:** Do **not** list issues of the type Epic or Initiative. Track those in Jira or program views, not in per-component tables.
-- **Reference:** See the section "## Related 1st-gen accessibility (Jira)" in **`avatar/rendering-and-styling-migration-analysis.md`** (and sibling component docs) for a full example table. This example only includes accessibility issues. It should follow the same format, but document non-accessibility gen1 issues.
+- **Reference:** See the section "## Related 1st-gen accessibility (Jira)" in **`avatar/component-accessibility-specification.md`** (and sibling component docs) for a full example table. This example only includes accessibility issues. It should follow the same format, but document non-accessibility gen1 issues.
 
 ## Readiness threshold
 
@@ -130,7 +130,7 @@ Critical inputs:
 - Figma PNG reference from **`S2 / Web`**, copied from the _Component_ frame that includes the variants
 - Epic number
 - Ticket numbers and summaries for any known breaking changes, or copied ticket descriptions the agent can evaluate
-- Accessibility migration analysis, if not already available
+- Component accessibility specification, if not already available
 - Confirmation or decision input when a dependency, extension, or shared-base relationship could materially change migration order, API shape, or shared-base strategy
 
 Do not wait until the end of the plan to summarize these gaps. Ask for them early and directly.
@@ -141,7 +141,7 @@ If a critical input is missing:
 - Offer a concrete fallback the user can provide immediately
 - Continue only with clearly labeled provisional scaffolding, not with a review-ready recommendation
 
-Do not resolve a missing accessibility migration analysis by running the accessibility-migration-analysis skill from within this skill. That analysis belongs to a separate workstream and review path.
+Do not resolve a missing component accessibility specification by running the component-accessibility-specification skill from within this skill. That analysis belongs to a separate workstream and review path.
 
 ## Critical missing-input handling
 
@@ -152,7 +152,7 @@ When a critical input is missing, decide first whether it is materially blocking
 Materially blocking inputs:
 
 - Figma PNG visual references from **`S2 / Web`**, copied from the _Component_ frame that includes the variants
-- accessibility analysis
+- component accessibility specification
 - dependency-order or shared-base decisions
 - breaking-change ticket context
 
@@ -199,16 +199,16 @@ Please provide these to continue:
 
 1. Approved visual reference
    Send a PNG copied from the internal Figma file `S2 / Web`, using `Copy as PNG` on the _Component_ frame that includes the variants, so I can validate visual API and supported presentation modes.
-2. Accessibility migration analysis
+2. Component accessibility specification
    Send the analysis if available, or confirm that I should proceed provisionally and leave accessibility-dependent recommendations unresolved.
 3. Breaking-change ticket context
    Send ticket numbers and summaries, or paste the ticket descriptions here and I can assess likely impact from that text.
 
 If you want to proceed provisionally instead, tell me that explicitly and I’ll keep the unresolved areas clearly marked."
 
-For accessibility analysis specifically:
+For component accessibility specifications specifically:
 
-- ask the user to provide the existing accessibility migration analysis if it exists
+- ask the user to provide the existing component accessibility specification if it exists
 - otherwise ask whether they want to pause until that separate workstream is completed, or proceed with accessibility-dependent recommendations explicitly marked as provisional
 
 Do not generate that analysis inside `migration-prep`.
@@ -345,7 +345,7 @@ If the plan is provisional because critical inputs are missing, end with explici
 Example resume hooks:
 
 - "When you have the Figma PNG from `S2 / Web` copied from the _Component_ frame with the variants, send it and I’ll update the visual API and supported presentation modes."
-- "When you have the accessibility migration analysis, send it and I’ll tighten the semantics, state, and testing recommendations."
+- "When you have the component accessibility specification, send it and I’ll tighten the semantics, state, and testing recommendations."
 - "When you have the Epic number, send it and I’ll finalize the header and references."
 - "If you can paste the breaking-change ticket descriptions, I can evaluate likely impact and update the plan’s migration-risk guidance."
 - "If there is already a team decision on the shared dependency / extension relationship, send it and I’ll update the sequencing and architecture sections accordingly."
