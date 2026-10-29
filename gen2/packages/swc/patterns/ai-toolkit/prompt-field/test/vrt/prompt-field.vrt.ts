@@ -56,7 +56,8 @@ type AttachmentKind =
   | 'cards'
   | 'media'
   | 'mediaBadge'
-  | 'manyMedia';
+  | 'manyMedia'
+  | 'manyCards';
 
 // Every action button (upload, send, and both attachment-scroll chevrons),
 // forced together so one snapshot captures all their hover/focus colors ahead
@@ -105,6 +106,7 @@ const mediaAttachment = (id: number, alt: string, badge?: string) => html`
     <swc-asset slot="thumbnail">
       <img src=${THUMBNAIL_IMAGES[id]} alt=${alt} />
     </swc-asset>
+    <span slot="title">${alt}</span>
     ${badge
       ? html`
           <swc-badge slot="badge" size="s" subtle>${badge}</swc-badge>
@@ -137,6 +139,14 @@ const attachmentSlot = (kind: AttachmentKind) => {
         ${Array.from({ length: 9 }, (_, i) =>
           mediaAttachment([64, 56, 823][i % 3], `Frame ${i + 1}`)
         )}
+      `;
+    // Card tiles overflow too; the chevrons center on the taller card row.
+    case 'manyCards':
+      return html`
+        ${cardAttachment('Brand guidelines', 'PDF')}
+        ${cardAttachment('Q2 metrics draft', 'XLSX')}
+        ${cardAttachment('Launch brief', 'DOCX')}
+        ${cardAttachment('Campaign timeline', 'PDF')}
       `;
     default:
       return nothing;
@@ -174,7 +184,10 @@ const renderField = ({
   fieldHover = false,
   fieldFocus = false,
 }: FieldCase) => {
-  const constrained = value === LONG_PROMPT || attachment === 'manyMedia';
+  const constrained =
+    value === LONG_PROMPT ||
+    attachment === 'manyMedia' ||
+    attachment === 'manyCards';
   const width = constrained
     ? 'inline-size: 380px;'
     : 'inline-size: 800px; max-inline-size: 90vw;';
@@ -247,7 +260,14 @@ const ANATOMY_PERMUTATIONS = createPermutations([
   {
     group: ['Attachments'],
     value: [SHORT_PROMPT],
-    attachment: ['card', 'cards', 'media', 'mediaBadge', 'manyMedia'],
+    attachment: [
+      'card',
+      'cards',
+      'media',
+      'mediaBadge',
+      'manyMedia',
+      'manyCards',
+    ],
   },
   // manyMedia overflows the strip so the scroll chevrons render and can be
   // forced alongside the upload/send buttons.
@@ -291,7 +311,7 @@ const SIZE_PERMUTATIONS = createPermutations([
     group: ['Small size — attachments'],
     size: ['s'],
     value: [SHORT_PROMPT],
-    attachment: ['card', 'media', 'manyMedia'],
+    attachment: ['card', 'media', 'manyMedia', 'manyCards'],
   },
   {
     group: ['Small size — buttons hover'],
