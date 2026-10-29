@@ -10,6 +10,48 @@
  * governing permissions and limitations under the License.
  */
 
+/* Sidebar icons use Spectrum visual colors. Selected items keep Storybook's
+   white icons for contrast against the accent background. */
+.sidebar-item:not([data-selected="true"]) {
+  svg[type="group"] {
+    color: var(--swc-indigo-visual-color);
+  }
+
+  svg[type="component"] {
+    color: var(--swc-accent-visual-color);
+  }
+
+  svg[type="document"] {
+    color: var(--swc-orange-visual-color);
+  }
+
+  svg[type="story"] {
+    color: var(--swc-seafoam-visual-color);
+  }
+}
+
+/* Overview pages use their own icon. manager.tsx sets the icon image. */
+.sidebar-item[data-item-id$="overview--docs"] svg[type="document"] {
+  background-color: currentcolor;
+  mask: var(--_swc-storybook-overview-icon) center / contain no-repeat;
+
+  use {
+    display: none;
+  }
+}
+
+/* Storybook darkens the selected item's background in dark mode; use the
+   Spectrum accent background in both themes instead. */
+.sidebar-item[data-selected="true"] {
+  background: var(--swc-accent-background-color-default) !important;
+}
+
+/* Storybook offsets the sidebar icons for its default font. Adobe Clean sits
+   higher in the line box, so move the icons up to center them on the text. */
+.sidebar-item div:has(> svg[type]) {
+  margin-block-start: 1px;
+}
+
 button[data-action="collapse-root"] {
   margin-block-start: 0;
   margin-block-end: 0;
@@ -54,4 +96,10 @@ button[data-action="collapse-root"] {
    of the bar, so hide it whenever nothing comes before it. */
 .sb-bar [role="toolbar"] > div > span:first-child:empty {
   display: none;
+}
+
+/* Storybook's layout sets `color-scheme: light dark`, which makes tokens follow
+   the OS instead of the Theme toolbar's `.swc-theme--*` class on the root. */
+#root > div {
+  color-scheme: inherit;
 }

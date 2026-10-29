@@ -13,12 +13,25 @@
 
 import { GithubIcon, OutlineIcon } from '@storybook/icons';
 import { addons, types, useGlobals } from '@storybook/manager-api';
-import { create } from '@storybook/theming';
 import React from 'react';
 import { Button, ToggleButton } from 'storybook/internal/components';
+import { GLOBALS_UPDATED, SET_GLOBALS } from 'storybook/internal/core-events';
+import type { ThemeVars } from 'storybook/theming';
 
+import { Icon_FileText } from '../../icons/src/FileText.js';
+import { Icon_Folder } from '../../icons/src/Folder.js';
+import { Icon_InfoCircle } from '../../icons/src/InfoCircle.js';
+import { Icon_Play } from '../../icons/src/Play.js';
+import { Icon_ViewGrid } from '../../icons/src/ViewGrid.js';
 import packageJson from '../package.json';
+import logoDark from './assets/logo-dark.svg';
 import logo from './assets/logo.svg';
+import {
+  applyThemeClass,
+  onPreferredColorSchemeChange,
+  resolveColorScheme,
+} from './utils/color-scheme.js';
+import { createSpectrumTheme } from './utils/spectrum-theme.js';
 
 import '../stylesheets/swc.css';
 import '../stylesheets/typography.css';
@@ -111,28 +124,95 @@ if (root) {
   root.classList.add('spectrum', 'spectrum--light', 'spectrum--medium');
 }
 
+const createManagerTheme = (theme: string): ThemeVars => {
+  const scheme = resolveColorScheme(theme);
+
+  return createSpectrumTheme(scheme, {
+    brandTitle: 'Adobe | Spectrum Web Components',
+    brandUrl: '?path=/docs/learn-about-swc-overview--docs',
+    brandImage: scheme === 'dark' ? logoDark : logo,
+    brandTarget: '_self',
+
+    inputBorderRadius: 4,
+  });
+};
+
+// The Theme toolbar global themes the Storybook UI as well as the stories.
+// Read it from the URL so a non-default theme doesn't flash while the preview
+// loads; `light` matches `initialGlobals` in preview.ts.
+const initialTheme =
+  /(?:^|;)theme:(\w+)/.exec(
+    new URLSearchParams(window.location.search).get('globals') ?? ''
+  )?.[1] ?? 'light';
+
+addons.register('swc/theme', (api) => {
+  let theme = initialTheme;
+
+  const applyTheme = (): void => {
+    applyThemeClass(document.documentElement, theme);
+    // Unlike `addons.setConfig()`, `setOptions()` doesn't reset the layout.
+    api.setOptions({ theme: createManagerTheme(theme) });
+  };
+
+  const onGlobals = ({
+    globals,
+    userGlobals = globals,
+  }: {
+    globals: Record<string, string>;
+    userGlobals?: Record<string, string>;
+  }): void => {
+    if (userGlobals.theme && userGlobals.theme !== theme) {
+      theme = userGlobals.theme;
+      applyTheme();
+    }
+  };
+
+  api.on(SET_GLOBALS, onGlobals);
+  api.on(GLOBALS_UPDATED, onGlobals);
+  // `adaptive` follows the OS color scheme.
+  onPreferredColorSchemeChange(applyTheme);
+});
+
+applyThemeClass(document.documentElement, initialTheme);
+
+// Storybook draws sidebar icons from `<symbol id="icon--{type}">` elements.
+// `<use>` resolves the first element with a matching ID, so prepending these
+// symbols swaps in Spectrum workflow icons.
+const SIDEBAR_ICONS = {
+  group: Icon_Folder,
+  component: Icon_ViewGrid,
+  document: Icon_FileText,
+  story: Icon_Play,
+};
+
+const sidebarIcons = document.createElementNS(
+  'http://www.w3.org/2000/svg',
+  'svg'
+);
+sidebarIcons.setAttribute('aria-hidden', 'true');
+sidebarIcons.setAttribute('width', '0');
+sidebarIcons.setAttribute('height', '0');
+sidebarIcons.style.position = 'absolute';
+sidebarIcons.innerHTML = Object.entries(SIDEBAR_ICONS)
+  .map(([type, icon]) =>
+    icon()
+      .replace('<svg', `<symbol id="icon--${type}"`)
+      .replace('</svg>', '</symbol>')
+  )
+  .join('');
+document.body.prepend(sidebarIcons);
+
+// Storybook picks sidebar icons by node type only, so overview pages swap in
+// their own icon through a CSS mask (see manager.css).
+document.documentElement.style.setProperty(
+  '--_swc-storybook-overview-icon',
+  `url("data:image/svg+xml,${encodeURIComponent(Icon_InfoCircle())}")`
+);
+
 addons.setConfig({
   toolbar: {
     'storybook/outline': { hidden: true },
   },
 
-  theme: create({
-    base: 'light',
-
-    brandTitle: 'Adobe | Spectrum Web Components',
-    brandUrl: '?path=/docs/learn-about-swc-overview--docs',
-    brandImage: logo,
-    brandTarget: '_self',
-
-    fontBase: 'var(--swc-sans-font-family-stack)',
-
-    // SB did not accept the var here
-    textColor: 'rgb(34 34 34)',
-
-    // Only applies to "Playground" background
-    appPreviewBg:
-      'var( --swc-gray-25, light-dark(rgb(255 255 255), rgb(17 17 17)))',
-
-    inputBorderRadius: 4,
-  }),
+  theme: createManagerTheme(initialTheme),
 });

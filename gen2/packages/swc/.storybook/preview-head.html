@@ -10,6 +10,31 @@
 <meta property="og:site_name" content="Adobe | Spectrum Web Components" />
 <meta property="og:type" content="website" />
 
+<!-- Apply the Theme toolbar value from the URL before the stylesheets and
+     Storybook load, so a non-default theme doesn't flash light first.
+     `withContext` and `SpectrumDocsContainer` keep the class in sync after. -->
+<script>
+  (() => {
+    const globals = new URLSearchParams(window.location.search).get('globals');
+    const theme = /(?:^|;)theme:(light|dark|adaptive)(?:;|$)/.exec(
+      globals ?? ''
+    )?.[1];
+    if (theme) {
+      document.documentElement.classList.add(`swc-theme--${theme}`);
+    }
+  })();
+</script>
+<style>
+  /* Mirrors swc.css, which loads later with the preview module */
+  :root.swc-theme--dark {
+    color-scheme: dark;
+  }
+
+  :root.swc-theme--adaptive {
+    color-scheme: light dark;
+  }
+</style>
+
 <!-- This preconnect opens the connection for typekit to more quickly load fonts -->
 <link rel="preconnect" href="https://use.typekit.net" crossorigin />
 <link rel="dns-prefetch" href="https://use.typekit.net" />
@@ -126,11 +151,11 @@
       white-space: nowrap;
       border-radius: 3px;
       font-size: 12px;
-      border: 1px solid rgb(147, 158, 172);
+      border: 1px solid var(--swc-gray-400);
       border-inline-end-width: 2px;
       border-block-end-width: 2px;
-      color: rgba(46, 51, 56, 0.9);
-      background-color: rgb(246, 249, 252);
+      color: var(--swc-neutral-content-color-default);
+      background-color: var(--swc-gray-75);
       font-family:
         ui-monospace, Menlo, Monaco, 'Roboto Mono', 'Oxygen Mono',
         'Ubuntu Monospace', 'Source Code Pro', 'Droid Sans Mono', 'Courier New',
@@ -145,6 +170,13 @@
       font-size: 0.88em !important;
     }
 
+    /* Inline code uses Storybook's palette; use Spectrum tokens instead */
+    :not(pre) > code:not(.swc-Code) {
+      color: var(--swc-code-color);
+      background-color: var(--swc-gray-75);
+      border-color: var(--swc-gray-200);
+    }
+
     #stories,
     .sbdocs-content h2:not(.sbdocs-subtitle) {
       font-size: var(--swc-heading-size-l) !important;
@@ -154,8 +186,8 @@
       padding: 0px 0px 4px;
       cursor: text;
       position: relative;
-      color: rgb(46, 52, 56);
-      border-bottom: 1px solid rgba(38, 85, 115, 0.15);
+      color: var(--swc-heading-color);
+      border-bottom: 1px solid var(--swc-gray-200);
       letter-spacing: unset;
       line-height: unset;
     }
@@ -177,6 +209,30 @@
     [data-section='upcoming'] {
       margin-block-end: 3.5rem;
     }
+  }
+
+  /* Storybook's loading placeholders are hard-coded white. `Canvas` follows
+     the color scheme until the tokens load. */
+  .sb-preparing-story,
+  .sb-preparing-docs,
+  .sb-previewBlock,
+  .sb-argstableBlock-body td {
+    background: var(--swc-background-base-color, Canvas);
+  }
+
+  .sb-previewBlock_icon,
+  .sb-argstableBlock th span,
+  .sb-argstableBlock td span,
+  .sb-argstableBlock-body button {
+    background-color: var(--swc-gray-200, GrayText);
+  }
+
+  .sb-previewBlock {
+    border-color: var(--swc-gray-200, GrayText);
+  }
+
+  .sb-argstableBlock-body tr:not(:first-child) {
+    border-top-color: var(--swc-gray-200, GrayText);
   }
 
   /* Ensure an adaptive-capable background */
@@ -201,13 +257,53 @@
     width: 20rem !important;
     nav {
       width: auto;
-      max-width: 15rem !important;
+      max-width: 17rem !important;
       font-size: 0.75rem !important;
     }
   }
 
   .toc-list-item.is-active-li > a {
-    color: rgb(2, 101, 220) !important;
+    color: var(--swc-accent-content-color-default) !important;
+  }
+
+  /* Give table of contents links targets of at least 24px (WCAG 2.5.8). The
+     inline padding keeps the focus ring off the text, and the negative start
+     margin keeps the text aligned with the rails. The end margin keeps the
+     ring inside the table of contents, which clips its overflow. */
+  .sbdocs-toc--custom .toc-list-item {
+    padding-block: 0 !important;
+    font-size: var(--swc-font-size-100) !important;
+    line-height: var(--swc-line-height-100);
+  }
+
+  .sbdocs-toc--custom .toc-link {
+    display: flex;
+    align-items: center;
+    min-block-size: 24px;
+    padding-inline: 6px;
+    margin-inline: -6px var(--swc-focus-indicator-thickness);
+    border-radius: var(--swc-corner-radius-100);
+  }
+
+  .sbdocs-toc--custom .toc-link:focus-visible {
+    outline: var(--swc-focus-indicator-thickness) solid
+      var(--swc-focus-indicator-color);
+    outline-offset: 0;
+  }
+
+  /* Storybook draws the table of contents rails with its own palette */
+  .sbdocs-toc--custom .toc-list {
+    border-left-color: var(--swc-gray-200) !important;
+  }
+
+  .sbdocs-toc--custom .toc-list-item::before {
+    border-left-color: var(--swc-accent-content-color-default) !important;
+  }
+
+  /* Storybook colors links with the accent background token, which is too
+     low-contrast for text on dark backgrounds. */
+  .sbdocs.sbdocs-a {
+    color: var(--swc-accent-content-color-default);
   }
 
   .sbdocs-wrapper {
@@ -234,7 +330,7 @@
     }
 
     sp-accordion-item {
-      border-block-end: 1px solid rgba(38, 85, 115, 0.15) !important;
+      border-block-end: 1px solid var(--swc-gray-200) !important;
     }
   }
 
