@@ -95,6 +95,14 @@
       "types": "./dist/components/card/index.d.ts",
       "import": "./dist/components/card/index.js"
     },
+    "./components/checkbox": {
+      "types": "./dist/components/checkbox/index.d.ts",
+      "import": "./dist/components/checkbox/index.js"
+    },
+    "./components/checkbox/index.js": {
+      "types": "./dist/components/checkbox/index.d.ts",
+      "import": "./dist/components/checkbox/index.js"
+    },
     "./components/color-handle": {
       "types": "./dist/components/color-handle/index.d.ts",
       "import": "./dist/components/color-handle/index.js"
@@ -500,6 +508,12 @@
       ],
       "components/card/index.js": [
         "dist/components/card/index.d.ts"
+      ],
+      "components/checkbox": [
+        "dist/components/checkbox/index.d.ts"
+      ],
+      "components/checkbox/index.js": [
+        "dist/components/checkbox/index.d.ts"
       ],
       "components/color-handle": [
         "dist/components/color-handle/index.d.ts"
