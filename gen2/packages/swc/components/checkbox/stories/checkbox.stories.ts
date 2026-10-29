@@ -13,7 +13,10 @@
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import { CHECKBOX_VALID_SIZES } from '@adobe/spectrum-wc-core/components/checkbox';
+import {
+  CHECKBOX_STATUSES,
+  CHECKBOX_VALID_SIZES,
+} from '@adobe/spectrum-wc-core/components/checkbox';
 
 import '@adobe/spectrum-wc/components/checkbox/swc-checkbox.js';
 
@@ -29,6 +32,13 @@ argTypes.size = {
   control: { type: 'select' },
   options: CHECKBOX_VALID_SIZES,
 };
+
+argTypes['field-status'] = {
+  ...argTypes['field-status'],
+  control: { type: 'select' },
+  options: [undefined, ...CHECKBOX_STATUSES],
+};
+args['field-status'] = undefined;
 
 /**
  * A checkbox selects or marks an item, or gives consent. Each checkbox is an

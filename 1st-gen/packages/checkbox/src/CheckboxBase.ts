@@ -13,6 +13,12 @@ import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 
 import { CheckboxMixin } from './CheckboxMixin.js';
 
+/**
+ * @deprecated The `CheckboxBase` export is deprecated and will be removed in a
+ * future release.
+ */
+// No runtime warning: `sp-switch` extends this class on every instance, so a
+// warning could not single out consumer code.
 export class CheckboxBase extends CheckboxMixin(Focusable) {
   public override get focusElement(): HTMLElement {
     return this.inputElement;

@@ -109,7 +109,7 @@ const dashIcon = {
 /**
  * @element sp-checkbox
  * @slot - content to display as the label for the Checkbox
- * @fires change - Announces a change in the `checked` property of a Checkbox
+ * @fires change - Announces a change in the `checked` property of a Checkbox. Canceling it is deprecated and will be removed in a future release; cancel the `click` event instead.
  */
 export class Checkbox extends SizedMixin(CheckboxMixin(SpectrumElement), {
   noDefaultSize: true,
@@ -121,6 +121,9 @@ export class Checkbox extends SizedMixin(CheckboxMixin(SpectrumElement), {
 
   /**
    * Disable this control. It will not receive focus or events
+   *
+   * @deprecated The `disabled` attribute is deprecated and will be removed in
+   * a future release.
    */
   @property({ type: Boolean, reflect: true })
   public disabled = false;
@@ -128,8 +131,25 @@ export class Checkbox extends SizedMixin(CheckboxMixin(SpectrumElement), {
   @property({ type: Boolean, reflect: true })
   public indeterminate = false;
 
+  /**
+   * @deprecated The `invalid` attribute is deprecated and will be removed in
+   * a future release.
+   */
   @property({ type: Boolean, reflect: true })
   public invalid = false;
+
+  /**
+   * @deprecated The `readonly` attribute is deprecated and will be removed in
+   * a future release.
+   */
+  declare public readonly: boolean;
+
+  /**
+   * @deprecated The `inputElement` property is deprecated and will be removed
+   * in a future release.
+   */
+  // No runtime warning: the component reads this internally on every change.
+  declare public inputElement: HTMLInputElement;
 
   @property({ type: Boolean, reflect: true })
   public emphasized = false;
@@ -158,6 +178,11 @@ export class Checkbox extends SizedMixin(CheckboxMixin(SpectrumElement), {
     this.inputElement?.click();
   }
 
+  /**
+   * @deprecated The `handleChange()` method is deprecated and will be removed
+   * in a future release.
+   */
+  // No runtime warning: the component calls this internally on every change.
   public override handleChange(): void {
     this.indeterminate = false;
     super.handleChange();
@@ -180,6 +205,18 @@ export class Checkbox extends SizedMixin(CheckboxMixin(SpectrumElement), {
 
   protected override updated(changes: PropertyValues): void {
     super.updated(changes);
+    if (window.__swc?.DEBUG) {
+      for (const attribute of ['disabled', 'invalid', 'readonly'] as const) {
+        if (changes.has(attribute) && this[attribute]) {
+          window.__swc.warn(
+            this,
+            `The "${attribute}" attribute on <${this.localName}> has been deprecated and will be removed in a future release.`,
+            'https://opensource.adobe.com/spectrum-web-components/components/checkbox/',
+            { level: 'deprecation' }
+          );
+        }
+      }
+    }
     if (
       changes.has('disabled') &&
       (typeof changes.get('disabled') !== 'undefined' || this.disabled)
