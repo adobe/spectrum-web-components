@@ -276,6 +276,10 @@ class ConversationFullPatternDemo extends LitElement {
   @state()
   private isGenerating = false;
 
+  // The composer starts collapsed and expands while it's in use.
+  @state()
+  private promptExpanded = false;
+
   private readonly fileInputId = `conv-demo-upload-${crypto.randomUUID()}`;
   private responseTimer: number | null = null;
   private stepTimer: number | null = null;
@@ -434,6 +438,23 @@ class ConversationFullPatternDemo extends LitElement {
     this.promptValue = inputEvent.detail?.value ?? '';
   };
 
+  private handlePromptFocusIn = (): void => {
+    this.promptExpanded = true;
+  };
+
+  // Shadow-internal focus moves (textarea to upload button) retarget relatedTarget to the host, so they don't collapse it.
+  private handlePromptFocusOut = (event: FocusEvent): void => {
+    const promptField = event.currentTarget as HTMLElement;
+    const next = event.relatedTarget as Node | null;
+    if (next && (next === promptField || promptField.contains(next))) {
+      return;
+    }
+    if (this.promptValue || this.attachments.length || this.isGenerating) {
+      return;
+    }
+    this.promptExpanded = false;
+  };
+
   private handlePromptSubmit = (event: Event): void => {
     const submitEvent = event as CustomEvent<{ value?: string }>;
     this.submitPrompt(submitEvent.detail?.value ?? '');
@@ -467,6 +488,7 @@ class ConversationFullPatternDemo extends LitElement {
       return;
     }
     this.attachments = [...this.attachments, ...nextAttachments];
+    this.promptExpanded = true;
   }
 
   private handleUploadClick = (event: Event): void => {
@@ -712,6 +734,7 @@ class ConversationFullPatternDemo extends LitElement {
           <swc-prompt-field
             .value=${this.promptValue}
             ?generating=${this.isGenerating}
+            ?collapsed=${!this.promptExpanded}
             variant=${this.config.variant}
             size=${this.config.size}
             loader=${this.config.loader}
@@ -723,6 +746,8 @@ class ConversationFullPatternDemo extends LitElement {
             @swc-prompt-field-stop=${this.stopGeneration}
             @swc-prompt-field-upload-click=${this.handleUploadClick}
             @swc-prompt-field-drop=${this.handleDrop}
+            @focusin=${this.handlePromptFocusIn}
+            @focusout=${this.handlePromptFocusOut}
           >
             ${this.renderAttachments()}
             <p slot="legal" class="swc-Typography--links">
