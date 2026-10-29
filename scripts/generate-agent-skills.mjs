@@ -841,6 +841,7 @@ function readStoriesMeta(unit) {
     : source.slice(metaStart);
 
   const titleMatch = metaBlock.match(/title:\s*['"`]([^'"`]+)['"`]/);
+  const componentMatch = metaBlock.match(/component:\s*['"`]([^'"`]+)['"`]/);
   const subtitleMatch = metaBlock.match(/subtitle:\s*['"`]([^'"`]*)['"`]/);
   const packagePathMatch = metaBlock.match(
     /packagePath:\s*['"`]([^'"`]*)['"`]/
@@ -866,6 +867,7 @@ function readStoriesMeta(unit) {
 
   return {
     title: titleMatch ? titleMatch[1] : null,
+    component: componentMatch ? componentMatch[1] : null,
     subtitle: subtitleMatch ? subtitleMatch[1].trim() : null,
     packagePath: packagePathMatch ? packagePathMatch[1] : null,
     tags,
@@ -891,11 +893,17 @@ function buildGettingStarted(unit, meta) {
   }
 
   const packageName = unit.dir;
-  const baseClassName = toPascalCase(packageName);
 
   if (meta.tags.includes('migrated')) {
-    const tagName = unit.tagName ?? `swc-${packageName}`;
+    // The story's `component` is the element tag; the folder name can differ
+    // (for example `ui-icons/` defines `swc-ui-icon`).
+    const tagName = meta.component?.startsWith('swc-')
+      ? meta.component
+      : (unit.tagName ?? `swc-${packageName}`);
+    const baseClassName = toPascalCase(tagName.replace(/^swc-/, ''));
     const resolvedPackagePath = meta.packagePath || `components/${packageName}`;
+    // Component barrels use the short form (`@adobe/spectrum-wc/badge.js`).
+    const barrelPath = resolvedPackagePath.replace(/^components\//, '');
 
     return `## Getting started
 
@@ -914,7 +922,7 @@ import '@adobe/spectrum-wc/${resolvedPackagePath}/${tagName}.js';
 To reference the \`${baseClassName}\` type, import it as a type-only import:
 
 \`\`\`typescript
-import type { ${baseClassName} } from '@adobe/spectrum-wc/${meta.packagePath || packageName}.js';
+import type { ${baseClassName} } from '@adobe/spectrum-wc/${barrelPath}.js';
 \`\`\`
 
 > The class is exposed primarily for type purposes. Extending it is possible, but the internal shape is not part of the public API — if you choose to subclass, you do so at your own risk and may need to adjust your code between releases.

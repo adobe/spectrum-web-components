@@ -5,8 +5,10 @@ import { formatTitle } from '../helpers/index.js';
 /**
  * A block that renders getting started instructions for a Spectrum Web Component.
  * Automatically derives package and component names from Storybook metadata.
- * Pattern stories can provide `parameters.docs.packagePath` to override the
- * component package path.
+ * The tag and class come from the story's `component` (falling back to the
+ * title), and the package path defaults to `components/<tag without swc->`.
+ * Stories whose folder differs from the tag (patterns, `ui-icons`) set
+ * `parameters.docs.packagePath` to override it.
  *
  * @param of - The Storybook meta or story to resolve the component from
  * @param tags - Meta tags that identify utilities, controllers, and migrated components
@@ -39,14 +41,22 @@ import { ${baseClassName} } from '@adobe/spectrum-wc-core/controllers/${packageN
   }
 
   if (tags?.includes('migrated')) {
-    // Extract component name in kebab-case from the title (e.g., "Components/Progress Circle" -> "progress-circle")
-    const packageName = formatTitle(resolvedOf.preparedMeta?.title);
+    // Prefer the story's `component` tag (e.g. `swc-dropzone`), because a title
+    // such as "Drop zone" does not always match the element. Fall back to the
+    // title (e.g. "Components/Progress Circle" -> "progress-circle").
+    const component = resolvedOf.preparedMeta?.component;
+    const tagName =
+      typeof component === 'string' && component.startsWith('swc-')
+        ? component
+        : `swc-${formatTitle(resolvedOf.preparedMeta?.title)}`;
+    const packageName = tagName.replace(/^swc-/, '');
 
-    // Extract component name in PascalCase from the title (e.g., "Components/Progress Circle" -> "ProgressCircle")
-    const baseClassName = formatTitle(resolvedOf.preparedMeta?.title, 'pascal');
+    // PascalCase class name (e.g. "progress-circle" -> "ProgressCircle")
+    const baseClassName = formatTitle(packageName, 'pascal');
 
-    const tagName = `swc-${packageName}`;
     const resolvedPackagePath = packagePath || `components/${packageName}`;
+    // Component barrels use the short form (`@adobe/spectrum-wc/badge.js`).
+    const barrelPath = resolvedPackagePath.replace(/^components\//, '');
 
     const markdownContent = `## Getting started
 
@@ -65,7 +75,7 @@ import '@adobe/spectrum-wc/${resolvedPackagePath}/${tagName}.js';
 To reference the \`${baseClassName}\` type, import it as a type-only import:
 
 \`\`\`typescript
-import type { ${baseClassName} } from '@adobe/spectrum-wc/${packagePath || packageName}.js';
+import type { ${baseClassName} } from '@adobe/spectrum-wc/${barrelPath}.js';
 \`\`\`
 
 > The class is exposed primarily for type purposes. Extending it is possible, but the internal shape is not part of the public API — if you choose to subclass, you do so at your own risk and may need to adjust your code between releases.

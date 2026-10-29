@@ -60,6 +60,7 @@ const meta: Meta = {
   parameters: {
     docs: {
       subtitle: `The Spectrum UI icon set, rendered by the swc-ui-icon element.`,
+      packagePath: 'components/ui-icons',
     },
   },
   tags: ['migrated'],
