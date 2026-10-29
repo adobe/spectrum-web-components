@@ -7495,6 +7495,8 @@ __metadata:
 "@spectrum-web-components/eslint-plugin@workspace:*, @spectrum-web-components/eslint-plugin@workspace:linters/eslint-plugin":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/eslint-plugin@workspace:linters/eslint-plugin"
+  dependencies:
+    comment-parser: "npm:1.2.4"
   languageName: unknown
   linkType: soft
 
