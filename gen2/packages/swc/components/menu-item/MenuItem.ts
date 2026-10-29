@@ -30,11 +30,11 @@ import styles from './menu-item.css';
  * @example
  * <swc-button id="edit">Edit</swc-button>
  * <swc-menu for="edit">
- *   <swc-menu-item><span slot="label">Cut</span></swc-menu-item>
- *   <swc-menu-item disabled><span slot="label">Paste</span></swc-menu-item>
+ *   <swc-menu-item>Cut</swc-menu-item>
+ *   <swc-menu-item disabled>Paste</swc-menu-item>
  * </swc-menu>
  *
- * @slot label - Text of the row.
+ * @slot - Text of the row.
  * @slot visual - Optional leading icon.
  */
 export class MenuItem extends MenuItemBase {
@@ -45,7 +45,7 @@ export class MenuItem extends MenuItemBase {
   protected override render(): TemplateResult {
     return html`
       <slot name="visual"></slot>
-      <slot name="label"></slot>
+      <slot></slot>
     `;
   }
 }

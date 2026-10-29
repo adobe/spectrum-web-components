@@ -24,7 +24,7 @@ import { MENU_ITEM_VALID_SIZES, type MenuItemSize } from './MenuItem.types.js';
  * pattern: `role="menuitem"` on the host, with the owning `swc-menu` driving
  * arrow-key navigation and roving tabindex across its rows.
  *
- * @slot label - Text of the row.
+ * @slot - Text of the row.
  * @slot visual - Optional leading icon.
  */
 export abstract class MenuItemBase extends SizedMixin(SpectrumElement, {

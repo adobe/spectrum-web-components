@@ -62,7 +62,7 @@ export const Playground: Story = {
   render: () =>
     inMenu(
       html`
-        <swc-menu-item><span slot="label">Cut</span></swc-menu-item>
+        <swc-menu-item>Cut</swc-menu-item>
       `,
       'playground-trigger'
     ),
@@ -77,9 +77,9 @@ export const Overview: Story = {
   render: () =>
     inMenu(
       html`
-        <swc-menu-item><span slot="label">Cut</span></swc-menu-item>
-        <swc-menu-item><span slot="label">Copy</span></swc-menu-item>
-        <swc-menu-item><span slot="label">Paste</span></swc-menu-item>
+        <swc-menu-item>Cut</swc-menu-item>
+        <swc-menu-item>Copy</swc-menu-item>
+        <swc-menu-item>Paste</swc-menu-item>
       `,
       'overview-trigger'
     ),
@@ -94,10 +94,8 @@ export const States: Story = {
   render: () =>
     inMenu(
       html`
-        <swc-menu-item><span slot="label">Default</span></swc-menu-item>
-        <swc-menu-item disabled>
-          <span slot="label">Disabled</span>
-        </swc-menu-item>
+        <swc-menu-item>Default</swc-menu-item>
+        <swc-menu-item disabled>Disabled</swc-menu-item>
       `,
       'states-trigger'
     ),

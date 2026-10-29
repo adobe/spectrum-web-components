@@ -40,9 +40,9 @@ const inMenu = (rows: unknown, id: string) => html`
 `;
 
 const threeRows = html`
-  <swc-menu-item><span slot="label">Cut</span></swc-menu-item>
-  <swc-menu-item disabled><span slot="label">Copy</span></swc-menu-item>
-  <swc-menu-item><span slot="label">Paste</span></swc-menu-item>
+  <swc-menu-item>Cut</swc-menu-item>
+  <swc-menu-item disabled>Copy</swc-menu-item>
+  <swc-menu-item>Paste</swc-menu-item>
 `;
 
 // ──────────────────────────────────────────────────────────────
@@ -51,7 +51,7 @@ const threeRows = html`
 
 export const DefaultsTest: Story = {
   render: () => html`
-    <swc-menu-item><span slot="label">Cut</span></swc-menu-item>
+    <swc-menu-item>Cut</swc-menu-item>
   `,
   play: async ({ canvasElement, step }) => {
     const item = await getComponent<MenuItem>(canvasElement, 'swc-menu-item');
@@ -77,7 +77,10 @@ export const DefaultsTest: Story = {
       const slots = Array.from(
         item.shadowRoot?.querySelectorAll('slot') ?? []
       ).map((slot) => slot.name);
-      expect(slots, 'slot order').toEqual(['visual', 'label']);
+      expect(slots, 'visual slot, then the default label slot').toEqual([
+        'visual',
+        '',
+      ]);
     });
   },
 };
@@ -88,7 +91,7 @@ export const DefaultsTest: Story = {
 
 export const PropertyMutationTest: Story = {
   render: () => html`
-    <swc-menu-item><span slot="label">Cut</span></swc-menu-item>
+    <swc-menu-item>Cut</swc-menu-item>
   `,
   play: async ({ canvasElement, step }) => {
     const item = await getComponent<MenuItem>(canvasElement, 'swc-menu-item');
@@ -126,9 +129,7 @@ export const PropertyMutationTest: Story = {
 
 export const AuthoredRoleWinsTest: Story = {
   render: () => html`
-    <swc-menu-item role="menuitemcheckbox">
-      <span slot="label">Wrap</span>
-    </swc-menu-item>
+    <swc-menu-item role="menuitemcheckbox">Wrap</swc-menu-item>
   `,
   play: async ({ canvasElement, step }) => {
     const item = await getComponent<MenuItem>(canvasElement, 'swc-menu-item');
@@ -154,6 +155,31 @@ export const DiscoveredByMenuTest: Story = {
 
     await step('opening focuses the first row', async () => {
       await userEvent.click(trigger);
+      await waitFor(() =>
+        expect(document.activeElement, 'focus on the first row').toBe(
+          getItems(canvasElement)[0]
+        )
+      );
+    });
+
+    // Raised in review from a screen recording: after a mouse open, the
+    // first arrow press appears to land on row two. Focus is on row one
+    // either way; what differs is whether the browser paints a ring for
+    // programmatic focus, which `:focus-visible` withholds after a pointer
+    // interaction. Asserting both open paths keeps that an appearance
+    // question for the row chrome story rather than a focus bug.
+    await step('opening from the keyboard focuses the first row', async () => {
+      // Closed directly: native popover light-dismiss ignores a synthetic
+      // Escape, so `userEvent` cannot drive that path here.
+      const menu = canvasElement.querySelector('swc-menu') as HTMLElement & {
+        open: boolean;
+      };
+      menu.open = false;
+      await waitFor(() => expect(menu.open, 'menu closed').toBe(false));
+
+      trigger.focus();
+      await userEvent.keyboard('{Enter}');
+
       await waitFor(() =>
         expect(document.activeElement, 'focus on the first row').toBe(
           getItems(canvasElement)[0]
