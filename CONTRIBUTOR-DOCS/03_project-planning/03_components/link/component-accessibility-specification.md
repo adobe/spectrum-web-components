@@ -149,7 +149,7 @@ Native links participate in the **tab** order; **Enter** (and platform conventio
 - [ ] Deprecate or document away `disabled` on `sp-link`; align consumer guides with [SWC-966](https://jira.corp.adobe.com/browse/SWC-966) (see [roadmap](./rendering-and-styling-migration-analysis.md)).
 - [ ] Contrast and 1.4.1 for link vs surrounding text: avoid repeating [SWC-1160](https://jira.corp.adobe.com/browse/SWC-1160); use [SWC-926](https://jira.corp.adobe.com/browse/SWC-926) and [SWC-1428](https://jira.corp.adobe.com/browse/SWC-1428) as pointers from 1st-gen / roadmap to native anchor styling.
 - [ ] [Semantic HTML and ARIA examples](../../../../gen2/packages/swc/.storybook/guides/accessibility-guides/semantic_html_aria.mdx) and link-purpose guidance appear in or alongside prose docs; **Storybook** and usage docs call out that **quiet** (non-underline) link styles are for **section**-scoped patterns such as **footers**, not generic body text.
-- [ ] Program-level (gen2) Jira is tracked in Jira, not duplicated in the 1st-gen table above, per the accessibility-migration skill.
+- [ ] Program-level (gen2) Jira is tracked in Jira, not duplicated in the 1st-gen table above, per the `component-accessibility-specification` skill.
 
 ## References
 

@@ -430,11 +430,11 @@ If you are renaming or removing a public prop or attribute, confirm with the tea
 
 ## Phase 4: Accessibility
 
-**Goal:** Implement the accessibility requirements defined in the component's **component accessibility specification** (`CONTRIBUTOR-DOCS/03_project-planning/03_components/<component>/component-accessibility-specification.md`). That document is the source of truth for this phase — implement exactly what it specifies, cross-referencing the repo’s [Accessibility testing](https://github.com/adobe/spectrum-web-components/blob/main/CONTRIBUTOR-DOCS/01_contributor-guides/09_accessibility-testing.md) guide and the PR template’s accessibility checklist.
+**Goal:** Implement the accessibility requirements defined in the **component accessibility specification** (`CONTRIBUTOR-DOCS/03_project-planning/03_components/<component>/component-accessibility-specification.md`). That document is the source of truth for this phase — implement exactly what it specifies, cross-referencing the repo’s [Accessibility testing](https://github.com/adobe/spectrum-web-components/blob/main/CONTRIBUTOR-DOCS/01_contributor-guides/09_accessibility-testing.md) guide and the PR template’s accessibility checklist.
 
 ### What to do
 
-1. **Read the component's component accessibility specification** — `CONTRIBUTOR-DOCS/03_project-planning/03_components/<component>/component-accessibility-specification.md`. The analysis defines the APG pattern (if any), required ARIA roles/states/properties, shadow DOM considerations, accessibility tree shape, keyboard and focus behavior, and the testing checklist. **Everything you implement in this phase flows from that document.**  
+1. **Read the component accessibility specification** — `CONTRIBUTOR-DOCS/03_project-planning/03_components/<component>/component-accessibility-specification.md`. The analysis defines the APG pattern (if any), required ARIA roles/states/properties, shadow DOM considerations, accessibility tree shape, keyboard and focus behavior, and the testing checklist. **Everything you implement in this phase flows from that document.**
 2. **Follow the [Accessibility testing](https://github.com/adobe/spectrum-web-components/blob/main/CONTRIBUTOR-DOCS/01_contributor-guides/09_accessibility-testing.md) guide** and the PR template checklist.
 3. **Use gen2 Storybook accessibility guides:** `gen2/packages/swc/.storybook/guides/accessibility-guides/` — codebase-specific a11y patterns and docs surfaced in Storybook (complement the contributor guide and APG).
 4. **Identify the APG pattern** for your component type (e.g. button, combobox) — [WCAG ARIA Authoring Practices Guide (APG)](https://www.w3.org/WAI/ARIA/apg/patterns/).
@@ -446,7 +446,7 @@ If you are renaming or removing a public prop or attribute, confirm with the tea
 
 ### What to check
 
-- [ ] The component's component accessibility specification doc exists and has been read in full.
+- [ ] The component accessibility specification doc exists and has been read in full.
 - [ ] All requirements in the analysis are implemented.
 - [ ] ARIA and semantics match the chosen APG pattern that the analysis identified.
 - [ ] Component behaves as expected with screen reader.
@@ -471,7 +471,7 @@ Prefer native events when they give the right semantics (e.g. `click`). Add cust
 
 ### Quality gate
 
-- [ ] Component's component accessibility specification doc exists and all its requirements are implemented.
+- [ ] The component accessibility specification doc exists and all its requirements are implemented.
 - [ ] Keyboard and ARIA implemented per the analysis.
 - [ ] APG pattern identified and linked
 - [ ] Keyboard and ARIA implemented
