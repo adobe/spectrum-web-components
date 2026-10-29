@@ -11,7 +11,7 @@
  */
 
 import { html } from 'lit';
-import { expect } from '@storybook/test';
+import { expect, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import { Toast } from '@adobe/spectrum-wc/toast';
@@ -51,21 +51,19 @@ const nextFrame = (): Promise<void> =>
 const messageSlot = (toast: Toast): HTMLSlotElement | null =>
   toast.shadowRoot?.querySelector('.swc-Toast-text slot') ?? null;
 
-// Cancels every swc-close on the toast until the returned function is called.
-const cancelClose = (
+// Cancels the next swc-close on the toast.
+const cancelNextClose = (
   toast: Toast,
   onClose?: (event: Event) => void
-): (() => void) => {
-  const controller = new AbortController();
+): void => {
   toast.addEventListener(
     'swc-close',
     (event) => {
       onClose?.(event);
       event.preventDefault();
     },
-    { signal: controller.signal }
+    { once: true }
   );
-  return () => controller.abort();
 };
 
 // ──────────────────────────────────────────────────────────────
@@ -538,28 +536,26 @@ export const CloseInteractionTest: Story = {
     );
 
     await step('swc-close can cancel dismissal', async () => {
-      const restoreClose = cancelClose(toast);
+      cancelNextClose(toast);
       closeButton.click();
       await toast.updateComplete;
 
       expect(toast.open, 'open after canceled swc-close').toBe(true);
-      restoreClose();
     });
 
     await step('close() can be canceled the same way', async () => {
-      const restoreClose = cancelClose(toast);
+      cancelNextClose(toast);
       toast.close();
       await toast.updateComplete;
 
       expect(toast.open, 'open after canceled close()').toBe(true);
-      restoreClose();
     });
 
     await step(
       'assigning open = false fires a cancelable swc-close before state changes',
       async () => {
         const openAttributesDuringEvent: boolean[] = [];
-        const restoreClose = cancelClose(toast, () =>
+        cancelNextClose(toast, () =>
           openAttributesDuringEvent.push(toast.hasAttribute('open'))
         );
 
@@ -575,7 +571,6 @@ export const CloseInteractionTest: Story = {
           toast.hasAttribute('open'),
           'open attribute after canceled swc-close'
         ).toBe(true);
-        restoreClose();
       }
     );
 
@@ -642,6 +637,81 @@ export const ReconnectTest: Story = {
           messageSlot(toast),
           'message slot after reconnection'
         ).not.toBeNull();
+      }
+    );
+
+    await step(
+      'emits swc-close once when moved right after close()',
+      async () => {
+        const closes: Event[] = [];
+        const record = (event: Event): void => {
+          closes.push(event);
+        };
+        toast.addEventListener('swc-close', record);
+
+        toast.close();
+        toast.remove();
+        canvasElement.append(toast);
+        await toast.updateComplete;
+        toast.removeEventListener('swc-close', record);
+
+        expect(closes, 'swc-close events').toHaveLength(1);
+      }
+    );
+  },
+};
+
+export const ReconnectAfterOpenTest: Story = {
+  render: () => html`
+    <swc-toast>File saved</swc-toast>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const toast = await getComponent<Toast>(canvasElement, 'swc-toast');
+
+    await step(
+      'fires swc-after-open when moved during the fade-in',
+      async () => {
+        const afterOpen: Event[] = [];
+        toast.addEventListener('swc-after-open', (event) => {
+          afterOpen.push(event);
+        });
+
+        toast.open = true;
+        await toast.updateComplete;
+        toast.remove();
+        canvasElement.append(toast);
+
+        await waitFor(() =>
+          expect(afterOpen, 'swc-after-open events').toHaveLength(1)
+        );
+      }
+    );
+  },
+};
+
+export const ReconnectAfterCloseTest: Story = {
+  render: () => html`
+    <swc-toast open>File saved</swc-toast>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const toast = await getComponent<Toast>(canvasElement, 'swc-toast');
+
+    await step(
+      'fires swc-after-close when moved during the fade-out',
+      async () => {
+        const afterClose: Event[] = [];
+        toast.addEventListener('swc-after-close', (event) => {
+          afterClose.push(event);
+        });
+
+        toast.close();
+        await toast.updateComplete;
+        toast.remove();
+        canvasElement.append(toast);
+
+        await waitFor(() =>
+          expect(afterClose, 'swc-after-close events').toHaveLength(1)
+        );
       }
     );
   },

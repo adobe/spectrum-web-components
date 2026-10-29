@@ -28,6 +28,8 @@ import { TOAST_VARIANTS, type ToastVariant } from './Toast.types.js';
  */
 export abstract class ToastBase extends SpectrumElement {
   private _cancelAfterTransition?: () => void;
+  // Kept until it runs so a reconnect can restart an event that disconnection canceled.
+  private _pendingAfterTransition?: () => void;
   // True once `swc-close` has fired, so the next update must not dispatch it again.
   private _closeEventDispatched = false;
   private _contentRevealed = true;
@@ -94,6 +96,9 @@ export abstract class ToastBase extends SpectrumElement {
     if (!this._contentRevealed) {
       this.scheduleContentReveal();
     }
+    if (this._pendingAfterTransition) {
+      this.dispatchAfterTransition(this._pendingAfterTransition);
+    }
   }
 
   public override disconnectedCallback(): void {
@@ -102,7 +107,6 @@ export abstract class ToastBase extends SpectrumElement {
     this._cancelAfterTransition = undefined;
     this._cancelContentReveal?.();
     this._cancelContentReveal = undefined;
-    this._closeEventDispatched = false;
     super.disconnectedCallback();
   }
 
@@ -288,12 +292,15 @@ export abstract class ToastBase extends SpectrumElement {
 
   private dispatchAfterTransition(callback: () => void): void {
     this._cancelAfterTransition?.();
+    this._pendingAfterTransition = undefined;
     const element = this.internalElement;
     if (!element) {
       return;
     }
+    this._pendingAfterTransition = callback;
     this._cancelAfterTransition = runAfterTransition(element, () => {
       this._cancelAfterTransition = undefined;
+      this._pendingAfterTransition = undefined;
       callback();
     });
   }

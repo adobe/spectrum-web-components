@@ -85,6 +85,7 @@ test.describe('Toast - ARIA Snapshots', () => {
   test('ID-bearing message names the alertdialog by reference', async ({
     page,
   }) => {
+    // TODO(SWC-2567): once the aria-label fallback is removed, this snapshot also proves the aria-labelledby path.
     const root = await gotoStory(
       page,
       'components-toast--accessibility',
@@ -145,6 +146,9 @@ const surfaceStyle = (
 // Matches "0s" or a list of them, which is how computed styles report it.
 const INSTANT = /^0s(, 0s)*$/;
 
+const hostTransitionDuration = (toast: Locator): Promise<string> =>
+  toast.evaluate((element) => getComputedStyle(element).transitionDuration);
+
 test.describe('Toast - Reduced motion', () => {
   test('removes the fade but keeps the two-frame delay', async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'reduce' });
@@ -153,6 +157,7 @@ test.describe('Toast - Reduced motion', () => {
 
     expect(await surfaceStyle(toast, 'transitionDuration')).toMatch(INSTANT);
     expect(await surfaceStyle(toast, 'transitionDelay')).toBe('0.034s');
+    expect(await hostTransitionDuration(toast)).toMatch(INSTANT);
   });
 
   test('keeps the fade when motion is not reduced', async ({ page }) => {

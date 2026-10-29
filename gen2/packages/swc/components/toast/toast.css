@@ -134,6 +134,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  :host,
   .swc-Toast {
     transition-duration: 0ms;
   }
