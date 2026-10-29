@@ -449,7 +449,7 @@ class ConversationFullPatternDemo extends LitElement {
     if (next && (next === promptField || promptField.contains(next))) {
       return;
     }
-    if (this.promptValue || this.attachments.length || this.isGenerating) {
+    if (this.promptValue || this.isGenerating) {
       return;
     }
     this.promptExpanded = false;
@@ -488,7 +488,6 @@ class ConversationFullPatternDemo extends LitElement {
       return;
     }
     this.attachments = [...this.attachments, ...nextAttachments];
-    this.promptExpanded = true;
   }
 
   private handleUploadClick = (event: Event): void => {
