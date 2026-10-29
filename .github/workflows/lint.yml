@@ -116,6 +116,9 @@ jobs:
       - name: Validate generated version files
         run: node scripts/generate-versions.js --check
 
+      - name: Test custom lint rules
+        run: yarn test:linters
+
       # Reviewdog's github-pr-review reporter only works on pull requests. On
       # push it exits without reading stdin, so the linter crashes with EPIPE.
       - name: Lint styles
