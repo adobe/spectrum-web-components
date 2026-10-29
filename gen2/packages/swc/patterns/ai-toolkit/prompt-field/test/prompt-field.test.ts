@@ -117,6 +117,40 @@ export const OverviewTest: Story = {
   },
 };
 
+export const CollapsedTest: Story = {
+  ...Overview,
+  args: { ...Overview.args, collapsed: true },
+  play: async ({ canvasElement, step }) => {
+    const el = await getComponent<PromptField>(
+      canvasElement,
+      'swc-prompt-field'
+    );
+    const leadingActions = (): HTMLElement | null | undefined =>
+      el.shadowRoot?.querySelector<HTMLElement>(
+        '.swc-PromptField-leading-actions'
+      );
+
+    await step('collapsed reflects and hides the upload button', async () => {
+      expect(el.collapsed).toBe(true);
+      expect(el.hasAttribute('collapsed')).toBe(true);
+      expect(leadingActions()?.inert).toBe(true);
+      expect(leadingActions()?.getAttribute('aria-hidden')).toBe('true');
+      expect(
+        el.shadowRoot?.querySelector('.swc-PromptField-send')
+      ).toBeTruthy();
+    });
+
+    await step('removing collapsed restores the upload button', async () => {
+      el.collapsed = false;
+      await el.updateComplete;
+
+      expect(el.hasAttribute('collapsed')).toBe(false);
+      expect(leadingActions()?.inert).toBe(false);
+      expect(leadingActions()?.hasAttribute('aria-hidden')).toBe(false);
+    });
+  },
+};
+
 export const AccessibleNameTest: Story = {
   ...Overview,
   play: async ({ canvasElement, step }) => {

@@ -87,12 +87,30 @@
     --_swc-prompt-field-bg-stop-2 var(--_swc-prompt-field-transition),
     --_swc-prompt-field-bg-stop-3 var(--_swc-prompt-field-transition),
     --_swc-prompt-field-bg-stop-4 var(--_swc-prompt-field-transition),
-    box-shadow var(--_swc-prompt-field-transition);
+    box-shadow var(--_swc-prompt-field-transition),
+    padding token("animation-duration-200") token("animation-ease-in-out"),
+    border-radius token("animation-duration-200") token("animation-ease-in-out");
 }
 
 /* Small size uses a tighter corner radius to match its dropped outer ring (see .swc-PromptField-outer-border). */
 :host([size="s"]) .swc-PromptField-box {
   --_swc-prompt-field-box-corner-radius: token("corner-radius-extra-large-default");
+}
+
+/* Collapsed is a pill: the radius is half the single-row height (button height plus block padding), so a one-line field has fully round ends. */
+:host([collapsed]) .swc-PromptField {
+  --_swc-prompt-field-collapsed-radius: calc(token("component-height-100") / 2 + token("spacing-200"));
+}
+
+:host([collapsed][size="s"]) .swc-PromptField {
+  --_swc-prompt-field-collapsed-radius: calc(token("component-height-75") / 2 + token("spacing-200"));
+}
+
+/* Placed before the has-attachment rule below so attachments keep their reduced top padding (badge clearance) when collapsed. */
+:host([collapsed]) .swc-PromptField-box {
+  padding-block: token("spacing-200");
+  padding-inline-end: token("spacing-200");
+  border-radius: var(--_swc-prompt-field-collapsed-radius);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -147,7 +165,8 @@
     --_swc-prompt-field-outer-stop-1 var(--_swc-prompt-field-transition),
     --_swc-prompt-field-outer-stop-2 var(--_swc-prompt-field-transition),
     --_swc-prompt-field-outer-stop-3 var(--_swc-prompt-field-transition),
-    box-shadow var(--_swc-prompt-field-transition);
+    box-shadow var(--_swc-prompt-field-transition),
+    border-radius token("animation-duration-200") token("animation-ease-in-out");
 
   /* Small size drops the ring entirely: the card's own border and shadow (.swc-PromptField-box) are the whole treatment. */
   :host([size="s"]) & {
@@ -155,6 +174,15 @@
     --_swc-prompt-field-outer-background: none;
     --_swc-prompt-field-outer-corner-radius: token("corner-radius-extra-large-default");
     --_swc-prompt-field-outer-box-shadow: none;
+  }
+
+  /* Ring follows the collapsed card's pill shape, offset by its own padding. */
+  :host([collapsed]) & {
+    border-radius: calc(var(--_swc-prompt-field-collapsed-radius) + token("spacing-85"));
+  }
+
+  :host([collapsed][size="s"]) & {
+    border-radius: var(--_swc-prompt-field-collapsed-radius);
   }
 
   :host([variant="subtle"]) & {
@@ -582,6 +610,15 @@
   --_swc-prompt-field-text-group-padding-inline-end: calc(token("component-height-75") + token("spacing-300"));
 }
 
+/* Collapsed tightens the gap between the text and the inline send button. */
+:host([collapsed]) .swc-PromptField-text-group {
+  padding-inline-end: calc(token("component-height-100") + token("spacing-85"));
+}
+
+:host([collapsed][size="s"]) .swc-PromptField-text-group {
+  padding-inline-end: calc(token("component-height-75") + token("spacing-85"));
+}
+
 .swc-PromptField-status-icon {
   display: flex;
   flex: 0 0 auto;
@@ -990,6 +1027,14 @@
 :host([size="s"]) .swc-PromptField-textarea {
   --_swc-prompt-field-textarea-font-size: token("font-size-100");
   --_swc-prompt-field-textarea-line-height: token("line-height-100");
+}
+
+/* Collapsed keeps the placeholder on one truncated line, like the single-row design; typed text still wraps and grows. The textarea itself ignores text-overflow, so the ellipsis is set on ::placeholder too. */
+:host([collapsed]) .swc-PromptField-textarea:placeholder-shown,
+:host([collapsed]) .swc-PromptField-textarea:placeholder-shown::placeholder {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* Own single-row grid animates 0fr <-> 1fr; overflow/min-block-size live on the row wrapper below, not here, since 0fr only resolves to a true 0 on the grid item, not the container. */

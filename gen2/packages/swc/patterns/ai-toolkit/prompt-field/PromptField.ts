@@ -129,11 +129,10 @@ export class PromptField extends SpectrumElement {
   public generating = false;
 
   /**
-   * Starts as a single-line layout with send/stop inline instead of the default
-   * layout with a separate action bar; the textarea still wraps and grows with
-   * content either way.
-   *
-   * @internal
+   * Renders a single-row pill with send/stop inline and the upload button
+   * hidden, instead of the default card with a separate action bar. The
+   * placeholder truncates to one line; typed text still wraps and grows.
+   * Toggling it animates between the two layouts.
    */
   @property({ type: Boolean, reflect: true })
   public collapsed = false;
