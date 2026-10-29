@@ -92,6 +92,7 @@ export const BadgeLabels: Story = {
       expect(badgeFor('notes.md')).toBe('MD');
       expect(badgeFor('archive.tar.GZ', 'application/gzip')).toBe('GZ');
       expect(badgeFor('data.csv', 'application/octet-stream')).toBe('CSV');
+      expect(badgeFor('archive.7z', 'application/x-7z-compressed')).toBe('7Z');
     });
 
     await step('ignores dotfile names and numeric suffixes', async () => {

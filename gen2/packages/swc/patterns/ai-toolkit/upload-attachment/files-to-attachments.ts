@@ -75,9 +75,11 @@ function isImageFile(file: File): boolean {
 }
 
 function getBadgeLabel(file: File): string | undefined {
-  // Needs a character before the dot (so dotfiles have no extension) and a
-  // leading letter (so numeric suffixes like `.20260415` don't count).
-  const extension = file.name.match(/.\.([a-z][a-z0-9]{0,7})$/i)?.[1];
+  // Needs a character before the dot (so dotfiles have no extension) and at
+  // least one letter (so numeric suffixes like `.20260415` don't count).
+  const extension = file.name.match(
+    /.\.((?=[a-z0-9]*[a-z])[a-z0-9]{1,8})$/i
+  )?.[1];
   if (extension) {
     return extension.toUpperCase();
   }
