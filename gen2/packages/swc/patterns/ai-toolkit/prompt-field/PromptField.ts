@@ -245,6 +245,11 @@ export class PromptField extends SpectrumElement {
   // becomes the Tab stop (see `_syncAttachmentActiveItemToVisible`).
   private _attachmentPagedScroll = false;
 
+  // The strip's scroll offset when it last came to rest. `focus()` can
+  // scroll the strip before `focusin` fires, so a focus-driven scroll uses
+  // this to tell which way the strip moved (see `_scrollAttachmentsTo`).
+  private _attachmentRestingOffset = 0;
+
   // Observed targets accumulate across slot changes (dismissed tiles are
   // never explicitly unobserved); the browser drops a target's callbacks
   // once it leaves the DOM, so this is a bounded, harmless handful of
@@ -577,6 +582,7 @@ export class PromptField extends SpectrumElement {
    */
   private _handleAttachmentScrollEnd(): void {
     this._attachmentScrollFallbackGeneration++;
+    this._attachmentRestingOffset = this._attachmentScrollOffset();
     this._updateAttachmentScrollState();
     void this.updateComplete.then(() =>
       this._syncAttachmentActiveItemToVisible()
@@ -604,9 +610,10 @@ export class PromptField extends SpectrumElement {
       return;
     }
 
-    // Use a fully visible tile. In a narrow strip no tile can be fully
-    // visible, so use a tile that is partly visible.
-    const { left, right } = this._attachmentVisibleBounds(scrollEl);
+    // Use a tile that looks whole: its edge can reach into the lighter half
+    // of an edge fade. In a narrow strip no tile can look whole, so use a
+    // tile that is partly visible.
+    const { left, right } = this._attachmentVisibleBounds(scrollEl, true);
     const tolerance = 1;
     const fullyVisible = (tile: HTMLElement): boolean => {
       const rect = tile.getBoundingClientRect();
@@ -634,8 +641,16 @@ export class PromptField extends SpectrumElement {
    * The part of the scroll viewport that no chevron covers. A side with a
    * chevron uses `scroll-padding-inline` (the chevron clearance); a side
    * without one uses the strip's padding.
+   *
+   * With `looksWhole`, a side with a chevron ends halfway through its edge
+   * fade instead. The fade starts at the chevron and is opaque at the
+   * scroll-padding edge, so a tile that only reaches its lighter half still
+   * looks whole.
    */
-  private _attachmentVisibleBounds(scrollEl: HTMLElement): {
+  private _attachmentVisibleBounds(
+    scrollEl: HTMLElement,
+    looksWhole = false
+  ): {
     left: number;
     right: number;
   } {
@@ -654,10 +669,29 @@ export class PromptField extends SpectrumElement {
     const rightInset = rightChevron
       ? scrollStyle.scrollPaddingRight
       : scrollStyle.paddingRight;
-    return {
-      left: scrollRect.left + (parseFloat(leftInset) || 0),
-      right: scrollRect.right - (parseFloat(rightInset) || 0),
-    };
+    let left = scrollRect.left + (parseFloat(leftInset) || 0);
+    let right = scrollRect.right - (parseFloat(rightInset) || 0);
+    if (looksWhole) {
+      const chevronRect = (direction: 'prev' | 'next'): DOMRect | undefined =>
+        this.shadowRoot
+          ?.querySelector<HTMLElement>(
+            `.swc-PromptField-attachments-scroll-${direction}`
+          )
+          ?.getBoundingClientRect();
+      const leftRect = leftChevron
+        ? chevronRect(rtl ? 'next' : 'prev')
+        : undefined;
+      const rightRect = rightChevron
+        ? chevronRect(rtl ? 'prev' : 'next')
+        : undefined;
+      if (leftRect) {
+        left = (left + leftRect.right) / 2;
+      }
+      if (rightRect) {
+        right = (right + rightRect.left) / 2;
+      }
+    }
+    return { left, right };
   }
 
   private _focusAttachment(el: HTMLElement): void {
@@ -681,6 +715,7 @@ export class PromptField extends SpectrumElement {
    * then, the strip doesn't move.
    */
   private _handleAttachmentFocusIn(event: FocusEvent): void {
+    const scrollEl = this._attachmentScrollEl;
     const attachments = this._assignedAttachmentElements ?? [];
     const tile = event
       .composedPath()
@@ -688,19 +723,126 @@ export class PromptField extends SpectrumElement {
         (node): node is HTMLElement =>
           node instanceof HTMLElement && attachments.includes(node)
       );
-    if (!tile) {
+    if (!scrollEl || !tile) {
       return;
     }
+    const from = this._attachmentRestingOffset;
     requestAnimationFrame(() => {
       const focused = getActiveElement();
       if (!focused || !deepContains(tile, focused)) {
         return;
       }
-      tile.scrollIntoView({
-        block: 'nearest',
-        inline: 'nearest',
-      });
+      this._scrollAttachmentsTo(
+        this._attachmentOffsetFor(scrollEl, tile, 'nearest'),
+        from
+      );
     });
+  }
+
+  /**
+   * How far the strip is scrolled from its start edge. In RTL, `scrollLeft`
+   * is 0 or negative.
+   */
+  private _attachmentScrollOffset(): number {
+    return Math.abs(this._attachmentScrollEl?.scrollLeft ?? 0);
+  }
+
+  /**
+   * The scroll offset that puts `tile` in the area the chevrons don't cover
+   * (the scroll-padding box). `start` and `end` align that inline edge.
+   * `nearest` aligns the edge that is cut off, as `scrollIntoView()` does,
+   * and keeps the offset when no edge is cut off.
+   */
+  private _attachmentOffsetFor(
+    scrollEl: HTMLElement,
+    tile: HTMLElement,
+    align: 'start' | 'end' | 'nearest'
+  ): number {
+    const rect = tile.getBoundingClientRect();
+    const scrollRect = scrollEl.getBoundingClientRect();
+    const scrollStyle = getComputedStyle(scrollEl);
+    const left =
+      scrollRect.left + (parseFloat(scrollStyle.scrollPaddingLeft) || 0);
+    const right =
+      scrollRect.right - (parseFloat(scrollStyle.scrollPaddingRight) || 0);
+    const rtl = this._isRtl();
+    let edge: 'left' | 'right' | undefined;
+    if (align === 'nearest') {
+      const tolerance = 1;
+      const cutLeft = rect.left < left - tolerance;
+      const cutRight = rect.right > right + tolerance;
+      // A tile wider than the area aligns its other edge.
+      const wider = rect.width > right - left;
+      if (cutLeft !== cutRight) {
+        edge = cutLeft !== wider ? 'left' : 'right';
+      }
+    } else {
+      edge = (align === 'start') !== rtl ? 'left' : 'right';
+    }
+    // How far the content must move to the left.
+    const shift =
+      edge === 'left'
+        ? rect.left - left
+        : edge === 'right'
+          ? rect.right - right
+          : 0;
+    return this._attachmentScrollOffset() + (rtl ? -shift : shift);
+  }
+
+  /** The scroll distance over which each edge fade grows in. */
+  private _attachmentFadeRange(): number {
+    const row = this.shadowRoot?.querySelector(
+      '.swc-PromptField-attachments-row'
+    );
+    return row
+      ? parseFloat(
+          getComputedStyle(row).getPropertyValue(
+            '--_swc-prompt-field-attachment-fade-range'
+          )
+        ) || 0
+      : 0;
+  }
+
+  /**
+   * Scrolls the strip from `from` to `offset`, both measured from its start
+   * edge. Where scroll-driven animations are supported, a chevron only shows
+   * once the strip has scrolled past its edge fade. So the scroll doesn't
+   * stop inside a fade, where a tile is cut off but the chevron is hidden:
+   * it goes on to the end of the strip, or, moving away from that end, just
+   * past the fade, where the chevron shows.
+   */
+  private _scrollAttachmentsTo(offset: number, from: number): void {
+    const scrollEl = this._attachmentScrollEl;
+    if (!scrollEl) {
+      return;
+    }
+    const max = scrollEl.scrollWidth - scrollEl.clientWidth;
+    const range = PromptField._scrollDrivenChevrons
+      ? this._attachmentFadeRange()
+      : 0;
+    let target = Math.min(Math.max(offset, 0), max);
+    if (target > from) {
+      if (target < range) {
+        target = range + 1;
+      }
+      if (target > max - range) {
+        target = max;
+      }
+    } else if (target < from) {
+      if (target > max - range) {
+        target = max - range - 1;
+      }
+      if (target < range) {
+        target = 0;
+      }
+    }
+    if (Math.abs(target - this._attachmentScrollOffset()) < 1) {
+      return;
+    }
+    // Aim past the end at the end: the browser stops the scroll at the true
+    // end, which can be fractional.
+    const left = target >= max ? scrollEl.scrollWidth : target;
+    scrollEl.scrollTo({ left: this._isRtl() ? -left : left });
   }
 
   private _handleAttachmentRowKeydown(event: KeyboardEvent): void {
@@ -928,19 +1070,19 @@ export class PromptField extends SpectrumElement {
 
     this._attachmentNavigation.setActiveItem(target);
     this._attachmentPagedScroll = true;
-    if (found) {
-      target.scrollIntoView({
-        block: 'nearest',
-        inline: direction === 1 ? 'start' : 'end',
-      });
-      return;
-    }
-    // No tile is left to move in. The end tile can still be partly hidden,
-    // when it is wider than the space next to the chevron, and aligning it
-    // again does not move the strip. So scroll to the end of the strip.
-    const end =
-      direction === 1 ? scrollEl.scrollWidth - scrollEl.clientWidth : 0;
-    scrollEl.scrollTo({ left: rtl ? -end : end });
+    // When no tile is left to move in, scroll to that end of the strip. The
+    // end tile can still be partly hidden, when it is wider than the space
+    // next to the chevron, and aligning it again would not move the strip.
+    const offset = found
+      ? this._attachmentOffsetFor(
+          scrollEl,
+          target,
+          direction === 1 ? 'start' : 'end'
+        )
+      : direction === 1
+        ? scrollEl.scrollWidth
+        : 0;
+    this._scrollAttachmentsTo(offset, this._attachmentScrollOffset());
   }
 
   /**

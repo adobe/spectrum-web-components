@@ -478,6 +478,59 @@ const isTileFullyVisible = (field: PromptField, tile: HTMLElement): boolean => {
   return rect.left >= left - 1 && rect.right <= right + 1;
 };
 
+// Whether `tile` looks whole: its edge can reach into the lighter half of an
+// edge fade, which runs from the chevron to the scroll-padding edge. This is
+// how the strip picks its Tab stop after a scroll.
+const looksWhole = (field: PromptField, tile: HTMLElement): boolean => {
+  const part = (selector: string): HTMLElement | null =>
+    field.shadowRoot!.querySelector<HTMLElement>(selector);
+  const scrollEl = part('.swc-PromptField-attachments-scroll')!;
+  const scrollRect = scrollEl.getBoundingClientRect();
+  const scrollStyle = getComputedStyle(scrollEl);
+  const prev = part('.swc-PromptField-attachments-scroll-prev');
+  const next = part('.swc-PromptField-attachments-scroll-next');
+  const left =
+    prev && !isChevronHidden(prev)
+      ? (scrollRect.left +
+          parseFloat(scrollStyle.scrollPaddingLeft) +
+          prev.getBoundingClientRect().right) /
+        2
+      : scrollRect.left + parseFloat(scrollStyle.paddingLeft);
+  const right =
+    next && !isChevronHidden(next)
+      ? (scrollRect.right -
+          parseFloat(scrollStyle.scrollPaddingRight) +
+          next.getBoundingClientRect().left) /
+        2
+      : scrollRect.right - parseFloat(scrollStyle.paddingRight);
+  const rect = tile.getBoundingClientRect();
+  return rect.left >= left - 1 && rect.right <= right + 1;
+};
+
+// The scroll range over which each edge fade grows in. Where scroll-driven
+// animations are supported, a chevron shows only past it.
+const fadeRange = (field: PromptField): number =>
+  parseFloat(
+    getComputedStyle(
+      field.shadowRoot!.querySelector('.swc-PromptField-attachments-row')!
+    ).getPropertyValue('--_swc-prompt-field-attachment-fade-range')
+  );
+
+// Whether the strip has stopped inside an edge fade, where a tile is cut off
+// but the chevron for that end is hidden.
+const restsInsideEdgeFade = (field: PromptField): boolean => {
+  const scrollEl = field.shadowRoot!.querySelector<HTMLElement>(
+    '.swc-PromptField-attachments-scroll'
+  )!;
+  const offset = Math.abs(scrollEl.scrollLeft);
+  const max = scrollEl.scrollWidth - scrollEl.clientWidth;
+  const range = fadeRange(field);
+  return (
+    (offset > 1 && offset < range - 1) ||
+    (offset > max - range + 1 && offset < max - 1)
+  );
+};
+
 function renderMultiAttachmentPromptField(
   canvasElement: HTMLElement,
   direction?: 'rtl'
@@ -564,7 +617,7 @@ export const AttachmentScrollPaginationTest: Story = {
     });
 
     await step(
-      'a fading-in chevron takes clicks only once it is at least half opaque',
+      'a chevron shows only past its edge fade, and never partly transparent',
       async () => {
         if (!CSS.supports('animation-timeline: scroll()')) {
           return;
@@ -572,24 +625,25 @@ export const AttachmentScrollPaginationTest: Story = {
         const prevButton = el.shadowRoot!.querySelector<HTMLElement>(
           '.swc-PromptField-attachments-scroll-prev'
         )!;
+        const range = fadeRange(el);
+        expect(range, 'sanity check: the fade range is set').toBeGreaterThan(4);
 
-        // Just past the start, Prev is shown but faint: clicks go to the
-        // tile under it.
-        scrollEl!.scrollTo({ left: 2, behavior: 'instant' });
-        await waitFor(() => {
-          const style = getComputedStyle(prevButton);
-          expect(style.visibility).toBe('visible');
-          expect(Number(style.opacity)).toBeLessThan(0.5);
-          expect(style.pointerEvents).toBe('none');
-        });
+        // Inside the fade range, even near its end, Prev stays hidden.
+        for (const left of [2, range / 2, range - 2]) {
+          scrollEl!.scrollTo({ left, behavior: 'instant' });
+          await waitForScrollSettled(scrollEl);
+          expect(
+            isChevronHidden(prevButton),
+            `Prev at ${left}px: ${describeChevron(prevButton)}`
+          ).toBe(true);
+        }
 
-        // Past the fade range, Prev is opaque and takes clicks.
-        scrollEl!.scrollTo({ left: 100, behavior: 'instant' });
-        await waitFor(() => {
-          const style = getComputedStyle(prevButton);
-          expect(Number(style.opacity)).toBe(1);
-          expect(style.pointerEvents).toBe('auto');
-        });
+        // Past the fade range, Prev shows fully opaque.
+        scrollEl!.scrollTo({ left: range + 2, behavior: 'instant' });
+        await waitForScrollSettled(scrollEl);
+        const style = getComputedStyle(prevButton);
+        expect(style.visibility).toBe('visible');
+        expect(Number(style.opacity)).toBe(1);
 
         scrollEl!.scrollTo({ left: 0, behavior: 'instant' });
         await waitFor(() => expect(isChevronHidden(prevButton)).toBe(true));
@@ -1541,8 +1595,9 @@ export const AttachmentChevronPagingTabStopTest: Story = {
       )!;
     const tabStop = (): HTMLElement | undefined =>
       attachments.find((tile) => tile.tabIndex === 0);
-    const firstVisibleTile = (): HTMLElement | undefined =>
-      attachments.find((tile) => isTileFullyVisible(el, tile));
+    const firstWholeTile = (): HTMLElement | undefined =>
+      attachments.find((tile) => looksWhole(el, tile));
+    const scrollDriven = CSS.supports('animation-timeline: scroll()');
     const page = async (side: 'prev' | 'next'): Promise<void> => {
       for (
         let count = 0;
@@ -1552,6 +1607,12 @@ export const AttachmentChevronPagingTabStopTest: Story = {
         chevron(side).click();
         await waitForScrollSettled(scrollEl);
         await el.updateComplete;
+        if (scrollDriven) {
+          expect(
+            restsInsideEdgeFade(el),
+            `page ${count + 1} stopped inside an edge fade at ${scrollEl.scrollLeft}px`
+          ).toBe(false);
+        }
       }
       expect(
         isChevronHidden(chevron(side)),
@@ -1560,10 +1621,10 @@ export const AttachmentChevronPagingTabStopTest: Story = {
     };
 
     await step(
-      'after paging to the end, Tab moves to the first visible tile, not a tile mid-strip',
+      'after paging to the end, Tab moves to the first tile that looks whole, not a tile mid-strip',
       async () => {
         await page('next');
-        await waitFor(() => expect(tabStop()).toBe(firstVisibleTile()));
+        await waitFor(() => expect(tabStop()).toBe(firstWholeTile()));
         expect(
           tabStop(),
           'sanity check: paging moved past the first tile'
@@ -1572,7 +1633,7 @@ export const AttachmentChevronPagingTabStopTest: Story = {
         chevron('prev').focus();
         const event = dispatchKeydown(chevron('prev'), 'Tab');
         expect(event.defaultPrevented).toBe(true);
-        expect(getActiveElement()).toBe(firstVisibleTile());
+        expect(getActiveElement()).toBe(firstWholeTile());
       }
     );
 
@@ -1584,6 +1645,86 @@ export const AttachmentChevronPagingTabStopTest: Story = {
         )!.focus();
         await page('prev');
         await waitFor(() => expect(tabStop()).toBe(attachments[0]));
+      }
+    );
+
+    await step(
+      'a tile whose edge only reaches the lighter half of an edge fade still becomes the Tab stop',
+      async () => {
+        // Put tile 5's start edge 4px into the start fade, as paging back can.
+        const tile = attachments[4]!;
+        const clearance = parseFloat(
+          getComputedStyle(scrollEl).scrollPaddingLeft
+        );
+        const left =
+          scrollEl.scrollLeft +
+          tile.getBoundingClientRect().left -
+          scrollEl.getBoundingClientRect().left -
+          (clearance - 4);
+        scrollEl.scrollTo({ left, behavior: 'instant' });
+        // WebKit can fire `scrollend` before the scroll-driven chevron
+        // updates, so let the chevron catch up first.
+        await waitForScrollSettled(scrollEl);
+        await waitFor(() => expect(tabStop()).toBe(tile));
+        expect(
+          isTileFullyVisible(el, tile),
+          `sanity check: the tile reaches into the fade (tile at ${
+            tile.getBoundingClientRect().left -
+            scrollEl.getBoundingClientRect().left
+          }px, Prev ${describeChevron(chevron('prev'))})`
+        ).toBe(false);
+      }
+    );
+  },
+};
+
+export const AttachmentFocusScrollTest: Story = {
+  render: () => '',
+  play: async ({ canvasElement, step }) => {
+    renderMultiAttachmentPromptField(canvasElement);
+
+    const el = await getComponent<PromptField>(
+      canvasElement,
+      'swc-prompt-field'
+    );
+    await el.updateComplete;
+    await new Promise((resolve) => requestAnimationFrame(resolve));
+    await el.updateComplete;
+
+    const attachments = Array.from(
+      el.querySelectorAll<HTMLElement>('[slot="attachment"]')
+    );
+    const scrollEl = el.shadowRoot!.querySelector<HTMLDivElement>(
+      '.swc-PromptField-attachments-scroll'
+    )!;
+    useInstantScroll(scrollEl);
+
+    await step(
+      'focusing a tile from either end shows all of it and never stops inside an edge fade',
+      async () => {
+        if (!CSS.supports('animation-timeline: scroll()')) {
+          return;
+        }
+        for (const end of ['start', 'end'] as const) {
+          for (const [index, tile] of attachments.entries()) {
+            const max = scrollEl.scrollWidth - scrollEl.clientWidth;
+            scrollEl.scrollTo({
+              left: end === 'start' ? 0 : max,
+              behavior: 'instant',
+            });
+            await waitForScrollStopped(scrollEl);
+            tile.focus();
+            await waitForScrollStopped(scrollEl);
+            const where = `tile ${index + 1}, focused from the ${end}, at ${Math.round(scrollEl.scrollLeft)}px`;
+            expect(
+              restsInsideEdgeFade(el),
+              `${where} stops inside an edge fade`
+            ).toBe(false);
+            expect(isTileFullyVisible(el, tile), `${where} is cut off`).toBe(
+              true
+            );
+          }
+        }
       }
     );
   },

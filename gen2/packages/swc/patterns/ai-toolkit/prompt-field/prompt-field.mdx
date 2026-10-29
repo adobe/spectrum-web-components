@@ -117,7 +117,7 @@ Attachments own dismiss behavior via **`dismissible`** and emit **`swc-upload-at
 When the attachments don't fit, the strip scrolls horizontally. This works the same for `type="card"` and `type="media"` tiles.
 
 - Round chevron buttons show on each side when there is more content in that direction. `>` moves the tile that is partly hidden at the end to the start of the strip; `<` does the reverse. When no tile is left to move, a chevron scrolls to that end of the strip.
-- Edge fades show that more content is off screen. The fades and chevrons come in as soon as the strip scrolls. While a chevron fades in with the scroll, it takes clicks only once it is at least half visible.
+- Edge fades show that more content is off screen, and grow in as soon as the strip scrolls. Each chevron shows once the strip has scrolled past its fade, so it's never partly transparent over a tile.
 - Users can also scroll with a trackpad, mouse wheel, or touch. The strip has no visible scrollbar and doesn't snap to tile edges.
 
 <Canvas of={PromptFieldStories.MultiAttachmentScroll} />

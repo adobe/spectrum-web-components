@@ -657,8 +657,8 @@
 }
 
 /* The edge fades and chevrons follow the scroll position, as in React
- * Spectrum. Over the first and last fade-range of scroll, each fade grows in
- * and its chevron fades in.
+ * Spectrum. Over the first and last fade-range of scroll, each fade grows in.
+ * Its chevron shows once the strip has scrolled past that range.
  *
  * Each fade is a gradient that is wider than its element. Moving its
  * mask-position shows or hides the fade. The start fade is on the scroller
@@ -887,10 +887,11 @@
 }
 
 /* The scroll position shows and hides the chevrons, as in React Spectrum.
- * Each fades in with its edge fade and is `visibility: hidden` at its end, so
- * it can't be clicked or focused there. `pointer-events` changes at the
- * midpoint of the fade, so a faint chevron doesn't block clicks on the tile
- * under it. A chevron with keyboard focus (.is-focus-visible) stays visible. */
+ * Each chevron shows once the strip has scrolled past its edge fade, and is
+ * `visibility: hidden` until then, so it can't be clicked or focused there.
+ * `step-end` switches it at once, so a chevron never shows partly
+ * transparent over a tile. A chevron with keyboard focus (.is-focus-visible)
+ * stays visible. */
 @supports (animation-timeline: scroll()) {
   .swc-PromptField-attachments-scroll-prev,
   .swc-PromptField-attachments-scroll-next {
@@ -898,7 +899,7 @@
     transition: none;
     animation-name: swc-prompt-field-attachment-chevron-in;
     animation-duration: 1ms;
-    animation-timing-function: linear;
+    animation-timing-function: step-end;
     animation-fill-mode: both;
   }
 
@@ -919,13 +920,11 @@
   @keyframes swc-prompt-field-attachment-chevron-in {
     from {
       visibility: hidden;
-      pointer-events: none;
       opacity: 0;
     }
 
     to {
       visibility: visible;
-      pointer-events: auto;
       opacity: 1;
     }
   }
