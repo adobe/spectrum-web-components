@@ -36,16 +36,12 @@
   gap: token("group-gap-medium");
   align-items: center;
   min-block-size: token("toast-height");
-
-  /* TODO: use banner-padding-vertical when available. */
-  padding-block: token("spacing-200");
-
-  /* TODO: use banner-padding-horizontal for inline-start padding when available. */
-  padding-inline: token("spacing-300") token("spacing-100");
+  padding-block: token("banner-padding-vertical");
+  padding-inline: token("banner-padding-horizontal") token("spacing-100");
   font-size: token("font-size-100");
   font-weight: token("regular-font-weight");
   line-height: token("line-height-font-size-100");
-  color: token("white");
+  color: token("transparent-static-white-1000");
   background-color: var(--_swc-toast-background-color);
   border-radius: token("corner-radius-700");
   opacity: 1;
@@ -64,9 +60,7 @@
   display: flex;
   flex: 1 1 auto;
   flex-wrap: wrap;
-
-  /* TODO: use banner-gap-vertical and banner-gap-horizontal when available. */
-  gap: token("spacing-100") token("spacing-400");
+  gap: token("banner-gap-vertical") token("banner-gap-horizontal");
   align-items: center;
   min-inline-size: 0;
 }
@@ -140,8 +134,9 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  :host,
   .swc-Toast {
-    --_swc-toast-animation-distance: 0;
+    transition-duration: 0ms;
   }
 }
 
