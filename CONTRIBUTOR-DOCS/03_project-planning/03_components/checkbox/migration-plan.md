@@ -60,7 +60,7 @@
 >
 > This plan covers **`swc-checkbox`, the individual checkbox, only.** Unlike `swc-radio`, a checkbox is a complete control on its own (a single required consent box is a first-class use case), so `swc-checkbox` can ship and be documented independently. `swc-checkbox-group` is planned separately (Q10). The [accessibility migration analysis](./accessibility-migration-analysis.md) is authoritative for gen2 semantics, except where Q7 (description and error text), Q13 (name wiring), B18 (invalid state inside a group), and B22 (`field-status` in place of the status booleans) override it. It was authored against the approved [forms strategy RFC](../../05_strategies/forms-strategy-rfc.md).
 >
-> **Status: ready for review.** Core migration questions are resolved in the [Decision log](#decision-log), except Q14, which blocks the accessibility phase. Q8 and Q9 are settled during implementation and do not change the API. Q15 waits on Design; either outcome is additive.
+> **Status: ready for review.** Core migration questions are resolved in the [Decision log](#decision-log), except Q14, which blocks the accessibility phase. Q9 is settled in the Decision log. Q8 is settled during Styling and does not change the API. Q15 waits on Design; either outcome is additive.
 
 ---
 
@@ -77,7 +77,7 @@
 
 - **Q14**: how to move focus to the first invalid checkbox after a failed submit in a `novalidate` form (C7). Blocks the accessibility phase. See [Architecture and behavior](#architecture-and-behavior).
 
-Q8, Q9, Q12, and Q15 are open but do not block implementation; see [Blockers and open questions](#blockers-and-open-questions).
+Q8, Q12, and Q15 are open but do not block implementation; see [Blockers and open questions](#blockers-and-open-questions).
 
 ---
 
@@ -490,20 +490,20 @@ Rationale for using `LabellingMixin` and skipping `DisabledMixin`: C4 and C3 in 
 
 #### Naming and public surface
 
-- [ ] `Checkbox.types.ts`: define the `size` union with default `m`, `CHECKBOX_STATUSES` (`disabled`, `invalid`, `readonly`) with `satisfies readonly FieldStatus[]` (B22), and the public interface
-- [ ] `Checkbox.base.ts`: implement `checked`, `indeterminate`, `fieldStatus`, `required`, `emphasized`, `size`, `name`, `value`
-- [ ] `fieldStatus` (B22): validate values against `CHECKBOX_STATUSES` with `validateEnum`; call `fieldAssoc.syncDisabledState()` from `update()` for the `disabled` custom state; read effective disabled and barring from `fieldAssoc.disabled` and `fieldAssoc.barred`, not the inner input's `readOnly`, which a checkbox ignores (C10); drop `valueMissing` from `setValidity()` while barred, keeping `customError` (C8); and pass `invalid: fieldStatus === 'invalid'` to `renderFieldDescription()` explicitly, as `swc-text-field` does. Omit `errorIcon` while the checkbox is effectively disabled (B14)
+- [x] `Checkbox.types.ts`: define the `size` union with default `m`, `CHECKBOX_STATUSES` (`disabled`, `invalid`, `readonly`) with `satisfies readonly FieldStatus[]` (B22), and the public interface. No separate interface was added: `CheckboxBase` is the public type, as for `swc-text-field` and `swc-radio-group`, whose types files define none.
+- [x] `Checkbox.base.ts`: implement `checked`, `indeterminate`, `fieldStatus`, `required`, `emphasized`, `size`, `name`, `value`
+- [x] `fieldStatus` (B22): validate values against `CHECKBOX_STATUSES` with `validateEnum`; call `fieldAssoc.syncDisabledState()` from `update()` for the `disabled` custom state; read effective disabled and barring from `fieldAssoc.disabled` and `fieldAssoc.barred`, not the inner input's `readOnly`, which a checkbox ignores (C10); drop `valueMissing` from `setValidity()` while barred, keeping `customError` (C8); and pass `invalid: fieldStatus === 'invalid'` to `renderFieldDescription()` explicitly, as `swc-text-field` does. Omit `errorIcon` while the checkbox is effectively disabled (B14)
 - [x] Compose `LabellingMixin` and `FieldDescriptionMixin`; override `roleElement` in the SWC class to return the inner input (C9)
-- [ ] `static formAssociated = true`, `attachInternals()`, `FieldAssociationController` with `onDisabledChange`, `getStatus: () => this.fieldStatus`, and `host: this`, so the controller owns `willValidate` and the disabled click guard (C10)
-- [ ] `formResetCallback`, `formStateRestoreCallback`, `formDisabledCallback` delegation
-- [ ] `setValidity()` for `valueMissing` and for `customError` while `field-status="invalid"`, with the `error-text` message, anchored to the inner input (B17)
-- [ ] `click()` forwarding; non-cancelable `change` (B10); `checked` attribute as default, property live (B9)
-- [ ] Keep the inner input reference and change handler private (B7); focus order relies on the native host `tabindex` (B6)
-- [ ] Q9: write the read-only unit test first and confirm it fails, implement the guard, then record the mechanism in the Decision log
+- [x] `static formAssociated = true`, `attachInternals()`, `FieldAssociationController` with `onDisabledChange`, `getStatus: () => this.fieldStatus`, and `host: this`, so the controller owns `willValidate` and the disabled click guard (C10)
+- [x] `formResetCallback`, `formStateRestoreCallback`, `formDisabledCallback` delegation
+- [x] `setValidity()` for `valueMissing` and for `customError` while `field-status="invalid"`, with the `error-text` message, anchored to the inner input (B17). `valueMissing` uses the inner input's native message.
+- [x] `click()` forwarding; non-cancelable `change` (B10); `checked` attribute as default, property live (B9). B9 uses a dirty flag: `attributeChangedCallback` applies the `checked` attribute only until the user or a script sets `checked`, and form reset clears the flag. The input handler syncs the form value and validity right away, so `input` and `change` listeners read current state.
+- [x] Keep the inner input reference and change handler private (B7); focus order relies on the native host `tabindex` (B6). The `roleElement` override is `@internal`, so the inner input stays out of the Custom Elements Manifest.
+- [x] Q9: write the read-only unit test first and confirm it fails, implement the guard, then record the mechanism in the Decision log
 
 #### Alignment checks
 
-- [ ] `form`, `validity`, `validationMessage`, `willValidate`, `checkValidity()`, and `reportValidity()` exist on the host with the same types as `swc-text-field`
+- [x] `form`, `validity`, `validationMessage`, `willValidate`, `checkValidity()`, and `reportValidity()` exist on the host with the same types as `swc-text-field`
 
 ### Styling
 
@@ -675,7 +675,6 @@ _Q1 and Q2 are settled in the [Decision log](#decision-log)._
 | #   | Item | Blocking? | Status | Owner |
 | --- | ---- | --------- | ------ | ----- |
 | Q8 | Direction from review: checkbox mostly uses custom styles, with `swc-radio`'s `radio.css` as a base where it fits, and likely won't fully share the shared `form-fields` `_lit-styles/` fragment. The fragment's `.swc-FormFieldLabel` rules lay out the labels of `swc-text-field` and `swc-radio-group` above or to the side of the field, not inline after a control, so the checkbox label needs its own styles. Open choices: (a) whether description and error text reuse the fragment's `.swc-FormFieldDescription` (including its `--invalid` modifier) and `.swc-FormFieldErrorText` rules or get local rules, judged against the Q7 placement; (b) whether `checkbox.css` styles the fixed `swc-FormFieldLabel*` classes that `renderLabel()` emits, or the directive gains a class option. Recommended: local rules for (a), and the fixed classes for (b), which needs no core change. | No | Open: settle in the Styling phase | CSS reviewer |
-| Q9 | Exact read-only mechanism (likely `preventDefault()` on the inner input's `click` while read-only, which also blocks <kbd>Space</kbd>). Settle in API phase with a test first. | No | Open | Implementation |
 | Q14 | How to move focus to the first invalid checkbox after a failed submit in a `novalidate` form (C7). With `novalidate`, the browser does not focus anything, so either the consumer's submit handler calls `focus()` or shared code provides the behavior. Focus for an invalid `swc-checkbox-group` differs and belongs to A1 (B18). In `swc-text-field`, error presentation stays application-controlled, and its [migration plan](../text-field/migration-plan.md) (Q19) defers the broader validation model, including native-bubble suppression, to the forms strategy. | Yes | Open: blocks the accessibility phase | Forms strategy owners + accessibility reviewer |
 
 ### Scope and prerequisites
@@ -720,6 +719,7 @@ A2–A4 have no tickets by decision (Q11): they are on-request or follow from sh
 | Q5 / B9 | `checked` follows native semantics, as specified in B9. | A reflected attribute cannot serve as the reset default. Matches `<input type="checkbox">` and React's controlled/uncontrolled split (`isSelected`/`defaultSelected`). Custom states (A4) remain available as a styling hook. |
 | Q6 / B10 | `change` follows native semantics, as specified in B10. | Matches native checkbox behavior; React has no cancel. Removes the 1st-gen revert path in `handleChange()`. |
 | Q7 | Description and error text. **Swap:** use `FieldDescriptionMixin` unchanged, so `error-text` replaces `description` while `field-status="invalid"` and `error-text` has content. **Placement:** on a standalone checkbox, both sit fully below the box and label, starting at the box's inline-start edge, at the control's text size. | Swapping is the correct default: it matches React S2 and `swc-text-field`, which uses the same mixin, and the description returns once the invalid status clears. The need to show both came partly from an earlier idea of wrapping a single checkbox in a checkbox group to get the in-group layout. Grid layout or slot placement inside `swc-checkbox` can produce either layout, so no wrapper is needed. This supersedes the accessibility analysis's two notes that a standalone required checkbox keeps its description alongside the error, under [ARIA roles, states, and properties](./accessibility-migration-analysis.md#aria-roles-states-and-properties) and [Shadow DOM and cross-root ARIA issues](./accessibility-migration-analysis.md#shadow-dom-and-cross-root-aria-issues). Placement follows React S2's standalone layout. In a group, React S2 moves the description under the label, one size smaller, and `swc-radio` uses the same under-label placement; the group layout waits for `swc-checkbox-group` (A1), because the item needs a way to flag group membership. |
+| Q9 | While `field-status="readonly"`, a capture-phase `click` listener on the host calls `preventDefault()` on clicks targeted at the inner input. | Canceling the click restores the native input's provisional toggle and suppresses `input` and `change`. Label clicks, `click()`, and <kbd>Space</kbd> all click the input, so one guard covers them, and consumers still receive the click. Settled test-first in the API phase: the read-only test failed before the guard and passes with it. |
 | Q10 | `swc-checkbox-group` is outside this migration. | The checkbox works standalone, so it ships first. Details: [Related components and ordering notes](#related-components-and-ordering-notes). |
 | Q11 | Only A1 gets a deferred ticket; A2–A4 are tracked in the Additive table without tickets. | A2 and A4 are on-request; A3 belongs to the shared forms strategy. Keeps the backlog limited to real, scheduled work. The former A5, the error icon, moved into scope with B14. |
 | Q13 | Use `LabellingMixin`'s name wiring unchanged: an in-shadow `<label for>` names the inner input from the `label` slot, `aria-label` carries `accessible-label`, and `ariaLabelledByElements` carries `accessible-labelledby`. | Testing during plan review found an in-shadow `<label for>` acceptable, and it matches `swc-text-field`. Browsers rank `aria-labelledby` over `aria-label` over a native label, so the precedence matches the order the accessibility analysis specifies. Internal wiring only; no public API change. This supersedes the accessibility analysis's description of the slotted label wired through `ariaLabelledByElements`, under [ARIA roles, states, and properties](./accessibility-migration-analysis.md#aria-roles-states-and-properties), [Shadow DOM and cross-root ARIA issues](./accessibility-migration-analysis.md#shadow-dom-and-cross-root-aria-issues), and [Summary checklist](./accessibility-migration-analysis.md#summary-checklist). |

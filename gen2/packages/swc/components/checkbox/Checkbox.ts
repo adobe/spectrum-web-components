@@ -11,8 +11,11 @@
  */
 
 import { CSSResultArray, html, TemplateResult } from 'lit';
+import { live } from 'lit/directives/live.js';
 
 import { CheckboxBase } from '@adobe/spectrum-wc-core/components/checkbox';
+
+import '@adobe/spectrum-wc-icons/swc-icon-alert-triangle.js';
 
 import styles from './checkbox.css';
 
@@ -29,8 +32,14 @@ const INPUT_ID = 'input';
  * @element swc-checkbox
  * @since 2.0.0-beta.7
  *
+ * @fires {Event} input - Fires when the user toggles the checkbox, after `checked`, the form value, and validity update. Bubbles and crosses shadow boundaries; not cancelable.
+ * @fires {Event} change - Fires when the user toggles the checkbox, after `input`. Bubbles and crosses shadow boundaries; not cancelable. To block a toggle, cancel the `click` event instead.
+ * @fires {Event} invalid - Fires on the host when validation fails. Cancelable; does not bubble or cross shadow boundaries. Canceling suppresses native validation UI, not the failure.
+ *
  * @example
- * <swc-checkbox><span slot="label">Send me updates</span></swc-checkbox>
+ * <swc-checkbox name="terms" value="accepted" required>
+ *   <span slot="label">I agree to the terms of service</span>
+ * </swc-checkbox>
  */
 export class Checkbox extends CheckboxBase {
   // ──────────────────────────────
@@ -42,18 +51,48 @@ export class Checkbox extends CheckboxBase {
   }
 
   /**
-   * Native input element, or `null` before rendering.
+   * @internal
+   *
+   * Native checkbox input, or `null` before rendering. Internal: the inner
+   * input is not public API.
    */
   public override get roleElement(): HTMLInputElement | null {
     return this.renderRoot?.querySelector(`input#${INPUT_ID}`) ?? null;
   }
 
+  /**
+   * Re-dispatch `change` from the host: the native `change` event is
+   * `composed: false`, so it never crosses the shadow boundary and a consumer's
+   * `<swc-checkbox @change=…>` would otherwise never fire.
+   */
+  private handleChange(): void {
+    this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
+  }
+
   protected override render(): TemplateResult {
     return html`
       <div class="swc-Checkbox">
-        <input id=${INPUT_ID} type="checkbox" class="swc-Checkbox-input" />
+        <input
+          id=${INPUT_ID}
+          type="checkbox"
+          class="swc-Checkbox-input"
+          .checked=${live(this.checked)}
+          .indeterminate=${live(this.indeterminate)}
+          ?required=${this.required}
+          ?disabled=${this.effectiveDisabled}
+          @input=${this.handleInput}
+          @change=${this.handleChange}
+        />
         ${this.renderLabel(INPUT_ID)}
       </div>
+      ${this.renderFieldDescription({
+        invalid: this.fieldStatus === 'invalid',
+        errorIcon: this.effectiveDisabled
+          ? undefined
+          : html`
+              <swc-icon-alert-triangle></swc-icon-alert-triangle>
+            `,
+      })}
     `;
   }
 }
