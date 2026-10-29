@@ -10,6 +10,31 @@
 <meta property="og:site_name" content="Adobe | Spectrum Web Components" />
 <meta property="og:type" content="website" />
 
+<!-- Apply the Theme toolbar value from the URL before the stylesheets and
+     Storybook load, so a non-default theme doesn't flash light first.
+     `withContext` and `SpectrumDocsContainer` keep the class in sync after. -->
+<script>
+  (() => {
+    const globals = new URLSearchParams(window.location.search).get('globals');
+    const theme = /(?:^|;)theme:(light|dark|adaptive)(?:;|$)/.exec(
+      globals ?? ''
+    )?.[1];
+    if (theme) {
+      document.documentElement.classList.add(`swc-theme--${theme}`);
+    }
+  })();
+</script>
+<style>
+  /* Mirrors swc.css, which loads later with the preview module */
+  :root.swc-theme--dark {
+    color-scheme: dark;
+  }
+
+  :root.swc-theme--adaptive {
+    color-scheme: light dark;
+  }
+</style>
+
 <!-- This preconnect opens the connection for typekit to more quickly load fonts -->
 <link rel="preconnect" href="https://use.typekit.net" crossorigin />
 <link rel="dns-prefetch" href="https://use.typekit.net" />
@@ -184,6 +209,30 @@
     [data-section='upcoming'] {
       margin-block-end: 3.5rem;
     }
+  }
+
+  /* Storybook's loading placeholders are hard-coded white. `Canvas` follows
+     the color scheme until the tokens load. */
+  .sb-preparing-story,
+  .sb-preparing-docs,
+  .sb-previewBlock,
+  .sb-argstableBlock-body td {
+    background: var(--swc-background-base-color, Canvas);
+  }
+
+  .sb-previewBlock_icon,
+  .sb-argstableBlock th span,
+  .sb-argstableBlock td span,
+  .sb-argstableBlock-body button {
+    background-color: var(--swc-gray-200, GrayText);
+  }
+
+  .sb-previewBlock {
+    border-color: var(--swc-gray-200, GrayText);
+  }
+
+  .sb-argstableBlock-body tr:not(:first-child) {
+    border-top-color: var(--swc-gray-200, GrayText);
   }
 
   /* Ensure an adaptive-capable background */
