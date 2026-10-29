@@ -75,12 +75,14 @@ function isImageFile(file: File): boolean {
 }
 
 function getBadgeLabel(file: File): string | undefined {
-  const extension = file.name.match(/\.([a-z0-9]+)$/i)?.[1];
+  // Needs a character before the dot (so dotfiles have no extension) and a
+  // leading letter (so numeric suffixes like `.20260415` don't count).
+  const extension = file.name.match(/.\.([a-z][a-z0-9]{0,7})$/i)?.[1];
   if (extension) {
     return extension.toUpperCase();
   }
 
-  const mimeType = file.type.toLowerCase();
+  const mimeType = file.type.split(';', 1)[0].trim().toLowerCase();
   if (MIME_BADGE_LABELS[mimeType]) {
     return MIME_BADGE_LABELS[mimeType];
   }
@@ -102,7 +104,8 @@ function formatFileSize(bytes: number, locale?: string | string[]): string {
   const units = ['kilobyte', 'megabyte', 'gigabyte'] as const;
   let value = bytes / 1000;
   let unitIndex = 0;
-  while (value >= 1000 && unitIndex < units.length - 1) {
+  // Compare the rounded value so 999.5 kB shows as 1 MB, not 1,000 kB.
+  while (Math.round(value) >= 1000 && unitIndex < units.length - 1) {
     value /= 1000;
     unitIndex += 1;
   }

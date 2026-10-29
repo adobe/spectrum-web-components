@@ -94,10 +94,16 @@ export const BadgeLabels: Story = {
       expect(badgeFor('data.csv', 'application/octet-stream')).toBe('CSV');
     });
 
+    await step('ignores dotfile names and numeric suffixes', async () => {
+      expect(badgeFor('.gitignore', 'text/plain')).toBe('TXT');
+      expect(badgeFor('report.20260415', 'application/pdf')).toBe('PDF');
+    });
+
     await step(
       'falls back to the MIME type when the name has no extension',
       async () => {
         expect(badgeFor('README', 'text/plain')).toBe('TXT');
+        expect(badgeFor('README', 'text/plain; charset=utf-8')).toBe('TXT');
         expect(badgeFor('download', 'application/pdf')).toBe('PDF');
         expect(
           badgeFor(
@@ -128,8 +134,12 @@ export const SizeLabels: Story = {
       expect(sizeLabelFor(1_000)).toBe('1 kB');
       expect(sizeLabelFor(1_540)).toBe('1.5 kB');
       expect(sizeLabelFor(12_345)).toBe('12 kB');
+      expect(sizeLabelFor(999_499)).toBe('999 kB');
+      expect(sizeLabelFor(999_500)).toBe('1 MB');
+      expect(sizeLabelFor(999_999)).toBe('1 MB');
       expect(sizeLabelFor(1_500_000)).toBe('1.5 MB');
       expect(sizeLabelFor(250_000_000)).toBe('250 MB');
+      expect(sizeLabelFor(999_500_000)).toBe('1 GB');
       expect(sizeLabelFor(2_000_000_000)).toBe('2 GB');
       expect(sizeLabelFor(3_000_000_000_000)).toBe('3,000 GB');
     });

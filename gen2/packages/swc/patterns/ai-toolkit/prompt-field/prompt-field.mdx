@@ -165,7 +165,7 @@ field.addEventListener('swc-prompt-field-drop', (event) => {
 });
 
 field.addEventListener('swc-upload-attachment-dismiss', (event) => {
-  const id = event.target.dataset.attachmentId;
+  const id = event.detail.attachment.dataset.attachmentId;
   const removed = attachments.find((item) => item.id === id);
   if (removed) revokeAttachment(removed);
   attachments = attachments.filter((item) => item.id !== id);
@@ -192,6 +192,7 @@ html`
         dismissible
         data-attachment-id=${item.id}
         accessible-label=${`${item.name}, ${item.sizeLabel}`}
+        dismiss-label=${`Remove ${item.name}`}
       >
         <swc-asset slot="thumbnail">
           ${item.thumbnailUrl

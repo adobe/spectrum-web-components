@@ -597,6 +597,8 @@ class ConversationFullPatternDemo extends LitElement {
           slot="attachment"
           type="media"
           dismissible
+          accessible-label=${`${attachment.name}, ${attachment.sizeLabel}`}
+          dismiss-label=${`Remove ${attachment.name}`}
           data-attachment-id=${attachment.id}
         >
           ${renderDemoAttachmentThumbnail(attachment)}
