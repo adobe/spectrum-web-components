@@ -89,6 +89,7 @@
     "test:a11y:headed": "playwright test --headed",
     "test:a11y:ui": "playwright test --ui",
     "test:browser": "vitest --project storybook --browser.headless=false",
+    "test:cem": "node --test cem.config.test.js",
     "test:coverage": "vitest --coverage --project storybook",
     "test:storybook": "test-storybook",
     "test:ui": "vitest --ui --project storybook",
