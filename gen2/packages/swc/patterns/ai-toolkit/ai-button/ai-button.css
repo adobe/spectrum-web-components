@@ -1,0 +1,385 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+/*
+  .swc-AiButton  (native button: shadows, backdrop blur)
+  ┌──────────────────────────────────────────────────────────┐
+  │ .swc-AiButton-glow     (radial tints)                      │  back
+  │   ::before             (blurred gradient glow strip)        │    │
+  │   ::after              (stronger glow strip, hover only)    │    │
+  │ .swc-AiButton-surface  (glass overlay and top light)       │    │
+  │   ::before             (top light blend, dark mode)         │    │
+  │   ::after              (white highlight)                    │    │
+  │ .swc-AiButton-icon + .swc-AiButton-label                  │    ▼
+  │ ::after                (hairline stroke)                    │  front
+  └──────────────────────────────────────────────────────────┘
+
+  Layer values come from the AI button "LightFX" design. Each color pairs the
+  value of the design's Light and Dark modes in light-dark().
+
+  The AI button is not customizable, so it has no public custom properties.
+  Its private properties are declared on the internal button, not the host,
+  so values set on the host can't override them.
+*/
+
+:host {
+  display: inline-block;
+  inline-size: fit-content;
+  vertical-align: top;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   BASE BUTTON
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.swc-AiButton {
+  /* Medium size. The size rules below override these. */
+  --_swc-ai-button-min-block-size: token("component-height-100");
+  --_swc-ai-button-edge-to-text: token("base-padding-horizontal-medium");
+  --_swc-ai-button-gap: token("base-gap-medium");
+  --_swc-ai-button-font-size: token("font-size-100");
+  --_swc-ai-button-line-height: token("line-height-font-size-100");
+  --_swc-ai-button-icon-size: token("workflow-icon-medium");
+  --_swc-ai-button-glow-offset: calc(token("spacing-50") * -1);
+  --_swc-ai-button-glow-hover-block-size: 9px;
+  --_swc-ai-button-glow-hover-inset-inline: token("spacing-200");
+  --_swc-ai-button-icon-only-glow-inset-inline: 10px;
+  --_swc-ai-button-icon-only-glow-hover-block-size: 22px;
+  --_swc-ai-button-icon-only-glow-hover-inset-inline: token("spacing-85");
+
+  /* Default state. The state rules below override these. */
+  --_swc-ai-button-glow-opacity: 1;
+  --_swc-ai-button-glow-hover-opacity: 0;
+  --_swc-ai-button-highlight-opacity: 1;
+  --_swc-ai-button-content-color: light-dark(token("pink-1400"), token("transparent-static-white-900"));
+  --_swc-ai-button-icon-color: light-dark(token("pink-1300"), token("transparent-static-white-900"));
+  --_swc-ai-button-stroke: inset 0 0.5px 0 0 light-dark(token("transparent-static-black-125"), token("transparent-static-white-100")), inset 0 0 0 0.5px light-dark(token("transparent-static-black-75"), token("transparent-static-white-100"));
+  --_swc-ai-button-tint-1: light-dark(token("fuchsia-600"), token("red-500"));
+  --_swc-ai-button-tint-2: light-dark(token("red-700"), token("fuchsia-600"));
+  --_swc-ai-button-tint-3: light-dark(token("orange-500"), token("indigo-500"));
+
+  /* Ends of the glow strip. The strip averages the design's angular gradient
+     down each column: the start mixes its first and last stops, and the end
+     mixes its second and third. */
+  --_swc-ai-button-glow-start: color-mix(in srgb, light-dark(token("fuchsia-700"), token("red-800")) 80%, light-dark(token("fuchsia-600"), token("fuchsia-700")));
+  --_swc-ai-button-glow-end: color-mix(in srgb, light-dark(token("orange-600"), token("red-700")) 67%, light-dark(token("red-700"), token("indigo-400")));
+  --_swc-ai-button-overlay-start: light-dark(token("transparent-static-white-600"), token("transparent-static-black-800"));
+  --_swc-ai-button-overlay-end: light-dark(token("transparent-static-white-300"), token("transparent-static-black-750"));
+  --_swc-ai-button-overlay-fill: light-dark(token("transparent-static-black-150"), token("transparent-static-white-125"));
+  --_swc-ai-button-overlay-hue-start: light-dark(token("magenta-200"), token("transparent-static-black-150"));
+  --_swc-ai-button-overlay-hue-end: light-dark(token("magenta-500"), token("fuchsia-400"));
+  --_swc-ai-button-overlay: linear-gradient(to bottom, color-mix(in srgb, var(--_swc-ai-button-overlay-hue-start) 10%, transparent), color-mix(in srgb, var(--_swc-ai-button-overlay-hue-end) 10%, transparent) 80%), linear-gradient(var(--_swc-ai-button-overlay-fill) 0 0), linear-gradient(to bottom, var(--_swc-ai-button-overlay-start), var(--_swc-ai-button-overlay-end));
+
+  /* The design's top light is a 10% color-dodge layer with a 4% white inner
+     shadow. On light glass, it adds a 10% white wash and the full shadow. On
+     dark glass, its shadow adds about half as much, and the dodge brightens
+     the glow (see .swc-AiButton-surface::before). */
+  --_swc-ai-button-top-light: light-dark(rgb(255 255 255 / 10%), transparent);
+  --_swc-ai-button-top-light-shadow: light-dark(token("transparent-static-white-100"), token("transparent-static-white-50"));
+  --_swc-ai-button-top-light-dodge: light-dark(transparent, rgb(134 112 112 / 10%));
+  --_swc-ai-button-highlight-start: light-dark(rgb(255 255 255 / 66%), token("transparent-static-white-150"));
+  --_swc-ai-button-highlight-end: light-dark(token("transparent-static-white-0"), token("transparent-static-black-75"));
+
+  -webkit-tap-highlight-color: transparent;
+  display: flex; /* Block-level, so the host's line height can't add space around a small button */
+  position: relative;
+  gap: var(--_swc-ai-button-gap);
+  align-items: center;
+  justify-content: center;
+  min-block-size: var(--_swc-ai-button-min-block-size);
+  padding-block: 0;
+  padding-inline: var(--_swc-ai-button-edge-to-text);
+  margin: 0;
+  font-family: token("sans-serif-font");
+  font-size: var(--_swc-ai-button-font-size);
+  font-weight: token("medium-font-weight");
+  line-height: var(--_swc-ai-button-line-height);
+  color: var(--_swc-ai-button-content-color);
+  white-space: nowrap;
+  background-color: transparent;
+  border: 0;
+  border-radius: calc(var(--_swc-ai-button-min-block-size) / 2);
+  box-shadow:
+    0 4px 12px token("transparent-static-black-125"),
+    0 2px 4px token("transparent-static-black-50"),
+    0 6px 20px token("transparent-static-black-50"),
+    inset 0 2px 8px token("transparent-static-white-125");
+  overflow: clip;
+  user-select: none;
+  backdrop-filter: blur(25px);
+  transition: transform token("animation-duration-100") token("animation-ease-in-out");
+}
+
+/* The design also shows its main drop shadow behind the translucent button. */
+.swc-AiButton::before {
+  position: absolute;
+  inset: 0;
+  background-color: token("transparent-static-black-125");
+  border-radius: inherit;
+  content: "";
+  filter: blur(6px);
+  translate: 0 4px;
+}
+
+/* Hairline drawn above every layer, like the design's inside stroke. The
+   offset shadow darkens the top edge so the stroke fades toward the bottom.
+   Box shadows keep it at 0.5px, which a border or mask would round up. */
+.swc-AiButton::after {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: var(--_swc-ai-button-stroke);
+  pointer-events: none;
+  content: "";
+}
+
+.swc-AiButton:hover {
+  --_swc-ai-button-glow-hover-opacity: token("opacity-900");
+}
+
+.swc-AiButton:focus-visible {
+  outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
+  outline-offset: token("focus-ring-gap");
+}
+
+.swc-AiButton:active {
+  transform: perspective(var(--_swc-ai-button-min-block-size)) translate3d(0, 0, token("component-size-difference-down"));
+}
+
+/* The disabled design drops the tints, glow, and overlay, and dims the
+   highlight. Its dark stroke is brighter along the top and sides. With no
+   glow, the dark top light has nothing to brighten. */
+.swc-AiButton:disabled {
+  --_swc-ai-button-content-color: light-dark(token("disabled-static-black-content-color"), token("disabled-content-color"));
+  --_swc-ai-button-icon-color: var(--_swc-ai-button-content-color);
+  --_swc-ai-button-quiet-edge: light-dark(transparent, token("transparent-static-white-200"));
+  --_swc-ai-button-stroke: inset 0 0.5px 0 0 var(--_swc-ai-button-quiet-edge), inset 0.5px 0 0 0 var(--_swc-ai-button-quiet-edge), inset -0.5px 0 0 0 var(--_swc-ai-button-quiet-edge), inset 0 0 0 0.5px light-dark(token("transparent-static-black-100"), token("transparent-static-white-100"));
+  --_swc-ai-button-glow-opacity: 0;
+  --_swc-ai-button-overlay: none;
+  --_swc-ai-button-top-light-dodge: transparent;
+  --_swc-ai-button-highlight-opacity: token("opacity-500");
+
+  transform: none;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   DECORATIVE LAYERS
+   Positioned without z-index, so they paint in source order below the content.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.swc-AiButton-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(59.4% 91.9% at 31.2% 99.6%, color-mix(in srgb, var(--_swc-ai-button-tint-1) 12%, transparent), transparent), radial-gradient(49.6% 89.8% at 46.2% 100%, color-mix(in srgb, var(--_swc-ai-button-tint-2) 6%, transparent), transparent), radial-gradient(50.4% 54.4% at 83.3% 100%, color-mix(in srgb, var(--_swc-ai-button-tint-3) 8%, transparent), transparent);
+  pointer-events: none;
+  opacity: var(--_swc-ai-button-glow-opacity);
+}
+
+.swc-AiButton-glow::before,
+.swc-AiButton-glow::after {
+  position: absolute;
+  inset-block-end: var(--_swc-ai-button-glow-offset);
+  inset-inline: token("spacing-200");
+  block-size: token("spacing-100");
+  background: linear-gradient(to right, var(--_swc-ai-button-glow-start) 40%, var(--_swc-ai-button-glow-end) 62%);
+  box-shadow: inset 0 1.5px 12px token("transparent-static-white-750");
+  content: "";
+  filter: blur(11px);
+}
+
+/* Unlike the base strip, the design's hover strip uses palette colors
+   directly, not the AI button variables. */
+.swc-AiButton-glow::after {
+  --_swc-ai-button-glow-start: color-mix(in srgb, token("fuchsia-700") 80%, token("fuchsia-600"));
+  --_swc-ai-button-glow-end: color-mix(in srgb, token("orange-600") 67%, token("red-700"));
+
+  inset-block-end: 0;
+  inset-inline: var(--_swc-ai-button-glow-hover-inset-inline);
+  block-size: var(--_swc-ai-button-glow-hover-block-size);
+  box-shadow: inset 0 1.5px 12px rgb(255 255 255 / 60%);
+  opacity: var(--_swc-ai-button-glow-hover-opacity);
+  transition: opacity token("animation-duration-100") token("animation-ease-in-out");
+}
+
+.swc-AiButton-surface {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(var(--_swc-ai-button-top-light) 0 0), var(--_swc-ai-button-overlay);
+  border-radius: inherit;
+  box-shadow: inset 0 21px 27px var(--_swc-ai-button-top-light-shadow);
+  pointer-events: none;
+}
+
+/* In dark mode, the top light is a real color-dodge blend that brightens the
+   glow. The blend can't see the page behind the button and would gray the
+   translucent glass above the glow, so it is masked to the glow. */
+.swc-AiButton-surface::before {
+  position: absolute;
+  inset: 0;
+  background-color: var(--_swc-ai-button-top-light-dodge);
+  border-radius: inherit;
+  content: "";
+  mix-blend-mode: color-dodge;
+  mask-image: linear-gradient(to bottom, transparent 50%, black 85%);
+}
+
+/* The design blurs the highlight progressively, from sharp at its bottom edge
+   to soft at the top. Clipping the blur below the bottom edge keeps the glow
+   rim under it clean. */
+.swc-AiButton-surface::after {
+  position: absolute;
+  inset: token("spacing-100") token("spacing-75") 1px;
+  background: linear-gradient(to top, var(--_swc-ai-button-highlight-start), var(--_swc-ai-button-highlight-end));
+  border-radius: inherit;
+  content: "";
+  opacity: var(--_swc-ai-button-highlight-opacity);
+  filter: blur(2px);
+  clip-path: inset(-12px -12px 0);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   CONTENT
+   Positioned so that it paints above the decorative layers.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.swc-AiButton-icon {
+  display: inline-flex;
+  position: relative;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--_swc-ai-button-icon-size);
+  block-size: var(--_swc-ai-button-icon-size);
+  color: var(--_swc-ai-button-icon-color);
+}
+
+/* Sets both of the loader's custom properties, so values set on the host
+   can't reach it. The AI mark glyph fills 90% of its icon box (18 of 20
+   units). */
+.swc-AiButton-icon swc-pixel-loader {
+  --swc-pixel-loader-size: calc(var(--_swc-ai-button-icon-size) * 0.9);
+  --swc-pixel-loader-color: currentcolor;
+}
+
+.swc-AiButton-label {
+  position: relative;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   SIZES
+   Set on the internal button, not the host, to keep them private. Medium is
+   the default, set in the base rule. Every size uses the standard button's
+   height, padding, gap, font size, and icon size tokens, so small and medium
+   are shorter than the design's 32px and 36px. Their glow values keep the
+   design's glow and hover strength at those heights.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+:host([size="s"]) .swc-AiButton {
+  --_swc-ai-button-min-block-size: token("component-height-75");
+  --_swc-ai-button-edge-to-text: token("base-padding-horizontal-small");
+  --_swc-ai-button-gap: token("base-gap-small");
+  --_swc-ai-button-font-size: token("font-size-75");
+  --_swc-ai-button-line-height: token("line-height-font-size-75");
+  --_swc-ai-button-icon-size: token("workflow-icon-small");
+  --_swc-ai-button-glow-offset: calc(token("spacing-75") * -1);
+  --_swc-ai-button-glow-hover-block-size: 10px;
+  --_swc-ai-button-icon-only-glow-inset-inline: 9px;
+  --_swc-ai-button-icon-only-glow-hover-block-size: 17px;
+  --_swc-ai-button-icon-only-glow-hover-inset-inline: token("spacing-75");
+}
+
+:host([size="l"]) .swc-AiButton {
+  --_swc-ai-button-min-block-size: token("component-height-200");
+  --_swc-ai-button-edge-to-text: token("base-padding-horizontal-large");
+  --_swc-ai-button-gap: token("base-gap-large");
+  --_swc-ai-button-font-size: token("font-size-200");
+  --_swc-ai-button-line-height: token("line-height-font-size-200");
+  --_swc-ai-button-icon-size: token("workflow-icon-large");
+  --_swc-ai-button-glow-offset: 0;
+  --_swc-ai-button-glow-hover-block-size: 10px;
+  --_swc-ai-button-icon-only-glow-inset-inline: token("spacing-200");
+  --_swc-ai-button-icon-only-glow-hover-block-size: 24px;
+  --_swc-ai-button-icon-only-glow-hover-inset-inline: token("spacing-200");
+}
+
+:host([size="xl"]) .swc-AiButton {
+  --_swc-ai-button-min-block-size: token("component-height-300");
+  --_swc-ai-button-edge-to-text: token("base-padding-horizontal-extra-large");
+  --_swc-ai-button-gap: token("base-gap-extra-large");
+  --_swc-ai-button-font-size: token("font-size-300");
+  --_swc-ai-button-line-height: token("line-height-font-size-300");
+  --_swc-ai-button-icon-size: token("workflow-icon-extra-large");
+  --_swc-ai-button-glow-offset: 0;
+  --_swc-ai-button-glow-hover-block-size: 13px;
+  --_swc-ai-button-icon-only-glow-inset-inline: token("spacing-200");
+  --_swc-ai-button-icon-only-glow-hover-block-size: 18px;
+  --_swc-ai-button-icon-only-glow-hover-inset-inline: token("spacing-100");
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   ICON ONLY
+   Overrides properties, not private properties: the size rules set those
+   with higher specificity.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.swc-AiButton--iconOnly {
+  gap: 0;
+  inline-size: var(--_swc-ai-button-min-block-size);
+  padding-inline: 0;
+}
+
+.swc-AiButton--iconOnly .swc-AiButton-glow::before {
+  inset-inline: var(--_swc-ai-button-icon-only-glow-inset-inline);
+}
+
+.swc-AiButton--iconOnly .swc-AiButton-glow::after {
+  inset-inline: var(--_swc-ai-button-icon-only-glow-hover-inset-inline);
+  block-size: var(--_swc-ai-button-icon-only-glow-hover-block-size);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   RTL
+   Mirrors the brand gradient, as the prompt field does.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+:host(:dir(rtl)) .swc-AiButton-glow {
+  scale: -1 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .swc-AiButton,
+  .swc-AiButton-glow::after {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .swc-AiButton::after {
+    border: token("border-width-100") solid ButtonText;
+  }
+
+  .swc-AiButton:disabled::after {
+    border-color: GrayText;
+  }
+
+  .swc-AiButton::before,
+  .swc-AiButton-glow,
+  .swc-AiButton-surface {
+    display: none;
+  }
+}
