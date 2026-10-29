@@ -22,25 +22,9 @@ const { args, argTypes, template } = getStorybookHelpers(
   'swc-upload-attachment'
 );
 
-argTypes.type = {
-  ...argTypes.type,
-  control: { type: 'radio' },
-  options: ['card', 'media'],
-  table: {
-    category: 'attributes',
-    defaultValue: { summary: 'card' },
-  },
-};
-
-argTypes.size = {
-  ...argTypes.size,
-  control: { type: 'radio' },
-  options: ['m', 'l'],
-  table: {
-    category: 'attributes',
-    defaultValue: { summary: 'm' },
-  },
-};
+// Radio controls instead of the inferred select; options and defaults come from the manifest.
+argTypes.type = { ...argTypes.type, control: { type: 'radio' } };
+argTypes.size = { ...argTypes.size, control: { type: 'radio' } };
 
 /**
  * Shared upload attachment primitive used across AI surfaces such as prompt field and user message.

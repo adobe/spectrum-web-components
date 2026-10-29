@@ -31,18 +31,6 @@ const { args, argTypes, template } = getStorybookHelpers('swc-ui-icon');
 
 const ICON_NAMES = Object.keys(UI_ICONS).sort() as UiIconName[];
 
-argTypes.icon = {
-  ...argTypes.icon,
-  control: { type: 'select' },
-  options: ICON_NAMES,
-};
-
-argTypes.size = {
-  ...argTypes.size,
-  control: { type: 'select' },
-  options: ICON_VALID_SIZES,
-};
-
 /**
  * UI icons are the small, functional glyphs Spectrum controls use (chevrons,
  * checkmarks, arrows, and the like). Spectrum's own components render them for
