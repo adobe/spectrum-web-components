@@ -10,17 +10,30 @@
  * governing permissions and limitations under the License.
  */
 
+import { parse } from 'comment-parser';
+
+const tagKinds = new Map([
+  ['cssprop', 'CSS custom property'],
+  ['cssproperty', 'CSS custom property'],
+  ['csspart', 'CSS part'],
+  ['part', 'CSS part'],
+  ['slot', 'Slot'],
+  ['cssstate', 'CSS state'],
+  ['cssState', 'CSS state'],
+]);
+
 /** @type {import('eslint').Rule.RuleModule} */
 export default {
   meta: {
     type: 'problem',
     docs: {
       description:
-        'Disallow duplicate CSS custom property names within a JSDoc block or across leading JSDoc blocks on the same class, including @cssprop and @cssproperty aliases, to prevent duplicate API table rows.',
+        'Disallow duplicate CSS custom properties, CSS parts, slots, and CSS states within a JSDoc block or across leading JSDoc blocks on the same class to prevent duplicate API table rows.',
     },
     schema: [],
     messages: {
-      duplicate: 'CSS custom property "{{name}}" is documented more than once.',
+      duplicate: '{{kind}} "{{name}}" is documented more than once.',
+      duplicateDefaultSlot: 'Default slot is documented more than once.',
     },
   },
   create(context) {
@@ -42,10 +55,7 @@ export default {
         const names = new Set();
         const previousToken = sourceCode.getTokenBefore(declaration);
         for (const comment of sourceCode.getCommentsBefore(declaration)) {
-          if (
-            previousToken?.loc.end.line === comment.loc.start.line ||
-            /^[ \t]*\*?[ \t]*@typedef\b/m.test(comment.value)
-          ) {
+          if (previousToken?.loc.end.line === comment.loc.start.line) {
             continue;
           }
           namesByComment.set(comment, names);
@@ -58,24 +68,58 @@ export default {
           }
 
           const names = namesByComment.get(comment) ?? new Set();
-          const tags =
-            /^[ \t]*\*?[ \t]*@cssprop(?:erty)?[ \t]+(?:\{[^}\r\n]*\}[ \t]*)?\[?(--[^\s=\]]+)/gm;
-
-          for (const match of comment.value.matchAll(tags)) {
-            const name = match[1];
-            if (names.has(name)) {
-              const start =
-                comment.range[0] + 2 + match.index + match[0].lastIndexOf(name);
-              context.report({
-                loc: {
-                  start: sourceCode.getLocFromIndex(start),
-                  end: sourceCode.getLocFromIndex(start + name.length),
-                },
-                messageId: 'duplicate',
-                data: { name },
-              });
+          for (const block of parse(sourceCode.getText(comment))) {
+            if (block.tags.some(({ tag }) => tag === 'typedef')) {
+              continue;
             }
-            names.add(name);
+
+            for (const spec of block.tags) {
+              const kind = tagKinds.get(spec.tag);
+              const name = spec.name === '-' ? '' : spec.name;
+              if (
+                !kind ||
+                (!name && kind !== 'Slot') ||
+                (kind === 'CSS custom property' && !name.startsWith('--'))
+              ) {
+                continue;
+              }
+
+              const key = `${kind}:${name}`;
+              if (names.has(key)) {
+                const line = name
+                  ? spec.source.find(({ tokens }) => tokens.name)
+                  : spec.source[0];
+                const { tokens } = line;
+                let column =
+                  tokens.start.length +
+                  tokens.delimiter.length +
+                  tokens.postDelimiter.length;
+                if (name) {
+                  column +=
+                    tokens.tag.length +
+                    tokens.postTag.length +
+                    tokens.type.length +
+                    tokens.postType.length +
+                    tokens.name.indexOf(name);
+                }
+                const start = sourceCode.getIndexFromLoc({
+                  line: comment.loc.start.line + line.number,
+                  column:
+                    column + (line.number === 0 ? comment.loc.start.column : 0),
+                });
+                context.report({
+                  loc: {
+                    start: sourceCode.getLocFromIndex(start),
+                    end: sourceCode.getLocFromIndex(
+                      start + (name ? name.length : tokens.tag.length)
+                    ),
+                  },
+                  messageId: name ? 'duplicate' : 'duplicateDefaultSlot',
+                  data: { kind, name },
+                });
+              }
+              names.add(key);
+            }
           }
         }
       },

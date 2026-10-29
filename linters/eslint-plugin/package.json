@@ -34,6 +34,9 @@
   "scripts": {
     "test": "node --test test/*.test.js"
   },
+  "dependencies": {
+    "comment-parser": "1.2.4"
+  },
   "keywords": [
     "design-system",
     "spectrum",

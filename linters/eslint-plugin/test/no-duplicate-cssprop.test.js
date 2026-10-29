@@ -174,19 +174,196 @@ for (const { name, code, duplicates, location } of cases) {
   });
 }
 
+const manifestCategories = [
+  { tags: ['csspart', 'part'], kind: 'CSS part' },
+  { tags: ['slot'], kind: 'Slot' },
+  { tags: ['cssstate', 'cssState'], kind: 'CSS state' },
+];
+
+for (const { tags, kind } of manifestCategories) {
+  for (const tag of tags) {
+    for (const separateBlocks of [false, true]) {
+      test(`reports duplicate @${tag} tags ${separateBlocks ? 'across class comments' : 'within a comment'}`, () => {
+        const code = separateBlocks
+          ? `/** @${tags[0]} first */\n/** @${tag} first */\nexport class Example {}`
+          : `/**\n * @${tags[0]} first\n * @${tag} first\n */`;
+        const messages = new Linter().verify(code, {
+          plugins: { swc: swcPlugin },
+          rules: { [ruleName]: 'warn' },
+        });
+
+        assert.equal(messages.length, 1);
+        assert.equal(messages[0].ruleId, ruleName);
+        assert.equal(
+          messages[0].message,
+          `${kind} "first" is documented more than once.`
+        );
+        assert.equal(messages[0].line, separateBlocks ? 2 : 3);
+        assert.equal(
+          messages[0].column,
+          separateBlocks ? tag.length + 7 : tag.length + 6
+        );
+        assert.equal(messages[0].endColumn - messages[0].column, 5);
+        assert.equal(messages[0].fix, undefined);
+      });
+    }
+  }
+}
+
+const manifestCases = [
+  {
+    name: 'ignores block comments with an extra opening asterisk',
+    code: '/***\n * @slot content\n * @slot content\n */',
+    messages: [],
+  },
+  {
+    name: 'allows distinct slots with nested record types',
+    code: '/**\n * @slot {{id: string}} header\n * @slot {{id: string}} footer\n */',
+    messages: [],
+  },
+  {
+    name: 'reports a duplicate slot with a nested record type',
+    code: '/**\n * @slot content\n * @slot {{id: string}} content\n */',
+    messages: ['Slot "content" is documented more than once.'],
+    location: { line: 3, column: 25, endLine: 3, endColumn: 32 },
+  },
+  {
+    name: 'reports a duplicate property with a nested record type',
+    code: '/**\n * @cssprop --first\n * @cssproperty {{color: string}} --first\n */',
+    messages: ['CSS custom property "--first" is documented more than once.'],
+    location: { line: 3, column: 35, endLine: 3, endColumn: 42 },
+  },
+  {
+    name: 'locates a duplicate name after a multiline type',
+    code: '/**\n * @slot content\n * @slot {\n *   id: string\n * } content\n */',
+    messages: ['Slot "content" is documented more than once.'],
+    location: { line: 5, column: 6, endLine: 5, endColumn: 13 },
+  },
+  {
+    name: 'locates optional names independently of their default values',
+    code: '/**\n * @slot content\n * @slot {Element} [content="content"]\n */',
+    messages: ['Slot "content" is documented more than once.'],
+    location: { line: 3, column: 21, endLine: 3, endColumn: 28 },
+  },
+  {
+    name: 'locates the default slot tag before a multiline type',
+    code: '/**\n * @slot - Content.\n * @slot {\n *   id: string\n * } - Other content.\n */',
+    messages: ['Default slot is documented more than once.'],
+    location: { line: 3, column: 4, endLine: 3, endColumn: 9 },
+  },
+  {
+    name: 'ignores duplicate tags inside typedef blocks',
+    code: '/**\n * @typedef {object} Options\n * @slot content\n * @slot content\n * @cssprop --first\n * @cssprop --first\n */\nclass Example {}',
+    messages: [],
+  },
+  {
+    name: 'ignores typedef blocks when the typedef follows other tags',
+    code: '/**\n * @slot content\n * @slot content\n * @typedef {object} Options\n */\n/** @slot content */\nclass Example {}',
+    messages: [],
+  },
+  {
+    name: 'keeps manifest categories independent',
+    code: '/**\n * @cssprop --shared\n * @csspart --shared\n * @slot --shared\n * @cssstate --shared\n */',
+    messages: [],
+  },
+  {
+    name: 'allows distinct names and case-sensitive names in each category',
+    code: '/**\n * @part first\n * @part First\n * @slot first\n * @slot second\n * @cssstate first\n * @cssstate First\n */',
+    messages: [],
+  },
+  {
+    name: 'keeps classes and member comments independent for other categories',
+    code: '/** @slot first */\nclass First {\n/** @slot first */\nmethod() {}\n}\n/** @slot first */\nclass Second {}',
+    messages: [],
+  },
+  {
+    name: 'ignores prose, other tags, and unnamed parts and states',
+    code: '/**\n * Mention @slot first in prose.\n * @slot first\n * @part\n * @part - Description.\n * @cssstate\n * @cssstate - Description.\n * @cssstates first\n */',
+    messages: [],
+  },
+  {
+    name: 'recognizes type annotations and optional defaults for other categories',
+    code: '/**\n * @part {Element} first\n * @csspart {Element} [first=button]\n * @slot {Element} [content]\n * @slot content\n */',
+    messages: [
+      'CSS part "first" is documented more than once.',
+      'Slot "content" is documented more than once.',
+    ],
+  },
+  {
+    name: 'reports every duplicate after the first in multiple categories',
+    code: '/**\n * @part first\n * @csspart first\n * @part first\n * @cssstate active\n * @cssState active\n */',
+    messages: [
+      'CSS part "first" is documented more than once.',
+      'CSS part "first" is documented more than once.',
+      'CSS state "active" is documented more than once.',
+    ],
+  },
+  {
+    name: 'reports duplicate default slots with and without a description separator',
+    code: '/**\n * @slot\n * @slot - Content.\n * @slot - Other content.\n */',
+    messages: [
+      'Default slot is documented more than once.',
+      'Default slot is documented more than once.',
+    ],
+    location: { line: 3, column: 4, endLine: 3, endColumn: 9 },
+  },
+  {
+    name: 'reports default slots across class comments',
+    code: '/** @slot - Content. */\n/** @slot */\nclass Example {}',
+    messages: ['Default slot is documented more than once.'],
+    location: { line: 2, column: 5, endLine: 2, endColumn: 10 },
+  },
+  {
+    name: 'keeps default slots separate from named slots and other classes',
+    code: '/**\n * @slot - Content.\n * @slot content\n */\nclass First {}\n/** @slot - Content. */\nclass Second {}',
+    messages: [],
+  },
+  {
+    name: 'does not combine typedef slots with class slots',
+    code: '/**\n * @typedef {object} Options\n * @slot content\n */\n/** @slot content */\nclass Example {}',
+    messages: [],
+  },
+];
+
+for (const { name, code, messages: expected, location } of manifestCases) {
+  test(name, () => {
+    const messages = new Linter().verify(code, {
+      plugins: { swc: swcPlugin },
+      rules: { [ruleName]: 'warn' },
+    });
+
+    assert.deepEqual(
+      messages.map(({ message }) => message),
+      expected
+    );
+    assert.ok(
+      messages.every(
+        ({ ruleId, severity, fix }) =>
+          ruleId === ruleName && severity === 1 && !fix
+      )
+    );
+    if (location) {
+      const { line, column, endLine, endColumn } = messages[0];
+      assert.deepEqual({ line, column, endLine, endColumn }, location);
+    }
+  });
+}
+
 test('enables IDE warnings for TypeScript components in the repository config', async () => {
   const eslint = new ESLint({
     cwd: fileURLToPath(new URL('../../../', import.meta.url)),
   });
   const [result] = await eslint.lintText(
-    '/** @cssprop --first */\n/** @cssprop --first */\nexport class Example {}',
+    '/** @cssprop --first\n * @slot content */\n/** @cssprop --first\n * @slot content */\nexport class Example {}',
     { filePath: 'gen2/packages/swc/components/tabs/Tab.ts' }
   );
   const messages = result.messages.filter(
     (message) => message.ruleId === ruleName
   );
 
-  assert.equal(messages.length, 1);
+  assert.equal(messages.length, 2);
   assert.equal(messages[0].severity, 1);
-  assert.equal(messages[0].line, 2);
+  assert.equal(messages[0].line, 3);
+  assert.equal(messages[1].severity, 1);
+  assert.equal(messages[1].line, 4);
 });
