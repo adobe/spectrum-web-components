@@ -10,6 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
+import { readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, resolve } from 'path';
 
@@ -33,6 +34,14 @@ import globals from 'globals';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 import { swcPlugin } from '@spectrum-web-components/eslint-plugin';
+
+// Published `@adobe/spectrum-wc-core` subpaths (for example `mixins.js`), read
+// from its export map so the import restriction below allows exactly these.
+const coreExportSubpaths = Object.keys(
+  JSON.parse(
+    readFileSync(resolve(__dirname, 'gen2/packages/core/package.json'), 'utf8')
+  ).exports
+).map((key) => key.replace(/^\.\//, '').replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
 
 // ────────────────────────────────────────────────────────────────────────────────
 // Package.json key ordering for jsonc/sort-keys
@@ -339,6 +348,91 @@ export default defineConfig([
         {
           js: 'always',
           ts: 'never',
+        },
+      ],
+    },
+  },
+
+  // ────────────────────────────────────────────────────────────────────────────
+  // Gen2 package import paths. `import/extensions` ignores packages, and the
+  // tsconfig `paths` resolve core files that are not exported, so this rule
+  // keeps every `@adobe/spectrum-wc*` import on a published `.js` entry point.
+  // It stays on for stories and tests, which are copied as examples.
+  // ────────────────────────────────────────────────────────────────────────────
+  {
+    files: ['**/*.ts', '**/*.js', '**/*.mjs', '**/*.cjs'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          paths: [
+            {
+              name: '@adobe/spectrum-wc',
+              message:
+                "'@adobe/spectrum-wc' has no root export. Import a component, for example '@adobe/spectrum-wc/badge.js'.",
+            },
+            {
+              name: '@adobe/spectrum-wc-core',
+              message:
+                "'@adobe/spectrum-wc-core' has no root export. Import a folder barrel, for example '@adobe/spectrum-wc-core/mixins.js'.",
+            },
+          ],
+          // Each pattern covers a distinct mistake, so a bad import gets one
+          // message. Matching is case-sensitive, like package export keys.
+          patterns: [
+            {
+              regex:
+                '^@adobe/spectrum-wc/(?!customElements$)(?!.*\\.(js|css)$)',
+              caseSensitive: true,
+              message:
+                "Gen2 package imports end in '.js' (for example '@adobe/spectrum-wc/badge.js').",
+            },
+            {
+              regex: '^@adobe/spectrum-wc/(.*/)?index\\.js$',
+              caseSensitive: true,
+              message:
+                "Import the sibling barrel instead of 'index.js' (for example '@adobe/spectrum-wc/badge.js').",
+            },
+            {
+              regex:
+                '^@adobe/spectrum-wc/components/(?!index\\.js$)[^/]+\\.js$',
+              caseSensitive: true,
+              message:
+                "Import component barrels by their short path (for example '@adobe/spectrum-wc/badge.js').",
+            },
+            {
+              regex:
+                '^@adobe/spectrum-wc/(?!(components|patterns)/)[^/]+/(?!(.*/)?index\\.js$).*\\.js$',
+              caseSensitive: true,
+              message:
+                "Import files inside a component through 'components/' (for example '@adobe/spectrum-wc/components/badge/swc-badge.js').",
+            },
+            {
+              regex: '^@adobe/spectrum-wc/.+/[^/]*\\.css$',
+              caseSensitive: true,
+              message:
+                "Stylesheets are published at the package top level (for example '@adobe/spectrum-wc/swc.css').",
+            },
+            {
+              regex:
+                '^@adobe/spectrum-wc-icons/(?!customElements$)(?!index\\.js$)(?![^/]+\\.js$)',
+              caseSensitive: true,
+              message:
+                "Icons are published as flat '.js' entry points (for example '@adobe/spectrum-wc-icons/swc-icon-star.js').",
+            },
+            {
+              regex: '^@adobe/spectrum-wc-icons/index\\.js$',
+              caseSensitive: true,
+              message:
+                "Import the package root '@adobe/spectrum-wc-icons' instead of 'index.js'.",
+            },
+            {
+              regex: `^@adobe/spectrum-wc-core/(?!(${coreExportSubpaths.join('|')})$)`,
+              caseSensitive: true,
+              message:
+                "Import core from a published entry point: a folder barrel such as '@adobe/spectrum-wc-core/mixins.js', or 'components/<name>.js', 'controllers/<name>.js', or 'directives/<name>.js'.",
+            },
+          ],
         },
       ],
     },

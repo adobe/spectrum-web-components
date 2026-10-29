@@ -98,7 +98,9 @@ import badgeStyles from './badge.css';
 
 ### Import extensions
 
-Use `.js` extensions for all imports. Never use `.ts` in import paths. This is enforced by the linter (`import/extensions`).
+Use `.js` extensions for all imports. Never use `.ts` in import paths. The linter enforces this for relative imports (`import/extensions`) and for `@adobe/spectrum-wc*` package imports (`no-restricted-imports`).
+
+Import gen2 packages through their published entry points: the sibling barrel (`@adobe/spectrum-wc/badge.js`, `@adobe/spectrum-wc-core/mixins.js`), not an `index.js` path or a file inside a core folder. For example, import `ElementSize` from `@adobe/spectrum-wc-core/mixins.js`, not from `@adobe/spectrum-wc-core/mixins/sized-mixin.js`.
 
 ```ts
 // ✅ Good
