@@ -16,6 +16,7 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import { BUTTON_VALID_SIZES } from '@adobe/spectrum-wc-core/components/button';
 
+import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '../swc-ai-button.js';
 
 import {
@@ -211,6 +212,120 @@ export const SizesTest: Story = {
         );
       }
     });
+  },
+};
+
+export const StandardButtonParityTest: Story = {
+  render: () => html`
+    ${(['sizeM', 'sizeL'] as const).map(
+      (scale) => html`
+        <div class="swc-theme swc-theme--${scale}" data-scale=${scale}>
+          ${BUTTON_VALID_SIZES.map(
+            (size) => html`
+              <swc-button size=${size}>
+                <svg slot="icon" viewBox="0 0 20 20" aria-hidden="true"></svg>
+                Ask AI
+              </swc-button>
+              <swc-ai-button size=${size}>Ask AI</swc-ai-button>
+              <swc-button size=${size} accessible-label="Ask AI">
+                <svg slot="icon" viewBox="0 0 20 20" aria-hidden="true"></svg>
+              </swc-button>
+              <swc-ai-button
+                size=${size}
+                accessible-label="Ask AI"
+              ></swc-ai-button>
+            `
+          )}
+        </div>
+      `
+    )}
+  `,
+  play: async ({ canvasElement, step }) => {
+    const standardButtons = await getComponents<HTMLElement>(
+      canvasElement,
+      'swc-button'
+    );
+    const aiButtons = await getComponents<AiButton>(
+      canvasElement,
+      'swc-ai-button'
+    );
+    const pairs = aiButtons.map((el, index) => {
+      const standardHost = standardButtons[index];
+      const button = innerButton(el);
+
+      return {
+        name: `${el.closest('[data-scale]')!.getAttribute('data-scale')} ${el.size}`,
+        iconOnly: el.hasAttribute('accessible-label'),
+        button,
+        icon: button.querySelector('.swc-AiButton-icon')!,
+        standard:
+          standardHost.shadowRoot!.querySelector<HTMLElement>('button')!,
+        standardIcon: standardHost.querySelector('svg')!,
+      };
+    });
+    const iconInset = (button: Element, icon: Element) =>
+      icon.getBoundingClientRect().left - button.getBoundingClientRect().left;
+
+    await step(
+      'uses the standard button height, padding, gap, font size, and icon size',
+      async () => {
+        for (const {
+          name,
+          button,
+          icon,
+          standard,
+          standardIcon,
+        } of pairs.filter((pair) => !pair.iconOnly)) {
+          const styles = getComputedStyle(button);
+          const standardStyles = getComputedStyle(standard);
+          // The standard button draws a border inside its padding.
+          const standardEdgeToText =
+            parseFloat(standardStyles.paddingInlineStart) +
+            parseFloat(standardStyles.borderInlineStartWidth);
+
+          expect(styles.minBlockSize, `${name} block size`).toBe(
+            standardStyles.minBlockSize
+          );
+          expect(parseFloat(styles.paddingInlineStart), `${name} edge`).toBe(
+            standardEdgeToText
+          );
+          expect(styles.columnGap, `${name} gap`).toBe(
+            standardStyles.columnGap
+          );
+          expect(styles.fontSize, `${name} font size`).toBe(
+            standardStyles.fontSize
+          );
+          expect(icon.getBoundingClientRect().width, `${name} icon size`).toBe(
+            standardIcon.getBoundingClientRect().width
+          );
+        }
+      }
+    );
+
+    await step(
+      'matches the standard icon-only button size and icon position',
+      async () => {
+        for (const {
+          name,
+          button,
+          icon,
+          standard,
+          standardIcon,
+        } of pairs.filter((pair) => pair.iconOnly)) {
+          expect(button.offsetWidth, `${name} icon-only inline size`).toBe(
+            standard.offsetWidth
+          );
+          // Not offsetHeight: the 23px line height of the extra-large standard
+          // button makes it 1px taller than its min-block-size.
+          expect(button.offsetHeight, `${name} icon-only block size`).toBe(
+            parseFloat(getComputedStyle(standard).minBlockSize)
+          );
+          expect(iconInset(button, icon), `${name} icon-only icon inset`).toBe(
+            iconInset(standard, standardIcon)
+          );
+        }
+      }
+    );
   },
 };
 

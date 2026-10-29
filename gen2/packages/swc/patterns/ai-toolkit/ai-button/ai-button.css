@@ -283,8 +283,9 @@
 /* ─────────────────────────────────────────────────────────────────────────────
    SIZES
    Set on the internal button, not the host, to keep them private. Medium is
-   the default, set in the base rule. Small and medium match the standard
-   button's sizes, not the design's 32px and 36px. Their glow values keep the
+   the default, set in the base rule. Every size uses the standard button's
+   height, padding, gap, font size, and icon size tokens, so small and medium
+   are shorter than the design's 32px and 36px. Their glow values keep the
    design's glow and hover strength at those heights.
    ───────────────────────────────────────────────────────────────────────────── */
 
@@ -304,8 +305,8 @@
 
 :host([size="l"]) .swc-AiButton {
   --_swc-ai-button-min-block-size: token("component-height-200");
-  --_swc-ai-button-edge-to-text: token("spacing-300");
-  --_swc-ai-button-gap: token("spacing-85");
+  --_swc-ai-button-edge-to-text: token("base-padding-horizontal-large");
+  --_swc-ai-button-gap: token("base-gap-large");
   --_swc-ai-button-font-size: token("font-size-200");
   --_swc-ai-button-line-height: token("line-height-font-size-200");
   --_swc-ai-button-icon-size: token("workflow-icon-large");
@@ -318,8 +319,8 @@
 
 :host([size="xl"]) .swc-AiButton {
   --_swc-ai-button-min-block-size: token("component-height-300");
-  --_swc-ai-button-edge-to-text: 18px;
-  --_swc-ai-button-gap: token("spacing-85");
+  --_swc-ai-button-edge-to-text: token("base-padding-horizontal-extra-large");
+  --_swc-ai-button-gap: token("base-gap-extra-large");
   --_swc-ai-button-font-size: token("font-size-300");
   --_swc-ai-button-line-height: token("line-height-font-size-300");
   --_swc-ai-button-icon-size: token("workflow-icon-extra-large");
