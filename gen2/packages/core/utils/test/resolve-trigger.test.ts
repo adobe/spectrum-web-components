@@ -14,7 +14,7 @@ import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import { resolveTrigger } from '../index.js';
+import { resolveTrigger } from '../../utils.js';
 
 export default {
   title: 'Utils/Resolve trigger/Tests',

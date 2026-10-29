@@ -14,7 +14,7 @@ import { CSSResultArray, html, TemplateResult } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
 import { styleMap } from 'lit/directives/style-map.js';
 
-import { AssetBase } from '@adobe/spectrum-wc-core/components/asset';
+import { AssetBase } from '@adobe/spectrum-wc-core/components/asset.js';
 
 import opacityCheckerboardStyles from '../../stylesheets/_lit-styles/opacity-checkerboard.css';
 import styles from './asset.css';

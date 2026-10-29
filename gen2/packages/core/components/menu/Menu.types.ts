@@ -10,8 +10,8 @@
  * governing permissions and limitations under the License.
  */
 
-import type { Placement } from '@adobe/spectrum-wc-core/controllers/index.js';
-import type { ElementSize } from '@adobe/spectrum-wc-core/mixins/index.js';
+import type { Placement } from '@adobe/spectrum-wc-core/controllers.js';
+import type { ElementSize } from '@adobe/spectrum-wc-core/mixins.js';
 
 // ──────────────────
 //     SHARED

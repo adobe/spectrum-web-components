@@ -57,7 +57,7 @@ interface SWCDebug {
 }
 ```
 
-**Initialization:** The `window.__swc` object is automatically created when the first Spectrum Web Component loads, for every environment except production (`process.env.NODE_ENV !== 'production'`, so `'development'`, `'staging'`, `'test'`, and unset all qualify). The initialization lives in `@adobe/spectrum-wc-core/element/spectrum-element.ts`. In production builds, `window.__swc` is not created, so all debug checks short-circuit via the optional chaining pattern (`window.__swc?.DEBUG`).
+**Initialization:** The `window.__swc` object is automatically created when the first Spectrum Web Component loads, for every environment except production (`process.env.NODE_ENV !== 'production'`, so `'development'`, `'staging'`, `'test'`, and unset all qualify). The initialization lives in `gen2/packages/core/element/spectrum-element.ts`. In production builds, `window.__swc` is not created, so all debug checks short-circuit via the optional chaining pattern (`window.__swc?.DEBUG`).
 
 Debug mode is enabled by default in development builds. To disable it, set `window.__swc.DEBUG = false` before components load. In production builds, debug checks are either stripped or short-circuit when `DEBUG` is false.
 
@@ -71,7 +71,7 @@ if (window.__swc?.DEBUG) {
 
 ## Reusable validation helpers
 
-`@spectrum-web-components/core/utils` exports four helpers that wrap `window.__swc.warn` for the most common validation shapes. **Use these instead of hand-writing an `includes()` + `warn()` check.** Doing so keeps message wording and the `DEBUG` gate consistent across components. Internally all four defer the actual gate-and-emit step to one private `emitWarning` primitive, so that is the single place that needs to change if the underlying warning engine is ever reworked.
+`@adobe/spectrum-wc-core/utils.js` exports four helpers that wrap `window.__swc.warn` for the most common validation shapes. **Use these instead of hand-writing an `includes()` + `warn()` check.** Doing so keeps message wording and the `DEBUG` gate consistent across components. Internally all four defer the actual gate-and-emit step to one private `emitWarning` primitive, so that is the single place that needs to change if the underlying warning engine is ever reworked.
 
 ```ts
 import {
@@ -79,7 +79,7 @@ import {
   validateEnum,
   validateRequiredSlot,
   warnIf,
-} from '@spectrum-web-components/core/utils';
+} from '@adobe/spectrum-wc-core/utils.js';
 ```
 
 None of the four require an outer `if (window.__swc?.DEBUG)` check. They gate on `DEBUG` internally. **They do not manage lifecycle timing for you.** Calling the right helper from the wrong place can check stale data (a property that hasn't updated yet) or DOM that doesn't exist yet (slot content before it's assigned). Which hook to call each helper from:

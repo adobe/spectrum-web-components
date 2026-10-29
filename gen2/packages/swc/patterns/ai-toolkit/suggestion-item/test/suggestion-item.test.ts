@@ -14,7 +14,7 @@ import { html } from 'lit';
 import { expect, userEvent, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import type { Button } from '@adobe/spectrum-wc/button';
+import type { Button } from '@adobe/spectrum-wc/button.js';
 
 import '../../suggestion/swc-suggestion-group.js';
 import '../swc-suggestion-item.js';

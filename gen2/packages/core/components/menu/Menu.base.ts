@@ -18,9 +18,9 @@ import {
   PlacementController,
   type PlacementOptions,
   TriggerPressController,
-} from '@adobe/spectrum-wc-core/controllers/index.js';
-import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
-import { SizedMixin } from '@adobe/spectrum-wc-core/mixins/index.js';
+} from '@adobe/spectrum-wc-core/controllers.js';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element.js';
+import { SizedMixin } from '@adobe/spectrum-wc-core/mixins.js';
 import {
   deepContains,
   getActiveElement,
@@ -32,7 +32,7 @@ import {
   validateAllowedChildren,
   validateEnum,
   warnIf,
-} from '@adobe/spectrum-wc-core/utils/index.js';
+} from '@adobe/spectrum-wc-core/utils.js';
 
 import {
   MENU_ALLOWED_CHILDREN,

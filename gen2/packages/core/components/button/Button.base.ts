@@ -13,11 +13,11 @@
 import { PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
-import { SlotPresenceController } from '@adobe/spectrum-wc-core/controllers/slot-presence-controller/index.js';
-import { SlotTextController } from '@adobe/spectrum-wc-core/controllers/slot-text-controller/index.js';
-import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
-import { SizedMixin } from '@adobe/spectrum-wc-core/mixins/index.js';
-import { warnIf } from '@adobe/spectrum-wc-core/utils/index.js';
+import { SlotPresenceController } from '@adobe/spectrum-wc-core/controllers/slot-presence-controller.js';
+import { SlotTextController } from '@adobe/spectrum-wc-core/controllers/slot-text-controller.js';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element.js';
+import { SizedMixin } from '@adobe/spectrum-wc-core/mixins.js';
+import { warnIf } from '@adobe/spectrum-wc-core/utils.js';
 
 import { BUTTON_VALID_SIZES, type ButtonSize } from './Button.types.js';
 

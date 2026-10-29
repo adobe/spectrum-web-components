@@ -20,7 +20,7 @@ import {
 import { customElement } from 'lit/decorators.js';
 import { computePosition, offset } from '@floating-ui/dom';
 
-import { HoverController } from '../index.js';
+import { HoverController } from '../../hover-controller.js';
 
 declare global {
   interface HTMLElementTagNameMap {

@@ -16,7 +16,7 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import {
   focusgroupNavigationActiveChange,
   type FocusgroupNavigationActiveChangeDetail,
-} from '@adobe/spectrum-wc-core/controllers/index.js';
+} from '@adobe/spectrum-wc-core/controllers.js';
 
 import '../stories/demo-hosts.js';
 

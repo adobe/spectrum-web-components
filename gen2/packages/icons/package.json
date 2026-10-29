@@ -23,7 +23,8 @@
       "types": "./dist/*.d.ts",
       "import": "./dist/*.js"
     },
-    "./customElements": "./dist/custom-elements.json"
+    "./customElements": "./dist/custom-elements.json",
+    "./stylesheets/*": null
   },
   "main": "./dist/index.js",
   "module": "./dist/index.js",

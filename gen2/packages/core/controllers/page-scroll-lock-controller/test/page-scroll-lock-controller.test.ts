@@ -15,7 +15,7 @@ import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import { PageScrollLockController } from '../index.js';
+import { PageScrollLockController } from '../../page-scroll-lock-controller.js';
 
 export default {
   title: 'Controllers/Page scroll lock controller/Tests',

@@ -13,11 +13,11 @@
 import { html, LitElement, type TemplateResult } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
 
-import { PlacementController } from '@adobe/spectrum-wc-core/controllers/index.js';
+import { PlacementController } from '@adobe/spectrum-wc-core/controllers.js';
 
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 
-import { TriggerPressController } from '../index.js';
+import { TriggerPressController } from '../../trigger-press-controller.js';
 
 declare global {
   interface HTMLElementTagNameMap {

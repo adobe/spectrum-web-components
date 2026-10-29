@@ -19,8 +19,8 @@ import {
   PROGRESS_CIRCLE_STATIC_COLORS,
   ProgressCircleBase,
   type ProgressCircleStaticColor,
-} from '@adobe/spectrum-wc-core/components/progress-circle';
-import { capitalize } from '@adobe/spectrum-wc-core/utils/index.js';
+} from '@adobe/spectrum-wc-core/components/progress-circle.js';
+import { capitalize } from '@adobe/spectrum-wc-core/utils.js';
 
 import styles from './progress-circle.css';
 

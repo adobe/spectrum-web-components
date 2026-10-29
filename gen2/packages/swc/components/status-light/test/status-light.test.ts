@@ -17,12 +17,12 @@ import type {
   StoryObj as Story,
 } from '@storybook/web-components';
 
-import { StatusLight } from '@adobe/spectrum-wc/status-light';
+import { StatusLight } from '@adobe/spectrum-wc/status-light.js';
 import {
   STATUS_LIGHT_VALID_SIZES,
   STATUS_LIGHT_VARIANTS_COLOR,
   STATUS_LIGHT_VARIANTS_SEMANTIC,
-} from '@adobe/spectrum-wc-core/components/status-light/index.js';
+} from '@adobe/spectrum-wc-core/components/status-light.js';
 
 import '@adobe/spectrum-wc/components/status-light/swc-status-light.js';
 

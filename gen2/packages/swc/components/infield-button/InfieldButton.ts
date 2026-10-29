@@ -18,7 +18,7 @@ import {
   INFIELD_BUTTON_VALID_SIZES,
   InfieldButtonBase,
   type InfieldButtonSize,
-} from '@adobe/spectrum-wc-core/components/infield-button';
+} from '@adobe/spectrum-wc-core/components/infield-button.js';
 
 import styles from './infield-button.css';
 

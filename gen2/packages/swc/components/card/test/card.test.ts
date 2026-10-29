@@ -14,12 +14,12 @@ import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import type { Card } from '@adobe/spectrum-wc/card';
+import type { Card } from '@adobe/spectrum-wc/card.js';
 import {
   CARD_DENSITIES,
   CARD_VARIANTS,
   SWC_CARD_CLICK_EVENT,
-} from '@adobe/spectrum-wc-core/components/card/index.js';
+} from '@adobe/spectrum-wc-core/components/card.js';
 
 import '@adobe/spectrum-wc/components/card/swc-card.js';
 import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';

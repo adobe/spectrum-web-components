@@ -12,13 +12,13 @@
 import { PropertyValues, ReactiveElement, type TemplateResult } from 'lit';
 import { property } from 'lit/decorators.js';
 
-import { SlotPresenceController } from '../controllers/slot-presence-controller/index.js';
+import { SlotPresenceController } from '../controllers/slot-presence-controller.js';
 import {
   type NecessityIndicatorText,
   renderFieldLabel,
   type RenderFieldLabelResult,
-} from '../directives/render-label/index.js';
-import { componentDocsHref, isDebug, warnIf } from '../utils/index.js';
+} from '../directives/render-label.js';
+import { componentDocsHref, isDebug, warnIf } from '../utils.js';
 
 type Constructor<T = Record<string, unknown>> = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

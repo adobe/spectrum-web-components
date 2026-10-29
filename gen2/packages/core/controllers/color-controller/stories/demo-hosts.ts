@@ -19,7 +19,7 @@ import {
 } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 
-import { ColorController } from '../index.js';
+import { ColorController } from '../../color-controller.js';
 
 declare global {
   interface HTMLElementTagNameMap {

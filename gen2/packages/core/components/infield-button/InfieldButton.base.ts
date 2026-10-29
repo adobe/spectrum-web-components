@@ -12,8 +12,8 @@
 
 import { property } from 'lit/decorators.js';
 
-import { ButtonBase } from '@adobe/spectrum-wc-core/components/button';
-import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
+import { ButtonBase } from '@adobe/spectrum-wc-core/components/button.js';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element.js';
 
 import {
   INFIELD_BUTTON_VALID_SIZES,

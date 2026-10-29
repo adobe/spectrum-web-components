@@ -16,7 +16,7 @@ import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import Color from 'colorjs.io';
 
-import { ColorController, type ColorTypes } from '../index.js';
+import { ColorController, type ColorTypes } from '../../color-controller.js';
 
 /**
  * `ColorController` renders no DOM, so these are pure-logic assertions wrapped in

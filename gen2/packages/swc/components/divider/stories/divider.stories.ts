@@ -15,7 +15,7 @@ import { styleMap } from 'lit/directives/style-map.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import { Divider } from '@adobe/spectrum-wc/divider';
+import { Divider } from '@adobe/spectrum-wc/divider.js';
 
 import '@adobe/spectrum-wc/components/divider/swc-divider.js';
 

@@ -13,7 +13,7 @@
 import { html, LitElement, type TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
-import { PageScrollLockController } from '../index.js';
+import { PageScrollLockController } from '../../page-scroll-lock-controller.js';
 
 declare global {
   interface HTMLElementTagNameMap {

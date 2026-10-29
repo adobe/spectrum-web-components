@@ -17,13 +17,13 @@ import {
   LanguageResolutionController,
   languageResolverUpdatedSymbol,
 } from '@adobe/spectrum-wc-core/controllers/language-resolution.js';
-import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
-import { SizedMixin } from '@adobe/spectrum-wc-core/mixins/index.js';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element.js';
+import { SizedMixin } from '@adobe/spectrum-wc-core/mixins.js';
 import {
   isDebug,
   validateEnum,
   warnIf,
-} from '@adobe/spectrum-wc-core/utils/index.js';
+} from '@adobe/spectrum-wc-core/utils.js';
 
 import {
   PROGRESS_CIRCLE_VALID_SIZES,

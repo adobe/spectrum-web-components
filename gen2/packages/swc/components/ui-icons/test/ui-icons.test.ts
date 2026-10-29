@@ -13,13 +13,13 @@ import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import { UiIcon } from '@adobe/spectrum-wc/ui-icons';
+import { UiIcon } from '@adobe/spectrum-wc/ui-icons.js';
 
 import '@adobe/spectrum-wc/components/ui-icons/swc-ui-icon.js';
 
 import { getComponent } from '../../../utils/test-utils.js';
-import type { UiIconName } from '../icon-set/index.js';
-import { UI_ICONS } from '../icon-set/index.js';
+import type { UiIconName } from '../icon-set.js';
+import { UI_ICONS } from '../icon-set.js';
 import meta, { Overview } from '../stories/ui-icons.stories.js';
 import { DIRECTIONAL_UI_ICONS } from '../ui-icon-direction.js';
 import type { UiIconArt } from '../ui-icons.types.js';

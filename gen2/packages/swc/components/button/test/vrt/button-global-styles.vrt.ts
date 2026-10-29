@@ -13,7 +13,7 @@
 import { html, nothing } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import { BUTTON_STATIC_COLORS } from '@adobe/spectrum-wc-core/components/button';
+import { BUTTON_STATIC_COLORS } from '@adobe/spectrum-wc-core/components/button.js';
 
 import {
   FORCED_STATES,

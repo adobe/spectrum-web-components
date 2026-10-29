@@ -15,7 +15,7 @@ import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import { IllustratedMessage } from '@adobe/spectrum-wc/illustrated-message';
+import { IllustratedMessage } from '@adobe/spectrum-wc/illustrated-message.js';
 
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc/components/button-group/swc-button-group.js';

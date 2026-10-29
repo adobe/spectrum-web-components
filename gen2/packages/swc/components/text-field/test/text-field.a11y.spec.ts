@@ -12,7 +12,7 @@
 
 import { expect, test } from '@playwright/test';
 
-import type { TextField } from '@adobe/spectrum-wc/text-field';
+import type { TextField } from '@adobe/spectrum-wc/text-field.js';
 
 import { gotoStory } from '../../../utils/a11y-helpers.js';
 

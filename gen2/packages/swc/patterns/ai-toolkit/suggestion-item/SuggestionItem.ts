@@ -12,12 +12,12 @@
 
 import { CSSResultArray, html, TemplateResult } from 'lit';
 
-import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element.js';
 
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc/components/icon/swc-icon.js';
 
-import { ArrowCurvedIcon } from '../utils/icons/index.js';
+import { ArrowCurvedIcon } from '../utils/icons.js';
 
 import styles from './suggestion-item.css';
 

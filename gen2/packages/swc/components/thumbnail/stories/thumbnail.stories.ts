@@ -13,11 +13,11 @@ import { html } from 'lit';
 import type { Args, Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import { Thumbnail } from '@adobe/spectrum-wc/thumbnail';
+import { Thumbnail } from '@adobe/spectrum-wc/thumbnail.js';
 import {
   THUMBNAIL_VALID_FITS,
   THUMBNAIL_VALID_SIZES,
-} from '@adobe/spectrum-wc-core/components/thumbnail/index.js';
+} from '@adobe/spectrum-wc-core/components/thumbnail.js';
 
 import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
 import '@adobe/spectrum-wc/components/thumbnail/swc-thumbnail.js';

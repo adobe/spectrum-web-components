@@ -13,7 +13,7 @@ import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import { IllustratedMessage } from '@adobe/spectrum-wc/illustrated-message';
+import { IllustratedMessage } from '@adobe/spectrum-wc/illustrated-message.js';
 
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc/components/illustrated-message/swc-illustrated-message.js';

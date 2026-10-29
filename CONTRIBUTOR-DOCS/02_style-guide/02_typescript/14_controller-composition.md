@@ -215,4 +215,4 @@ Key rules:
 - Store the host as a private field
 - Call `host.addController(this)` in the constructor
 - Always clean up in `hostDisconnected()`
-- Place the controller in `core/controllers/` and export from `core/controllers/index.ts`
+- Place the controller in `core/controllers/` and export from the `core/controllers.ts` barrel

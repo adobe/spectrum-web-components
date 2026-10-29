@@ -9,6 +9,6 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-export { withFlexLayout } from './flex-layout';
-export { withStaticColorsDemo } from './static-colors-demo';
-export { withStaticColorPlayground } from './static-color-playground';
+export { withFlexLayout } from './flex-layout.js';
+export { withStaticColorsDemo } from './static-colors-demo.js';
+export { withStaticColorPlayground } from './static-color-playground.js';

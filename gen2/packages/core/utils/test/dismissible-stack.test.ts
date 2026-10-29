@@ -18,7 +18,7 @@ import {
   isTopDismissible,
   registerDismissible,
   unregisterDismissible,
-} from '../index.js';
+} from '../../utils.js';
 
 export default {
   title: 'Utils/Dismissible stack/Tests',

@@ -17,11 +17,11 @@ import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 import {
   ICON_VALID_SIZES,
   type IconSize,
-} from '@adobe/spectrum-wc-core/components/icon';
+} from '@adobe/spectrum-wc-core/components/icon.js';
 
 import '@adobe/spectrum-wc/components/ui-icons/swc-ui-icon.js';
 
-import { UI_ICONS, type UiIconName } from '../icon-set/index.js';
+import { UI_ICONS, type UiIconName } from '../icon-set.js';
 
 // ────────────────
 //    METADATA
@@ -60,6 +60,7 @@ const meta: Meta = {
   parameters: {
     docs: {
       subtitle: `The Spectrum UI icon set, rendered by the swc-ui-icon element.`,
+      packagePath: 'components/ui-icons',
     },
   },
   tags: ['migrated'],

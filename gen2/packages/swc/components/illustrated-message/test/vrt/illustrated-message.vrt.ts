@@ -18,7 +18,7 @@ import {
   ILLUSTRATED_MESSAGE_VALID_SIZES,
   type IllustratedMessageOrientation,
   type IllustratedMessageSize,
-} from '@adobe/spectrum-wc-core/components/illustrated-message';
+} from '@adobe/spectrum-wc-core/components/illustrated-message.js';
 
 import '@adobe/spectrum-wc/components/illustrated-message/swc-illustrated-message.js';
 import '@adobe/spectrum-wc/components/button/swc-button.js';

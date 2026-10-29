@@ -12,7 +12,7 @@
 import { html, type TemplateResult } from 'lit';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
-import { capitalize } from '@adobe/spectrum-wc-core/utils/index.js';
+import { capitalize } from '@adobe/spectrum-wc-core/utils.js';
 
 export const SIZES = [
   'XXS',

@@ -14,12 +14,12 @@ import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import { ProgressCircle } from '@adobe/spectrum-wc/progress-circle';
+import { ProgressCircle } from '@adobe/spectrum-wc/progress-circle.js';
 import {
   PROGRESS_CIRCLE_STATIC_COLORS,
   PROGRESS_CIRCLE_VALID_SIZES,
   type ProgressCircleSize,
-} from '@adobe/spectrum-wc-core/components/progress-circle';
+} from '@adobe/spectrum-wc-core/components/progress-circle.js';
 
 import '@adobe/spectrum-wc/components/progress-circle/swc-progress-circle.js';
 

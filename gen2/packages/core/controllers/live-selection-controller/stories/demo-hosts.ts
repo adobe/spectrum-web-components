@@ -13,7 +13,10 @@
 import { css, html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
-import { LiveSelectionController, type LiveSelectionMode } from '../index.js';
+import {
+  LiveSelectionController,
+  type LiveSelectionMode,
+} from '../../live-selection-controller.js';
 
 declare global {
   interface HTMLElementTagNameMap {

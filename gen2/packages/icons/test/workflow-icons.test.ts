@@ -13,7 +13,7 @@ import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import type { IconBase } from '@adobe/spectrum-wc-core/components/icon';
+import type { IconBase } from '@adobe/spectrum-wc-core/components/icon.js';
 
 // Register only the elements these stories render. The manifest coverage test loads the
 // full set lazily via its loader, so this page doesn't define all ~413 elements.

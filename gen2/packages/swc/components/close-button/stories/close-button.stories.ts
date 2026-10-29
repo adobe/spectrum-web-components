@@ -17,7 +17,7 @@ import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 import {
   BUTTON_STATIC_COLORS,
   BUTTON_VALID_SIZES,
-} from '@adobe/spectrum-wc-core/components/button';
+} from '@adobe/spectrum-wc-core/components/button.js';
 
 import '@adobe/spectrum-wc/components/close-button/swc-close-button.js';
 

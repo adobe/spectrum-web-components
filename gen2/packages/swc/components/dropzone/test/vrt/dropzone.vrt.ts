@@ -14,7 +14,7 @@ import { html } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import { DROPZONE_VALID_SIZES } from '@adobe/spectrum-wc-core/components/dropzone';
+import { DROPZONE_VALID_SIZES } from '@adobe/spectrum-wc-core/components/dropzone.js';
 
 import '@adobe/spectrum-wc/components/badge/swc-badge.js';
 import '@adobe/spectrum-wc/components/button/swc-button.js';

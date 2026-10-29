@@ -9,7 +9,7 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { readdirSync, statSync } from 'fs';
+import { existsSync, readdirSync, statSync } from 'fs';
 import { dirname, resolve } from 'path';
 import { fileURLToPath } from 'url';
 import { defineConfig } from 'vite';
@@ -35,21 +35,19 @@ function scanTsFiles(dir, prefix) {
   return entries;
 }
 
-// Helper to scan a directory for subdirectories with index.ts
-function scanSubdirIndexes(dir, prefix) {
+// Helper to find barrel files: `<name>.ts` files that sit next to a `<name>/`
+// directory and re-export its public API.
+function scanBarrels(dir, prefix) {
   const entries = {};
   try {
-    const items = readdirSync(dir);
-    for (const item of items) {
-      const itemPath = resolve(dir, item);
-      if (statSync(itemPath).isDirectory()) {
-        const indexPath = resolve(itemPath, 'index.ts');
-        try {
-          statSync(indexPath);
-          entries[`${prefix}/${item}/index`] = indexPath;
-        } catch {
-          // index.ts doesn't exist, skip
-        }
+    for (const item of readdirSync(dir)) {
+      if (!item.endsWith('.ts') || item.endsWith('.d.ts')) {
+        continue;
+      }
+      const name = item.replace(/\.ts$/, '');
+      const subdir = resolve(dir, name);
+      if (existsSync(subdir) && statSync(subdir).isDirectory()) {
+        entries[prefix ? `${prefix}/${name}` : name] = resolve(dir, item);
       }
     }
   } catch {
@@ -62,10 +60,13 @@ function scanSubdirIndexes(dir, prefix) {
 function getEntries() {
   const entries = {};
 
-  // Find all components/*/index.ts
+  // Find the top-level barrels (element.ts, mixins.ts, controllers.ts, ...)
+  Object.assign(entries, scanBarrels(__dirname, ''));
+
+  // Find all components/*.ts barrels
   Object.assign(
     entries,
-    scanSubdirIndexes(resolve(__dirname, 'components'), 'components')
+    scanBarrels(resolve(__dirname, 'components'), 'components')
   );
 
   // Find all element/*.ts files
@@ -80,24 +81,10 @@ function getEntries() {
     scanTsFiles(resolve(__dirname, 'controllers'), 'controllers')
   );
 
-  // Find all controllers/*/index.ts files. Without this, Rollup's
-  // preserveModules output can inline a controller's re-export barrel into
-  // the parent chunk and drop its standalone file, breaking that
-  // controller's package.json subpath export even though the barrel export
-  // (`controllers/index.js`) still works.
-  Object.assign(
-    entries,
-    scanSubdirIndexes(resolve(__dirname, 'controllers'), 'controllers')
-  );
-
   // Find all directives/*.ts files
   Object.assign(
     entries,
     scanTsFiles(resolve(__dirname, 'directives'), 'directives')
-  );
-  Object.assign(
-    entries,
-    scanSubdirIndexes(resolve(__dirname, 'directives'), 'directives')
   );
 
   // Find all utils/*.ts files
@@ -112,7 +99,6 @@ export default defineConfig({
       include: ['**/*.ts'],
       exclude: ['**/*.test.ts', '**/*.stories.ts'],
       outDir: 'dist',
-      insertTypesEntry: true,
     }),
   ],
   build: {

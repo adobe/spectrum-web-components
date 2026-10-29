@@ -187,7 +187,7 @@ Files use **PascalCase** for the component name and a dot-separated suffix that 
 | Concrete class | `{Component}.ts` | `Badge.ts` |
 | Types | `{Component}.types.ts` | `Badge.types.ts` |
 | Styles | `{component}.css` (lowercase) | `badge.css` |
-| Index | `index.ts` | `index.ts` |
+| Barrel | `{component}.ts` next to the `{component}/` folder (lowercase) | `badge.ts` |
 | Tests | `{component}.test.ts` (lowercase) | `badge.test.ts` |
 | A11y tests | `{component}.a11y.spec.ts` (lowercase) | `badge.a11y.spec.ts` |
 | Stories | `{component}.stories.ts` (lowercase) | `badge.stories.ts` |

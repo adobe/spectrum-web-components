@@ -14,7 +14,7 @@ import { css, html, LitElement, nothing, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 
-import { SlotPresenceController } from '../index.js';
+import { SlotPresenceController } from '../../slot-presence-controller.js';
 
 declare global {
   interface HTMLElementTagNameMap {

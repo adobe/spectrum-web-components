@@ -18,7 +18,7 @@ import {
   hasActiveTransition,
   maxTransitionDurationMs,
   runAfterTransition,
-} from '../index.js';
+} from '../../utils.js';
 
 export default {
   title: 'Utils/Transition/Tests',

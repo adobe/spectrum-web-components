@@ -56,8 +56,8 @@ import '@adobe/spectrum-wc/components/button/swc-button.js';
 
 - **Side-effectful import**: importing a component's `.js` entry registers its
   custom element (e.g. `@adobe/spectrum-wc/components/button/swc-button.js`).
-  Prefer this registering import; import the class directly (e.g.
-  `@adobe/spectrum-wc/components/button/Button.js`) only for extension or typing.
+  Prefer this registering import; import the class from its barrel (e.g.
+  `@adobe/spectrum-wc/button.js`) only for typing or extension.
 
 - **Accessibility**: components handle their own roles, state, and keyboard
   interaction, but some require attributes you must supply. Read the

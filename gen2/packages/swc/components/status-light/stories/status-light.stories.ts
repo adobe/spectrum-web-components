@@ -14,14 +14,14 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import { StatusLight } from '@adobe/spectrum-wc/status-light';
+import { StatusLight } from '@adobe/spectrum-wc/status-light.js';
 import {
   STATUS_LIGHT_VALID_SIZES,
   STATUS_LIGHT_VARIANTS_COLOR,
   STATUS_LIGHT_VARIANTS_SEMANTIC,
   StatusLightColorVariant,
   StatusLightSemanticVariant,
-} from '@adobe/spectrum-wc-core/components/status-light';
+} from '@adobe/spectrum-wc-core/components/status-light.js';
 
 import '@adobe/spectrum-wc/components/status-light/swc-status-light.js';
 
