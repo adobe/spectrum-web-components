@@ -401,6 +401,57 @@ export const ResetTest: Story = {
 ResetTest.storyName = 'Reset and state restore';
 
 // ──────────────────────────────────────────────────────────────
+// TEST: Host disabled attribute, the channel a group uses (C12)
+// ──────────────────────────────────────────────────────────────
+
+export const HostDisabledTest: Story = {
+  render: () => html`
+    <form>
+      <swc-checkbox name="terms" checked field-status="readonly">
+        <span slot="label">I agree to the terms</span>
+      </swc-checkbox>
+    </form>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const form = formOf(canvasElement);
+    const checkbox = await getComponent<Checkbox>(
+      canvasElement,
+      'swc-checkbox'
+    );
+    const clicks: Event[] = [];
+    checkbox.addEventListener('click', (event) => clicks.push(event));
+
+    await step('a host disabled attribute disables the checkbox', async () => {
+      checkbox.setAttribute('disabled', '');
+      await waitFor(() =>
+        expect(checkbox.matches(':state(disabled)')).toBe(true)
+      );
+      expect(inputOf(checkbox).disabled).toBe(true);
+      expect(new FormData(form).has('terms')).toBe(false);
+      expect(checkbox.willValidate).toBe(false);
+      checkbox.click();
+      expect(checkbox.checked).toBe(true);
+    });
+
+    await step('it leaves the authored field-status untouched', () => {
+      expect(checkbox.fieldStatus).toBe('readonly');
+    });
+
+    await step('removing it restores the authored state', async () => {
+      checkbox.removeAttribute('disabled');
+      await waitFor(() =>
+        expect(checkbox.matches(':state(disabled)')).toBe(false)
+      );
+      expect(inputOf(checkbox).disabled).toBe(false);
+      expect(checkbox.fieldStatus).toBe('readonly');
+      expect(new FormData(form).get('terms')).toBe('on');
+      expect(clicks).toHaveLength(0);
+    });
+  },
+};
+HostDisabledTest.storyName = 'Host disabled attribute';
+
+// ──────────────────────────────────────────────────────────────
 // TEST: Script changes take effect immediately
 // ──────────────────────────────────────────────────────────────
 

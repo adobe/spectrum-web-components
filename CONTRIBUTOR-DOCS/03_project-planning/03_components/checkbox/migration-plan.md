@@ -60,7 +60,7 @@
 >
 > This plan covers **`swc-checkbox`, the individual checkbox, only.** Unlike `swc-radio`, a checkbox is a complete control on its own (a single required consent box is a first-class use case), so `swc-checkbox` can ship and be documented independently. `swc-checkbox-group` is planned separately (Q10). The [accessibility migration analysis](./accessibility-migration-analysis.md) is authoritative for gen2 semantics, except where Q7 (description and error text), Q13 (name wiring), B18 (invalid state inside a group), and B22 (`field-status` in place of the status booleans) override it. It was authored against the approved [forms strategy RFC](../../05_strategies/forms-strategy-rfc.md).
 >
-> **Status: ready for review.** Core migration questions are resolved in the [Decision log](#decision-log), except Q14, which blocks the accessibility phase. Q9 is settled in the Decision log. Q8 is settled during Styling and does not change the API. Q15 waits on Design; either outcome is additive.
+> **Status: ready for review.** Core migration questions are resolved in the [Decision log](#decision-log), except Q14, which blocks the accessibility phase. Q9 is settled in the Decision log. Q8 is settled during Styling and does not change the API. Q15 waits on Design and must be settled before the Styling phase, because adding the required marker's default later would be a visible change.
 
 ---
 
@@ -77,7 +77,7 @@
 
 - **Q14**: how to move focus to the first invalid checkbox after a failed submit in a `novalidate` form (C7). Blocks the accessibility phase. See [Architecture and behavior](#architecture-and-behavior).
 
-Q8, Q12, and Q15 are open but do not block implementation; see [Blockers and open questions](#blockers-and-open-questions).
+Q8 and Q12 are open but do not block implementation. Q15 must be settled with Design before the Styling phase. See [Blockers and open questions](#blockers-and-open-questions).
 
 ---
 
@@ -269,7 +269,7 @@ gen2 (planned; see [Architecture](#architecture-core-vs-swc-split)):
 ### Related components and ordering notes
 
 - **`swc-switch`**: 1st-gen `sp-switch` extends `CheckboxBase` (`CheckboxMixin(Focusable)`). **Decision (Q4): no shared base class in gen2.** Switch composes the same mixins and controller in its own `Switch.base.ts`; the switch accessibility analysis already frames the relationship as a shared foundation (different role, no `mixed`, no `invalid`). The cost is a few duplicated lines (`checked`, the read-only toggle guard, form value), in exchange for two independent public APIs. If the duplication grows during switch's migration, extract a `ToggleFieldMixin` into core then.
-- **`swc-checkbox-group`**: Has its own [accessibility migration analysis](../checkbox-group/accessibility-migration-analysis.md); SWC-2548 concluded a dedicated `swc-checkbox-group` replaces `sp-field-group` for checkboxes. **Decision (Q10): planned separately, outside this migration.** The checkbox is usable standalone, so it ships first. The group will later propagate `size`/`emphasized` with `SlotAttributePropagationController` and, when invalid, own the invalid state and its error message instead of each item (B18). Both behaviors leave this item's API unchanged. The group will also change where each item places its description, which needs a way to flag group membership on each item (Q7).
+- **`swc-checkbox-group`**: Has its own [accessibility migration analysis](../checkbox-group/accessibility-migration-analysis.md); SWC-2548 concluded a dedicated `swc-checkbox-group` replaces `sp-field-group` for checkboxes. **Decision (Q10): planned separately, outside this migration.** The checkbox is usable standalone, so it ships first. The group will later propagate `size`/`emphasized` with `SlotAttributePropagationController` and, when invalid, own the invalid state and its error message instead of each item (B18). Both behaviors leave this item's API unchanged. To disable its items, the group sets the host `disabled` attribute, which the browser treats like an ancestor `<fieldset disabled>` and which leaves each item's own `field-status` intact (C12). The group will also change where each item places its description, which needs a way to flag group membership on each item (Q7).
 - **`swc-radio`**: Sibling form control. Checkbox does not extend `swc-radio`, but builds on the radio branch (Q3). Radio renders its own label and does not use `LabellingMixin`; checkbox does (C4). Its styles inform checkbox's (Q8).
 - **Shared `_lit-styles/` fragment**: The shared `form-fields` stylesheet for label, required indicator, description, and error is on `main` since the text field migration. How much of it checkbox shares is open (Q8).
 - **Shared render template**: None. Checkbox anatomy (box, inline label, description below) is not shared with another component today; switch may become a second consumer later.
@@ -338,7 +338,7 @@ Unchanged from 1st-gen: the host sets no `role`, `delegatesFocus` stays `true`, 
 
 | #   | What is added | Notes |
 | --- | ------------- | ----- |
-| A1 | `swc-checkbox-group` | Group label, description, error, "select at least one" validity, `size`/`emphasized` propagation, group-level invalid state (B18), focus after a failed submit when the group is invalid (Q14), and in-group item layout (Q7). |
+| A1 | `swc-checkbox-group` | Group label, description, error, "select at least one" validity, `size`/`emphasized` propagation, item disabling through the host `disabled` attribute and an internal hook for item read-only (C12), group-level invalid state (B18), focus after a failed submit when the group is invalid (Q14), and in-group item layout (Q7). |
 | A2 | Additional `--swc-*` custom properties | Beyond the initial reviewed set, only on confirmed need. |
 | A3 | Custom validation (`validate`) and `validationBehavior` | React parity; no 1st-gen equivalent. Revisit once the forms strategy settles a shared `setValidity()` pattern. B17 already turns `field-status="invalid"` into `customError`; an `aria`-only mode, where the invalid status does not affect validity, would come with A3. |
 | A4 | Custom states (`:state(checked)`, `:state(indeterminate)`) | Styling hook for consumers now that `checked` no longer reflects (B9). Add on request. `:state(disabled)` is not additive: it ships in the baseline (B22). |
@@ -423,7 +423,7 @@ Initial expectation for Checkbox is a small reviewed set. Candidates: control si
 
 ### Behavioral semantics
 
-- **Toggling:** a click on the box or label, or <kbd>Space</kbd> on the focused input, toggles the native input. The host then clears `indeterminate`, syncs `checked`, updates form value and validity, and dispatches `change`. <kbd>Enter</kbd> does not toggle (native behavior).
+- **Toggling:** a click on the box or label, or <kbd>Space</kbd> on the focused input, toggles the native input. The host then clears `indeterminate`, syncs `checked`, updates form value and validity, and dispatches `change`. <kbd>Enter</kbd> does not toggle; in a form with a submit button, it submits the form, as a native checkbox does (C11).
 - **Indeterminate:** a visual and assistive technology state only. Setting it does not change `checked` or the form value. The next user activation clears it and then toggles `checked` from its current value (1st-gen tests: indeterminate + checked → unchecked; indeterminate + unchecked → checked). React keeps it set after interaction; gen2 clears it (C2).
 - **Read-only** (`field-status="readonly"`): focus works. The component cancels the `click`, which reverts the native input's provisional toggle, so neither `input` nor `change` fires (mechanism: Q9).
 - **Disabled** (`field-status="disabled"`, or an ancestor `<fieldset disabled>`): effective disabled (B19) sets native `disabled`; `click()` is a no-op; the field is excluded from validation (`willValidate === false`).
@@ -538,6 +538,7 @@ Rationale for using `LabellingMixin` and skipping `DisabledMixin`: C4 and C3 in 
 - [ ] Name precedence `accessible-labelledby` > `accessible-label` > `label` slot resolves on the inner input through `LabellingMixin` (Q13)
 - [ ] `description` and `error-text` associate through `ariaDescribedByElements` only (the `aria-describedby` relationship); while `field-status="invalid"` with error text, `error-text` replaces `description` in both the rendering and the association (Q7)
 - [ ] Dev warning when no accessible name is available
+- [ ] Dev warning when an external `<label for>` targets the checkbox, pointing to the `label` slot or `accessible-labelledby` (C13)
 
 #### State verification
 
@@ -550,6 +551,7 @@ Rationale for using `LabellingMixin` and skipping `DisabledMixin`: C4 and C3 in 
 - [ ] Each checkbox is independently form-associated and submits its own `name`/`value`
 - [ ] The box-plus-label hit target meets [WCAG 2.5.8](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html) target size at every size
 - [ ] The box, checkmark, and dash meet 3:1 [non-text contrast](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html) in unchecked, checked, and mixed states, and the error icon meets it while invalid
+- [ ] <kbd>Enter</kbd> on the focused checkbox clicks the form's default submit button, as on a native checkbox (C11)
 
 ### Testing
 
@@ -614,11 +616,12 @@ Form participation (in a native `<form>` with native submit and reset buttons, p
 - [ ] `form.reset()` restores the default checked state and clears an `invalid` status, keeping a `disabled` or `readonly` status
 - [ ] `formStateRestoreCallback` with state `'true'` or `'false'` restores `checked`
 - [ ] `<fieldset disabled>` disables the checkbox and excludes it from `FormData` and validation
+- [x] A host `disabled` attribute disables the checkbox, excludes it from `FormData` and validation, and keeps its own `field-status` (C12)
 - [ ] Value read programmatically matches the submitted value across checked, unchecked, and post-reset states
 
 Keyboard (Playwright):
 
-- [ ] Standalone checkbox is one Tab stop; <kbd>Space</kbd> toggles; <kbd>Enter</kbd> does not
+- [ ] Standalone checkbox is one Tab stop; <kbd>Space</kbd> toggles; <kbd>Enter</kbd> does not toggle, and in a form with a submit button it submits the form (C11)
 - [ ] Several checkboxes are each a Tab stop; arrow keys do not move focus
 - [ ] Disabled is skipped by <kbd>Tab</kbd>; read-only is reached but does not toggle
 - [ ] <kbd>Tab</kbd> shows the focus ring on the box and the label focus color; a pointer click does not show the ring
@@ -668,7 +671,7 @@ During drafting, this section tracks active blockers and open questions. As each
 
 | #   | Item | Blocking? | Status | Owner |
 | --- | ---- | --------- | ------ | ----- |
-| Q15 | Whether `swc-checkbox` exposes `necessity-indicator` (`icon` or `label`) like `swc-text-field`, so `renderLabel()` adds a required marker to the inline label. React S2's checkbox has none. Recommended: match `swc-text-field`, because a required consent checkbox needs a visible cue ([WCAG 3.3.2](https://www.w3.org/WAI/WCAG22/Understanding/labels-or-instructions.html)) and the field family stays consistent. Additive either way. | No | Open: Design confirms | Design + implementation |
+| Q15 | Whether `swc-checkbox` exposes `necessity-indicator` (`icon` or `label`) like `swc-text-field`, so `renderLabel()` adds a required marker to the inline label. React S2's checkbox has none. Recommended: match `swc-text-field`, because a required consent checkbox needs a visible cue ([WCAG 3.3.2](https://www.w3.org/WAI/WCAG22/Understanding/labels-or-instructions.html)) and the field family stays consistent. If adopted, ship the `icon` default from the start: adding it later would change how every existing required checkbox looks. | Before Styling | Open: Design confirms before the Styling phase | Design + implementation |
 
 _Q1 and Q2 are settled in the [Decision log](#decision-log)._
 
@@ -714,6 +717,9 @@ A2–A4 have no tickets by decision (Q11): they are on-request or follow from sh
 | C8 | While barred (effectively disabled, or `field-status="readonly"`), `setValidity()` drops `valueMissing` but keeps `customError` for `field-status="invalid"`. The barred test is `FieldAssociationController.barred` (C10). | Found in the Setup review. `swc-text-field` and `swc-radio-group` on the radio branch both keep `customError` while barred, which keeps `validity` consistent with `aria-invalid="true"` (B14). Barring already makes `checkValidity()` pass and lets the form submit, so keeping the flag changes no submit behavior. Text field tests the inner input's `readOnly`, which a native checkbox ignores, so checkbox uses the controller's `barred`, as `RadioGroup.base.ts` does. The controller docs say to pass empty flags while barred; the siblings' behavior wins here. Replaces the earlier "empty flags" wording in B17 and B22. |
 | C9 | The SWC class, not core, overrides `roleElement` and re-dispatches `change`. | Found in the Setup review. Both depend on the rendered input, which core doesn't own. `swc-text-field` does both in the SWC class, and `swc-radio-group` overrides `roleElement` there too. Radio group's `change` differs: core dispatches a new, cancelable event when the selection changes, which doesn't apply to a checkbox (B10). Core still owns `checked` state, form value, and validity. Supersedes the earlier core row in [Architecture: core vs SWC split](#architecture-core-vs-swc-split). |
 | C10 | Use `FieldAssociationController`'s status-aware options instead of hand-rolling them: pass `getStatus: () => this.fieldStatus` and `host: this`, read `disabled` and `barred` from the controller, call `syncDisabledState()` from `update()`, and let the controller's `willValidate` and capture-phase click guard handle disabled and read-only. | A late change in [#6872](https://github.com/adobe/spectrum-web-components/pull/6872), relayed by the radio owner after plan review: `swc-text-field` and `swc-radio-group` moved this shared field-status behavior into the controller. It replaces the per-field `willValidate` override, `internals.states` call, and click guard that B19, B22, and the Architecture section first described. `setValidity()` stays on the host (C8). A read-only field still receives clicks, so the read-only toggle guard stays on the checkbox (B15, Q9). |
+| C11 | <kbd>Enter</kbd> on a focused checkbox clicks the form's default submit button, as a native checkbox does. With no submit button it does nothing. Implemented in the accessibility phase, reusing `swc-text-field`'s keydown handling. | Found in the API review and verified in Chromium: a native checkbox in a form with a submit button submits on <kbd>Enter</kbd>, but `swc-checkbox` doesn't, because its inner input has no form owner. `swc-text-field` closes the same gap with `handleKeydown`; `swc-radio-group` has the same gap. |
+| C12 | A future `swc-checkbox-group` disables its items by setting the host `disabled` attribute. The browser treats a form-associated element with `disabled` like one inside a `<fieldset disabled>`, so `FieldAssociationController` reports it as disabled, and the item's own `field-status` stays intact for when the group re-enables it. Read-only gets an internal hook when the group is built (A1). | Found in the API review: `field-status` holds one value, so a group that wrote it would overwrite the item's own status. Radio items keep a separate `disabled` boolean for this; checkbox gets the same effect without new API. A form test confirms the attribute disables the checkbox, excludes it from `FormData`, bars validation, and keeps `field-status`. |
+| C13 | An external `<label for>` that targets the checkbox neither toggles nor names it. A ticket covering `swc-text-field`, `swc-radio-group`, and `swc-checkbox` tracks support. Until then, the accessibility phase adds a dev warning when an external label targets the checkbox, pointing to the `label` slot or `accessible-labelledby`. | Found in the API review and verified in Chromium: the label's click lands on the host, not the inner input, and the accessible name comes only from the in-shadow label. Text field has the same naming gap, so the fix belongs to the shared form foundation. Ticket to be filed. |
 | Q1 / B14 | Invalid leaves the box colors unchanged; a decorative error icon marks the state, as specified in B14. | Design decided, in a Slack discussion relayed in plan review, that invalid does not change the input's border or fill. This matches Figma, where checkbox has no invalid state, and follows Spectrum CSS, which already removed radio's invalid styles ([spectrum-css#2209](https://github.com/adobe/spectrum-css/pull/2209)). The error icon placement copies the `swc-radio-group` decision: the icon shows while `field-status="invalid"`, so the state never relies on color alone. Inside a disabled fieldset, the icon follows `swc-text-field` instead and hides (B22). This replaces the earlier plan to follow React S2's negative box colors and brings the error icon, formerly A5, into scope. |
 | Q2 | Read-only has no distinct visual treatment; it looks like the enabled state. Spectrum CSS's suppression of the down-state transform for read-only is kept. | Follows React S2, whose checkbox styles have no read-only condition. Figma's component frame has no read-only state. Read-only is conveyed to assistive technology by `aria-readonly="true"`. |
 | Q3 | Build on the shared form mixins and controller; start Setup (SWC-2343) once the radio branch merges to `main`; the text field branch already merged. **Amended at Setup:** Setup started on `main` before the radio branch was ready, then moved onto `seckles/radio-migration` after [#6872](https://github.com/adobe/spectrum-web-components/pull/6872) merged into it. `Checkbox.types.ts` uses the shared `FieldStatus` type, and the API phase renders the B14 error icon through the `errorIcon` option. | The foundation landed on `main` with the text field migration; building on it avoids a second labelling and form implementation and validates its boolean-field path. Plan review asked to wait for the radio branch too, so checkbox reuses settled radio patterns instead of chasing them while they shift; that branch also carries the `errorIcon` option that B14 needs. Details: [Dependency-aware recommendation](#dependency-aware-recommendation). |
