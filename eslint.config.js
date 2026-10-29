@@ -232,6 +232,7 @@ export default defineConfig([
         { disallowed: ['e', 'ev', 'evt', 'err'] },
       ],
       'swc/document-active-element': 'error',
+      'swc/no-duplicate-cssprop': 'warn',
 
       // Import rules
       'import/prefer-default-export': 'off',
