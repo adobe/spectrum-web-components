@@ -53,12 +53,12 @@ const innerButton = (el: AiButton): HTMLButtonElement =>
   el.shadowRoot!.querySelector<HTMLButtonElement>('.swc-AiButton')!;
 
 /**
- * Dimensions per size, in pixels. Small matches the standard button's small
- * size; the other sizes match the design.
+ * Dimensions per size, in pixels. Small and medium match the standard
+ * button's sizes; large and extra-large match the design.
  */
 const DESIGN_SIZES = {
   s: { blockSize: 24, edgeToText: 10, iconSize: 16, fontSize: 12 },
-  m: { blockSize: 36, edgeToText: 14, iconSize: 18, fontSize: 14 },
+  m: { blockSize: 32, edgeToText: 12, iconSize: 18, fontSize: 14 },
   l: { blockSize: 40, edgeToText: 16, iconSize: 20, fontSize: 16 },
   xl: { blockSize: 48, edgeToText: 18, iconSize: 22, fontSize: 18 },
 } as const;
@@ -355,7 +355,7 @@ export const LockedStylesTest: Story = {
     await loader.updateComplete;
 
     await step('ignores custom properties set on the host', async () => {
-      expect(button.offsetHeight).toBe(36);
+      expect(button.offsetHeight).toBe(DESIGN_SIZES.m.blockSize);
       expect(getComputedStyle(button).color).toBe('rgb(83, 0, 53)');
       expect(
         getComputedStyle(button.querySelector('.swc-AiButton-glow')!, '::after')

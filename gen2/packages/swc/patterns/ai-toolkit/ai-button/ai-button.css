@@ -49,16 +49,16 @@
 
 .swc-AiButton {
   /* Medium size. The size rules below override these. */
-  --_swc-ai-button-min-block-size: 36px;
-  --_swc-ai-button-edge-to-text: 14px;
-  --_swc-ai-button-gap: 5px;
+  --_swc-ai-button-min-block-size: token("component-height-100");
+  --_swc-ai-button-edge-to-text: token("base-padding-horizontal-medium");
+  --_swc-ai-button-gap: token("base-gap-medium");
   --_swc-ai-button-font-size: token("font-size-100");
   --_swc-ai-button-line-height: token("line-height-font-size-100");
   --_swc-ai-button-icon-size: token("workflow-icon-medium");
-  --_swc-ai-button-glow-offset: 0;
-  --_swc-ai-button-glow-hover-block-size: 10px;
+  --_swc-ai-button-glow-offset: calc(token("spacing-50") * -1);
+  --_swc-ai-button-glow-hover-block-size: 9px;
   --_swc-ai-button-glow-hover-inset-inline: token("spacing-200");
-  --_swc-ai-button-icon-only-glow-inset-inline: token("spacing-200");
+  --_swc-ai-button-icon-only-glow-inset-inline: 10px;
   --_swc-ai-button-icon-only-glow-hover-block-size: 22px;
   --_swc-ai-button-icon-only-glow-hover-inset-inline: token("spacing-85");
 
@@ -283,11 +283,11 @@
 /* ─────────────────────────────────────────────────────────────────────────────
    SIZES
    Set on the internal button, not the host, to keep them private. Medium is
-   the default, set in the base rule.
+   the default, set in the base rule. Small and medium match the standard
+   button's sizes, not the design's 32px and 36px. Their glow values keep the
+   design's glow and hover strength at those heights.
    ───────────────────────────────────────────────────────────────────────────── */
 
-/* Small matches the standard button's small size, not the design's 32px.
-   Its glow values keep the design's glow and hover strength at that height. */
 :host([size="s"]) .swc-AiButton {
   --_swc-ai-button-min-block-size: token("component-height-75");
   --_swc-ai-button-edge-to-text: token("base-padding-horizontal-small");
@@ -296,6 +296,7 @@
   --_swc-ai-button-line-height: token("line-height-font-size-75");
   --_swc-ai-button-icon-size: token("workflow-icon-small");
   --_swc-ai-button-glow-offset: calc(token("spacing-75") * -1);
+  --_swc-ai-button-glow-hover-block-size: 10px;
   --_swc-ai-button-icon-only-glow-inset-inline: 9px;
   --_swc-ai-button-icon-only-glow-hover-block-size: 17px;
   --_swc-ai-button-icon-only-glow-hover-inset-inline: token("spacing-75");
@@ -308,6 +309,9 @@
   --_swc-ai-button-font-size: token("font-size-200");
   --_swc-ai-button-line-height: token("line-height-font-size-200");
   --_swc-ai-button-icon-size: token("workflow-icon-large");
+  --_swc-ai-button-glow-offset: 0;
+  --_swc-ai-button-glow-hover-block-size: 10px;
+  --_swc-ai-button-icon-only-glow-inset-inline: token("spacing-200");
   --_swc-ai-button-icon-only-glow-hover-block-size: 24px;
   --_swc-ai-button-icon-only-glow-hover-inset-inline: token("spacing-200");
 }
@@ -319,7 +323,9 @@
   --_swc-ai-button-font-size: token("font-size-300");
   --_swc-ai-button-line-height: token("line-height-font-size-300");
   --_swc-ai-button-icon-size: token("workflow-icon-extra-large");
+  --_swc-ai-button-glow-offset: 0;
   --_swc-ai-button-glow-hover-block-size: 13px;
+  --_swc-ai-button-icon-only-glow-inset-inline: token("spacing-200");
   --_swc-ai-button-icon-only-glow-hover-block-size: 18px;
   --_swc-ai-button-icon-only-glow-hover-inset-inline: token("spacing-100");
 }
