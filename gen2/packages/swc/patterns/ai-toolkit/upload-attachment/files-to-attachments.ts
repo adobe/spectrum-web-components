@@ -35,7 +35,8 @@ export interface UploadAttachmentData {
 
   /**
    * Upper-case file-type label for non-image files, for example "PDF".
-   * Undefined for images and when the type can't be determined.
+   * Undefined for images and when the type can't be determined; supply your
+   * own localized fallback (for example, "File") in that case.
    */
   readonly badgeLabel?: string;
 }
@@ -64,6 +65,10 @@ const MIME_BADGE_LABELS: Record<string, string> = {
 // object, so copies of an attachment (for example, spread into new framework
 // state) still revoke exactly once.
 const liveObjectUrls = new Set<string>();
+
+// Guarantees unique ids within this module; the random part keeps them unique
+// across duplicate copies of the module.
+let idCounter = 0;
 
 function isImageFile(file: File): boolean {
   return file.type.startsWith('image/') || IMAGE_EXTENSION.test(file.name);
@@ -129,21 +134,33 @@ export function filesToAttachments(
   files: Iterable<File> | ArrayLike<File>,
   options: FilesToAttachmentsOptions = {}
 ): UploadAttachmentData[] {
-  return Array.from(files, (file) => {
+  // Compute everything that can throw (for example, an invalid locale) before
+  // creating object URLs, so a failed call leaves nothing to revoke.
+  const prepared = Array.from(files, (file) => {
     const isImage = isImageFile(file);
+    return {
+      file,
+      isImage,
+      sizeLabel: formatFileSize(file.size, options.locale),
+      badgeLabel: isImage ? undefined : getBadgeLabel(file),
+    };
+  });
+
+  return prepared.map(({ file, isImage, sizeLabel, badgeLabel }) => {
     let thumbnailUrl: string | undefined;
     if (isImage) {
       thumbnailUrl = URL.createObjectURL(file);
       liveObjectUrls.add(thumbnailUrl);
     }
 
+    idCounter += 1;
     return {
-      id: uniqueId('swc-attachment'),
+      id: uniqueId(`swc-attachment-${idCounter}`),
       file,
       name: file.name,
-      sizeLabel: formatFileSize(file.size, options.locale),
+      sizeLabel,
       thumbnailUrl,
-      badgeLabel: isImage ? undefined : getBadgeLabel(file),
+      badgeLabel,
     };
   });
 }

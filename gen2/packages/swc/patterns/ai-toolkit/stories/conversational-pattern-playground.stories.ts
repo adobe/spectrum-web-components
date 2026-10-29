@@ -267,9 +267,11 @@ class ConversationFullPatternDemo extends LitElement {
     // Submitted attachments stay visible in the thread, so their thumbnails
     // are released here rather than on submit.
     revokeAttachments(this.attachments);
+    this.attachments = [];
     for (const turn of this.turns) {
       revokeAttachments(turn.attachments ?? []);
     }
+    this.turns = this.turns.map(({ attachments: _revoked, ...turn }) => turn);
     super.disconnectedCallback();
   }
 
@@ -598,13 +600,13 @@ class ConversationFullPatternDemo extends LitElement {
           data-attachment-id=${attachment.id}
         >
           ${renderDemoAttachmentThumbnail(attachment)}
-          ${attachment.badgeLabel
-            ? html`
+          ${attachment.thumbnailUrl
+            ? ''
+            : html`
                 <swc-badge slot="badge" size="s" subtle>
-                  ${attachment.badgeLabel}
+                  ${attachment.badgeLabel ?? 'FILE'}
                 </swc-badge>
-              `
-            : ''}
+              `}
         </swc-upload-attachment>
       `
     );

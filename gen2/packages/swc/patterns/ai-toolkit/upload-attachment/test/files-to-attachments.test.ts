@@ -152,6 +152,39 @@ export const EmptyInput: Story = {
   },
 };
 
+export const UniqueIds: Story = {
+  play: async ({ step }) => {
+    await step('ids are unique across many calls', async () => {
+      const file = new File(['txt'], 'notes.txt', { type: 'text/plain' });
+      const ids = new Set<string>();
+      for (let call = 0; call < 200; call += 1) {
+        for (const { id } of filesToAttachments([file, file, file])) {
+          ids.add(id);
+        }
+      }
+      expect(ids.size).toBe(600);
+    });
+  },
+};
+
+export const FailedConversionCreatesNoObjectUrls: Story = {
+  play: async ({ step }) => {
+    await step(
+      'an invalid locale throws before any object URL is created',
+      async () => {
+        const createSpy = spyOn(URL, 'createObjectURL');
+        expect(() =>
+          filesToAttachments(
+            [new File(['png'], 'photo.png', { type: 'image/png' })],
+            { locale: 'en_US' }
+          )
+        ).toThrow(RangeError);
+        expect(createSpy).not.toHaveBeenCalled();
+      }
+    );
+  },
+};
+
 export const IdempotentRevoke: Story = {
   play: async ({ step }) => {
     const revokeSpy = spyOn(URL, 'revokeObjectURL');
