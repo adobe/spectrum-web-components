@@ -29,11 +29,11 @@ import '@adobe/spectrum-wc/components/popover/swc-popover.js';
 
 const { events, args, argTypes, template } = getStorybookHelpers('swc-popover');
 
+// The `undefined` option is a sentinel, not a size: it clears `size` so the
+// popover fits its contents. The manifest cannot express that.
 argTypes.size = {
   ...argTypes.size,
-  control: { type: 'select' },
   options: [undefined, ...Popover.VALID_SIZES],
-  table: { category: 'attributes' },
 };
 
 // `actual-placement` is internal CSS-only state that `Popover` sets via
