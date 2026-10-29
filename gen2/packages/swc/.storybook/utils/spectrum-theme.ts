@@ -15,7 +15,7 @@ import {
   type ThemeVarsPartial,
 } from 'storybook/theming';
 
-import type { ColorScheme } from './color-scheme';
+import type { ColorScheme } from './color-scheme.js';
 
 /**
  * The Spectrum token, without its `--swc-` prefix, behind each Storybook

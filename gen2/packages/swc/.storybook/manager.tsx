@@ -18,11 +18,11 @@ import { Button, ToggleButton } from 'storybook/internal/components';
 import { GLOBALS_UPDATED, SET_GLOBALS } from 'storybook/internal/core-events';
 import type { ThemeVars } from 'storybook/theming';
 
-import { Icon_FileText } from '../../icons/src/FileText';
-import { Icon_Folder } from '../../icons/src/Folder';
-import { Icon_InfoCircle } from '../../icons/src/InfoCircle';
-import { Icon_Play } from '../../icons/src/Play';
-import { Icon_ViewGrid } from '../../icons/src/ViewGrid';
+import { Icon_FileText } from '../../icons/src/FileText.js';
+import { Icon_Folder } from '../../icons/src/Folder.js';
+import { Icon_InfoCircle } from '../../icons/src/InfoCircle.js';
+import { Icon_Play } from '../../icons/src/Play.js';
+import { Icon_ViewGrid } from '../../icons/src/ViewGrid.js';
 import packageJson from '../package.json';
 import logoDark from './assets/logo-dark.svg';
 import logo from './assets/logo.svg';
@@ -30,8 +30,8 @@ import {
   applyThemeClass,
   onPreferredColorSchemeChange,
   resolveColorScheme,
-} from './utils/color-scheme';
-import { createSpectrumTheme } from './utils/spectrum-theme';
+} from './utils/color-scheme.js';
+import { createSpectrumTheme } from './utils/spectrum-theme.js';
 
 import '../stylesheets/swc.css';
 import '../stylesheets/typography.css';

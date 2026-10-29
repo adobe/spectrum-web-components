@@ -26,8 +26,8 @@ import {
   applyThemeClass,
   onPreferredColorSchemeChange,
   resolveColorScheme,
-} from '../utils/color-scheme';
-import { createSpectrumTheme } from '../utils/spectrum-theme';
+} from '../utils/color-scheme.js';
+import { createSpectrumTheme } from '../utils/spectrum-theme.js';
 
 type Channel = DocsContainerProps['context']['channel'];
 
