@@ -38,7 +38,7 @@ const DOCS_URL =
  *
  * @slot label - Visible label. Clicking it toggles the checkbox.
  * @slot description - Help text included in the accessible description. While `field-status="invalid"`, replaced by supplied `error-text`.
- * @slot error-text - Error text shown, included in the accessible description, and used as the validation message while `field-status="invalid"`. Missing or whitespace-only text uses "Enter a valid value." for validation without showing a fallback inline message.
+ * @slot error-text - Error text shown, included in the accessible description, and used as the validation message while `field-status="invalid"`. Supply translated text when needed. Missing or whitespace-only text uses "Enter a valid value." for validation without showing a fallback inline message.
  */
 export abstract class CheckboxBase extends SizedMixin(
   FieldDescriptionMixin(LabellingMixin(SpectrumElement)),
@@ -47,12 +47,12 @@ export abstract class CheckboxBase extends SizedMixin(
     defaultSize: 'm',
   }
 ) {
-  /** Opts the element into native form participation. */
-  static formAssociated = true;
-
   // ──────────────────
   //     SHARED API
   // ──────────────────
+
+  /** Opts the element into native form participation. */
+  static formAssociated = true;
 
   /**
    * Size of the box, label, and supporting text.
@@ -72,15 +72,24 @@ export abstract class CheckboxBase extends SizedMixin(
   }
 
   public set checked(value: boolean) {
+    const checked = Boolean(value);
     if (!this.#applyingCheckedAttribute) {
       this.#checkedDirty = true;
     }
-    if (value === this._checked) {
+    if (checked === this._checked) {
       return;
     }
     const oldValue = this._checked;
-    this._checked = value;
+    this._checked = checked;
     this.requestUpdate('checked', oldValue);
+    // Update the input, form value, and validity now, as a native checkbox
+    // does, so an immediate `FormData` or `checkValidity()` read is current.
+    const input = this.inputElement;
+    if (input) {
+      input.checked = checked;
+    }
+    this.syncFormValue();
+    this.syncValidity();
   }
 
   private _checked = false;
@@ -107,6 +116,7 @@ export abstract class CheckboxBase extends SizedMixin(
 
   /**
    * Requires the checkbox to be checked when it participates in validation.
+   * An unchecked required checkbox fails with the browser's native message.
    */
   @property({ type: Boolean, reflect: true })
   public required = false;
@@ -161,7 +171,10 @@ export abstract class CheckboxBase extends SizedMixin(
     return this.fieldAssoc.reportValidity();
   }
 
-  /** Toggles the checkbox as a user click does. Does nothing while disabled. */
+  /**
+   * Toggles the checkbox as a user click does. Does nothing while disabled,
+   * including before the inner input renders the disabled state.
+   */
   public override click(): void {
     if (this.effectiveDisabled) {
       return;
@@ -175,9 +188,9 @@ export abstract class CheckboxBase extends SizedMixin(
 
   // Form association: `formAssociated` (static, above) and `attachInternals` stay
   // on the element; the controller wraps the rest.
-  private internals = this.attachInternals();
+  private readonly internals = this.attachInternals();
 
-  private fieldAssoc = new FieldAssociationController(this.internals, {
+  private readonly fieldAssoc = new FieldAssociationController(this.internals, {
     onDisabledChange: () => this.requestUpdate(),
     getStatus: () => this.fieldStatus,
     host: this,
@@ -213,39 +226,6 @@ export abstract class CheckboxBase extends SizedMixin(
     );
   }
 
-  /**
-   * The authored disabled status OR the native disabled callback state.
-   * The subclass render reads it to disable the inner control.
-   */
-  protected get effectiveDisabled(): boolean {
-    return this.fieldAssoc.disabled;
-  }
-
-  /** The role element is always the native checkbox `<input>`. */
-  private get inputElement(): HTMLInputElement | null {
-    return this.roleElement as HTMLInputElement | null;
-  }
-
-  /**
-   * @internal
-   *
-   * Takes the inner input's state after a user toggle. The subclass binds it to
-   * the input's `input` event, which fires before `change`, so `checked` is
-   * current for both.
-   */
-  protected handleInput(): void {
-    const input = this.inputElement;
-    if (!input) {
-      return;
-    }
-    this.indeterminate = false;
-    this.checked = input.checked;
-    // Sync now, not on the next update, so `input` and `change` listeners read
-    // the current form value and validity.
-    this.syncFormValue();
-    this.syncValidity();
-  }
-
   /** @internal Applies the `checked` attribute only until `checked` changes. */
   public override attributeChangedCallback(
     name: string,
@@ -259,28 +239,27 @@ export abstract class CheckboxBase extends SizedMixin(
     if (this.#checkedDirty) {
       return;
     }
-    this.#applyingCheckedAttribute = true;
-    try {
-      super.attributeChangedCallback(name, oldValue, value);
-    } finally {
-      this.#applyingCheckedAttribute = false;
-    }
+    this.applyCheckedAttribute(() =>
+      super.attributeChangedCallback(name, oldValue, value)
+    );
   }
 
   /** @internal Restores the default checked state and clears an invalid status on native form reset. */
   public formResetCallback(): void {
     this.#checkedDirty = false;
-    this.#applyingCheckedAttribute = true;
-    this.checked = this.hasAttribute('checked');
-    this.#applyingCheckedAttribute = false;
+    this.applyCheckedAttribute(() => {
+      this.checked = this.hasAttribute('checked');
+    });
     if (this.fieldStatus === 'invalid') {
       this.fieldStatus = undefined;
     }
+    this.syncValidity();
   }
 
   /** @internal Restores the checked state supplied by the browser for navigation or autofill. */
   public formStateRestoreCallback(
-    state: string | File | FormData | null
+    state: string | File | FormData | null,
+    _mode?: 'restore' | 'autocomplete'
   ): void {
     if (state === 'true' || state === 'false') {
       this.checked = state === 'true';
@@ -311,6 +290,40 @@ export abstract class CheckboxBase extends SizedMixin(
     super.disconnectedCallback();
   }
 
+  /**
+   * @internal
+   *
+   * The authored disabled status OR the native disabled callback state.
+   * The subclass render reads it to disable the inner control.
+   */
+  protected get effectiveDisabled(): boolean {
+    return this.fieldAssoc.disabled;
+  }
+
+  /**
+   * @internal
+   *
+   * Takes the inner input's state after a user toggle. The subclass binds it to
+   * the input's `input` event, which fires before `change`, so `checked`, the
+   * form value, and validity are current for both.
+   */
+  protected handleInput(event: Event): void {
+    const input = this.inputElement;
+    if (!input) {
+      return;
+    }
+    if (this.fieldStatus === 'readonly') {
+      // Backup for a click the capture guard never saw, such as one an
+      // ancestor listener stopped: undo the toggle and keep it from consumers.
+      input.checked = this.checked;
+      input.indeterminate = this.indeterminate;
+      event.stopPropagation();
+      return;
+    }
+    this.indeterminate = false;
+    this.checked = input.checked;
+  }
+
   protected override update(changedProperties: PropertyValues): void {
     if (this.fieldStatus !== undefined) {
       validateEnum(this, {
@@ -325,17 +338,51 @@ export abstract class CheckboxBase extends SizedMixin(
     this.syncFormValue();
   }
 
+  protected override updated(changedProperties: PropertyValues): void {
+    super.updated(changedProperties);
+    // Write only state that changed: a re-render during a user click must not
+    // overwrite the input's provisional toggle with the previous value.
+    const input = this.inputElement;
+    if (input && changedProperties.has('checked')) {
+      input.checked = this.checked;
+    }
+    if (input && changedProperties.has('indeterminate')) {
+      input.indeterminate = this.indeterminate;
+    }
+    this.syncValidity();
+  }
+
+  /** The role element is always the native checkbox `<input>`. */
+  private get inputElement(): HTMLInputElement | null {
+    return this.roleElement as HTMLInputElement | null;
+  }
+
+  /** Plain text of the slotted `error-text`, used as the validation message. */
+  private get errorTextContent(): string {
+    return Array.from(
+      this.querySelectorAll(':scope > [slot="error-text"]'),
+      (element) => element.textContent ?? ''
+    )
+      .join(' ')
+      .trim();
+  }
+
+  /** Runs `apply` without marking `checked` as changed by the user or a script. */
+  private applyCheckedAttribute(apply: () => void): void {
+    this.#applyingCheckedAttribute = true;
+    try {
+      apply();
+    } finally {
+      this.#applyingCheckedAttribute = false;
+    }
+  }
+
   /** Submits `value` only while checked and enabled; restores by checked state. */
   private syncFormValue(): void {
     this.fieldAssoc.setValue(
       this.effectiveDisabled || !this.checked ? null : this.value,
       String(this.checked)
     );
-  }
-
-  protected override updated(changedProperties: PropertyValues): void {
-    super.updated(changedProperties);
-    this.syncValidity();
   }
 
   /**
@@ -355,19 +402,11 @@ export abstract class CheckboxBase extends SizedMixin(
       this.internals.setValidity({});
       return;
     }
+    // `setValidity()` throws on an empty message. The native message can be
+    // empty only before the input renders `required`, so the fallback is brief.
     const message = customError
       ? this.errorTextContent || 'Enter a valid value.'
       : input.validationMessage || 'Check this box to continue.';
     this.internals.setValidity({ customError, valueMissing }, message, input);
-  }
-
-  /** Plain text of the slotted `error-text`, used as the validation message. */
-  private get errorTextContent(): string {
-    return Array.from(
-      this.querySelectorAll(':scope > [slot="error-text"]'),
-      (element) => element.textContent ?? ''
-    )
-      .join(' ')
-      .trim();
   }
 }

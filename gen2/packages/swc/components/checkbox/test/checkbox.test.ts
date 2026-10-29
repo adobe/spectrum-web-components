@@ -15,6 +15,7 @@ import { expect, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import { Checkbox } from '@adobe/spectrum-wc/checkbox';
+import { CHECKBOX_VALID_SIZES } from '@adobe/spectrum-wc-core/components/checkbox';
 
 import '@adobe/spectrum-wc/components/checkbox/swc-checkbox.js';
 
@@ -119,7 +120,7 @@ export const OptionControlsTest: Story = {
     await step('enum controls expose their supported values', () => {
       expect(meta.argTypes?.size).toMatchObject({
         control: { type: 'select' },
-        options: ['s', 'm', 'l', 'xl'],
+        options: [...CHECKBOX_VALID_SIZES],
       });
       expect(meta.argTypes?.['field-status']).toMatchObject({
         control: { type: 'select' },
@@ -132,7 +133,7 @@ export const OptionControlsTest: Story = {
 OptionControlsTest.storyName = 'Playground option controls';
 
 // ──────────────────────────────────────────────────────────────
-// TEST: checked (B9, SWC-1518)
+// TEST: checked (B9)
 // ──────────────────────────────────────────────────────────────
 
 export const CheckedTest: Story = {
@@ -258,6 +259,26 @@ export const CheckedAttributeTest: Story = {
         expect(toggled.checked).toBe(false);
       }
     );
+
+    await step(
+      'setting checked to its current value also stops the attribute',
+      async () => {
+        form.reset();
+        untouched.checked = true;
+        untouched.removeAttribute('checked');
+        await untouched.updateComplete;
+        expect(untouched.checked).toBe(true);
+      }
+    );
+
+    await step('checked is always a boolean', async () => {
+      const loose = untouched as unknown as { checked: unknown };
+      loose.checked = 'yes';
+      expect(untouched.checked).toBe(true);
+      loose.checked = 0;
+      expect(untouched.checked).toBe(false);
+      await untouched.updateComplete;
+    });
   },
 };
 CheckedAttributeTest.storyName = 'checked attribute is the default';
@@ -423,6 +444,19 @@ export const ClickTest: Story = {
     );
 
     await step(
+      'click() right after disabling does nothing, before the input updates',
+      async () => {
+        checkbox.fieldStatus = 'disabled';
+        checkbox.click();
+        await checkbox.updateComplete;
+        expect(checkbox.checked).toBe(true);
+        expect(events).toHaveLength(1);
+        checkbox.fieldStatus = undefined;
+        await checkbox.updateComplete;
+      }
+    );
+
+    await step(
       'a disabled fieldset disables the input and click()',
       async () => {
         fieldset.disabled = true;
@@ -471,8 +505,33 @@ export const ReadOnlyTest: Story = {
       }
     );
 
-    await step('consumers still receive the clicks', () => {
-      expect(clicks.length).toBeGreaterThan(0);
+    await step('consumers still receive every click', () => {
+      // The input click, the label click and its input click, and click().
+      expect(clicks).toHaveLength(4);
+    });
+
+    await step('canceling also keeps the mixed state', async () => {
+      checkbox.indeterminate = true;
+      await checkbox.updateComplete;
+      input.click();
+      await checkbox.updateComplete;
+      expect(checkbox.indeterminate).toBe(true);
+      expect(input.indeterminate).toBe(true);
+      expect(checkbox.checked).toBe(true);
+      expect(events).toHaveLength(0);
+      checkbox.indeterminate = false;
+      await checkbox.updateComplete;
+    });
+
+    await step('a click stopped before the guard is still undone', async () => {
+      const stop = (event: Event): void => event.stopPropagation();
+      canvasElement.addEventListener('click', stop, { capture: true });
+      input.click();
+      canvasElement.removeEventListener('click', stop, { capture: true });
+      await checkbox.updateComplete;
+      expect(checkbox.checked).toBe(true);
+      expect(input.checked).toBe(true);
+      expect(events).toHaveLength(0);
     });
 
     await step('clearing the status restores toggling', async () => {

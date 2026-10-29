@@ -43,10 +43,6 @@ function inputOf(checkbox: Checkbox): HTMLInputElement {
   return input;
 }
 
-/** Waits for the error-text `MutationObserver` to run. */
-const nextTask = (): Promise<void> =>
-  new Promise((resolve) => setTimeout(resolve));
-
 // ──────────────────────────────────────────────────────────────
 // TEST: Form value (B2, B16)
 // ──────────────────────────────────────────────────────────────
@@ -213,14 +209,16 @@ export const InvalidStatusTest: Story = {
 
     await step('the message follows edits to the error text', async () => {
       errorText.textContent = 'Choose another plan.';
-      await nextTask();
-      expect(checkbox.validationMessage).toBe('Choose another plan.');
+      await waitFor(() =>
+        expect(checkbox.validationMessage).toBe('Choose another plan.')
+      );
     });
 
     await step('empty error text falls back to a default message', async () => {
       errorText.textContent = '';
-      await nextTask();
-      expect(checkbox.validationMessage).toBe('Enter a valid value.');
+      await waitFor(() =>
+        expect(checkbox.validationMessage).toBe('Enter a valid value.')
+      );
     });
 
     await step('clearing the status clears customError', async () => {
@@ -401,3 +399,42 @@ export const ResetTest: Story = {
   },
 };
 ResetTest.storyName = 'Reset and state restore';
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Script changes take effect immediately
+// ──────────────────────────────────────────────────────────────
+
+export const ImmediateSyncTest: Story = {
+  render: () => html`
+    <form>
+      <swc-checkbox name="terms" required>
+        <span slot="label">I agree to the terms</span>
+      </swc-checkbox>
+    </form>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const form = formOf(canvasElement);
+    const checkbox = await getComponent<Checkbox>(
+      canvasElement,
+      'swc-checkbox'
+    );
+
+    await step('setting checked updates FormData and validity at once', () => {
+      checkbox.checked = true;
+      expect(new FormData(form).get('terms')).toBe('on');
+      expect(checkbox.checkValidity()).toBe(true);
+      expect(inputOf(checkbox).checked).toBe(true);
+    });
+
+    await step('form reset updates FormData and validity at once', async () => {
+      checkbox.fieldStatus = 'invalid';
+      await checkbox.updateComplete;
+      expect(checkbox.validity.customError).toBe(true);
+      form.reset();
+      expect(new FormData(form).has('terms')).toBe(false);
+      expect(checkbox.validity.customError).toBe(false);
+      expect(checkbox.validity.valueMissing).toBe(true);
+    });
+  },
+};
+ImmediateSyncTest.storyName = 'Script changes take effect immediately';

@@ -11,7 +11,6 @@
  */
 
 import { CSSResultArray, html, TemplateResult } from 'lit';
-import { live } from 'lit/directives/live.js';
 
 import { CheckboxBase } from '@adobe/spectrum-wc-core/components/checkbox';
 
@@ -60,24 +59,16 @@ export class Checkbox extends CheckboxBase {
     return this.renderRoot?.querySelector(`input#${INPUT_ID}`) ?? null;
   }
 
-  /**
-   * Re-dispatch `change` from the host: the native `change` event is
-   * `composed: false`, so it never crosses the shadow boundary and a consumer's
-   * `<swc-checkbox @change=…>` would otherwise never fire.
-   */
-  private handleChange(): void {
-    this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
-  }
-
   protected override render(): TemplateResult {
+    // `checked` and `indeterminate` are written to the input by the base class
+    // only when they change, never by a binding: a binding would re-apply the
+    // previous value if the element re-renders during a user click.
     return html`
       <div class="swc-Checkbox">
         <input
           id=${INPUT_ID}
           type="checkbox"
           class="swc-Checkbox-input"
-          .checked=${live(this.checked)}
-          .indeterminate=${live(this.indeterminate)}
           ?required=${this.required}
           ?disabled=${this.effectiveDisabled}
           @input=${this.handleInput}
@@ -94,5 +85,19 @@ export class Checkbox extends CheckboxBase {
             `,
       })}
     `;
+  }
+
+  /**
+   * Re-dispatch `change` from the host: the native `change` event is
+   * `composed: false`, so it never crosses the shadow boundary and a consumer's
+   * `<swc-checkbox @change=…>` would otherwise never fire. While read-only, a
+   * toggle only gets here if the base class guard was bypassed; the input
+   * handler already undid it, so no `change` is sent.
+   */
+  private handleChange(): void {
+    if (this.fieldStatus === 'readonly') {
+      return;
+    }
+    this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
   }
 }

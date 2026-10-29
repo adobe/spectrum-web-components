@@ -19,6 +19,7 @@ import {
   waitUntil,
 } from '@open-wc/testing';
 import { a11ySnapshot, findAccessibilityNode } from '@web/test-runner-commands';
+import { stub } from 'sinon';
 
 import '@spectrum-web-components/checkbox/sp-checkbox.js';
 import '@spectrum-web-components/shared/src/focus-visible.js';
@@ -390,5 +391,86 @@ describe('Checkbox', () => {
     el.removeAttribute('disabled');
     await elementUpdated(el);
     expect(el.tabIndex).to.equal(0);
+  });
+  describe('dev mode', () => {
+    let consoleWarnStub!: ReturnType<typeof stub>;
+    before(() => {
+      window.__swc.verbose = true;
+      consoleWarnStub = stub(console, 'warn');
+    });
+    afterEach(() => {
+      consoleWarnStub.resetHistory();
+    });
+    after(() => {
+      window.__swc.verbose = false;
+      consoleWarnStub.restore();
+    });
+
+    // Scoped to one element: the outer `beforeEach` fixture includes a
+    // disabled checkbox that warns before every test.
+    const deprecationCalls = (el: Checkbox): { args: unknown[] }[] =>
+      consoleWarnStub
+        .getCalls()
+        .filter(
+          (call: { args: unknown[] }) =>
+            (call.args[0] as string)?.includes('deprecated') &&
+            call.args.includes(el)
+        );
+
+    for (const attribute of ['disabled', 'invalid', 'readonly']) {
+      it(`warns in Dev Mode for the deprecated "${attribute}" attribute`, async () => {
+        const el = await fixture<Checkbox>(html`
+          <sp-checkbox>Checkbox</sp-checkbox>
+        `);
+        el.setAttribute(attribute, '');
+        await elementUpdated(el);
+
+        const spyCall = deprecationCalls(el).find((call) =>
+          (call.args[0] as string).includes(`"${attribute}"`)
+        );
+        expect(spyCall, `${attribute} warning emitted`).to.not.be.undefined;
+        expect(
+          spyCall!.args[spyCall!.args.length - 1],
+          'confirm `data` shape'
+        ).to.deep.equal({
+          data: {
+            localName: 'sp-checkbox',
+            type: 'api',
+            level: 'deprecation',
+          },
+        });
+      });
+    }
+
+    it('warns in Dev Mode when the change event is canceled', async () => {
+      const el = await fixture<Checkbox>(html`
+        <sp-checkbox>Checkbox</sp-checkbox>
+      `);
+      el.addEventListener('change', (event) => event.preventDefault());
+      el.click();
+      await elementUpdated(el);
+
+      expect(el.checked, 'canceling still reverts the toggle').to.be.false;
+      const spyCall = deprecationCalls(el).find((call) =>
+        (call.args[0] as string).includes('"change" event')
+      );
+      expect(spyCall, 'change cancel warning emitted').to.not.be.undefined;
+      expect(
+        (spyCall!.args[0] as string).includes(
+          'Cancel the "click" event instead'
+        ),
+        'names the replacement'
+      ).to.be.true;
+    });
+
+    it('does not warn for supported attributes or an uncanceled change', async () => {
+      const el = await fixture<Checkbox>(html`
+        <sp-checkbox checked indeterminate emphasized>Checkbox</sp-checkbox>
+      `);
+      el.click();
+      await elementUpdated(el);
+
+      expect(deprecationCalls(el), 'no deprecation warnings').to.have.length(0);
+    });
   });
 });
