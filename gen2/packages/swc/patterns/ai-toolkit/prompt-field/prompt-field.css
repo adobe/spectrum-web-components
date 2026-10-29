@@ -106,13 +106,6 @@
   --_swc-prompt-field-collapsed-radius: calc(token("component-height-75") / 2 + token("spacing-200"));
 }
 
-/* Placed before the has-attachment rule below so attachments keep their reduced top padding (badge clearance) when collapsed. */
-:host([collapsed]) .swc-PromptField-box {
-  padding-block: token("spacing-200");
-  padding-inline-end: token("spacing-200");
-  border-radius: var(--_swc-prompt-field-collapsed-radius);
-}
-
 @media (prefers-reduced-motion: reduce) {
   .swc-PromptField-box {
     transition: none;
@@ -121,6 +114,18 @@
 
 .swc-PromptField-box:has(.swc-PromptField-input-area.has-attachment) {
   padding-block-start: token("spacing-100");
+}
+
+/* Placed after the has-attachment rule above so the pill's uniform block padding wins over it. */
+:host([collapsed]) .swc-PromptField-box {
+  padding-block: token("spacing-200");
+  padding-inline-end: token("spacing-200");
+  border-radius: var(--_swc-prompt-field-collapsed-radius);
+}
+
+/* With attachments, the strip's badge clearance supplies most of the top space, so the card's own top padding drops to put the tiles 18px from the edge. */
+:host([collapsed]) .swc-PromptField-box:has(.swc-PromptField-input-area.has-attachment) {
+  padding-block-start: token("spacing-85");
 }
 
 /* Inert when disabled: default cursor, and the card ignores pointer input so hover treatments don't fire. */
