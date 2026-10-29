@@ -70,6 +70,15 @@ export const DefaultsTest: Story = {
         false
       );
     });
+
+    // Order is the reading order the row is announced in, so a swap is a
+    // regression even though both slots still render.
+    await step('renders the visual slot ahead of the label', async () => {
+      const slots = Array.from(
+        item.shadowRoot?.querySelectorAll('slot') ?? []
+      ).map((slot) => slot.name);
+      expect(slots, 'slot order').toEqual(['visual', 'label']);
+    });
   },
 };
 
@@ -185,6 +194,67 @@ export const DiscoveredByMenuTest: Story = {
         getItems(canvasElement)[1].getAttribute('aria-disabled'),
         'the row it reached is genuinely the disabled one'
       ).toBe('true');
+    });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Keyboard activation
+// ──────────────────────────────────────────────────────────────
+
+// Dispatched from the row for the same reason as the arrow-key step above.
+const pressKey = (row: MenuItem, key: string): KeyboardEvent => {
+  const event = new KeyboardEvent('keydown', {
+    key,
+    bubbles: true,
+    composed: true,
+    cancelable: true,
+  });
+  row.dispatchEvent(event);
+  return event;
+};
+
+export const KeyboardActivationTest: Story = {
+  render: () => inMenu(threeRows, 'activation-trigger'),
+  play: async ({ canvasElement, step }) => {
+    const trigger = canvasElement.querySelector(
+      '#activation-trigger'
+    ) as HTMLElement;
+    const menu = canvasElement.querySelector('swc-menu') as HTMLElement & {
+      open: boolean;
+    };
+
+    await step('Enter on a disabled row does nothing', async () => {
+      await userEvent.click(trigger);
+      await waitFor(() => expect(menu.open).toBe(true));
+
+      const [, disabledRow] = getItems(canvasElement);
+      let clicked = false;
+      disabledRow.addEventListener('click', () => {
+        clicked = true;
+      });
+
+      const event = pressKey(disabledRow, 'Enter');
+
+      expect(event.defaultPrevented, 'the key is still swallowed').toBe(true);
+      expect(clicked, 'no activation reaches the consumer').toBe(false);
+      expect(menu.open, 'the menu stays open').toBe(true);
+    });
+
+    // The a11y analysis requires Enter *and* Space (WCAG 2.1.1). Space is
+    // the one that was missing: the row never turned it into a click.
+    await step('Space on an enabled row activates and closes', async () => {
+      const [firstRow] = getItems(canvasElement);
+      let clicked = false;
+      firstRow.addEventListener('click', () => {
+        clicked = true;
+      });
+
+      const event = pressKey(firstRow, ' ');
+
+      expect(event.defaultPrevented, 'the page does not scroll').toBe(true);
+      expect(clicked, 'the consumer click handler runs').toBe(true);
+      await waitFor(() => expect(menu.open, 'the menu closes').toBe(false));
     });
   },
 };

@@ -29,7 +29,6 @@ import { MENU_ITEM_VALID_SIZES, type MenuItemSize } from './MenuItem.types.js';
  */
 export abstract class MenuItemBase extends SizedMixin(SpectrumElement, {
   validSizes: MENU_ITEM_VALID_SIZES,
-  defaultSize: 'm',
 }) {
   /**
    * The size of the menu item.
@@ -63,19 +62,34 @@ export abstract class MenuItemBase extends SizedMixin(SpectrumElement, {
     if (!this.hasAttribute('role')) {
       this.setAttribute('role', 'menuitem');
     }
+    this.addEventListener('keydown', this.handleKeyDown);
   }
+
+  public override disconnectedCallback(): void {
+    this.removeEventListener('keydown', this.handleKeyDown);
+    super.disconnectedCallback();
+  }
+
+  // Enter and Space activate a row. Turning them into a click is what makes
+  // keyboard and pointer activation reach the same consumer handler.
+  private readonly handleKeyDown = (event: KeyboardEvent): void => {
+    if (event.key !== 'Enter' && event.key !== ' ') {
+      return;
+    }
+    // Enter would otherwise re-fire on the trigger the menu restores focus
+    // to, and Space would scroll the page under the open surface.
+    event.preventDefault();
+    if (!this.disabled) {
+      this.click();
+    }
+  };
 
   protected override update(changedProperties: PropertyValues): void {
     super.update(changedProperties);
-    if (!changedProperties.has('disabled')) {
-      return;
-    }
     // Mapped by hand rather than via `DisabledMixin` (Q20): the mixin also
     // writes `tabindex`, which `FocusgroupNavigationController` owns here.
-    if (this.disabled) {
-      this.setAttribute('aria-disabled', 'true');
-    } else {
-      this.removeAttribute('aria-disabled');
+    if (changedProperties.has('disabled')) {
+      this.ariaDisabled = this.disabled ? 'true' : null;
     }
   }
 }

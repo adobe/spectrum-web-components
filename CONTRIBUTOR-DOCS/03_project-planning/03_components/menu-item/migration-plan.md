@@ -182,10 +182,10 @@ Row chrome belongs here, not in `swc-menu`: in `spectrum-css`, `.spectrum-Menu` 
 
 ### API
 
-- [ ] `MenuItem.types.ts` with `MENU_ITEM_VALID_SIZES` and `MenuItemSize`
-- [ ] `MenuItemBase` with `size`, `disabled`, and `role="menuitem"` on the host
-- [ ] Resolve [Q20](#blockers-and-open-questions) before settling the `disabled` implementation
-- [ ] `index.ts` exports and `core/package.json` subpath exports
+- [x] `MenuItem.types.ts` with `MENU_ITEM_VALID_SIZES` and `MenuItemSize`
+- [x] `MenuItemBase` with `size`, `disabled`, and `role="menuitem"` on the host
+- [x] Resolve [Q20](#blockers-and-open-questions) before settling the `disabled` implementation
+- [x] `index.ts` exports and `core/package.json` subpath exports
 
 ### CSS
 
@@ -196,20 +196,22 @@ Row chrome belongs here, not in `swc-menu`: in `spectrum-css`, `.spectrum-Menu` 
 
 ### Accessibility
 
-- [ ] `role="menuitem"` present before `swc-menu`'s first discovery pass
-- [ ] `disabled` exposes `aria-disabled="true"` and the row stays arrow-reachable
+- [x] `role="menuitem"` present before `swc-menu`'s first discovery pass
+- [x] `disabled` exposes `aria-disabled="true"` and the row stays arrow-reachable
+- [x] <kbd>Enter</kbd> and <kbd>Space</kbd> activate an enabled row ([WCAG 2.1.1](https://www.w3.org/WAI/WCAG22/Understanding/keyboard)); a disabled row swallows both without activating
 - [ ] Reconcile `accessibility-migration-analysis.md`: its "Migration scope" currently lists submenu parents and link rows as in scope, contradicting [Q17](#blockers-and-open-questions)
 
 ### Testing
 
 Red/green TDD. Each item below should fail before the implementation exists.
 
-- [ ] Host carries `role="menuitem"` on connect
-- [ ] Defaults: `size` is `m`, `disabled` is `false`, no `aria-disabled`
-- [ ] `disabled` sets `aria-disabled="true"` and **not** the native disabled behaviour
-- [ ] A disabled row remains reachable by arrow keys inside `swc-menu` ([B20](#must-ship)) — this is the test that settles [Q20](#blockers-and-open-questions)
-- [ ] `label` and `visual` slots render in the expected order
-- [ ] `swc-menu` discovers rows via `:scope > swc-menu-item` with real elements, not placeholders
+- [x] Host carries `role="menuitem"` on connect
+- [x] Defaults: `size` is `m`, `disabled` is `false`, no `aria-disabled`
+- [x] `disabled` sets `aria-disabled="true"` and **not** the native disabled behaviour
+- [x] A disabled row remains reachable by arrow keys inside `swc-menu` ([B20](#must-ship)); this is the test that settles [Q20](#blockers-and-open-questions)
+- [x] `label` and `visual` slots render in the expected order
+- [x] `swc-menu` discovers rows via `:scope > swc-menu-item` with real elements, not placeholders
+- [x] <kbd>Enter</kbd> and <kbd>Space</kbd> reach a consumer `click` handler on an enabled row, and neither activates a disabled one
 - [ ] Playwright: ARIA tree shows `menu` containing named `menuitem` rows
 - [ ] VRT: sizes, disabled, with and without a visual, forced colors
 
@@ -225,7 +227,7 @@ Red/green TDD. Each item below should fail before the implementation exists.
 
 | # | Question | Blocking? | Status |
 | --- | --- | --- | --- |
-| **Q20** | Does `DisabledMixin` fight `FocusgroupNavigationController`? The mixin writes `tabindex` (saving and restoring a previous value) while the controller owns roving tabindex and, with `skipDisabled: false`, deliberately keeps `aria-disabled` rows in sequence. `DisabledMixin` currently has no consumers, so this combination is untested. Resolved in review: if they conflict, skip `DisabledMixin` and map the property by hand, leaving tabindex entirely to the controller. The test still has to run to tell us which path we are on. | Yes, for the API | Path decided, needs the test |
+| **Q20** | Does `DisabledMixin` fight `FocusgroupNavigationController`? The mixin writes `tabindex` (saving and restoring a previous value) while the controller owns roving tabindex and, with `skipDisabled: false`, deliberately keeps `aria-disabled` rows in sequence. `DisabledMixin` currently has no consumers, so this combination is untested. Resolved in review: if they conflict, skip `DisabledMixin` and map the property by hand, leaving tabindex entirely to the controller. | Yes, for the API | **Closed.** They conflict, so `MenuItemBase` maps `disabled` to `aria-disabled` by hand and never touches tabindex. The arrow-reachability test confirms it, and fails when the controller's `skipDisabled` is flipped |
 | **Q21** | The menu epic was specced against Figma file `Mngz9H7WZLbrCvGQf3GnsY`, now named "S2 - Web (Deprecated)". `swc-menu` and `swc-close-button` link to it; `swc-thumbnail` uses `xHBWBBIe2eo5vwoCeNrC4Q`. Which supersedes it, and do the row specs change? | Yes, for styling | Open |
 | **Q22** | Does `noWrap` survive? 1st-gen offers it; `swc-menu` already caps row width at 320px, so wrapping behaviour needs a design answer rather than a carry-forward. | No | Open |
 | **Q24** | Should a row be able to mark itself as the current one? `menuitem` cannot carry `aria-selected`, but `aria-current` is available and would cover "this is where you are" without implying selection. Needs a product answer on whether menus need it at all before any `current` property is designed. | No | Open |
