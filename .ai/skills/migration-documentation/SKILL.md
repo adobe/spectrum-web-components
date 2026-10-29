@@ -49,6 +49,8 @@ Read the migration plan at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[
 
 Before writing anything, read the `### Documentation` section of the migration plan at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/migration-plan.md`. Make a note of every unchecked item. These are the documentation gaps Phase 7 must close. Return to this checklist at the end and confirm which items are now covered by the per-component MDX (or by JSDoc on the public API in `Component.ts`) and which remain outstanding.
 
+**Form-associated components:** also check the page against [forms strategy RFC §3.9](../../../CONTRIBUTOR-DOCS/03_project-planning/05_strategies/forms-strategy-rfc.md#39-form-documentation-until-a-forms-page-exists) (validation timing, `novalidate` and the submit handler, focus, status barring, reset, and styling hooks), using `text-field.mdx` as the reference. Do not copy claims the component does not implement.
+
 ### Step 1: Ask for guidance resources
 
 Before writing any "when to use" or "why to use" descriptions for sizes, variants, states, or behaviors — **stop and ask the user** for the authoritative source. Acceptable sources include:

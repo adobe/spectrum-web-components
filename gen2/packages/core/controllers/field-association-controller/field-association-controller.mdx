@@ -157,14 +157,15 @@ The validity members read straight off `ElementInternals`; writing validity stay
 
 These stay on the element and cannot be delegated:
 
-| Responsibility                     | Why it stays on the host                                                            |
-| ---------------------------------- | ----------------------------------------------------------------------------------- |
-| `static formAssociated = true`     | Read by the browser at element-definition time off the constructor.                 |
-| `attachInternals()`                | Can only be called on the element; its result is passed into the controller.        |
-| `internals.setValidity(...)`       | Writing validity is per-component logic; the controller only exposes the read side. |
-| Calling `setValue` on value change | The browser does not observe the host's value; the host re-pushes it.               |
-| `formResetCallback()`              | The browser calls it on the host; the host decides how to restore its own state.    |
-| Focusable validation anchor        | Only the host knows which element takes focus; pass it to `setValidity()`.          |
-| `focus()` reaching the anchor      | Through `delegatesFocus: true` or a `focus()` override on the host.                 |
+| Responsibility                     | Why it stays on the host                                                                                                                                 |
+| ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `static formAssociated = true`     | Read by the browser at element-definition time off the constructor.                                                                                      |
+| `attachInternals()`                | Can only be called on the element; its result is passed into the controller.                                                                             |
+| `internals.setValidity(...)`       | Writing validity is per-component logic; the controller only exposes the read side.                                                                      |
+| Calling `setValue` on value change | The browser does not observe the host's value; the host re-pushes it.                                                                                    |
+| `formResetCallback()`              | The browser calls it on the host; the host decides how to restore its own state.                                                                         |
+| Validation message                 | The host reads its slotted `error-text` and passes its text to `setValidity()` while `field-status="invalid"`; it does not expose `setCustomValidity()`. |
+| Focusable validation anchor        | Only the host knows which element takes focus; pass it to `setValidity()`.                                                                               |
+| `focus()` reaching the anchor      | Through `delegatesFocus: true` or a `focus()` override on the host.                                                                                      |
 
 <DocsFooter />

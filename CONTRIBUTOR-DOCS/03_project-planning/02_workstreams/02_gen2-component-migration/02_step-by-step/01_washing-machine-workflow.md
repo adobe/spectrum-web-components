@@ -665,7 +665,8 @@ Use these when you are not sure how to structure the migration.
 
 - **Small, fixed set** (e.g. size: S/M/L): Use a **string attribute** and reflect it; use a const array for type and Storybook options.
 - Match the **primary role** of the component (button, listbox, combobox, dialog, etc.) to native HTML or an existing accessible [pattern](https://www.w3.org/WAI/ARIA/apg/patterns/).
-- **Boolean toggles** (e.g. disabled, readonly): Use **boolean attributes** and reflect.
+- **Boolean toggles** (e.g. pending, emphasized): Use **boolean attributes** and reflect.
+- **Form-field status** (`disabled`, `invalid`, `valid`, `readonly`): Use one mutually exclusive `field-status` attribute instead of separate booleans, per [forms strategy RFC §3.7](../../../05_strategies/forms-strategy-rfc.md#37-field-status-and-validation-sources).
 - **Stop and ask** when the 1st-gen uses a different pattern (e.g. only classes) and you want to change to attributes.
 
 ### What accessibility pattern applies?
