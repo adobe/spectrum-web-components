@@ -1,0 +1,28 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
+import * as Stories from './stories/card-view-waterfall-nowrap.stories';
+
+<Meta of={Stories} />
+
+<DocsHeader />
+
+## Anatomy
+
+`swc-card-view-waterfall-nowrap` places 50 unequal-height cards into the shortest available visual column. Each card contains a Picsum photo, selection checkbox, primary action, and Share action. All cards remain gridcells in one semantic row, with stable collection-order column indices.
+
+## Behaviors
+
+### Playground
+
+Arrow keys move spatially to the nearest enabled neighbor with overlap on the perpendicular axis. Movement stops when no qualifying neighbor exists. Horizontal movement uses vertical overlap because waterfall cards do not form aligned horizontal rows. It does not loop or advance across an edge.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## Accessibility
+
+We recommend a single-row grid for collection-position feedback such as "x of y," exposing one row and 50 semantic columns. Actual spoken output depends on the screen reader, browser, and navigation mode.
+
+This example tests the unresolved horizontal-navigation problem in a waterfall: cards can overlap several potential visual neighbors without sharing a horizontal row. Evaluate the chosen neighbor with sighted keyboard users and with users who know only the one-dimensional semantic order. Spatial movement may skip intervening semantic items. <kbd>Home</kbd> and <kbd>End</kbd> reach collection boundaries; <kbd>Space</kbd> toggles selection and <kbd>Enter</kbd> opens the active card.
+
+<DocsFooter />

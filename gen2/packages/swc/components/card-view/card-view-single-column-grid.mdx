@@ -1,0 +1,65 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
+import * as Stories from './stories/card-view-single-column-grid.stories';
+
+<Meta of={Stories} />
+
+<DocsHeader />
+
+This reference preserves single-column semantics for comparison. We recommend the [single-row grid](./?path=/docs/components-card-view-single-row-grid--docs) for collection-position feedback such as "x of y" and use that structure for all current grid and waterfall keyboard-navigation experiments.
+
+## Anatomy
+
+- A labelled grid represents the collection as one semantic column.
+- Each card is a row containing a focusable `gridcell`.
+- Each cell contains a photo, selection checkbox, Open action, and Share action.
+
+## Options
+
+### Grid
+
+Cards align in uniform visual rows. The visual columns do not create additional semantic columns. All four arrow keys follow visual geometry without wrapping.
+
+<Canvas of={Stories.Grid} />
+
+### Waterfall
+
+Cards have varied heights. Arrow keys move to enabled visual neighbors that overlap on the perpendicular axis. The single-column semantic structure remains unchanged.
+
+<Canvas of={Stories.Waterfall} />
+
+## Behaviors
+
+<kbd>ArrowLeft</kbd> and <kbd>ArrowRight</kbd> move to aligned cards to the left
+and right. <kbd>ArrowUp</kbd> and <kbd>ArrowDown</kbd> move to aligned cards
+above and below. These are visual directions in both left-to-right and
+right-to-left layouts. Movement stops when no aligned enabled card exists; it
+does not wrap. <kbd>Home</kbd> and <kbd>End</kbd> reach the first and last
+enabled cards.
+
+<kbd>Space</kbd> toggles selection and <kbd>Enter</kbd> opens the focused card.
+Holding <kbd>Shift</kbd> with an arrow key, <kbd>Home</kbd>, or <kbd>End</kbd>
+selects a collection-order range, skipping disabled cards. <kbd>Tab</kbd>
+reaches the active card's checkbox and actions, then leaves the collection.
+<kbd>Shift</kbd> + <kbd>Tab</kbd> reverses that path. Child actions do not also
+select the card; their arrow keys are not intercepted by collection navigation.
+
+## Accessibility
+
+### Features
+
+The collection exposes `grid > row > gridcell` semantics, one semantic column, and a row per card. Cards expose accessible names and selection state when selection is enabled. Disabled cards remain represented but are skipped by navigation. Native checkboxes expose checked state, and a live status reports the selected count.
+
+### Best practices
+
+The announced single column does not describe the horizontal movement available in the visual layout. Spatial navigation can skip collection items; repeating one arrow does not necessarily visit every card. Use this reference to understand the positional-feedback contrast with the recommended single-row grid rather than reopening the semantic decision or assuming visual alignment establishes usability.
+
+Test position and total announcements with screen reader users; ARIA metadata does not guarantee spoken output. Cover keyboard entry and exit, child actions, range selection, disabled cards, RTL, zoom, and layout changes while focus remains in the collection. This is an experimental comparison, not an accessibility sign-off.
+
+<Canvas of={Stories.Accessibility} />
+
+## Upcoming features
+
+Virtualization and dynamic loading are deferred. All cards are loaded in this prototype.
+
+<DocsFooter />

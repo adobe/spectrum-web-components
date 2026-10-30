@@ -1,0 +1,28 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
+import * as Stories from './stories/card-view-grid-nowrap.stories';
+
+<Meta of={Stories} />
+
+<DocsHeader />
+
+## Anatomy
+
+`swc-card-view-grid-nowrap` places 50 cards in uniform visual rows. Each card contains a Picsum photo, selection checkbox, primary action, and Share action. The collection exposes one semantic row with one gridcell per card, not one semantic row per visual row.
+
+## Behaviors
+
+### Playground
+
+Arrow keys move to the nearest enabled card in the pressed visual direction, with overlap on the perpendicular axis. Movement stops at the current visual row or column boundary. It does not loop or advance into another row or column.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## Accessibility
+
+We recommend a single-row grid for collection-position feedback such as "x of y." This example exposes one row, 50 semantic columns, and stable one-based column indices. Actual announcements depend on the screen reader, browser, and navigation mode; this is not a guarantee of spoken output.
+
+The keyboard policy remains an experiment: sighted users see a two-dimensional grid, while users relying on semantics encounter a one-dimensional collection. Spatial movement can skip semantic neighbors. Test both perspectives, including whether vertical movement is discoverable. <kbd>Home</kbd> and <kbd>End</kbd> reach collection boundaries; <kbd>Space</kbd> toggles selection and <kbd>Enter</kbd> opens the active card.
+
+<DocsFooter />
