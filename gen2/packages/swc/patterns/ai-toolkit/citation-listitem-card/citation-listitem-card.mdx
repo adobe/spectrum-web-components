@@ -1,0 +1,77 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../../.storybook/blocks';
+
+import * as CitationListitemCardStories from './stories/citation-listitem-card.stories';
+
+<Meta of={CitationListitemCardStories} />
+
+<DocsHeader />
+
+## Anatomy
+
+A citation listitem card describes one source cited by an AI response. The whole card follows the source link when clicked. It consists of:
+
+- **Thumbnail**: an `<swc-thumbnail>` in the `thumbnail` slot. The card sets its `size` to `75` (20px) and marks it `decorative`, because the source text next to it already names the source.
+- **Source**: the source name or domain, in the `source` slot.
+- **Title link**: an `<a href>` wrapping a heading, in the `citation-link` slot. The anchor's hit area is stretched over the whole card.
+- **Description**: the quoted snippet, in the `citation-description` slot, preferably a `<blockquote cite>`. It's never truncated; the card grows to fit it.
+
+<Canvas of={CitationListitemCardStories.Anatomy} />
+
+## Options
+
+### Form comparison
+
+This prototype ships the card in three candidate forms so they can be compared before choosing one. All three share the same anatomy, design tokens, and stretched-link behavior.
+
+- **A. CSS-only pattern**: a native `<li class="swc-CitationListitemCard">` styled by the document-level `citation-listitem-card.global.css`, which reuses `.swc-Link`, `.swc-Title`, and `.swc-Body`. Valid HTML with native list semantics and no JavaScript, but the markup isn't enforced and isn't encapsulated.
+- **B. `<swc-citation-card>` inside a native `<li>`**: valid HTML with native list semantics and encapsulated styles. The card manages the thumbnail's size and `decorative` attribute. The consumer supplies the `<li>`.
+- **C. `<swc-citation-listitem-card>` directly in a `<ul>` or `<ol>`**: the least markup. A custom element has no native list semantics, so the host gets `role="listitem"`. A `<ul>` or `<ol>` with non-`<li>` children isn't valid HTML.
+
+<Canvas of={CitationListitemCardStories.FormComparison} />
+
+### Ordered lists
+
+All three forms render as list items, so `<ol>` numbering applies. Form C sets `display: list-item` on its host to match a native `<li>`.
+
+<Canvas of={CitationListitemCardStories.OrderedLists} />
+
+### Description length
+
+The description is never truncated: the card grows to fit the full snippet, so no part of the quote is hidden from sighted readers or assistive technology. Length is a content decision:
+
+- Keep snippets to about 150 characters or fewer. At the default 310px width, that's about three lines.
+- Quote the passage that supports the statement, not the whole paragraph. If you shorten a quote, mark the omission with an ellipsis (…) in the text itself.
+- Keep cards in the same list to similar lengths so they're easy to scan, and so long quotes don't push other sources out of view.
+
+<Canvas of={CitationListitemCardStories.DescriptionLength} />
+
+## Accessibility
+
+### Features
+
+- **Native semantics first**: the link, heading, and quotation come from native slotted elements (`<a href>`, `<h2>` to `<h6>`, and `<blockquote cite>`), not ARIA. Forms A and B get list semantics from a native `<li>`. Only form C adds ARIA, setting `role="listitem"` on its host unless the consumer sets a role.
+- **Whole-card activation**: a pseudo-element on the title anchor covers the card, so clicking anywhere follows the link. Only one element is focusable, and the link's accessible name is its heading text.
+- **Whole-card focus indicator**: when the link has keyboard focus, the focus indicator is drawn around the whole card rather than the title alone.
+- **Decorative thumbnail**: forms B and C mark the slotted `<swc-thumbnail>` as `decorative`, hiding it from assistive technology. Form A sets `decorative` in markup.
+- **Forced colors**: hover shows an outline, and the focus indicator uses the system `Highlight` color.
+
+### Best practices
+
+- Choose a heading level that fits the page outline. Every card in a list should use the same level. Style the heading with `swc-Title swc-Title--sizeM` so it matches the design whatever the level.
+- Give the list an accessible name, such as `aria-label="Sources"`, when nearby text doesn't already label it.
+- Keep link text descriptive. The heading inside the anchor is the link's accessible name.
+- If the link opens in a new tab or window, say so in the link text or with visually hidden text.
+- Don't put other interactive elements inside the card. The stretched link covers them.
+- The stretched link also covers the description, so readers can't select its text. Offer another way to copy the snippet if that matters.
+
+<Canvas of={CitationListitemCardStories.Accessibility} />
+
+## Upcoming features
+
+- Choosing one of the three forms and removing the others.
+- Hover and focus states confirmed by design. The current gray background on hover and the focus indicator around the card are assumptions.
+- Unit, accessibility, and visual regression tests.
+- Using the card inside `<swc-message-sources>`.
+
+<DocsFooter />
