@@ -25,7 +25,8 @@ import { MENU_ITEM_VALID_SIZES, type MenuItemSize } from './MenuItem.types.js';
  * arrow-key navigation and roving tabindex across its rows.
  *
  * @slot - Text of the row.
- * @slot visual - Optional leading icon.
+ * @slot visual - Optional leading icon or thumbnail.
+ * @slot description - Optional secondary text below the label.
  */
 export abstract class MenuItemBase extends SizedMixin(SpectrumElement, {
   validSizes: MENU_ITEM_VALID_SIZES,

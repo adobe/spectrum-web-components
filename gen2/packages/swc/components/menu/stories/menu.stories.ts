@@ -67,6 +67,9 @@ const meta: Meta = {
     },
     // Pending a real Stackblitz project for swc-menu.
     // stackblitz: { url: '' },
+    // swc-menu-item is a second element of this component; surface its API
+    // table alongside swc-menu's on the docs page.
+    additionalApiTables: ['swc-menu-item'],
   },
   tags: ['migrated'],
 };
@@ -228,6 +231,31 @@ export const States: Story = {
   `,
   tags: ['states'],
 };
+
+export const ItemContent: Story = {
+  args: {
+    for: 'item-content-trigger',
+    'actual-placement': null,
+  },
+  render: (args) => html`
+    <swc-button id="item-content-trigger">Edit</swc-button>
+    ${template(
+      args,
+      html`
+        <swc-menu-item>
+          <span slot="visual" aria-hidden="true">📋</span>
+          Paste
+        </swc-menu-item>
+        <swc-menu-item>
+          Paste special
+          <span slot="description">Keeps the source formatting</span>
+        </swc-menu-item>
+      `
+    )}
+  `,
+  tags: ['options'],
+};
+ItemContent.storyName = 'Item content';
 
 export const ItemStates: Story = {
   args: {

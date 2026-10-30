@@ -35,6 +35,14 @@ The menu's `PlacementController` handles pixel positioning automatically. When t
 
 <Canvas of={MenuStories.Sizes} />
 
+### Item content
+
+A row's label goes in its default slot. Two named slots sit alongside it: `visual` for a leading icon or thumbnail, and `description` for secondary text below the label. Both are optional.
+
+A `menuitem` takes its accessible name from its contents, so a description is announced as part of the row's name rather than separately. Keep descriptions short, and do not repeat the label in them.
+
+<Canvas of={MenuStories.ItemContent} />
+
 ## States
 
 `open` is the single source of truth for visibility: the menu is either open or closed. Clicking the trigger, clicking a row, pressing <kbd>Escape</kbd>, or clicking outside all reconcile back to `open`. There are no disabled or selected states.

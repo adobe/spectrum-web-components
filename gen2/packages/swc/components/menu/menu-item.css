@@ -19,6 +19,12 @@
   align-items: center;
 }
 
+/* The label and its description stack; the visual sits beside both. */
+.swc-MenuItem-text {
+  display: flex;
+  flex-direction: column;
+}
+
 * {
   box-sizing: border-box;
 }

@@ -32,10 +32,15 @@ import styles from './menu-item.css';
  * <swc-menu for="edit">
  *   <swc-menu-item>Cut</swc-menu-item>
  *   <swc-menu-item disabled>Paste</swc-menu-item>
+ *   <swc-menu-item>
+ *     Paste special
+ *     <span slot="description">Keeps the source formatting</span>
+ *   </swc-menu-item>
  * </swc-menu>
  *
  * @slot - Text of the row.
- * @slot visual - Optional leading icon.
+ * @slot visual - Optional leading icon or thumbnail.
+ * @slot description - Optional secondary text below the label.
  */
 export class MenuItem extends MenuItemBase {
   public static override get styles(): CSSResultArray {
@@ -45,7 +50,10 @@ export class MenuItem extends MenuItemBase {
   protected override render(): TemplateResult {
     return html`
       <slot name="visual"></slot>
-      <slot></slot>
+      <div class="swc-MenuItem-text">
+        <slot></slot>
+        <slot name="description"></slot>
+      </div>
     `;
   }
 }

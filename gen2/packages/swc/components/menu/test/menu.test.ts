@@ -1446,9 +1446,10 @@ export const ItemDefaultsTest: Story = {
       const slots = Array.from(
         item.shadowRoot?.querySelectorAll('slot') ?? []
       ).map((slot) => slot.name);
-      expect(slots, 'visual slot, then the default label slot').toEqual([
+      expect(slots, 'visual, then the label, then its description').toEqual([
         'visual',
         '',
+        'description',
       ]);
     });
   },

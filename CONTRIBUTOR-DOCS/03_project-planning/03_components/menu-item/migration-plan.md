@@ -96,7 +96,7 @@ No public `change`/activation event in Phase A: activation is a plain `click` on
 | --- | --- |
 | default | **Kept** as the label slot ([B22](#must-ship)) |
 | `icon` | **Renamed** to `visual` ([B23](#must-ship)) |
-| `description` | **Defer** — Phase B. Likely needed to tell similarly-named options apart, which is an a11y concern in its own right |
+| `description` | **Kept.** Pulled into Phase A in review: it is how similarly-named options are told apart, which is an a11y concern in its own right |
 | `value` | **Defer** — trailing content, Phase B |
 | `submenu` | **Defer** — Phase B |
 
@@ -134,7 +134,7 @@ Two things worth noting against this plan:
 | **B20** | Disabled rows | `disabled` maps to `aria-disabled="true"`, not the native attribute. Rows stay focusable and in the roving set, per `swc-menu`'s [B7](../menu/migration-plan.md) |
 | **B21** | Link rows | `LikeAnchor` surface removed entirely. `swc-menu-item` never carries `href` or renders an anchor ([Q17](#blockers-and-open-questions)) |
 | **B22** | Label content | ~~Named `label` slot replaces the default slot~~. **Reversed in review:** the label is the row's main content, so it stays in the default slot and later additions (`description`, `visual`) are the named ones. Matches `swc-badge` and `swc-status-light`, 1st-gen `sp-menu-item`, and React Spectrum S2, whose `MenuItem` takes `children` for the label and names only `description` |
-| **B23** | Leading visual | `icon` slot renamed `visual`, so it can hold an icon or a future `swc-thumbnail` without a second rename |
+| **B23** | Leading visual | `icon` slot renamed `visual`, so it can hold an icon or a future `swc-thumbnail` without a second rename. Confirmed in review |
 | **B24** | Role | `role="menuitem"` on the host, always. No `setRole()` and no conditional branch |
 | **B25** | CSS custom properties | All 45 `--mod-menu-item-*` removed |
 
@@ -150,7 +150,7 @@ Two things worth noting against this plan:
 | --- | --- |
 | **B26** | Submenus (`hasSubmenu`, `open`, `submenu` slot) |
 | **A21** | Selection — not a later phase of this component. It belongs to `swc-menuitem-checkbox` and `swc-menuitem-radio`, which expose it as `aria-checked` |
-| **A22** | `description` and trailing `value` slots |
+| **A22** | ~~`description`~~ (shipped in Phase A, see the slot table) and trailing `value` slot |
 | **A23** | `swc-thumbnail` in the `visual` slot |
 | **A24** | Highlight badge |
 | **A25** | Printable-character navigation |
@@ -164,7 +164,7 @@ Two things worth noting against this plan:
 | `size` | `size` | `'s' \| 'm' \| 'l' \| 'xl'` | `'m'` | Confirmed |
 | `disabled` | `disabled` | `boolean` | `false` | Confirmed; mapping via [Q20](#blockers-and-open-questions) |
 
-Slots: default (text), `visual` (optional leading icon).
+Slots: default (text), `visual` (optional leading icon or thumbnail), `description` (optional secondary text).
 
 Role: `menuitem`, set on the host before the owning menu's first discovery pass.
 
@@ -193,6 +193,7 @@ Row chrome belongs here, not in `swc-menu`: in `spectrum-css`, `.spectrum-Menu` 
 ### CSS
 
 - [ ] Row chrome: background, border, radius, padding, and hover/focus/disabled treatments
+- [ ] Description typography and colour, including the disabled and focused variants 1st-gen tracks separately from the label
 - [ ] Key the focus treatment off `:host(:focus)`, **not** `:focus-visible`. Raised in review from a recording: after a mouse open the row holds focus but Chrome paints no ring, so the first arrow press looks like it skipped a row. Safari paints it. 1st-gen `spectrum-menu-item.css` uses `:host(:focus)` for the same reason
 - [ ] No public custom properties this pass
 - [ ] Forced-colors treatment
@@ -213,11 +214,11 @@ Red/green TDD. Each item below should fail before the implementation exists.
 - [x] Defaults: `size` is `m`, `disabled` is `false`, no `aria-disabled`
 - [x] `disabled` sets `aria-disabled="true"` and **not** the native disabled behaviour
 - [x] A disabled row remains reachable by arrow keys inside `swc-menu` ([B20](#must-ship)); this is the test that settles [Q20](#blockers-and-open-questions)
-- [x] `label` and `visual` slots render in the expected order
+- [x] Default, `visual` and `description` slots render in the expected order
 - [x] `swc-menu` discovers rows via `:scope > swc-menu-item` with real elements, not placeholders
 - [x] <kbd>Enter</kbd> and <kbd>Space</kbd> reach a consumer `click` handler on an enabled row, and neither activates a disabled one
 - [ ] Playwright: ARIA tree shows `menu` containing named `menuitem` rows
-- [ ] VRT: sizes, disabled, with and without a visual, forced colors
+- [ ] VRT: sizes, disabled, with and without a visual, with and without a description, forced colors
 
 > **Test-authoring note.** A spike for this plan produced a false failure by pressing a key before the menu's deferred open-focus had settled, so the key went to `body`. Assert the row actually holds focus before dispatching navigation keys.
 
@@ -236,6 +237,7 @@ Red/green TDD. Each item below should fail before the implementation exists.
 | **Q22** | Does `noWrap` survive? 1st-gen offers it; `swc-menu` already caps row width at 320px, so wrapping behaviour needs a design answer rather than a carry-forward. | No | Open |
 | **Q24** | Should a row be able to mark itself as the current one? `menuitem` cannot carry `aria-selected`, but `aria-current` is available and would cover "this is where you are" without implying selection. Needs a product answer on whether menus need it at all before any `current` property is designed. | No | Open |
 | **Q23** | Authoring ergonomics of the named `label` slot. | No | **Closed.** The trade was not worth it: the row is now `<swc-menu-item>Cut</swc-menu-item>`. See [B22](#must-ship) |
+| **Q25** | A `menuitem` takes its accessible name from its contents, so a `description` is announced as part of the row's name rather than as a separate description. 1st-gen behaves the same way. Wiring it as a real description instead would mean naming the row from its label alone, which the default slot makes awkward since the label can be a bare text node. Worth doing, or is name-from-contents the right answer here? | No | Open, raised in review |
 
 ## Decision log
 
