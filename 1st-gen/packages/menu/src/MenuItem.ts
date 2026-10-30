@@ -49,6 +49,8 @@ import menuItemStyles from './menu-item.css.js';
  **/
 const POINTERLEAVE_TIMEOUT = 100;
 
+const pointerPositions = new WeakMap<HTMLElement, { x: number; y: number }>();
+
 type MenuCascadeItem = {
   hadFocusRoot: boolean;
   ancestorWithSelects?: HTMLElement;
@@ -598,12 +600,38 @@ export class MenuItem extends LikeAnchor(
     super.firstUpdated(changes);
     this.setAttribute('tabindex', '-1');
     this.addEventListener('keydown', this.handleKeydown);
-    this.addEventListener('mouseover', this.handleMouseover);
+    this.addEventListener('pointermove', this.handlePointermove);
     this.addEventListener('pointerdown', this.handlePointerdown);
     this.addEventListener('pointerenter', this.closeOverlaysForRoot);
     if (!this.hasAttribute('id')) {
       this.id = `sp-menu-item-${randomID()}`;
     }
+  }
+
+  private handlePointermove(event: PointerEvent): void {
+    if (event.pointerType === 'touch' || event.target !== this) {
+      return;
+    }
+    const root = this.menuData.focusRoot ?? this;
+    const previousPosition = pointerPositions.get(root);
+    // WebKit also sends pointermove when scrolling changes the item under a stationary pointer.
+    if (
+      previousPosition?.x === event.clientX &&
+      previousPosition.y === event.clientY
+    ) {
+      return;
+    }
+    if (!previousPosition) {
+      root.addEventListener(
+        'pointerleave',
+        () => pointerPositions.delete(root),
+        {
+          once: true,
+        }
+      );
+    }
+    pointerPositions.set(root, { x: event.clientX, y: event.clientY });
+    this.handleMouseover(event);
   }
 
   private getActiveElementSafely(): HTMLElement | null {
