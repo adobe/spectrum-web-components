@@ -112,13 +112,9 @@
 }
 
 ::slotted([slot="citation-description"]) {
-  -webkit-box-orient: vertical;
-  display: -webkit-box;
   font-size: token("font-size-100");
   line-height: token("line-height-200");
-  overflow: hidden;
-  -webkit-line-clamp: var(--swc-citation-card-description-max-lines, 2);
-  line-clamp: var(--swc-citation-card-description-max-lines, 2);
+  overflow-wrap: anywhere;
 }
 
 /* ─────────────────────────────────────────────────────────────────────────────

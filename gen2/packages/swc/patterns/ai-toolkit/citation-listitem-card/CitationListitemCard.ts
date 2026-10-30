@@ -32,7 +32,7 @@ import listitemStyles from './citation-listitem-card.css';
  * @slot thumbnail - An `<swc-thumbnail>` for the source. Its `size` is set to 75 and it is marked `decorative`, since the source text names the source.
  * @slot source - Source name or domain text.
  * @slot citation-link - An `<a href>` wrapping the citation title heading (`<h2>`–`<h6>`, matching the page outline). Its hit area covers the card.
- * @slot citation-description - The quoted snippet, preferably a `<blockquote cite>`; clamped to two lines.
+ * @slot citation-description - The quoted snippet, preferably a `<blockquote cite>`. The card grows to fit it; keep it to about 150 characters.
  *
  * @example
  * <ol>

@@ -100,11 +100,7 @@
   }
 
   .swc-CitationListitemCard-description {
-    -webkit-box-orient: vertical;
-    display: -webkit-box;
-    overflow: hidden;
-    -webkit-line-clamp: var(--swc-citation-card-description-max-lines, 2);
-    line-clamp: var(--swc-citation-card-description-max-lines, 2);
+    overflow-wrap: anywhere;
   }
 }
 

@@ -14,7 +14,7 @@ A citation listitem card describes one source cited by an AI response. The whole
 - **Thumbnail**: an `<swc-thumbnail>` in the `thumbnail` slot. The card sets its `size` to `75` (20px) and marks it `decorative`, because the source text next to it already names the source.
 - **Source**: the source name or domain, in the `source` slot.
 - **Title link**: an `<a href>` wrapping a heading, in the `citation-link` slot. The anchor's hit area is stretched over the whole card.
-- **Description**: the quoted snippet, in the `citation-description` slot, preferably a `<blockquote cite>`. It's clamped to two lines.
+- **Description**: the quoted snippet, in the `citation-description` slot, preferably a `<blockquote cite>`. It's never truncated; the card grows to fit it.
 
 <Canvas of={CitationListitemCardStories.Anatomy} />
 
@@ -38,7 +38,11 @@ All three forms render as list items, so `<ol>` numbering applies. Form C sets `
 
 ### Description length
 
-Descriptions longer than two lines are truncated with an ellipsis. Set `--swc-citation-card-description-max-lines` to change the limit.
+The description is never truncated: the card grows to fit the full snippet, so no part of the quote is hidden from sighted readers or assistive technology. Length is a content decision:
+
+- Keep snippets to about 150 characters or fewer. At the default 310px width, that's about three lines.
+- Quote the passage that supports the statement, not the whole paragraph. If you shorten a quote, mark the omission with an ellipsis (…) in the text itself.
+- Keep cards in the same list to similar lengths so they're easy to scan, and so long quotes don't push other sources out of view.
 
 <Canvas of={CitationListitemCardStories.DescriptionLength} />
 

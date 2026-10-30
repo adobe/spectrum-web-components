@@ -43,7 +43,7 @@ const CITATIONS: Citation[] = [
     href: 'https://www.adobe.com',
     title: 'How do we do in-line sources?',
     description:
-      '“In-line sources allow for integrated citations to be placed directly next to statements. It creates a clear connection between output and source that can expect readers to scrutinize individual statements.”',
+      '“In-line sources place citations directly next to statements, creating a clear connection between output and source.”',
   },
   {
     source: 'spectrum.adobe.com',
@@ -268,10 +268,16 @@ export const DescriptionLength: Story = {
     <ul style=${UNSTYLED_LIST_STYLE}>
       ${formC({
         ...CITATIONS[0],
-        title: 'Short snippet',
-        description: '“Shown in full.”',
+        title: 'Recommended length',
+        description:
+          '“In-line sources place citations directly next to statements, creating a clear connection between output and source that readers can check.”',
       })}
-      ${formC({ ...CITATIONS[0], title: 'Long snippet, truncated' })}
+      ${formC({
+        ...CITATIONS[0],
+        title: 'Longer than recommended',
+        description:
+          '“In-line sources allow for integrated citations to be placed directly next to statements. It creates a clear connection between output and source that can expect readers to scrutinize individual statements, and longer quotes push the next source further down the list.”',
+      })}
     </ul>
   `,
   tags: ['options'],

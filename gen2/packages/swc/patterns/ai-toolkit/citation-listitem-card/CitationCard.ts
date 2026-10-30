@@ -40,11 +40,10 @@ export const CITATION_CARD_THUMBNAIL_SIZE = '75';
  * @slot thumbnail - An `<swc-thumbnail>` for the source. Its `size` is set to 75 and it is marked `decorative`, since the source text names the source.
  * @slot source - Source name or domain text.
  * @slot citation-link - An `<a href>` wrapping the citation title heading (`<h2>`–`<h6>`, matching the page outline). Its hit area covers the card.
- * @slot citation-description - The quoted snippet, preferably a `<blockquote cite>`; clamped to two lines.
+ * @slot citation-description - The quoted snippet, preferably a `<blockquote cite>`. The card grows to fit it; keep it to about 150 characters.
  *
  * @cssprop --swc-citation-card-background-color - Background color of the card.
  * @cssprop --swc-citation-card-background-color-hover - Background color of the card on hover.
- * @cssprop --swc-citation-card-description-max-lines - Number of lines shown before the description is truncated. Defaults to 2.
  *
  * @example
  * <li>
