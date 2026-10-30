@@ -88,6 +88,7 @@
     - Tooltip
 - [Milestones](04_milestones/README.md)
 - Strategies
+    - [Card view strategy](05_strategies/card-view-strategy.md)
     - [Focus Management Strategy: gen2 Proposal](05_strategies/focus-management-strategy-rfc.md)
     - [Forms Strategy: gen2 Proposal](05_strategies/forms-strategy-rfc.md)
     - [RFC: gen2 icon strategy (Spectrum 2)](05_strategies/icon-rfc.md)
