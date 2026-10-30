@@ -57,6 +57,12 @@ interface ARIALabelledByElements {
 const DOCS_URL =
   'https://spectrum-web-components.adobe.com/?path=/docs/components-menu--docs';
 
+// Read off the attribute, not a `disabled` property: rows stay in the roving
+// set via `aria-disabled`, and the menu never requires the `swc-menu-item`
+// class to be loaded to read one.
+const isRowDisabled = (row: HTMLElement): boolean =>
+  row.getAttribute('aria-disabled') === 'true';
+
 /**
  * Base class for the menu host. Implements the
  * {@link https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/ | menu button}
@@ -188,38 +194,49 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
     return deepContains(this, getActiveElement());
   }
 
-  // Whether the event's path crosses a roving-tabindex row, so keyboard and
+  // The roving-tabindex row the event passed through, so keyboard and
   // pointer activation agree on what counts as a row.
-  private isMenuItemEventTarget(event: Event): boolean {
+  private menuItemFromEvent(event: Event): HTMLElement | null {
     const items = new Set(this.getMenuItems());
-    return event.composedPath().some((node) => items.has(node as HTMLElement));
+    const row = event
+      .composedPath()
+      .find((node) => items.has(node as HTMLElement));
+    return (row as HTMLElement) ?? null;
   }
 
-  // Traps Tab on the active row; Enter only closes. Row activation (and
-  // Space) belong to `swc-menu-item`, unshipped. Escape is native.
+  // Traps Tab on the active row; Enter and Space close on an enabled one.
+  // `swc-menu-item` turns those same keys into a click, so the consumer's
+  // handler runs either way. Escape is native.
   private readonly handleKeyDown = (event: KeyboardEvent): void => {
     if (!this.open) {
       return;
     }
-    if (event.key === 'Tab' && this.isMenuItemEventTarget(event)) {
+    const item = this.menuItemFromEvent(event);
+    if (!item) {
+      return;
+    }
+    if (event.key === 'Tab') {
       event.preventDefault();
       return;
     }
-    if (event.key === 'Enter' && this.isMenuItemEventTarget(event)) {
-      // Else the deferred default-action re-activates the refocused trigger.
+    if (event.key === 'Enter' || event.key === ' ') {
+      // Else the deferred default-action re-activates the refocused trigger,
+      // and Space scrolls the page under the open surface.
       event.preventDefault();
-      this.open = false;
+      if (!isRowDisabled(item)) {
+        this.open = false;
+      }
     }
-    // No Space branch: per the menu-button pattern Space activates a row
-    // the same way Enter does, but activation lives on `swc-menu-item`.
-    // Add it there rather than closing from the host on a key that cannot
-    // yet activate anything.
   };
 
   // Closes the menu when a slotted row is clicked; no submenus/selection to
-  // special-case yet, so any click on a roving-tabindex item counts.
+  // special-case yet, so any click on an enabled roving-tabindex item counts.
   private readonly handleItemActivate = (event: MouseEvent): void => {
-    if (!this.open || !this.isMenuItemEventTarget(event)) {
+    if (!this.open) {
+      return;
+    }
+    const item = this.menuItemFromEvent(event);
+    if (!item || isRowDisabled(item)) {
       return;
     }
     this.open = false;

@@ -96,7 +96,7 @@ No public `change`/activation event in Phase A: activation is a plain `click` on
 | --- | --- |
 | default | **Replaced** by a named `label` slot ([B22](#must-ship)) |
 | `icon` | **Renamed** to `visual` ([B23](#must-ship)) |
-| `description` | **Defer** — Phase B. Likely needed to tell similarly-named options apart, which is an a11y concern in its own right |
+| `description` | **Kept.** Pulled into Phase A in review: it is how similarly-named options are told apart, which is an a11y concern in its own right |
 | `value` | **Defer** — trailing content, Phase B |
 | `submenu` | **Defer** — Phase B |
 
@@ -133,8 +133,8 @@ Two things worth noting against this plan:
 | --- | --- | --- |
 | **B20** | Disabled rows | `disabled` maps to `aria-disabled="true"`, not the native attribute. Rows stay focusable and in the roving set, per `swc-menu`'s [B7](../menu/migration-plan.md) |
 | **B21** | Link rows | `LikeAnchor` surface removed entirely. `swc-menu-item` never carries `href` or renders an anchor ([Q17](#blockers-and-open-questions)) |
-| **B22** | Label content | Named `label` slot replaces the default slot, so `description` can sit alongside it later without ambiguity |
-| **B23** | Leading visual | `icon` slot renamed `visual`, so it can hold an icon or a future `swc-thumbnail` without a second rename |
+| **B22** | Label content | Named `label` slot replaces the default slot, so it stays distinct from `description` and each part has a handle for grid placement in the row layout. React Spectrum S2 names it the same way (`Text slot="label"` alongside `Text slot="description"`). Briefly reversed to the default slot mid-review on a misreading of that API, then restored |
+| **B23** | Leading visual | `icon` slot renamed `visual`, so it can hold an icon or a future `swc-thumbnail` without a second rename. Confirmed in review |
 | **B24** | Role | `role="menuitem"` on the host, always. No `setRole()` and no conditional branch |
 | **B25** | CSS custom properties | All 45 `--mod-menu-item-*` removed |
 
@@ -150,7 +150,7 @@ Two things worth noting against this plan:
 | --- | --- |
 | **B26** | Submenus (`hasSubmenu`, `open`, `submenu` slot) |
 | **A21** | Selection — not a later phase of this component. It belongs to `swc-menuitem-checkbox` and `swc-menuitem-radio`, which expose it as `aria-checked` |
-| **A22** | `description` and trailing `value` slots |
+| **A22** | ~~`description`~~ (shipped in Phase A, see the slot table) and trailing `value` slot |
 | **A23** | `swc-thumbnail` in the `visual` slot |
 | **A24** | Highlight badge |
 | **A25** | Printable-character navigation |
@@ -164,17 +164,20 @@ Two things worth noting against this plan:
 | `size` | `size` | `'s' \| 'm' \| 'l' \| 'xl'` | `'m'` | Confirmed |
 | `disabled` | `disabled` | `boolean` | `false` | Confirmed; mapping via [Q20](#blockers-and-open-questions) |
 
-Slots: `label` (text), `visual` (optional leading icon). No default slot in Phase A.
+Slots: `label` (text), `visual` (optional leading icon or thumbnail), `description` (optional secondary text).
 
 Role: `menuitem`, set on the host before the owning menu's first discovery pass.
 
 ## Architecture: core vs SWC split
 
-Mirrors `swc-menu`:
+Rows ship **inside the menu component folder**, not as a folder of their own. `swc-accordion-item` and `swc-tab` set the precedent: a sub-element that only exists inside its parent lives beside it and shares one Storybook entry and one docs page. `swc-close-button` and `swc-infield-button` get their own folders because they are reusable across parents; a menu row is not. The rest of the family (`swc-menu-link`, `swc-menuitem-checkbox`, `swc-menuitem-radio`, `swc-menu-group`, `swc-menu-divider`) should land the same way, which also matches 1st-gen's single `packages/menu` package.
 
-- `core/components/menu-item/MenuItem.base.ts` — role, disabled semantics, size, roving-tabindex participation
-- `core/components/menu-item/MenuItem.types.ts` — `MENU_ITEM_VALID_SIZES`, `MenuItemSize`
-- `swc/components/menu-item/MenuItem.ts` + `menu-item.css` — render template and row chrome
+- `core/components/menu/MenuItem.base.ts`: role, disabled semantics, size, roving-tabindex participation
+- `core/components/menu/MenuItem.types.ts`: `MENU_ITEM_VALID_SIZES`, `MenuItemSize`
+- `swc/components/menu/MenuItem.ts` + `menu-item.css`: render template and row chrome
+- Stories, tests and docs extend the menu's own (`Menu/Tests`, `menu.mdx`); there is no separate `Menu item` Storybook entry
+
+The Jira ticket's `menu/menu-item/` nested directory is not the convention; no gen2 component nests a sub-element in its own subdirectory.
 
 Row chrome belongs here, not in `swc-menu`: in `spectrum-css`, `.spectrum-Menu` carries no background, border, radius or shadow, and every visual property is scoped under `.spectrum-Menu-item`.
 
@@ -182,54 +185,59 @@ Row chrome belongs here, not in `swc-menu`: in `spectrum-css`, `.spectrum-Menu` 
 
 ### API
 
-- [ ] `MenuItem.types.ts` with `MENU_ITEM_VALID_SIZES` and `MenuItemSize`
-- [ ] `MenuItemBase` with `size`, `disabled`, and `role="menuitem"` on the host
-- [ ] Resolve [Q20](#blockers-and-open-questions) before settling the `disabled` implementation
-- [ ] `index.ts` exports and `core/package.json` subpath exports
+- [x] `MenuItem.types.ts` with `MENU_ITEM_VALID_SIZES` and `MenuItemSize`
+- [x] `MenuItemBase` with `size`, `disabled`, and `role="menuitem"` on the host
+- [x] Resolve [Q20](#blockers-and-open-questions) before settling the `disabled` implementation
+- [x] `index.ts` exports and `core/package.json` subpath exports (re-exported from `components/menu`, no separate subpath)
 
 ### CSS
 
 - [ ] Row chrome: background, border, radius, padding, and hover/focus/disabled treatments
+- [ ] Description typography and colour, including the disabled and focused variants 1st-gen tracks separately from the label
+- [ ] Key the focus treatment off `:host(:focus)`, **not** `:focus-visible`. Raised in review from a recording: after a mouse open the row holds focus but Chrome paints no ring, so the first arrow press looks like it skipped a row. Safari paints it. 1st-gen `spectrum-menu-item.css` uses `:host(:focus)` for the same reason
 - [ ] No public custom properties this pass
 - [ ] Forced-colors treatment
 - [ ] Stylelint clean
 
 ### Accessibility
 
-- [ ] `role="menuitem"` present before `swc-menu`'s first discovery pass
-- [ ] `disabled` exposes `aria-disabled="true"` and the row stays arrow-reachable
+- [x] `role="menuitem"` present before `swc-menu`'s first discovery pass
+- [x] `disabled` exposes `aria-disabled="true"` and the row stays arrow-reachable
+- [x] <kbd>Enter</kbd> and <kbd>Space</kbd> activate an enabled row ([WCAG 2.1.1](https://www.w3.org/WAI/WCAG22/Understanding/keyboard)); a disabled row swallows both without activating
 - [ ] Reconcile `accessibility-migration-analysis.md`: its "Migration scope" currently lists submenu parents and link rows as in scope, contradicting [Q17](#blockers-and-open-questions)
 
 ### Testing
 
 Red/green TDD. Each item below should fail before the implementation exists.
 
-- [ ] Host carries `role="menuitem"` on connect
-- [ ] Defaults: `size` is `m`, `disabled` is `false`, no `aria-disabled`
-- [ ] `disabled` sets `aria-disabled="true"` and **not** the native disabled behaviour
-- [ ] A disabled row remains reachable by arrow keys inside `swc-menu` ([B20](#must-ship)) — this is the test that settles [Q20](#blockers-and-open-questions)
-- [ ] `label` and `visual` slots render in the expected order
-- [ ] `swc-menu` discovers rows via `:scope > swc-menu-item` with real elements, not placeholders
+- [x] Host carries `role="menuitem"` on connect
+- [x] Defaults: `size` is `m`, `disabled` is `false`, no `aria-disabled`
+- [x] `disabled` sets `aria-disabled="true"` and **not** the native disabled behaviour
+- [x] A disabled row remains reachable by arrow keys inside `swc-menu` ([B20](#must-ship)); this is the test that settles [Q20](#blockers-and-open-questions)
+- [x] `label`, `visual` and `description` slots render in the expected order
+- [x] `swc-menu` discovers rows via `:scope > swc-menu-item` with real elements, not placeholders
+- [x] <kbd>Enter</kbd> and <kbd>Space</kbd> reach a consumer `click` handler on an enabled row, and neither activates a disabled one
 - [ ] Playwright: ARIA tree shows `menu` containing named `menuitem` rows
-- [ ] VRT: sizes, disabled, with and without a visual, forced colors
+- [ ] VRT: sizes, disabled, with and without a visual, with and without a description, forced colors
 
 > **Test-authoring note.** A spike for this plan produced a false failure by pressing a key before the menu's deferred open-focus had settled, so the key went to `body`. Assert the row actually holds focus before dispatching navigation keys.
 
 ### Documentation
 
-- [ ] `menu-item.mdx` docs page and stories
+- [x] Rows documented in `menu.mdx` and storied in `menu.stories.ts`, per the shared-folder decision above
 - [ ] Consumer migration guide covering the dropped `href` surface and the slot renames
-- [ ] Update `swc-menu`'s stories, tests and VRT to use real rows with `slot="label"` instead of placeholders
+- [x] Update `swc-menu`'s stories, tests and VRT to use real rows instead of placeholders
 
 ## Blockers and open questions
 
 | # | Question | Blocking? | Status |
 | --- | --- | --- | --- |
-| **Q20** | Does `DisabledMixin` fight `FocusgroupNavigationController`? The mixin writes `tabindex` (saving and restoring a previous value) while the controller owns roving tabindex and, with `skipDisabled: false`, deliberately keeps `aria-disabled` rows in sequence. `DisabledMixin` currently has no consumers, so this combination is untested. Resolved in review: if they conflict, skip `DisabledMixin` and map the property by hand, leaving tabindex entirely to the controller. The test still has to run to tell us which path we are on. | Yes, for the API | Path decided, needs the test |
+| **Q20** | Does `DisabledMixin` fight `FocusgroupNavigationController`? The mixin writes `tabindex` (saving and restoring a previous value) while the controller owns roving tabindex and, with `skipDisabled: false`, deliberately keeps `aria-disabled` rows in sequence. `DisabledMixin` currently has no consumers, so this combination is untested. Resolved in review: if they conflict, skip `DisabledMixin` and map the property by hand, leaving tabindex entirely to the controller. | Yes, for the API | **Closed.** They conflict, so `MenuItemBase` maps `disabled` to `aria-disabled` by hand and never touches tabindex. The arrow-reachability test confirms it, and fails when the controller's `skipDisabled` is flipped |
 | **Q21** | The menu epic was specced against Figma file `Mngz9H7WZLbrCvGQf3GnsY`, now named "S2 - Web (Deprecated)". `swc-menu` and `swc-close-button` link to it; `swc-thumbnail` uses `xHBWBBIe2eo5vwoCeNrC4Q`. Which supersedes it, and do the row specs change? | Yes, for styling | Open |
 | **Q22** | Does `noWrap` survive? 1st-gen offers it; `swc-menu` already caps row width at 320px, so wrapping behaviour needs a design answer rather than a carry-forward. | No | Open |
 | **Q24** | Should a row be able to mark itself as the current one? `menuitem` cannot carry `aria-selected`, but `aria-current` is available and would cover "this is where you are" without implying selection. Needs a product answer on whether menus need it at all before any `current` property is designed. | No | Open |
-| **Q23** | Authoring ergonomics of the named `label` slot: `<swc-menu-item><span slot="label">Cut</span></swc-menu-item>` is heavier than the 1st-gen default-slot form, and every existing `swc-menu` story and test uses the lighter one. Confirm the trade is still wanted now that the cost is visible. | No | Open, decided in principle under [B22](#must-ship) |
+| **Q23** | Authoring ergonomics of the named `label` slot. | No | **Closed.** Named slot kept: with `description` alongside it, an unnamed label is both ambiguous and harder to place in a grid. See [B22](#must-ship) |
+| **Q25** | A `menuitem` takes its accessible name from its contents, so a `description` is announced as part of the row's name rather than as a separate description. 1st-gen behaves the same way. Wiring it as a real description instead would mean naming the row from its label alone, which the default slot makes awkward since the label can be a bare text node. Worth doing, or is name-from-contents the right answer here? | No | Open, raised in review |
 
 ## Decision log
 
@@ -237,7 +245,7 @@ Red/green TDD. Each item below should fail before the implementation exists.
 | --- | --- |
 | Link rows move to `swc-menu-link`; `swc-menu-item` is never a link | `swc-menu` plan, Q17 |
 | `role="menuitem"` on exactly one node, no competing role | `swc-menu` plan, Q19 |
-| Named `label` slot rather than the default slot | `swc-menu` plan, Phase A surface table |
+| Named `label` slot rather than the default slot | `swc-menu` plan, Phase A surface table; confirmed in PR review |
 | Disabled rows stay in the roving set | `swc-menu` plan, B7 |
 | Migration order among menu siblings still undecided | `swc-menu` plan, Q15 |
 

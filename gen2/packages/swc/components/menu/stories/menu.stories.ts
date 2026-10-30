@@ -20,6 +20,7 @@ import { MENU_PLACEMENTS } from '@adobe/spectrum-wc-core/components/menu';
 
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc/components/menu/swc-menu.js';
+import '@adobe/spectrum-wc/components/menu/swc-menu-item.js';
 
 // ────────────────
 //    METADATA
@@ -66,6 +67,9 @@ const meta: Meta = {
     },
     // Pending a real Stackblitz project for swc-menu.
     // stackblitz: { url: '' },
+    // swc-menu-item is a second element of this component; surface its API
+    // table alongside swc-menu's on the docs page.
+    additionalApiTables: ['swc-menu-item'],
   },
   tags: ['migrated'],
 };
@@ -76,12 +80,10 @@ export default meta;
 //    HELPERS
 // ────────────────────
 
-// Placeholders for `swc-menu-item`, which doesn't exist yet; matches its
-// eventual tag name and `role="menuitem"` so the story stays aXe-clean.
 const defaultItems = html`
-  <swc-menu-item role="menuitem">Cut</swc-menu-item>
-  <swc-menu-item role="menuitem">Copy</swc-menu-item>
-  <swc-menu-item role="menuitem">Paste</swc-menu-item>
+  <swc-menu-item><span slot="label">Cut</span></swc-menu-item>
+  <swc-menu-item><span slot="label">Copy</span></swc-menu-item>
+  <swc-menu-item><span slot="label">Paste</span></swc-menu-item>
 `;
 
 // ────────────────────
@@ -229,6 +231,52 @@ export const States: Story = {
   `,
   tags: ['states'],
 };
+
+export const ItemContent: Story = {
+  args: {
+    for: 'item-content-trigger',
+    'actual-placement': null,
+  },
+  render: (args) => html`
+    <swc-button id="item-content-trigger">Edit</swc-button>
+    ${template(
+      args,
+      html`
+        <swc-menu-item>
+          <span slot="visual" aria-hidden="true">📋</span>
+          <span slot="label">Paste</span>
+        </swc-menu-item>
+        <swc-menu-item>
+          <span slot="label">Paste special</span>
+          <span slot="description">Keeps the source formatting</span>
+        </swc-menu-item>
+      `
+    )}
+  `,
+  tags: ['options'],
+};
+ItemContent.storyName = 'Item content';
+
+export const ItemStates: Story = {
+  args: {
+    for: 'item-states-trigger',
+    'actual-placement': null,
+  },
+  render: (args) => html`
+    <swc-button id="item-states-trigger">Edit</swc-button>
+    ${template(
+      args,
+      html`
+        <swc-menu-item><span slot="label">Default</span></swc-menu-item>
+        <swc-menu-item disabled>
+          <span slot="label">Disabled</span>
+        </swc-menu-item>
+      `
+    )}
+  `,
+  tags: ['states'],
+};
+ItemStates.storyName = 'Item states';
 
 // ──────────────────────────────
 //    BEHAVIORS STORIES
