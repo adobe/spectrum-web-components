@@ -94,7 +94,7 @@ No public `change`/activation event in Phase A: activation is a plain `click` on
 
 | Slot | Disposition |
 | --- | --- |
-| default | **Kept** as the label slot ([B22](#must-ship)) |
+| default | **Replaced** by a named `label` slot ([B22](#must-ship)) |
 | `icon` | **Renamed** to `visual` ([B23](#must-ship)) |
 | `description` | **Kept.** Pulled into Phase A in review: it is how similarly-named options are told apart, which is an a11y concern in its own right |
 | `value` | **Defer** — trailing content, Phase B |
@@ -133,7 +133,7 @@ Two things worth noting against this plan:
 | --- | --- | --- |
 | **B20** | Disabled rows | `disabled` maps to `aria-disabled="true"`, not the native attribute. Rows stay focusable and in the roving set, per `swc-menu`'s [B7](../menu/migration-plan.md) |
 | **B21** | Link rows | `LikeAnchor` surface removed entirely. `swc-menu-item` never carries `href` or renders an anchor ([Q17](#blockers-and-open-questions)) |
-| **B22** | Label content | ~~Named `label` slot replaces the default slot~~. **Reversed in review:** the label is the row's main content, so it stays in the default slot and later additions (`description`, `visual`) are the named ones. Matches `swc-badge` and `swc-status-light`, 1st-gen `sp-menu-item`, and React Spectrum S2, whose `MenuItem` takes `children` for the label and names only `description` |
+| **B22** | Label content | Named `label` slot replaces the default slot, so it stays distinct from `description` and each part has a handle for grid placement in the row layout. React Spectrum S2 names it the same way (`Text slot="label"` alongside `Text slot="description"`). Briefly reversed to the default slot mid-review on a misreading of that API, then restored |
 | **B23** | Leading visual | `icon` slot renamed `visual`, so it can hold an icon or a future `swc-thumbnail` without a second rename. Confirmed in review |
 | **B24** | Role | `role="menuitem"` on the host, always. No `setRole()` and no conditional branch |
 | **B25** | CSS custom properties | All 45 `--mod-menu-item-*` removed |
@@ -164,7 +164,7 @@ Two things worth noting against this plan:
 | `size` | `size` | `'s' \| 'm' \| 'l' \| 'xl'` | `'m'` | Confirmed |
 | `disabled` | `disabled` | `boolean` | `false` | Confirmed; mapping via [Q20](#blockers-and-open-questions) |
 
-Slots: default (text), `visual` (optional leading icon or thumbnail), `description` (optional secondary text).
+Slots: `label` (text), `visual` (optional leading icon or thumbnail), `description` (optional secondary text).
 
 Role: `menuitem`, set on the host before the owning menu's first discovery pass.
 
@@ -214,7 +214,7 @@ Red/green TDD. Each item below should fail before the implementation exists.
 - [x] Defaults: `size` is `m`, `disabled` is `false`, no `aria-disabled`
 - [x] `disabled` sets `aria-disabled="true"` and **not** the native disabled behaviour
 - [x] A disabled row remains reachable by arrow keys inside `swc-menu` ([B20](#must-ship)); this is the test that settles [Q20](#blockers-and-open-questions)
-- [x] Default, `visual` and `description` slots render in the expected order
+- [x] `label`, `visual` and `description` slots render in the expected order
 - [x] `swc-menu` discovers rows via `:scope > swc-menu-item` with real elements, not placeholders
 - [x] <kbd>Enter</kbd> and <kbd>Space</kbd> reach a consumer `click` handler on an enabled row, and neither activates a disabled one
 - [ ] Playwright: ARIA tree shows `menu` containing named `menuitem` rows
@@ -236,7 +236,7 @@ Red/green TDD. Each item below should fail before the implementation exists.
 | **Q21** | The menu epic was specced against Figma file `Mngz9H7WZLbrCvGQf3GnsY`, now named "S2 - Web (Deprecated)". `swc-menu` and `swc-close-button` link to it; `swc-thumbnail` uses `xHBWBBIe2eo5vwoCeNrC4Q`. Which supersedes it, and do the row specs change? | Yes, for styling | Open |
 | **Q22** | Does `noWrap` survive? 1st-gen offers it; `swc-menu` already caps row width at 320px, so wrapping behaviour needs a design answer rather than a carry-forward. | No | Open |
 | **Q24** | Should a row be able to mark itself as the current one? `menuitem` cannot carry `aria-selected`, but `aria-current` is available and would cover "this is where you are" without implying selection. Needs a product answer on whether menus need it at all before any `current` property is designed. | No | Open |
-| **Q23** | Authoring ergonomics of the named `label` slot. | No | **Closed.** The trade was not worth it: the row is now `<swc-menu-item>Cut</swc-menu-item>`. See [B22](#must-ship) |
+| **Q23** | Authoring ergonomics of the named `label` slot. | No | **Closed.** Named slot kept: with `description` alongside it, an unnamed label is both ambiguous and harder to place in a grid. See [B22](#must-ship) |
 | **Q25** | A `menuitem` takes its accessible name from its contents, so a `description` is announced as part of the row's name rather than as a separate description. 1st-gen behaves the same way. Wiring it as a real description instead would mean naming the row from its label alone, which the default slot makes awkward since the label can be a bare text node. Worth doing, or is name-from-contents the right answer here? | No | Open, raised in review |
 
 ## Decision log
@@ -245,7 +245,7 @@ Red/green TDD. Each item below should fail before the implementation exists.
 | --- | --- |
 | Link rows move to `swc-menu-link`; `swc-menu-item` is never a link | `swc-menu` plan, Q17 |
 | `role="menuitem"` on exactly one node, no competing role | `swc-menu` plan, Q19 |
-| ~~Named `label` slot rather than the default slot~~. Reversed in review: the label is the default slot | `swc-menu` plan, Phase A surface table; PR review |
+| Named `label` slot rather than the default slot | `swc-menu` plan, Phase A surface table; confirmed in PR review |
 | Disabled rows stay in the roving set | `swc-menu` plan, B7 |
 | Migration order among menu siblings still undecided | `swc-menu` plan, Q15 |
 

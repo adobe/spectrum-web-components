@@ -47,9 +47,9 @@ export default {
 // ─── Test helpers ─────────────────────────────────────────────────────────────
 
 const defaultItems = html`
-  <swc-menu-item>Cut</swc-menu-item>
-  <swc-menu-item>Copy</swc-menu-item>
-  <swc-menu-item>Paste</swc-menu-item>
+  <swc-menu-item><span slot="label">Cut</span></swc-menu-item>
+  <swc-menu-item><span slot="label">Copy</span></swc-menu-item>
+  <swc-menu-item><span slot="label">Paste</span></swc-menu-item>
 `;
 
 // `userEvent.keyboard` tracks its own notion of focus and stops reaching the
@@ -258,7 +258,8 @@ export const StartsOpenNoPhantomEventTest: Story = {
         menu.addEventListener('swc-open', () => (openFired = true));
         menu.setAttribute('for', 'starts-open-trigger');
         menu.open = true;
-        menu.innerHTML = '<swc-menu-item>Cut</swc-menu-item>';
+        menu.innerHTML =
+          '<swc-menu-item><span slot="label">Cut</span></swc-menu-item>';
         mount.appendChild(menu);
 
         await menu.updateComplete;
@@ -574,7 +575,8 @@ export const ShadowRootScopeTest: Story = {
     trigger.textContent = 'Trigger';
 
     const menu = document.createElement('swc-menu') as Menu;
-    menu.innerHTML = '<swc-menu-item>Cut</swc-menu-item>';
+    menu.innerHTML =
+      '<swc-menu-item><span slot="label">Cut</span></swc-menu-item>';
 
     shadow.append(trigger, menu);
 
@@ -1291,7 +1293,8 @@ export const DisconnectCleanupTest: Story = {
     ) as HTMLElement;
     const menu = document.createElement('swc-menu') as Menu;
     menu.setAttribute('for', 'disconnect-trigger');
-    menu.innerHTML = '<swc-menu-item>Cut</swc-menu-item>';
+    menu.innerHTML =
+      '<swc-menu-item><span slot="label">Cut</span></swc-menu-item>';
     mount.appendChild(menu);
     await menu.updateComplete;
 
@@ -1330,7 +1333,8 @@ export const DisconnectCleanupTest: Story = {
 
         const menu2 = document.createElement('swc-menu') as Menu;
         menu2.setAttribute('for', 'disconnect-trigger-2');
-        menu2.innerHTML = '<swc-menu-item>Cut</swc-menu-item>';
+        menu2.innerHTML =
+          '<swc-menu-item><span slot="label">Cut</span></swc-menu-item>';
         canvasElement.appendChild(menu2);
         await menu2.updateComplete;
 
@@ -1364,7 +1368,8 @@ export const DisconnectCleanupTest: Story = {
 
         const menu3 = document.createElement('swc-menu') as Menu;
         menu3.setAttribute('for', 'disconnect-trigger-3');
-        menu3.innerHTML = '<swc-menu-item>Cut</swc-menu-item>';
+        menu3.innerHTML =
+          '<swc-menu-item><span slot="label">Cut</span></swc-menu-item>';
         canvasElement.appendChild(menu3);
         await menu3.updateComplete;
 
@@ -1409,9 +1414,9 @@ const rowsInMenu = (rows: unknown, id: string) => html`
 `;
 
 const threeRows = html`
-  <swc-menu-item>Cut</swc-menu-item>
-  <swc-menu-item disabled>Copy</swc-menu-item>
-  <swc-menu-item>Paste</swc-menu-item>
+  <swc-menu-item><span slot="label">Cut</span></swc-menu-item>
+  <swc-menu-item disabled><span slot="label">Copy</span></swc-menu-item>
+  <swc-menu-item><span slot="label">Paste</span></swc-menu-item>
 `;
 
 // ──────────────────────────────────────────────────────────────
@@ -1420,7 +1425,7 @@ const threeRows = html`
 
 export const ItemDefaultsTest: Story = {
   render: () => html`
-    <swc-menu-item>Cut</swc-menu-item>
+    <swc-menu-item><span slot="label">Cut</span></swc-menu-item>
   `,
   play: async ({ canvasElement, step }) => {
     const item = await getComponent<MenuItem>(canvasElement, 'swc-menu-item');
@@ -1448,7 +1453,7 @@ export const ItemDefaultsTest: Story = {
       ).map((slot) => slot.name);
       expect(slots, 'visual, then the label, then its description').toEqual([
         'visual',
-        '',
+        'label',
         'description',
       ]);
     });
@@ -1461,7 +1466,7 @@ export const ItemDefaultsTest: Story = {
 
 export const ItemPropertyMutationTest: Story = {
   render: () => html`
-    <swc-menu-item>Cut</swc-menu-item>
+    <swc-menu-item><span slot="label">Cut</span></swc-menu-item>
   `,
   play: async ({ canvasElement, step }) => {
     const item = await getComponent<MenuItem>(canvasElement, 'swc-menu-item');
@@ -1499,7 +1504,9 @@ export const ItemPropertyMutationTest: Story = {
 
 export const ItemAuthoredRoleWinsTest: Story = {
   render: () => html`
-    <swc-menu-item role="menuitemcheckbox">Wrap</swc-menu-item>
+    <swc-menu-item role="menuitemcheckbox">
+      <span slot="label">Wrap</span>
+    </swc-menu-item>
   `,
   play: async ({ canvasElement, step }) => {
     const item = await getComponent<MenuItem>(canvasElement, 'swc-menu-item');

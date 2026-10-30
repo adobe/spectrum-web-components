@@ -81,9 +81,9 @@ export default meta;
 // ────────────────────
 
 const defaultItems = html`
-  <swc-menu-item>Cut</swc-menu-item>
-  <swc-menu-item>Copy</swc-menu-item>
-  <swc-menu-item>Paste</swc-menu-item>
+  <swc-menu-item><span slot="label">Cut</span></swc-menu-item>
+  <swc-menu-item><span slot="label">Copy</span></swc-menu-item>
+  <swc-menu-item><span slot="label">Paste</span></swc-menu-item>
 `;
 
 // ────────────────────
@@ -244,10 +244,10 @@ export const ItemContent: Story = {
       html`
         <swc-menu-item>
           <span slot="visual" aria-hidden="true">📋</span>
-          Paste
+          <span slot="label">Paste</span>
         </swc-menu-item>
         <swc-menu-item>
-          Paste special
+          <span slot="label">Paste special</span>
           <span slot="description">Keeps the source formatting</span>
         </swc-menu-item>
       `
@@ -267,8 +267,10 @@ export const ItemStates: Story = {
     ${template(
       args,
       html`
-        <swc-menu-item>Default</swc-menu-item>
-        <swc-menu-item disabled>Disabled</swc-menu-item>
+        <swc-menu-item><span slot="label">Default</span></swc-menu-item>
+        <swc-menu-item disabled>
+          <span slot="label">Disabled</span>
+        </swc-menu-item>
       `
     )}
   `,

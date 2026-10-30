@@ -30,15 +30,15 @@ import styles from './menu-item.css';
  * @example
  * <swc-button id="edit">Edit</swc-button>
  * <swc-menu for="edit">
- *   <swc-menu-item>Cut</swc-menu-item>
- *   <swc-menu-item disabled>Paste</swc-menu-item>
+ *   <swc-menu-item><span slot="label">Cut</span></swc-menu-item>
+ *   <swc-menu-item disabled><span slot="label">Paste</span></swc-menu-item>
  *   <swc-menu-item>
- *     Paste special
+ *     <span slot="label">Paste special</span>
  *     <span slot="description">Keeps the source formatting</span>
  *   </swc-menu-item>
  * </swc-menu>
  *
- * @slot - Text of the row.
+ * @slot label - Text of the row.
  * @slot visual - Optional leading icon or thumbnail.
  * @slot description - Optional secondary text below the label.
  */
@@ -51,7 +51,7 @@ export class MenuItem extends MenuItemBase {
     return html`
       <slot name="visual"></slot>
       <div class="swc-MenuItem-text">
-        <slot></slot>
+        <slot name="label"></slot>
         <slot name="description"></slot>
       </div>
     `;

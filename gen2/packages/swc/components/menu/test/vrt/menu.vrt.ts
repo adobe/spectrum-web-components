@@ -68,9 +68,9 @@ const menuForcedColorsVrtParameters = {
 };
 
 const DEFAULT_ROWS = html`
-  <swc-menu-item>Cut</swc-menu-item>
-  <swc-menu-item>Copy</swc-menu-item>
-  <swc-menu-item>Paste</swc-menu-item>
+  <swc-menu-item><span slot="label">Cut</span></swc-menu-item>
+  <swc-menu-item><span slot="label">Copy</span></swc-menu-item>
+  <swc-menu-item><span slot="label">Paste</span></swc-menu-item>
 `;
 
 // The trigger carries the permutation's name: an open surface can cover or
@@ -149,10 +149,12 @@ const placementRows = (prefix: string) =>
 // merely looks long still fits on a line and proves nothing.
 const LONG_LABEL_ROWS = html`
   <swc-menu-item>
-    Export the current selection as a flattened layered composite file with
-    embedded colour profiles
+    <span slot="label">
+      Export the current selection as a flattened layered composite file with
+      embedded colour profiles
+    </span>
   </swc-menu-item>
-  <swc-menu-item>Copy</swc-menu-item>
+  <swc-menu-item><span slot="label">Copy</span></swc-menu-item>
 `;
 
 const MANY_ROWS = html`
