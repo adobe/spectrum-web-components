@@ -1,0 +1,119 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+/**
+ * Prototype: CSS-only citation listitem card (form A) for a native `<li>`.
+ * Load it as a document-level stylesheet alongside `typography.css` and
+ * `link.css`. Mirrors the shadow styles in `citation-card.css`.
+ *
+ * Selectors are scoped under `.swc-CitationListitemCard` so they outrank the
+ * equal-specificity `.swc-Link` rules regardless of stylesheet order.
+ */
+
+.swc-CitationListitemCard {
+  --_swc-citation-card-border-radius: token("corner-radius-500");
+  --_swc-citation-card-text-color: token("neutral-content-color-default");
+  --swc-body-font-color: var(--_swc-citation-card-text-color);
+  --swc-title-font-color: var(--_swc-citation-card-text-color);
+  --swc-link-text-color-default: var(--_swc-citation-card-text-color);
+  --swc-link-text-color-hover: var(--_swc-citation-card-text-color);
+  --swc-link-text-color-down: var(--_swc-citation-card-text-color);
+  --swc-link-text-color-focus: var(--_swc-citation-card-text-color);
+
+  box-sizing: border-box;
+  position: relative;
+  padding: token("container-padding-small");
+  color: var(--_swc-citation-card-text-color);
+  background-color: var(--swc-citation-card-background-color, transparent);
+  border-radius: var(--_swc-citation-card-border-radius);
+  transition: background-color token("animation-duration-100") token("animation-ease-in-out");
+
+  &:hover {
+    background-color: var(--swc-citation-card-background-color-hover, token("gray-100"));
+  }
+
+  .swc-CitationListitemCard-lockup {
+    display: flex;
+    gap: token("base-gap-large");
+    align-items: center;
+  }
+
+  .swc-CitationListitemCard-lockup > swc-thumbnail {
+    flex-shrink: 0;
+  }
+
+  /* Body/M and Body/S in the design use a 1.5 line height, taller than the
+     `.swc-Body` size defaults. */
+  .swc-CitationListitemCard-source,
+  .swc-CitationListitemCard-description {
+    --swc-body-line-height: token("line-height-200");
+
+    margin: 0;
+  }
+
+  .swc-CitationListitemCard-source {
+    min-inline-size: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .swc-CitationListitemCard-content {
+    display: flex;
+    flex-direction: column;
+    gap: token("text-gap-large");
+    margin-block-start: token("list-item-gap-medium");
+  }
+
+  .swc-CitationListitemCard-link {
+    text-decoration: none;
+  }
+
+  .swc-CitationListitemCard-link:hover {
+    text-decoration: underline;
+  }
+
+  /* The focus indicator is drawn around the whole card by the stretched
+     pseudo-element, so the anchor's own `.swc-Link` outline is removed. */
+  .swc-CitationListitemCard-link:focus-visible {
+    outline: none;
+  }
+
+  /* Stretched link: extends the anchor's hit area over the whole card. */
+  .swc-CitationListitemCard-link::before {
+    position: absolute;
+    inset: 0;
+    border-radius: var(--_swc-citation-card-border-radius);
+    content: "";
+  }
+
+  .swc-CitationListitemCard-link:focus-visible::before {
+    outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
+    outline-offset: token("focus-ring-gap");
+  }
+
+  .swc-CitationListitemCard-description {
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-line-clamp: var(--swc-citation-card-description-max-lines, 2);
+    line-clamp: var(--swc-citation-card-description-max-lines, 2);
+  }
+}
+
+@media (forced-colors: active) {
+  .swc-CitationListitemCard:hover {
+    outline: 1px solid CanvasText;
+  }
+
+  .swc-CitationListitemCard .swc-CitationListitemCard-link:focus-visible::before {
+    outline-color: Highlight;
+  }
+}

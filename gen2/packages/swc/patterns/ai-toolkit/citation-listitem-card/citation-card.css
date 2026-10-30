@@ -1,0 +1,136 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+/**
+ * Shared shadow styles for `<swc-citation-card>` and
+ * `<swc-citation-listitem-card>`.
+ */
+
+:host {
+  display: block;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.swc-CitationCard {
+  --_swc-citation-card-border-radius: token("corner-radius-500");
+  --_swc-citation-card-text-color: token("neutral-content-color-default");
+
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  gap: token("list-item-gap-medium");
+  padding: token("container-padding-small");
+  color: var(--_swc-citation-card-text-color);
+  background-color: var(--swc-citation-card-background-color, transparent);
+  border-radius: var(--_swc-citation-card-border-radius);
+  transition: background-color token("animation-duration-100") token("animation-ease-in-out");
+}
+
+:host(:hover) .swc-CitationCard {
+  background-color: var(--swc-citation-card-background-color-hover, token("gray-100"));
+}
+
+.swc-CitationCard-lockup {
+  display: flex;
+  gap: token("base-gap-large");
+  align-items: center;
+}
+
+.swc-CitationCard-content {
+  display: flex;
+  flex-direction: column;
+  gap: token("text-gap-large");
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   SLOTTED CONTENT
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Resets user-agent margins, including `<blockquote>`'s inline indent. */
+::slotted(*) {
+  margin: 0;
+}
+
+::slotted([slot="thumbnail"]) {
+  flex-shrink: 0;
+}
+
+::slotted([slot="source"]) {
+  min-inline-size: 0;
+  font-size: token("font-size-200");
+  line-height: token("line-height-200");
+  overflow-wrap: anywhere;
+}
+
+/* Custom properties reach a nested `.swc-Title` heading and a `.swc-Link`
+   anchor, which shadow styles otherwise can't override. */
+::slotted([slot="citation-link"]) {
+  --swc-title-font-color: var(--_swc-citation-card-text-color);
+  --swc-link-text-color-default: var(--_swc-citation-card-text-color);
+  --swc-link-text-color-hover: var(--_swc-citation-card-text-color);
+  --swc-link-text-color-down: var(--_swc-citation-card-text-color);
+  --swc-link-text-color-focus: var(--_swc-citation-card-text-color);
+
+  color: var(--_swc-citation-card-text-color);
+  text-decoration: none;
+}
+
+::slotted([slot="citation-link"]:hover) {
+  text-decoration: underline;
+}
+
+/* The focus indicator is drawn around the whole card by the stretched
+   pseudo-element below, so the anchor's own outline (including one from
+   `.swc-Link`, which outranks shadow styles) is suppressed. */
+::slotted([slot="citation-link"]:focus-visible) {
+  outline: none !important;
+}
+
+/* Stretched link: extends the anchor's hit area over the whole card. */
+::slotted([slot="citation-link"])::before {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--_swc-citation-card-border-radius);
+  content: "";
+}
+
+::slotted([slot="citation-link"]:focus-visible)::before {
+  outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
+  outline-offset: token("focus-ring-gap");
+}
+
+::slotted([slot="citation-description"]) {
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  font-size: token("font-size-100");
+  line-height: token("line-height-200");
+  overflow: hidden;
+  -webkit-line-clamp: var(--swc-citation-card-description-max-lines, 2);
+  line-clamp: var(--swc-citation-card-description-max-lines, 2);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   FORCED COLORS
+   ───────────────────────────────────────────────────────────────────────────── */
+
+@media (forced-colors: active) {
+  :host(:hover) .swc-CitationCard {
+    outline: 1px solid CanvasText;
+  }
+
+  ::slotted([slot="citation-link"]:focus-visible)::before {
+    outline-color: Highlight;
+  }
+}
