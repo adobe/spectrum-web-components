@@ -93,6 +93,7 @@ const CARD_PROPERTY_CASES: readonly CardPropertyCase[] = [
     value: '48px',
     density: 'spacious',
   },
+  { property: '--swc-card-base-grid-template-rows', value: 'auto 160px auto' },
   {
     property: '--swc-card-collection-item-aspect-ratio',
     value: '2',
