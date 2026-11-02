@@ -1558,7 +1558,7 @@ export const ItemAriaTextWiringTest: Story = {
 // TEST: Role
 // ──────────────────────────────────────────────────────────────
 
-export const ItemAuthoredRoleWinsTest: Story = {
+export const ItemRoleIsAlwaysMenuitemTest: Story = {
   render: () => html`
     <swc-menu-item role="menuitemcheckbox">
       <span slot="label">Wrap</span>
@@ -1567,9 +1567,22 @@ export const ItemAuthoredRoleWinsTest: Story = {
   play: async ({ canvasElement, step }) => {
     const item = await getComponent<MenuItem>(canvasElement, 'swc-menu-item');
 
-    await step('does not overwrite an author-supplied role', async () => {
-      expect(item.getAttribute('role'), 'authored role survives').toBe(
-        'menuitemcheckbox'
+    // Selection rows ship as their own components. Letting an author swap in
+    // `menuitemcheckbox` would promise visuals and behavior this row has not
+    // got, so the role is fixed rather than a default.
+    await step('overwrites an author-supplied role', async () => {
+      expect(item.getAttribute('role'), 'role is always menuitem').toBe(
+        'menuitem'
+      );
+    });
+
+    await step('keeps the role fixed when re-set after connect', async () => {
+      item.setAttribute('role', 'menuitemradio');
+      item.remove();
+      canvasElement.append(item);
+      await item.updateComplete;
+      expect(item.getAttribute('role'), 'reconnect restores menuitem').toBe(
+        'menuitem'
       );
     });
   },

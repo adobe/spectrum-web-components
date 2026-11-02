@@ -58,6 +58,7 @@ import '@adobe/spectrum-wc/components/menu/swc-menu.js';
 | `ignore` property                                                                           | No replacement.                                                                                                                             |
 | `getNeighboringFocusableElement()` method                                                   | No public replacement; arrow-key navigation is handled internally.                                                                          |
 | `role="menu"` on the host element                                                           | Moved to the shadow-internal surface. Do not select `sp-menu[role="menu"]`-style host selectors.                                            |
+| `setRole()` on menu items                                                                   | No replacement. A row is always `role="menuitem"`; checkbox and radio rows arrive as dedicated components.                                  |
 | `mobile-view` / `mobile-back-label` (mobile drilldown tray)                                 | No replacement. Not currently planned.                                                                                                      |
 | `selects` / `value` / `selectedItems` / `selectOrToggleItem()` / `change` event (selection) | Not yet available in Spectrum 2.                                                                                                            |
 | Link items (`href`, `target`, `download`, `rel`, `referrerpolicy` on menu items)            | Not yet available. A dedicated link-row component is planned but has not shipped.                                                           |
@@ -120,6 +121,7 @@ menu.addEventListener('swc-close', () => {
 
 - The menu's accessible name comes from the trigger you author, not a `label` property. See [step 2](#2-author-and-reference-a-trigger).
 - `<swc-menu>` does not carry `role="menu"` on its host element; it is set on the shadow-internal surface instead.
+- Remove any `role` attribute you set on a menu item. A row is always `role="menuitem"`, set each time it connects to the DOM, so an authored value is overwritten.
 
 ## Styling
 

@@ -57,13 +57,10 @@ export abstract class MenuItemBase extends SizedMixin(SpectrumElement, {
 
   public override connectedCallback(): void {
     super.connectedCallback();
-    // `swc-menu` collects rows by tag name on `slotchange`, which can run
-    // before this element's first render, so the role cannot wait for one.
-    // An author-supplied role wins: `menuitemcheckbox` and `menuitemradio`
-    // rows arrive with selection.
-    if (!this.hasAttribute('role')) {
-      this.setAttribute('role', 'menuitem');
-    }
+    // Set here, not in render(): `swc-menu` collects rows on `slotchange`,
+    // which can run first. Always `menuitem`; selection rows ship as their
+    // own components rather than as a role swap on this one.
+    this.setAttribute('role', 'menuitem');
     this.addEventListener('keydown', this.handleKeyDown);
   }
 
