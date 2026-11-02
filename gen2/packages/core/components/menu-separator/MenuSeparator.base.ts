@@ -16,6 +16,18 @@ import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
  * A menu separator is a non-interactive line that visually and semantically
  * separates groups of items inside a menu.
  *
- * It has no public properties. Behavior is added in later migration phases.
+ * It has no public properties, slots, or events. The host is fixed to
+ * `role="separator"`, is not focusable, and carries no value or accessible name.
+ * Thickness and spacing come from the parent menu, so there is no `size`.
  */
-export abstract class MenuSeparatorBase extends SpectrumElement {}
+export abstract class MenuSeparatorBase extends SpectrumElement {
+  // ──────────────────────
+  //     IMPLEMENTATION
+  // ──────────────────────
+
+  public override connectedCallback(): void {
+    super.connectedCallback();
+    // Set on connect so the role exists before first paint and before a parent menu inspects its children.
+    this.setAttribute('role', 'separator');
+  }
+}

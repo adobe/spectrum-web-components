@@ -71,7 +71,7 @@
 
 ### Most blocking open questions
 
-- Q2 in [Architecture and behavior](#architecture-and-behavior): whether the separator extends `DividerBase` or stands alone in core.
+- None block the baseline. Q3 (container height depends on a spacing token update) is the main open item before the styling phase.
 
 ---
 
@@ -282,17 +282,17 @@ Planned rendering shape:
 
 ### Setup
 
-- [ ] Create `gen2/packages/core/components/menu-separator/`
-- [ ] Create `gen2/packages/swc/components/menu-separator/`
-- [ ] Wire exports in both `package.json` files
+- [x] Create `gen2/packages/core/components/menu-separator/`
+- [x] Create `gen2/packages/swc/components/menu-separator/`
+- [x] Wire exports in both `package.json` files (the swc package uses a wildcard export, so only core needed entries)
 - [x] Check out `spectrum-css` at `spectrum-two` branch as sibling directory (done at `4df8792e1`)
 
 ### API
 
 #### Naming and public surface
 
-- [ ] `MenuSeparator.base.ts`: set `role="separator"`; no public properties
-- [ ] No default slot
+- [x] `MenuSeparator.base.ts`: set `role="separator"`; no public properties
+- [x] No default slot
 - [ ] Add `swc-menu-separator` to the allowed children of `swc-menu`, `swc-action-menu`, and `swc-menu-item` (Menu Phase B)
 
 #### Alignment checks
@@ -371,10 +371,8 @@ Planned rendering shape:
 
 | #   | Item                                                                                                                                                                                  | Blocking? | Status | Owner                 |
 | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- | ------ | --------------------- |
-| Q2  | Core base: extend `DividerBase` (reuses role and line CSS, but inherits `size`, `vertical`, `staticColor`) or stand alone on `SpectrumElement` (recommended). Duplicated line CSS is small. | Yes       | Open   | Architecture reviewer |
 | Q5  | Should shared line styling be extracted to a `_lit-styles/` fragment used by both `swc-divider` and `swc-menu-separator`? Recommend no unless Q2 chooses standalone and duplication grows. | No        | Open   | CSS reviewer          |
-| Q8  | Confirm when `role="separator"` is applied (constructor, `connectedCallback`, or `firstUpdated`) so it is present before first paint.                                                  | No        | Open   | Accessibility reviewer |
-| Q7  | Dev-mode warning for placement inside `swc-menu-group` or outside a menu (A1): in scope or deferred?                                                                                  | No        | Open   | Architecture reviewer |
+| Q7  | Dev-mode warning for placement inside `swc-menu-group` or outside a menu (A1): not implemented in the API phase; stays Additive until the team decides it is in scope. | No        | Open   | Architecture reviewer |
 
 ### Scope and prerequisites
 
@@ -391,6 +389,8 @@ Planned rendering shape:
 | --- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Q1  | Standalone `swc-menu-separator`; do not reuse `swc-divider`. | Direction confirmed by blunteshwar (PR author) in this PR. nikkimk made the earlier call (Menu plan Q14, reuse `swc-divider`), so her review of the revised decision is still pending. Consistent with the menu-separator accessibility analysis. Supersedes Menu plan Q14. The Menu plan (Q14, Q15, Q21, Phase B) is updated to match. |
 | Q6  | Use the Medium divider thickness (2px). | Figma Divider frame (node 9233:4610): Small 1px, Medium 2px, Large 4px. The Menu frame draws 2px. 1st-gen also defaults to medium. The Spectrum CSS story passing `size: "s"` does not match Figma. |
+| Q2  | The core base extends `SpectrumElement`, not `DividerBase`. | Implemented in Phase 2 and 3 as the recommended option. `DividerBase` carries `size`, `vertical` and `staticColor`, which the separator must not expose. The duplicated line CSS is small (Q5). Pending reviewer confirmation. |
+| Q8  | `role="separator"` is set in `connectedCallback`. | Implemented in Phase 3. It runs before first render, so the role exists before first paint and before a parent menu inspects its children, unlike 1st-gen and `swc-divider`, which set it in `firstUpdated`. Pending accessibility reviewer confirmation. |
 
 ---
 
