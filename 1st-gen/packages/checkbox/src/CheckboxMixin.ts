@@ -76,8 +76,8 @@ export function CheckboxMixin<T extends Constructor<ReactiveElement>>(
       const applyDefault = this.dispatchEvent(changeEvent);
 
       if (!applyDefault) {
-        // Scoped to `sp-checkbox`: `sp-switch` shares this mixin and migrates
-        // on its own schedule.
+        // Scoped to `sp-checkbox`: `sp-switch` shares this mixin and still
+        // allows canceling `change`.
         if (window.__swc?.DEBUG && this.localName === 'sp-checkbox') {
           window.__swc.warn(
             this,

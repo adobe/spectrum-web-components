@@ -76,18 +76,21 @@ export abstract class CheckboxBase extends SizedMixin(
     if (!this.#applyingCheckedAttribute) {
       this.#checkedDirty = true;
     }
+    // Write the input even when `checked` is unchanged: during a click the
+    // input already holds the provisional toggle, and a listener's assignment
+    // must override it, as on a native checkbox.
+    const input = this.inputElement;
+    if (input && input.checked !== checked) {
+      input.checked = checked;
+    }
     if (checked === this._checked) {
       return;
     }
     const oldValue = this._checked;
     this._checked = checked;
     this.requestUpdate('checked', oldValue);
-    // Update the input, form value, and validity now, as a native checkbox
-    // does, so an immediate `FormData` or `checkValidity()` read is current.
-    const input = this.inputElement;
-    if (input) {
-      input.checked = checked;
-    }
+    // Update the form value and validity now, as a native checkbox does, so an
+    // immediate `FormData` or `checkValidity()` read is current.
     this.syncFormValue();
     this.syncValidity();
   }
@@ -100,7 +103,26 @@ export abstract class CheckboxBase extends SizedMixin(
    * clears it.
    */
   @property({ type: Boolean, reflect: true })
-  public indeterminate = false;
+  public get indeterminate(): boolean {
+    return this._indeterminate;
+  }
+
+  public set indeterminate(value: boolean) {
+    const indeterminate = Boolean(value);
+    // Same provisional-state override as the `checked` setter.
+    const input = this.inputElement;
+    if (input && input.indeterminate !== indeterminate) {
+      input.indeterminate = indeterminate;
+    }
+    if (indeterminate === this._indeterminate) {
+      return;
+    }
+    const oldValue = this._indeterminate;
+    this._indeterminate = indeterminate;
+    this.requestUpdate('indeterminate', oldValue);
+  }
+
+  private _indeterminate = false;
 
   /**
    * Sets one interaction or validation status. `undefined` clears authored status.
@@ -207,18 +229,22 @@ export abstract class CheckboxBase extends SizedMixin(
 
   constructor() {
     super();
-    // A native checkbox ignores `readonly`, so cancel the click to undo the
-    // provisional toggle. Canceling also suppresses `input` and `change`, and
-    // covers label clicks and Space, which both click the input.
     this.addEventListener(
       'click',
       (event) => {
-        if (
-          this.fieldStatus === 'readonly' &&
-          event.composedPath()[0] === this.inputElement
-        ) {
-          event.preventDefault();
+        if (event.composedPath()[0] !== this.inputElement) {
+          return;
         }
+        // A native checkbox ignores `readonly`, so cancel the click to undo the
+        // provisional toggle. Canceling also suppresses `input` and `change`,
+        // and covers label clicks and Space, which both click the input.
+        if (this.fieldStatus === 'readonly') {
+          event.preventDefault();
+          return;
+        }
+        // The input has already toggled, which counts as a user change, so the
+        // `checked` attribute no longer applies.
+        this.#checkedDirty = true;
       },
       { capture: true }
     );
@@ -264,7 +290,7 @@ export abstract class CheckboxBase extends SizedMixin(
     }
   }
 
-  /** @internal Delegates the ancestor form / fieldset disabled cascade to the controller. */
+  /** @internal */
   public formDisabledCallback(disabled: boolean): void {
     this.fieldAssoc.formDisabledCallback(disabled);
   }
@@ -291,8 +317,7 @@ export abstract class CheckboxBase extends SizedMixin(
   /**
    * @internal
    *
-   * The authored disabled status OR the native disabled callback state.
-   * The subclass render reads it to disable the inner control.
+   * Authored disabled status, or a disabled ancestor form or fieldset.
    */
   protected get effectiveDisabled(): boolean {
     return this.fieldAssoc.disabled;
@@ -318,7 +343,9 @@ export abstract class CheckboxBase extends SizedMixin(
       event.stopPropagation();
       return;
     }
-    this.indeterminate = false;
+    // The browser has cleared `indeterminate` unless a click listener set it
+    // again, so take both values from the input rather than forcing them.
+    this.indeterminate = input.indeterminate;
     this.checked = input.checked;
   }
 
@@ -386,7 +413,7 @@ export abstract class CheckboxBase extends SizedMixin(
   /**
    * Sets host validity, anchored to the inner input. While barred (disabled or
    * read-only), `valueMissing` is dropped and `customError` stays for an
-   * invalid status, as in `swc-text-field` and `swc-radio-group`.
+   * invalid status.
    */
   private syncValidity(): void {
     const input = this.inputElement;

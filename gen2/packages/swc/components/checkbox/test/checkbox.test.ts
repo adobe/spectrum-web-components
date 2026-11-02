@@ -101,7 +101,7 @@ export const RegistrationTest: Story = {
       expect(text).toBe('Send me product updates');
     });
 
-    await step('public defaults match the plan', () => {
+    await step('renders documented public defaults', () => {
       expect(checkbox.checked).toBe(false);
       expect(checkbox.indeterminate).toBe(false);
       expect(checkbox.fieldStatus).toBeUndefined();
@@ -133,7 +133,7 @@ export const OptionControlsTest: Story = {
 OptionControlsTest.storyName = 'Playground option controls';
 
 // ──────────────────────────────────────────────────────────────
-// TEST: checked (B9)
+// TEST: checked
 // ──────────────────────────────────────────────────────────────
 
 export const CheckedTest: Story = {
@@ -284,7 +284,7 @@ export const CheckedAttributeTest: Story = {
 CheckedAttributeTest.storyName = 'checked attribute is the default';
 
 // ──────────────────────────────────────────────────────────────
-// TEST: indeterminate (C2)
+// TEST: indeterminate
 // ──────────────────────────────────────────────────────────────
 
 export const IndeterminateTest: Story = {
@@ -335,7 +335,7 @@ export const IndeterminateTest: Story = {
 IndeterminateTest.storyName = 'indeterminate';
 
 // ──────────────────────────────────────────────────────────────
-// TEST: change event (B10)
+// TEST: change event
 // ──────────────────────────────────────────────────────────────
 
 export const ChangeEventTest: Story = {
@@ -603,7 +603,7 @@ export const FieldStatusTest: Story = {
 FieldStatusTest.storyName = 'field-status values';
 
 // ──────────────────────────────────────────────────────────────
-// TEST: description, error text, and error icon (Q7, B14)
+// TEST: description, error text, and error icon
 // ──────────────────────────────────────────────────────────────
 
 export const DescriptionTest: Story = {

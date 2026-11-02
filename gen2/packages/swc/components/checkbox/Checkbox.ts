@@ -59,7 +59,7 @@ export class Checkbox extends CheckboxBase {
 
   protected override render(): TemplateResult {
     // `checked` and `indeterminate` aren't bound here: the base class writes
-    // them in `updated()`, only when they change.
+    // them to the input directly, from their setters and on first render.
     return html`
       <div class="swc-Checkbox">
         <input
@@ -87,8 +87,8 @@ export class Checkbox extends CheckboxBase {
   /**
    * Re-dispatch `change` from the host: the native `change` event is
    * `composed: false`, so it never crosses the shadow boundary and a consumer's
-   * `<swc-checkbox @change=…>` would otherwise never fire. Nothing is sent
-   * while read-only, because the base class has already undone the toggle.
+   * `<swc-checkbox @change=…>` would otherwise never fire. Skipped while
+   * read-only, because the toggle was undone.
    */
   private handleChange(): void {
     if (this.fieldStatus === 'readonly') {

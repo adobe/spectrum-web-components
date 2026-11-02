@@ -44,7 +44,7 @@ function inputOf(checkbox: Checkbox): HTMLInputElement {
 }
 
 // ──────────────────────────────────────────────────────────────
-// TEST: Form value (B2, B16)
+// TEST: Form value
 // ──────────────────────────────────────────────────────────────
 
 export const FormValueTest: Story = {
@@ -121,7 +121,7 @@ export const FormValueTest: Story = {
 FormValueTest.storyName = 'Form value';
 
 // ──────────────────────────────────────────────────────────────
-// TEST: Validity (B17)
+// TEST: Validity
 // ──────────────────────────────────────────────────────────────
 
 export const RequiredTest: Story = {
@@ -233,7 +233,7 @@ export const InvalidStatusTest: Story = {
 InvalidStatusTest.storyName = 'field-status="invalid" validity';
 
 // ──────────────────────────────────────────────────────────────
-// TEST: Barring and disabling (B17, B19, B22, C8, C10)
+// TEST: Barring and disabling
 // ──────────────────────────────────────────────────────────────
 
 export const BarredTest: Story = {
@@ -327,7 +327,7 @@ export const BarredTest: Story = {
 BarredTest.storyName = 'Barred and disabled fields';
 
 // ──────────────────────────────────────────────────────────────
-// TEST: Reset and restore (B9, B16)
+// TEST: Reset and restore
 // ──────────────────────────────────────────────────────────────
 
 export const ResetTest: Story = {
@@ -401,7 +401,7 @@ export const ResetTest: Story = {
 ResetTest.storyName = 'Reset and state restore';
 
 // ──────────────────────────────────────────────────────────────
-// TEST: Host disabled attribute, the channel a group uses (C12)
+// TEST: Host disabled attribute
 // ──────────────────────────────────────────────────────────────
 
 export const HostDisabledTest: Story = {

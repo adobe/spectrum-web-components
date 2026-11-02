@@ -19,11 +19,9 @@ import { gotoStory } from '../../../utils/a11y-helpers.js';
 /**
  * Accessibility tests for the gen2 Checkbox component.
  *
- * These tests drive trusted pointer and keyboard input, which play functions
- * can't produce: the browser runs pending microtasks between listeners only
- * for trusted events, and only trusted keys activate the native input. Each
- * test configures the Playground story with `evaluate()`, because the CI
- * Storybook build excludes `test/*.test.ts` fixture stories.
+ * Tests that need trusted input, which play functions can't produce. Each
+ * test configures the Playground story because the CI Storybook build
+ * excludes `test/*.test.ts` stories.
  */
 
 const PLAYGROUND = 'components-checkbox--playground';
@@ -84,6 +82,103 @@ test.describe('Checkbox - Trusted input', () => {
     await page.keyboard.press('Space');
 
     await expect(checkbox.locator('input')).toBeChecked();
+    await expect(checkbox).toHaveJSProperty('checked', true);
+  });
+
+  for (const initial of [false, true]) {
+    test(`a click listener that sets checked to ${initial} again keeps it ${initial}, as on a native checkbox`, async ({
+      page,
+    }) => {
+      const root = await gotoStory(page, PLAYGROUND, 'swc-checkbox');
+      const checkbox = root.locator('swc-checkbox');
+      await checkbox.evaluate(async (element: Checkbox, value: boolean) => {
+        element.checked = value;
+        await element.updateComplete;
+        const native = document.createElement('input');
+        native.type = 'checkbox';
+        native.id = 'native';
+        native.checked = value;
+        element.after(native);
+        for (const target of [element, native]) {
+          target.addEventListener('click', () => {
+            target.checked = value;
+          });
+        }
+        const changes: boolean[] = [];
+        (window as Window & { __changes?: boolean[] }).__changes = changes;
+        element.addEventListener('change', () => changes.push(element.checked));
+      }, initial);
+
+      await page.locator('#native').click();
+      await checkbox.locator('input').click();
+
+      await expect(page.locator('#native')).toBeChecked({ checked: initial });
+      await expect(checkbox).toHaveJSProperty('checked', initial);
+      await expect(checkbox.locator('input')).toBeChecked({ checked: initial });
+      expect(
+        await page.evaluate(
+          () => (window as Window & { __changes?: boolean[] }).__changes
+        )
+      ).toEqual([initial]);
+    });
+  }
+
+  test('a click listener that re-adds the checked attribute keeps the user toggle, as on a native checkbox', async ({
+    page,
+  }) => {
+    const root = await gotoStory(page, PLAYGROUND, 'swc-checkbox');
+    const checkbox = root.locator('swc-checkbox');
+    await checkbox.evaluate(async (element: Checkbox) => {
+      element.setAttribute('checked', '');
+      await element.updateComplete;
+      const native = document.createElement('input');
+      native.type = 'checkbox';
+      native.id = 'native';
+      native.setAttribute('checked', '');
+      element.after(native);
+      for (const target of [element, native]) {
+        target.addEventListener('click', () => {
+          target.setAttribute('checked', '');
+        });
+      }
+    });
+
+    await page.locator('#native').click();
+    await checkbox.locator('input').click();
+
+    await expect(page.locator('#native')).not.toBeChecked();
+    await expect(checkbox).toHaveJSProperty('checked', false);
+    await expect(checkbox.locator('input')).not.toBeChecked();
+  });
+
+  test('a click listener that sets indeterminate again keeps it, as on a native checkbox', async ({
+    page,
+  }) => {
+    const root = await gotoStory(page, PLAYGROUND, 'swc-checkbox');
+    const checkbox = root.locator('swc-checkbox');
+    await checkbox.evaluate(async (element: Checkbox) => {
+      element.indeterminate = true;
+      await element.updateComplete;
+      const native = document.createElement('input');
+      native.type = 'checkbox';
+      native.id = 'native';
+      native.indeterminate = true;
+      element.after(native);
+      for (const target of [element, native]) {
+        target.addEventListener('click', () => {
+          target.indeterminate = true;
+        });
+      }
+    });
+
+    await page.locator('#native').click();
+    await checkbox.locator('input').click();
+
+    for (const input of [page.locator('#native'), checkbox.locator('input')]) {
+      await expect(input).toHaveJSProperty('indeterminate', true);
+      await expect(input).toBeChecked();
+    }
+    await expect(checkbox).toHaveJSProperty('indeterminate', true);
     await expect(checkbox).toHaveJSProperty('checked', true);
   });
 });
