@@ -53,7 +53,7 @@ export function resolveTemplate(fileName, { templateFile, template }) {
     path.isAbsolute(templateFile)
       ? templateFile
       : path.join(process.cwd(), templateFile),
-    path.resolve(__dirname, '..', '..', templateFile),
+    path.resolve(__dirname, '..', '..', '..', templateFile),
   ];
   for (const candidate of candidates) {
     if (fs.existsSync(candidate)) {
