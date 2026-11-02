@@ -334,12 +334,7 @@ export const States: Story = {
 };
 ```
 
-For a **form field**, the Disabled, Read-only, and Error states are values of `field-status` (see [forms strategy RFC §3.7](../../../CONTRIBUTOR-DOCS/03_project-planning/05_strategies/forms-strategy-rfc.md#37-field-status-and-validation-sources)), not separate boolean attributes. Document them in the field's state sections and cover these points once, rather than per state. Also cover the form participation points in [forms strategy RFC §3.9](../../../CONTRIBUTOR-DOCS/03_project-planning/05_strategies/forms-strategy-rfc.md#39-form-documentation-until-a-forms-page-exists), using `text-field.mdx` as the reference:
-
-- Always pair `field-status="invalid"` with slotted `error-text`. Without it, the icon and error-colored description still show, but the user gets no explanation.
-- Neither native validation failures nor `error-text` set `field-status` automatically. The application sets it, as described in the field's form behavior section.
-- A disabled field is excluded from `FormData` and its value cannot be selected or copied. Recommend `readonly` when users need to review or copy the value.
-- Describe disabled, read-only, and invalid as mutually exclusive.
+For a **form field**, the Disabled, Read-only, and Error states are values of `field-status`, not separate boolean attributes. Document them in the field's state sections, and cover the form participation points in [forms strategy RFC §3.9](../../../CONTRIBUTOR-DOCS/03_project-planning/05_strategies/forms-strategy-rfc.md#39-form-documentation-until-a-forms-page-exists), using `text-field.mdx` as the reference.
 
 **Pattern for complex states** (when animation or interaction is critical — states no longer combine into one story, so each gets its own per-story `### Title`):
 
