@@ -232,7 +232,7 @@ export class ResponseStatusStep extends SpectrumElement {
     // `:has(::slotted(pre))` isn't supported by any engine (`:has()`
     // forbids pseudo-elements in its argument), so this is read from the
     // host's own light DOM rather than expressed purely in CSS.
-    const hasCode = Boolean(this.querySelector('pre'));
+    const hasCode = Boolean(this.querySelector(':scope > pre'));
     if (hasCode !== this._hasCode) {
       this._hasCode = hasCode;
     }

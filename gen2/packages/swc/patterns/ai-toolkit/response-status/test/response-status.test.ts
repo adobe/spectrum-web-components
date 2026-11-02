@@ -999,7 +999,6 @@ export const AgenticWidthTest: Story = {
         expect(el.getBoundingClientRect().width).toBe(320);
         expect(content!.getBoundingClientRect().width).toBe(288);
 
-        el.style.maxInlineSize = 'none';
         el.style.inlineSize = '100%';
         for (const [width, expected] of [
           [240, 216],

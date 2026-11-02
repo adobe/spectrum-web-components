@@ -556,37 +556,37 @@ export const ForcedColors: Story = {
 
 // Its own snapshot (rather than a row in Permutations) so it can claim
 // taller Chromatic viewports: this content is long enough that the default
-// viewport modes would clip it.
+// viewport modes would clip it. Rendered once in light/ltr and once in
+// dark/rtl, same reasoning as Permutations: the sticky scroll-fade overlay
+// and the horizontally-scrolling code sample are the parts most likely to
+// behave differently under RTL mirroring.
+const containerCheckContent = () => html`
+  ${row([containerCheckStatus('active')], 'Active')}
+  ${row([containerCheckStatus('stopped', { priorStepCount: 2 })], 'Stopped')}
+  ${row([containerCheckStatus('complete')], 'Complete')}
+  ${row(
+    [
+      containerCheckStatus('active', {
+        priorStepCount: 0,
+        descriptionIsCode: true,
+      }),
+    ],
+    'Active with code sample (horizontal scroll)'
+  )}
+`;
+
 export const ContainerCheck: Story = {
-  render: () =>
-    theme(
-      html`
-        ${row([containerCheckStatus('active')], 'Active')}
-        ${row(
-          [containerCheckStatus('stopped', { priorStepCount: 2 })],
-          'Stopped'
-        )}
-        ${row([containerCheckStatus('complete')], 'Complete')}
-        ${row(
-          [
-            containerCheckStatus('active', {
-              priorStepCount: 0,
-              descriptionIsCode: true,
-            }),
-          ],
-          'Active with code sample (horizontal scroll)'
-        )}
-      `,
-      'light',
-      'ltr'
-    ),
+  render: () => html`
+    ${theme(containerCheckContent(), 'light', 'ltr')}
+    ${theme(containerCheckContent(), 'dark', 'rtl')}
+  `,
   parameters: {
     ...vrtParameters,
     chromatic: {
       modes: {
-        mobile: { viewport: { width: 320, height: 1300 } },
-        tablet: { viewport: { width: 500, height: 1300 } },
-        desktop: { viewport: { width: 1280, height: 1500 } },
+        mobile: { viewport: { width: 320, height: 2600 } },
+        tablet: { viewport: { width: 500, height: 2600 } },
+        desktop: { viewport: { width: 1280, height: 3000 } },
       },
     },
   },
