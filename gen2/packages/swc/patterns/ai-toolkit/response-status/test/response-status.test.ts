@@ -996,7 +996,10 @@ export const AgenticWidthTest: Story = {
       async () => {
         expect(container).toBeTruthy();
         expect(content).toBeTruthy();
-        expect(el.getBoundingClientRect().width).toBe(320);
+        // The clamp lives on `:host`, so the host's own box and its painted
+        // content clamp together instead of the host staying full-width
+        // while only the inner content is constrained.
+        expect(el.getBoundingClientRect().width).toBe(288);
         expect(content!.getBoundingClientRect().width).toBe(288);
 
         el.style.inlineSize = '100%';
@@ -1008,6 +1011,7 @@ export const AgenticWidthTest: Story = {
           [1280, 832],
         ]) {
           container!.style.inlineSize = `${width}px`;
+          expect(el.getBoundingClientRect().width).toBeCloseTo(expected, 0);
           expect(content!.getBoundingClientRect().width).toBeCloseTo(
             expected,
             0
