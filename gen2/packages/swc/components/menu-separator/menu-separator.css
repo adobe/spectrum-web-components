@@ -17,3 +17,21 @@
 * {
   box-sizing: border-box;
 }
+
+/* Block margin centers the line in the 12px section-divider container
+ * (Q3: container height pending a spacing token update). */
+.swc-MenuSeparator {
+  --_swc-menu-separator-thickness: token("divider-thickness-medium");
+
+  block-size: var(--_swc-menu-separator-thickness);
+  margin-block: max(0px, calc((token("menu-item-section-divider-height") - var(--_swc-menu-separator-thickness)) / 2));
+  margin-inline: token("base-padding-horizontal-medium");
+  background-color: token("gray-200");
+  border-radius: var(--_swc-menu-separator-thickness);
+}
+
+@media (forced-colors: active) {
+  .swc-MenuSeparator {
+    background-color: CanvasText;
+  }
+}

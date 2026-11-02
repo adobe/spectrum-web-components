@@ -304,11 +304,11 @@ Planned rendering shape:
 
 > Follow the [CSS style guide](../../../02_style-guide/01_css/) as the source of truth for all styling work. Key references: [migration steps](../../../02_style-guide/01_css/04_spectrum-swc-migration.md), [custom properties](../../../02_style-guide/01_css/02_custom-properties.md), [anti-patterns](../../../02_style-guide/01_css/05_anti-patterns.md).
 
-- [ ] Add `.swc-MenuSeparator` to the internal element in `render()`; keep styling off `:host`
-- [ ] Copy the `.spectrum-Menu-divider` rule from `spectrum-css` `spectrum-two` `components/menu/index.css` into `menu-separator.css` as baseline
-- [ ] Apply the Medium divider thickness (2px, Q6) and the container heights from Q3
-- [ ] Add `@cssprop` JSDoc for every exposed `--swc-*` property
-- [ ] Pass stylelint (property order, `no-descending-specificity`, token validation)
+- [x] Add `.swc-MenuSeparator` to the internal element in `render()`; keep styling off `:host`
+- [x] Copy the `.spectrum-Menu-divider` rule from `spectrum-css` `spectrum-two` `components/menu/index.css` into `menu-separator.css` as baseline
+- [x] Apply the Medium divider thickness (2px, Q6) and the container heights from Q3 (12px container via `menu-item-section-divider-height`; the 7px token update is still pending, Q3)
+- [x] Add `@cssprop` JSDoc for every exposed `--swc-*` property (N/A: no public custom properties are exposed, per B4)
+- [x] Pass stylelint (property order, `no-descending-specificity`, token validation)
 
 #### Visual model and regressions
 
