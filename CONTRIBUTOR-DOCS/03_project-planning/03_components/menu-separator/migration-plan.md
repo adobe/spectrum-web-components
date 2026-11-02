@@ -329,7 +329,7 @@ Planned rendering shape:
 ### Testing
 
 - [ ] Port 1st-gen menu tests that include `sp-menu-divider` ([`menu.test.ts`](../../../../1st-gen/packages/menu/test/menu.test.ts), [`menu-group.test.ts`](../../../../1st-gen/packages/menu/test/menu-group.test.ts))
-- [ ] Add Playwright `menu-separator.a11y.spec.ts` with `toMatchAriaSnapshot`
+- [x] Add Playwright `menu-separator.a11y.spec.ts` with `toMatchAriaSnapshot` (authored; needs a Storybook run in CI to confirm)
 
 #### Behavior
 
