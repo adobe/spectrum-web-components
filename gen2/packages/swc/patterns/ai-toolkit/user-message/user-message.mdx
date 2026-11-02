@@ -11,8 +11,10 @@ import * as UserMessageStories from './stories/user-message.stories';
 
 A user message consists of:
 
-1. **Bubble**: rounded container with a neutral gray background (`gray-50`)
-2. **Default slot**: the message content: plain text, a card attachment, or image-first content
+- **Bubble**: rounded container with a neutral gray background (`gray-50`)
+- **Message copy**, provided through the default slot for `type="copy"`
+- **Attachments**, provided through the `thumbnail` slot for card and media messages
+- **Document metadata**, provided through each nested upload card's `title` and `subtitle` slots
 
 <Canvas of={UserMessageStories.Anatomy} />
 
@@ -20,13 +22,43 @@ A user message consists of:
 
 ### Content
 
-Bubble sizing and padding are inferred from slotted content:
+The `type` attribute selects the bubble layout:
 
 - **Copy**: default text-only content with the bubble's default width and padding
-- **Card**: compact attachment layout with thumbnail, title, and subtitle
-- **Media**: larger preview-first attachment layout with metadata beneath the preview
+- **Card**: one or more document cards inside a shared bubble
+- **Media**: one or more square image previews inside a shared bubble
+
+The default slot is rendered only for copy messages. Attachment messages use the `thumbnail` slot; place any accompanying prompt in a separate copy message inside the same user turn.
 
 <Canvas of={UserMessageStories.Content} />
+
+### Card
+
+Use `type="card"` for one or more document cards inside a shared user-message bubble. Slot each `<swc-upload-attachment type="card">` into the message's `thumbnail` slot. Use an empty `<swc-thumbnail slot="thumbnail" decorative>` inside each tile, and provide the filename and file size through its `title` and `subtitle` slots. The decorative [Thumbnail](../?path=/docs/components-thumbnail--docs) provides a consistent placeholder without an image or a redundant screen reader announcement.
+
+Cards use two columns when space allows and one column in narrower messages. Each card is up to 220px wide, and the outer bubble hugs its occupied columns. Card galleries share the 240px height cap, scrolling, fades, and scrollbar clearance described below.
+
+Place the shared card bubble and a separate copy message inside the same `<swc-conversation-turn type="user">`. The turn right-aligns both bubbles with a 16px gap. Omit the copy message for attachment-only submissions. Sent cards omit dismiss controls and upload progress; pending uploads can continue to use those controls in the composer.
+
+<Canvas of={UserMessageStories.Card} />
+
+### Media
+
+Use `type="media"` for one or more sent images. Slot each image into `thumbnail` and provide meaningful `alt` text. Thumbnails are 64px square with 6px gaps. The gallery wraps within the parent turn's width boundary rather than a fixed column limit. The bubble hugs the occupied columns, adding only its padding, borders, and any scrollbar gutter. Galleries with two or more images keep at least two columns; thumbnails shrink proportionally when two full-size previews no longer fit. A single image uses one column and shrinks only when needed.
+
+Place the gallery and a separate copy message inside the same `<swc-conversation-turn type="user">`. The turn right-aligns both bubbles and separates them by 16px. Omit the copy message for image-only submissions.
+
+<Canvas of={UserMessageStories.Media} />
+
+## Behaviors
+
+### Gallery overflow
+
+Both card and media bubbles have a maximum height of 240px, including padding and borders. Smaller collections keep their natural height. Larger collections scroll vertically inside the attachment area, leaving the separate message-copy bubble outside the scroll region.
+
+The scroll area uses a thin scrollbar and contains overscroll so reaching its boundary does not scroll the conversation. The scrollbar sits beside the previews in the bubble's end padding instead of covering them. In browsers that support scroll-driven animations, a 24px gradient indicates hidden attachments: the bottom edge fades at the start, both edges fade between the ends, and only the top edge fades at the end. Collections without overflow have no fade. Browsers without scroll-timeline support retain normal scrolling without gradients. Forced-colors mode disables the fades.
+
+<Canvas of={UserMessageStories.GalleryOverflow} />
 
 ## Accessibility
 
@@ -36,14 +68,17 @@ The `<swc-user-message>` element implements the following accessibility features
 
 #### Semantic structure
 
-- The bubble is rendered as a `<div>` acting as a visual container
+- The custom element acts as the visual bubble inside a semantic user turn
 - `type="copy"` uses the default slot for message text
-- `type="card"` and `type="media"` use named slots for thumbnail, title, and subtitle
+- `type="card"` and `type="media"` render attachments through the `thumbnail` slot; title and subtitle content belongs to each card tile rather than the outer message
+- An overflowing collection adds a keyboard-focusable group named "Uploaded images" for media or "Uploaded documents" for cards. Use <kbd>Tab</kbd> to enter it, native scrolling keys to explore the attachments, and <kbd>Tab</kbd> or <kbd>Shift</kbd> + <kbd>Tab</kbd> to leave. Non-overflowing collections do not add a tab stop
+- The gallery scroll area's focus indicator is drawn outside the gradient mask so it remains visible
 
 ### Best practices
 
 - Ensure message text is descriptive and self-contained
-- For card and media attachments, ensure titles/subtitles and `aria-label`/`alt` text are present for previews
+- For card attachments, provide descriptive filenames and metadata, and mark empty thumbnails `decorative`
+- For media attachments, give every image descriptive `alt` text so attachments remain identifiable without visible filenames
 
 <Canvas of={UserMessageStories.Accessibility} />
 

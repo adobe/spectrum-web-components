@@ -16,6 +16,7 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import '../../swc-upload-attachment.js';
 import '@adobe/spectrum-wc/components/asset/swc-asset.js';
 import '@adobe/spectrum-wc/components/badge/swc-badge.js';
+import '@adobe/spectrum-wc/components/thumbnail/swc-thumbnail.js';
 
 import {
   forcedColorsVrtParameters,
@@ -90,7 +91,7 @@ const renderCardAttachment = ({
     data-force-dismiss-state=${forceDismissState ?? nothing}
     style="max-inline-size: 280px;"
   >
-    ${landscapeAsset('File preview')}
+    <swc-thumbnail slot="thumbnail" decorative></swc-thumbnail>
     <span slot="title" lang=${lang ?? nothing}>${title}</span>
     ${subtitle
       ? html`

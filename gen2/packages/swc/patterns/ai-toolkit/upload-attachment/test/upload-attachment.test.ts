@@ -10,11 +10,12 @@
  * governing permissions and limitations under the License.
  */
 
-import { html } from 'lit';
+import { html, type LitElement } from 'lit';
 import { expect, userEvent, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import '../swc-upload-attachment.js';
+import '@adobe/spectrum-wc/components/thumbnail/swc-thumbnail.js';
 
 import { getComponent } from '../../../../utils/test-utils.js';
 import meta, { Overview } from '../stories/upload-attachment.stories.js';
@@ -46,6 +47,10 @@ export const OverviewTest: Story = {
         expect(el.dismissLabel).toBe('');
         expect(el.getAttribute('role')).toBe('group');
         expect(el.getAttribute('aria-label')).toBe('Hilton commercial assets');
+        const thumbnail = await getComponent<LitElement>(el, 'swc-thumbnail');
+        expect(thumbnail.hasAttribute('decorative')).toBe(true);
+        expect(thumbnail.children).toHaveLength(0);
+        expect(el.querySelector('swc-asset, img')).toBeNull();
 
         const dismissButton = el.shadowRoot?.querySelector<HTMLButtonElement>(
           '.swc-UploadAttachment-dismiss'
@@ -62,6 +67,34 @@ export const OverviewTest: Story = {
         expect(dismissIcon?.getAttribute('aria-hidden')).toBe('true');
       }
     );
+  },
+};
+
+export const CardThumbnailSizingTest: Story = {
+  render: () => html`
+    <swc-upload-attachment type="card">
+      <swc-thumbnail slot="thumbnail" decorative></swc-thumbnail>
+      <span slot="title">Campaign brief.pdf</span>
+    </swc-upload-attachment>
+  `,
+  play: async ({ canvasElement }) => {
+    const el = await getComponent<UploadAttachment>(
+      canvasElement,
+      'swc-upload-attachment'
+    );
+    const thumbnail = await getComponent<LitElement>(el, 'swc-thumbnail');
+    const frame =
+      thumbnail.shadowRoot!.querySelector<HTMLElement>('.swc-Thumbnail')!;
+
+    for (const size of [32, 96]) {
+      el.style.setProperty(
+        '--swc-upload-attachment-card-thumbnail-size',
+        `${size}px`
+      );
+      expect(thumbnail.getBoundingClientRect().width).toBe(size);
+      expect(frame.getBoundingClientRect().width).toBe(thumbnail.clientWidth);
+      expect(frame.getBoundingClientRect().height).toBe(thumbnail.clientHeight);
+    }
   },
 };
 

@@ -45,6 +45,7 @@ import styles from './upload-attachment.css';
  *
  * @example
  * <swc-upload-attachment type="card" dismissible>
+ *   <swc-thumbnail slot="thumbnail" decorative></swc-thumbnail>
  *   <span slot="title">Brief.pdf</span>
  * </swc-upload-attachment>
  *

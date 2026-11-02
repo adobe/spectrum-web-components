@@ -15,6 +15,7 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import '../../swc-upload-attachment.js';
 import '@adobe/spectrum-wc/components/asset/swc-asset.js';
+import '@adobe/spectrum-wc/components/thumbnail/swc-thumbnail.js';
 
 import type { CustomPropertyCase } from '../../../../../.storybook/helpers/index.js';
 import {
@@ -101,7 +102,7 @@ const renderPropertyCase = (
         dismissible
         style="max-inline-size: 240px; ${style ?? ''}"
       >
-        ${thumbnail('File preview')}
+        <swc-thumbnail slot="thumbnail" decorative></swc-thumbnail>
         <span slot="title">Card title</span>
       </swc-upload-attachment>
     `;

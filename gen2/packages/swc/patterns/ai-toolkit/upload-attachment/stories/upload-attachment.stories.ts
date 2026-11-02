@@ -17,6 +17,7 @@ import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 import '../swc-upload-attachment.js';
 import '@adobe/spectrum-wc/components/asset/swc-asset.js';
 import '@adobe/spectrum-wc/components/badge/swc-badge.js';
+import '@adobe/spectrum-wc/components/thumbnail/swc-thumbnail.js';
 
 const { args, argTypes, template } = getStorybookHelpers(
   'swc-upload-attachment'
@@ -95,7 +96,7 @@ export const Overview: Story = {
     type: 'card',
     dismissible: true,
     'thumbnail-slot':
-      '<swc-asset slot="thumbnail"><img src="images/landscape-asset.jpg" alt="Campaign preview"></swc-asset>',
+      '<swc-thumbnail slot="thumbnail" decorative></swc-thumbnail>',
     'title-slot': '<span slot="title">Hilton commercial assets</span>',
     'subtitle-slot': '<span slot="subtitle">2026</span>',
   },
@@ -113,23 +114,17 @@ export const MultiCard: Story = {
       </p>
       <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start;">
         <swc-upload-attachment type="card" dismissible>
-          <swc-asset slot="thumbnail">
-            <img src="images/landscape-asset.jpg" alt="Campaign preview" />
-          </swc-asset>
+          <swc-thumbnail slot="thumbnail" decorative></swc-thumbnail>
           <span slot="title">Brand guidelines</span>
           <span slot="subtitle">PDF</span>
         </swc-upload-attachment>
         <swc-upload-attachment type="card" dismissible>
-          <swc-asset slot="thumbnail">
-            <img src="images/landscape-asset.jpg" alt="Campaign preview" />
-          </swc-asset>
+          <swc-thumbnail slot="thumbnail" decorative></swc-thumbnail>
           <span slot="title">Q2 metrics draft</span>
           <span slot="subtitle">XLSX</span>
         </swc-upload-attachment>
         <swc-upload-attachment type="card" dismissible>
-          <swc-asset slot="thumbnail">
-            <img src="images/landscape-asset.jpg" alt="Campaign preview" />
-          </swc-asset>
+          <swc-thumbnail slot="thumbnail" decorative></swc-thumbnail>
           <span slot="title">Executive summary</span>
           <span slot="subtitle">PPTX</span>
         </swc-upload-attachment>
@@ -175,9 +170,7 @@ export const Card: Story = {
   render: () => html`
     <div style="max-inline-size:360px;">
       <swc-upload-attachment type="card" dismissible>
-        <swc-asset slot="thumbnail">
-          <img src="images/landscape-asset.jpg" alt="Campaign preview" />
-        </swc-asset>
+        <swc-thumbnail slot="thumbnail" decorative></swc-thumbnail>
         <span slot="title">Hilton commercial assets</span>
         <span slot="subtitle">2026</span>
       </swc-upload-attachment>
@@ -263,9 +256,7 @@ export const TextOverflow: Story = {
     >
       <div style="max-inline-size:280px;">
         <swc-upload-attachment type="card" dismissible>
-          <swc-asset slot="thumbnail">
-            <img src="images/landscape-asset.jpg" alt="Campaign preview" />
-          </swc-asset>
+          <swc-thumbnail slot="thumbnail" decorative></swc-thumbnail>
           <span slot="title">${longOverflowTitle}</span>
           <span slot="subtitle">${longOverflowSubtitle}</span>
         </swc-upload-attachment>

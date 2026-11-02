@@ -26,6 +26,7 @@ import '../suggestion-item/swc-suggestion-item.js';
 import '../prompt-field/swc-prompt-field.js';
 import '../upload-attachment/swc-upload-attachment.js';
 import '@adobe/spectrum-wc/components/badge/swc-badge.js';
+import '@adobe/spectrum-wc/components/thumbnail/swc-thumbnail.js';
 
 import { uniqueId } from '../../../utils/id.js';
 import {
@@ -116,6 +117,7 @@ type DemoAttachment = {
   /** Image preview URL when the attachment is a visual file. */
   thumbnailUrl?: string;
   objectUrl?: string;
+  file?: File;
   /** File-type label for non-image media tiles (for example, "PDF"). */
   badge?: string;
 };
@@ -147,7 +149,6 @@ const renderDemoAttachmentThumbnail = (
           slot="thumbnail"
           src=${attachment.thumbnailUrl}
           alt=${attachment.title}
-          style="inline-size:100%;block-size:100%;object-fit:cover;"
         />
       `
     : html`
@@ -282,12 +283,36 @@ class ConversationFullPatternDemo extends LitElement {
   private responseTargetId: string | null = null;
   private lastPrompt = '';
 
+  public override connectedCallback(): void {
+    super.connectedCallback();
+    const restorePreview = (attachment: DemoAttachment): DemoAttachment => {
+      if (!attachment.objectUrl || !attachment.file) {
+        return attachment;
+      }
+      const objectUrl = URL.createObjectURL(attachment.file);
+      return { ...attachment, objectUrl, thumbnailUrl: objectUrl };
+    };
+    this.attachments = this.attachments.map(restorePreview);
+    this.turns = this.turns.map((turn) => ({
+      ...turn,
+      attachments: turn.attachments?.map(restorePreview),
+    }));
+  }
+
   public override disconnectedCallback(): void {
     if (this.responseTimer !== null) {
       window.clearTimeout(this.responseTimer);
       this.responseTimer = null;
     }
     this.clearStepTimer();
+    for (const attachment of [
+      ...this.attachments,
+      ...this.turns.flatMap((turn) => turn.attachments ?? []),
+    ]) {
+      if (attachment.objectUrl) {
+        URL.revokeObjectURL(attachment.objectUrl);
+      }
+    }
     super.disconnectedCallback();
   }
 
@@ -342,11 +367,6 @@ class ConversationFullPatternDemo extends LitElement {
       (hasAttachments ? this.attachments.map((a) => a.title).join(', ') : '');
     this.responseTargetId = systemTurn.id;
     this.promptValue = '';
-    for (const attachment of this.attachments) {
-      if (attachment.objectUrl) {
-        URL.revokeObjectURL(attachment.objectUrl);
-      }
-    }
     this.attachments = [];
 
     // How long each step stays active before the next one takes over. The
@@ -459,6 +479,7 @@ class ConversationFullPatternDemo extends LitElement {
         subtitle: sizeLabel,
         thumbnailUrl: objectUrl,
         objectUrl,
+        file: isImage ? file : undefined,
         badge: isImage ? undefined : getFileBadge(fileName),
       } satisfies DemoAttachment;
     });
@@ -547,25 +568,45 @@ class ConversationFullPatternDemo extends LitElement {
     const lastTurnId = this.turns[this.turns.length - 1]?.id;
     return this.turns.map((turn) => {
       if (turn.role === 'user') {
+        const images = (turn.attachments ?? []).filter(
+          (attachment) => attachment.thumbnailUrl
+        );
+        const documents = (turn.attachments ?? []).filter(
+          (attachment) => !attachment.thumbnailUrl
+        );
         return html`
-          ${(turn.attachments ?? []).map(
-            (attachment) => html`
-              <swc-conversation-turn type="user">
-                <swc-user-message type="media">
-                  ${renderDemoAttachmentThumbnail(attachment)}
-                  <span slot="title">${attachment.title}</span>
-                  <span slot="subtitle">${attachment.subtitle}</span>
-                </swc-user-message>
-              </swc-conversation-turn>
-            `
-          )}
-          ${turn.text
-            ? html`
-                <swc-conversation-turn type="user">
+          <swc-conversation-turn type="user">
+            ${images.length
+              ? html`
+                  <swc-user-message type="media">
+                    ${images.map(renderDemoAttachmentThumbnail)}
+                  </swc-user-message>
+                `
+              : ''}
+            ${documents.length
+              ? html`
+                  <swc-user-message type="card">
+                    ${documents.map(
+                      (attachment) => html`
+                        <swc-upload-attachment slot="thumbnail" type="card">
+                          <swc-thumbnail
+                            slot="thumbnail"
+                            decorative
+                          ></swc-thumbnail>
+                          <span slot="title">${attachment.title}</span>
+                          <span slot="subtitle">${attachment.subtitle}</span>
+                        </swc-upload-attachment>
+                      `
+                    )}
+                  </swc-user-message>
+                `
+              : ''}
+            ${turn.text
+              ? html`
                   <swc-user-message>${turn.text}</swc-user-message>
-                </swc-conversation-turn>
-              `
-            : ''}
+                `
+              : ''}
+          </swc-conversation-turn>
         `;
       }
 

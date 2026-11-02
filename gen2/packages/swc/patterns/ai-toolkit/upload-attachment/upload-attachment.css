@@ -106,6 +106,7 @@
   display: block;
   inline-size: 100%;
   block-size: 100%;
+  aspect-ratio: 1 / 1;
   object-fit: cover;
 }
 
@@ -183,6 +184,8 @@
 }
 
 :host([type="card"]) .swc-UploadAttachment-thumbnail ::slotted(*) {
+  --swc-thumbnail-size: 100%;
+
   box-sizing: border-box;
   flex-shrink: 0;
   inline-size: var(--swc-upload-attachment-card-thumbnail-size, token("thumbnail-size-700"));
