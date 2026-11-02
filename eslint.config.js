@@ -232,6 +232,7 @@ export default defineConfig([
         { disallowed: ['e', 'ev', 'evt', 'err'] },
       ],
       'swc/document-active-element': 'error',
+      'swc/no-duplicate-cssprop': 'warn',
 
       // Import rules
       'import/prefer-default-export': 'off',
@@ -442,6 +443,26 @@ export default defineConfig([
     ],
     languageOptions: {
       globals: globals.node,
+    },
+  },
+
+  // ────────────────────────────────────────────────────────────────────────────
+  // Changesets scripts (e.g. changelog generators): Node globals and release-tooling imports
+  // ────────────────────────────────────────────────────────────────────────────
+  {
+    files: ['**/.changeset/*.cjs', '**/.changeset/*.js', '**/.changeset/*.mjs'],
+    languageOptions: {
+      globals: globals.node,
+    },
+    rules: {
+      'import/no-extraneous-dependencies': [
+        'error',
+        {
+          devDependencies: true,
+          optionalDependencies: false,
+          peerDependencies: false,
+        },
+      ],
     },
   },
 

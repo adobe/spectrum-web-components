@@ -49,6 +49,7 @@
   --_swc-card-base-footer-padding: 0 var(--_swc-card-base-content-padding) var(--_swc-card-base-content-padding);
   --_swc-card-base-transition-timing-function: token("animation-ease-in-out");
   --_swc-card-base-transition-duration: token("animation-duration-100");
+  --_swc-card-base-grid-template-rows: var(--swc-card-base-grid-template-rows, auto 1fr auto);
 
   display: grid;
   position: relative;
@@ -56,7 +57,7 @@
     "media"
     "content"
     "footer";
-  grid-template-rows: auto 1fr auto;
+  grid-template-rows: var(--_swc-card-base-grid-template-rows);
   align-items: start;
   font-size: var(--_swc-card-base-title-font-size);
   line-height: var(--_swc-card-base-title-line-height);
