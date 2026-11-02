@@ -64,6 +64,9 @@ test.describe('Checkbox - Trusted input', () => {
     await expect(checkbox).toHaveJSProperty('checked', false);
     await page.keyboard.press('Space');
     await expect(checkbox).toHaveJSProperty('checked', true);
+    await expect(checkbox).toMatchAriaSnapshot(`
+      - checkbox "Send me product updates" [checked]
+    `);
   });
 
   test('a read-only checkbox is a Tab stop that Space does not toggle', async ({
@@ -83,6 +86,9 @@ test.describe('Checkbox - Trusted input', () => {
 
     await expect(checkbox.locator('input')).toBeChecked();
     await expect(checkbox).toHaveJSProperty('checked', true);
+    await expect(checkbox).toMatchAriaSnapshot(`
+      - checkbox "Send me product updates" [checked]
+    `);
   });
 
   for (const initial of [false, true]) {

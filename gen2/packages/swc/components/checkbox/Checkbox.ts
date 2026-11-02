@@ -30,7 +30,7 @@ const INPUT_ID = 'input';
  * @element swc-checkbox
  * @since 2.0.0-beta.7
  *
- * @fires {Event} input - Fires when the user toggles the checkbox, after `checked`, the form value, and validity update. Bubbles and crosses shadow boundaries; not cancelable.
+ * @fires {Event} input - Fires when the user toggles the checkbox. Listeners on the checkbox see the updated `checked`, form value, and validity. Bubbles and crosses shadow boundaries; not cancelable.
  * @fires {Event} change - Fires when the user toggles the checkbox, after `input`. Bubbles and crosses shadow boundaries; not cancelable. To block a toggle, cancel the `click` event instead.
  * @fires {Event} invalid - Fires on the host when validation fails. Cancelable; does not bubble or cross shadow boundaries. Canceling suppresses native validation UI, not the failure.
  *
@@ -87,11 +87,11 @@ export class Checkbox extends CheckboxBase {
   /**
    * Re-dispatch `change` from the host: the native `change` event is
    * `composed: false`, so it never crosses the shadow boundary and a consumer's
-   * `<swc-checkbox @change=…>` would otherwise never fire. Skipped while
-   * read-only, because the toggle was undone.
+   * `<swc-checkbox @change=…>` would otherwise never fire. Skipped when the
+   * base class undid the toggle.
    */
   private handleChange(): void {
-    if (this.fieldStatus === 'readonly') {
+    if (this.toggleReverted) {
       return;
     }
     this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));

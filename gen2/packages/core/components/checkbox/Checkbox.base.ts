@@ -63,7 +63,7 @@ export abstract class CheckboxBase extends SizedMixin(
 
   /**
    * Whether the checkbox is checked. The `checked` attribute sets the default
-   * state, which form reset restores. Once the user or a script changes
+   * state, which form reset restores. Once the user or a script sets
    * `checked`, the attribute no longer changes it until the next reset.
    */
   @property({ type: Boolean })
@@ -73,7 +73,7 @@ export abstract class CheckboxBase extends SizedMixin(
 
   public set checked(value: boolean) {
     const checked = Boolean(value);
-    if (!this.#applyingCheckedAttribute) {
+    if (!this.#keepingCheckedClean) {
       this.#checkedDirty = true;
     }
     // Write the input even when `checked` is unchanged: during a click the
@@ -201,15 +201,18 @@ export abstract class CheckboxBase extends SizedMixin(
     if (this.effectiveDisabled) {
       return;
     }
-    this.inputElement?.click();
+    const input = this.inputElement;
+    if (input) {
+      // Re-enable before the next render, in case `click()` follows enabling.
+      input.disabled = false;
+      input.click();
+    }
   }
 
   // ──────────────────────
   //     IMPLEMENTATION
   // ──────────────────────
 
-  // Form association: `formAssociated` (static, above) and `attachInternals` stay
-  // on the element; the controller wraps the rest.
   private readonly internals = this.attachInternals();
 
   private readonly fieldAssoc = new FieldAssociationController(this.internals, {
@@ -225,7 +228,9 @@ export abstract class CheckboxBase extends SizedMixin(
 
   #checkedDirty = false;
 
-  #applyingCheckedAttribute = false;
+  #keepingCheckedClean = false;
+
+  #toggleReverted = false;
 
   constructor() {
     super();
@@ -263,7 +268,7 @@ export abstract class CheckboxBase extends SizedMixin(
     if (this.#checkedDirty) {
       return;
     }
-    this.applyCheckedAttribute(() =>
+    this.withoutDirtyingChecked(() =>
       super.attributeChangedCallback(name, oldValue, value)
     );
   }
@@ -271,7 +276,7 @@ export abstract class CheckboxBase extends SizedMixin(
   /** @internal Restores the default checked state and clears an invalid status on native form reset. */
   public formResetCallback(): void {
     this.#checkedDirty = false;
-    this.applyCheckedAttribute(() => {
+    this.withoutDirtyingChecked(() => {
       this.checked = this.hasAttribute('checked');
     });
     if (this.fieldStatus === 'invalid') {
@@ -282,8 +287,7 @@ export abstract class CheckboxBase extends SizedMixin(
 
   /** @internal Restores the checked state supplied by the browser for navigation or autofill. */
   public formStateRestoreCallback(
-    state: string | File | FormData | null,
-    _mode?: 'restore' | 'autocomplete'
+    state: string | File | FormData | null
   ): void {
     if (state === 'true' || state === 'false') {
       this.checked = state === 'true';
@@ -335,7 +339,8 @@ export abstract class CheckboxBase extends SizedMixin(
     if (!input) {
       return;
     }
-    if (this.fieldStatus === 'readonly') {
+    this.#toggleReverted = this.fieldStatus === 'readonly';
+    if (this.#toggleReverted) {
       // Backup for a click the capture guard never saw, such as one an
       // ancestor listener stopped: undo the toggle and keep it from consumers.
       input.checked = this.checked;
@@ -343,10 +348,23 @@ export abstract class CheckboxBase extends SizedMixin(
       event.stopPropagation();
       return;
     }
-    // The browser has cleared `indeterminate` unless a click listener set it
-    // again, so take both values from the input rather than forcing them.
+    // Take both values from the input: the browser has cleared `indeterminate`
+    // unless a click listener set it again, and `checked` is set only if it
+    // differs, so a form reset during the click keeps the attribute in control.
     this.indeterminate = input.indeterminate;
-    this.checked = input.checked;
+    if (input.checked !== this.checked) {
+      this.checked = input.checked;
+    }
+  }
+
+  /**
+   * @internal
+   *
+   * Whether `handleInput` undid the latest user toggle. The subclass reads it
+   * to skip `change`, because an `input` listener can change `fieldStatus` first.
+   */
+  protected get toggleReverted(): boolean {
+    return this.#toggleReverted;
   }
 
   protected override update(changedProperties: PropertyValues): void {
@@ -392,13 +410,13 @@ export abstract class CheckboxBase extends SizedMixin(
       .trim();
   }
 
-  /** Runs `apply` without marking `checked` as changed by the user or a script. */
-  private applyCheckedAttribute(apply: () => void): void {
-    this.#applyingCheckedAttribute = true;
+  /** Runs `callback` without marking `checked` as set by the user or a script. */
+  private withoutDirtyingChecked(callback: () => void): void {
+    this.#keepingCheckedClean = true;
     try {
-      apply();
+      callback();
     } finally {
-      this.#applyingCheckedAttribute = false;
+      this.#keepingCheckedClean = false;
     }
   }
 
@@ -427,8 +445,8 @@ export abstract class CheckboxBase extends SizedMixin(
       this.internals.setValidity({});
       return;
     }
-    // `setValidity()` throws on an empty message. The native message can be
-    // empty only before the input renders `required`, so the fallback is brief.
+    // `setValidity()` throws on an empty message, and the native message is
+    // empty until the input renders `required`.
     const message = customError
       ? this.errorTextContent || 'Enter a valid value.'
       : input.validationMessage || 'Check this box to continue.';

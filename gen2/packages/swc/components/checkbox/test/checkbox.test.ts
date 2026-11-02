@@ -279,6 +279,23 @@ export const CheckedAttributeTest: Story = {
       expect(untouched.checked).toBe(false);
       await untouched.updateComplete;
     });
+
+    await step(
+      'a form reset during a click hands control back to the attribute',
+      async () => {
+        toggled.setAttribute('checked', '');
+        form.reset();
+        await toggled.updateComplete;
+        const reset = (): void => form.reset();
+        toggled.addEventListener('click', reset, { once: true });
+        inputOf(toggled).click();
+        await toggled.updateComplete;
+        expect(toggled.checked).toBe(true);
+        toggled.removeAttribute('checked');
+        await toggled.updateComplete;
+        expect(toggled.checked).toBe(false);
+      }
+    );
   },
 };
 CheckedAttributeTest.storyName = 'checked attribute is the default';
@@ -375,6 +392,23 @@ export const ChangeEventTest: Story = {
       await checkbox.updateComplete;
     });
 
+    await step(
+      'an input listener that makes the checkbox read-only still gets change',
+      async () => {
+        const events = recordEvents(checkbox, ['change']);
+        const makeReadOnly = (): void => {
+          checkbox.fieldStatus = 'readonly';
+        };
+        checkbox.addEventListener('input', makeReadOnly, { once: true });
+        const before = checkbox.checked;
+        input.click();
+        expect(events).toHaveLength(1);
+        expect(checkbox.checked).toBe(!before);
+        checkbox.fieldStatus = undefined;
+        await checkbox.updateComplete;
+      }
+    );
+
     await step('programmatic changes fire nothing', async () => {
       const events = recordEvents(checkbox, ['change', 'input']);
       checkbox.checked = !checkbox.checked;
@@ -467,6 +501,25 @@ export const ClickTest: Story = {
         expect(events).toHaveLength(1);
         fieldset.disabled = false;
         await waitFor(() => expect(inputOf(checkbox).disabled).toBe(false));
+      }
+    );
+
+    await step(
+      'click() right after re-enabling toggles, before the input updates',
+      async () => {
+        checkbox.fieldStatus = 'disabled';
+        await checkbox.updateComplete;
+        checkbox.fieldStatus = undefined;
+        checkbox.click();
+        expect(checkbox.checked).toBe(false);
+        await checkbox.updateComplete;
+
+        fieldset.disabled = true;
+        await waitFor(() => expect(inputOf(checkbox).disabled).toBe(true));
+        fieldset.disabled = false;
+        checkbox.click();
+        expect(checkbox.checked).toBe(true);
+        await checkbox.updateComplete;
       }
     );
   },
