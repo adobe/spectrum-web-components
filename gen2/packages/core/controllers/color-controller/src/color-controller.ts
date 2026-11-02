@@ -15,7 +15,7 @@ import type ColorSpace from 'colorjs.io';
 import type { ColorObject, ColorTypes as DefaultColorTypes } from 'colorjs.io';
 import Color from 'colorjs.io';
 
-import { isDebug } from '@adobe/spectrum-wc-core/utils/index.js';
+import { isDebug } from '@adobe/spectrum-wc-core/utils.js';
 
 // ─────────────────────────
 //     TYPES

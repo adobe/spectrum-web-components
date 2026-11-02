@@ -13,13 +13,13 @@ import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import { ColorHandle } from '@adobe/spectrum-wc/color-handle';
+import { ColorHandle } from '@adobe/spectrum-wc/color-handle.js';
 import {
   COLOR_HANDLE_ALPHA_FLOOR,
   computeBorderAlpha,
   contrastRatio,
   findMinAlpha,
-} from '@adobe/spectrum-wc-core/components/color-handle';
+} from '@adobe/spectrum-wc-core/components/color-handle.js';
 
 import { getComponent } from '../../../utils/test-utils.js';
 import meta from '../stories/color-handle.stories.js';

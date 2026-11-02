@@ -20,10 +20,10 @@ import {
   ACTION_BUTTON_VALID_SIZES,
   type ActionButtonSize,
   type ActionButtonStaticColor,
-} from '@adobe/spectrum-wc-core/components/action-button';
-import { ButtonBase } from '@adobe/spectrum-wc-core/components/button';
-import { PendingMixin } from '@adobe/spectrum-wc-core/mixins';
-import { validateEnum } from '@adobe/spectrum-wc-core/utils';
+} from '@adobe/spectrum-wc-core/components/action-button.js';
+import { ButtonBase } from '@adobe/spectrum-wc-core/components/button.js';
+import { PendingMixin } from '@adobe/spectrum-wc-core/mixins.js';
+import { validateEnum } from '@adobe/spectrum-wc-core/utils.js';
 
 import pendingSpinnerStyles from '../../stylesheets/_lit-styles/pending-spinner.css';
 import styles from './action-button.css';

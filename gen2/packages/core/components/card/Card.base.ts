@@ -13,19 +13,19 @@
 import { PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
-import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element.js';
 import {
   type ElementSize,
   SizedMixin,
-} from '@adobe/spectrum-wc-core/mixins/index.js';
+} from '@adobe/spectrum-wc-core/mixins.js';
 import {
   isDebug,
   validateEnum,
   warnIf,
-} from '@adobe/spectrum-wc-core/utils/index.js';
+} from '@adobe/spectrum-wc-core/utils.js';
 
-import { SlotAttributePropagationController } from '../../controllers/slot-attribute-propagation-controller/index.js';
-import { SlotTextController } from '../../controllers/slot-text-controller/index.js';
+import { SlotAttributePropagationController } from '../../controllers/slot-attribute-propagation-controller.js';
+import { SlotTextController } from '../../controllers/slot-text-controller.js';
 import {
   CARD_DENSITIES,
   CARD_VALID_SIZES,

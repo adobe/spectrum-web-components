@@ -15,7 +15,7 @@ import type { Meta, StoryObj } from '@storybook/web-components';
 
 import './demo-hosts.js';
 
-import { ALL_PLACEMENTS, type Placement } from '../index.js';
+import { ALL_PLACEMENTS, type Placement } from '../../placement-controller.js';
 
 // ────────────────
 //    METADATA

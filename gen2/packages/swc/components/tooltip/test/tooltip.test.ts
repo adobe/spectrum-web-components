@@ -14,9 +14,9 @@ import { html } from 'lit';
 import { expect, userEvent, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import type { Button } from '@adobe/spectrum-wc/button';
-import type { Popover } from '@adobe/spectrum-wc/popover';
-import { Tooltip } from '@adobe/spectrum-wc/tooltip';
+import type { Button } from '@adobe/spectrum-wc/button.js';
+import type { Popover } from '@adobe/spectrum-wc/popover.js';
+import { Tooltip } from '@adobe/spectrum-wc/tooltip.js';
 
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc/components/popover/swc-popover.js';

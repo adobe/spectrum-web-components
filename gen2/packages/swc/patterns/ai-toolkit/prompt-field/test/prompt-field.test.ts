@@ -14,7 +14,7 @@ import { html, nothing, render } from 'lit';
 import { expect, userEvent, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import { getActiveElement } from '@adobe/spectrum-wc-core/utils/index.js';
+import { getActiveElement } from '@adobe/spectrum-wc-core/utils.js';
 
 import '../../upload-attachment/swc-upload-attachment.js';
 import '../swc-prompt-field.js';

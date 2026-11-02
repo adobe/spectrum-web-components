@@ -12,7 +12,7 @@
 
 import { CSSResultArray, html, nothing, TemplateResult } from 'lit';
 
-import { PopoverBase } from '@adobe/spectrum-wc-core/components/popover';
+import { PopoverBase } from '@adobe/spectrum-wc-core/components/popover.js';
 
 import styles from './popover.css';
 

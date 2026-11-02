@@ -14,5 +14,5 @@
 - Create `[Component].base.ts` using the 1st-gen implementation as a reference
 - Apply incremental improvements where justified (bugs, accessibility, feature gaps) — avoid speculative rewrites
 - Add `[Component].types.ts` for shared constants and types
-- Add `index.ts` barrel file
+- Add the `core/components/[component].ts` barrel file next to the component folder
 - Confirm the base class compiles and is exported correctly from core

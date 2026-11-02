@@ -173,6 +173,7 @@ class MyTextfield extends DisabledMixin(SpectrumElement) {
 
 ```
 gen2/packages/core/
+├── controllers.ts                barrel
 ├── controllers/
 │   ├── focus-group-navigation-controller/
 │   │   ├── src/focus-group-navigation-controller.ts   NEW
@@ -182,17 +183,17 @@ gen2/packages/core/
 │   ├── focus-group-navigation-controller.ts           NEW (re-export entry)
 │   ├── slot-presence.ts          NEW (converted from mixin)
 │   ├── slot-text.ts              NEW (converted from mixin)
-│   ├── language-resolution.ts    existing
-│   └── index.ts
+│   └── language-resolution.ts    existing
+├── mixins.ts                     barrel
 ├── mixins/
 │   ├── disabled-mixin.ts         NEW
-│   ├── sized-mixin.ts            existing
-│   └── index.ts
+│   └── sized-mixin.ts            existing
+├── utils.ts                      barrel
 ├── utils/
 │   ├── focusable-selectors.ts    NEW (migrated + simplified)
 │   ├── first-focusable-in.ts     NEW (migrated, low priority)
-│   ├── get-active-element.ts     NEW (migrated)
-│   └── index.ts
+│   └── get-active-element.ts     NEW (migrated)
+├── element.ts                    barrel
 └── element/
     └── spectrum-element.ts       existing (cleanup only)
 ```
@@ -779,8 +780,8 @@ export function DisabledMixin<T extends Constructor<ReactiveElement>>(
 Referenced from [§4.2](#42-delegatesfocus-true).
 
 ```typescript
-import { DisabledMixin } from '@adobe/spectrum-wc-core/mixins';
-import { SpectrumElement } from '@adobe/spectrum-wc-core/element';
+import { DisabledMixin } from '@adobe/spectrum-wc-core/mixins.js';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element.js';
 import { html, css } from 'lit';
 
 class SpCheckbox extends DisabledMixin(SpectrumElement) {
@@ -898,8 +899,8 @@ Referenced from [§4.4](#44-focusgroupnavigationcontroller).
 ```typescript
 import {
   FocusgroupNavigationController,
-} from '@adobe/spectrum-wc-core/controllers';
-import { SpectrumElement } from '@adobe/spectrum-wc-core/element';
+} from '@adobe/spectrum-wc-core/controllers.js';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element.js';
 
 class SpTabs extends SpectrumElement {
   private navigation = new FocusgroupNavigationController(this, {

@@ -27,7 +27,7 @@ import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { MutationController } from '@lit-labs/observers/mutation-controller.js';
 
-import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element.js';
 
 import '@adobe/spectrum-wc/components/icon/swc-icon.js';
 import '@adobe/spectrum-wc/components/ui-icons/swc-ui-icon.js';
@@ -40,7 +40,7 @@ import {
   type PixelLoaderIconName,
   type PixelLoaderPresetName,
 } from '../pixel-loader/data.js';
-import { CheckCircleIcon } from '../utils/icons/index.js';
+import { CheckCircleIcon } from '../utils/icons.js';
 import {
   RESPONSE_STATUS_STEP_STATUSES,
   ResponseStatusStep,

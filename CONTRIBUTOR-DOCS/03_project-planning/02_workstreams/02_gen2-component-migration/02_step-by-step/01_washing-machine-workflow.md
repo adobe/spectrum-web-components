@@ -185,8 +185,8 @@ Before you start, know the split:
 <details>
 <summary>File layout</summary>
 
-- Core: `Component.base.ts`, `Component.types.ts`, `index.ts`
-- SWC: `Component.ts`, `component.css`, `index.ts`, `stories/`, `test/`
+- Core: `Component.base.ts`, `Component.types.ts`, plus the sibling barrel `components/<name>.ts`
+- SWC: `Component.ts`, `component.css`, `swc-<tag>.ts`, `stories/`, `test/`, plus the sibling barrel `components/<name>.ts`
 
 </details>
 
@@ -237,11 +237,11 @@ Use the decision tree under **Decision trees** below. If the answer is "split," 
 
 ### What to do
 
-1. **Core:** Create `gen2/packages/core/components/<name>/` with `Component.base.ts`, `Component.types.ts`, `index.ts`.
-2. **SWC:** Create `gen2/packages/swc/components/<name>/` with `Component.ts`, `component.css`, `index.ts`, `swc-<tag>.ts`, `stories/`, `test/`.
-   - `index.ts` — class re-export only (`export * from './Component.js'`). No `defineElement`, no `HTMLElementTagNameMap`.
+1. **Core:** Create `gen2/packages/core/components/<name>/` with `Component.base.ts` and `Component.types.ts`, and add the barrel `gen2/packages/core/components/<name>.ts` next to that folder.
+2. **SWC:** Create `gen2/packages/swc/components/<name>/` with `Component.ts`, `component.css`, `swc-<tag>.ts`, `stories/`, `test/`.
+   - `gen2/packages/swc/components/<name>.ts` — the barrel, next to the folder. Class re-export only (`export * from './<name>/Component.js'`). No `defineElement`, no `HTMLElementTagNameMap`.
    - `swc-<tag>.ts` — side-effect entry point that calls `defineElement('swc-<tag>', Component)` and declares the `HTMLElementTagNameMap` augmentation. Use `gen2/packages/swc/components/badge/swc-badge.ts` as the reference.
-3. **Wire up exports** in `package.json` with a `./components/<name>/swc-<tag>.js` export entry so the side-effect file is importable as `@adobe/spectrum-wc/components/<name>/swc-<tag>.js`.
+3. **Wire up exports:** The SWC wildcard exports already make the side-effect file importable as `@adobe/spectrum-wc/components/<name>/swc-<tag>.js` and the barrel importable as `@adobe/spectrum-wc/<name>.js`. Core exports are explicit: add a `./components/<name>.js` entry to the core `package.json` exports that points at `./dist/components/<name>.js` and `./dist/components/<name>.d.ts`.
 
 See [Step 2](02_factor-rendering-out-of-1st-gen-component.md) and [Step 3](03_move-base-class-to-gen2-core.md) for directory layout, code structure, and reference implementations (Badge).
 
@@ -257,13 +257,13 @@ See [Step 2](02_factor-rendering-out-of-1st-gen-component.md) and [Step 3](03_mo
 | -------- | ---------- |
 | Wrong base or mixin | See Badge and [Step 2](02_factor-rendering-out-of-1st-gen-component.md). |
 | CSS not applied | Add `static override get styles()` and import the CSS module. See Badge. |
-| Package not exporting | Add a `./components/<name>/swc-<tag>.js` entry to the SWC `package.json` exports map. |
-| `defineElement` in `index.ts` | Move it to `swc-<tag>.ts`; `index.ts` should only re-export the class. |
+| Package not exporting | The SWC `./components/*.js` wildcard export covers `swc-<tag>.js`. Check that the build emits `dist/components/<name>/swc-<tag>.js`. |
+| `defineElement` in the barrel | Move it to `swc-<tag>.ts`; the `<name>.ts` barrel should only re-export the class. |
 
 ### Quality gate
 
 - [ ] All files exist, including `swc-<tag>.ts`; `nx build` (or equivalent) for the affected packages succeeds.
-- [ ] `import '@adobe/spectrum-wc/components/<name>/swc-<tag>.js'` registers the element; `import { Class } from '@adobe/spectrum-wc/<name>'` does not.
+- [ ] `import '@adobe/spectrum-wc/components/<name>/swc-<tag>.js'` registers the element; `import { Class } from '@adobe/spectrum-wc/<name>.js'` does not.
 
 ---
 
@@ -277,7 +277,7 @@ See [Step 2](02_factor-rendering-out-of-1st-gen-component.md) and [Step 3](03_mo
 2. **Define types** in `Component.types.ts`; put shared API in base (core), SWC-only in concrete class.
 3. **Mark internal API** with JSDoc `@internal`; add JSDoc for public props/slots.
 4. **Implement static readonly arrays and debug warnings** — follow [API patterns (statics and warnings)](#api-patterns-statics-and-warnings) below; reference implementation: gen2 Badge (`Badge.base.ts`, `Badge.ts`).
-5. **Apply dev-warning validation for every applicable category**: union/enum values, required properties, conditionally required properties, mutually exclusive/no-effect property combinations, required slots, and allowed children. Use the shared helpers in `@spectrum-web-components/core/utils` (`validateEnum`, `warnIf`, `validateRequiredSlot`, `validateAllowedChildren`) rather than hand-rolled `window.__swc.warn()` checks. See [Debug and validation](../../../../02_style-guide/02_typescript/17_debug-validation.md#reusable-validation-helpers).
+5. **Apply dev-warning validation for every applicable category**: union/enum values, required properties, conditionally required properties, mutually exclusive/no-effect property combinations, required slots, and allowed children. Use the shared helpers in `@adobe/spectrum-wc-core/utils.js` (`validateEnum`, `warnIf`, `validateRequiredSlot`, `validateAllowedChildren`) rather than hand-rolled `window.__swc.warn()` checks. See [Debug and validation](../../../../02_style-guide/02_typescript/17_debug-validation.md#reusable-validation-helpers).
 
 ### Property migration scenarios
 
@@ -309,7 +309,7 @@ Follow team **TypeScript conventions** for naming and structure; use **Badge** a
 **Dev-warning validation categories (use the shared helpers)**
 
 Do not write `includes()` + `window.__swc.warn()` checks by hand. Import the
-shared helpers from `@spectrum-web-components/core/utils` instead
+shared helpers from `@adobe/spectrum-wc-core/utils.js` instead
 (`validateEnum`, `warnIf`, `validateRequiredSlot`, `validateAllowedChildren`).
 Every component should be checked against each applicable category:
 

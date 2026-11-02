@@ -13,7 +13,7 @@
 import { css, html, LitElement, type TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators.js';
 
-import { SlotAttributePropagationController } from '../index.js';
+import { SlotAttributePropagationController } from '../../slot-attribute-propagation-controller.js';
 
 declare global {
   interface HTMLElementTagNameMap {

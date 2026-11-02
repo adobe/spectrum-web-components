@@ -14,7 +14,7 @@ import { css, html, LitElement, type TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
-import { FieldDescriptionMixin, LabellingMixin } from '../index.js';
+import { FieldDescriptionMixin, LabellingMixin } from '../../mixins.js';
 
 declare global {
   interface HTMLElementTagNameMap {

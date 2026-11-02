@@ -13,19 +13,17 @@
 /**
  * Verifies the tree-shaking acceptance criterion: an app that imports a few workflow
  * icons ships only those icons, not the whole set. Bundles a small sample of element
- * subpaths from the built `dist/` with esbuild (tree-shaking on) and asserts the output
+ * package subpaths with esbuild (tree-shaking on) and asserts the output
  * registers exactly the sampled tags and none of the others.
  *
  * Run with `yarn workspace @adobe/spectrum-wc-icons verify:tree-shaking` after a build.
  */
 import { build } from 'esbuild';
-import { mkdtempSync, rmSync, writeFileSync } from 'node:fs';
-import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
-const distDir = path.resolve(scriptDir, '..', 'dist');
+const packageDir = path.resolve(scriptDir, '..');
 
 // The sample an app might import, and a few icons it must NOT drag in.
 const SAMPLE = ['swc-icon-star', 'swc-icon-heart', 'swc-icon-folder'];
@@ -35,17 +33,13 @@ const MUST_BE_ABSENT = [
   'swc-icon-3d-asset',
 ];
 
-const tmp = mkdtempSync(path.join(tmpdir(), 'swc-icons-treeshake-'));
-const entry = path.join(tmp, 'entry.js');
-writeFileSync(
-  entry,
-  SAMPLE.map((tag) => `import '${path.join(distDir, `${tag}.js`)}';`).join('\n')
-);
-
-let code = '';
-try {
+async function bundle(contents) {
   const result = await build({
-    entryPoints: [entry],
+    stdin: {
+      contents,
+      resolveDir: packageDir,
+      sourcefile: 'entry.js',
+    },
     bundle: true,
     treeShaking: true,
     format: 'esm',
@@ -60,10 +54,12 @@ try {
       '@adobe/spectrum-wc-core/*',
     ],
   });
-  code = result.outputFiles[0].text;
-} finally {
-  rmSync(tmp, { recursive: true, force: true });
+  return result.outputFiles[0].text;
 }
+
+const code = await bundle(
+  SAMPLE.map((tag) => `import '@adobe/spectrum-wc-icons/${tag}.js';`).join('\n')
+);
 
 // Each element module registers its tag via `defineElement('swc-icon-…', …)`; the tag
 // is the only quoted `swc-icon-*` string in the emitted JS.
@@ -90,6 +86,17 @@ if (registered.length !== SAMPLE.length) {
   );
 }
 
+const functionImport = 'console.log(Icon_Star());';
+const directFunctionCode = await bundle(
+  `import { Icon_Star } from '@adobe/spectrum-wc-icons/Star.js';\n${functionImport}`
+);
+const rootFunctionCode = await bundle(
+  `import { Icon_Star } from '@adobe/spectrum-wc-icons';\n${functionImport}`
+);
+if (rootFunctionCode.length > directFunctionCode.length + 1000) {
+  errors.push('root function import bundles unrelated icons');
+}
+
 if (errors.length > 0) {
   console.error('Tree-shaking verification FAILED:');
   for (const error of errors) {
@@ -99,5 +106,5 @@ if (errors.length > 0) {
 }
 
 console.log(
-  `Tree-shaking verified: importing ${SAMPLE.length} icons ships exactly those ${registered.length} (${registered.join(', ')}), not the full set.`
+  `Tree-shaking verified: importing ${SAMPLE.length} icons ships exactly those ${registered.length} (${registered.join(', ')}), and the root function barrel omits unrelated icons.`
 );

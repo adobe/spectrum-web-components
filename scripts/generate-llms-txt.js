@@ -224,7 +224,7 @@ function buildComponent(decl, modulePath, gen) {
         ? `${npmPackage}/${decl.tagName}.js`
         : null
       : packageDir
-        ? `@adobe/spectrum-wc/components/${packageDir}/index.js`
+        ? `@adobe/spectrum-wc/components/${packageDir}/${decl.tagName}.js`
         : null;
 
   const description =

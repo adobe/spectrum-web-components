@@ -14,13 +14,13 @@ import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import { Button } from '@adobe/spectrum-wc/button';
+import { Button } from '@adobe/spectrum-wc/button.js';
 import {
   BUTTON_FILL_STYLES,
   BUTTON_STATIC_COLORS,
   BUTTON_VALID_SIZES,
   BUTTON_VARIANTS,
-} from '@adobe/spectrum-wc-core/components/button';
+} from '@adobe/spectrum-wc-core/components/button.js';
 
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc-icons/swc-icon-add.js';

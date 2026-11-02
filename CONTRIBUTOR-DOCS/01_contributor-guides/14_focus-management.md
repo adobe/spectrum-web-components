@@ -69,8 +69,8 @@ For the full technical rationale, see the [Focus Management Strategy RFC](../03_
 | Primitive | What it does | Import |
 |-----------|-------------|--------|
 | `delegatesFocus: true` | Browser-native focus delegation from host to first focusable child | Built-in (shadow root option) |
-| `DisabledMixin` | Reactive `disabled` property with `aria-disabled`, tabindex, blur | `@adobe/spectrum-wc-core/mixins` |
-| `FocusgroupNavigationController` | Arrow key navigation + tabindex management for composite widgets (Open UI `focusgroup` aligned) | `@adobe/spectrum-wc-core/controllers` |
+| `DisabledMixin` | Reactive `disabled` property with `aria-disabled`, tabindex, blur | `@adobe/spectrum-wc-core/mixins.js` |
+| `FocusgroupNavigationController` | Arrow key navigation + tabindex management for composite widgets (Open UI `focusgroup` aligned) | `@adobe/spectrum-wc-core/controllers.js` |
 
 ---
 
@@ -105,8 +105,8 @@ Use `delegatesFocus` when there is **exactly one place focus should ever go** in
 ### How to use
 
 ```typescript
-import { DisabledMixin } from '@adobe/spectrum-wc-core/mixins';
-import { SpectrumElement } from '@adobe/spectrum-wc-core/element';
+import { DisabledMixin } from '@adobe/spectrum-wc-core/mixins.js';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element.js';
 import { html, css } from 'lit';
 
 class SpCheckbox extends DisabledMixin(SpectrumElement) {
@@ -240,8 +240,8 @@ Any interactive component that can be disabled — buttons, inputs, links, menu 
 ### How to use
 
 ```typescript
-import { DisabledMixin } from '@adobe/spectrum-wc-core/mixins';
-import { SpectrumElement } from '@adobe/spectrum-wc-core/element';
+import { DisabledMixin } from '@adobe/spectrum-wc-core/mixins.js';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element.js';
 import { html } from 'lit';
 
 class SpButton extends DisabledMixin(SpectrumElement) {
@@ -354,8 +354,8 @@ The controller is aligned with the [Open UI `focusgroup` attribute](https://open
 ### How to use
 
 ```typescript
-import { FocusgroupNavigationController } from '@adobe/spectrum-wc-core/controllers';
-import { SpectrumElement } from '@adobe/spectrum-wc-core/element';
+import { FocusgroupNavigationController } from '@adobe/spectrum-wc-core/controllers.js';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element.js';
 
 class SpTabs extends SpectrumElement {
   private navigation = new FocusgroupNavigationController(this, {
@@ -492,7 +492,7 @@ class SpMenu extends SpectrumElement {
 Returns the deepest focused element by traversing shadow DOM boundaries. `document.activeElement` stops at shadow hosts — this follows the chain.
 
 ```typescript
-import { getActiveElement } from '@adobe/spectrum-wc-core/utils';
+import { getActiveElement } from '@adobe/spectrum-wc-core/utils.js';
 
 // Get the truly focused element across all shadow boundaries
 const active = getActiveElement();
@@ -506,7 +506,7 @@ const active = getActiveElement(this.getRootNode() as Document);
 CSS selector strings matching focusable and tabbable elements per the HTML spec.
 
 ```typescript
-import { focusableSelector, tabbableSelector } from '@adobe/spectrum-wc-core/utils';
+import { focusableSelector, tabbableSelector } from '@adobe/spectrum-wc-core/utils.js';
 
 // Find the first focusable element in a container
 const first = container.querySelector(focusableSelector);
@@ -519,10 +519,10 @@ These use standard HTML focusability rules only. The 1st-gen `[focusable]` attri
 
 ### isFocusVisibleInTree()
 
-Import from `@adobe/spectrum-wc-core/utils`. Returns `true` if the deepest focused element in a tree matches `:focus-visible`, meaning the browser would show a focus ring. Pass a root node to scope the check to that tree; it defaults to `document`.
+Import from `@adobe/spectrum-wc-core/utils.js`. Returns `true` if the deepest focused element in a tree matches `:focus-visible`, meaning the browser would show a focus ring. Pass a root node to scope the check to that tree; it defaults to `document`.
 
 ```typescript
-import { isFocusVisibleInTree } from '@adobe/spectrum-wc-core/utils';
+import { isFocusVisibleInTree } from '@adobe/spectrum-wc-core/utils.js';
 
 class SpButton extends SpectrumElement {
   private handleFocus() {
@@ -552,8 +552,8 @@ class SpTextfield extends Focusable {
 }
 
 // gen2
-import { DisabledMixin } from '@adobe/spectrum-wc-core/mixins';
-import { SpectrumElement } from '@adobe/spectrum-wc-core/element';
+import { DisabledMixin } from '@adobe/spectrum-wc-core/mixins.js';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element.js';
 
 class SpTextfield extends DisabledMixin(SpectrumElement) {
   static override shadowRootOptions = {
@@ -595,7 +595,7 @@ import { FocusGroupController } from '@spectrum-web-components/reactive-controll
 import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers';
 
 // gen2
-import { FocusgroupNavigationController } from '@adobe/spectrum-wc-core/controllers';
+import { FocusgroupNavigationController } from '@adobe/spectrum-wc-core/controllers.js';
 ```
 
 Key API differences from 1st-gen:

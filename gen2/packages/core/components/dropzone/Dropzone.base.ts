@@ -12,12 +12,12 @@
 
 import { property } from 'lit/decorators.js';
 
-import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
-import { SizedMixin } from '@adobe/spectrum-wc-core/mixins/index.js';
-import { validateEnum } from '@adobe/spectrum-wc-core/utils/index.js';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element.js';
+import { SizedMixin } from '@adobe/spectrum-wc-core/mixins.js';
+import { validateEnum } from '@adobe/spectrum-wc-core/utils.js';
 
-import { DragAndDropController } from '../../controllers/drag-and-drop-controller/index.js';
-import { SlotAttributePropagationController } from '../../controllers/slot-attribute-propagation-controller/index.js';
+import { DragAndDropController } from '../../controllers/drag-and-drop-controller.js';
+import { SlotAttributePropagationController } from '../../controllers/slot-attribute-propagation-controller.js';
 import {
   DROP_EFFECTS,
   type DropEffect,

@@ -308,8 +308,8 @@ export abstract class IconBase extends SizedMixin(SpectrumElement, {
 **1. `<swc-icon>` frame (swc): renders a slotted, consumer-supplied SVG.**
 
 ```ts
-// @adobe/spectrum-wc/icon/swc-icon.js
-import { IconBase } from '@adobe/spectrum-wc-core';
+// @adobe/spectrum-wc/components/icon/swc-icon.js
+import { IconBase } from '@adobe/spectrum-wc-core/components/icon.js';
 
 export class Icon extends IconBase {
   static styles = [iconBaseCss]; // shared _lit-styles/icon-base.css
@@ -336,7 +336,7 @@ export function Icon_Star(): string {
 }
 
 // @adobe/spectrum-wc-icons/swc-icon-star.js  (generated element, extends IconBase)
-import { IconBase } from '@adobe/spectrum-wc-core';
+import { IconBase } from '@adobe/spectrum-wc-core/components/icon.js';
 import { Icon_Star } from './Star.js';
 
 export class IconStar extends IconBase {
@@ -359,8 +359,8 @@ optical step and renders a Lit `TemplateResult`. Not public; no `unsafeSVG`.**
 
 ```ts
 // @adobe/spectrum-wc, components/ui-icons/ (internal; imported relatively, not a public subpath)
-import { IconBase } from '@adobe/spectrum-wc-core';
-import { UI_ICONS } from './icon-set/index.js'; // icon → per-step Lit `html` templates
+import { IconBase } from '@adobe/spectrum-wc-core/components/icon.js';
+import { UI_ICONS } from './icon-set.js'; // icon → per-step Lit `html` templates
 
 export class UiIcon extends IconBase {
   @property() icon!: UiIconName; // selects the icon-set

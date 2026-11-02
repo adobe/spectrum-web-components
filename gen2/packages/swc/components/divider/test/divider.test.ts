@@ -13,11 +13,11 @@ import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import { Divider } from '@adobe/spectrum-wc/divider';
+import { Divider } from '@adobe/spectrum-wc/divider.js';
 import {
   DIVIDER_STATIC_COLORS,
   DIVIDER_VALID_SIZES,
-} from '@adobe/spectrum-wc-core/components/divider/index.js';
+} from '@adobe/spectrum-wc-core/components/divider.js';
 
 import '@adobe/spectrum-wc/components/divider/swc-divider.js';
 

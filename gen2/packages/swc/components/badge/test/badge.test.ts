@@ -13,14 +13,14 @@ import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import { Badge } from '@adobe/spectrum-wc/badge';
+import { Badge } from '@adobe/spectrum-wc/badge.js';
 import {
   BADGE_VALID_SIZES,
   BADGE_VARIANTS,
   BADGE_VARIANTS_COLOR,
   BADGE_VARIANTS_SEMANTIC,
   FIXED_VALUES,
-} from '@adobe/spectrum-wc-core/components/badge/index.js';
+} from '@adobe/spectrum-wc-core/components/badge.js';
 
 import '@adobe/spectrum-wc/components/badge/swc-badge.js';
 

@@ -13,7 +13,7 @@ import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import { ProgressCircle } from '@adobe/spectrum-wc/progress-circle';
+import { ProgressCircle } from '@adobe/spectrum-wc/progress-circle.js';
 
 import '@adobe/spectrum-wc/components/progress-circle/swc-progress-circle.js';
 

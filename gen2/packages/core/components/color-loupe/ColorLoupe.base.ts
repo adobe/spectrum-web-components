@@ -12,8 +12,8 @@
 
 import { property } from 'lit/decorators.js';
 
-import { computeBorderAlpha } from '@adobe/spectrum-wc-core/components/color-handle';
-import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
+import { computeBorderAlpha } from '@adobe/spectrum-wc-core/components/color-handle.js';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element.js';
 
 /**
  * Minimum inner-border opacity (matches the existing `transparent-black-200`

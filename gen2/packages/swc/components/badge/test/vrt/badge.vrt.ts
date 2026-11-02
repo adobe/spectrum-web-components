@@ -19,7 +19,7 @@ import {
   BADGE_VARIANTS_SEMANTIC,
   type BadgeSize,
   FIXED_VALUES,
-} from '@adobe/spectrum-wc-core/components/badge';
+} from '@adobe/spectrum-wc-core/components/badge.js';
 
 import '@adobe/spectrum-wc/components/badge/swc-badge.js';
 import '@adobe/spectrum-wc-icons/swc-icon-checkmark.js';

@@ -13,8 +13,8 @@ import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import { Avatar } from '@adobe/spectrum-wc/avatar';
-import { AVATAR_VALID_SIZES } from '@adobe/spectrum-wc-core/components/avatar/index.js';
+import { Avatar } from '@adobe/spectrum-wc/avatar.js';
+import { AVATAR_VALID_SIZES } from '@adobe/spectrum-wc-core/components/avatar.js';
 
 import '@adobe/spectrum-wc/components/avatar/swc-avatar.js';
 

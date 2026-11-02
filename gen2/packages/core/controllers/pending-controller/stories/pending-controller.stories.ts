@@ -53,8 +53,8 @@ const argTypes = {
  *
  * Rendering is decoupled: read `pendingActive` and render the indicator with the
  * `renderPendingSpinner` directive from
- * `@adobe/spectrum-wc-core/directives/pending-spinner`. For button-like
- * elements, `PendingMixin` (`@adobe/spectrum-wc-core/mixins`) wires the
+ * `@adobe/spectrum-wc-core/directives/pending-spinner.js`. For button-like
+ * elements, `PendingMixin` (`@adobe/spectrum-wc-core/mixins.js`) wires the
  * controller, properties, and click suppression together.
  */
 const meta: Meta = {

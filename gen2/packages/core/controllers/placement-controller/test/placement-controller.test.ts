@@ -16,7 +16,10 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import '../stories/demo-hosts.js';
 
 import { getComponent } from '../../../../swc/utils/test-utils.js';
-import { fromFloatingPlacement, toFloatingPlacement } from '../index.js';
+import {
+  fromFloatingPlacement,
+  toFloatingPlacement,
+} from '../../placement-controller.js';
 import type {
   DemoPlacementMultiController,
   DemoPlacementTestFixture,

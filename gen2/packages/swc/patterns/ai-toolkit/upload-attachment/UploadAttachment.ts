@@ -20,14 +20,14 @@ import {
 import { property, query } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
-import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
-import { getLabelFromSlot } from '@adobe/spectrum-wc-core/utils/index.js';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element.js';
+import { getLabelFromSlot } from '@adobe/spectrum-wc-core/utils.js';
 
 import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
 import '@adobe/spectrum-wc/components/card/swc-card.js';
 import '@adobe/spectrum-wc/components/progress-circle/swc-progress-circle.js';
 
-import { CrossIcon } from '../utils/icons/index.js';
+import { CrossIcon } from '../utils/icons.js';
 
 import visuallyHiddenStyles from '../../../stylesheets/_lit-styles/visually-hidden.css';
 import styles from './upload-attachment.css';

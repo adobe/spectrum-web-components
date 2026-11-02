@@ -13,7 +13,7 @@
 import { CSSResultArray, html, nothing, TemplateResult } from 'lit';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
-import { ProgressBarBase } from '@adobe/spectrum-wc-core/components/progress-bar';
+import { ProgressBarBase } from '@adobe/spectrum-wc-core/components/progress-bar.js';
 
 import sharedStyles from '../../stylesheets/_lit-styles/linear-progress-base.css';
 import styles from './progress-bar.css';

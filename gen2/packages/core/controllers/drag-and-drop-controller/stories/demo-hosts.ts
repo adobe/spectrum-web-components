@@ -13,7 +13,7 @@
 import { css, html, LitElement, type TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 
-import { DragAndDropController } from '../index.js';
+import { DragAndDropController } from '../../drag-and-drop-controller.js';
 
 declare global {
   interface HTMLElementTagNameMap {

@@ -71,6 +71,7 @@ export default {
   globs: [
     'components/**/*.ts',
     'patterns/**/*.ts',
+    '../core/{controllers,element,mixins,utils}.ts',
     '../core/components/**/*.ts',
     '../core/controllers/**/*.ts',
     '../core/element/**/*.ts',

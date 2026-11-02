@@ -16,7 +16,7 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import {
   ICON_VALID_SIZES,
   type IconSize,
-} from '@adobe/spectrum-wc-core/components/icon';
+} from '@adobe/spectrum-wc-core/components/icon.js';
 
 import '@adobe/spectrum-wc/components/ui-icons/swc-ui-icon.js';
 
@@ -27,7 +27,7 @@ import {
   theme,
   vrtParameters,
 } from '../../../../.storybook/helpers/index.js';
-import { UI_ICONS, type UiIconName } from '../../icon-set/index.js';
+import { UI_ICONS, type UiIconName } from '../../icon-set.js';
 import { DIRECTIONAL_UI_ICONS } from '../../ui-icon-direction.js';
 
 // Metadata

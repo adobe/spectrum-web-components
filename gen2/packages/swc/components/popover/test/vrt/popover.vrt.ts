@@ -15,11 +15,11 @@ import { expect, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import { Popover } from '@adobe/spectrum-wc/popover';
+import { Popover } from '@adobe/spectrum-wc/popover.js';
 import {
   POPOVER_VALID_PLACEMENTS,
   POPOVER_VALID_SIZES,
-} from '@adobe/spectrum-wc-core/components/popover';
+} from '@adobe/spectrum-wc-core/components/popover.js';
 
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc/components/popover/swc-popover.js';

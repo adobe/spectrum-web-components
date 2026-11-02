@@ -58,6 +58,6 @@ Not every logical icon ships every step. The element falls back to the nearest a
 
 - Refuses to run if this folder has no SVGs, so a clean checkout can't wipe the committed art.
 - Rewrites the A4U `var(--iconPrimary, …)` fill to `var(--swc-icon-color, currentColor)`, then cleans each SVG with SVGO (`preset-default` keeps the `viewBox`; `removeDimensions` drops `width` and `height` so the element sizes the box).
-- Replaces every module in `icon-set/` with one Lit `html` bundle per logical icon plus the `index.ts` registry, then formats them with Prettier.
+- Replaces every module in `icon-set/` with one Lit `html` bundle per logical icon plus the `icon-set.ts` registry next to the folder, then formats them with Prettier.
 
 See the [icon strategy RFC](../../../../../../CONTRIBUTOR-DOCS/03_project-planning/05_strategies/icon-rfc.md), section 8, for the full pipeline.

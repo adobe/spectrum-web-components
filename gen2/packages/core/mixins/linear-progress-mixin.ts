@@ -13,13 +13,8 @@ import { PropertyValues, ReactiveElement } from 'lit';
 import { property } from 'lit/decorators.js';
 
 import { LanguageResolutionController } from '../controllers/language-resolution.js';
-import { SlotPresenceController } from '../controllers/slot-presence-controller/index.js';
-import {
-  componentDocsHref,
-  isDebug,
-  validateEnum,
-  warnIf,
-} from '../utils/index.js';
+import { SlotPresenceController } from '../controllers/slot-presence-controller.js';
+import { componentDocsHref, isDebug, validateEnum, warnIf } from '../utils.js';
 import type { ElementSize } from './sized-mixin.js';
 
 type Constructor<T = Record<string, unknown>> = {

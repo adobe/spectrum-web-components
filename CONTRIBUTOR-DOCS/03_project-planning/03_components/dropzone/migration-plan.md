@@ -177,7 +177,7 @@ The SVG stroke's `rx`/`ry`/`stroke-width`/`stroke-dasharray` and the outer wrapp
 
 | Package | Version | Role |
 | ------- | ------- | ---- |
-| `@spectrum-web-components/base` (gen2: `@spectrum-web-components/core`) | workspace | `SpectrumElement` base class, `@property`, `@state` decorators, `html` template tag |
+| `@spectrum-web-components/base` (gen2: `@adobe/spectrum-wc-core`) | workspace | `SpectrumElement` base class, `@property`, `@state` decorators, `html` template tag |
 | `@spectrum-web-components/illustrated-message` | peer / slot content | `sp-illustrated-message` is the recommended default slot content in 1st-gen. The gen2 `swc-illustrated-message` is already migrated and will fill this role, but `swc-dropzone` does not import it; it is consumer-provided via the slot. |
 
 ---
@@ -242,7 +242,7 @@ No sequencing, shared-base, or inheritance decisions require explicit user confi
 | **B8** | SVG stroke border — **Figma confirmed; shipped** | CSS `border-style: dashed` (pure CSS border; no SVG) | Inline SVG `<rect>` stroke for rounded corner dashes as shown in Figma, matching `spectrum-two`'s token-driven dash pattern (8px dash / 6px gap). Final visual sign-off against Figma still pending (Q4). | No consumer migration; SVG border adds a shadow DOM element (`aria-hidden`, no impact on the accessibility tree). |
 | **B9** | CJK font size tokens | Applied via `--mod-illustrated-message-*` passthrough | Applied via direct token usage inside `swc-dropzone` (passthrough redesign per Q8) | No consumer migration needed; visual behavior preserved. |
 | **B10** | Focus styling scoped to browse control | 1st-gen applied focus styles to host only when consumer added `tabindex`. | gen2 has no `tabindex` on host. `:host(:focus-within)` applies the same accent border/background to the container as the dragged state when the browse control has focus; the browse control (`swc-button`) also has its own independent `:focus-visible` ring. | See a11y changes below. |
-| **B16** | `size` attribute — **new, not in 1st-gen** | No size variants; fixed visual scale. | `size: 's' \| 'm' \| 'l'`; default `'m'`. Controls illustrated icon scale and container dimensions per Figma. Use `SizedMixin` from `@spectrum-web-components/core/mixins` with `validSizes: ['s', 'm', 'l']` applied in `DropzoneBase`; the mixin provides the `size` `@property`, validation, and attribute reflection. | No breaking change for existing consumers (defaults to `'m'`). |
+| **B16** | `size` attribute — **new, not in 1st-gen** | No size variants; fixed visual scale. | `size: 's' \| 'm' \| 'l'`; default `'m'`. Controls illustrated icon scale and container dimensions per Figma. Use `SizedMixin` from `@adobe/spectrum-wc-core/mixins.js` with `validSizes: ['s', 'm', 'l']` applied in `DropzoneBase`; the mixin provides the `size` `@property`, validation, and attribute reflection. | No breaking change for existing consumers (defaults to `'m'`). |
 
 #### Accessibility and behavior
 
@@ -432,7 +432,7 @@ No `DropzoneEventDetail` alias is exported. gen2 is a clean break from 1st-gen (
 - [x] Wire exports in `core/package.json`
 - [x] Wire exports in `swc/package.json` — **N/A.** No SWC component has an explicit named
   package.json export; every component (including dropzone) resolves through the existing
-  `"./*"` → `dist/components/*/index.js` wildcard, so no dropzone-specific entry is needed.
+  `"./*.js"` → `dist/components/*.js` wildcard, so no dropzone-specific entry is needed.
 - [x] Confirm `spectrum-css` is checked out at `spectrum-two` branch as sibling directory (`/spectrum-css/components/dropzone/index.css`) — **Note:** originally implemented against a `main`-branch checkout (see Q4); sibling has since been switched to `spectrum-two` and pulled to head for the Q4 re-verification.
 
 ### API

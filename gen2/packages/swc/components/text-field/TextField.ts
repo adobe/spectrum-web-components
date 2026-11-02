@@ -17,8 +17,8 @@ import { live } from 'lit/directives/live.js';
 import {
   TextFieldBase,
   type TextFieldSize,
-} from '@adobe/spectrum-wc-core/components/text-field';
-import { SlotAttributePropagationController } from '@adobe/spectrum-wc-core/controllers/index.js';
+} from '@adobe/spectrum-wc-core/components/text-field.js';
+import { SlotAttributePropagationController } from '@adobe/spectrum-wc-core/controllers.js';
 
 import '@adobe/spectrum-wc-icons/swc-icon-alert-triangle.js';
 import '../ui-icons/swc-ui-icon.js';

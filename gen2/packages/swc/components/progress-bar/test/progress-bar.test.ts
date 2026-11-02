@@ -13,7 +13,7 @@ import { html } from 'lit';
 import { expect, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import { ProgressBar } from '@adobe/spectrum-wc/progress-bar';
+import { ProgressBar } from '@adobe/spectrum-wc/progress-bar.js';
 
 import '@adobe/spectrum-wc/components/progress-bar/swc-progress-bar.js';
 

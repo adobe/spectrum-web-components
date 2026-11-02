@@ -12,8 +12,8 @@
 import { PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
-import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
-import { validateEnum, warnIf } from '@adobe/spectrum-wc-core/utils/index.js';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element.js';
+import { validateEnum, warnIf } from '@adobe/spectrum-wc-core/utils.js';
 
 import {
   THUMBNAIL_DEFAULT_FIT,

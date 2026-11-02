@@ -19,7 +19,7 @@ import {
   TEXT_FIELD_NECESSITY_INDICATORS,
   TEXT_FIELD_STATUSES,
   TEXT_FIELD_VALID_SIZES,
-} from '@adobe/spectrum-wc-core/components/text-field';
+} from '@adobe/spectrum-wc-core/components/text-field.js';
 
 import '@adobe/spectrum-wc/components/text-field/swc-text-field.js';
 import '@adobe/spectrum-wc/components/avatar/swc-avatar.js';

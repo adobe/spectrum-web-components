@@ -9,7 +9,7 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { UiIconName } from './icon-set/index.js';
+import { UiIconName } from './icon-set.js';
 
 /**
  * Logical UI icons that mirror horizontally in RTL. Keep in sync with the`:host()` selector list in `ui-icon-direction.css`;

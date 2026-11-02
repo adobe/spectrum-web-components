@@ -25,7 +25,7 @@ import {
   PlacementController,
   type PlacementOptions,
   type VirtualTrigger,
-} from '../index.js';
+} from '../../placement-controller.js';
 
 declare global {
   interface HTMLElementTagNameMap {
