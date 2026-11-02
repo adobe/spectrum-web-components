@@ -76,7 +76,10 @@ export const AnatomyTest: Story = {
       '.swc-MenuSeparator'
     ) as HTMLElement;
 
-    await step('renders a 2px line', async () => {
+    // Stands in for the parent swc-menu, which supplies the thickness.
+    separator.style.setProperty('--swc-menu-separator-thickness', '2px');
+
+    await step('uses the thickness supplied by the menu', async () => {
       expect(getComputedStyle(line).blockSize).toBe('2px');
     });
 
