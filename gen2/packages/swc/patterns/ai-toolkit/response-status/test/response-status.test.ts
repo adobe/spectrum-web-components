@@ -89,6 +89,62 @@ export const PlaygroundDisclosureLabelTest: Story = {
   },
 };
 
+export const PlaygroundCompleteStatusTest: Story = {
+  ...Playground,
+  args: {
+    ...Playground.args,
+    status: 'complete',
+  },
+  play: async ({ canvasElement }) => {
+    const el = await getComponent<TestResponseStatus>(
+      canvasElement,
+      'swc-response-status'
+    );
+
+    await waitFor(() => {
+      expect(el.status).toBe('complete');
+      expect(
+        el.shadowRoot
+          ?.querySelector('.swc-ResponseStatus-label')
+          ?.textContent?.trim()
+      ).toBe('Thought for 9 seconds');
+      expect(
+        Array.from(el.querySelectorAll('swc-response-status-step')).map(
+          (step) => step.getAttribute('status')
+        )
+      ).toEqual(['complete', 'complete', 'complete', 'complete']);
+    });
+  },
+};
+
+export const PlaygroundStoppedStatusTest: Story = {
+  ...Playground,
+  args: {
+    ...Playground.args,
+    status: 'stopped',
+  },
+  play: async ({ canvasElement }) => {
+    const el = await getComponent<TestResponseStatus>(
+      canvasElement,
+      'swc-response-status'
+    );
+
+    await waitFor(() => {
+      expect(el.status).toBe('stopped');
+      expect(
+        el.shadowRoot
+          ?.querySelector('.swc-ResponseStatus-label')
+          ?.textContent?.trim()
+      ).toBe('You stopped the response');
+      expect(
+        Array.from(el.querySelectorAll('swc-response-status-step')).map(
+          (step) => step.getAttribute('status')
+        )
+      ).toEqual(['complete', 'complete', 'stopped']);
+    });
+  },
+};
+
 // A step's label/description are projected through a `<slot>`, so
 // `.textContent` (raw-tree only) reads empty, and `.innerText` is gated by
 // CSS visibility (empty while the step's own detail panel is collapsed).
