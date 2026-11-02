@@ -477,8 +477,8 @@ Checklist items for this migration; resolve Q9 before treating this section as f
 
 ### Testing
 
-- [ ] Port `1st-gen/packages/toast/test/toast.test.ts` coverage that still applies
-- [ ] Add Playwright `toast.a11y.spec.ts` with `toMatchAriaSnapshot`
+- [x] Port `1st-gen/packages/toast/test/toast.test.ts` coverage that still applies
+- [x] Add Playwright `toast.a11y.spec.ts` with `toMatchAriaSnapshot`
 
 #### Behavior
 
@@ -493,14 +493,14 @@ Checklist items for this migration; resolve Q9 before treating this section as f
 - [ ] Expand/collapse interaction: scrim click, <kbd>Escape</kbd>, and the Collapse control (an `swc-action-button` at size `s`, beside Clear all) each collapse the expanded view
 - [ ] Focus management: modality branching on toast-close, collapse-to-region, and last-toast-close returning focus to whatever was focused before entering the region
 - [ ] New toasts join the front of the queue, not the back
-- [ ] A toast opened in the same turn it is created skips the two-frame delay; one opened after its first update reveals its message through it (Q11)
+- [x] A toast opened in the same turn it is created skips the two-frame delay; one opened after its first update reveals its message through it (Q11)
 
 #### Visual regression
 
-- [ ] Add VRT coverage for all variants, with/without action button, closed state
-- [ ] Add VRT coverage for text wrapping: short single-line message, long message wrapping to multiple lines within the host's `max-inline-size`
+- [x] Add VRT coverage for all variants, with/without action button, closed state
+- [x] Add VRT coverage for text wrapping: short single-line message, long message wrapping to multiple lines within the host's `max-inline-size`
 - [ ] Add VRT coverage for the peek stack and the expanded view
-- [ ] Add focus-visible regression coverage for the close and action buttons
+- [x] Add focus-visible regression coverage for the close and action buttons
 
 ### Documentation
 
