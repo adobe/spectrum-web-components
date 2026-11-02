@@ -78,4 +78,14 @@ export const Anatomy: Story = {
 //    ACCESSIBILITY STORIES
 // ────────────────────────────────
 
-// TODO: will complete in separate documentation pass of phase 7
+export const Accessibility: Story = {
+  render: () => html`
+    <div style="inline-size: 240px;">
+      <div>Cut</div>
+      <div>Copy</div>
+      <swc-menu-separator></swc-menu-separator>
+      <div>Delete</div>
+    </div>
+  `,
+  tags: ['a11y'],
+};

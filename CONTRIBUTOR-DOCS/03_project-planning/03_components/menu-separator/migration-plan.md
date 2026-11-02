@@ -343,12 +343,12 @@ Planned rendering shape:
 
 #### General
 
-- [ ] JSDoc on the class and any CSS custom properties
+- [x] JSDoc on the class and any CSS custom properties (no custom properties exposed)
 - [ ] Storybook story with a separator between labelled `swc-menu-group` blocks
 
 #### Breaking changes
 
-- [ ] Migration guide: `sp-menu-divider` → `swc-menu-separator`, `size` removed, placement rules (B1 to B3)
+- [x] Migration guide: `sp-menu-divider` → `swc-menu-separator`, `size` removed, placement rules (B1 to B3)
 
 ### Review
 

@@ -1,0 +1,78 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Menu separator/Migration guide" />
+
+# Menu separator migration guide
+
+Replace `<sp-menu-divider>` with `<swc-menu-separator>` and update the import; the size option is gone.
+
+## Installation
+
+```bash
+# Remove
+yarn remove @spectrum-web-components/menu
+
+# Add
+yarn add @adobe/spectrum-wc
+```
+
+Update your import:
+
+```js
+// Before
+import '@spectrum-web-components/menu/sp-menu-divider.js';
+
+// After
+import '@adobe/spectrum-wc/components/menu-separator/swc-menu-separator.js';
+```
+
+> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath registers and loads only that component's bundle.
+
+## What changed
+
+### Renamed
+
+| Area        | Spectrum 1 (`sp-menu-divider`)                     | Spectrum 2 (`swc-menu-separator`)                                    |
+| ----------- | -------------------------------------------------- | -------------------------------------------------------------------- |
+| Tag         | `sp-menu-divider`                                  | `swc-menu-separator`                                                 |
+| Import path | `@spectrum-web-components/menu/sp-menu-divider.js` | `@adobe/spectrum-wc/components/menu-separator/swc-menu-separator.js` |
+
+### Removed
+
+| Area            | Spectrum 1                                   | Spectrum 2                                                 |
+| --------------- | -------------------------------------------- | ---------------------------------------------------------- |
+| `size`          | `size` attribute inherited from `SizedMixin` | Removed. The line is always 2px thick                      |
+| `--mod-*` props | `--mod-*` divider custom properties          | Removed. Spacing and thickness come from Spectrum 2 tokens |
+
+### Changed
+
+| Area      | Spectrum 1                        | Spectrum 2                                          |
+| --------- | --------------------------------- | --------------------------------------------------- |
+| Role      | `role="separator"`, overridable   | `role="separator"`, set on the host and fixed       |
+| Placement | Allowed anywhere inside `sp-menu` | Place it between groups of menu items inside a menu |
+
+## Migration steps
+
+### 1. Rename the element
+
+```html
+<!-- Before -->
+<sp-menu-divider></sp-menu-divider>
+
+<!-- After -->
+<swc-menu-separator></swc-menu-separator>
+```
+
+### 2. Remove the `size` attribute
+
+```html
+<!-- Before -->
+<sp-menu-divider size="s"></sp-menu-divider>
+
+<!-- After -->
+<swc-menu-separator></swc-menu-separator>
+```
+
+### 3. Replace custom property overrides
+
+Remove any `--mod-*` overrides targeting the divider. The separator doesn't expose public custom properties in this release.
