@@ -1,5 +1,7 @@
 # @adobe/spectrum-wc-icons
 
+## 2.0.0-beta.6
+
 ## 2.0.0-beta.5
 
 ### Minor Changes
