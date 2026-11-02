@@ -318,7 +318,7 @@ Planned rendering shape:
 
 #### Naming and semantics
 
-- [ ] Host `role="separator"`, no accessible name by default, no splitter value semantics
+- [x] Host `role="separator"`, no accessible name by default, no splitter value semantics (set in `connectedCallback`; no `aria-*`, `tabindex` or slot is rendered)
 - [ ] Contrast of the line versus menu background meets [1.4.11](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html)
 
 #### State verification
