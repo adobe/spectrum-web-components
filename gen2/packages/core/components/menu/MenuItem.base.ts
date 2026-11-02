@@ -24,9 +24,10 @@ import { MENU_ITEM_VALID_SIZES, type MenuItemSize } from './MenuItem.types.js';
  * pattern: `role="menuitem"` on the host, with the owning `swc-menu` driving
  * arrow-key navigation and roving tabindex across its rows.
  *
- * @slot label - Text of the row.
+ * @slot label - Text of the row. Referenced as the row's accessible name.
  * @slot visual - Optional leading icon or thumbnail.
- * @slot description - Optional secondary text below the label.
+ * @slot description - Optional secondary text below the label. Referenced as
+ * the row's accessible description.
  */
 export abstract class MenuItemBase extends SizedMixin(SpectrumElement, {
   validSizes: MENU_ITEM_VALID_SIZES,
@@ -84,6 +85,25 @@ export abstract class MenuItemBase extends SizedMixin(SpectrumElement, {
       this.click();
     }
   };
+
+  /**
+   * Names the row from its `label` slot and describes it from its
+   * `description` slot. Wire this to both slots' `slotchange` event in the
+   * SWC render().
+   *
+   * Element references rather than ID refs: the slotted content is
+   * consumer-authored, so there is no `id` to point at.
+   */
+  protected handleTextSlotChange(): void {
+    // `menuitem` names from contents, so without this the description is
+    // folded into the name instead of announced as a description.
+    const label = [...this.querySelectorAll(':scope > [slot="label"]')];
+    const description = [
+      ...this.querySelectorAll(':scope > [slot="description"]'),
+    ];
+    this.ariaLabelledByElements = label.length > 0 ? label : null;
+    this.ariaDescribedByElements = description.length > 0 ? description : null;
+  }
 
   protected override update(changedProperties: PropertyValues): void {
     super.update(changedProperties);

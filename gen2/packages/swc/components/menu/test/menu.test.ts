@@ -1499,6 +1499,62 @@ export const ItemPropertyMutationTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
+// TEST: Accessible name and description
+// ──────────────────────────────────────────────────────────────
+
+export const ItemAriaTextWiringTest: Story = {
+  render: () => html`
+    <swc-menu-item>
+      <span slot="label">Paste special</span>
+      <span slot="description">Keeps the source formatting</span>
+    </swc-menu-item>
+    <swc-menu-item><span slot="label">Cut</span></swc-menu-item>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const [described, plain] = getRows(canvasElement);
+    await described.updateComplete;
+    await plain.updateComplete;
+
+    await step('names the row from its label alone', async () => {
+      expect(
+        described.ariaLabelledByElements,
+        'the label slot is the only name source'
+      ).toEqual([described.querySelector('[slot="label"]')]);
+    });
+
+    await step('describes the row from its description', async () => {
+      expect(
+        described.ariaDescribedByElements,
+        'the description slot is the description'
+      ).toEqual([described.querySelector('[slot="description"]')]);
+    });
+
+    await step('leaves a row with no description undescribed', async () => {
+      expect(plain.ariaDescribedByElements, 'no description reference').toBe(
+        null
+      );
+    });
+
+    // Proves the wiring tracks the slot instead of running once: a stale
+    // reference would leave the row with no accessible name at all.
+    await step('re-points the name when the label is swapped', async () => {
+      described.querySelector('[slot="label"]')?.remove();
+      const replacement = document.createElement('span');
+      replacement.slot = 'label';
+      replacement.textContent = 'Paste and match style';
+      described.prepend(replacement);
+
+      await waitFor(() => {
+        expect(
+          described.ariaLabelledByElements,
+          'the name follows the swap'
+        ).toEqual([replacement]);
+      });
+    });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
 // TEST: Role
 // ──────────────────────────────────────────────────────────────
 

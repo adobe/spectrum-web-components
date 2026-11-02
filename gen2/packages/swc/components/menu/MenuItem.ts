@@ -38,9 +38,10 @@ import styles from './menu-item.css';
  *   </swc-menu-item>
  * </swc-menu>
  *
- * @slot label - Text of the row.
+ * @slot label - Text of the row. Referenced as the row's accessible name.
  * @slot visual - Optional leading icon or thumbnail.
- * @slot description - Optional secondary text below the label.
+ * @slot description - Optional secondary text below the label. Referenced as
+ * the row's accessible description.
  */
 export class MenuItem extends MenuItemBase {
   public static override get styles(): CSSResultArray {
@@ -51,8 +52,11 @@ export class MenuItem extends MenuItemBase {
     return html`
       <slot name="visual"></slot>
       <div class="swc-MenuItem-text">
-        <slot name="label"></slot>
-        <slot name="description"></slot>
+        <slot name="label" @slotchange=${this.handleTextSlotChange}></slot>
+        <slot
+          name="description"
+          @slotchange=${this.handleTextSlotChange}
+        ></slot>
       </div>
     `;
   }

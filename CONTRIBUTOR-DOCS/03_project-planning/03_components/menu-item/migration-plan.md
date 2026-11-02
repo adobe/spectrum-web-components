@@ -237,7 +237,7 @@ Red/green TDD. Each item below should fail before the implementation exists.
 | **Q22** | Does `noWrap` survive? 1st-gen offers it; `swc-menu` already caps row width at 320px, so wrapping behaviour needs a design answer rather than a carry-forward. | No | Open |
 | **Q24** | Should a row be able to mark itself as the current one? `menuitem` cannot carry `aria-selected`, but `aria-current` is available and would cover "this is where you are" without implying selection. Needs a product answer on whether menus need it at all before any `current` property is designed. | No | Open |
 | **Q23** | Authoring ergonomics of the named `label` slot. | No | **Closed.** Named slot kept: with `description` alongside it, an unnamed label is both ambiguous and harder to place in a grid. See [B22](#must-ship) |
-| **Q25** | A `menuitem` takes its accessible name from its contents, so a `description` is announced as part of the row's name rather than as a separate description. 1st-gen behaves the same way. Wiring it as a real description instead would mean naming the row from its label alone, which the default slot makes awkward since the label can be a bare text node. Worth doing, or is name-from-contents the right answer here? | No | Open, raised in review |
+| **Q25** | A `menuitem` takes its accessible name from its contents, so a `description` is announced as part of the row's name rather than as a separate description. 1st-gen behaves the same way. Wiring it as a real description instead would mean naming the row from its label alone, which the default slot makes awkward since the label can be a bare text node. Worth doing, or is name-from-contents the right answer here? | No | **Closed.** Reviewer confirmed React Spectrum references the label as `aria-labelledby` and the description as `aria-describedby`, so the row is named from its label alone. `MenuItemBase.handleTextSlotChange()` sets `ariaLabelledByElements` and `ariaDescribedByElements` from the slotted elements; the named `label` slot ([Q23](#open-questions)) is what makes this possible, since element references need an element |
 
 ## Decision log
 
@@ -246,6 +246,7 @@ Red/green TDD. Each item below should fail before the implementation exists.
 | Link rows move to `swc-menu-link`; `swc-menu-item` is never a link | `swc-menu` plan, Q17 |
 | `role="menuitem"` on exactly one node, no competing role | `swc-menu` plan, Q19 |
 | Named `label` slot rather than the default slot | `swc-menu` plan, Phase A surface table; confirmed in PR review |
+| Row named from its `label`, described by its `description`, via ARIA element references | PR review, Q25 |
 | Disabled rows stay in the roving set | `swc-menu` plan, B7 |
 | Migration order among menu siblings still undecided | `swc-menu` plan, Q15 |
 
