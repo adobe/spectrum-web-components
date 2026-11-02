@@ -18,10 +18,12 @@
   box-sizing: border-box;
 }
 
-/* Block margin centers the line in the 12px section-divider container
+/* Thickness is supplied by the parent `swc-menu` through the inherited
+ * `--swc-menu-separator-thickness`; the separator does not define it.
+ * Block margin centers the line in the 12px section-divider container
  * (Q3: container height pending a spacing token update). */
 .swc-MenuSeparator {
-  --_swc-menu-separator-thickness: token("divider-thickness-medium");
+  --_swc-menu-separator-thickness: var(--swc-menu-separator-thickness, 0px);
 
   block-size: var(--_swc-menu-separator-thickness);
   margin-block: max(0px, calc((token("menu-item-section-divider-height") - var(--_swc-menu-separator-thickness)) / 2));
