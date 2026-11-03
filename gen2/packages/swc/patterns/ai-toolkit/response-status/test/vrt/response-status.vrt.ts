@@ -11,6 +11,7 @@
  */
 
 import { html, nothing } from 'lit';
+import { expect, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import '../../swc-response-status.js';
@@ -22,6 +23,7 @@ import {
   theme,
   vrtParameters,
 } from '../../../../../.storybook/helpers/index.js';
+import type { PixelLoader } from '../../../pixel-loader/index.js';
 import type { ResponseStatusStepStatus } from '../../response-status-step/ResponseStatusStep.js';
 import {
   RESPONSE_STATUSES,
@@ -144,17 +146,26 @@ const forceStepScrollStates = forcePseudoStates(
   '.swc-ResponseStatusStep-detailScroll'
 );
 
-// The active-status leading icon is a live, JS-ticked `swc-pixel-loader`
-// (not a CSS animation Chromatic can freeze on its own), so pause it on its
-// settled frame; otherwise every active-status case would snapshot whatever
-// random mid-animation frame happened to be showing.
-const pauseLoaders = ({ canvasElement }: { canvasElement: HTMLElement }) => {
-  canvasElement.querySelectorAll('swc-response-status').forEach((status) => {
-    const loader = status.shadowRoot?.querySelector('swc-pixel-loader');
-    if (loader) {
-      (loader as HTMLElement & { paused: boolean }).paused = true;
-    }
+// The active-status leading icon is a live, JS-ticked `swc-pixel-loader`, so
+// pause it on its settled frame. `swc-response-status` holds its loader
+// paused for a beat after first render, then unpauses it through its own
+// binding, which would undo an earlier pause. Wait for that first.
+const pauseLoaders = async ({
+  canvasElement,
+}: {
+  canvasElement: HTMLElement;
+}) => {
+  const loaders = Array.from(
+    canvasElement.querySelectorAll('swc-response-status'),
+    (status) => status.shadowRoot?.querySelector('swc-pixel-loader')
+  ).filter(Boolean) as PixelLoader[];
+  await waitFor(() =>
+    expect(loaders.every((loader) => !loader.paused)).toBe(true)
+  );
+  loaders.forEach((loader) => {
+    loader.paused = true;
   });
+  await Promise.all(loaders.map((loader) => loader.updateComplete));
 };
 
 const forceAll = async (
@@ -163,7 +174,7 @@ const forceAll = async (
   await forceDisclosureRowStates(context);
   await forceStepToggleStates(context);
   await forceStepScrollStates(context);
-  pauseLoaders(context);
+  await pauseLoaders(context);
 };
 
 // Every whole-response status with no steps (bare status row: loader icon,

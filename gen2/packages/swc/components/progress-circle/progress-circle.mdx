@@ -46,13 +46,13 @@ Each panel lists **small**, **medium**, and **large** in order so Chromatic can 
 
 ### Progress values
 
-Progress circles can show specific progress values from 0% to 100%. Set the `progress` attribute to a value between 0 and 100 to represent determinate progress. This automatically sets `aria-valuenow` to the provided value for screen readers.
+Progress circles can show specific progress values from 0% to 100%. Set the `progress` attribute to a value between 0 and 100 to represent determinate progress. For screen readers, the component automatically sets `aria-valuenow` to the provided value, `aria-valuemin` to `0`, `aria-valuemax` to `100`, and `aria-valuetext` to a locale-formatted percentage.
 
 <Canvas of={ProgressCircleStories.ProgressValues} />
 
 ### Indeterminate
 
-By default, when `progress` is not set, the component displays an animated loading indicator. The `aria-valuenow` attribute is omitted, signaling to assistive technologies that the operation duration is unknown.
+By default, when `progress` is not set, the component displays an animated loading indicator. The `aria-valuenow`, `aria-valuemin`, `aria-valuemax`, and `aria-valuetext` attributes are omitted, signaling to assistive technologies that the operation duration is unknown.
 
 Use the default (no `progress`) when:
 
@@ -70,20 +70,22 @@ The `<swc-progress-circle>` element implements several accessibility features:
 
 #### ARIA implementation
 
-1. **ARIA role**: automatically sets `role="progressbar"` for proper semantic meaning
-2. **Labeling**: uses the `label` attribute value as `aria-label`, or rely on `aria-label` / `aria-labelledby` you set on the host
+1. **ARIA role**: automatically sets `role="progressbar"` for proper semantic meaning.
+2. **Labeling**: uses the `label` attribute value as `aria-label`, or rely on `aria-label` / `aria-labelledby` you set on the host.
 3. **Progress state** (determinate):
-   - Sets `aria-valuenow` with the current `progress` value
+   - Sets `aria-valuenow` with the current `progress` value.
+   - Sets `aria-valuemin="0"` and `aria-valuemax="100"`.
+   - Sets `aria-valuetext` to a locale-formatted percentage.
 4. **Loading state** (indeterminate, default when `progress` is unset):
-   - When no `progress` value is set, `aria-valuenow` is omitted
-   - Screen readers understand this as an ongoing operation with unknown duration
-5. **Status communication**: screen readers announce progress updates as values change
+   - When no `progress` value is set, `aria-valuenow`, `aria-valuemin`, `aria-valuemax`, and `aria-valuetext` are all omitted.
+   - Screen readers understand this as an ongoing operation with unknown duration.
+5. **Status communication**: assistive technology can observe changes to `aria-valuenow`, but the component does not set a live region. Whether progress updates are announced depends on the live-region setup you provide.
 
 #### Visual accessibility
 
-- Progress is shown visually through the fill amount, not relying solely on color ([WCAG 1.4.1](https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html))
-- High contrast mode is supported with appropriate color overrides
-- Static color variants ensure sufficient contrast on different backgrounds
+- Progress is shown visually through the fill amount, not relying solely on color ([WCAG 1.4.1](https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html)).
+- High contrast mode is supported with appropriate color overrides.
+- Static color variants ensure sufficient contrast on different backgrounds.
 - At `progress="0"`, a small amount of fill is still rendered intentionally. A fully empty circle would fail [WCAG 1.4.11](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html) (non-text contrast) because the track alone may not meet the required 3:1 contrast ratio against the background. The `aria-valuenow` attribute still reflects 0.
 
 #### Non-interactive element
