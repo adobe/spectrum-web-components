@@ -16,6 +16,7 @@ import {
   PropertyValues,
   TemplateResult,
 } from 'lit';
+import { classMap } from 'lit/directives/class-map.js';
 
 import {
   ToastContainerBase,
@@ -38,6 +39,7 @@ import styles from './toast-container.css';
 export class ToastContainer extends ToastContainerBase {
   private _toast?: Toast;
   private _renderedKey?: string;
+  private _shownKey?: string;
 
   public static override get styles(): CSSResultArray {
     return [styles];
@@ -77,6 +79,25 @@ export class ToastContainer extends ToastContainerBase {
     this._renderedKey = entry.key;
   }
 
+  protected override updated(changes: PropertyValues): void {
+    const region = this.region;
+    if (region) {
+      // Re-showing moves the region to the end of the top layer, above anything opened since.
+      if (
+        region.matches(':popover-open') &&
+        this._shownKey !== this._renderedKey
+      ) {
+        region.hidePopover();
+      }
+      if (!region.matches(':popover-open')) {
+        region.showPopover();
+      }
+    }
+    this._shownKey = region ? this._renderedKey : undefined;
+    // The base class opens the toast, so the region must be shown first (a hidden popover is display: none).
+    super.updated(changes);
+  }
+
   protected override render(): TemplateResult | typeof nothing {
     if (!this._toast) {
       return nothing;
@@ -84,8 +105,12 @@ export class ToastContainer extends ToastContainerBase {
     const count = ToastQueue.entries.length;
     return html`
       <div
-        class="swc-ToastContainer swc-ToastContainer--${this.placement}"
+        class=${classMap({
+          'swc-ToastContainer': true,
+          [`swc-ToastContainer--${this.placement}`]: true,
+        })}
         role="region"
+        popover="manual"
         tabindex="-1"
         aria-label=${`${count} ${count === 1 ? 'notification' : 'notifications'}.`}
         @pointerenter=${this.handlePointerEnter}

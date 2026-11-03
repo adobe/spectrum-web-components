@@ -123,12 +123,39 @@ test('only the front counts down and promotion starts a full timeout', async ({
   await expect(page.locator('swc-toast')).toHaveCount(0);
 });
 
+// Runs on the real clock: Playwright's fake clock also stops requestAnimationFrame,
+// which hid the stuck countdown this test guards against.
+test('closing the focused toast with the keyboard lets the promoted toast auto-dismiss', async ({
+  page,
+}) => {
+  await gotoStory(
+    page,
+    'components-toast-container--auto-dismiss',
+    'swc-button'
+  );
+  const add = page.getByRole('button', { name: 'Add toast', exact: true });
+  await add.click();
+  await page.waitForTimeout(1500);
+  await add.click();
+  const region = page.getByRole('region');
+  await expect(region).toHaveAttribute('aria-label', '2 notifications.');
+  await page.waitForTimeout(1500);
+  await add.focus();
+  await page.keyboard.press('Tab');
+  await page.keyboard.press('Tab');
+  await page.keyboard.press('Tab');
+  await expect(page.getByRole('button', { name: 'Close' })).toBeFocused();
+  await page.keyboard.press('Enter');
+  await expect(region).toHaveAttribute('aria-label', '1 notification.');
+  await expect(page.locator('swc-toast')).toHaveCount(0, { timeout: 10000 });
+});
+
 test('a pointer still inside the region keeps the promoted toast paused', async ({
   page,
 }) => {
   await openTimedStory(
     page,
-    'components-toast-container-tests-container--programmatic-close-fixture'
+    'components-toast-container--programmatic-close-fixture'
   );
   const add = page.getByRole('button', { name: 'Add toast', exact: true });
   await add.click();

@@ -12,13 +12,14 @@
 import { PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
-import { SpectrumElement } from '../../element/index.js';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import {
   deepContains,
   getActiveElement,
   validateEnum,
   warnIf,
-} from '../../utils/index.js';
+} from '@adobe/spectrum-wc-core/utils/index.js';
+
 import type { ToastBase } from './Toast.base.js';
 import {
   TOAST_CONTAINER_PLACEMENTS,
@@ -104,6 +105,14 @@ export abstract class ToastContainerBase extends SpectrumElement {
       return;
     }
     this._activeToast = toast;
+    // Removing a focused toast fires no focusout, so drop a pause its focus left behind.
+    if (
+      this._focusWithin &&
+      !deepContains(this, getActiveElement(this.ownerDocument))
+    ) {
+      this._focusWithin = false;
+      this.countdown.setPaused('focus', false);
+    }
     this._unregisterToast = ToastQueue.setRendered(entry.key, () => {
       toast.close();
       return !toast.open;
@@ -248,6 +257,12 @@ export abstract class ToastContainerBase extends SpectrumElement {
       return;
     }
     const hasAction = Boolean(entry.actionLabel && entry.onAction);
+    warnIf(
+      this,
+      Boolean(entry.actionLabel) !== Boolean(entry.onAction),
+      'A toast action needs both actionLabel and onAction.',
+      docsUrl
+    );
     warnIf(
       this,
       hasAction && toast.timeout !== null,

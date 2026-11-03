@@ -417,3 +417,34 @@ export const ToastTextWrapping: Story<ToastContainerArgs> = {
   parameters: staticStackParameters,
   tags: ['behaviors'],
 };
+
+// ──────────────────
+//    TEST FIXTURES
+// ──────────────────
+
+// Hidden fixture for the Playwright pause spec, which closes the newest toast
+// through the queue so the pointer state under test stays untouched. The ci-a11y
+// and production Storybooks build `*.stories.ts` but not `.test.ts` files, so it
+// lives here. `!dev` keeps it out of the sidebar and `!test` out of the
+// automatic runs; it stays addressable by story id.
+export const ProgrammaticCloseFixture: Story<ToastContainerArgs> = {
+  render: () => {
+    const add = (): void => {
+      ToastQueue.add('File saved', { timeout: 6000 });
+    };
+    const closeNewest = (): void => {
+      const entry = ToastQueue.entries[0];
+      if (entry) {
+        ToastQueue.close(entry.key);
+      }
+    };
+    return html`
+      <swc-button variant="secondary" @click=${add}>Add toast</swc-button>
+      <swc-button variant="secondary" @click=${closeNewest}>
+        Close newest
+      </swc-button>
+      <swc-toast-container></swc-toast-container>
+    `;
+  },
+  tags: ['!dev', '!test'],
+};

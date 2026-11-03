@@ -42,33 +42,6 @@ const getFront = async (container: ToastContainer): Promise<Toast> => {
   return toast!;
 };
 
-// Fixture for the Playwright pause specs: closes the newest toast through the
-// queue so the pointer state under test stays untouched.
-export const ProgrammaticCloseFixture: Story = {
-  beforeEach: () => {
-    ToastQueue.clear();
-    return () => ToastQueue.clear();
-  },
-  render: () => {
-    const add = (): void => {
-      ToastQueue.add('File saved', { timeout: 6000 });
-    };
-    const closeNewest = (): void => {
-      const entry = ToastQueue.entries[0];
-      if (entry) {
-        ToastQueue.close(entry.key);
-      }
-    };
-    return html`
-      <swc-button variant="secondary" @click=${add}>Add toast</swc-button>
-      <swc-button variant="secondary" @click=${closeNewest}>
-        Close newest
-      </swc-button>
-      <swc-toast-container></swc-toast-container>
-    `;
-  },
-};
-
 export const QueueOperationsTest: Story = {
   render: () => html`
     <div></div>
@@ -423,6 +396,19 @@ export const ActionsTest: Story = {
         }
       );
 
+      await step('an action missing its label or callback warns', async () => {
+        await withWarningSpy(async (warnings) => {
+          ToastQueue.add('Label only', { actionLabel: 'Undo' });
+          await getFront(container);
+          expect(
+            warnings.some((warning) =>
+              String(warning[1]).includes('actionLabel and onAction')
+            ),
+            'incomplete action warning'
+          ).toBe(true);
+        });
+      });
+
       await step(
         'shouldCloseOnAction opts into closure and its callback',
         async () => {
@@ -638,5 +624,121 @@ export const InterruptedClosureTest: Story = {
       }
       ToastQueue.clear();
     }
+  },
+};
+
+export const TopLayerStackingTest: Story = {
+  render: () => html`
+    <div
+      id="overlap"
+      popover="manual"
+      style="inset: auto 0 0 0; inline-size: auto; block-size: 200px; margin: 0;"
+    ></div>
+    <swc-toast-container></swc-toast-container>
+  `,
+  play: async ({ canvasElement, step }) => {
+    ToastQueue.clear();
+    const container = await getComponent<ToastContainer>(
+      canvasElement,
+      'swc-toast-container'
+    );
+    const overlap = canvasElement.querySelector<HTMLElement>('#overlap')!;
+    const topElementOverToast = (): Element | null => {
+      const rect = container.shadowRoot
+        ?.querySelector('[role="region"]')
+        ?.getBoundingClientRect();
+      return rect
+        ? document.elementFromPoint(
+            rect.left + rect.width / 2,
+            rect.top + rect.height / 2
+          )
+        : null;
+    };
+
+    try {
+      ToastQueue.add('First notification');
+      await getFront(container);
+      overlap.showPopover();
+
+      await step('a popover opened after the first toast covers it', () => {
+        expect(topElementOverToast(), 'top element').toBe(overlap);
+      });
+
+      await step('a newly added toast stacks above that popover', async () => {
+        ToastQueue.add('Second notification');
+        await getFront(container);
+        expect(topElementOverToast(), 'top element').toBe(container);
+      });
+    } finally {
+      if (overlap.matches(':popover-open')) {
+        overlap.hidePopover();
+      }
+      ToastQueue.clear();
+    }
+  },
+};
+
+// Manual check for layering (see Q16, Q18): the region is in the top layer, so a
+// high z-index header must not cover it; a modal dialog and open popovers are the cases to inspect.
+export const LayeringFixture: Story = {
+  name: 'Layering (manual check)',
+  args: { placement: 'top' },
+  argTypes: {
+    placement: {
+      control: 'select',
+      options: ['top', 'top-end', 'bottom', 'bottom-end'],
+    },
+  },
+  tags: ['!test'],
+  beforeEach: () => {
+    ToastQueue.clear();
+    return () => ToastQueue.clear();
+  },
+  render: (args) => {
+    const add = (): void => {
+      ToastQueue.add(`Layering check (${ToastQueue.entries.length + 1})`, {
+        variant: 'info',
+      });
+    };
+    const openDialog = (): void => {
+      document
+        .querySelector<HTMLDialogElement>('#layering-dialog')
+        ?.showModal();
+    };
+    const closeDialog = (): void => {
+      document.querySelector<HTMLDialogElement>('#layering-dialog')?.close();
+    };
+    const openPopover = (): void => {
+      document.querySelector<HTMLElement>('#layering-popover')?.showPopover();
+    };
+    return html`
+      <div
+        style="position: fixed; inset: 0 0 auto 0; z-index: 100; padding: 16px; background: #333; color: #fff;"
+      >
+        App header (z-index: 100). A toast at the top placement should stay
+        visible above it.
+      </div>
+      <div style="padding-block-start: 96px; display: flex; gap: 8px;">
+        <swc-button variant="secondary" @click=${add}>Add toast</swc-button>
+        <swc-button variant="secondary" @click=${openDialog}>
+          Open modal dialog
+        </swc-button>
+        <swc-button variant="secondary" @click=${openPopover}>
+          Open popover
+        </swc-button>
+      </div>
+      <div id="layering-popover" popover="auto" style="padding: 24px;">
+        <p>Auto popover. Adding a toast from here should not close it.</p>
+        <swc-button variant="secondary" @click=${add}>Add toast</swc-button>
+      </div>
+      <dialog id="layering-dialog" style="padding: 24px;">
+        <p>Modal dialog. A toast added from here should stay visible.</p>
+        <swc-button variant="secondary" @click=${add}>Add toast</swc-button>
+        <swc-button variant="secondary" @click=${closeDialog}>
+          Close dialog
+        </swc-button>
+      </dialog>
+      <swc-toast-container .placement=${args.placement}></swc-toast-container>
+    `;
   },
 };

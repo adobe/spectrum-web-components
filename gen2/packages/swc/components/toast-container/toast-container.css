@@ -12,13 +12,18 @@
 
 .swc-ToastContainer {
   position: fixed;
-  inset-block-end: token("spacing-300");
+  inset-block: auto token("spacing-300");
   inset-inline: token("spacing-300");
-  z-index: 1;
   inline-size: fit-content;
   max-inline-size: calc(100% - 2 * token("spacing-300"));
+  padding: 0;
+  margin: 0;
   margin-inline: auto;
+  color: inherit;
+  background: transparent;
+  border: 0;
   border-radius: token("corner-radius-700");
+  overflow: visible;
   outline: none;
 }
 
