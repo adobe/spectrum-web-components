@@ -293,7 +293,7 @@ Planned rendering shape:
 
 - [x] `MenuSeparator.base.ts`: set `role="separator"`; no public properties
 - [x] No default slot
-- [ ] Add `swc-menu-separator` to the allowed children of `swc-menu`, `swc-action-menu`, and `swc-menu-item` (Menu Phase B)
+- [x] Add `swc-menu-separator` to the allowed children of `swc-menu` (`MENU_ALLOWED_CHILDREN`). `swc-action-menu` and `swc-menu-item` do not exist yet, so they stay with Menu Phase B
 
 #### Alignment checks
 
@@ -307,7 +307,7 @@ Planned rendering shape:
 - [x] Add `.swc-MenuSeparator` to the internal element in `render()`; keep styling off `:host`
 - [x] Copy the `.spectrum-Menu-divider` rule from `spectrum-css` `spectrum-two` `components/menu/index.css` into `menu-separator.css` as baseline
 - [x] Apply the Medium divider thickness (2px, Q6) and the container heights from Q3 (12px container via `menu-item-section-divider-height`; the 7px token update is still pending, Q3)
-- [x] Add `@cssprop` JSDoc for every exposed `--swc-*` property (N/A: no public custom properties are exposed, per B4)
+- [x] Add `@cssprop` JSDoc for every exposed `--swc-*` property (`--swc-menu-separator-thickness`, set by `swc-menu`; no `--mod-*` per B4)
 - [x] Pass stylelint (property order, `no-descending-specificity`, token validation)
 
 #### Visual model and regressions
@@ -343,7 +343,7 @@ Planned rendering shape:
 
 #### General
 
-- [x] JSDoc on the class and any CSS custom properties (no custom properties exposed)
+- [x] JSDoc on the class and any CSS custom properties (`--swc-menu-separator-thickness` documented with `@cssprop`)
 - [ ] Storybook story with a separator between labelled `swc-menu-group` blocks
 
 #### Breaking changes

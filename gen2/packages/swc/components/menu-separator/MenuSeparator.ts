@@ -20,6 +20,7 @@ import styles from './menu-separator.css';
  * A menu separator separates groups of items inside a menu.
  *
  * @element swc-menu-separator
+ * @cssprop {Length} --swc-menu-separator-thickness - Line thickness. Set by the parent `swc-menu`; the separator does not define it.
  * @since 2.0.0-beta.1
  */
 export class MenuSeparator extends MenuSeparatorBase {

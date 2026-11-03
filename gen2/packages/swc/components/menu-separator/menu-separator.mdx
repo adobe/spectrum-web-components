@@ -25,6 +25,10 @@ A menu separator consists of:
 
 Place a menu separator between groups of menu items, not before the first item or after the last. The separator is not interactive and does not receive focus.
 
+Place it as a direct child of `swc-menu`, `swc-action-menu`, or a `swc-menu-item` submenu, never inside a `swc-menu-group`. The menu supplies the line thickness. `swc-menu-item` has not shipped yet, so the example slots placeholder rows with `role="menuitem"`.
+
+<Canvas of={MenuSeparatorStories.InMenu} />
+
 ## Accessibility
 
 ### Features

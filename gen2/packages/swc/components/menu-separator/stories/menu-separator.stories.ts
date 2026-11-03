@@ -14,6 +14,8 @@ import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
+import '@adobe/spectrum-wc/components/button/swc-button.js';
+import '@adobe/spectrum-wc/components/menu/swc-menu.js';
 import '@adobe/spectrum-wc/components/menu-separator/swc-menu-separator.js';
 
 // ────────────────
@@ -72,6 +74,24 @@ export const Anatomy: Story = {
     </div>
   `,
   tags: ['anatomy'],
+};
+
+// ──────────────────────────
+//    BEHAVIOR STORIES
+// ──────────────────────────
+
+// Placeholder rows: `swc-menu-item` has not shipped yet.
+export const InMenu: Story = {
+  render: () => html`
+    <swc-button id="separator-menu-trigger">Edit</swc-button>
+    <swc-menu open for="separator-menu-trigger">
+      <swc-menu-item role="menuitem">Cut</swc-menu-item>
+      <swc-menu-item role="menuitem">Copy</swc-menu-item>
+      <swc-menu-separator></swc-menu-separator>
+      <swc-menu-item role="menuitem">Delete</swc-menu-item>
+    </swc-menu>
+  `,
+  tags: ['behaviors'],
 };
 
 // ────────────────────────────────

@@ -18,7 +18,11 @@ import { MenuSeparator } from '@adobe/spectrum-wc/components/menu-separator/Menu
 import '@adobe/spectrum-wc/components/menu-separator/swc-menu-separator.js';
 
 import { getComponent } from '../../../utils/test-utils.js';
-import meta, { Anatomy, Overview } from '../stories/menu-separator.stories.js';
+import meta, {
+  Anatomy,
+  InMenu,
+  Overview,
+} from '../stories/menu-separator.stories.js';
 
 // This file defines dev-only test stories that reuse the main story metadata.
 export default {
@@ -86,6 +90,33 @@ export const AnatomyTest: Story = {
     await step('centers the line in the 12px container', async () => {
       expect(getComputedStyle(line).marginBlockStart).toBe('5px');
       expect(getComputedStyle(line).marginBlockEnd).toBe('5px');
+    });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Menu integration
+// ──────────────────────────────────────────────────────────────
+
+export const InMenuTest: Story = {
+  ...InMenu,
+  play: async ({ canvasElement, step }) => {
+    const separator = await getComponent<MenuSeparator>(
+      canvasElement,
+      'swc-menu-separator'
+    );
+    const line = separator.shadowRoot?.querySelector(
+      '.swc-MenuSeparator'
+    ) as HTMLElement;
+
+    await step('receives the medium thickness from the menu', async () => {
+      expect(getComputedStyle(line).blockSize).toBe('2px');
+    });
+
+    await step('is not focusable inside the menu', async () => {
+      expect(separator.hasAttribute('tabindex')).toBe(false);
+      separator.focus();
+      expect(document.activeElement).not.toBe(separator);
     });
   },
 };
