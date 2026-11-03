@@ -366,6 +366,15 @@ jobs:
           node ./scripts/create-git-tag.js gen1
           echo "published=true" >> $GITHUB_OUTPUT
 
+      # npm can take a few minutes to serve a new version everywhere, so this polls
+      # until every 1st-gen package and React wrapper is on npm at the released
+      # version with `latest` pointing at it. Runs after the git tag so a slow
+      # registry never leaves a half-tagged release; a red step here means "don't
+      # announce yet", not "re-publish".
+      - name: Verify the registry
+        if: steps.publish.outputs.published == 'true'
+        run: node scripts/verify-registry.js --gen=1st-gen --tag=latest --include=1st-gen/react
+
       - name: Publish summary
         if: always()
         env:

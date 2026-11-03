@@ -56,7 +56,9 @@
     "tokens:test": "yarn workspace @adobe/swc-tokens test && yarn workspace @adobe/postcss-token test && yarn workspace swc-vscode-token test",
     "tokens:update": "yarn tokens:test && yarn workspace swc-vscode-token tokens && yarn workspace @adobe/spectrum-wc stylesheet:tokens && yarn workspace @adobe/spectrum-wc stylesheet:typography",
     "type-check": "yarn type-check:gen2",
-    "type-check:gen2": "tsc -b gen2/packages/core gen2/packages/icons gen2/packages/swc --pretty false"
+    "type-check:gen2": "tsc -b gen2/packages/core gen2/packages/icons gen2/packages/swc --pretty false",
+    "validate:packages": "node scripts/validate-packages.js",
+    "verify:registry": "node scripts/verify-registry.js"
   },
   "workspaces": [
     "1st-gen",
@@ -80,6 +82,7 @@
     }
   },
   "devDependencies": {
+    "@arethetypeswrong/cli": "0.18.5",
     "@axe-core/playwright": "4.13.0",
     "@changesets/cli": "2.29.7",
     "@commitlint/cli": "19.8.1",
@@ -109,6 +112,7 @@
     "npm-run-all2": "8.0.4",
     "prettier": "3.8.1",
     "prettier-plugin-package": "1.4.0",
+    "publint": "0.3.25",
     "replace-in-file": "8.3.0",
     "start-server-and-test": "2.1.5",
     "stylelint": "17.1.1",
