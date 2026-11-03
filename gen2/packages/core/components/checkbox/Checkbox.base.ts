@@ -91,8 +91,7 @@ export abstract class CheckboxBase extends SizedMixin(
     this.requestUpdate('checked', oldValue);
     // Update the form value and validity now, as a native checkbox does, so an
     // immediate `FormData` or `checkValidity()` read is current.
-    this.syncFormValue();
-    this.syncValidity();
+    this.syncFormState();
   }
 
   private _checked = false;
@@ -157,9 +156,9 @@ export abstract class CheckboxBase extends SizedMixin(
   public name: string | undefined;
 
   /**
-   * Value submitted under `name` while the checkbox is checked. Reflects to the
-   * `value` attribute; removing the attribute restores `on`. `null` becomes an
-   * empty string, as on a native checkbox.
+   * Value submitted under `name` while the checkbox is checked. As on a native
+   * checkbox, removing the `value` attribute restores `on`, and `null` becomes
+   * an empty string.
    *
    * @default on
    */
@@ -168,7 +167,7 @@ export abstract class CheckboxBase extends SizedMixin(
     return this._value;
   }
 
-  public set value(value: string) {
+  public set value(value: string | null) {
     const next = value === null ? '' : String(value);
     if (next === this._value) {
       return;
@@ -234,7 +233,17 @@ export abstract class CheckboxBase extends SizedMixin(
   private readonly internals = this.attachInternals();
 
   private readonly fieldAssoc = new FieldAssociationController(this.internals, {
-    onDisabledChange: () => this.requestUpdate(),
+    // A form can submit right after the fieldset cascade flips, so apply the
+    // new disabled state now rather than on the next update.
+    onDisabledChange: () => {
+      const input = this.inputElement;
+      if (input) {
+        input.disabled = this.effectiveDisabled;
+      }
+      this.fieldAssoc.syncDisabledState();
+      this.syncFormState();
+      this.requestUpdate();
+    },
     getStatus: () => this.fieldStatus,
     host: this,
   });
@@ -438,6 +447,11 @@ export abstract class CheckboxBase extends SizedMixin(
   }
 
   /** Submits `value` only while checked and enabled; restores by checked state. */
+  private syncFormState(): void {
+    this.syncFormValue();
+    this.syncValidity();
+  }
+
   private syncFormValue(): void {
     this.fieldAssoc.setValue(
       this.effectiveDisabled || !this.checked ? null : this.value,
@@ -451,10 +465,8 @@ export abstract class CheckboxBase extends SizedMixin(
    * invalid status.
    */
   private syncValidity(): void {
-    const input = this.inputElement;
-    if (!input) {
-      return;
-    }
+    // Before the first render there is no input, so validity has no anchor.
+    const input = this.inputElement ?? undefined;
     const customError = this.fieldStatus === 'invalid';
     const valueMissing =
       !this.fieldAssoc.barred && this.required && !this.checked;
@@ -466,7 +478,7 @@ export abstract class CheckboxBase extends SizedMixin(
     // empty until the input renders `required`.
     const message = customError
       ? this.errorTextContent || 'Enter a valid value.'
-      : input.validationMessage || 'Check this box to continue.';
+      : input?.validationMessage || 'Check this box to continue.';
     this.internals.setValidity({ customError, valueMissing }, message, input);
   }
 }

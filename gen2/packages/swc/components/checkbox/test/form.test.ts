@@ -152,6 +152,52 @@ export const FormValueTest: Story = {
 };
 FormValueTest.storyName = 'Form value';
 
+export const ValueAttributeTest: Story = {
+  render: () => html`
+    <form>
+      <swc-checkbox name="empty" value="" checked>
+        <span slot="label">Empty</span>
+      </swc-checkbox>
+      <swc-checkbox name="plain" checked>
+        <span slot="label">Plain</span>
+      </swc-checkbox>
+    </form>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const form = formOf(canvasElement);
+    const [, plain] = await getComponents<Checkbox>(
+      canvasElement,
+      'swc-checkbox'
+    );
+
+    await step('an empty value attribute submits an empty string', () => {
+      expect(new FormData(form).get('empty')).toBe('');
+    });
+
+    await step('setting value to "on" writes the attribute', async () => {
+      plain.value = 'on';
+      await plain.updateComplete;
+      expect(plain).toHaveAttribute('value', 'on');
+    });
+
+    await step(
+      'a property set before the first update wins over the attribute',
+      async () => {
+        const early = document.createElement('swc-checkbox');
+        early.setAttribute('name', 'early');
+        early.setAttribute('value', 'from-attribute');
+        early.setAttribute('checked', '');
+        form.append(early);
+        early.value = 'from-property';
+        await early.updateComplete;
+        expect(early).toHaveAttribute('value', 'from-property');
+        expect(new FormData(form).get('early')).toBe('from-property');
+      }
+    );
+  },
+};
+ValueAttributeTest.storyName = 'value attribute';
+
 // ──────────────────────────────────────────────────────────────
 // TEST: Validity
 // ──────────────────────────────────────────────────────────────
@@ -209,6 +255,32 @@ export const RequiredTest: Story = {
   },
 };
 RequiredTest.storyName = 'required';
+
+export const PreRenderValidityTest: Story = {
+  render: () => html`
+    <form></form>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const form = formOf(canvasElement);
+    let submits = 0;
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      submits += 1;
+    });
+
+    await step('a required checkbox is invalid before its first render', () => {
+      const checkbox = document.createElement('swc-checkbox');
+      checkbox.setAttribute('name', 'terms');
+      checkbox.setAttribute('required', '');
+      form.append(checkbox);
+      expect(checkbox.validity.valueMissing).toBe(true);
+      expect(checkbox.validationMessage).not.toBe('');
+      form.requestSubmit();
+      expect(submits).toBe(0);
+    });
+  },
+};
+PreRenderValidityTest.storyName = 'Validity before the first render';
 
 export const InvalidStatusTest: Story = {
   render: () => html`
@@ -357,6 +429,59 @@ export const BarredTest: Story = {
   },
 };
 BarredTest.storyName = 'Barred and disabled fields';
+
+export const FieldsetReenableTest: Story = {
+  render: () => html`
+    <form>
+      <fieldset disabled>
+        <swc-checkbox name="terms" required>
+          <span slot="label">I agree to the terms</span>
+        </swc-checkbox>
+        <swc-checkbox name="news" checked>
+          <span slot="label">Send me news</span>
+        </swc-checkbox>
+      </fieldset>
+    </form>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const form = formOf(canvasElement);
+    const fieldset = form.querySelector('fieldset');
+    const [terms, news] = await getComponents<Checkbox>(
+      canvasElement,
+      'swc-checkbox'
+    );
+    if (!fieldset) {
+      throw new Error('Test requires a fieldset');
+    }
+    let submits = 0;
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      submits += 1;
+    });
+
+    await step(
+      're-enabling the fieldset takes effect before the next update',
+      () => {
+        fieldset.disabled = false;
+        expect(news.matches(':state(disabled)')).toBe(false);
+        expect(inputOf(news).disabled).toBe(false);
+        expect(new FormData(form).get('news')).toBe('on');
+        expect(terms.validity.valueMissing).toBe(true);
+        form.requestSubmit();
+        expect(submits).toBe(0);
+      }
+    );
+
+    await step('disabling it again also takes effect at once', () => {
+      fieldset.disabled = true;
+      expect(new FormData(form).has('news')).toBe(false);
+      expect(terms.validity.valueMissing).toBe(false);
+      form.requestSubmit();
+      expect(submits).toBe(1);
+    });
+  },
+};
+FieldsetReenableTest.storyName = 'Fieldset changes take effect immediately';
 
 // ──────────────────────────────────────────────────────────────
 // TEST: Reset and restore
