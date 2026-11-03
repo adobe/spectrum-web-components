@@ -18,11 +18,7 @@ import { MenuSeparator } from '@adobe/spectrum-wc/components/menu-separator/Menu
 import '@adobe/spectrum-wc/components/menu-separator/swc-menu-separator.js';
 
 import { getComponent } from '../../../utils/test-utils.js';
-import meta, {
-  Anatomy,
-  InMenu,
-  Overview,
-} from '../stories/menu-separator.stories.js';
+import meta, { Anatomy, Overview } from '../stories/menu-separator.stories.js';
 
 // This file defines dev-only test stories that reuse the main story metadata.
 export default {
@@ -80,12 +76,12 @@ export const AnatomyTest: Story = {
       '.swc-MenuSeparator'
     ) as HTMLElement;
 
-    // Stands in for the parent swc-menu, which supplies the thickness.
-    separator.style.setProperty('--swc-menu-separator-thickness', '2px');
-
-    await step('uses the thickness supplied by the menu', async () => {
-      expect(getComputedStyle(line).blockSize).toBe('2px');
-    });
+    await step(
+      'receives the medium thickness from the parent menu',
+      async () => {
+        expect(getComputedStyle(line).blockSize).toBe('2px');
+      }
+    );
 
     await step('centers the line in the 12px container', async () => {
       expect(getComputedStyle(line).marginBlockStart).toBe('5px');
@@ -94,24 +90,13 @@ export const AnatomyTest: Story = {
   },
 };
 
-// ──────────────────────────────────────────────────────────────
-// TEST: Menu integration
-// ──────────────────────────────────────────────────────────────
-
-export const InMenuTest: Story = {
-  ...InMenu,
+export const FocusTest: Story = {
+  ...Anatomy,
   play: async ({ canvasElement, step }) => {
     const separator = await getComponent<MenuSeparator>(
       canvasElement,
       'swc-menu-separator'
     );
-    const line = separator.shadowRoot?.querySelector(
-      '.swc-MenuSeparator'
-    ) as HTMLElement;
-
-    await step('receives the medium thickness from the menu', async () => {
-      expect(getComputedStyle(line).blockSize).toBe('2px');
-    });
 
     await step('is not focusable inside the menu', async () => {
       expect(separator.hasAttribute('tabindex')).toBe(false);

@@ -22,7 +22,7 @@ import '@adobe/spectrum-wc/components/menu-separator/swc-menu-separator.js';
 //    METADATA
 // ────────────────
 
-const { args, argTypes, template } = getStorybookHelpers('swc-menu-separator');
+const { args, argTypes } = getStorybookHelpers('swc-menu-separator');
 
 /**
  * A menu separator is a visual and semantic break between groups of items in a menu.
@@ -32,7 +32,6 @@ const meta: Meta = {
   component: 'swc-menu-separator',
   args,
   argTypes,
-  render: (args) => template(args),
   parameters: {
     docs: {
       subtitle: `Separates groups of items inside a menu`,
@@ -44,11 +43,28 @@ const meta: Meta = {
 
 export default meta;
 
+// ────────────────────
+//    HELPERS
+// ────────────────────
+
+// A separator only has meaning inside a menu, so every story renders it there.
+// Placeholder rows: `swc-menu-item` has not shipped yet.
+const renderInMenu = (id: string) => html`
+  <swc-button id="${id}-trigger">Edit</swc-button>
+  <swc-menu open for="${id}-trigger">
+    <swc-menu-item role="menuitem">Cut</swc-menu-item>
+    <swc-menu-item role="menuitem">Copy</swc-menu-item>
+    <swc-menu-separator></swc-menu-separator>
+    <swc-menu-item role="menuitem">Delete</swc-menu-item>
+  </swc-menu>
+`;
+
 // ────────────────────────
 //    PLAYGROUND STORY
 // ────────────────────────
 
 export const Playground: Story = {
+  render: () => renderInMenu('playground'),
   tags: ['dev'],
 };
 
@@ -57,6 +73,7 @@ export const Playground: Story = {
 // ──────────────────────────
 
 export const Overview: Story = {
+  render: () => renderInMenu('overview'),
   tags: ['overview'],
 };
 
@@ -65,33 +82,8 @@ export const Overview: Story = {
 // ──────────────────────────
 
 export const Anatomy: Story = {
-  render: () => html`
-    <div style="inline-size: 240px;">
-      <div>Cut</div>
-      <div>Copy</div>
-      <swc-menu-separator></swc-menu-separator>
-      <div>Delete</div>
-    </div>
-  `,
+  render: () => renderInMenu('anatomy'),
   tags: ['anatomy'],
-};
-
-// ──────────────────────────
-//    BEHAVIOR STORIES
-// ──────────────────────────
-
-// Placeholder rows: `swc-menu-item` has not shipped yet.
-export const InMenu: Story = {
-  render: () => html`
-    <swc-button id="separator-menu-trigger">Edit</swc-button>
-    <swc-menu open for="separator-menu-trigger">
-      <swc-menu-item role="menuitem">Cut</swc-menu-item>
-      <swc-menu-item role="menuitem">Copy</swc-menu-item>
-      <swc-menu-separator></swc-menu-separator>
-      <swc-menu-item role="menuitem">Delete</swc-menu-item>
-    </swc-menu>
-  `,
-  tags: ['behaviors'],
 };
 
 // ────────────────────────────────
@@ -99,13 +91,6 @@ export const InMenu: Story = {
 // ────────────────────────────────
 
 export const Accessibility: Story = {
-  render: () => html`
-    <div style="inline-size: 240px;">
-      <div>Cut</div>
-      <div>Copy</div>
-      <swc-menu-separator></swc-menu-separator>
-      <div>Delete</div>
-    </div>
-  `,
+  render: () => renderInMenu('accessibility'),
   tags: ['a11y'],
 };
