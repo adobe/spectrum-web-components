@@ -13,8 +13,8 @@
 import { HeaderMdx, useOf } from '@storybook/addon-docs/blocks';
 import React from 'react';
 
-import { ApiTable } from './ApiTable';
-import { SpectrumStories } from './SpectrumStories';
+import { ApiTable } from './ApiTable.js';
+import { SpectrumStories } from './SpectrumStories.js';
 
 /**
  * The standard bottom of a Storybook docs page: API table and the feedback
@@ -38,7 +38,7 @@ export const DocsFooter = () => {
   // Per-unit pages may flag custom API content by tagging stories with `api`.
   const hasCustomApiStories = Object.values(
     resolvedOf?.csfFile?.stories ?? {}
-  ).some((story: any) => story.tags?.includes('api'));
+  ).some((story) => story.tags?.includes('api'));
 
   // Multi-element components (e.g. accordion, tabs) declare sibling element tags
   // via `parameters.additionalApiTables`. When present, each element gets its
