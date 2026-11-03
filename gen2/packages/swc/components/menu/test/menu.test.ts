@@ -1600,7 +1600,9 @@ export const ItemAriaTextWiringTest: Story = {
 // ──────────────────────────────────────────────────────────────
 
 export const ItemMissingLabelWarningTest: Story = {
-  render: () => html`<div></div>`,
+  render: () => html`
+    <div></div>
+  `,
   play: async ({ canvasElement, step }) => {
     const host = canvasElement.querySelector('div') as HTMLElement;
 
