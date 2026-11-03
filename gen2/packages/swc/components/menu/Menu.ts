@@ -18,9 +18,9 @@ import styles from './menu.css';
 
 /**
  * A menu is a list of actions or options anchored to an externally-referenced
- * trigger, following the menu-button pattern. `swc-menu-item` rows
- * (`swc-menu-group` and `swc-divider` as a separator join in a later
- * migration phase) render in a shadow-internal `role="menu"` surface.
+ * trigger, following the menu-button pattern. `swc-menu-item` rows and
+ * `swc-menu-separator` lines (`swc-menu-group` joins in a later migration
+ * phase) render in a shadow-internal `role="menu"` surface.
  *
  * The behavior (trigger and ARIA wiring, positioning, keyboard navigation,
  * and event dispatch) lives in `MenuBase`; this class supplies only the
@@ -37,7 +37,7 @@ import styles from './menu.css';
  *   <swc-menu-item>Paste</swc-menu-item>
  * </swc-menu>
  *
- * @slot - `swc-menu-item` elements.
+ * @slot - `swc-menu-item` and `swc-menu-separator` elements.
  *
  * @fires swc-open - Dispatched when the menu begins opening.
  * @fires swc-after-open - Dispatched after the open transition completes.

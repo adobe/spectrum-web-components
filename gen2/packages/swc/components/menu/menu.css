@@ -102,6 +102,13 @@
   }
 }
 
+/* The menu owns the separator's line thickness. */
+::slotted(swc-menu-separator) {
+  --swc-menu-separator-thickness: token("divider-thickness-medium");
+
+  padding: 0;
+}
+
 /* Minimal padding so rows are visually distinct; not a real row treatment.
  * `swc-menu-item` owns its own padding once it exists. */
 ::slotted(*) {
