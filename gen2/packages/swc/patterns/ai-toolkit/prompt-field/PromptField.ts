@@ -338,6 +338,10 @@ export class PromptField extends SpectrumElement {
 
   public override disconnectedCallback(): void {
     this._attachmentScrollFallbackGeneration++;
+    if (this._autosizeFrame !== undefined) {
+      cancelAnimationFrame(this._autosizeFrame);
+      this._autosizeFrame = undefined;
+    }
     super.disconnectedCallback();
   }
 
@@ -368,19 +372,29 @@ export class PromptField extends SpectrumElement {
 
   private _autosizeInlineSize = 0;
 
+  private _autosizeFrame?: number;
+
   // Fallback only: the collapse animates the card's padding, so the textarea's
-  // width keeps changing after `updated()`. Re-measure on width changes alone;
-  // the height this sets doesn't retrigger it.
+  // width keeps changing after `updated()`. Re-measure on width changes alone,
+  // one frame later, so the height write happens outside the ResizeObserver
+  // delivery (writing during it logs a "loop completed" error in WebKit).
   private readonly _textareaResizeObserver = SUPPORTS_FIELD_SIZING
     ? undefined
     : new ResizeController(this, {
         target: null,
         callback: () => {
           const inlineSize = this._textarea?.clientWidth ?? 0;
-          if (inlineSize !== this._autosizeInlineSize) {
-            this._autosizeInlineSize = inlineSize;
-            this._autosizeTextarea();
+          if (
+            inlineSize === this._autosizeInlineSize ||
+            this._autosizeFrame !== undefined
+          ) {
+            return;
           }
+          this._autosizeFrame = requestAnimationFrame(() => {
+            this._autosizeFrame = undefined;
+            this._autosizeInlineSize = this._textarea?.clientWidth ?? 0;
+            this._autosizeTextarea();
+          });
         },
       });
 
