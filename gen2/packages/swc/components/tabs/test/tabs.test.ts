@@ -1770,10 +1770,16 @@ export const ReplacedTabsSelectionTest: Story = {
     });
 
     await step('selection indicator follows the replacement tab', async () => {
+      const tablist = tabs.shadowRoot?.querySelector('.tablist') as HTMLElement;
+      const tabRect = tab2.getBoundingClientRect();
+      const listRect = tablist.getBoundingClientRect();
+
       expect(
         tabs['selectionIndicatorStyle'],
-        'indicator is visible'
-      ).not.toContain('scaleX(0)');
+        'indicator matches tab 2 position and width'
+      ).toBe(
+        `transform: translateX(${tabRect.left - listRect.left}px) scaleX(${tabRect.width / 100})`
+      );
     });
   },
 };
