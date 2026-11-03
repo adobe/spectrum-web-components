@@ -116,6 +116,7 @@
     - [Menu item component accessibility specification](menu-item/component-accessibility-specification.md)
 - Menu Separator
     - [Menu separator component accessibility specification](menu-separator/component-accessibility-specification.md)
+    - [Menu separator migration plan](menu-separator/migration-plan.md)
 - Meter
     - [Meter component accessibility specification](meter/component-accessibility-specification.md)
     - [Meter migration plan](meter/migration-plan.md)
