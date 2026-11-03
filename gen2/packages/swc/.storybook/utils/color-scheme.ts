@@ -54,3 +54,15 @@ export const applyThemeClass = (element: Element, theme: string): void => {
   element.classList.remove(...THEME_CLASSES);
   element.classList.add(`swc-theme--${theme}`);
 };
+
+/**
+ * Returns the Theme toolbar value from the URL's `globals` parameter, such
+ * as `?globals=theme:dark;lang:ja`, or `undefined` if it's absent or not a
+ * known theme. The inline scripts in `manager-head.html` and
+ * `preview-head.html` run before modules load, so they repeat this pattern;
+ * keep all three in sync.
+ */
+export const getThemeFromUrl = (): string | undefined =>
+  /(?:^|;)theme:(light|dark|adaptive)(?:;|$)/.exec(
+    new URLSearchParams(window.location.search).get('globals') ?? ''
+  )?.[1];

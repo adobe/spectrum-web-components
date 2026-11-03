@@ -12,7 +12,9 @@
 
 <!-- Apply the Theme toolbar value from the URL before the stylesheets and
      Storybook load, so a non-default theme doesn't flash light first.
-     `withContext` and `SpectrumDocsContainer` keep the class in sync after. -->
+     `withContext` and `SpectrumDocsContainer` keep the class in sync after.
+     Keep the pattern in sync with `getThemeFromUrl()` in
+     `utils/color-scheme.ts`. -->
 <script>
   (() => {
     const globals = new URLSearchParams(window.location.search).get('globals');

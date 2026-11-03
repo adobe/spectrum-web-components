@@ -24,10 +24,11 @@ import { Icon_InfoCircle } from '../../icons/src/InfoCircle.js';
 import { Icon_Play } from '../../icons/src/Play.js';
 import { Icon_ViewGrid } from '../../icons/src/ViewGrid.js';
 import packageJson from '../package.json';
-import logoDark from './assets/logo-dark.svg';
 import logo from './assets/logo.svg';
+import logoDark from './assets/logo-dark.svg';
 import {
   applyThemeClass,
+  getThemeFromUrl,
   onPreferredColorSchemeChange,
   resolveColorScheme,
 } from './utils/color-scheme.js';
@@ -138,12 +139,9 @@ const createManagerTheme = (theme: string): ThemeVars => {
 };
 
 // The Theme toolbar global themes the Storybook UI as well as the stories.
-// Read it from the URL so a non-default theme doesn't flash while the preview
-// loads; `light` matches `initialGlobals` in preview.ts.
-const initialTheme =
-  /(?:^|;)theme:(\w+)/.exec(
-    new URLSearchParams(window.location.search).get('globals') ?? ''
-  )?.[1] ?? 'light';
+// `manager-head.html` already applied the URL's theme class before this
+// bundle loaded; `light` matches `initialGlobals` in preview.ts.
+const initialTheme = getThemeFromUrl() ?? 'light';
 
 addons.register('swc/theme', (api) => {
   let theme = initialTheme;
