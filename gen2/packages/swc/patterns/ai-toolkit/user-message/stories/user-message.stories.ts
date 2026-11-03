@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { html } from 'lit';
+import { html, type TemplateResult } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
@@ -99,6 +99,15 @@ const attachments = (type: unknown, count: number) => html`
   )}
 `;
 
+const renderWithAttachments = (
+  storyArgs: typeof args,
+  content: TemplateResult
+) =>
+  template(
+    storyArgs,
+    storyArgs['thumbnail-slot'] || !storyArgs.type ? undefined : content
+  );
+
 // ────────────────────
 //    PLAYGROUND STORY
 // ────────────────────
@@ -108,13 +117,7 @@ export const Playground: Story = {
     type: undefined,
     'default-slot': 'Can you summarize these campaign references?',
   },
-  render: (args) =>
-    template(
-      args,
-      args['thumbnail-slot'] || !args.type
-        ? undefined
-        : attachments(args.type, 2)
-    ),
+  render: (args) => renderWithAttachments(args, attachments(args.type, 2)),
   tags: ['dev', 'overview'],
 };
 
@@ -131,31 +134,29 @@ export const Card: Story = {
 export const Media: Story = {
   args: { type: 'media' },
   render: (args) =>
-    template(
+    renderWithAttachments(
       args,
-      args['thumbnail-slot'] || !args.type
-        ? undefined
-        : args.type === 'card'
-          ? attachments('card', 4)
-          : html`
-              ${attachments('media', 2)}
-              ${['PDF', 'DOCX'].map(
-                (extension) => html`
-                  <swc-upload-attachment
-                    slot="thumbnail"
-                    type="media"
-                    accessible-label=${`Campaign brief.${extension.toLowerCase()}`}
-                  >
-                    ${renderAttachmentPreview({
-                      fileName: `Campaign brief.${extension.toLowerCase()}`,
-                    })}
-                    <span slot="title">
-                      Campaign brief.${extension.toLowerCase()}
-                    </span>
-                  </swc-upload-attachment>
-                `
-              )}
-            `
+      args.type === 'card'
+        ? attachments('card', 4)
+        : html`
+            ${attachments('media', 2)}
+            ${['PDF', 'DOCX'].map(
+              (extension) => html`
+                <swc-upload-attachment
+                  slot="thumbnail"
+                  type="media"
+                  accessible-label=${`Campaign brief.${extension.toLowerCase()}`}
+                >
+                  ${renderAttachmentPreview({
+                    fileName: `Campaign brief.${extension.toLowerCase()}`,
+                  })}
+                  <span slot="title">
+                    Campaign brief.${extension.toLowerCase()}
+                  </span>
+                </swc-upload-attachment>
+              `
+            )}
+          `
     ),
   tags: ['options'],
 };
@@ -166,12 +167,6 @@ export const Media: Story = {
 
 export const Overflow: Story = {
   args: { ...Playground.args, type: 'media' },
-  render: (args) =>
-    template(
-      args,
-      args['thumbnail-slot'] || !args.type
-        ? undefined
-        : attachments(args.type, 24)
-    ),
+  render: (args) => renderWithAttachments(args, attachments(args.type, 24)),
   tags: ['behaviors'],
 };
