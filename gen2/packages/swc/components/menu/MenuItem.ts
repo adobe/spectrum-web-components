@@ -25,7 +25,7 @@ import styles from './menu-item.css';
  * this class supplies the styles and the render template.
  *
  * @element swc-menu-item
- * @since 2.0.0-beta.5
+ * @since 2.0.0-beta.7
  *
  * @example
  * <swc-button id="edit">Edit</swc-button>
@@ -38,11 +38,9 @@ import styles from './menu-item.css';
  *   </swc-menu-item>
  * </swc-menu>
  *
- * @slot label - Text of the row. Required; referenced as the row's accessible
- * name.
+ * @slot label - Required text of the row; provides its accessible name.
  * @slot visual - Optional leading icon or thumbnail.
- * @slot description - Optional secondary text below the label. Referenced as
- * the row's accessible description.
+ * @slot description - Optional secondary text; provides the accessible description.
  */
 export class MenuItem extends MenuItemBase {
   public static override get styles(): CSSResultArray {

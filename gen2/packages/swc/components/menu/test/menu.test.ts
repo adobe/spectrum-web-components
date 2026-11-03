@@ -55,15 +55,25 @@ const defaultItems = html`
 // `userEvent.keyboard` tracks its own notion of focus and stops reaching the
 // menu once a row has a shadow root, landing the key on `body`. Dispatching
 // from the focused row is what a real key press does.
-const pressFromActiveRow = (key: string): KeyboardEvent => {
-  const event = new KeyboardEvent('keydown', {
+const keyEvent = (type: 'keydown' | 'keyup', key: string): KeyboardEvent =>
+  new KeyboardEvent(type, {
     key,
     bubbles: true,
     composed: true,
     cancelable: true,
   });
-  (document.activeElement ?? document.body).dispatchEvent(event);
-  return event;
+
+// Rows activate on `keyup`, so a synthetic press has to send both halves or
+// nothing is activated. The keydown is returned because that is the half the
+// component cancels, for example to trap Tab.
+const pressFromActiveRow = (key: string): KeyboardEvent => {
+  const target = document.activeElement ?? document.body;
+  const down = keyEvent('keydown', key);
+  target.dispatchEvent(down);
+  (document.activeElement ?? document.body).dispatchEvent(
+    keyEvent('keyup', key)
+  );
+  return down;
 };
 
 // Rows take their text from a named `label` slot, so a bare text node renders
@@ -1778,15 +1788,13 @@ export const ItemDiscoveryTest: Story = {
 // ──────────────────────────────────────────────────────────────
 
 // Dispatched from the row for the same reason as the arrow-key step above.
+// Both halves, since activation happens on `keyup`; the returned keydown is
+// the half the row cancels.
 const pressRowKey = (row: MenuItem, key: string): KeyboardEvent => {
-  const event = new KeyboardEvent('keydown', {
-    key,
-    bubbles: true,
-    composed: true,
-    cancelable: true,
-  });
-  row.dispatchEvent(event);
-  return event;
+  const down = keyEvent('keydown', key);
+  row.dispatchEvent(down);
+  row.dispatchEvent(keyEvent('keyup', key));
+  return down;
 };
 
 export const ItemKeyboardActivationTest: Story = {
@@ -1828,6 +1836,131 @@ export const ItemKeyboardActivationTest: Story = {
       const event = pressRowKey(firstRow, ' ');
 
       expect(event.defaultPrevented, 'the page does not scroll').toBe(true);
+      expect(clicked, 'the consumer click handler runs').toBe(true);
+      await waitFor(() => expect(menu.open, 'the menu closes').toBe(false));
+    });
+
+    await step('Space on a disabled row does nothing', async () => {
+      await userEvent.click(trigger);
+      await waitFor(() => expect(menu.open).toBe(true));
+
+      const [, disabledRow] = getRows(canvasElement);
+      let clicked = false;
+      disabledRow.addEventListener('click', () => {
+        clicked = true;
+      });
+
+      const event = pressRowKey(disabledRow, ' ');
+
+      expect(event.defaultPrevented, 'the page does not scroll').toBe(true);
+      expect(clicked, 'no activation reaches the consumer').toBe(false);
+      expect(menu.open, 'the menu stays open').toBe(true);
+    });
+
+    await step('Enter on an enabled row reaches its handler', async () => {
+      const [firstRow] = getRows(canvasElement);
+      let clicked = false;
+      firstRow.addEventListener('click', () => {
+        clicked = true;
+      });
+
+      pressRowKey(firstRow, 'Enter');
+
+      expect(clicked, 'the consumer click handler runs').toBe(true);
+      await waitFor(() => expect(menu.open, 'the menu closes').toBe(false));
+    });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Size cascades from the menu
+// ──────────────────────────────────────────────────────────────
+
+export const ItemSizeCascadeTest: Story = {
+  render: () => rowsInMenu(threeRows, 'size-cascade-trigger'),
+  play: async ({ canvasElement, step }) => {
+    const menu = await getComponent<Menu>(canvasElement, 'swc-menu');
+
+    // The menu owns its rows' size, so one menu can never render a mix.
+    await step('rows take the menu size on slot assignment', async () => {
+      await waitFor(() => {
+        for (const row of getRows(canvasElement)) {
+          expect(row.size, 'row matches the default menu size').toBe('m');
+        }
+      });
+    });
+
+    await step('changing the menu size updates every row', async () => {
+      for (const size of MENU_VALID_SIZES) {
+        menu.size = size;
+        await menu.updateComplete;
+        await waitFor(() => {
+          for (const row of getRows(canvasElement)) {
+            expect(row.size, `row follows menu size "${size}"`).toBe(size);
+          }
+        });
+      }
+    });
+
+    await step('a row authored with its own size is overridden', async () => {
+      menu.size = 'l';
+      await menu.updateComplete;
+
+      const row = document.createElement('swc-menu-item') as MenuItem;
+      row.setAttribute('size', 's');
+      row.append(labelSpan('Late arrival'));
+      menu.append(row);
+
+      await waitFor(() =>
+        expect(row.size, 'the menu wins over the authored size').toBe('l')
+      );
+      row.remove();
+    });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Disabled row swallows a pointer click
+// ──────────────────────────────────────────────────────────────
+
+export const ItemDisabledClickTest: Story = {
+  render: () => rowsInMenu(threeRows, 'disabled-click-trigger'),
+  play: async ({ canvasElement, step }) => {
+    const trigger = canvasElement.querySelector(
+      '#disabled-click-trigger'
+    ) as HTMLElement;
+    const menu = canvasElement.querySelector('swc-menu') as HTMLElement & {
+      open: boolean;
+    };
+
+    // `aria-disabled` keeps the row focusable, so it stays clickable unless
+    // the row stops the event. Without the capture listener the consumer's
+    // own handler runs on a row the user was told is unavailable.
+    await step('a click on a disabled row reaches no handler', async () => {
+      await userEvent.click(trigger);
+      await waitFor(() => expect(menu.open).toBe(true));
+
+      const [, disabledRow] = getRows(canvasElement);
+      let clicked = false;
+      disabledRow.addEventListener('click', () => {
+        clicked = true;
+      });
+
+      await userEvent.click(disabledRow);
+
+      expect(clicked, 'no activation reaches the consumer').toBe(false);
+      expect(menu.open, 'the menu stays open').toBe(true);
+    });
+
+    await step('a click on an enabled row still activates', async () => {
+      const [firstRow] = getRows(canvasElement);
+      let clicked = false;
+      firstRow.addEventListener('click', () => {
+        clicked = true;
+      });
+
+      await userEvent.click(firstRow);
+
       expect(clicked, 'the consumer click handler runs').toBe(true);
       await waitFor(() => expect(menu.open, 'the menu closes').toBe(false));
     });

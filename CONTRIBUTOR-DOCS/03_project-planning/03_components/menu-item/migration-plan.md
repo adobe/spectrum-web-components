@@ -161,7 +161,7 @@ Two things worth noting against this plan:
 
 | Property | Attribute | Type | Default | Status |
 | --- | --- | --- | --- | --- |
-| `size` | `size` | `'s' \| 'm' \| 'l' \| 'xl'` | `'m'` | Confirmed |
+| `size` | `size` | `'s' \| 'm' \| 'l' \| 'xl'` | `'m'` | Confirmed. Owned by the parent: `swc-menu` copies its own `size` onto every row, matching `swc-accordion`, so one menu cannot render mismatched rows |
 | `disabled` | `disabled` | `boolean` | `false` | Confirmed; mapping via [Q20](#blockers-and-open-questions) |
 
 Slots: `label` (text), `visual` (optional leading icon or thumbnail), `description` (optional secondary text).
@@ -217,6 +217,9 @@ Red/green TDD. Each item below should fail before the implementation exists.
 - [x] `label`, `visual` and `description` slots render in the expected order
 - [x] `swc-menu` discovers rows via `:scope > swc-menu-item` with real elements, not placeholders
 - [x] <kbd>Enter</kbd> and <kbd>Space</kbd> reach a consumer `click` handler on an enabled row, and neither activates a disabled one
+- [x] A pointer click on a disabled row reaches no consumer handler and leaves the menu open
+- [x] Rows activate on `keyup`, so a held key activates once and never reopens the menu (Playwright; synthetic events cannot show it)
+- [x] `size` cascades from `swc-menu` onto its rows, overriding a row-authored value
 - [ ] Playwright: ARIA tree shows `menu` containing named `menuitem` rows
 - [ ] VRT: sizes, disabled, with and without a visual, with and without a description, forced colors
 
@@ -237,7 +240,7 @@ Red/green TDD. Each item below should fail before the implementation exists.
 | **Q22** | Does `noWrap` survive? 1st-gen offers it; `swc-menu` already caps row width at 320px, so wrapping behaviour needs a design answer rather than a carry-forward. | No | Open |
 | **Q24** | Should a row be able to mark itself as the current one? `menuitem` cannot carry `aria-selected`, but `aria-current` is available and would cover "this is where you are" without implying selection. Needs a product answer on whether menus need it at all before any `current` property is designed. | No | Open |
 | **Q23** | Authoring ergonomics of the named `label` slot. | No | **Closed.** Named slot kept: with `description` alongside it, an unnamed label is both ambiguous and harder to place in a grid. See [B22](#must-ship) |
-| **Q25** | A `menuitem` takes its accessible name from its contents, so a `description` is announced as part of the row's name rather than as a separate description. 1st-gen behaves the same way. Wiring it as a real description instead would mean naming the row from its label alone, which the default slot makes awkward since the label can be a bare text node. Worth doing, or is name-from-contents the right answer here? | No | **Closed.** Reviewer confirmed React Spectrum references the label as `aria-labelledby` and the description as `aria-describedby`, so the row is named from its label alone. `MenuItemBase.handleTextSlotChange()` sets `ariaLabelledByElements` and `ariaDescribedByElements` from the slotted elements; the named `label` slot ([Q23](#open-questions)) is what makes this possible, since element references need an element |
+| **Q25** | A `menuitem` takes its accessible name from its contents, so a `description` is announced as part of the row's name rather than as a separate description. 1st-gen behaves the same way. Wiring it as a real description instead would mean naming the row from its label alone, which the default slot makes awkward since the label can be a bare text node. Worth doing, or is name-from-contents the right answer here? | No | **Closed.** Reviewer confirmed React Spectrum references the label as `aria-labelledby` and the description as `aria-describedby`, so the row is named from its label alone. `MenuItemBase.handleTextSlotChange()` sets `ariaLabelledByElements` and `ariaDescribedByElements` from the slotted elements; the named `label` slot ([Q23](#blockers-and-open-questions)) is what makes this possible, since element references need an element |
 
 ## Decision log
 

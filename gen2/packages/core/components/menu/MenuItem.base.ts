@@ -28,11 +28,9 @@ const DOCS_URL =
  * pattern: `role="menuitem"` on the host, with the owning `swc-menu` driving
  * arrow-key navigation and roving tabindex across its rows.
  *
- * @slot label - Text of the row. Required; referenced as the row's accessible
- * name.
+ * @slot label - Required text of the row; provides its accessible name.
  * @slot visual - Optional leading icon or thumbnail.
- * @slot description - Optional secondary text below the label. Referenced as
- * the row's accessible description.
+ * @slot description - Optional secondary text; provides the accessible description.
  */
 export abstract class MenuItemBase extends SizedMixin(SpectrumElement, {
   validSizes: MENU_ITEM_VALID_SIZES,
@@ -57,9 +55,13 @@ export abstract class MenuItemBase extends SizedMixin(SpectrumElement, {
   public disabled = false;
 
   /**
-   * ARIA the component supplies itself goes through `internals`, where it acts
-   * as a default a consumer's own attributes still override. Writing the same
-   * values to `this` would reflect onto the host and clobber them.
+   * Carries the row's name and description references. On `internals` they are
+   * defaults a consumer's own attributes replace; writing them to `this` would
+   * reflect onto the host and clobber whatever was already there.
+   *
+   * Not every piece of ARIA belongs here. `aria-disabled` stays a host
+   * attribute, because the owning `swc-menu` reads it off the element to
+   * decide whether a row may be activated.
    */
   protected readonly internals = this.attachInternals();
 
@@ -73,6 +75,14 @@ export abstract class MenuItemBase extends SizedMixin(SpectrumElement, {
   //     IMPLEMENTATION
   // ──────────────────────
 
+  public constructor() {
+    super();
+    // Capture, so a disabled row swallows the click before it reaches a
+    // consumer's own listener. `aria-disabled` keeps the row focusable, which
+    // means it stays clickable too unless something stops the event here.
+    this.addEventListener('click', this.handleClickCapture, { capture: true });
+  }
+
   public override connectedCallback(): void {
     super.connectedCallback();
     // Set here, not in render(): `swc-menu` collects rows on `slotchange`,
@@ -80,25 +90,50 @@ export abstract class MenuItemBase extends SizedMixin(SpectrumElement, {
     // own components rather than as a role swap on this one.
     this.setAttribute('role', 'menuitem');
     this.addEventListener('keydown', this.handleKeyDown);
+    this.addEventListener('keyup', this.handleKeyUp);
   }
 
   public override disconnectedCallback(): void {
     this.removeEventListener('keydown', this.handleKeyDown);
+    this.removeEventListener('keyup', this.handleKeyUp);
     super.disconnectedCallback();
   }
 
-  // Enter and Space activate a row. Turning them into a click is what makes
-  // keyboard and pointer activation reach the same consumer handler.
+  private isActivationKey(event: KeyboardEvent): boolean {
+    return event.key === 'Enter' || event.key === ' ';
+  }
+
+  // Claims the key but does not act on it. Activating here would restore
+  // focus to the trigger mid-press, handing the rest of the same press (the
+  // repeats, then the keyup) to a button that then activates and reopens the
+  // menu. Space would also scroll the page under the open surface.
   private readonly handleKeyDown = (event: KeyboardEvent): void => {
-    if (event.key !== 'Enter' && event.key !== ' ') {
+    if (!this.isActivationKey(event)) {
       return;
     }
-    // Enter would otherwise re-fire on the trigger the menu restores focus
-    // to, and Space would scroll the page under the open surface.
+    event.preventDefault();
+  };
+
+  // Activation happens here so focus moves only once the press is over.
+  // Turning the key into a click is what makes keyboard and pointer
+  // activation reach the same consumer handler, and lets the owning menu
+  // close through one path for both.
+  private readonly handleKeyUp = (event: KeyboardEvent): void => {
+    if (!this.isActivationKey(event)) {
+      return;
+    }
     event.preventDefault();
     if (!this.disabled) {
       this.click();
     }
+  };
+
+  private readonly handleClickCapture = (event: Event): void => {
+    if (!this.disabled) {
+      return;
+    }
+    event.preventDefault();
+    event.stopImmediatePropagation();
   };
 
   // `slotchange` never fires for a slot that starts empty, so the first render
@@ -139,6 +174,10 @@ export abstract class MenuItemBase extends SizedMixin(SpectrumElement, {
     super.update(changedProperties);
     // Mapped by hand rather than via `DisabledMixin` (Q20): the mixin also
     // writes `tabindex`, which `FocusgroupNavigationController` owns here.
+    // This runs on the first update too, so a hand-authored `aria-disabled`
+    // is replaced by whatever `disabled` says. That is deliberate: the menu
+    // reads the attribute to decide activation, so letting the two disagree
+    // would make a row announce one thing and behave as another.
     if (changedProperties.has('disabled')) {
       this.ariaDisabled = this.disabled ? 'true' : null;
     }

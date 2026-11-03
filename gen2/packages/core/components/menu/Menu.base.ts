@@ -188,6 +188,15 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
     );
   }
 
+  // The menu owns its rows' size, the way `swc-accordion` owns its items'.
+  // Authoring it per row would let a single menu render mismatched rows, and
+  // `menu.mdx` tells consumers to set it once on the menu.
+  protected syncMenuItems(): void {
+    for (const item of this.getMenuItems()) {
+      (item as HTMLElement & { size: MenuSize }).size = this.size;
+    }
+  }
+
   // `deepContains` crosses shadow boundaries, so focus inside a slotted
   // item's own shadow tree still counts as "inside the menu".
   private isFocusWithin(): boolean {
@@ -220,12 +229,11 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
       return;
     }
     if (event.key === 'Enter' || event.key === ' ') {
-      // Else the deferred default-action re-activates the refocused trigger,
-      // and Space scrolls the page under the open surface.
+      // Claim the key only. The row activates on keyup and closes the menu
+      // through its own click, so keyboard and pointer share one path:
+      // activate, then close. Closing here instead would close first and
+      // activate afterwards, and would move focus mid-press.
       event.preventDefault();
-      if (!isRowDisabled(item)) {
-        this.open = false;
-      }
     }
   };
 
@@ -409,6 +417,7 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
       DOCS_URL
     );
     this.focusNavigation.refresh();
+    this.syncMenuItems();
   }
 
   // Enters the top layer; the rest of the open side effects only run once
@@ -514,6 +523,10 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
 
   protected override updated(changedProperties: PropertyValues): void {
     super.updated(changedProperties);
+
+    if (changedProperties.has('size')) {
+      this.syncMenuItems();
+    }
 
     if (changedProperties.has('placement')) {
       validateEnum(this, {

@@ -176,7 +176,7 @@ const MANY_ROWS = html`
     'Send backward',
   ].map(
     (label) => html`
-      <swc-menu-item>${label}</swc-menu-item>
+      <swc-menu-item><span slot="label">${label}</span></swc-menu-item>
     `
   )}
 `;

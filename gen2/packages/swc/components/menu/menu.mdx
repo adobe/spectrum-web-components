@@ -31,7 +31,7 @@ The menu's `PlacementController` handles pixel positioning automatically. When t
 
 ### Sizes
 
-`size` accepts `s`, `m`, `l`, and `xl` (default `m`). `swc-menu-item` doesn't exist yet, so no row content currently reflects this size; set it now so your markup carries the right value once row-level sizing ships.
+`size` accepts `s`, `m`, `l`, and `xl` (default `m`). Set it on `swc-menu`; the menu copies its size onto its rows, so a single menu never renders mismatched rows. Setting `size` on a row directly is overwritten by the menu.
 
 <Canvas of={MenuStories.Sizes} />
 
@@ -72,7 +72,7 @@ menu.triggerElement = someElement; // replaces any `for` wiring
 
 ### Open and close
 
-Clicking the trigger opens the menu and moves focus to the first row. Clicking a row, pressing <kbd>Enter</kbd> on a row, pressing <kbd>Escape</kbd>, or clicking outside the menu closes it; closing returns focus to the trigger if focus was still inside the menu.
+Clicking the trigger opens the menu and moves focus to the first row. Clicking a row, pressing <kbd>Enter</kbd> or <kbd>Space</kbd> on a row, pressing <kbd>Escape</kbd>, or clicking outside the menu closes it; closing returns focus to the trigger if focus was still inside the menu.
 
 The menu is a native `popover="auto"` element: it renders in the browser's top layer, so it is never clipped by an ancestor's `overflow`, and Escape/outside-click light-dismiss come from the platform rather than a hand-rolled listener.
 
@@ -98,7 +98,7 @@ When no CSS transition is active (for example when `prefers-reduced-motion` remo
 1. **`role="menu"`**: set on the shadow-internal surface.
 2. **`aria-haspopup="menu"` and `aria-expanded`**: wired onto the trigger's interactive element (for a gen2 SWC trigger with an open shadow root, its inner `<button>`) as the menu opens and closes.
 3. **Accessible name**: `swc-menu` has no `label` property. The menu's accessible name comes entirely from the trigger you author; give the trigger its own accessible name (visible text, `aria-label`, or `accessible-label` on a gen2 SWC trigger).
-4. **Row name and description**: each `swc-menu-item` points its own accessible name at its `label` slot and its accessible description at its `description` slot. The references are to the slotted elements themselves, so your markup needs no `id` attributes. They are defaults, so `aria-label` or `aria-labelledby` set on the row still wins. A row with no `label` warns in development builds.
+4. **Row name and description**: each `swc-menu-item` points its own accessible name at its `label` slot and its accessible description at its `description` slot. The references are to the slotted elements themselves, so your markup needs no `id` attributes. To name a row differently, set `aria-labelledby` on it; that attribute replaces the component's reference. `aria-label` does not take effect, because a label reference is resolved ahead of it. A row with no `label` warns in development builds.
 
 #### Keyboard navigation
 

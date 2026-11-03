@@ -169,6 +169,31 @@ export const Sizes: Story = {
   tags: ['options'],
 };
 
+export const ItemContent: Story = {
+  args: {
+    for: 'item-content-trigger',
+    'actual-placement': null,
+  },
+  render: (args) => html`
+    <swc-button id="item-content-trigger">Edit</swc-button>
+    ${template(
+      args,
+      html`
+        <swc-menu-item>
+          <span slot="visual" aria-hidden="true">📋</span>
+          <span slot="label">Paste</span>
+        </swc-menu-item>
+        <swc-menu-item>
+          <span slot="label">Paste special</span>
+          <span slot="description">Keeps the source formatting</span>
+        </swc-menu-item>
+      `
+    )}
+  `,
+  tags: ['options'],
+};
+ItemContent.storyName = 'Item content';
+
 export const Placements: Story = {
   render: (args) => html`
     <swc-button id="placement-bottom-start-trigger">Edit</swc-button>
@@ -231,31 +256,6 @@ export const States: Story = {
   `,
   tags: ['states'],
 };
-
-export const ItemContent: Story = {
-  args: {
-    for: 'item-content-trigger',
-    'actual-placement': null,
-  },
-  render: (args) => html`
-    <swc-button id="item-content-trigger">Edit</swc-button>
-    ${template(
-      args,
-      html`
-        <swc-menu-item>
-          <span slot="visual" aria-hidden="true">📋</span>
-          <span slot="label">Paste</span>
-        </swc-menu-item>
-        <swc-menu-item>
-          <span slot="label">Paste special</span>
-          <span slot="description">Keeps the source formatting</span>
-        </swc-menu-item>
-      `
-    )}
-  `,
-  tags: ['options'],
-};
-ItemContent.storyName = 'Item content';
 
 export const ItemStates: Story = {
   args: {
