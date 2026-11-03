@@ -16,18 +16,16 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import {
-  TOAST_VARIANTS,
-  type ToastVariant,
-} from '@adobe/spectrum-wc-core/components/toast/index.js';
-import {
   TOAST_CONTAINER_PLACEMENTS,
+  TOAST_VARIANTS,
   type ToastContainerPlacement,
   ToastQueue,
   type ToastQueueOptions,
+  type ToastVariant,
 } from '@adobe/spectrum-wc-core/components/toast-container/index.js';
 
 import '@adobe/spectrum-wc/components/button/swc-button.js';
-import '@adobe/spectrum-wc/components/toast/swc-toast.js';
+import '@adobe/spectrum-wc/components/toast-container/swc-toast.js';
 import '@adobe/spectrum-wc/components/toast-container/swc-toast-container.js';
 
 import { uniqueId } from '../../../utils/id.js';

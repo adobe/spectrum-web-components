@@ -9,7 +9,7 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import type { ToastVariant } from '../toast/Toast.types.js';
+import type { ToastVariant } from './Toast.types.js';
 
 export const TOAST_CONTAINER_PLACEMENTS = [
   'top',

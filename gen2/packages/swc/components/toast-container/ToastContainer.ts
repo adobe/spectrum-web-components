@@ -22,10 +22,10 @@ import {
   ToastQueue,
 } from '@adobe/spectrum-wc-core/components/toast-container/index.js';
 
-import '../../components/toast/swc-toast.js';
+import './swc-toast.js';
 
 import { uniqueId } from '../../utils/id.js';
-import type { Toast } from '../toast/Toast.js';
+import type { Toast } from './Toast.js';
 
 import styles from './toast-container.css';
 

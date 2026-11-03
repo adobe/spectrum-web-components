@@ -18,9 +18,9 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import {
   TOAST_VARIANTS,
   type ToastVariant,
-} from '@adobe/spectrum-wc-core/components/toast';
+} from '@adobe/spectrum-wc-core/components/toast-container/index.js';
 
-import '@adobe/spectrum-wc/components/toast/swc-toast.js';
+import '@adobe/spectrum-wc/components/toast-container/swc-toast.js';
 
 import {
   forcedColorsVrtParameters,

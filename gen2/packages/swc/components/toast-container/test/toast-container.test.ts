@@ -20,8 +20,8 @@ import '../swc-toast-container.js';
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 
 import { getComponent, withWarningSpy } from '../../../utils/test-utils.js';
-import type { Toast } from '../../toast/Toast.js';
 import { ToastQueue as RenderingToastQueue } from '../index.js';
+import type { Toast } from '../Toast.js';
 import type { ToastContainer } from '../ToastContainer.js';
 
 export default {

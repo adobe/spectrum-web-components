@@ -19,7 +19,7 @@ import {
   validateEnum,
   warnIf,
 } from '../../utils/index.js';
-import type { ToastBase } from '../toast/Toast.base.js';
+import type { ToastBase } from './Toast.base.js';
 import {
   TOAST_CONTAINER_PLACEMENTS,
   type ToastContainerPlacement,

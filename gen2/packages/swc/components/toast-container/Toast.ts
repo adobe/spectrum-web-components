@@ -16,7 +16,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import {
   SWC_TOAST_ACTION_EVENT,
   ToastBase,
-} from '@adobe/spectrum-wc-core/components/toast';
+} from '@adobe/spectrum-wc-core/components/toast-container/index.js';
 
 import '@adobe/spectrum-wc-icons/swc-icon-alert-triangle.js';
 import '@adobe/spectrum-wc-icons/swc-icon-checkmark-circle.js';

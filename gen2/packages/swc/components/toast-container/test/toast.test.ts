@@ -14,20 +14,20 @@ import { html } from 'lit';
 import { expect, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import { Toast } from '@adobe/spectrum-wc/toast';
 import {
   SWC_TOAST_ACTION_EVENT,
   TOAST_VARIANTS,
   type ToastVariant,
-} from '@adobe/spectrum-wc-core/components/toast';
+} from '@adobe/spectrum-wc-core/components/toast-container/index.js';
 
-import '@adobe/spectrum-wc/components/toast/swc-toast.js';
+import '../swc-toast.js';
 
 import {
   getComponent,
   waitForEvent,
   withWarningSpy,
 } from '../../../utils/test-utils.js';
+import { Toast } from '../Toast.js';
 
 // These tests cover standalone Toast only; queue and container behavior is tested in toast-container.
 // TODO(SWC-2655): add collapsed-stack tests: peek layers, Show all, front-toast countdown.
