@@ -12,10 +12,11 @@
 
 import { useOf } from '@storybook/addon-docs/blocks';
 import React, { useEffect, useRef } from 'react';
-import customElements from '../../dist/custom-elements.json' with { type: 'json' };
 
 // Register the badge component for use in the docs iframe
 import '@adobe/spectrum-wc/components/badge/swc-badge.js';
+
+import customElements from '../../dist/custom-elements.json' with { type: 'json' };
 
 type Status = 'preview' | 'deprecated' | 'internal';
 
@@ -45,7 +46,9 @@ const Badge = ({
 
   useEffect(() => {
     const el = ref.current;
-    if (!el) return;
+    if (!el) {
+      return;
+    }
     el.setAttribute('size', 's');
     el.setAttribute('variant', variant);
     if (outline) {
@@ -87,7 +90,9 @@ export const StatusBadge = ({
   const resolvedOf = useOf(of || 'meta', ['meta']);
   const componentTag = resolvedOf.preparedMeta?.component;
 
-  if (!componentTag) return null;
+  if (!componentTag) {
+    return null;
+  }
 
   // Look up component declaration in the CEM
   let status: string | undefined;
@@ -106,7 +111,9 @@ export const StatusBadge = ({
 
   const hasStatus = status && status in STATUS_CONFIG;
 
-  if (!hasStatus && !since) return null;
+  if (!hasStatus && !since) {
+    return null;
+  }
 
   const statusConfig = hasStatus ? STATUS_CONFIG[status as Status] : undefined;
 

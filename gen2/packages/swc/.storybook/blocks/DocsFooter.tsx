@@ -13,8 +13,8 @@
 import { HeaderMdx, useOf } from '@storybook/addon-docs/blocks';
 import React from 'react';
 
-import { ApiTable } from './ApiTable';
-import { SpectrumStories } from './SpectrumStories';
+import { ApiTable } from './ApiTable.js';
+import { SpectrumStories } from './SpectrumStories.js';
 
 /**
  * The standard bottom of a Storybook docs page: API table and the feedback

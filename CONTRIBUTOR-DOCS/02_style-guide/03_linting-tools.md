@@ -158,7 +158,7 @@ For generation-wide linting without a path, you can also use:
 Linting runs automatically on staged files when you commit via `lint-staged`. The pre-commit hook runs:
 
 - **CSS files**: Stylelint with autofix, then Prettier
-- **TypeScript files**: ESLint with autofix, then Prettier
+- **TypeScript and JavaScript files** (including `.tsx`): ESLint with autofix, then Prettier
 - **Other files**: Prettier only
 
 If the pre-commit hook fails, fix the reported issues and commit again.
