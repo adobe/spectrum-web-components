@@ -116,7 +116,7 @@
   padding-block-start: token("spacing-100");
 }
 
-/* Placed after the has-attachment rule above so the pill's uniform block padding wins over it. */
+/* Placed after the has-attachment rule above so the pill's 12px block padding wins over it; the attachment case below then trims only the top. */
 :host([collapsed]) .swc-PromptField-box {
   padding-block: token("spacing-200");
   padding-inline-end: token("spacing-200");

@@ -140,6 +140,21 @@ export const CollapsedTest: Story = {
       ).toBeTruthy();
     });
 
+    await step('collapsed renders as a single-line pill', async () => {
+      const box = el.shadowRoot?.querySelector<HTMLElement>(
+        '.swc-PromptField-box'
+      );
+      const textarea =
+        el.shadowRoot?.querySelector<HTMLTextAreaElement>('textarea');
+      const boxStyle = getComputedStyle(box as HTMLElement);
+      expect(boxStyle.borderTopLeftRadius).toBe('28px');
+      expect(boxStyle.paddingBlockStart).toBe('12px');
+      expect(boxStyle.paddingBlockEnd).toBe('12px');
+      expect(getComputedStyle(textarea as HTMLElement).whiteSpace).toBe(
+        'nowrap'
+      );
+    });
+
     await step('removing collapsed restores the upload button', async () => {
       el.collapsed = false;
       await el.updateComplete;
@@ -147,6 +162,9 @@ export const CollapsedTest: Story = {
       expect(el.hasAttribute('collapsed')).toBe(false);
       expect(leadingActions()?.inert).toBe(false);
       expect(leadingActions()?.hasAttribute('aria-hidden')).toBe(false);
+
+      el.collapsed = true;
+      await el.updateComplete;
     });
   },
 };

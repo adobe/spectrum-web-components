@@ -403,6 +403,7 @@ class ConversationFullPatternDemo extends LitElement {
     this.responseTimer = null;
     this.clearStepTimer();
     this.isGenerating = false;
+    this.collapsePromptIfIdle();
   }
 
   private stopGeneration = (): void => {
@@ -431,6 +432,7 @@ class ConversationFullPatternDemo extends LitElement {
 
     this.responseTargetId = null;
     this.isGenerating = false;
+    this.collapsePromptIfIdle();
   };
 
   private handlePromptInput = (event: Event): void => {
@@ -438,22 +440,35 @@ class ConversationFullPatternDemo extends LitElement {
     this.promptValue = inputEvent.detail?.value ?? '';
   };
 
-  private handlePromptFocusIn = (): void => {
-    this.promptExpanded = true;
+  // Only the textarea expands the field: the legal link, attachment tiles, and
+  // strip chevrons stay usable in the collapsed pill without changing layout.
+  private handlePromptFocusIn = (event: FocusEvent): void => {
+    if (event.composedPath()[0] instanceof HTMLTextAreaElement) {
+      this.promptExpanded = true;
+    }
   };
 
-  // Shadow-internal focus moves (textarea to upload button) retarget relatedTarget to the host, so they don't collapse it.
-  private handlePromptFocusOut = (event: FocusEvent): void => {
-    const promptField = event.currentTarget as HTMLElement;
-    const next = event.relatedTarget as Node | null;
-    if (next && (next === promptField || promptField.contains(next))) {
+  // Checked once focus has landed: focus moving inside the shadow root, or the
+  // window blurring to open the native file picker, keeps the field active.
+  private handlePromptFocusOut = (): void => {
+    window.setTimeout(() => this.collapsePromptIfIdle());
+  };
+
+  private collapsePromptIfIdle(): void {
+    const promptField = this.querySelector('swc-prompt-field');
+    const active = document.activeElement;
+    if (
+      promptField &&
+      active &&
+      (active === promptField || promptField.contains(active))
+    ) {
       return;
     }
     if (this.promptValue || this.isGenerating) {
       return;
     }
     this.promptExpanded = false;
-  };
+  }
 
   private handlePromptSubmit = (event: Event): void => {
     const submitEvent = event as CustomEvent<{ value?: string }>;

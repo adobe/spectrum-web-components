@@ -341,20 +341,53 @@ export class PromptField extends SpectrumElement {
     super.disconnectedCallback();
   }
 
+  protected override firstUpdated(
+    changedProperties: PropertyValues<this>
+  ): void {
+    super.firstUpdated(changedProperties);
+    if (this._textarea) {
+      this._textareaResizeObserver?.observe(this._textarea);
+    }
+  }
+
   protected override updated(changedProperties: PropertyValues<this>): void {
     this._warnIfMissingLegalContent();
     if (changedProperties.has('accessibleLabel')) {
       this._warnIfMissingAccessibleLabel();
     }
-    if (changedProperties.has('value')) {
+    // `collapsed` and `size` change the textarea's width, font metrics, and
+    // placeholder wrapping, so the fallback height has to be recomputed too.
+    if (
+      changedProperties.has('value') ||
+      changedProperties.has('collapsed') ||
+      changedProperties.has('size')
+    ) {
       this._autosizeTextarea();
     }
   }
 
+  private _autosizeInlineSize = 0;
+
+  // Fallback only: the collapse animates the card's padding, so the textarea's
+  // width keeps changing after `updated()`. Re-measure on width changes alone;
+  // the height this sets doesn't retrigger it.
+  private readonly _textareaResizeObserver = SUPPORTS_FIELD_SIZING
+    ? undefined
+    : new ResizeController(this, {
+        target: null,
+        callback: () => {
+          const inlineSize = this._textarea?.clientWidth ?? 0;
+          if (inlineSize !== this._autosizeInlineSize) {
+            this._autosizeInlineSize = inlineSize;
+            this._autosizeTextarea();
+          }
+        },
+      });
+
   // Fallback for browsers without field-sizing: content, which is not yet
   // widely supported. Grows the textarea to fit content, up to the CSS
-  // max-block-size clamp (past which overflow-y scrolls). Gated to value
-  // changes so unrelated re-renders don't force a layout reflow.
+  // max-block-size clamp (past which overflow-y scrolls). Gated to value,
+  // layout, and width changes so unrelated re-renders don't force a reflow.
   private _autosizeTextarea(): void {
     if (SUPPORTS_FIELD_SIZING) {
       return;
