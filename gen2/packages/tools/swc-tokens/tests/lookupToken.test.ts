@@ -19,8 +19,8 @@ const prefix = 'test';
 describe('lookupToken', () => {
   const { lookupToken } = __test__;
 
-  it('Core color alias', async () => {
-    const result = await lookupToken('black', prefix);
+  it('Renamed core color alias', async () => {
+    const result = await lookupToken('transparent-static-black-1000', prefix);
 
     expect(result).toBe('rgb(0 0 0)');
   });
@@ -34,7 +34,7 @@ describe('lookupToken', () => {
   it('Basic token alias', async () => {
     const result = await lookupToken('overlay-color', prefix);
 
-    expect(result).toBe(`var(--${prefix}-black)`);
+    expect(result).toBe(`var(--${prefix}-transparent-static-black-1000)`);
   });
 
   it('Composite scale set', async () => {

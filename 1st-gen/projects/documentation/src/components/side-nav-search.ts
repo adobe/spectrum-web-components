@@ -141,7 +141,11 @@ export class SearchComponent extends LitElement {
     const search = await import('./search-index.js').then(
       ({ search }) => search
     );
-    this.results = await search(searchParam);
+    const results = await search(searchParam);
+    if (value !== this.searchField.value || !this.searchField.focused) {
+      return false;
+    }
+    this.results = results;
 
     this.openPopover();
 
