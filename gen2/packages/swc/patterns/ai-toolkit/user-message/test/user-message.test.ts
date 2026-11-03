@@ -75,9 +75,7 @@ export const ContentTest: Story = {
             message.shadowRoot!.querySelector('slot:not([name])')
           ).toBeNull();
           expect(group).not.toBeNull();
-          expect(group.getAttribute('aria-label')).toBe(
-            type === 'card' ? 'Uploaded documents' : 'Uploaded images'
-          );
+          expect(group.getAttribute('aria-label')).toBe('Uploaded attachments');
           expect(group.getAttribute('tabindex')).toBe('0');
           expect(message.scrollWidth).toBeLessThanOrEqual(message.clientWidth);
           if (type === 'card') {

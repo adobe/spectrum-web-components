@@ -26,7 +26,7 @@ export type UserMessageType = 'card' | 'media';
  *
  * @element swc-user-message
  * @slot - Message text when `type` is omitted.
- * @slot thumbnail - Document cards when `type="card"` or image previews when `type="media"`.
+ * @slot thumbnail - Attachments grouped by their card or media presentation, regardless of file format.
  * @since 2.0.0-beta.3
  */
 export class UserMessage extends SpectrumElement {
@@ -47,9 +47,7 @@ export class UserMessage extends SpectrumElement {
           <div
             class="swc-UserMessage-galleryViewport"
             role="group"
-            aria-label=${this.type === 'card'
-              ? 'Uploaded documents'
-              : 'Uploaded images'}
+            aria-label="Uploaded attachments"
             tabindex="0"
           >
             <slot name="thumbnail" class="swc-UserMessage-gallery"></slot>

@@ -16,7 +16,6 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import '../../swc-user-message.js';
 import '../../../upload-attachment/swc-upload-attachment.js';
-import '@adobe/spectrum-wc/components/thumbnail/swc-thumbnail.js';
 
 import {
   createPermutations,
@@ -26,6 +25,7 @@ import {
   theme,
   vrtParameters,
 } from '../../../../../.storybook/helpers/index.js';
+import { renderAttachmentPreview } from '../../../stories/attachment-preview.js';
 import type { UserMessage, UserMessageType } from '../../UserMessage.js';
 
 // Metadata
@@ -62,9 +62,9 @@ type MessageCase = {
   maxInlineSize?: string;
 };
 
-const cardThumbnail = html`
-  <swc-thumbnail slot="thumbnail" decorative></swc-thumbnail>
-`;
+const cardThumbnail = renderAttachmentPreview({
+  fileName: 'Campaign brief.pdf',
+});
 
 const mediaThumbnail = html`
   <img slot="thumbnail" src="images/card-preview.jpg" alt="Campaign preview" />
@@ -164,6 +164,64 @@ const typeRows = () =>
       ),
       type
     )
+  );
+
+const mixedMediaRow = () =>
+  row(
+    [
+      html`
+        <swc-user-message type="media">
+          ${mediaThumbnail}
+          ${['PDF', 'DOCX', 'BIN'].map(
+            (extension) => html`
+              <swc-upload-attachment
+                slot="thumbnail"
+                type="media"
+                accessible-label=${`Campaign brief.${extension.toLowerCase()}`}
+              >
+                ${renderAttachmentPreview({
+                  fileName: `Campaign brief.${extension.toLowerCase()}`,
+                })}
+                <span slot="title">
+                  Campaign brief.${extension.toLowerCase()}
+                </span>
+              </swc-upload-attachment>
+            `
+          )}
+        </swc-user-message>
+      `,
+    ],
+    'Media: images and documents'
+  );
+
+const mixedCardRow = () =>
+  row(
+    [
+      html`
+        <swc-user-message type="card">
+          ${['JPG', 'PDF', 'DOCX', 'BIN'].map((extension) => {
+            const fileName = `Campaign brief.${extension.toLowerCase()}`;
+
+            return html`
+              <swc-upload-attachment
+                slot="thumbnail"
+                type="card"
+                accessible-label=${fileName}
+              >
+                ${renderAttachmentPreview({
+                  fileName,
+                  src:
+                    extension === 'JPG' ? 'images/card-preview.jpg' : undefined,
+                })}
+                <span slot="title">${fileName}</span>
+                <span slot="subtitle">2026</span>
+              </swc-upload-attachment>
+            `;
+          })}
+        </swc-user-message>
+      `,
+    ],
+    'Card: images and documents'
   );
 
 const galleryOverflowRow = (type: 'media' | 'card' = 'media') =>
@@ -271,6 +329,8 @@ const extraRows = () => [
 
 const permutationContent = () => [
   ...typeRows(),
+  mixedMediaRow(),
+  mixedCardRow(),
   ...extraRows(),
   galleryOverflowRow(),
   galleryOverflowRow('card'),
@@ -301,7 +361,13 @@ export const Permutations: Story = {
 export const ForcedColors: Story = {
   render: () =>
     theme(
-      [...typeRows(), galleryOverflowRow(), galleryOverflowRow('card')],
+      [
+        ...typeRows(),
+        mixedMediaRow(),
+        mixedCardRow(),
+        galleryOverflowRow(),
+        galleryOverflowRow('card'),
+      ],
       'light',
       'ltr'
     ),

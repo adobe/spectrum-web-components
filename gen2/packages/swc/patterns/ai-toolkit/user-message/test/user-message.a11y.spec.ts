@@ -58,7 +58,7 @@ test.describe('UserMessage - ARIA Snapshots', () => {
           host.replaceWith(cardMessage);
         });
       }
-      const name = type === 'card' ? 'Uploaded documents' : 'Uploaded images';
+      const name = 'Uploaded attachments';
       const viewport = root.getByRole('group', { name, exact: true });
       await expect(viewport).toMatchAriaSnapshot(
         `- group "${name}":\n${Array.from(
@@ -101,7 +101,7 @@ test.describe('UserMessage - ARIA Snapshots', () => {
       'patterns-ai-toolkit-user-message--overflow',
       'swc-user-message'
     );
-    const viewport = root.getByRole('group', { name: 'Uploaded images' });
+    const viewport = root.getByRole('group', { name: 'Uploaded attachments' });
     await expect(viewport).toHaveCSS('mask-image', 'none');
     await expect(viewport).toHaveCSS('animation-name', 'none');
     await page.keyboard.press('Tab');

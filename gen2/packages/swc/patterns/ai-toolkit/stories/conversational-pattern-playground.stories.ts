@@ -25,14 +25,14 @@ import '../suggestion/swc-suggestion-group.js';
 import '../suggestion-item/swc-suggestion-item.js';
 import '../prompt-field/swc-prompt-field.js';
 import '../upload-attachment/swc-upload-attachment.js';
-import '@adobe/spectrum-wc/components/badge/swc-badge.js';
-import '@adobe/spectrum-wc/components/thumbnail/swc-thumbnail.js';
 
 import { uniqueId } from '../../../utils/id.js';
 import {
   PIXEL_LOADER_ICON_NAMES,
   PIXEL_LOADER_PRESET_NAMES,
 } from '../pixel-loader/index.js';
+import type { UserMessageType } from '../user-message/index.js';
+import { renderAttachmentPreview } from './attachment-preview.js';
 
 // ────────────────
 //    METADATA
@@ -45,6 +45,7 @@ type PlaygroundArgs = {
   'animate-loader': boolean;
   placeholder: string;
   disabled: boolean;
+  'attachment-type': UserMessageType;
   'step-duration': number;
   'show-feedback': boolean;
   'show-sources': boolean;
@@ -59,6 +60,7 @@ const DEFAULT_PLAYGROUND_ARGS: PlaygroundArgs = {
   placeholder:
     'Ready to get started? Ask a question, share an idea, or add a task.',
   disabled: false,
+  'attachment-type': 'media',
   'step-duration': 2200,
   'show-feedback': true,
   'show-sources': true,
@@ -91,6 +93,13 @@ const meta: Meta<PlaygroundArgs> = {
     'animate-loader': { table: { category: 'Prompt field' } },
     placeholder: { table: { category: 'Prompt field' } },
     disabled: { table: { category: 'Prompt field' } },
+    'attachment-type': {
+      description:
+        'Presentation for newly uploaded files. Existing attachments keep their type after sending.',
+      control: { type: 'select' },
+      options: ['media', 'card'],
+      table: { category: 'Prompt field' },
+    },
     'step-duration': {
       description: 'Milliseconds each response status step stays active.',
       control: { type: 'range', min: 500, max: 5000, step: 100 },
@@ -112,53 +121,34 @@ export default meta;
 
 type DemoAttachment = {
   id: string;
+  type: UserMessageType;
   title: string;
   subtitle: string;
   /** Image preview URL when the attachment is a visual file. */
   thumbnailUrl?: string;
   objectUrl?: string;
   file?: File;
-  /** File-type label for non-image media tiles (for example, "PDF"). */
-  badge?: string;
 };
 
-const getFileBadge = (fileName: string): string | undefined => {
-  const match = fileName.toLowerCase().match(/\.([a-z0-9]+)$/);
-  if (!match) {
-    return 'FILE';
-  }
-
-  const extension = match[1];
-  if (/^(png|jpe?g|gif|webp|bmp|svg|avif)$/.test(extension)) {
-    return undefined;
-  }
-
-  if (extension === 'pdf') {
-    return 'PDF';
-  }
-
-  return extension.toUpperCase();
-};
-
-const renderDemoAttachmentThumbnail = (
-  attachment: DemoAttachment
-): ReturnType<typeof html> =>
-  attachment.thumbnailUrl
-    ? html`
-        <img
-          slot="thumbnail"
-          src=${attachment.thumbnailUrl}
-          alt=${attachment.title}
-        />
-      `
-    : html`
-        <div
-          slot="thumbnail"
-          role="img"
-          aria-label=${attachment.title}
-          style="inline-size:100%;block-size:100%;background:#f3f3f3;"
-        ></div>
-      `;
+const renderDemoAttachment = (
+  attachment: DemoAttachment,
+  sent: boolean
+) => html`
+  <swc-upload-attachment
+    slot=${sent ? 'thumbnail' : 'attachment'}
+    type=${attachment.type}
+    ?dismissible=${!sent}
+    accessible-label=${attachment.title}
+    data-attachment-id=${attachment.id}
+  >
+    ${renderAttachmentPreview({
+      fileName: attachment.title,
+      src: attachment.thumbnailUrl,
+    })}
+    <span slot="title">${attachment.title}</span>
+    <span slot="subtitle">${attachment.subtitle}</span>
+  </swc-upload-attachment>
+`;
 
 type DemoTurn = {
   id: string;
@@ -475,12 +465,12 @@ class ConversationFullPatternDemo extends LitElement {
 
       return {
         id: uniqueId(`attachment-${index}`),
+        type: this.config['attachment-type'],
         title: fileName,
         subtitle: sizeLabel,
         thumbnailUrl: objectUrl,
         objectUrl,
         file: isImage ? file : undefined,
-        badge: isImage ? undefined : getFileBadge(fileName),
       } satisfies DemoAttachment;
     });
 
@@ -568,39 +558,22 @@ class ConversationFullPatternDemo extends LitElement {
     const lastTurnId = this.turns[this.turns.length - 1]?.id;
     return this.turns.map((turn) => {
       if (turn.role === 'user') {
-        const images = (turn.attachments ?? []).filter(
-          (attachment) => attachment.thumbnailUrl
-        );
-        const documents = (turn.attachments ?? []).filter(
-          (attachment) => !attachment.thumbnailUrl
-        );
         return html`
           <swc-conversation-turn type="user">
-            ${images.length
-              ? html`
-                  <swc-user-message type="media">
-                    ${images.map(renderDemoAttachmentThumbnail)}
-                  </swc-user-message>
-                `
-              : ''}
-            ${documents.length
-              ? html`
-                  <swc-user-message type="card">
-                    ${documents.map(
-                      (attachment) => html`
-                        <swc-upload-attachment slot="thumbnail" type="card">
-                          <swc-thumbnail
-                            slot="thumbnail"
-                            decorative
-                          ></swc-thumbnail>
-                          <span slot="title">${attachment.title}</span>
-                          <span slot="subtitle">${attachment.subtitle}</span>
-                        </swc-upload-attachment>
-                      `
-                    )}
-                  </swc-user-message>
-                `
-              : ''}
+            ${(['media', 'card'] as const).map((type) => {
+              const attachments = (turn.attachments ?? []).filter(
+                (attachment) => attachment.type === type
+              );
+              return attachments.length
+                ? html`
+                    <swc-user-message type=${type}>
+                      ${attachments.map((attachment) =>
+                        renderDemoAttachment(attachment, true)
+                      )}
+                    </swc-user-message>
+                  `
+                : '';
+            })}
             ${turn.text
               ? html`
                   <swc-user-message>${turn.text}</swc-user-message>
@@ -676,24 +649,8 @@ class ConversationFullPatternDemo extends LitElement {
   }
 
   private renderAttachments() {
-    return this.attachments.map(
-      (attachment) => html`
-        <swc-upload-attachment
-          slot="attachment"
-          type="media"
-          dismissible
-          data-attachment-id=${attachment.id}
-        >
-          ${renderDemoAttachmentThumbnail(attachment)}
-          ${attachment.badge
-            ? html`
-                <swc-badge slot="badge" size="s" subtle>
-                  ${attachment.badge}
-                </swc-badge>
-              `
-            : ''}
-        </swc-upload-attachment>
-      `
+    return this.attachments.map((attachment) =>
+      renderDemoAttachment(attachment, false)
     );
   }
 
@@ -833,7 +790,6 @@ const fullPatternSource = `<div style="max-width:800px; margin:auto; padding:24p
         aria-label="Hilton commercial assets"
         style="inline-size:100%;block-size:100%;background:#f3f3f3;"
       ></div>
-      <swc-badge slot="badge" size="s" subtle>PDF</swc-badge>
     </swc-upload-attachment>
     <p slot="legal" class="swc-Typography--links">
       Responses are generated using AI, and may be inaccurate. Check before
