@@ -13,6 +13,7 @@ import {
   Canvas,
   Description,
   Markdown,
+  type Of,
   useOf,
 } from '@storybook/addon-docs/blocks';
 import React, { Fragment } from 'react';
@@ -31,21 +32,21 @@ export const SpectrumStories = ({
   tag = 'usage',
   hideTitle = false,
 }: {
-  of?: any;
+  of?: Of;
   tag?: string;
   hideTitle?: boolean;
 }) => {
   const resolvedOf = useOf(of || 'meta', ['meta']);
 
   const taggedStories = Object.values(resolvedOf.csfFile.stories).filter(
-    (story: any) => story.tags?.includes(tag)
+    (story) => story.tags?.includes(tag)
   );
 
   if (taggedStories.length === 0) {
     return null;
   }
 
-  return taggedStories.map((story: any) => (
+  return taggedStories.map((story) => (
     <Fragment key={story.name}>
       {!hideTitle && <Markdown>{`### ${story.name}`}</Markdown>}
       <Description of={story.moduleExport} />

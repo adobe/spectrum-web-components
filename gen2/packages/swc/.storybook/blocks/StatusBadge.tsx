@@ -10,7 +10,11 @@
  * governing permissions and limitations under the License.
  */
 
-import { useOf } from '@storybook/addon-docs/blocks';
+import { type Of, useOf } from '@storybook/addon-docs/blocks';
+import type {
+  CustomElementDeclaration,
+  Package,
+} from 'custom-elements-manifest/schema';
 import React, { useEffect, useRef } from 'react';
 
 // Register the badge component for use in the docs iframe
@@ -19,6 +23,12 @@ import '@adobe/spectrum-wc/components/badge/swc-badge.js';
 import customElements from '../../dist/custom-elements.json' with { type: 'json' };
 
 type Status = 'preview' | 'deprecated' | 'internal';
+
+/** A CEM element declaration, plus the tags that `statusPlugin` adds. */
+type StatusDeclaration = CustomElementDeclaration & {
+  status?: string;
+  since?: string;
+};
 
 const STATUS_CONFIG: Record<
   Status,
@@ -84,7 +94,7 @@ export const StatusBadge = ({
   of,
   showSince = false,
 }: {
-  of?: any;
+  of?: Of;
   showSince?: boolean;
 }) => {
   const resolvedOf = useOf(of || 'meta', ['meta']);
@@ -98,10 +108,10 @@ export const StatusBadge = ({
   let status: string | undefined;
   let since: string | undefined;
 
-  for (const mod of (customElements as any).modules ?? []) {
+  for (const mod of (customElements as unknown as Package).modules ?? []) {
     const decl = (mod.declarations ?? []).find(
-      (d: any) => d.tagName === componentTag
-    );
+      (d) => 'tagName' in d && d.tagName === componentTag
+    ) as StatusDeclaration | undefined;
     if (decl) {
       status = decl.status;
       since = showSince ? decl.since : undefined;

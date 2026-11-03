@@ -38,7 +38,7 @@ export const DocsFooter = () => {
   // Per-unit pages may flag custom API content by tagging stories with `api`.
   const hasCustomApiStories = Object.values(
     resolvedOf?.csfFile?.stories ?? {}
-  ).some((story: any) => story.tags?.includes('api'));
+  ).some((story) => story.tags?.includes('api'));
 
   // Multi-element components (e.g. accordion, tabs) declare sibling element tags
   // via `parameters.additionalApiTables`. When present, each element gets its

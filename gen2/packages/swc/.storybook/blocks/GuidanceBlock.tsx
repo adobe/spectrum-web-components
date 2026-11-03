@@ -13,6 +13,7 @@
 import {
   HeaderMdx,
   Markdown,
+  type Of,
   Source,
   useOf,
 } from '@storybook/addon-docs/blocks';
@@ -21,7 +22,7 @@ import React, { Fragment } from 'react';
 import customElements from '../../dist/custom-elements.json' with { type: 'json' };
 
 interface GuidanceBlockProps {
-  of?: any;
+  of?: Of;
   member?: string; // Property/method name
   tag?: string; // Specific tag name
   title?: string; // Custom title

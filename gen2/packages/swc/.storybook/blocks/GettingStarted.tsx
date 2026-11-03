@@ -9,7 +9,7 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { Markdown, useOf } from '@storybook/addon-docs/blocks';
+import { Markdown, type Of, useOf } from '@storybook/addon-docs/blocks';
 import React from 'react';
 
 import { formatTitle } from '../helpers/index.js';
@@ -24,7 +24,7 @@ import { formatTitle } from '../helpers/index.js';
  * @param props.of - The Storybook meta or story to resolve the component from
  * @param props.tags - Meta tags that identify utilities, controllers, and migrated components
  */
-export const GettingStarted = ({ of, tags }: { of?: any; tags?: string[] }) => {
+export const GettingStarted = ({ of, tags }: { of?: Of; tags?: string[] }) => {
   const resolvedOf = useOf(of || 'meta', ['meta']);
 
   if (tags?.includes('utility')) {

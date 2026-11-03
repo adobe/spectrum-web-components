@@ -11,7 +11,7 @@
  */
 /// <reference types="vite/client" />
 
-import { useOf } from '@storybook/addon-docs/blocks';
+import { type Of, useOf } from '@storybook/addon-docs/blocks';
 import React, { useEffect, useState } from 'react';
 
 import { formatTitle } from '../helpers/index.js';
@@ -36,7 +36,7 @@ export const SpectrumDocs = ({
   of,
   tag = 'usage',
 }: {
-  of?: any;
+  of?: Of;
   tag?: string;
 }) => {
   const resolvedOf = useOf(of || 'meta', ['meta']);
