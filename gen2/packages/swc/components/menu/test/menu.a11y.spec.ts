@@ -106,6 +106,13 @@ test.describe('Menu - native dismissal', () => {
 
     await trigger.click();
     await expect(menu).toHaveJSProperty('open', true);
+    // `open` flips before `PlacementController` has positioned the surface,
+    // and until it does the surface sits at the viewport origin, covering the
+    // corner this test clicks. Pressing there then lands inside the menu and
+    // correctly does not dismiss it. `actual-placement` is set once
+    // positioning has run, so it is the signal that the corner is really
+    // outside.
+    await expect(menu).toHaveAttribute('actual-placement', /.+/);
     // A trusted pointer press in the empty top-left corner is outside the
     // menu and its trigger, so it light-dismisses.
     await page.mouse.click(2, 2);
@@ -127,6 +134,9 @@ test.describe('Menu - native dismissal', () => {
 
     await trigger.click();
     await expect(menu).toHaveJSProperty('open', true);
+    // Same positioning race as the outside-click test above: an unpositioned
+    // surface can sit over the trigger this test clicks again.
+    await expect(menu).toHaveAttribute('actual-placement', /.+/);
 
     await trigger.click();
     await expect(menu).toHaveJSProperty('open', false);
