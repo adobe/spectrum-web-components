@@ -43,7 +43,8 @@ export const ContentTest: Story = {
       canvasElement,
       'swc-user-message'
     );
-    expect(message.type).toBe('copy');
+    expect(message.type).toBeUndefined();
+    expect(message.hasAttribute('type')).toBe(false);
     expect(
       message.shadowRoot!.querySelector('slot')!.assignedNodes()[0].textContent
     ).toContain('Summarize these references.');
@@ -87,17 +88,22 @@ export const ContentTest: Story = {
               message.querySelector('img, swc-asset, [dismissible]')
             ).toBeNull();
           }
+          if (type === 'media') {
+            message.removeAttribute('type');
+          } else {
+            message.type = undefined;
+          }
+          await message.updateComplete;
+          expect(message.hasAttribute('type')).toBe(false);
+          expect(
+            message.shadowRoot!.querySelector('slot:not([name])')
+          ).not.toBeNull();
+          expect(
+            message.shadowRoot!.querySelector('[role="group"]')
+          ).toBeNull();
         }
       );
     }
-
-    message.type = 'copy';
-    message.textContent = 'Summarize these references.';
-    await message.updateComplete;
-    expect(
-      message.shadowRoot!.querySelector('slot:not([name])')
-    ).not.toBeNull();
-    expect(message.shadowRoot!.querySelector('[role="group"]')).toBeNull();
   },
 };
 

@@ -86,33 +86,30 @@ const attachmentSlots = (slots: AttachmentSlots) => {
 };
 
 const renderMessage = ({
-  type = 'copy',
+  type,
   count = 1,
   slots = 'titleAndSubtitle',
   copy = SHORT_COPY,
   lang,
   maxInlineSize,
 }: MessageCase) => {
-  const message =
-    type === 'copy'
-      ? html`
-          <swc-user-message type="copy" lang=${lang ?? nothing}>
-            ${copy}
-          </swc-user-message>
-        `
-      : html`
-          <swc-user-message type=${type} lang=${lang ?? nothing}>
-            ${Array.from({ length: count }, () =>
-              type === 'card'
-                ? html`
-                    <swc-upload-attachment slot="thumbnail" type="card">
-                      ${attachmentSlots(slots)}
-                    </swc-upload-attachment>
-                  `
-                : mediaThumbnail
-            )}
-          </swc-user-message>
-        `;
+  const message = !type
+    ? html`
+        <swc-user-message lang=${lang ?? nothing}>${copy}</swc-user-message>
+      `
+    : html`
+        <swc-user-message type=${type} lang=${lang ?? nothing}>
+          ${Array.from({ length: count }, () =>
+            type === 'card'
+              ? html`
+                  <swc-upload-attachment slot="thumbnail" type="card">
+                    ${attachmentSlots(slots)}
+                  </swc-upload-attachment>
+                `
+              : mediaThumbnail
+          )}
+        </swc-user-message>
+      `;
 
   return maxInlineSize
     ? html`
@@ -137,7 +134,7 @@ const SLOT_LABELS = {
 } as const satisfies Record<Exclude<AttachmentSlots, 'truncated'>, string>;
 
 const TYPE_PERMUTATIONS = createPermutations([
-  { type: ['copy'] },
+  {},
   { type: ['card'], slots: ['titleAndSubtitle', 'titleOnly'] },
   { type: ['media'], count: [1, 2, 7] },
   { type: ['card'], count: [2, 6] },

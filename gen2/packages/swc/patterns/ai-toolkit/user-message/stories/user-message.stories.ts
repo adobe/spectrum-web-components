@@ -29,11 +29,14 @@ delete (argTypes as Record<string, unknown>).content;
 
 argTypes.type = {
   ...argTypes.type,
-  control: { type: 'select' },
-  options: ['copy', 'card', 'media'],
+  control: {
+    type: 'select',
+    labels: { undefined: 'Default (text)' },
+  },
+  options: [undefined, 'card', 'media'],
   table: {
     category: 'attributes',
-    defaultValue: { summary: 'copy' },
+    defaultValue: { summary: 'undefined' },
   },
 };
 
@@ -99,17 +102,33 @@ const attachments = (type: unknown, count: number) => html`
 
 export const Playground: Story = {
   args: {
-    type: 'copy',
+    type: undefined,
     'default-slot': 'Can you summarize these campaign references?',
   },
   render: (args) =>
     template(
       args,
-      args['thumbnail-slot'] || args.type === 'copy'
+      args['thumbnail-slot'] || !args.type
         ? undefined
         : attachments(args.type, 2)
     ),
   tags: ['dev', 'overview'],
+};
+
+// ────────────────────
+//    OPTIONS STORIES
+// ────────────────────
+
+export const Card: Story = {
+  args: { type: 'card' },
+  render: Playground.render,
+  tags: ['options'],
+};
+
+export const Media: Story = {
+  args: { type: 'media' },
+  render: Playground.render,
+  tags: ['options'],
 };
 
 // ──────────────────────────────
@@ -121,7 +140,7 @@ export const Overflow: Story = {
   render: (args) =>
     template(
       args,
-      args['thumbnail-slot'] || args.type === 'copy'
+      args['thumbnail-slot'] || !args.type
         ? undefined
         : attachments(args.type, 24)
     ),
