@@ -391,6 +391,17 @@ export const DisabledTest: Story = {
         expect(getComputedStyle(surface, '::after').opacity).toBe('0.32');
       }
     );
+
+    await step(
+      'tints the glass evenly, with no light rim at the edges',
+      async () => {
+        const shadow = getComputedStyle(button, '::before');
+
+        expect(shadow.backgroundColor).toBe('rgba(0, 0, 0, 0.04)');
+        expect(shadow.filter).toBe('none');
+        expect(shadow.translate).toBe('none');
+      }
+    );
   },
 };
 

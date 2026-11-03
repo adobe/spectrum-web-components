@@ -177,6 +177,15 @@
   transform: none;
 }
 
+/* The disabled design is evenly tinted up to its stroke. With no overlay
+   over it, the blurred shadow behind the glass would fade toward the edges
+   and leave a light rim inside them, so it becomes a flat tint. */
+.swc-AiButton:disabled::before {
+  background-color: token("transparent-static-black-100");
+  filter: none;
+  translate: none;
+}
+
 /* ─────────────────────────────────────────────────────────────────────────────
    DECORATIVE LAYERS
    Positioned without z-index, so they paint in source order below the content.
