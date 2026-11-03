@@ -114,7 +114,7 @@ These recommendations apply to **gen2 consumer documentation** and to **SWC comp
 
 None
 
-The utility is **CSS only**. Cross-root **`aria-labelledby`** / **`aria-describedby`** concerns belong to **consumer components** that host the pattern in **shadow DOM** and reference **light DOM** IDs; plan those in each component's component accessibility specification, not here.
+The utility is **CSS only**. Cross-root **`aria-labelledby`** / **`aria-describedby`** concerns belong to **consumer components** that host the pattern in **shadow DOM** and reference **light DOM** IDs; plan those in each component accessibility specification, not here.
 
 ### Accessibility tree expectations
 
