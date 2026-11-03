@@ -208,6 +208,12 @@
       font-size: 0.75rem !important;
     }
 
+    /* Storybook stripes docs tables with its own palette, which put links
+       in dark rows below text contrast minimums */
+    .sbdocs-content table tr:nth-of-type(2n) {
+      background-color: var(--swc-background-layer-1-color);
+    }
+
     [data-section='upcoming'] {
       margin-block-end: 3.5rem;
     }
