@@ -160,7 +160,9 @@ export const OverflowTest: Story = {
           );
         }
         viewport.focus();
-        expect(message.shadowRoot!.activeElement).toBe(viewport);
+        await waitFor(() =>
+          expect(message.shadowRoot!.activeElement).toBe(viewport)
+        );
         viewport.scrollTop = viewport.scrollHeight;
         await waitFor(() => expect(viewport.scrollTop).toBeGreaterThan(0));
       }
