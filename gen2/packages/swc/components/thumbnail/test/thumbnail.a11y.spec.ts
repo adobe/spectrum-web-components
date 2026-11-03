@@ -86,9 +86,7 @@ test.describe('Thumbnail - ARIA Snapshots', () => {
       - img "Preview, size 300"
       - img "Preview, size 400"
       - img "Preview, size 500"
-      - img "Preview, size 600"
       - img "Preview, size 700"
-      - img "Preview, size 800"
       - img "Preview, size 900"
       - img "Preview, size 1000"
     `);

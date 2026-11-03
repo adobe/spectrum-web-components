@@ -19,7 +19,7 @@
 }
 
 .swc-Divider {
-  --_swc-divider-thickness: var(--swc-divider-thickness, token("divider-thickness-medium"));
+  --_swc-divider-thickness: var(--swc-divider-thickness, token("bar-thickness-extra-small"));
 
   inline-size: 100%;
   block-size: var(--_swc-divider-thickness);
@@ -28,17 +28,17 @@
 }
 
 :host([size="s"]) {
-  --swc-divider-thickness: token("divider-thickness-small");
+  --swc-divider-thickness: token("bar-thickness-2x-small");
 }
 
 :host([size="l"]) {
-  --swc-divider-thickness: token("divider-thickness-large");
+  --swc-divider-thickness: token("bar-thickness-small");
   --swc-divider-background-color: token("gray-800");
 }
 
 /* Minimum tracks below cap percentage fill; when the basis does not resolve, set a definite inline size on :host for horizontal dividers or block size for vertical. */
 .swc-Divider:not(.swc-Divider--vertical) {
-  min-inline-size: min(100%, token("divider-horizontal-minimum-width"));
+  min-inline-size: min(100%, token("bar-minimum-width-2x-small"));
 }
 
 :host([vertical]) {
@@ -48,7 +48,7 @@
 .swc-Divider--vertical {
   inline-size: var(--_swc-divider-thickness);
   block-size: 100%;
-  min-block-size: min(100%, token("divider-vertical-minimum-height"));
+  min-block-size: min(100%, token("bar-minimum-width-2x-small"));
 }
 
 .swc-Divider--staticWhite {

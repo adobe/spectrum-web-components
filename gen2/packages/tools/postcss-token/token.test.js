@@ -71,8 +71,8 @@ describe('postcss-token plugin', () => {
 
   it('replaces token() inside a partial value', async () => {
     await run(
-      `a { min-block-size: var(--${prefix}-badge-height, token('component-height-100')); }`,
-      `a { min-block-size: var(--${prefix}-badge-height, var(--${prefix}-component-height-100)); }`
+      `a { min-block-size: var(--${prefix}-badge-height, token('font-size-100')); }`,
+      `a { min-block-size: var(--${prefix}-badge-height, var(--${prefix}-font-size-100)); }`
     );
   });
 

@@ -31,7 +31,7 @@
   display: inline-flex;
   gap: var(--swc-badge-gap, token("base-gap-small"));
   align-items: center;
-  min-block-size: var(--swc-badge-height, token("component-height-75"));
+  min-block-size: var(--swc-badge-height, token("base-height-small"));
   padding-block: calc(var(--_swc-badge-padding-block) - var(--_swc-badge-border-width));
   padding-inline-start: calc(var(--_swc-badge-padding-inline-start) - var(--_swc-badge-border-width));
   padding-inline-end: calc(var(--_swc-badge-padding-inline) - var(--_swc-badge-border-width));
@@ -76,7 +76,7 @@
 }
 
 :host([size="m"]) {
-  --swc-badge-height: token("component-height-100");
+  --swc-badge-height: token("base-height-medium");
   --swc-badge-corner-radius: token("corner-radius-medium-size-medium");
   --swc-badge-gap: token("base-gap-medium");
   --swc-badge-padding-inline: token("base-padding-horizontal-medium");
@@ -90,7 +90,7 @@
 }
 
 :host([size="l"]) {
-  --swc-badge-height: token("component-height-200");
+  --swc-badge-height: token("base-height-large");
   --swc-badge-corner-radius: token("corner-radius-medium-size-large");
   --swc-badge-gap: token("base-gap-large");
   --swc-badge-padding-inline: token("base-padding-horizontal-large");
@@ -104,7 +104,7 @@
 }
 
 :host([size="xl"]) {
-  --swc-badge-height: token("component-height-300");
+  --swc-badge-height: token("base-height-extra-large");
   --swc-badge-corner-radius: token("corner-radius-medium-size-extra-large");
   --swc-badge-gap: token("base-gap-extra-large");
   --swc-badge-padding-inline: token("base-padding-horizontal-extra-large");

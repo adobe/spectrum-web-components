@@ -24,13 +24,13 @@
   display: block;
   position: absolute;
   z-index: 1;
-  inline-size: token("color-handle-size");
-  block-size: token("color-handle-size");
+  inline-size: token("size-300");
+  block-size: token("size-300");
 
   /* Center the handle on its coordinate; the outer border is drawn as a
      box-shadow so it is not counted in the handle's size (Figma box model). */
-  margin-block: calc(-1 * calc(token("color-handle-size") / 2));
-  margin-inline: calc(-1 * calc(token("color-handle-size") / 2));
+  margin-block: calc(-1 * calc(token("size-300") / 2));
+  margin-inline: calc(-1 * calc(token("size-300") / 2));
   border-color: token("transparent-static-white-1000");
   border-style: solid;
   border-width: token("color-handle-border-width");
@@ -48,10 +48,10 @@
 /* Invisible hit area so the handle is easy to grab on the parent track. */
 :host::after {
   position: absolute;
-  inset-block: calc(50% - calc(token("color-control-track-width") / 2));
-  inset-inline: calc(50% - calc(token("color-control-track-width") / 2));
-  inline-size: token("color-control-track-width");
-  block-size: token("color-control-track-width");
+  inset-block: calc(50% - calc(token("size-400") / 2));
+  inset-inline: calc(50% - calc(token("size-400") / 2));
+  inline-size: token("size-400");
+  block-size: token("size-400");
   border-radius: 100%;
   content: "";
 }
@@ -88,10 +88,10 @@
    `tabindex` plus a `:focus-visible` rule) will be added when a parent picker
    is migrated and can exercise it. */
 :host([focused]) {
-  inline-size: token("color-handle-size-key-focus");
-  block-size: token("color-handle-size-key-focus");
-  margin-block: calc(-1 * token("color-handle-size"));
-  margin-inline: calc(-1 * token("color-handle-size"));
+  inline-size: token("size-500");
+  block-size: token("size-500");
+  margin-block: calc(-1 * token("size-300"));
+  margin-inline: calc(-1 * token("size-300"));
   outline: none;
 }
 

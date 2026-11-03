@@ -13,10 +13,10 @@
 /**
  * Valid numeric size values for the Thumbnail component.
  *
- * Matches the full 1st-gen scale; no new sizes are added in Spectrum 2.
+ * Each size maps to a step on the Spectrum 2 `visual-size-*` scale.
  */
 export const THUMBNAIL_VALID_SIZES = [
-  50, 75, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000,
+  50, 75, 100, 200, 300, 400, 500, 700, 900, 1000,
 ] as const;
 
 export type ThumbnailSize = (typeof THUMBNAIL_VALID_SIZES)[number];

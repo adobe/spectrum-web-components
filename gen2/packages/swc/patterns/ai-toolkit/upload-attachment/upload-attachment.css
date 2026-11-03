@@ -185,8 +185,8 @@
 :host([type="card"]) .swc-UploadAttachment-thumbnail ::slotted(*) {
   box-sizing: border-box;
   flex-shrink: 0;
-  inline-size: var(--swc-upload-attachment-card-thumbnail-size, token("thumbnail-size-700"));
-  block-size: var(--swc-upload-attachment-card-thumbnail-size, token("thumbnail-size-700"));
+  inline-size: var(--swc-upload-attachment-card-thumbnail-size, token("visual-size-600"));
+  block-size: var(--swc-upload-attachment-card-thumbnail-size, token("visual-size-600"));
   background: token("gray-100");
   border: token("border-width-100") solid transparent;
   border-radius: token("corner-radius-large-default");
@@ -236,7 +236,7 @@
 }
 
 :host([type="media"]) {
-  /* Fixed (not token("thumbnail-size-1000"), which scales to 72px at
+  /* Fixed (not token("visual-size-800"), which scales to 72px at
    * large scale) so the m/l size gap stays constant across scales. */
   inline-size: 64px;
   block-size: 64px;

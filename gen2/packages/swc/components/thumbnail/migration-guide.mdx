@@ -53,6 +53,7 @@ import '@adobe/spectrum-wc/components/thumbnail/swc-thumbnail.js';
 | `layer` attribute                               | Apply your own border styling directly to `<swc-thumbnail>` or a wrapping element.                                                                                                                |
 | `disabled` attribute (CSS-only, no JS property) | Apply your own dimmed/opacity styling to `<swc-thumbnail>` from the parent component that is actually disabled.                                                                                   |
 | `focused` attribute (CSS-only, no JS property)  | The parent interactive element that wraps the thumbnail draws its own focus ring.                                                                                                                 |
+| `size="600"` and `size="800"`                   | Use a neighboring size (`500`, `700` or `900`), or set `--swc-thumbnail-size` for an exact value.                                                                                                 |
 | `selected` attribute (CSS-only, no JS property) | Apply your own selected-state styling (for example an outline) to `<swc-thumbnail>` from the parent component.                                                                                    |
 
 ## Update your code
@@ -207,6 +208,7 @@ Spectrum 2 exposes one public CSS custom property on `<swc-thumbnail>`.
 - [ ] Update imports
 - [ ] Rename all `<sp-thumbnail>` to `<swc-thumbnail>`
 - [ ] Update any JavaScript that reads or sets `.size` to use a numeric literal
+- [ ] Replace `size="600"` and `size="800"` with a supported size
 - [ ] Replace `cover` with `fit="cover"`
 - [ ] Remove `background`, `layer`, `disabled`, `focused`, and `selected`; replace with your own CSS where still needed
 - [ ] Replace `--mod-thumbnail-*` overrides with `--swc-thumbnail-size` where applicable

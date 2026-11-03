@@ -32,7 +32,7 @@
   gap: token("base-gap-medium");
   align-items: center;
   justify-content: center;
-  block-size: var(--swc-tab-height, token("tab-item-height-medium"));
+  block-size: var(--swc-tab-height, token("base-height-extra-large"));
   padding-block: var(--swc-tab-padding-block, token("base-padding-vertical-medium")) var(--swc-tab-padding-block-end, token("list-item-padding-vertical-spacious"));
   color: var(--_swc-tab-text-color);
   overflow: clip;

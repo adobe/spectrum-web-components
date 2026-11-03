@@ -566,20 +566,20 @@
   min-inline-size: 0;
 
   /* One button height in both states, so the collapse only removes the action bar below — the row never changes height, and the bottom-anchored send button reads centered on it when collapsed. */
-  min-block-size: var(--_swc-prompt-field-text-group-min-block-size, token("component-height-100"));
+  min-block-size: var(--_swc-prompt-field-text-group-min-block-size, token("base-height-medium"));
 
   /* Fixed offset so a single line still reads vertically centered in the row. */
-  padding-block-start: var(--_swc-prompt-field-text-group-padding-block-start, calc((token("component-height-100") - (token("font-size-200") * token("line-height-200"))) / 2));
+  padding-block-start: var(--_swc-prompt-field-text-group-padding-block-start, calc((token("base-height-medium") - (token("font-size-200") * token("line-height-200"))) / 2));
   padding-inline-start: var(--_swc-prompt-field-text-group-padding-inline-start, token("spacing-75"));
-  padding-inline-end: var(--_swc-prompt-field-text-group-padding-inline-end, calc(token("component-height-100") + token("spacing-300")));
+  padding-inline-end: var(--_swc-prompt-field-text-group-padding-inline-end, calc(token("base-height-medium") + token("spacing-300")));
 }
 
 :host([size="s"]) .swc-PromptField-text-group {
   --_swc-prompt-field-text-group-gap: token("spacing-100");
-  --_swc-prompt-field-text-group-min-block-size: token("component-height-75");
-  --_swc-prompt-field-text-group-padding-block-start: calc((token("component-height-75") - (token("font-size-100") * token("line-height-100"))) / 2);
+  --_swc-prompt-field-text-group-min-block-size: token("base-height-small");
+  --_swc-prompt-field-text-group-padding-block-start: calc((token("base-height-small") - (token("font-size-100") * token("line-height-100"))) / 2);
   --_swc-prompt-field-text-group-padding-inline-start: 2px;
-  --_swc-prompt-field-text-group-padding-inline-end: calc(token("component-height-75") + token("spacing-300"));
+  --_swc-prompt-field-text-group-padding-inline-end: calc(token("base-height-small") + token("spacing-300"));
 }
 
 .swc-PromptField-status-icon {
@@ -666,7 +666,7 @@
  * mask-position. This avoids @property, which shadow-root styles can't use. */
 .swc-PromptField-attachments-row {
   /* Fully transparent under the chevron (plateau), then opaque over -soft. */
-  --_swc-prompt-field-attachment-fade-plateau: calc(token("component-height-100") + token("spacing-75"));
+  --_swc-prompt-field-attachment-fade-plateau: calc(token("base-height-medium") + token("spacing-75"));
   --_swc-prompt-field-attachment-fade-soft: token("spacing-400");
   --_swc-prompt-field-attachment-fade: calc(var(--_swc-prompt-field-attachment-fade-plateau) + var(--_swc-prompt-field-attachment-fade-soft));
   --_swc-prompt-field-attachment-fade-range: token("spacing-500");
@@ -732,7 +732,7 @@
  * It is on both sides, so paging lands clear of a chevron that only appears
  * after the scroll starts. At the ends, the browser clamps the position. */
 .swc-PromptField-attachments-scroll:is(.has-scroll-prev, .has-scroll-next) {
-  scroll-padding-inline: calc(token("component-height-100") + token("spacing-400") + token("spacing-75"));
+  scroll-padding-inline: calc(token("base-height-medium") + token("spacing-400") + token("spacing-75"));
 }
 
 /* In RTL, the start edge is on the right. */

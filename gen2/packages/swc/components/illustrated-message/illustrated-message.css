@@ -25,7 +25,7 @@
   flex-direction: column;
   gap: var(--_swc-illustrated-message-illustration-to-content);
   align-items: center;
-  max-inline-size: var(--swc-illustrated-message-max-inline-size, token("illustrated-message-vertical-maximum-width"));
+  max-inline-size: var(--swc-illustrated-message-max-inline-size, token("container-maximum-width-large"));
   margin-inline: auto;
 }
 
@@ -107,7 +107,7 @@
 /* ── Orientation: horizontal ─────────────────────────────────────────────── */
 
 :host([orientation="horizontal"]) {
-  --swc-illustrated-message-max-inline-size: token("illustrated-message-horizontal-maximum-width");
+  --swc-illustrated-message-max-inline-size: token("container-maximum-width-2x-large");
 }
 
 :host([orientation="horizontal"]) .swc-IllustratedMessage {

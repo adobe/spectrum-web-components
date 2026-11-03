@@ -34,7 +34,7 @@
 
 :host([density="compact"]) .tablist {
   --_swc-tabs-gap: token("tab-gap-horizontal-medium");
-  --swc-tab-height: token("tab-item-compact-height-medium");
+  --swc-tab-height: auto;
   --swc-tab-padding-block: token("base-padding-vertical-medium");
   --swc-tab-padding-block-end: token("base-padding-vertical-medium");
 }

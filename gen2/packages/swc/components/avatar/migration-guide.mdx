@@ -46,7 +46,7 @@ import '@adobe/spectrum-wc/components/avatar/swc-avatar.js';
 | ---------------------------- | ---------------------------------------------------- |
 | `outline` boolean attribute  | Renders a visible border around the avatar           |
 | `disabled` boolean attribute | Applies reduced opacity to indicate a disabled state |
-| Sizes 800–1500               | Valid `size` values expanded from 50–700 to 50–1500  |
+| Sizes 900–1400               | Valid `size` values added: 900, 1000, 1200 and 1400  |
 
 ### Removed in Spectrum 2
 
@@ -55,6 +55,7 @@ import '@adobe/spectrum-wc/components/avatar/swc-avatar.js';
 | `href` attribute                   | No replacement (wrap `<swc-avatar>` in an `<a>` element if link behavior is needed)            |
 | `--mod-avatar-*` custom properties | `--swc-avatar-*` equivalents (see [Styling](#styling))                                         |
 | Default `size` of `100`            | Default is now `500` — set `size="100"` explicitly if your design requires the smaller default |
+| `size="600"`                       | Use `500` (40 px) or `700` (48 px), or set `--swc-avatar-size` for an exact 44 px              |
 
 ## Update your code
 
@@ -104,7 +105,7 @@ The built-in link capability has been removed. Wrap `<swc-avatar>` in a standard
 
 ### 5. Verify your `size` value
 
-The default `size` changed from `100` to `500`. If you relied on the default, set the size explicitly.
+The default `size` changed from `100` to `500`. If you relied on the default, set the size explicitly. Size `600` (44 px) is no longer supported; use `500` or `700`.
 
 ```html
 <!-- Before (implicitly size="100") -->
@@ -186,5 +187,5 @@ Replace every `--mod-avatar-*` property with its `--swc-avatar-*` equivalent:
 - [ ] Rename `label` attribute to `alt`
 - [ ] Rename `is-decorative` to `decorative`
 - [ ] Replace `href` with an `<a>` wrapper
-- [ ] Verify `size` value (default changed from `100` to `500`)
+- [ ] Verify `size` value (default changed from `100` to `500`; `600` removed)
 - [ ] Replace `--mod-avatar-*` overrides with `--swc-avatar-*` equivalents

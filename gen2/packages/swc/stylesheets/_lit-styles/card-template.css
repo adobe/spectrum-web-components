@@ -44,7 +44,7 @@
   --_swc-card-base-title-font-size: var(--swc-card-base-title-font-size, token("font-size-200"));
   --_swc-card-base-title-line-height: var(--swc-card-base-title-line-height, token("line-height-font-size-300"));
   --_swc-card-base-description-font-size: var(--swc-card-base-description-font-size, token("font-size-75"));
-  --_swc-card-base-action-component-height: var(--swc-card-base-action-component-height, token("component-height-75"));
+  --_swc-card-base-action-component-height: var(--swc-card-base-action-component-height, token("base-height-small"));
   --_swc-card-base-content-padding: var(--swc-card-base-content-padding, var(--swc-card-base-content-padding-regular, token("container-padding-medium")));
   --_swc-card-base-footer-padding: 0 var(--_swc-card-base-content-padding) var(--_swc-card-base-content-padding);
   --_swc-card-base-transition-timing-function: token("animation-ease-in-out");
@@ -232,7 +232,7 @@
   --swc-card-base-content-padding-regular: token("container-padding-small");
   --swc-card-base-content-padding-compact: token("container-padding-extra-small");
   --swc-card-base-content-padding-spacious: token("container-padding-medium");
-  --swc-card-base-action-component-height: token("component-height-75");
+  --swc-card-base-action-component-height: token("base-height-small");
   --swc-card-base-content-header-gap: token("base-gap-small");
 }
 
@@ -244,7 +244,7 @@
   --swc-card-base-content-padding-regular: token("container-padding-large");
   --swc-card-base-content-padding-compact: token("container-padding-medium");
   --swc-card-base-content-padding-spacious: token("container-padding-extra-large");
-  --swc-card-base-action-component-height: token("component-height-100");
+  --swc-card-base-action-component-height: token("base-height-medium");
   --swc-card-base-content-header-gap: token("base-gap-large");
 }
 
@@ -256,7 +256,7 @@
   --swc-card-base-content-padding-regular: token("container-padding-extra-large");
   --swc-card-base-content-padding-compact: token("container-padding-large");
   --swc-card-base-content-padding-spacious: token("container-padding-2x-large");
-  --swc-card-base-action-component-height: token("component-height-200");
+  --swc-card-base-action-component-height: token("base-height-large");
   --swc-card-base-content-header-gap: token("base-gap-large");
 }
 

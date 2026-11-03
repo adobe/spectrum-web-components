@@ -22,7 +22,7 @@
 
   position: absolute;
   inset: auto;
-  max-inline-size: min(100%, var(--swc-placement-available-width), token("tooltip-maximum-width"));
+  max-inline-size: min(100%, var(--swc-placement-available-width), token("container-maximum-width-2x-small"));
   max-block-size: min(var(--swc-placement-available-height), 90vb);
   padding: 0;
   margin: 0;
@@ -59,7 +59,7 @@
 
   display: inline-flex;
   position: relative;
-  min-block-size: token("component-height-75");
+  min-block-size: token("base-height-small");
   padding-block: token("base-padding-vertical-small");
   padding-inline: token("base-padding-horizontal-small");
   margin-block-end: var(--_swc-tooltip-tip-height);

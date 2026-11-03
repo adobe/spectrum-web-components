@@ -111,7 +111,7 @@ const forcedColorsContent = () => html`
 
 // VRT stories
 
-// Every size (50–1500), the outline modifier at the default size and at the
+// Every size (50–1400), the outline modifier at the default size and at the
 // large-size breakpoint (>=1000, where the outline width doubles per
 // avatar.css), and the disabled state. Rendered once in light/ltr and once
 // in dark/rtl below (that combination covers both axes), all in a single

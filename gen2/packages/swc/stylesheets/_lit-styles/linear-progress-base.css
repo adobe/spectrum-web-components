@@ -21,8 +21,7 @@
 :host {
   display: inline-block;
   inline-size: 100%;
-  min-inline-size: token("progress-bar-minimum-width");
-  max-inline-size: token("progress-bar-maximum-width");
+  min-inline-size: token("bar-minimum-width-extra-large");
   vertical-align: top;
 }
 
@@ -35,7 +34,7 @@
    * `corner-radius-full` design token resolves to `50 %`, which renders
    * an ellipse on a non-square track; half-thickness gives a perfect
    * stadium pill at every size. */
-  --_swc-linear-progress-corner-radius: calc(var(--swc-linear-progress-thickness, token("progress-bar-thickness-medium")) / 2);
+  --_swc-linear-progress-corner-radius: calc(var(--swc-linear-progress-thickness, token("bar-thickness-medium")) / 2);
 
   display: grid;
   position: relative;
@@ -79,7 +78,7 @@
 .swc-LinearProgress-track {
   grid-area: track;
   inline-size: 100%;
-  block-size: var(--swc-linear-progress-thickness, token("progress-bar-thickness-medium"));
+  block-size: var(--swc-linear-progress-thickness, token("bar-thickness-medium"));
   background: var(--swc-linear-progress-track-color, token("track-color"));
   border-radius: var(--_swc-linear-progress-corner-radius);
   overflow: hidden;
@@ -93,7 +92,7 @@
    * radius; one thickness is the smallest width that still renders. ARIA is
    * unaffected — aria-valuenow stays at the real value. */
   min-inline-size: 3%;
-  block-size: var(--swc-linear-progress-thickness, token("progress-bar-thickness-medium"));
+  block-size: var(--swc-linear-progress-thickness, token("bar-thickness-medium"));
   background: var(--swc-linear-progress-fill-color, token("accent-content-color-default"));
   border: none;
   border-radius: var(--_swc-linear-progress-corner-radius);
@@ -110,19 +109,19 @@
 
 /* Sizes — exposed via `:host()` so consumers can re-target. */
 :host([size="s"]) {
-  --swc-linear-progress-thickness: token("progress-bar-thickness-small");
+  --swc-linear-progress-thickness: token("bar-thickness-small");
   --swc-linear-progress-font-size: token("font-size-75");
   --swc-linear-progress-top-to-text: token("base-padding-vertical-small");
 }
 
 :host([size="l"]) {
-  --swc-linear-progress-thickness: token("progress-bar-thickness-large");
+  --swc-linear-progress-thickness: token("bar-thickness-large");
   --swc-linear-progress-font-size: token("font-size-200");
   --swc-linear-progress-top-to-text: token("base-padding-vertical-large");
 }
 
 :host([size="xl"]) {
-  --swc-linear-progress-thickness: token("progress-bar-thickness-extra-large");
+  --swc-linear-progress-thickness: token("bar-thickness-extra-large");
   --swc-linear-progress-font-size: token("font-size-300");
   --swc-linear-progress-top-to-text: token("base-padding-vertical-extra-large");
 }

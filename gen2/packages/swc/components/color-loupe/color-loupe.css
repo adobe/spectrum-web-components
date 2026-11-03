@@ -17,15 +17,15 @@
    inner dark border or the white outer border meets 3:1 against the
    underlying color. */
 :host {
-  --_swc-color-loupe-width: token("color-loupe-width");
+  --_swc-color-loupe-width: token("size-700");
   --_swc-color-loupe-border-alpha: 0.12;
 
   display: block;
   position: absolute;
-  inset-block-end: calc((token("color-handle-size") - token("color-handle-outer-border-width")) + token("color-loupe-bottom-to-color-handle"));
+  inset-block-end: calc((token("size-300") - token("color-handle-outer-border-width")) + token("color-loupe-bottom-to-color-handle"));
   inset-inline-end: calc(50% - (var(--_swc-color-loupe-width) / 2));
   inline-size: var(--_swc-color-loupe-width);
-  block-size: token("color-loupe-height");
+  block-size: token("size-800");
 }
 
 * {

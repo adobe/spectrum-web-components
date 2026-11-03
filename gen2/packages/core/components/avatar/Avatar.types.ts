@@ -13,11 +13,10 @@
 /**
  * Valid numeric size values for the Avatar component.
  *
- * Sizes 50–700 match 1st-gen. Sizes 800–1500 are new in Spectrum 2.
+ * Each size maps to a step on the Spectrum 2 `visual-size-*` scale.
  */
 export const AVATAR_VALID_SIZES = [
-  50, 75, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300,
-  1400, 1500,
+  50, 75, 100, 200, 300, 400, 500, 700, 900, 1000, 1200, 1400,
 ] as const;
 
 export type AvatarSize = (typeof AVATAR_VALID_SIZES)[number];

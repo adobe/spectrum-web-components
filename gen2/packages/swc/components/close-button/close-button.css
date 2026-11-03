@@ -27,8 +27,8 @@
   position: relative;
   align-items: center;
   justify-content: center;
-  inline-size: var(--swc-close-button-size, token("component-height-100"));
-  block-size: var(--swc-close-button-size, token("component-height-100"));
+  inline-size: var(--swc-close-button-size, token("base-height-medium"));
+  block-size: var(--swc-close-button-size, token("base-height-medium"));
   padding: 0;
   margin: 0;
   color: var(--swc-close-button-icon-color-default, token("neutral-content-color-default"));
@@ -61,7 +61,7 @@
 .swc-CloseButton:active {
   color: var(--swc-close-button-icon-color-down, token("neutral-content-color-down"));
   background-color: var(--swc-close-button-background-color-down, token("gray-100"));
-  transform: perspective(var(--swc-close-button-size, token("component-height-100"))) translate3d(0, 0, token("component-size-difference-down"));
+  transform: perspective(var(--swc-close-button-size, token("base-height-medium"))) translate3d(0, 0, token("component-size-difference-down"));
   will-change: transform;
 }
 
@@ -78,19 +78,19 @@
 }
 
 :host([size="s"]) {
-  --swc-close-button-size: token("component-height-75");
+  --swc-close-button-size: token("base-height-small");
 }
 
 :host([size="m"]) {
-  --swc-close-button-size: token("component-height-100");
+  --swc-close-button-size: token("base-height-medium");
 }
 
 :host([size="l"]) {
-  --swc-close-button-size: token("component-height-200");
+  --swc-close-button-size: token("base-height-large");
 }
 
 :host([size="xl"]) {
-  --swc-close-button-size: token("component-height-300");
+  --swc-close-button-size: token("base-height-extra-large");
 }
 
 :host([static-color="white"]) {

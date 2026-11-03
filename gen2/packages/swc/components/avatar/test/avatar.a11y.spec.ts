@@ -88,16 +88,11 @@ test.describe('Avatar - ARIA Snapshots', () => {
       - img "Jane Doe, size 300"
       - img "Jane Doe, size 400"
       - img "Jane Doe, size 500"
-      - img "Jane Doe, size 600"
       - img "Jane Doe, size 700"
-      - img "Jane Doe, size 800"
       - img "Jane Doe, size 900"
       - img "Jane Doe, size 1000"
-      - img "Jane Doe, size 1100"
       - img "Jane Doe, size 1200"
-      - img "Jane Doe, size 1300"
       - img "Jane Doe, size 1400"
-      - img "Jane Doe, size 1500"
     `);
   });
 

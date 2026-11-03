@@ -42,7 +42,7 @@
 
   /* Dot */
   &::before {
-    --_swc-status-light-dot-size: var(--swc-status-light-dot-size, token("status-light-dot-size-medium"));
+    --_swc-status-light-dot-size: var(--swc-status-light-dot-size, token("ui-icon-medium"));
 
     flex-grow: 0;
     flex-shrink: 0;
@@ -57,21 +57,21 @@
 
 :host([size="s"]) {
   --swc-status-light-text-to-visual: token("base-gap-small");
-  --swc-status-light-dot-size: token("status-light-dot-size-small");
+  --swc-status-light-dot-size: token("ui-icon-small");
   --swc-status-light-font-size: token("font-size-75");
   --swc-status-light-line-height: token("line-height-font-size-75");
 }
 
 :host([size="l"]) {
   --swc-status-light-text-to-visual: token("base-gap-large");
-  --swc-status-light-dot-size: token("status-light-dot-size-large");
+  --swc-status-light-dot-size: token("ui-icon-large");
   --swc-status-light-font-size: token("font-size-200");
   --swc-status-light-line-height: token("line-height-font-size-200");
 }
 
 :host([size="xl"]) {
   --swc-status-light-text-to-visual: token("base-gap-extra-large");
-  --swc-status-light-dot-size: token("status-light-dot-size-extra-large");
+  --swc-status-light-dot-size: token("ui-icon-extra-large");
   --swc-status-light-font-size: token("font-size-300");
   --swc-status-light-line-height: token("line-height-font-size-300");
 }

@@ -1277,6 +1277,76 @@
     var(--swc-yellow-500),
     var(--swc-yellow-1300)
   );
+  --swc-bar-minimum-width-2x-small: 16px;
+  --swc-bar-minimum-width-extra-large: 48px;
+  --swc-bar-minimum-width-extra-small: 20px;
+  --swc-bar-minimum-width-large: 40px;
+  --swc-bar-minimum-width-medium: 32px;
+  --swc-bar-minimum-width-small: 24px;
+  --swc-bar-thickness-2x-large: 12px;
+  --swc-bar-thickness-2x-small: 1px;
+  --swc-bar-thickness-3x-large: 16px;
+  --swc-bar-thickness-extra-large: 10px;
+  --swc-bar-thickness-extra-small: 2px;
+  --swc-bar-thickness-large: 8px;
+  --swc-bar-thickness-medium: 6px;
+  --swc-bar-thickness-small: 4px;
+  --swc-bar-width-extra-large: 240px;
+  --swc-bar-width-large: 192px;
+  --swc-bar-width-medium: 144px;
+  --swc-bar-width-small: 120px;
+  --swc-base-visual-size-2x-large: 24px;
+  --swc-base-visual-size-2x-small: 12px;
+  --swc-base-visual-size-3x-large: 32px;
+  --swc-base-visual-size-3x-small: 10px;
+  --swc-base-visual-size-extra-large: 22px;
+  --swc-base-visual-size-extra-small: 14px;
+  --swc-base-visual-size-large: 20px;
+  --swc-base-visual-size-medium: 18px;
+  --swc-base-visual-size-small: 16px;
+  --swc-control-size-extra-large: 20px;
+  --swc-control-size-extra-small: 12px;
+  --swc-control-size-large: 18px;
+  --swc-control-size-medium: 16px;
+  --swc-control-size-small: 14px;
+  --swc-field-minimum-height-extra-large: 64px;
+  --swc-field-minimum-height-large: 56px;
+  --swc-field-minimum-height-medium: 40px;
+  --swc-field-minimum-height-small: 32px;
+  --swc-field-minimum-width-extra-large: 240px;
+  --swc-field-minimum-width-large: 192px;
+  --swc-field-minimum-width-medium: 144px;
+  --swc-field-minimum-width-small: 120px;
+  --swc-field-width-2x-large: 352px;
+  --swc-field-width-3x-large: 416px;
+  --swc-field-width-extra-large: 288px;
+  --swc-field-width-large: 240px;
+  --swc-field-width-medium: 192px;
+  --swc-field-width-small: 144px;
+  --swc-list-item-height-extra-large: 56px;
+  --swc-list-item-height-extra-small: 24px;
+  --swc-list-item-height-large: 48px;
+  --swc-list-item-height-medium: 40px;
+  --swc-list-item-height-small: 32px;
+  --swc-list-item-minimum-height: 40px;
+  --swc-list-item-minimum-width-medium: 192px;
+  --swc-list-item-minimum-width-small: 144px;
+  --swc-list-item-width-extra-large: 240px;
+  --swc-list-item-width-large: 192px;
+  --swc-list-item-width-medium: 144px;
+  --swc-list-item-width-small: 120px;
+  --swc-visual-size-100: 24px;
+  --swc-visual-size-1000: 96px;
+  --swc-visual-size-200: 28px;
+  --swc-visual-size-300: 32px;
+  --swc-visual-size-400: 36px;
+  --swc-visual-size-50: 16px;
+  --swc-visual-size-500: 40px;
+  --swc-visual-size-600: 48px;
+  --swc-visual-size-700: 56px;
+  --swc-visual-size-75: 20px;
+  --swc-visual-size-800: 64px;
+  --swc-visual-size-900: 80px;
   --swc-accessory-gap-2x-large: 9px;
   --swc-accessory-gap-affixed-2x-large: 7px;
   --swc-accessory-gap-affixed-extra-large: 6px;
@@ -1296,11 +1366,25 @@
   --swc-accessory-item-padding-medium: 5px;
   --swc-accessory-item-padding-small: 3px;
   --swc-android-elevation: 2dp;
+  --swc-aspect-ratio-100: 1.25;
+  --swc-aspect-ratio-200: 1.33;
+  --swc-aspect-ratio-300: 1.5;
+  --swc-aspect-ratio-400: 1.78;
+  --swc-aspect-ratio-500: 2;
+  --swc-aspect-ratio-600: 2.25;
+  --swc-aspect-ratio-700: 2.5;
+  --swc-aspect-ratio-800: 4;
   --swc-banner-gap-horizontal: 24px;
   --swc-banner-gap-vertical: 8px;
+  --swc-banner-height: 56px;
+  --swc-banner-maximum-width: 352px;
+  --swc-banner-minimum-height: 56px;
+  --swc-banner-minimum-width-large: 240px;
+  --swc-banner-minimum-width-medium: 192px;
   --swc-banner-padding-horizontal: 16px;
   --swc-banner-padding-horizontal-compact: 8px;
   --swc-banner-padding-vertical: 12px;
+  --swc-banner-width: 896px;
   --swc-base-gap-2x-large: 8px;
   --swc-base-gap-3x-large: 8px;
   --swc-base-gap-4x-large: 10px;
@@ -1309,6 +1393,14 @@
   --swc-base-gap-large: 6px;
   --swc-base-gap-medium: 6px;
   --swc-base-gap-small: 4px;
+  --swc-base-height-2x-large: 56px;
+  --swc-base-height-3x-large: 64px;
+  --swc-base-height-extra-large: 48px;
+  --swc-base-height-extra-small: 20px;
+  --swc-base-height-large: 40px;
+  --swc-base-height-medium: 32px;
+  --swc-base-height-small: 24px;
+  --swc-base-maximum-width: 288px;
   --swc-base-padding-horizontal-extra-small: 8px;
   --swc-base-padding-horizontal-uniform-2x-large: 15px;
   --swc-base-padding-horizontal-uniform-2x-small: 2px;
@@ -1339,6 +1431,31 @@
   --swc-container-gap-large: 20px;
   --swc-container-gap-medium: 16px;
   --swc-container-gap-small: 12px;
+  --swc-container-height: 192px;
+  --swc-container-maximum-width-2x-large: 512px;
+  --swc-container-maximum-width-2x-small: 144px;
+  --swc-container-maximum-width-3x-large: 608px;
+  --swc-container-maximum-width-extra-large: 416px;
+  --swc-container-maximum-width-extra-small: 192px;
+  --swc-container-maximum-width-large: 352px;
+  --swc-container-maximum-width-medium: 288px;
+  --swc-container-maximum-width-small: 240px;
+  --swc-container-minimum-height-2x-large: 416px;
+  --swc-container-minimum-height-2x-small: 120px;
+  --swc-container-minimum-height-3x-large: 512px;
+  --swc-container-minimum-height-3x-small: 96px;
+  --swc-container-minimum-height-extra-large: 352px;
+  --swc-container-minimum-height-extra-small: 144px;
+  --swc-container-minimum-height-large: 288px;
+  --swc-container-minimum-height-medium: 240px;
+  --swc-container-minimum-height-small: 192px;
+  --swc-container-minimum-width-2x-large: 352px;
+  --swc-container-minimum-width-3x-large: 416px;
+  --swc-container-minimum-width-extra-large: 288px;
+  --swc-container-minimum-width-extra-small: 120px;
+  --swc-container-minimum-width-large: 240px;
+  --swc-container-minimum-width-medium: 192px;
+  --swc-container-minimum-width-small: 144px;
   --swc-container-padding-2x-large: 32px;
   --swc-container-padding-2x-small: 6px;
   --swc-container-padding-3x-large: 40px;
@@ -1347,6 +1464,13 @@
   --swc-container-padding-large: 20px;
   --swc-container-padding-medium: 16px;
   --swc-container-padding-small: 12px;
+  --swc-container-width-2x-large: 352px;
+  --swc-container-width-3x-large: 416px;
+  --swc-container-width-extra-large: 288px;
+  --swc-container-width-extra-small: 120px;
+  --swc-container-width-large: 240px;
+  --swc-container-width-medium: 192px;
+  --swc-container-width-small: 144px;
   --swc-corner-radius-0: 0px;
   --swc-corner-radius-100: 4px;
   --swc-corner-radius-1000: 50%;
@@ -1426,7 +1550,35 @@
   --swc-list-item-padding-horizontal: 6px;
   --swc-list-item-padding-vertical-regular: 4px;
   --swc-list-item-padding-vertical-spacious: 8px;
-  --swc-side-focus-indicator: 4px;
+  --swc-list-width: 192px;
+  --swc-size-100: 8px;
+  --swc-size-1000: 96px;
+  --swc-size-1100: 120px;
+  --swc-size-1200: 144px;
+  --swc-size-1300: 192px;
+  --swc-size-1400: 240px;
+  --swc-size-1500: 288px;
+  --swc-size-1600: 352px;
+  --swc-size-1700: 416px;
+  --swc-size-1800: 512px;
+  --swc-size-1900: 608px;
+  --swc-size-200: 12px;
+  --swc-size-2000: 736px;
+  --swc-size-25: 1px;
+  --swc-size-300: 16px;
+  --swc-size-350: 20px;
+  --swc-size-400: 24px;
+  --swc-size-450: 28px;
+  --swc-size-50: 2px;
+  --swc-size-500: 32px;
+  --swc-size-550: 36px;
+  --swc-size-600: 40px;
+  --swc-size-700: 48px;
+  --swc-size-75: 4px;
+  --swc-size-750: 56px;
+  --swc-size-800: 64px;
+  --swc-size-85: 6px;
+  --swc-size-900: 80px;
   --swc-spacing-100: 8px;
   --swc-spacing-1000: 96px;
   --swc-spacing-200: 12px;
@@ -1443,9 +1595,7 @@
   --swc-spacing-85: 6px;
   --swc-spacing-900: 80px;
   --swc-strikethrough-day-orientation: -25;
-  --swc-strikethrough-day-thickness: 2px;
   --swc-tab-item-to-tab-item-compact-horizontal-medium: 24px;
-  --swc-tab-selection-indicator-thickness: 2px;
   --swc-text-gap-extra-large: 2px;
   --swc-text-gap-extra-small: 1px;
   --swc-text-gap-large: 2px;
@@ -1584,28 +1734,14 @@
     var(--swc-gray-400)
   );
   --swc-action-bar-counter-font-size: var(--swc-font-size-100);
-  --swc-action-bar-height: var(--swc-component-height-400);
-  --swc-action-bar-minimum-width: 176px;
-  --swc-alert-dialog-maximum-width: 480px;
-  --swc-alert-dialog-minimum-width: 288px;
   --swc-avatar-border-color: var(--swc-gray-25);
   --swc-avatar-border-width: var(--swc-border-width-100);
   --swc-avatar-opacity-disabled: var(--swc-opacity-disabled);
   --swc-gradient-stop-1-avatar: 0%;
   --swc-gradient-stop-2-avatar: 67%;
   --swc-gradient-stop-3-avatar: 100%;
-  --swc-avatar-group-size-100: var(--swc-avatar-size-100);
-  --swc-avatar-group-size-200: var(--swc-avatar-size-200);
-  --swc-avatar-group-size-300: var(--swc-avatar-size-300);
-  --swc-avatar-group-size-400: var(--swc-avatar-size-400);
-  --swc-avatar-group-size-50: var(--swc-avatar-size-50);
-  --swc-avatar-group-size-500: var(--swc-avatar-size-500);
-  --swc-avatar-group-size-75: var(--swc-avatar-size-75);
   --swc-bar-panel-gripper-color: var(--swc-gray-200);
   --swc-bar-panel-gripper-color-drag: var(--swc-gray-800);
-  --swc-bar-panel-maximum-width: 72px;
-  --swc-bar-panel-minimum-width: 40px;
-  --swc-bar-panel-width: 56px;
   --swc-body-cjk-emphasized-font-style: var(--swc-default-font-style);
   --swc-body-cjk-emphasized-font-weight: var(--swc-extra-bold-font-weight);
   --swc-body-cjk-font-family: var(--swc-cjk-font-family);
@@ -1662,28 +1798,6 @@
   --swc-button-minimum-width-multiplier: 2.25;
   --swc-card-background-loading-color: var(--swc-gray-100);
   --swc-card-background-well-color: var(--swc-gray-100);
-  --swc-card-default-width-extra-large: 400px;
-  --swc-card-default-width-extra-small: 120px;
-  --swc-card-default-width-large: 320px;
-  --swc-card-default-width-medium: 240px;
-  --swc-card-default-width-small: 180px;
-  --swc-card-maximum-width-extra-large: 460px;
-  --swc-card-maximum-width-extra-small: 140px;
-  --swc-card-maximum-width-large: 370px;
-  --swc-card-maximum-width-medium: 280px;
-  --swc-card-maximum-width-small: 210px;
-  --swc-card-minimum-height-extra-large: 300px;
-  --swc-card-minimum-height-extra-small: 90px;
-  --swc-card-minimum-height-large: 240px;
-  --swc-card-minimum-height-medium: 180px;
-  --swc-card-minimum-height-small: 135px;
-  --swc-card-minimum-width-default: 100px;
-  --swc-card-minimum-width-extra-large: 340px;
-  --swc-card-minimum-width-extra-small: 100px;
-  --swc-card-minimum-width-large: 270px;
-  --swc-card-minimum-width-medium: 200px;
-  --swc-card-minimum-width-small: 150px;
-  --swc-card-preview-minimum-height: 130px;
   --swc-card-selection-background-color: light-dark(
     rgb(255 255 255 / 48%),
     rgb(0 0 0 / 56%)
@@ -1732,16 +1846,6 @@
   --swc-code-strong-emphasized-font-weight: var(--swc-bold-font-weight);
   --swc-code-strong-font-style: var(--swc-default-font-style);
   --swc-code-strong-font-weight: var(--swc-bold-font-weight);
-  --swc-collection-card-minimum-height-extra-large: 249px;
-  --swc-collection-card-minimum-height-extra-small: 88px;
-  --swc-collection-card-minimum-height-hero-extra-large: 514px;
-  --swc-collection-card-minimum-height-hero-extra-small: 168px;
-  --swc-collection-card-minimum-height-hero-large: 414px;
-  --swc-collection-card-minimum-height-hero-medium: 317px;
-  --swc-collection-card-minimum-height-hero-small: 243px;
-  --swc-collection-card-minimum-height-large: 202px;
-  --swc-collection-card-minimum-height-medium: 157px;
-  --swc-collection-card-minimum-height-small: 124px;
   --swc-color-area-border-color: var(--swc-gray-1000);
   --swc-color-area-border-opacity: 0.1;
   --swc-color-area-border-rounding: var(--swc-corner-radius-medium-size-small);
@@ -1763,12 +1867,10 @@
   );
   --swc-color-handle-outer-border-width: 1px;
   --swc-color-loupe-bottom-to-color-handle: 12px;
-  --swc-color-loupe-height: 64px;
   --swc-color-loupe-inner-border: var(--swc-transparent-static-black-200);
   --swc-color-loupe-inner-border-width: 1px;
   --swc-color-loupe-outer-border: var(--swc-transparent-static-white-1000);
   --swc-color-loupe-outer-border-width: var(--swc-border-width-200);
-  --swc-color-loupe-width: 48px;
   --swc-color-slider-border-color: var(--swc-gray-1000);
   --swc-color-slider-border-opacity: 0.1;
   --swc-color-slider-border-rounding: var(
@@ -1779,9 +1881,6 @@
   --swc-color-wheel-border-opacity: 0.1;
   --swc-color-wheel-color-area-margin: 12px;
   --swc-combo-box-minimum-width-multiplier: 2.5;
-  --swc-contextual-help-minimum-width: 268px;
-  --swc-date-field-minimum-width: 152px;
-  --swc-date-picker-minimum-width: 152px;
   --swc-detail-cjk-emphasized-font-style: var(--swc-default-font-style);
   --swc-detail-cjk-emphasized-font-weight: var(--swc-extra-bold-font-weight);
   --swc-detail-cjk-font-family: var(--swc-cjk-font-family);
@@ -1832,13 +1931,6 @@
   --swc-detail-size-s: var(--swc-font-size-75);
   --swc-detail-size-xl: var(--swc-font-size-300);
   --swc-detail-size-xs: var(--swc-font-size-50);
-  --swc-divider-horizontal-minimum-width: 200px;
-  --swc-divider-thickness-large: 4px;
-  --swc-divider-thickness-medium: 2px;
-  --swc-divider-thickness-small: 1px;
-  --swc-divider-vertical-minimum-height: 200px;
-  --swc-double-calendar-popover-minimum-height: 320px;
-  --swc-double-calendar-popover-minimum-width: 616px;
   --swc-drop-zone-background-color: var(--swc-accent-visual-color);
   --swc-drop-zone-background-color-opacity: 0.1;
   --swc-drop-zone-background-color-opacity-filled: 0.3;
@@ -1851,7 +1943,6 @@
   --swc-drop-zone-title-font-size: var(
     --swc-illustrated-message-medium-title-font-size
   );
-  --swc-drop-zone-width: 428px;
   --swc-floating-action-button-drop-shadow-blur: 12px;
   --swc-floating-action-button-drop-shadow-color: var(
     --swc-transparent-static-black-300
@@ -1965,15 +2056,8 @@
   --swc-heading-size-xxl: var(--swc-font-size-1100);
   --swc-heading-size-xxxl: var(--swc-font-size-1300);
   --swc-heading-size-xxxxl: var(--swc-font-size-1500);
-  --swc-illustrated-message-horizontal-maximum-width: 535px;
   --swc-illustrated-message-small-body-font-size: var(--swc-body-size-xs);
-  --swc-illustrated-message-vertical-maximum-width: 380px;
   --swc-in-field-button-fill-stacked-inner-border-rounding: 0px;
-  --swc-in-field-button-width-stacked-extra-large: 44px;
-  --swc-in-field-button-width-stacked-large: 36px;
-  --swc-in-field-button-width-stacked-medium: 28px;
-  --swc-in-field-button-width-stacked-small: 20px;
-  --swc-in-line-alert-minimum-width: 240px;
   --swc-list-view-item-bottom-corner-radius: var(
     --swc-corner-radius-medium-default
   );
@@ -2001,9 +2085,6 @@
     var(--swc-gray-200)
   );
   --swc-menu-item-background-opacity: 0;
-  --swc-menu-item-section-divider-height: 12px;
-  --swc-meter-maximum-width: 768px;
-  --swc-meter-minimum-width: 48px;
   --swc-number-field-minimum-width-multiplier: 1.25;
   --swc-opacity-checkerboard-square-dark-light: var(--swc-gray-200);
   --swc-opacity-checkerboard-square-dark-dark: var(--swc-gray-800);
@@ -2022,23 +2103,11 @@
   --swc-popover-padding: var(--swc-spacing-100);
   --swc-popover-tip-height: 8px;
   --swc-popover-tip-width: 16px;
-  --swc-progress-bar-maximum-width: 768px;
-  --swc-progress-bar-minimum-width: 48px;
   --swc-radio-button-selection-indicator: 4px;
-  --swc-rating-height-medium: var(--swc-component-height-100);
-  --swc-rating-height-small: var(--swc-component-height-75);
-  --swc-rating-width-medium: 128px;
-  --swc-rating-width-small: 104px;
   --swc-search-field-minimum-width-multiplier: 4;
-  --swc-segmented-control-item-height: var(--swc-component-height-100);
-  --swc-segmented-control-item-maximum-width: 265px;
   --swc-segmented-control-selection-border-width: var(--swc-border-width-200);
   --swc-segmented-text-field-rounding: 2px;
   --swc-select-box-selected-border-color: var(--swc-gray-800);
-  --swc-side-navigation-indicator-thickness: 2px;
-  --swc-single-calendar-popover-minimum-height: 320px;
-  --swc-single-calendar-popover-minimum-width: 320px;
-  --swc-slider-handle-precision-width: 6px;
   --swc-slider-track-height-large: 16px;
   --swc-slider-track-height-medium: 4px;
   --swc-stack-item-background-color-down: var(--swc-gray-100);
@@ -2058,29 +2127,9 @@
   --swc-stack-item-selected-background-opacity-emphasized-key-focus: 0.15;
   --swc-stack-item-selected-background-opacity-highlight: 0.1;
   --swc-stack-item-selected-background-opacity-highlight-hover: 0.15;
-  --swc-standard-dialog-maximum-width-large: 640px;
-  --swc-standard-dialog-maximum-width-medium: 480px;
-  --swc-standard-dialog-maximum-width-small: 400px;
-  --swc-standard-dialog-minimum-width: 288px;
   --swc-standard-panel-gripper-color: var(--swc-gray-500);
   --swc-standard-panel-gripper-color-drag: var(--swc-gray-800);
-  --swc-standard-panel-maximum-width: 400px;
-  --swc-standard-panel-minimum-width: 200px;
   --swc-standard-panel-title-font-size: var(--swc-title-size-s);
-  --swc-standard-panel-width: 260px;
-  --swc-steplist-step-default-height-extra-large: 78px;
-  --swc-steplist-step-default-height-large: 70px;
-  --swc-steplist-step-default-height-medium: 54px;
-  --swc-steplist-step-default-height-small: 46px;
-  --swc-steplist-step-default-width-extra-large: 78px;
-  --swc-steplist-step-default-width-large: 70px;
-  --swc-steplist-step-default-width-medium: 54px;
-  --swc-steplist-step-default-width-small: 46px;
-  --swc-steplist-step-to-track-size-extra-large: 9px;
-  --swc-steplist-step-to-track-size-large: 8px;
-  --swc-steplist-step-to-track-size-medium: 7px;
-  --swc-steplist-step-to-track-size-small: 6px;
-  --swc-steplist-track-thickness-medium: 2px;
   --swc-steplist-visual-size-extra-large: 32px;
   --swc-steplist-visual-size-large: 24px;
   --swc-steplist-visual-size-medium: 16px;
@@ -2103,10 +2152,6 @@
   --swc-table-item-padding-regular: var(--swc-spacing-200);
   --swc-table-item-padding-spacious: var(--swc-spacing-300);
   --swc-table-row-down-opacity: 0.1;
-  --swc-table-row-height-extra-large-compact: var(--swc-component-height-300);
-  --swc-table-row-height-large-compact: var(--swc-component-height-200);
-  --swc-table-row-height-medium-compact: var(--swc-component-height-100);
-  --swc-table-row-height-small-compact: var(--swc-component-height-75);
   --swc-table-row-hover-color: var(--swc-gray-900);
   --swc-table-row-hover-opacity: 0.07;
   --swc-table-selected-row-background-color: var(
@@ -2123,24 +2168,11 @@
   --swc-tab-gap-horizontal-large: var(--swc-spacing-500);
   --swc-tab-gap-horizontal-medium: var(--swc-spacing-400);
   --swc-tab-gap-horizontal-small: var(--swc-spacing-350);
-  --swc-tab-item-compact-height-extra-large: var(--swc-component-height-300);
-  --swc-tab-item-compact-height-large: var(--swc-component-height-200);
-  --swc-tab-item-compact-height-medium: var(--swc-component-height-100);
-  --swc-tab-item-compact-height-small: var(--swc-component-height-75);
-  --swc-tab-item-height-extra-large: var(--swc-component-height-500);
-  --swc-tab-item-height-large: var(--swc-component-height-400);
-  --swc-tab-item-height-medium: var(--swc-component-height-300);
-  --swc-tab-item-height-small: var(--swc-component-height-200);
-  --swc-tag-maximum-width-multiplier: 7;
-  --swc-takeover-dialog-height: 100%;
-  --swc-takeover-dialog-width: 100%;
   --swc-text-field-minimum-width-multiplier: 1.5;
   --swc-thumbnail-border-color: var(--swc-gray-800);
   --swc-thumbnail-border-opacity: 0.1;
   --swc-thumbnail-corner-radius: var(--swc-corner-radius-75);
-  --swc-thumbnail-opacity-checkerboard-square-size: 4px;
   --swc-thumbnail-opacity-disabled: var(--swc-opacity-disabled);
-  --swc-time-field-minimum-width: 2.5;
   --swc-title-cjk-emphasized-font-style: var(--swc-default-font-style);
   --swc-title-cjk-emphasized-font-weight: var(--swc-extra-bold-font-weight);
   --swc-title-cjk-font-family: var(--swc-cjk-font-family);
@@ -2201,16 +2233,6 @@
   --swc-tree-view-selected-row-background-hover: var(--swc-gray-100);
   --swc-tree-view-selected-row-background-opacity-emphasized: 0.1;
   --swc-tree-view-selected-row-background-opacity-emphasized-hover: 0.15;
-  --swc-triple-calendar-popover-minimum-height: 320px;
-  --swc-triple-calendar-popover-minimum-width: 912px;
-  --swc-user-card-minimum-height-extra-large: 236px;
-  --swc-user-card-minimum-height-large: 219px;
-  --swc-user-card-minimum-height-medium: 202px;
-  --swc-user-card-minimum-height-small: 192px;
-  --swc-user-card-minimum-height-title-below-extra-large: 263px;
-  --swc-user-card-minimum-height-title-below-large: 244px;
-  --swc-user-card-minimum-height-title-below-medium: 224px;
-  --swc-user-card-minimum-height-title-below-small: 212px;
   --swc-animation-duration-0: 0ms;
   --swc-animation-duration-100: 130ms;
   --swc-animation-duration-1000: 500ms;
@@ -2301,20 +2323,6 @@
     var(--swc-theme--sizeL, 10px);
   --swc-base-padding-horizontal-small: var(--swc-theme--sizeM, 10px)
     var(--swc-theme--sizeL, 8px);
-  --swc-component-height-100: var(--swc-theme--sizeM, 32px)
-    var(--swc-theme--sizeL, 40px);
-  --swc-component-height-200: var(--swc-theme--sizeM, 40px)
-    var(--swc-theme--sizeL, 50px);
-  --swc-component-height-300: var(--swc-theme--sizeM, 48px)
-    var(--swc-theme--sizeL, 60px);
-  --swc-component-height-400: var(--swc-theme--sizeM, 56px)
-    var(--swc-theme--sizeL, 70px);
-  --swc-component-height-50: var(--swc-theme--sizeM, 20px)
-    var(--swc-theme--sizeL, 26px);
-  --swc-component-height-500: var(--swc-theme--sizeM, 64px)
-    var(--swc-theme--sizeL, 80px);
-  --swc-component-height-75: var(--swc-theme--sizeM, 24px)
-    var(--swc-theme--sizeL, 30px);
   --swc-workflow-icon-2x-large: var(--swc-theme--sizeM, 24px)
     var(--swc-theme--sizeL, 32px);
   --swc-workflow-icon-2x-small: var(--swc-theme--sizeM, 12px)
@@ -2403,12 +2411,6 @@
     var(--swc-theme--sizeL, 44px);
   --swc-line-height-font-size-900: var(--swc-theme--sizeM, 42px)
     var(--swc-theme--sizeL, 50px);
-  --swc-accordion-minimum-width: var(--swc-theme--sizeM, 200px)
-    var(--swc-theme--sizeL, 250px);
-  --swc-alert-banner-minimum-height: var(--swc-theme--sizeM, 56px)
-    var(--swc-theme--sizeL, 64px);
-  --swc-alert-banner-width: var(--swc-theme--sizeM, 832px)
-    var(--swc-theme--sizeL, 680px);
   --swc-alert-dialog-description-font-size: var(
       --swc-theme--sizeM,
       var(--swc-body-size-m)
@@ -2419,63 +2421,15 @@
       var(--swc-title-size-xxl)
     )
     var(--swc-theme--sizeL, var(--swc-title-size-xl));
-  --swc-avatar-size-100: var(--swc-theme--sizeM, 24px)
-    var(--swc-theme--sizeL, 28px);
-  --swc-avatar-size-1000: var(--swc-theme--sizeM, 64px)
-    var(--swc-theme--sizeL, 72px);
-  --swc-avatar-size-1100: var(--swc-theme--sizeM, 72px)
-    var(--swc-theme--sizeL, 80px);
-  --swc-avatar-size-1200: var(--swc-theme--sizeM, 80px)
-    var(--swc-theme--sizeL, 88px);
-  --swc-avatar-size-1300: var(--swc-theme--sizeM, 88px)
-    var(--swc-theme--sizeL, 96px);
-  --swc-avatar-size-1400: var(--swc-theme--sizeM, 96px)
-    var(--swc-theme--sizeL, 104px);
-  --swc-avatar-size-1500: var(--swc-theme--sizeM, 104px)
-    var(--swc-theme--sizeL, 112px);
-  --swc-avatar-size-200: var(--swc-theme--sizeM, 28px)
-    var(--swc-theme--sizeL, 32px);
-  --swc-avatar-size-300: var(--swc-theme--sizeM, 32px)
-    var(--swc-theme--sizeL, 36px);
-  --swc-avatar-size-400: var(--swc-theme--sizeM, 36px)
-    var(--swc-theme--sizeL, 40px);
-  --swc-avatar-size-50: var(--swc-theme--sizeM, 16px)
-    var(--swc-theme--sizeL, 20px);
-  --swc-avatar-size-500: var(--swc-theme--sizeM, 40px)
-    var(--swc-theme--sizeL, 44px);
-  --swc-avatar-size-600: var(--swc-theme--sizeM, 44px)
-    var(--swc-theme--sizeL, 48px);
-  --swc-avatar-size-700: var(--swc-theme--sizeM, 48px)
-    var(--swc-theme--sizeL, 52px);
-  --swc-avatar-size-75: var(--swc-theme--sizeM, 20px)
-    var(--swc-theme--sizeL, 24px);
-  --swc-avatar-size-800: var(--swc-theme--sizeM, 52px)
-    var(--swc-theme--sizeL, 56px);
-  --swc-avatar-size-900: var(--swc-theme--sizeM, 56px)
-    var(--swc-theme--sizeL, 64px);
-  --swc-breadcrumbs-height-multiline: var(--swc-theme--sizeM, 72px)
-    var(--swc-theme--sizeL, 90px);
-  --swc-checkbox-control-size-extra-large: var(--swc-theme--sizeM, 20px)
-    var(--swc-theme--sizeL, 26px);
-  --swc-checkbox-control-size-large: var(--swc-theme--sizeM, 18px)
-    var(--swc-theme--sizeL, 22px);
-  --swc-checkbox-control-size-medium: var(--swc-theme--sizeM, 16px)
-    var(--swc-theme--sizeL, 20px);
-  --swc-checkbox-control-size-small: var(--swc-theme--sizeM, 14px)
-    var(--swc-theme--sizeL, 18px);
   --swc-coach-mark-body-font-size: var(
       --swc-theme--sizeM,
       var(--swc-body-size-m)
     )
     var(--swc-theme--sizeL, var(--swc-body-size-s));
-  --swc-coach-mark-maximum-width: var(--swc-theme--sizeM, 380px)
-    var(--swc-theme--sizeL, 248px);
   --swc-coach-mark-media-height: var(--swc-theme--sizeM, 222px)
     var(--swc-theme--sizeL, 162px);
   --swc-coach-mark-media-minimum-height: var(--swc-theme--sizeM, 166px)
     var(--swc-theme--sizeL, 121px);
-  --swc-coach-mark-minimum-width: var(--swc-theme--sizeM, 296px)
-    var(--swc-theme--sizeL, 216px);
   --swc-coach-mark-pagination-body-font-size: var(
       --swc-theme--sizeM,
       var(--swc-body-size-s)
@@ -2486,30 +2440,6 @@
       var(--swc-title-size-m)
     )
     var(--swc-theme--sizeL, var(--swc-title-size-s));
-  --swc-coach-mark-width: var(--swc-theme--sizeM, 296px)
-    var(--swc-theme--sizeL, 216px);
-  --swc-color-area-height: var(--swc-theme--sizeM, 192px)
-    var(--swc-theme--sizeL, 240px);
-  --swc-color-area-minimum-height: var(--swc-theme--sizeM, 64px)
-    var(--swc-theme--sizeL, 80px);
-  --swc-color-area-minimum-width: var(--swc-theme--sizeM, 64px)
-    var(--swc-theme--sizeL, 80px);
-  --swc-color-area-width: var(--swc-theme--sizeM, 192px)
-    var(--swc-theme--sizeL, 240px);
-  --swc-color-control-track-width: var(--swc-theme--sizeM, 24px)
-    var(--swc-theme--sizeL, 30px);
-  --swc-color-handle-size: var(--swc-theme--sizeM, 16px)
-    var(--swc-theme--sizeL, 20px);
-  --swc-color-handle-size-key-focus: var(--swc-theme--sizeM, 32px)
-    var(--swc-theme--sizeL, 40px);
-  --swc-color-slider-length: var(--swc-theme--sizeM, 192px)
-    var(--swc-theme--sizeL, 240px);
-  --swc-color-slider-minimum-length: var(--swc-theme--sizeM, 80px)
-    var(--swc-theme--sizeL, 100px);
-  --swc-color-wheel-minimum-width: var(--swc-theme--sizeM, 175px)
-    var(--swc-theme--sizeL, 219px);
-  --swc-color-wheel-width: var(--swc-theme--sizeM, 192px)
-    var(--swc-theme--sizeL, 240px);
   --swc-contextual-help-body-font-size: var(
       --swc-theme--sizeM,
       var(--swc-body-size-s)
@@ -2520,14 +2450,6 @@
       var(--swc-title-size-m)
     )
     var(--swc-theme--sizeL, var(--swc-title-size-s));
-  --swc-field-default-width-extra-large: var(--swc-theme--sizeM, 240px)
-    var(--swc-theme--sizeL, 288px);
-  --swc-field-default-width-large: var(--swc-theme--sizeM, 224px)
-    var(--swc-theme--sizeL, 272px);
-  --swc-field-default-width-medium: var(--swc-theme--sizeM, 208px)
-    var(--swc-theme--sizeL, 256px);
-  --swc-field-default-width-small: var(--swc-theme--sizeM, 192px)
-    var(--swc-theme--sizeL, 240px);
   --swc-illustrated-message-large-body-font-size: var(
       --swc-theme--sizeM,
       var(--swc-body-size-s)
@@ -2568,28 +2490,6 @@
       var(--swc-title-size-m)
     )
     var(--swc-theme--sizeL, var(--swc-title-size-s));
-  --swc-in-field-progress-circle-size-100: var(--swc-theme--sizeM, 20px)
-    var(--swc-theme--sizeL, 24px);
-  --swc-in-field-progress-circle-size-200: var(--swc-theme--sizeM, 22px)
-    var(--swc-theme--sizeL, 28px);
-  --swc-in-field-progress-circle-size-300: var(--swc-theme--sizeM, 26px)
-    var(--swc-theme--sizeL, 30px);
-  --swc-in-field-progress-circle-size-75: var(--swc-theme--sizeM, 16px)
-    var(--swc-theme--sizeL, 18px);
-  --swc-list-view-minimum-height: var(--swc-theme--sizeM, 40px)
-    var(--swc-theme--sizeL, 50px);
-  --swc-list-view-minimum-width: var(--swc-theme--sizeM, 200px)
-    var(--swc-theme--sizeL, 240px);
-  --swc-meter-thickness-extra-large: var(--swc-theme--sizeM, 10px)
-    var(--swc-theme--sizeL, 13px);
-  --swc-meter-thickness-large: var(--swc-theme--sizeM, 8px)
-    var(--swc-theme--sizeL, 10px);
-  --swc-meter-thickness-medium: var(--swc-theme--sizeM, 6px)
-    var(--swc-theme--sizeL, 8px);
-  --swc-meter-thickness-small: var(--swc-theme--sizeM, 4px)
-    var(--swc-theme--sizeL, 5px);
-  --swc-meter-width: var(--swc-theme--sizeM, 192px)
-    var(--swc-theme--sizeL, 240px);
   --swc-number-field-with-stepper-minimum-width-extra-large: var(
       --swc-theme--sizeM,
       168px
@@ -2614,69 +2514,12 @@
     var(--swc-theme--sizeL, 10px);
   --swc-opacity-checkerboard-square-size-small: var(--swc-theme--sizeM, 4px)
     var(--swc-theme--sizeL, 5px);
-  --swc-progress-bar-thickness-extra-large: var(--swc-theme--sizeM, 10px)
-    var(--swc-theme--sizeL, 13px);
-  --swc-progress-bar-thickness-large: var(--swc-theme--sizeM, 8px)
-    var(--swc-theme--sizeL, 10px);
-  --swc-progress-bar-thickness-medium: var(--swc-theme--sizeM, 6px)
-    var(--swc-theme--sizeL, 8px);
-  --swc-progress-bar-thickness-small: var(--swc-theme--sizeM, 4px)
-    var(--swc-theme--sizeL, 5px);
-  --swc-progress-circle-size-large: var(--swc-theme--sizeM, 64px)
-    var(--swc-theme--sizeL, 80px);
-  --swc-progress-circle-size-medium: var(--swc-theme--sizeM, 32px)
-    var(--swc-theme--sizeL, 40px);
-  --swc-progress-circle-size-small: var(--swc-theme--sizeM, 16px)
-    var(--swc-theme--sizeL, 20px);
   --swc-progress-circle-thickness-large: var(--swc-theme--sizeM, 4px)
     var(--swc-theme--sizeL, 5px);
   --swc-progress-circle-thickness-medium: var(--swc-theme--sizeM, 3px)
     var(--swc-theme--sizeL, 4px);
   --swc-progress-circle-thickness-small: var(--swc-theme--sizeM, 2px)
     var(--swc-theme--sizeL, 3px);
-  --swc-radio-button-control-size-extra-large: var(--swc-theme--sizeM, 18px)
-    var(--swc-theme--sizeL, 22px);
-  --swc-radio-button-control-size-large: var(--swc-theme--sizeM, 16px)
-    var(--swc-theme--sizeL, 20px);
-  --swc-radio-button-control-size-medium: var(--swc-theme--sizeM, 14px)
-    var(--swc-theme--sizeL, 18px);
-  --swc-radio-button-control-size-small: var(--swc-theme--sizeM, 12px)
-    var(--swc-theme--sizeL, 16px);
-  --swc-select-box-horizontal-minimum-height: var(--swc-theme--sizeM, 80px)
-    var(--swc-theme--sizeL, 100px);
-  --swc-select-box-horizontal-minimum-width: var(--swc-theme--sizeM, 188px)
-    var(--swc-theme--sizeL, 220px);
-  --swc-select-box-horizontal-width: var(--swc-theme--sizeM, 368px)
-    var(--swc-theme--sizeL, 460px);
-  --swc-select-box-vertical-height: var(--swc-theme--sizeM, 170px)
-    var(--swc-theme--sizeL, 212px);
-  --swc-side-navigation-indicator-height: var(--swc-theme--sizeM, 18px)
-    var(--swc-theme--sizeL, 22px);
-  --swc-side-navigation-minimum-width: var(--swc-theme--sizeM, 144px)
-    var(--swc-theme--sizeL, 180px);
-  --swc-side-navigation-width: var(--swc-theme--sizeM, 192px)
-    var(--swc-theme--sizeL, 240px);
-  --swc-slider-handle-extra-large: var(--swc-theme--sizeM, 24px)
-    var(--swc-theme--sizeL, 30px);
-  --swc-slider-handle-height-precision-extra-large: var(
-      --swc-theme--sizeM,
-      26px
-    )
-    var(--swc-theme--sizeL, 32px);
-  --swc-slider-handle-height-precision-large: var(--swc-theme--sizeM, 24px)
-    var(--swc-theme--sizeL, 30px);
-  --swc-slider-handle-height-precision-medium: var(--swc-theme--sizeM, 22px)
-    var(--swc-theme--sizeL, 26px);
-  --swc-slider-handle-height-precision-small: var(--swc-theme--sizeM, 20px)
-    var(--swc-theme--sizeL, 24px);
-  --swc-slider-handle-large: var(--swc-theme--sizeM, 22px)
-    var(--swc-theme--sizeL, 28px);
-  --swc-slider-handle-medium: var(--swc-theme--sizeM, 20px)
-    var(--swc-theme--sizeL, 24px);
-  --swc-slider-handle-small: var(--swc-theme--sizeM, 18px)
-    var(--swc-theme--sizeL, 22px);
-  --swc-stack-item-header-minimum-width: var(--swc-theme--sizeM, 200px)
-    var(--swc-theme--sizeL, 240px);
   --swc-stack-item-minimum-padding-vertical: var(--swc-theme--sizeM, 8px)
     var(--swc-theme--sizeL, 10px);
   --swc-standard-dialog-body-font-size: var(
@@ -2689,38 +2532,6 @@
       var(--swc-title-size-xxl)
     )
     var(--swc-theme--sizeL, var(--swc-title-size-xl));
-  --swc-status-light-dot-size-extra-large: var(--swc-theme--sizeM, 14px)
-    var(--swc-theme--sizeL, 16px);
-  --swc-status-light-dot-size-large: var(--swc-theme--sizeM, 12px)
-    var(--swc-theme--sizeL, 14px);
-  --swc-status-light-dot-size-medium: var(--swc-theme--sizeM, 10px)
-    var(--swc-theme--sizeL, 12px);
-  --swc-status-light-dot-size-small: var(--swc-theme--sizeM, 8px)
-    var(--swc-theme--sizeL, 10px);
-  --swc-swatch-size-extra-small: var(--swc-theme--sizeM, 16px)
-    var(--swc-theme--sizeL, 20px);
-  --swc-swatch-size-large: var(--swc-theme--sizeM, 40px)
-    var(--swc-theme--sizeL, 50px);
-  --swc-swatch-size-medium: var(--swc-theme--sizeM, 32px)
-    var(--swc-theme--sizeL, 40px);
-  --swc-swatch-size-small: var(--swc-theme--sizeM, 24px)
-    var(--swc-theme--sizeL, 30px);
-  --swc-switch-control-height-extra-large: var(--swc-theme--sizeM, 20px)
-    var(--swc-theme--sizeL, 26px);
-  --swc-switch-control-height-large: var(--swc-theme--sizeM, 18px)
-    var(--swc-theme--sizeL, 22px);
-  --swc-switch-control-height-medium: var(--swc-theme--sizeM, 16px)
-    var(--swc-theme--sizeL, 20px);
-  --swc-switch-control-height-small: var(--swc-theme--sizeM, 14px)
-    var(--swc-theme--sizeL, 18px);
-  --swc-switch-control-width-extra-large: var(--swc-theme--sizeM, 34px)
-    var(--swc-theme--sizeL, 46px);
-  --swc-switch-control-width-large: var(--swc-theme--sizeM, 30px)
-    var(--swc-theme--sizeL, 38px);
-  --swc-switch-control-width-medium: var(--swc-theme--sizeM, 26px)
-    var(--swc-theme--sizeL, 34px);
-  --swc-switch-control-width-small: var(--swc-theme--sizeM, 22px)
-    var(--swc-theme--sizeL, 30px);
   --swc-switch-handle-selected-size-extra-large: var(--swc-theme--sizeM, 14px)
     var(--swc-theme--sizeL, 20px);
   --swc-switch-handle-selected-size-large: var(--swc-theme--sizeM, 12px)
@@ -2737,98 +2548,9 @@
     var(--swc-theme--sizeL, 12px);
   --swc-switch-handle-size-small: var(--swc-theme--sizeM, 6px)
     var(--swc-theme--sizeL, 10px);
-  --swc-table-row-height-extra-large: var(--swc-theme--sizeM, 56px)
-    var(--swc-theme--sizeL, 70px);
-  --swc-table-row-height-extra-large-spacious: var(--swc-theme--sizeM, 64px)
-    var(--swc-theme--sizeL, 80px);
-  --swc-table-row-height-large: var(--swc-theme--sizeM, 48px)
-    var(--swc-theme--sizeL, 60px);
-  --swc-table-row-height-large-spacious: var(--swc-theme--sizeM, 56px)
-    var(--swc-theme--sizeL, 70px);
-  --swc-table-row-height-medium: var(--swc-theme--sizeM, 40px)
-    var(--swc-theme--sizeL, 50px);
-  --swc-table-row-height-medium-spacious: var(--swc-theme--sizeM, 48px)
-    var(--swc-theme--sizeL, 60px);
-  --swc-table-row-height-small: var(--swc-theme--sizeM, 32px)
-    var(--swc-theme--sizeL, 40px);
-  --swc-table-row-height-small-spacious: var(--swc-theme--sizeM, 40px)
-    var(--swc-theme--sizeL, 50px);
-  --swc-table-section-header-row-height-extra-large: var(
-      --swc-theme--sizeM,
-      48px
-    )
-    var(--swc-theme--sizeL, 60px);
-  --swc-table-section-header-row-height-large: var(--swc-theme--sizeM, 40px)
-    var(--swc-theme--sizeL, 50px);
-  --swc-table-section-header-row-height-medium: var(--swc-theme--sizeM, 32px)
-    var(--swc-theme--sizeL, 40px);
-  --swc-table-section-header-row-height-small: var(--swc-theme--sizeM, 24px)
-    var(--swc-theme--sizeL, 30px);
-  --swc-tag-minimum-width-large: var(--swc-theme--sizeM, 33px)
-    var(--swc-theme--sizeL, 42px);
-  --swc-tag-minimum-width-medium: var(--swc-theme--sizeM, 27px)
-    var(--swc-theme--sizeL, 34px);
-  --swc-tag-minimum-width-small: var(--swc-theme--sizeM, 21px)
-    var(--swc-theme--sizeL, 25px);
-  --swc-tag-field-default-width-large: var(--swc-theme--sizeM, 288px)
-    var(--swc-theme--sizeL, 312px);
-  --swc-tag-field-default-width-medium: var(--swc-theme--sizeM, 264px)
-    var(--swc-theme--sizeL, 288px);
-  --swc-tag-field-default-width-small: var(--swc-theme--sizeM, 240px)
-    var(--swc-theme--sizeL, 264px);
-  --swc-tag-field-minimum-height-large: var(--swc-theme--sizeM, 68px)
-    var(--swc-theme--sizeL, 82px);
-  --swc-tag-field-minimum-height-medium: var(--swc-theme--sizeM, 56px)
-    var(--swc-theme--sizeL, 68px);
-  --swc-tag-field-minimum-height-small: var(--swc-theme--sizeM, 44px)
-    var(--swc-theme--sizeL, 54px);
-  --swc-tag-field-minimum-width: var(--swc-theme--sizeM, 180px)
-    var(--swc-theme--sizeL, 200px);
-  --swc-text-area-minimum-height: var(--swc-theme--sizeM, 56px)
-    var(--swc-theme--sizeL, 70px);
-  --swc-text-area-minimum-width: var(--swc-theme--sizeM, 112px)
-    var(--swc-theme--sizeL, 140px);
-  --swc-thumbnail-size-100: var(--swc-theme--sizeM, 24px)
-    var(--swc-theme--sizeL, 28px);
-  --swc-thumbnail-size-1000: var(--swc-theme--sizeM, 64px)
-    var(--swc-theme--sizeL, 72px);
-  --swc-thumbnail-size-200: var(--swc-theme--sizeM, 28px)
-    var(--swc-theme--sizeL, 32px);
-  --swc-thumbnail-size-300: var(--swc-theme--sizeM, 32px)
-    var(--swc-theme--sizeL, 36px);
-  --swc-thumbnail-size-400: var(--swc-theme--sizeM, 36px)
-    var(--swc-theme--sizeL, 40px);
-  --swc-thumbnail-size-50: var(--swc-theme--sizeM, 16px)
-    var(--swc-theme--sizeL, 20px);
-  --swc-thumbnail-size-500: var(--swc-theme--sizeM, 40px)
-    var(--swc-theme--sizeL, 44px);
-  --swc-thumbnail-size-600: var(--swc-theme--sizeM, 44px)
-    var(--swc-theme--sizeL, 48px);
-  --swc-thumbnail-size-700: var(--swc-theme--sizeM, 48px)
-    var(--swc-theme--sizeL, 52px);
-  --swc-thumbnail-size-75: var(--swc-theme--sizeM, 20px)
-    var(--swc-theme--sizeL, 24px);
-  --swc-thumbnail-size-800: var(--swc-theme--sizeM, 52px)
-    var(--swc-theme--sizeL, 56px);
-  --swc-thumbnail-size-900: var(--swc-theme--sizeM, 56px)
-    var(--swc-theme--sizeL, 64px);
-  --swc-toast-height: var(--swc-theme--sizeM, 52px)
-    var(--swc-theme--sizeL, 60px);
-  --swc-toast-maximum-width: var(--swc-theme--sizeM, 336px)
-    var(--swc-theme--sizeL, 420px);
-  --swc-tooltip-maximum-width: var(--swc-theme--sizeM, 160px)
-    var(--swc-theme--sizeL, 200px);
-  --swc-tooltip-tip-height: var(--swc-theme--sizeM, 5px)
-    var(--swc-theme--sizeL, 6px);
-  --swc-tooltip-tip-width: var(--swc-theme--sizeM, 10px)
-    var(--swc-theme--sizeL, 12px);
-  --swc-tree-view-disclosure-indicator-height: var(--swc-theme--sizeM, 32px)
-    var(--swc-theme--sizeL, 40px);
-  --swc-tree-view-disclosure-indicator-width: var(--swc-theme--sizeM, 34px)
-    var(--swc-theme--sizeL, 42px);
-  --swc-tree-view-minimum-height: var(--swc-theme--sizeM, 40px)
-    var(--swc-theme--sizeL, 50px);
-  --swc-tree-view-minimum-width: var(--swc-theme--sizeM, 160px)
-    var(--swc-theme--sizeL, 200px);
+  --swc-tooltip-tip-height: var(--swc-theme--sizeM, 4px)
+    var(--swc-theme--sizeL, 4px);
+  --swc-tooltip-tip-width: var(--swc-theme--sizeM, 8px)
+    var(--swc-theme--sizeL, 8px);
   --swc-font-size: var(--swc-theme--sizeM, 14px) var(--swc-theme--sizeL, 17px);
 }

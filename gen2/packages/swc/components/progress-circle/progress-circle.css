@@ -41,7 +41,7 @@
 }
 
 .swc-ProgressCircle {
-  --_swc-progress-circle-size: var(--swc-progress-circle-size, token("progress-circle-size-medium"));
+  --_swc-progress-circle-size: var(--swc-progress-circle-size, token("visual-size-300"));
   --_swc-progress-circle-track-border-color: var(--swc-progress-circle-track-border-color, token("track-color"));
   --_swc-progress-circle-fill-border-color: var(--swc-progress-circle-fill-border-color, token("accent-content-color-default"));
   --_swc-progress-circle-thickness: var(--swc-progress-circle-thickness, token("progress-circle-thickness-medium"));
@@ -81,12 +81,12 @@
 }
 
 :host([size="s"]) {
-  --swc-progress-circle-size: token("progress-circle-size-small");
+  --swc-progress-circle-size: token("visual-size-50");
   --swc-progress-circle-thickness: token("progress-circle-thickness-small");
 }
 
 :host([size="l"]) {
-  --swc-progress-circle-size: token("progress-circle-size-large");
+  --swc-progress-circle-size: token("visual-size-800");
   --swc-progress-circle-thickness: token("progress-circle-thickness-large");
 }
 

@@ -12,7 +12,7 @@
 
 :host {
   display: block;
-  min-inline-size: var(--swc-accordion-min-inline-size, token("accordion-minimum-width"));
+  min-inline-size: var(--swc-accordion-min-inline-size, token("list-item-minimum-width-medium"));
 }
 
 .swc-Accordion {

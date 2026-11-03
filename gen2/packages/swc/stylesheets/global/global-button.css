@@ -31,7 +31,7 @@
   overflow: visible;
   user-select: none;
   --_swc-button-border-width: token("border-width-200");
-  --_swc-button-min-block-size: var(--swc-button-min-block-size, token("component-height-100"));
+  --_swc-button-min-block-size: var(--swc-button-min-block-size, token("base-height-medium"));
 
   gap: var(--swc-button-gap, token("base-gap-medium"));
   max-inline-size: var(--swc-button-max-inline-size, inherit);
@@ -114,7 +114,7 @@
 }
 
 .swc-Button--sizeS {
-  --swc-button-min-block-size: token("component-height-75");
+  --swc-button-min-block-size: token("base-height-small");
   --swc-button-font-size: token("font-size-75");
   --swc-button-gap: token("base-gap-small");
   --swc-button-edge-to-text: token("base-padding-horizontal-small");
@@ -125,7 +125,7 @@
 }
 
 .swc-Button--sizeL {
-  --swc-button-min-block-size: token("component-height-200");
+  --swc-button-min-block-size: token("base-height-large");
   --swc-button-font-size: token("font-size-200");
   --swc-button-gap: token("base-gap-large");
   --swc-button-edge-to-text: token("base-padding-horizontal-large");
@@ -136,7 +136,7 @@
 }
 
 .swc-Button--sizeXl {
-  --swc-button-min-block-size: token("component-height-300");
+  --swc-button-min-block-size: token("base-height-extra-large");
   --swc-button-font-size: token("font-size-300");
   --swc-button-gap: token("base-gap-extra-large");
   --swc-button-edge-to-text: token("base-padding-horizontal-extra-large");
