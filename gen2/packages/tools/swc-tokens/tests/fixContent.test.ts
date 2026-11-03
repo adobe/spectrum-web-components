@@ -94,6 +94,29 @@ describe('fixContent', () => {
     ]);
   });
 
+  it('carries the Spectrum deprecation comment into the TODO when one exists', () => {
+    const { result, replacements } = fixContent(
+      'max-inline-size: token("removed-no-replacement");',
+      {},
+      DELETED,
+      {
+        'removed-no-replacement':
+          'Governed by container + padding; no token needed. Avoid */ here.',
+      }
+    );
+    expect(result).toBe(
+      'max-inline-size: token("removed-no-replacement") /* TODO: removed token — Governed by container + padding; no token needed. Avoid * / here. */;'
+    );
+    expect(replacements).toEqual([
+      {
+        kind: 'todo',
+        from: 'removed-no-replacement',
+        comment:
+          'Governed by container + padding; no token needed. Avoid * / here.',
+      },
+    ]);
+  });
+
   it('handles multiple token() calls in one string', () => {
     const css = 'padding: token("zero-value-token") token("old-spacing");';
     const { result, replacements } = fixContent(css, RENAMED, DELETED);

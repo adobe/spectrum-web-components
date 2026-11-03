@@ -375,6 +375,32 @@ describe('removeActiveTokensFromDeleted', () => {
   });
 });
 
+describe('removeRenamedTokensFromDeleted', () => {
+  const { removeRenamedTokensFromDeleted } = __test__;
+
+  it('drops curated entries for tokens that now have an official rename', () => {
+    expect(
+      removeRenamedTokensFromDeleted(
+        {
+          'gripper-icon-size-100': 'ui-icon-medium',
+          'removed-token': null,
+        },
+        new Set(['gripper-icon-size-100'])
+      )
+    ).toEqual({
+      'removed-token': null,
+    });
+  });
+
+  it('never lists a token as both renamed and deleted', async () => {
+    const { renamed, deleted } = await allTokenData();
+
+    for (const name of Object.keys(renamed)) {
+      expect(deleted, name).not.toHaveProperty(name);
+    }
+  });
+});
+
 describe('generateCSS', () => {
   it('does not wrap comma-separated font-family stacks in extra quotes', async () => {
     const css = await generateCSS('swc');

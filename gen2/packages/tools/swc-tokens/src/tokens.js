@@ -759,6 +759,13 @@ export function removeActiveTokensFromDeleted(deleted, activeTokenNames) {
   );
 }
 
+// An official rename from Spectrum supersedes any locally curated deleted-token entry.
+export function removeRenamedTokensFromDeleted(deleted, renamedTokenNames) {
+  return Object.fromEntries(
+    Object.entries(deleted).filter(([name]) => !renamedTokenNames.has(name))
+  );
+}
+
 async function loadAllTokenData(prefix, debug = false) {
   const [rawFiles, customDeleted] = await Promise.all([
     loadTokenSources(),
@@ -771,19 +778,23 @@ async function loadAllTokenData(prefix, debug = false) {
     ...rawFiles.map((f) => extractDeprecatedComments(f.raw, debug))
   );
   const tokens = extractAllTokenValues(rawFiles, prefix, debug, globalLookup);
+  const renamed = Object.assign(
+    {},
+    ...rawFiles.map((f) => extractRenamedTokenValues(f.raw, debug))
+  );
 
   return {
     tokens,
-    renamed: Object.assign(
-      {},
-      ...rawFiles.map((f) => extractRenamedTokenValues(f.raw, debug))
-    ),
-    deleted: removeActiveTokensFromDeleted(
-      {
-        ...customDeleted,
-        ...deriveZeroValueEntries(deprecatedComments, customDeleted),
-      },
-      new Set(Object.keys(tokens))
+    renamed,
+    deleted: removeRenamedTokensFromDeleted(
+      removeActiveTokensFromDeleted(
+        {
+          ...customDeleted,
+          ...deriveZeroValueEntries(deprecatedComments, customDeleted),
+        },
+        new Set(Object.keys(tokens))
+      ),
+      new Set(Object.keys(renamed))
     ),
     deprecatedComments,
   };
@@ -850,5 +861,6 @@ export const __test__ = {
   extractDeprecatedComments,
   deriveZeroValueEntries,
   removeActiveTokensFromDeleted,
+  removeRenamedTokensFromDeleted,
   lookupToken,
 };

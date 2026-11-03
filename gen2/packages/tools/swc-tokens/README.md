@@ -59,11 +59,13 @@ The script:
 
 - Compares the currently installed version against the target version
 - Identifies tokens that are **deleted** (active in the old version, absent from the new one and not captured by any rename mapping)
-- Seeds `custom/deleted.json` with its best guesses:
+- Seeds `custom/deleted.json`, preferring Spectrum's own data over guesses:
   - Tokens with zero-value removal comments in the source data are seeded as `"0"` automatically
-  - Other deleted tokens get a fuzzy-matched candidate from the added token set, or `null` if no match is close enough
-  - Previously curated entries are preserved unless the target version has made that token active again; active tokens are removed from the deleted-token map
-- Removes stale `custom/deleted.json` entries whose token names are active in the target version, even when there are no newly deleted tokens
+  - Tokens with any other `deprecated_comment` are seeded as `null`, and the comment is listed so you can read the design rationale. `fix-token-refs.js` later puts the same comment in the inline TODO
+  - Tokens without a comment get a fuzzy-matched candidate from the added token set, or `null` if no match is close enough
+  - Newly seeded replacements are value-checked against the deleted token on desktop and mobile, and mismatches are listed for review
+  - Previously curated entries are preserved unless the target version has made that token active again or given it an official `renamed`
+- Removes stale `custom/deleted.json` entries whose token names are active in, or renamed by, the target version, even when there are no newly deleted tokens
 - Warns about any new source JSON files in the package that are not yet listed in `SPECTRUM_TOKENS` in `src/tokens.js`
 - Lists newly deprecated+renamed tokens (these are handled automatically after the bump via `extractRenamedTokenValues` — no curation needed)
 
@@ -72,8 +74,9 @@ The script:
 Review the seeded file and fill in replacement values where possible:
 
 - **`"0"` entries**: already correct for zero-pixel spacing tokens; no action needed
-- **Fuzzy-matched entries**: verify the suggestion is semantically correct; update or set to `null` if not
-- **`null` entries**: investigate whether a reasonable replacement exists in the new token set; if not, leave as `null` and the VS Code extension will prompt engineers to check Design specs or React
+- **Fuzzy-matched entries**: verify the suggestion is semantically correct, and check any value mismatches the script reported; update or set to `null` if not
+- **`null` entries with a Spectrum comment**: read the comment before adding a replacement. If it says the value is derived (for example, from content and padding) or that no token is needed, leave it as `null` and handle it in the component CSS so the design intent is kept
+- **Other `null` entries**: investigate whether a reasonable replacement exists in the new token set; if not, leave as `null` and the VS Code extension will prompt engineers to check Design specs or React
 
 Commit the curated `custom/deleted.json` before proceeding.
 
@@ -117,7 +120,7 @@ node scripts/fix-token-refs.js --dry-run   # preview first
 node scripts/fix-token-refs.js             # apply
 ```
 
-This handles renamed tokens, zero-value tokens, and deleted tokens with curated replacements. Deleted tokens with no known replacement are flagged with an inline `/* TODO */` comment — review those manually.
+This handles renamed tokens, zero-value tokens, and deleted tokens with curated replacements. Deleted tokens with no known replacement are flagged with an inline `/* TODO */` comment, which includes Spectrum's deprecation comment when one exists. Review those manually.
 
 ### Step 7: verify
 

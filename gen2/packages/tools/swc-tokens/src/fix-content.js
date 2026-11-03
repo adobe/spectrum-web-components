@@ -21,12 +21,16 @@
  *   - Replaced: token("old")  →  token("suggestion")
  *   - TODO:     token("old")  →  token("old") /∗ TODO ∗/
  *
+ * When Spectrum provides a `deprecated_comment` for a deleted token with no replacement,
+ * the TODO carries that comment so the design rationale stays next to the reference.
+ *
  * @param {string} content - CSS source to transform
  * @param {Record<string, string>} renamed - deprecated+renamed token map { old → new }
  * @param {Record<string, string | null>} deleted - curated deleted token map
+ * @param {Record<string, string>} [deprecatedComments] - Spectrum `deprecated_comment` text keyed by token name
  * @returns {{ result: string, replacements: Array<{kind: string, from: string, to?: string}> }} The transformed CSS and the list of replacements applied.
  */
-export function fixContent(content, renamed, deleted) {
+export function fixContent(content, renamed, deleted, deprecatedComments = {}) {
   const re = /token\(\s*(['"])([\w-]+)\1\s*\)/g;
   const replacements = [];
 
@@ -55,8 +59,11 @@ export function fixContent(content, renamed, deleted) {
       }
 
       // null: no known replacement — flag for manual review
-      replacements.push({ kind: 'todo', from: tokenName });
-      return `${match} /* TODO: removed token — no known replacement, check Spectrum changelog */`;
+      const comment = deprecatedComments[tokenName]?.replaceAll('*/', '* /');
+      replacements.push({ kind: 'todo', from: tokenName, comment });
+      return comment
+        ? `${match} /* TODO: removed token — ${comment} */`
+        : `${match} /* TODO: removed token — no known replacement, check Spectrum changelog */`;
     }
 
     return match;

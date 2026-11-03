@@ -21,7 +21,7 @@
  *   - Renamed token:              token("old-name")  →  token("new-name")
  *   - Deleted, "0" replacement:   token("zero-val")  →  0
  *   - Deleted, named replacement: token("old-name")  →  token("suggestion")
- *   - Deleted, null replacement:  token("old-name")  →  token("old-name") /∗ TODO ∗/
+ *   - Deleted, null replacement:  token("old-name")  →  token("old-name") /∗ TODO: <Spectrum deprecated_comment> ∗/
  *
  * Usage:
  *   node scripts/fix-token-refs.js [--dry-run] [--files <path> ...]
@@ -130,7 +130,7 @@ if (dryRun) {
 // Load token data from the currently installed @adobe/spectrum-tokens.
 // renamed: { old-name → new-name } for deprecated+renamed tokens
 // deleted: { old-name → replacement|"0"|null } from custom/deleted.json
-const { renamed, deleted } = await allTokenData(null);
+const { renamed, deleted, deprecatedComments } = await allTokenData(null);
 
 const renamedCount = Object.keys(renamed).length;
 const deletedCount = Object.keys(deleted).length;
@@ -160,7 +160,12 @@ for (const file of allFiles) {
     continue;
   }
 
-  const { result, replacements } = fixContent(content, renamed, deleted);
+  const { result, replacements } = fixContent(
+    content,
+    renamed,
+    deleted,
+    deprecatedComments
+  );
 
   if (!replacements.length) {
     continue;

@@ -17,8 +17,17 @@
  * target version to identify deleted, renamed, and added tokens.
  *
  * Writes a seeded custom/deleted.json for human curation, where each entry
- * maps a deleted token name to its best fuzzy-matched replacement or null.
- * Edit the values before committing — null means "no known replacement".
+ * maps a deleted token name to a replacement or null. Null means "no known
+ * replacement". Edit the values before committing.
+ *
+ * Spectrum's own data takes precedence over local curation:
+ *   - Entries for tokens that are active again, or that now have an official
+ *     `renamed`, are removed.
+ *   - Deleted tokens with a `deprecated_comment` are seeded as null and the
+ *     comment is reported, rather than guessing a replacement by name. Only
+ *     tokens without a comment get a fuzzy-matched suggestion.
+ *   - Newly seeded replacements are value-checked (desktop and mobile)
+ *     against the deleted token, and mismatches are reported for review.
  *
  * Usage:
  *   node scripts/diff-versions.js --to 14.13.0
@@ -46,6 +55,7 @@ import { hideBin } from 'yargs/helpers';
 
 import {
   removeActiveTokensFromDeleted,
+  removeRenamedTokensFromDeleted,
   ZERO_VALUE_COMMENT_PATTERN,
 } from '../src/tokens.js';
 
@@ -131,6 +141,7 @@ function findBestMatch(name, candidates) {
  *   active    - Set of non-deprecated token names
  *   renamed   - Map of old name → new name (deprecated + renamed)
  *   comments  - Map of old name → deprecated_comment (deprecated, no rename)
+ *   raw       - Map of every token name → raw token data, for value checks
  *   srcFiles  - List of JSON file base names found in the directory
  */
 function loadTokenNames(srcDir) {
@@ -144,15 +155,17 @@ function loadTokenNames(srcDir) {
   const active = new Set();
   const renamed = {};
   const comments = {};
+  const raw = {};
   const srcFiles = [];
 
   for (const file of files) {
     const name = file.replace('.json', '');
     srcFiles.push(name);
 
-    const raw = JSON.parse(readFileSync(join(srcDir, file), 'utf8'));
+    const fileTokens = JSON.parse(readFileSync(join(srcDir, file), 'utf8'));
+    Object.assign(raw, fileTokens);
 
-    for (const [tokenName, token] of Object.entries(raw)) {
+    for (const [tokenName, token] of Object.entries(fileTokens)) {
       if (token?.deprecated) {
         if (typeof token.renamed === 'string') {
           renamed[tokenName] = token.renamed;
@@ -169,7 +182,37 @@ function loadTokenNames(srcDir) {
     }
   }
 
-  return { active, renamed, comments, srcFiles };
+  return { active, renamed, comments, raw, srcFiles };
+}
+
+const MAX_ALIAS_DEPTH = 10;
+
+/**
+ * Resolve a token to a comparable value for one scale ('desktop' or 'mobile'),
+ * following `{alias}` references. Returns undefined when the token is missing.
+ */
+function resolveTokenValue(raw, name, scale, depth = 0) {
+  const token = raw[name];
+  if (!token || depth > MAX_ALIAS_DEPTH) {
+    return undefined;
+  }
+
+  let node = token;
+  while (node?.sets) {
+    node = node.sets[scale] ?? node.sets.light ?? Object.values(node.sets)[0];
+  }
+
+  const value = node?.value;
+  if (typeof value === 'string' && /^\{[\w-]+\}$/.test(value)) {
+    return resolveTokenValue(raw, value.slice(1, -1), scale, depth + 1);
+  }
+  return typeof value === 'object' ? JSON.stringify(value) : value;
+}
+
+function describeValue(raw, name) {
+  const desktop = resolveTokenValue(raw, name, 'desktop');
+  const mobile = resolveTokenValue(raw, name, 'mobile');
+  return desktop === mobile ? `${desktop}` : `${desktop} / ${mobile} (mobile)`;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -341,9 +384,17 @@ try {
     }
   }
 
-  const output = removeActiveTokensFromDeleted(existing, to.active);
+  const withoutActive = removeActiveTokensFromDeleted(existing, to.active);
   const removedActiveEntries =
-    Object.keys(existing).length - Object.keys(output).length;
+    Object.keys(existing).length - Object.keys(withoutActive).length;
+  const output = removeRenamedTokensFromDeleted(
+    withoutActive,
+    new Set(toRenamedKeys)
+  );
+  const removedRenamedEntries = Object.keys(withoutActive).filter(
+    (name) => !(name in output)
+  );
+  const commentSeeded = [];
 
   for (const name of deleted) {
     if (name in output) {
@@ -357,11 +408,69 @@ try {
       continue;
     }
 
-    // Seed with best fuzzy match from the added set, or null.
+    // Spectrum explained the removal; keep its rationale rather than guessing.
+    if (comment) {
+      output[name] = null;
+      commentSeeded.push([name, comment]);
+      continue;
+    }
+
+    // No rationale from Spectrum: seed with best fuzzy match, or null.
     output[name] = findBestMatch(name, added);
   }
 
-  if (!deleted.size && !removedActiveEntries) {
+  if (removedRenamedEntries.length) {
+    console.log(
+      '\nℹ Removed curated entries superseded by an official Spectrum rename:'
+    );
+    for (const name of removedRenamedEntries) {
+      console.log(
+        `  ${name}: ${existing[name] ?? 'null'}  →  renamed to ${to.renamed[name]}`
+      );
+    }
+    console.log();
+  }
+
+  if (commentSeeded.length) {
+    console.log(
+      '\nℹ Deleted tokens with a Spectrum deprecation comment (seeded as null; the comment is shown in fix-token-refs TODOs):'
+    );
+    for (const [name, comment] of commentSeeded) {
+      console.log(`  ${name}: ${comment}`);
+    }
+    console.log();
+  }
+
+  // Value-check newly seeded replacements; earlier entries were already curated.
+  const valueMismatches = Object.entries(output)
+    .filter(
+      ([name, replacement]) =>
+        !(name in existing) && replacement && replacement !== '0'
+    )
+    .map(([name, replacement]) => ({
+      name,
+      replacement,
+      from: describeValue(from.raw[name] ? from.raw : to.raw, name),
+      to: describeValue(to.raw, replacement),
+    }))
+    .filter(({ from: fromValue, to: toValue }) => fromValue !== toValue);
+
+  if (valueMismatches.length) {
+    console.log(
+      '\n⚠ Replacements whose value differs from the deleted token (verify before committing):'
+    );
+    for (const {
+      name,
+      replacement,
+      from: fromValue,
+      to: toValue,
+    } of valueMismatches) {
+      console.log(`  ${name} [${fromValue}]  →  ${replacement} [${toValue}]`);
+    }
+    console.log();
+  }
+
+  if (!deleted.size && !removedActiveEntries && !removedRenamedEntries.length) {
     console.log(
       `✔ No truly deleted tokens found and no stale deleted-token entries to remove.\n`
     );
@@ -396,6 +505,12 @@ try {
     console.log(
       `  ${removedActiveEntries} stale active-token entry/entries removed`
     );
+    console.log(
+      `  ${removedRenamedEntries.length} entry/entries superseded by an official rename removed`
+    );
+    console.log(
+      `  ${commentSeeded.length} seeded as null with a Spectrum deprecation comment`
+    );
     console.log(`  ${preserved} preserved from previous curation`);
     if (zeroSeeded) {
       console.log(
@@ -404,6 +519,9 @@ try {
     }
     console.log(
       `  ${fuzzySeeded} seeded with fuzzy matches (review before committing)`
+    );
+    console.log(
+      `  ${valueMismatches.length} replacement(s) with a value mismatch`
     );
     console.log(
       `  ${needsCuration} with null (no replacement found — requires manual curation)`
