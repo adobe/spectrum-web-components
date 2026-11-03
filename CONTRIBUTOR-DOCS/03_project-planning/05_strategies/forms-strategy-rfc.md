@@ -155,6 +155,7 @@ Every form-associated component's story set and test suite must cover the full f
   - **Invalid presentation** ([§3.7](#37-field-status-and-validation-sources)): error text replaces the description, and the invalid icon shows with and without error text.
   - **Barred states:** `field-status="disabled"` and `field-status="readonly"` do not block validation.
   - **Status warnings:** `undefined` is accepted silently, and an unsupported `field-status` value (including a value the component does not accept, such as `valid` on the radio group) produces a dev-mode enum warning ([§3.7](#37-field-status-and-validation-sources)).
+  - **Resubmit after fixing:** submit an empty required field so an error shows, enter a valid value, and submit again. The earlier native error does not block the second submit, and a disabled or read-only field keeps its status ([§3.6](#36-validation-timing-and-submit-behavior)).
   - **Focus target** ([§3.6](#36-validation-timing-and-submit-behavior)): calling `focus()` on the host moves focus to the validation anchor. The form story uses `novalidate`, and after a failed submit its handler moves focus to the first invalid field.
 - **Reset:** `form.reset()` restores every control to its default value via `formResetCallback()`.
 - **Getting the value:** the value read on submit matches the value read programmatically, across the checked/selected, unchecked/empty, and post-reset states.
@@ -177,11 +178,12 @@ gen2 fields do not show errors by themselves. The application sets `field-status
 - **Do not switch to realtime validation after submit.** After a failed submit, the field keeps commit-based timing. The displayed validity updates on the next commit, not on each keystroke. This keeps the behavior consistent before and after submit.
 - **Forms use `novalidate`.** Fields show their own inline error text, so the browser must not show its native validation bubbles. With `novalidate`, the browser also does not block submit, does not fire `invalid` events on submit, and does not move focus. The application's submit handler does all three. Fields do not suppress native bubbles themselves; controlling the enclosing form is the application's responsibility.
 - **On a blocked submit, focus the first invalid field, or another target the application chooses.** The submit handler does these steps:
-  1. **Call `event.preventDefault()` synchronously, before the first `await`.** The browser does not wait for an async submit listener, so with `novalidate` the form would otherwise submit as soon as the synchronous part of the handler returns. The handler then submits explicitly when validation passes (step 5).
-  2. **Recompute the application's own rules**, such as username availability or cross-field checks. `form.checkValidity()` cannot rerun them, so a value that passes native constraints could still break an application rule. Await each rule, set `field-status="invalid"` and `error-text` where it fails, and clear them where it passes, because authored status is itself a validity source ([§3.7](#37-field-status-and-validation-sources)). Leave authored status alone for rules the handler is not recomputing, such as a server error from an earlier submit. Then await `updateComplete` on the fields so they re-sync validity before the next step.
-  3. Call `form.checkValidity()`. It shows no browser UI and returns only a boolean. It fires `invalid` events on the invalid fields, which the handler can ignore.
-  4. If it returns `false`, set `field-status="invalid"` and `error-text` on each field that fails a native constraint, and move focus. By default, focus the first invalid field in DOM order. The application can instead move focus somewhere else, for example to an inline alert that summarizes the errors.
-  5. If it returns `true`, submit. Either send the data from the handler, for example `fetch(form.action, { method: form.method, body: new FormData(form, event.submitter) })`, or let the browser submit without running validation again: set a one-shot flag and call `form.requestSubmit(event.submitter)`. The handler returns early when the flag is set, so it does not run again, and the submitter's name and value are kept.
+  1. **Call `event.preventDefault()` synchronously, before the first `await`.** The browser does not wait for an async submit listener, so with `novalidate` the form would otherwise submit as soon as the synchronous part of the handler returns. The handler then submits explicitly when validation passes (step 6).
+  2. **Clear every `invalid` status from the previous submit.** Authored `invalid` status is itself a validity source ([§3.7](#37-field-status-and-validation-sources)), so an error shown for an earlier native failure (for example "required" on an empty field) keeps the field failing through its `customError`, even after the user enters a valid value. Clear only `invalid`, not other statuses: clearing every status would remove `disabled` and `readonly`. The stale `error-text` content can stay, because it is not shown or used as the message while the status is not `invalid`. The handler re-derives every error in the next steps, so it does not need to know whether the earlier error came from a native constraint or an application rule. If some errors come from outside the handler, such as a server error that should survive a resubmit, skip those fields in this step.
+  3. **Recompute the application's own rules**, such as username availability or cross-field checks. `form.checkValidity()` cannot rerun them, so a value that passes native constraints could still break an application rule. Await each rule, and set `field-status="invalid"` and `error-text` where it fails. Then await `updateComplete` on the fields so they re-sync validity before the next step.
+  4. Call `form.checkValidity()`. It shows no browser UI and returns only a boolean. It fires `invalid` events on the invalid fields, which the handler can ignore.
+  5. If it returns `false`, show an error on each field that fails validation but is not showing one yet. Those fields fail a native constraint, because the application rules already set their status in step 3. Set `field-status="invalid"`. The field's `error-text` slot, which the markup should already include and fill ([§3.7](#37-field-status-and-validation-sources)), then shows its message. Set the slot's text only to change the message, for example to the application's own copy for this failure. A field with a native inner control also offers the browser's localized `validationMessage` as a generic default, and other fields report a component fallback. If you use `validationMessage` as the text, read it before setting `field-status`, because an invalid field reports its `error-text` as the message. Then move focus. By default, focus the first invalid field in DOM order. The application can instead move focus somewhere else, for example to an inline alert that summarizes the errors.
+  6. If it returns `true`, submit. Either send the data from the handler, for example `fetch(form.action, { method: form.method, body: new FormData(form, event.submitter) })`, or let the browser submit without running validation again: set a one-shot flag and call `form.requestSubmit(event.submitter)`. The handler returns early when the flag is set, so it does not run again, and the submitter's name and value are kept.
 
   The steps together:
 
@@ -195,27 +197,42 @@ gen2 fields do not show errors by themselves. The application sets `field-status
     }
     event.preventDefault(); // before any await
     const submitter = event.submitter;
+    const fields = [...form.elements];
 
-    await validateApplicationRules(); // sets or clears field-status and error-text
-    await Promise.all([...form.elements].map((element) => element.updateComplete));
+    for (const field of fields) {
+      // Only invalid, so disabled, readonly, and valid are kept
+      if (field.fieldStatus === 'invalid') {
+        field.fieldStatus = undefined;
+      }
+    }
+    await validateApplicationRules(); // sets field-status="invalid" and error-text where a rule fails
+    await Promise.all(fields.map((field) => field.updateComplete));
 
     if (form.checkValidity()) {
       validated = true;
       form.requestSubmit(submitter);
       return;
     }
-    showNativeErrors(); // field-status and error-text for native failures
-    const firstInvalid = [...form.elements].find(
-      (element) => element.willValidate && !element.validity.valid
-    );
-    firstInvalid?.focus();
+    for (const field of fields) {
+      if (
+        field.willValidate &&
+        !field.validity.valid &&
+        field.fieldStatus !== 'invalid'
+      ) {
+        // A native failure with no error shown yet. The field's error-text
+        // slot shows its existing message. Set its textContent only to change it:
+        // field.querySelector('[slot="error-text"]').textContent = '...';
+        field.fieldStatus = 'invalid';
+      }
+    }
+    fields.find((field) => field.willValidate && !field.validity.valid)?.focus();
   });
   ```
 
   - Use `form.elements`. It lists every associated field in tree order, including fields outside the form subtree that join it through the `form` attribute (`form="form-id"`).
   - Do not use `form.querySelector(':invalid')`. `:invalid` matches the field host through the shadow boundary, but it also matches an enclosing `<fieldset>` and the form itself, and it does not find fields outside the form subtree.
-  - Do not call `form.submit()` to submit. It skips constraint validation and the `submit` event, so the handler above never runs, and it drops the submitter's name and value. Use a submit button, or `form.requestSubmit(submitter)` as in step 5.
-  - `novalidate` on the form makes `formnovalidate` on a submit button a no-op for the browser, because the browser is not validating at all. If the form has a button that should skip validation (for example, "Save draft"), the handler checks `event.submitter?.formNoValidate` itself and skips steps 2 to 4. This is application logic, not something fields handle.
+  - Do not call `form.submit()` to submit. It skips constraint validation and the `submit` event, so the handler above never runs, and it drops the submitter's name and value. Use a submit button, or `form.requestSubmit(submitter)` as in step 6.
+  - `novalidate` on the form makes `formnovalidate` on a submit button a no-op for the browser, because the browser is not validating at all. If the form has a button that should skip validation (for example, "Save draft"), the handler checks `event.submitter?.formNoValidate` itself and skips steps 2 to 5. This is application logic, not something fields handle.
   - Do not use `form.reportValidity()` to move focus. It focuses the validation anchor, but it shows the native bubble that `novalidate` avoids, and it does not show the inline error.
   - If a form does not use `novalidate`, the browser runs interactive validation: it shows native bubbles and focuses the first invalid field's anchor. Canceling `invalid` suppresses this only for the fields whose event is canceled. Because `invalid` does not bubble, a capture listener on the `<form>` catches only fields inside the form subtree; add listeners on each field in `form.elements` to include fields associated through the `form` attribute. We do not recommend this setup.
 - **Fields supply a focusable validation anchor.** For the steps above to work, each field must meet both requirements. One without the other does not move focus.
@@ -286,7 +303,7 @@ Until a shared Forms pattern page exists ([§6](#6-open-questions)), each form f
 
 - **Errors are set by the application.** The application sets `field-status="invalid"` and supplies `error-text`. Nothing sets them automatically, and `error-text` alone does not make the field invalid. Clear the status explicitly. Await `updateComplete` before checking validity. Always pair `invalid` with error text.
 - **Validation timing.** Errors display on commit or submit, not on each keystroke. Realtime validation is opt-in through the application's own `input` listener, and a field never switches to realtime after a failed submit ([§3.6](#36-validation-timing-and-submit-behavior)).
-- **Form setup and submit handler.** Use `novalidate`. The handler calls `event.preventDefault()` synchronously, recomputes the application's own rules, calls `form.checkValidity()`, sets status and error text, moves focus, and submits explicitly on success. It finds the first invalid field with `form.elements` and `willValidate`, not `:invalid` selectors or `reportValidity()`. Keep the submit button enabled and submit with `requestSubmit()` or a button, not `form.submit()`.
+- **Form setup and submit handler.** Use `novalidate`. The handler calls `event.preventDefault()` synchronously, clears the `invalid` statuses from the previous submit, recomputes the application's own rules, calls `form.checkValidity()`, sets status and error text, moves focus, and submits explicitly on success. It finds the first invalid field with `form.elements` and `willValidate`, not `:invalid` selectors or `reportValidity()`. Keep the submit button enabled and submit with `requestSubmit()` or a button, not `form.submit()`.
 - **Focus.** Say that `host.focus()` reaches the field's focus target, so the handler can focus the field it found.
 - **Status and barring.** Status values are mutually exclusive, and consumers set `field-status`, not native `disabled` or `readonly` attributes on the host. Disabled and read-only fields do not block validation. A disabled field is excluded from `FormData`, and its value cannot be selected or copied, so recommend `readonly` when users need to review or copy it. A `<fieldset disabled>` does not change `fieldStatus`, and an authored invalid status returns when the field is re-enabled.
 - **Reset and methods.** Reset restores the default value and clears `valid` and `invalid` status. Explain `checkValidity()` versus `reportValidity()`, the `invalid` event, and that authored `invalid` sets `validity.customError`.
