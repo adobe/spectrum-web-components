@@ -11,12 +11,16 @@
  */
 
 import { PropertyValues } from 'lit';
-import { property } from 'lit/decorators.js';
+import { property, query } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import { SizedMixin } from '@adobe/spectrum-wc-core/mixins/index.js';
+import { validateRequiredSlot } from '@adobe/spectrum-wc-core/utils/index.js';
 
 import { MENU_ITEM_VALID_SIZES, type MenuItemSize } from './MenuItem.types.js';
+
+const DOCS_URL =
+  'https://spectrum-web-components.adobe.com/?path=/docs/components-menu--docs';
 
 /**
  * Base class for a menu row. Implements the row half of the
@@ -24,7 +28,8 @@ import { MENU_ITEM_VALID_SIZES, type MenuItemSize } from './MenuItem.types.js';
  * pattern: `role="menuitem"` on the host, with the owning `swc-menu` driving
  * arrow-key navigation and roving tabindex across its rows.
  *
- * @slot label - Text of the row. Referenced as the row's accessible name.
+ * @slot label - Text of the row. Required; referenced as the row's accessible
+ * name.
  * @slot visual - Optional leading icon or thumbnail.
  * @slot description - Optional secondary text below the label. Referenced as
  * the row's accessible description.
@@ -50,6 +55,19 @@ export abstract class MenuItemBase extends SizedMixin(SpectrumElement, {
    */
   @property({ type: Boolean, reflect: true })
   public disabled = false;
+
+  /**
+   * ARIA the component supplies itself goes through `internals`, where it acts
+   * as a default a consumer's own attributes still override. Writing the same
+   * values to `this` would reflect onto the host and clobber them.
+   */
+  protected readonly internals = this.attachInternals();
+
+  @query('slot[name="label"]')
+  private labelSlot?: HTMLSlotElement;
+
+  @query('slot[name="description"]')
+  private descriptionSlot?: HTMLSlotElement;
 
   // ──────────────────────
   //     IMPLEMENTATION
@@ -83,6 +101,14 @@ export abstract class MenuItemBase extends SizedMixin(SpectrumElement, {
     }
   };
 
+  // `slotchange` never fires for a slot that starts empty, so the first render
+  // is the only chance to wire a row that arrives without content, and the
+  // only chance for the missing-label warning to reach an empty one.
+  protected override firstUpdated(changedProperties: PropertyValues): void {
+    super.firstUpdated(changedProperties);
+    this.handleTextSlotChange();
+  }
+
   /**
    * Names the row from its `label` slot and describes it from its
    * `description` slot. Wire this to both slots' `slotchange` event in the
@@ -92,14 +118,21 @@ export abstract class MenuItemBase extends SizedMixin(SpectrumElement, {
    * consumer-authored, so there is no `id` to point at.
    */
   protected handleTextSlotChange(): void {
-    // `menuitem` names from contents, so without this the description is
-    // folded into the name instead of announced as a description.
-    const label = [...this.querySelectorAll(':scope > [slot="label"]')];
-    const description = [
-      ...this.querySelectorAll(':scope > [slot="description"]'),
-    ];
-    this.ariaLabelledByElements = label.length > 0 ? label : null;
-    this.ariaDescribedByElements = description.length > 0 ? description : null;
+    // Flattened, so a row whose slots are forwarded through another
+    // component still resolves to the elements that actually render.
+    const label = this.labelSlot?.assignedElements({ flatten: true }) ?? [];
+    const description =
+      this.descriptionSlot?.assignedElements({ flatten: true }) ?? [];
+    // `menuitem` names from contents, so without explicit references the
+    // description is folded into the name rather than announced as one.
+    this.internals.ariaLabelledByElements = label.length > 0 ? label : null;
+    this.internals.ariaDescribedByElements =
+      description.length > 0 ? description : null;
+    // Without a label the row falls back to naming from contents, which folds
+    // any description into the name. Every row needs one.
+    validateRequiredSlot(this, this.labelSlot, 'label', DOCS_URL, {
+      type: 'accessibility',
+    });
   }
 
   protected override update(changedProperties: PropertyValues): void {

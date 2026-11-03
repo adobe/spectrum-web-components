@@ -38,7 +38,8 @@ import styles from './menu-item.css';
  *   </swc-menu-item>
  * </swc-menu>
  *
- * @slot label - Text of the row. Referenced as the row's accessible name.
+ * @slot label - Text of the row. Required; referenced as the row's accessible
+ * name.
  * @slot visual - Optional leading icon or thumbnail.
  * @slot description - Optional secondary text below the label. Referenced as
  * the row's accessible description.

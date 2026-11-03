@@ -66,6 +66,15 @@ const pressFromActiveRow = (key: string): KeyboardEvent => {
   return event;
 };
 
+// Rows take their text from a named `label` slot, so a bare text node renders
+// nowhere; every programmatically built row needs a real slotted element.
+const labelSpan = (text: string): HTMLSpanElement => {
+  const span = document.createElement('span');
+  span.slot = 'label';
+  span.textContent = text;
+  return span;
+};
+
 const getItems = (canvasElement: HTMLElement): HTMLElement[] =>
   Array.from(canvasElement.querySelectorAll('swc-menu-item')) as HTMLElement[];
 
@@ -783,9 +792,8 @@ export const ArrowKeyNavigationTest: Story = {
       'picks up a row added while open (slotchange refreshes navigation)',
       async () => {
         const newRow = document.createElement('swc-menu-item');
-        newRow.setAttribute('role', 'menuitem');
         newRow.setAttribute('tabindex', '-1');
-        newRow.textContent = 'Duplicate';
+        newRow.append(labelSpan('Duplicate'));
         menu.appendChild(newRow);
         await new Promise((r) => requestAnimationFrame(r));
 
@@ -906,9 +914,8 @@ export const SlotRestrictionValidNoWarningTest: Story = {
     await step('does not warn when adding another allowed child', () =>
       withWarningSpy(async (warnCalls) => {
         const item = document.createElement('swc-menu-item');
-        item.setAttribute('role', 'menuitem');
         item.setAttribute('tabindex', '-1');
-        item.textContent = 'Delete';
+        item.append(labelSpan('Delete'));
         menu.appendChild(item);
         await menu.updateComplete;
         await new Promise((r) => requestAnimationFrame(r));
@@ -1502,6 +1509,12 @@ export const ItemPropertyMutationTest: Story = {
 // TEST: Accessible name and description
 // ──────────────────────────────────────────────────────────────
 
+// `internals` is protected, and ARIA element references are invisible to both
+// the DOM and Playwright's accessible-name computation, so the references are
+// read off internals directly rather than asserted through an ARIA snapshot.
+const ariaOf = (row: MenuItem): ElementInternals =>
+  (row as unknown as { internals: ElementInternals }).internals;
+
 export const ItemAriaTextWiringTest: Story = {
   render: () => html`
     <swc-menu-item>
@@ -1517,40 +1530,128 @@ export const ItemAriaTextWiringTest: Story = {
 
     await step('names the row from its label alone', async () => {
       expect(
-        described.ariaLabelledByElements,
+        ariaOf(described).ariaLabelledByElements,
         'the label slot is the only name source'
       ).toEqual([described.querySelector('[slot="label"]')]);
     });
 
     await step('describes the row from its description', async () => {
       expect(
-        described.ariaDescribedByElements,
+        ariaOf(described).ariaDescribedByElements,
         'the description slot is the description'
       ).toEqual([described.querySelector('[slot="description"]')]);
     });
 
     await step('leaves a row with no description undescribed', async () => {
-      expect(plain.ariaDescribedByElements, 'no description reference').toBe(
-        null
-      );
+      expect(
+        ariaOf(plain).ariaDescribedByElements,
+        'no description reference'
+      ).toBe(null);
+    });
+
+    // The reason the references go on internals rather than on the host:
+    // writing them to `this` reflects onto these attributes and would discard
+    // whatever a consumer put there.
+    await step('writes no ARIA attributes onto the host', async () => {
+      expect(
+        described.hasAttribute('aria-labelledby'),
+        'no aria-labelledby on the host'
+      ).toBe(false);
+      expect(
+        described.hasAttribute('aria-describedby'),
+        'no aria-describedby on the host'
+      ).toBe(false);
+    });
+
+    await step("preserves a consumer's own aria-describedby", async () => {
+      plain.setAttribute('aria-describedby', 'consumer-note');
+      plain.append(labelSpan('Cut again'));
+      await waitFor(() => {
+        expect(
+          ariaOf(plain).ariaLabelledByElements?.length,
+          'the re-run picked up the new label'
+        ).toBe(2);
+      });
+      expect(
+        plain.getAttribute('aria-describedby'),
+        'the consumer value survives'
+      ).toBe('consumer-note');
     });
 
     // Proves the wiring tracks the slot instead of running once: a stale
     // reference would leave the row with no accessible name at all.
     await step('re-points the name when the label is swapped', async () => {
       described.querySelector('[slot="label"]')?.remove();
-      const replacement = document.createElement('span');
-      replacement.slot = 'label';
-      replacement.textContent = 'Paste and match style';
+      const replacement = labelSpan('Paste and match style');
       described.prepend(replacement);
 
       await waitFor(() => {
         expect(
-          described.ariaLabelledByElements,
+          ariaOf(described).ariaLabelledByElements,
           'the name follows the swap'
         ).toEqual([replacement]);
       });
     });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Missing label warning
+// ──────────────────────────────────────────────────────────────
+
+export const ItemMissingLabelWarningTest: Story = {
+  render: () => html`<div></div>`,
+  play: async ({ canvasElement, step }) => {
+    const host = canvasElement.querySelector('div') as HTMLElement;
+
+    // An entirely empty row fires no `slotchange` at all, so the first render
+    // is the only thing that can reach the warning. Remove the `firstUpdated`
+    // call and this step is the one that fails.
+    await step('warns for a row with no slotted content at all', () =>
+      withWarningSpy(async (warnCalls) => {
+        const row = document.createElement('swc-menu-item');
+        host.append(row);
+        await (row as MenuItem).updateComplete;
+
+        expect(warnCalls.length, 'warns on an empty row').toBeGreaterThan(0);
+        expect(String(warnCalls[0][1]), 'names the label slot').toContain(
+          'requires content in the "label" slot'
+        );
+        row.remove();
+      })
+    );
+
+    await step('warns for a row with a description but no label', () =>
+      withWarningSpy(async (warnCalls) => {
+        const row = document.createElement('swc-menu-item');
+        row.append(
+          Object.assign(document.createElement('span'), {
+            slot: 'description',
+            textContent: 'Orphaned description',
+          })
+        );
+        host.append(row);
+        await (row as MenuItem).updateComplete;
+
+        // Count is not pinned: the handler runs on first render and again on
+        // the description slot's `slotchange`, and the spy bypasses the
+        // `issuedWarnings` dedupe that collapses them in real dev use.
+        expect(warnCalls.length, 'warns at least once').toBeGreaterThan(0);
+        row.remove();
+      })
+    );
+
+    await step('stays quiet once the row has a label', () =>
+      withWarningSpy(async (warnCalls) => {
+        const row = document.createElement('swc-menu-item');
+        row.append(labelSpan('Cut'));
+        host.append(row);
+        await (row as MenuItem).updateComplete;
+
+        expect(warnCalls.length, 'no warning for a labelled row').toBe(0);
+        row.remove();
+      })
+    );
   },
 };
 

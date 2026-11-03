@@ -37,7 +37,7 @@ The menu's `PlacementController` handles pixel positioning automatically. When t
 
 ### Item content
 
-A row is composed from three named slots: `label` for its text, `visual` for an optional leading icon or thumbnail, and `description` for optional secondary text below the label. Naming the label keeps it distinct from `description` and gives each part a handle for grid placement in the row layout.
+A row is composed from three named slots: `label` for its text, `visual` for an optional leading icon or thumbnail, and `description` for optional secondary text below the label. `label` is required. Naming the label keeps it distinct from `description` and gives each part a handle for grid placement in the row layout.
 
 A row is named from its `label` slot and described from its `description` slot, so the description is announced as a description rather than folded into the row's name. Keep descriptions short, and do not repeat the label in them.
 
@@ -98,7 +98,7 @@ When no CSS transition is active (for example when `prefers-reduced-motion` remo
 1. **`role="menu"`**: set on the shadow-internal surface.
 2. **`aria-haspopup="menu"` and `aria-expanded`**: wired onto the trigger's interactive element (for a gen2 SWC trigger with an open shadow root, its inner `<button>`) as the menu opens and closes.
 3. **Accessible name**: `swc-menu` has no `label` property. The menu's accessible name comes entirely from the trigger you author; give the trigger its own accessible name (visible text, `aria-label`, or `accessible-label` on a gen2 SWC trigger).
-4. **Row name and description**: each `swc-menu-item` points its own accessible name at its `label` slot and its accessible description at its `description` slot. The references are to the slotted elements themselves, so your markup needs no `id` attributes.
+4. **Row name and description**: each `swc-menu-item` points its own accessible name at its `label` slot and its accessible description at its `description` slot. The references are to the slotted elements themselves, so your markup needs no `id` attributes. They are defaults, so `aria-label` or `aria-labelledby` set on the row still wins. A row with no `label` warns in development builds.
 
 #### Keyboard navigation
 
