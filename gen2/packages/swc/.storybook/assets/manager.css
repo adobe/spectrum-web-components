@@ -46,6 +46,31 @@
   background: var(--swc-accent-background-color-default) !important;
 }
 
+/* The sidebar item's context menu button follows the quiet action button.
+   Storybook colors it from its accent instead, which doesn't match the
+   row's Spectrum backgrounds. */
+.sidebar-item button[aria-haspopup] {
+  color: var(--swc-neutral-subdued-content-color-default);
+
+  &:hover {
+    color: var(--swc-neutral-content-color-hover);
+    background: var(--swc-gray-200);
+  }
+}
+
+/* On the selected item, the button and the glow that fades the label behind
+   it match the row. */
+.sidebar-item[data-selected="true"] button[aria-haspopup] {
+  color: inherit;
+  background: var(--swc-accent-background-color-default);
+  box-shadow: 0 0 5px 5px var(--swc-accent-background-color-default);
+
+  &:hover {
+    color: inherit;
+    background: var(--swc-accent-background-color-hover);
+  }
+}
+
 /* Storybook offsets the sidebar icons for its default font. Adobe Clean sits
    higher in the line box, so move the icons up to center them on the text. */
 .sidebar-item div:has(> svg[type]) {
