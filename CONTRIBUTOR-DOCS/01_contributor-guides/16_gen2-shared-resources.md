@@ -49,6 +49,7 @@ Index of shared, reusable resources in gen2: controllers, mixins, utilities, and
 | `TriggerPressController` | Click-to-toggle for a trigger of a native light-dismissible surface, without the surface reopening on the click that closed it | `popover` |
 | `PendingController` | Delayed busy-state activation, size freeze, pending accessible name | `button`, `action-button` (via `PendingMixin`) |
 | `LanguageResolutionController` | Resolves locale (from `<html lang>`, `navigator.language`, or a language-provider event) for formatting. See [Controller composition](../02_style-guide/02_typescript/14_controller-composition.md#languageresolutioncontroller) | `progress-circle`; also `progress-bar`, `meter` (via `LinearProgressMixin`) |
+| `FieldAssociationController` | Form participation through `ElementInternals`: form value, the fieldset disabled cascade, validity reads, and `field-status` barring | `text-field`, `radio-group`, `checkbox` |
 | `ColorController` | `colorjs.io` conversion wrapper | none |
 
 ## Mixins
@@ -88,7 +89,7 @@ Index of shared, reusable resources in gen2: controllers, mixins, utilities, and
 |---|---|---|
 | `renderPendingSpinner` | Renders the busy-state spinner; called via `PendingController.renderPendingState()` | `button`, `action-button` |
 | `renderFieldLabel` | Renders a form field's visible label and necessity indicator | `text-field`, `checkbox` (via `LabellingMixin`) |
-| `renderFieldDescription` | Renders a form field's description or invalid-state error text | `text-field` (via `FieldDescriptionMixin`) |
+| `renderFieldDescription` | Renders a form field's description or invalid-state error text | `text-field`, `checkbox` (via `FieldDescriptionMixin`) |
 
 ## Base class and dev-mode warnings
 
