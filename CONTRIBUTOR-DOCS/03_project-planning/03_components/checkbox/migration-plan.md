@@ -366,7 +366,7 @@ These are derived from the 1st-gen implementation, the [Figma `S2 / Web` checkbo
 | `emphasized` | `boolean` | `false` | `emphasized` (reflect) | **Confirmed** by Figma: accent fill on checked and indeterminate only. |
 | `size` | `'s' \| 'm' \| 'l' \| 'xl'` | `'m'` | `size` (reflect) | **Confirmed** by Figma (four sizes) and React default. |
 | `name` | `string \| undefined` | `undefined` | `name` (reflect) | **Confirmed.** Form field name. |
-| `value` | `string` | `'on'` | `value` | **Confirmed (new).** Submitted when checked. |
+| `value` | `string` | `'on'` | `value` (reflect) | **Confirmed (new).** Submitted when checked. As on a native checkbox, removing the attribute restores `on`, and `null` becomes an empty string. The default isn't written to the attribute. |
 | `accessibleLabel` | `string` | `''` | `accessible-label` | **Confirmed.** From `LabellingMixin`. |
 | `accessibleLabelledby` | `string \| undefined` | `undefined` | `accessible-labelledby` | **Confirmed.** From `LabellingMixin`; highest precedence. |
 | `accessibleDescribedby` | `string \| undefined` | `undefined` | `accessible-describedby` | **Confirmed.** From `FieldDescriptionMixin`. |

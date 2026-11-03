@@ -87,8 +87,7 @@ export class Checkbox extends CheckboxBase {
   /**
    * Re-dispatch `change` from the host: the native `change` event is
    * `composed: false`, so it never crosses the shadow boundary and a consumer's
-   * `<swc-checkbox @change=…>` would otherwise never fire. Skipped when the
-   * base class undid the toggle.
+   * `<swc-checkbox @change=…>` would otherwise never fire.
    */
   private handleChange(): void {
     if (this.toggleReverted) {

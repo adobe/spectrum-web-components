@@ -73,7 +73,7 @@ export abstract class CheckboxBase extends SizedMixin(
 
   public set checked(value: boolean) {
     const checked = Boolean(value);
-    if (!this.#keepingCheckedClean) {
+    if (!this.#suppressCheckedDirty) {
       this.#checkedDirty = true;
     }
     // Write the input even when `checked` is unchanged: during a click the
@@ -130,6 +130,7 @@ export abstract class CheckboxBase extends SizedMixin(
    * toggling; `invalid` fails validation and shows `error-text`.
    */
   @property({
+    type: String,
     attribute: 'field-status',
     reflect: true,
     converter: { fromAttribute: (value: string | null) => value ?? undefined },
@@ -156,12 +157,29 @@ export abstract class CheckboxBase extends SizedMixin(
   public name: string | undefined;
 
   /**
-   * Value submitted under `name` while the checkbox is checked.
+   * Value submitted under `name` while the checkbox is checked. Reflects to the
+   * `value` attribute; removing the attribute restores `on`. `null` becomes an
+   * empty string, as on a native checkbox.
    *
    * @default on
    */
-  @property({ type: String })
-  public value = 'on';
+  @property({ type: String, reflect: true, useDefault: true })
+  public get value(): string {
+    return this._value;
+  }
+
+  public set value(value: string) {
+    const next = value === null ? '' : String(value);
+    if (next === this._value) {
+      return;
+    }
+    const oldValue = this._value;
+    this._value = next;
+    this.requestUpdate('value', oldValue);
+    this.syncFormValue();
+  }
+
+  private _value = 'on';
 
   /** Associated form, or `null` when the checkbox is not associated with a form. */
   public get form(): HTMLFormElement | null {
@@ -228,7 +246,7 @@ export abstract class CheckboxBase extends SizedMixin(
 
   #checkedDirty = false;
 
-  #keepingCheckedClean = false;
+  #suppressCheckedDirty = false;
 
   #toggleReverted = false;
 
@@ -395,7 +413,6 @@ export abstract class CheckboxBase extends SizedMixin(
     this.syncValidity();
   }
 
-  /** The role element is always the native checkbox `<input>`. */
   private get inputElement(): HTMLInputElement | null {
     return this.roleElement as HTMLInputElement | null;
   }
@@ -412,11 +429,11 @@ export abstract class CheckboxBase extends SizedMixin(
 
   /** Runs `callback` without marking `checked` as set by the user or a script. */
   private withoutDirtyingChecked(callback: () => void): void {
-    this.#keepingCheckedClean = true;
+    this.#suppressCheckedDirty = true;
     try {
       callback();
     } finally {
-      this.#keepingCheckedClean = false;
+      this.#suppressCheckedDirty = false;
     }
   }
 

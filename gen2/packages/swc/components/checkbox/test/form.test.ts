@@ -111,10 +111,42 @@ export const FormValueTest: Story = {
       expect(new FormData(form).getAll('topic')).toEqual(['headlines', 'tips']);
     });
 
+    await step('removing the value attribute falls back to "on"', async () => {
+      news.removeAttribute('value');
+      await news.updateComplete;
+      expect(news.value).toBe('on');
+      expect(news).not.toHaveAttribute('value');
+      expect(new FormData(form).getAll('topic')).toEqual(['on', 'tips']);
+      news.setAttribute('value', 'news');
+      await news.updateComplete;
+      expect(new FormData(form).getAll('topic')).toEqual(['news', 'tips']);
+    });
+
+    await step(
+      'value reflects and converts like a native checkbox',
+      async () => {
+        expect(updates).not.toHaveAttribute('value');
+        news.value = 'headlines';
+        expect(new FormData(form).getAll('topic')).toEqual([
+          'headlines',
+          'tips',
+        ]);
+        await news.updateComplete;
+        expect(news).toHaveAttribute('value', 'headlines');
+        const loose = news as unknown as { value: unknown };
+        loose.value = null;
+        expect(news.value).toBe('');
+        expect(new FormData(form).getAll('topic')).toEqual(['', 'tips']);
+        news.value = 'news';
+        await news.updateComplete;
+        expect(new FormData(form).getAll('topic')).toEqual(['news', 'tips']);
+      }
+    );
+
     await step('indeterminate does not change the form value', async () => {
       news.indeterminate = true;
       await news.updateComplete;
-      expect(new FormData(form).getAll('topic')).toEqual(['headlines', 'tips']);
+      expect(new FormData(form).getAll('topic')).toEqual(['news', 'tips']);
     });
   },
 };
