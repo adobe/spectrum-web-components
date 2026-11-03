@@ -10,12 +10,14 @@
  * governing permissions and limitations under the License.
  */
 /** @type { import('@storybook/web-components').Preview } */
+import type { DocsContainerProps } from '@storybook/addon-docs/blocks';
 import { setCustomElementsManifest } from '@storybook/web-components';
 import {
   type Options,
   setStorybookHelpersConfig,
 } from '@wc-toolkit/storybook-helpers';
 import isChromatic from 'chromatic/isChromatic';
+import { createElement, lazy, type PropsWithChildren, Suspense } from 'react';
 
 import customElements from '../dist/custom-elements.json';
 import { withContext } from './decorators/contexts.js';
@@ -50,6 +52,13 @@ setStorybookHelpersConfig(storybookHelperOptions);
 
 // Set the Custom Elements Manifest for automatic controls generation
 setCustomElementsManifest(customElements);
+
+// Loaded on demand because it imports addon-docs, which Vitest doesn't load.
+const SpectrumDocsContainer = lazy(() =>
+  import('./blocks/SpectrumDocsContainer.js').then((module) => ({
+    default: module.SpectrumDocsContainer,
+  }))
+);
 
 const preview = {
   globalTypes: {
@@ -176,6 +185,12 @@ const preview = {
     },
     docs: {
       codePanel: true,
+      container: (props: PropsWithChildren<DocsContainerProps>) =>
+        createElement(
+          Suspense,
+          null,
+          createElement(SpectrumDocsContainer, props)
+        ),
       page: DocumentTemplate,
       toc: {
         contentsSelector: '.sbdocs-content',
