@@ -27,10 +27,6 @@ type Constructor<T = Record<string, unknown>> = {
   prototype: T;
 };
 
-/**
- * @deprecated The `CheckboxElement` export is deprecated and will be removed in
- * a future release.
- */
 export interface CheckboxElement {
   checked: boolean;
   handleChange(): void;
@@ -39,12 +35,6 @@ export interface CheckboxElement {
   readonly?: boolean;
 }
 
-/**
- * @deprecated The `CheckboxMixin` export is deprecated and will be removed in a
- * future release.
- */
-// No runtime warning: `sp-checkbox` and `sp-switch` apply this mixin on every
-// instance, so a warning could not single out consumer code.
 export function CheckboxMixin<T extends Constructor<ReactiveElement>>(
   constructor: T
 ): T & Constructor<CheckboxElement> {
@@ -76,16 +66,6 @@ export function CheckboxMixin<T extends Constructor<ReactiveElement>>(
       const applyDefault = this.dispatchEvent(changeEvent);
 
       if (!applyDefault) {
-        // Scoped to `sp-checkbox`: `sp-switch` shares this mixin and still
-        // allows canceling `change`.
-        if (window.__swc?.DEBUG && this.localName === 'sp-checkbox') {
-          window.__swc.warn(
-            this,
-            `Canceling the "change" event on <${this.localName}> has been deprecated and will be removed in a future release. Cancel the "click" event instead.`,
-            'https://opensource.adobe.com/spectrum-web-components/components/checkbox/',
-            { level: 'deprecation' }
-          );
-        }
         this.checked = !this.inputElement.checked;
         this.inputElement.checked = this.checked;
       }

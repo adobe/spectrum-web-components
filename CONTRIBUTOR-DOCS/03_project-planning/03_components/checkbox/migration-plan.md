@@ -501,7 +501,7 @@ Rationale for using `LabellingMixin` and skipping `DisabledMixin`: C4 and C3 in 
 - [x] Keep the inner input reference and change handler private (B7). The `roleElement` override is `@internal`, so the inner input stays out of the Custom Elements Manifest.
 - [ ] Focus order relies on the native host `tabindex` (B6). The `tabIndex` override is gone, but a host `tabindex="-1"` takes effect only once the accessibility phase adds `delegatesFocus`.
 - [x] Q9: write the read-only unit test first and confirm it fails, implement the guard, then record the mechanism in the Decision log
-- [x] 1st-gen deprecation notices, as `swc-text-field` and `swc-radio` added: `@deprecated` plus a `level: 'deprecation'` warning for `disabled`, `invalid`, and `readonly` on `sp-checkbox` (B22) and for canceling `change` (B10). `inputElement`, `handleChange()`, `CheckboxBase`, `CheckboxMixin`, and `CheckboxElement` get `@deprecated` only, with a comment, because `sp-checkbox` and `sp-switch` use them on every instance (B7, B21). Warnings from the shared mixin are scoped to `sp-checkbox`. A 1st-gen changeset is still needed when the checkbox feature branch merges to `main`.
+- [x] Leave the 1st-gen API unchanged, without new deprecation annotations or warnings, per PR review, as `swc-text-field` did. The gen2 migration guide covers each breaking change (Phase 7).
 
 #### Alignment checks
 
