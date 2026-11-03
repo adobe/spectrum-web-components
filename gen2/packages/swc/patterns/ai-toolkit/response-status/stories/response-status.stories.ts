@@ -20,6 +20,8 @@ import '../swc-response-status.js';
 import {
   PIXEL_LOADER_ICON_NAMES,
   PIXEL_LOADER_PRESET_NAMES,
+  RESPONSE_STATUSES,
+  type ResponseStatusStatus,
 } from '../ResponseStatus.js';
 
 // ────────────────
@@ -27,8 +29,6 @@ import {
 // ────────────────
 
 const { args, argTypes, template } = getStorybookHelpers('swc-response-status');
-
-const activeStepsSlot = `<swc-response-status-step status="complete"><span slot="label">Looked through documentation</span><span slot="description">Prioritizing data from your documents like the '2023 Annual Report' and press releases related to Hilton.</span></swc-response-status-step><swc-response-status-step status="complete"><span slot="label">Searching web for: Carnival cruise trip packages Europe Asia</span><span slot="description">Correlating package availability across regions and travel windows.</span></swc-response-status-step><swc-response-status-step status="active"><span slot="label">Searching repositories for Europe trips</span><span slot="description">Checked 3 internal repositories for previously compiled trip package data and pricing templates.</span></swc-response-status-step>`;
 
 // Ordering only. The manifest lists the 29 icon names before the 5 presets,
 // because that is the order of the union; presets are the values you normally
@@ -47,8 +47,6 @@ const meta: Meta = {
   args: {
     ...args,
     'accessible-label': 'Execution steps',
-    'label-slot': 'Searching repositories for Europe trips',
-    'default-slot': activeStepsSlot,
   },
   argTypes,
   render: (args) => template(args),
@@ -189,12 +187,60 @@ const allStateSteps = html`
   </swc-response-status-step>
 `;
 
+const playgroundContentByStatus: Record<
+  ResponseStatusStatus,
+  { label: string; steps: TemplateResult }
+> = {
+  active: {
+    label: '',
+    steps: activeSteps,
+  },
+  complete: {
+    label: 'Thought for 9 seconds',
+    steps: completeSteps,
+  },
+  stopped: {
+    label: 'You stopped the response',
+    steps: stoppedSteps,
+  },
+};
+
 // ────────────────────
 //    PLAYGROUND STORY
 // ────────────────────
 
 export const Playground: Story = {
+  args: {
+    'label-slot': '',
+    'default-slot': '',
+  },
+  render: (args) => {
+    const status =
+      RESPONSE_STATUSES.find((status) => status === args.status) ?? 'active';
+    const { label, steps } = playgroundContentByStatus[status];
+
+    return template(
+      {
+        ...args,
+        status,
+        'label-slot': args['label-slot'] || label,
+      },
+      args['default-slot'] ? undefined : steps
+    );
+  },
   tags: ['dev'],
+  argTypes: {
+    'label-slot': {
+      ...argTypes['label-slot'],
+      description:
+        'Custom header label. Leave empty for the status-specific label and automatic active-step/Processing label switching.',
+    },
+    'default-slot': {
+      ...argTypes['default-slot'],
+      description:
+        'Custom execution steps. Leave empty for the status-specific example steps.',
+    },
+  },
 };
 
 // ──────────────────────────────
