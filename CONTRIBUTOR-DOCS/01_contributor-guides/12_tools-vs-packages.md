@@ -60,7 +60,7 @@ When reclassifying 1st-gen tools or tool-like components for gen2, use the [deci
 | ---------------------- | ------------------- | ---------------- |
 | **Asset** | Web component (unchanged) | Remains in `components/`; recategorize under Tools/Utilities in docs since it is not a Spectrum design component |
 | **Opacity-Checkerboard** | CSS utility class | Shared CSS (utility class only; no custom element) |
-| **Grid** | CSS layout utilities | Shared CSS or layout utilities (e.g. layout tokens or utility classes) |
+| **Grid** | Web component (`swc-grid`), core + SWC split | `2nd-gen/packages/core/components/grid/` + `2nd-gen/packages/swc/components/grid/`. Migrated as a full component (`role="grid"` + `FocusgroupNavigationController` + virtualization cannot be met by CSS utilities alone), not reclassified to CSS. See the [Grid migration plan](../03_project-planning/03_components/grid/migration-plan.md) (decision C1, 2026-09-16). |
 | **Truncated** | CSS utility + optional JS helper | CSS for truncation styling; optional small JS helper in `core/utils/` if dynamic behavior is needed |
 
 ## Migration and deprecation for reclassified items
