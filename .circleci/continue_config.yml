@@ -15,8 +15,15 @@ executors:
     resource_class: medium
   # xlarge — heavy builds (Vite, Storybook), VRT, and single-container coverage.
   node:
+    parameters:
+      # Gen1's Web Test Runner stays on its golden-image browser version and
+      # needs page.accessibility.snapshot(), removed in Playwright 1.57.
+      # Match the root resolution and install:browsers:1st-gen.
+      playwright-version:
+        type: string
+        default: v1.64.1-resolute
     docker:
-      - image: mcr.microsoft.com/playwright:v1.53.1-noble
+      - image: mcr.microsoft.com/playwright:<< parameters.playwright-version >>
     resource_class: xlarge
     environment:
       NODE_ENV: development
@@ -27,8 +34,12 @@ executors:
   # large — sharded test jobs. Each container runs a fraction of the suite
   # (parallelism + test splitting / vitest --shard), so half the RAM is plenty.
   node-large:
+    parameters:
+      playwright-version:
+        type: string
+        default: v1.64.1-resolute
     docker:
-      - image: mcr.microsoft.com/playwright:v1.53.1-noble
+      - image: mcr.microsoft.com/playwright:<< parameters.playwright-version >>
     resource_class: large
     environment:
       NODE_ENV: development
@@ -66,7 +77,7 @@ commands:
     steps:
       - restore_cache:
           keys:
-            - azcopy-v10.29.1-{{ arch }}
+            - azcopy-v10.34.1-{{ arch }}
       - run:
           when: always
           name: Install AzCopy
@@ -74,7 +85,7 @@ commands:
             mkdir -p ~/bin
             if [ ! -f ~/bin/azcopy ]; then
               cd ~/bin
-              wget -O azcopy.tar.gz https://github.com/Azure/azure-storage-azcopy/releases/download/v10.29.1/azcopy_linux_amd64_10.29.1.tar.gz
+              wget -O azcopy.tar.gz https://github.com/Azure/azure-storage-azcopy/releases/download/v10.34.1/azcopy_linux_amd64_10.34.1.tar.gz
               tar -xf azcopy.tar.gz --strip-components=1
               chmod +x azcopy
             fi
@@ -88,14 +99,29 @@ commands:
       - save_cache:
           paths:
             - ~/bin/azcopy
-          key: azcopy-v10.29.1-{{ arch }}
+          key: azcopy-v10.34.1-{{ arch }}
   setup-node-dependencies:
     description: 'Checkout code and install node dependencies'
     steps:
       - checkout
+      # The Playwright image ships its own Node. Install the version from
+      # .nvmrc so CircleCI matches GitHub Actions and local development.
+      - run:
+          name: Install Node from .nvmrc
+          command: |
+            NODE_VERSION=$(tr -d '[:space:]' < .nvmrc)
+            NODE_DIST="node-${NODE_VERSION}-linux-x64.tar.gz"
+            cd /tmp
+            curl -fsSLO "https://nodejs.org/dist/${NODE_VERSION}/${NODE_DIST}"
+            curl -fsSL "https://nodejs.org/dist/${NODE_VERSION}/SHASUMS256.txt" | grep " ${NODE_DIST}\$" | sha256sum -c -
+            tar -xzf "$NODE_DIST" -C /usr/local --strip-components=1 --no-same-owner
+            rm "$NODE_DIST"
+            hash -r
+            [ "$(node -v)" = "$NODE_VERSION" ] || { echo "Expected Node $NODE_VERSION, got $(node -v)"; exit 1; }
+            echo "Using Node $(node -v)"
       - restore_cache:
           keys:
-            - cache-deps-yarn-{{ arch }}-{{ checksum "yarn.lock" }}
+            - cache-deps-yarn-{{ arch }}-{{ checksum ".nvmrc" }}-{{ checksum "yarn.lock" }}
       - run:
           name: Installing Dependencies
           command: |
@@ -107,7 +133,7 @@ commands:
       - save_cache:
           paths:
             - ~/.cache/yarn
-          key: cache-deps-yarn-{{ arch }}-{{ checksum "yarn.lock" }}
+          key: cache-deps-yarn-{{ arch }}-{{ checksum ".nvmrc" }}-{{ checksum "yarn.lock" }}
   downstream:
     steps:
       - setup-node-dependencies
@@ -307,7 +333,9 @@ jobs:
   # gen1 unit tests (sharded across 5 containers, split by timings)
   # ---------------------------------------------------------------------------
   test-chromium:
-    executor: node-large
+    executor:
+      name: node-large
+      playwright-version: v1.53.1-noble
     parallelism: 5
     steps:
       - downstream
@@ -320,7 +348,9 @@ jobs:
           path: /root/project/1st-gen/results/
 
   test-chromium-coverage:
-    executor: node
+    executor:
+      name: node
+      playwright-version: v1.53.1-noble
     steps:
       - downstream
       - run:
@@ -333,7 +363,9 @@ jobs:
           path: 1st-gen/coverage
 
   test-chromium-memory:
-    executor: node-large
+    executor:
+      name: node-large
+      playwright-version: v1.53.1-noble
     parallelism: 5
     steps:
       - downstream
@@ -347,7 +379,9 @@ jobs:
           path: /root/project/1st-gen/results/
 
   test-firefox:
-    executor: node-large
+    executor:
+      name: node-large
+      playwright-version: v1.53.1-noble
     parallelism: 5
     steps:
       - downstream
@@ -360,7 +394,9 @@ jobs:
           path: /root/project/1st-gen/results/
 
   test-webkit:
-    executor: node-large
+    executor:
+      name: node-large
+      playwright-version: v1.53.1-noble
     parallelism: 5
     steps:
       - downstream
@@ -390,9 +426,18 @@ jobs:
       - run:
           name: Run gen2 << parameters.browser >> tests (shard $CIRCLE_NODE_INDEX/$CIRCLE_NODE_TOTAL)
           command: |
-            VITEST_BROWSER_INSTANCES=<< parameters.browser >> \
-              yarn workspace @spectrum-web-components/gen2 run test \
-              --shard=$((CIRCLE_NODE_INDEX + 1))/$CIRCLE_NODE_TOTAL
+            if [ "<< parameters.browser >>" = "webkit" ]; then
+              # Keep one visible WebKit test window on the virtual display.
+              VITEST_BROWSER_INSTANCES=webkit xvfb-run -a \
+                yarn workspace @spectrum-web-components/gen2 run test \
+                --browser.headless=false \
+                --maxWorkers=1 \
+                --shard=$((CIRCLE_NODE_INDEX + 1))/$CIRCLE_NODE_TOTAL
+            else
+              VITEST_BROWSER_INSTANCES=<< parameters.browser >> \
+                yarn workspace @spectrum-web-components/gen2 run test \
+                --shard=$((CIRCLE_NODE_INDEX + 1))/$CIRCLE_NODE_TOTAL
+            fi
       - store_test_results:
           path: /root/project/gen2/packages/swc/test-results
 
@@ -501,7 +546,9 @@ jobs:
             echo "Beta Storybook URL: $STORYBOOK_URL"
 
   hcm-visual:
-    executor: node
+    executor:
+      name: node
+      playwright-version: v1.53.1-noble
     steps:
       - downstream
       - restore_cache:
@@ -623,7 +670,9 @@ jobs:
           key: v2-golden-images-{{ .Branch }}-hcm-{{ .Revision }}
 
   visual:
-    executor: node
+    executor:
+      name: node
+      playwright-version: v1.53.1-noble
     parameters:
       system:
         type: string
@@ -727,9 +776,9 @@ workflows:
             branches:
               # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
               ignore: /pull\/[0-9]+/
-      # Posts the required gen1-tests status once the unit tests pass. VRT
-      # (visual, hcm-visual) and beta-docs are left out — they're branch-filtered
-      # (forks skip VRT, beta-docs is main-only) so can't gate uniformly.
+      # Posts the required gen1-tests status once the unit tests and VRT
+      # (visual, hcm-visual) pass. beta-docs is left out because it only runs
+      # on main.
       - report-gen-status:
           name: gen1-tests-status
           gen: gen1

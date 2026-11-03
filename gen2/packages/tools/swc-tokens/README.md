@@ -62,7 +62,8 @@ The script:
 - Seeds `custom/deleted.json` with its best guesses:
   - Tokens with zero-value removal comments in the source data are seeded as `"0"` automatically
   - Other deleted tokens get a fuzzy-matched candidate from the added token set, or `null` if no match is close enough
-  - Previously curated entries are preserved exactly as-is
+  - Previously curated entries are preserved unless the target version has made that token active again; active tokens are removed from the deleted-token map
+- Removes stale `custom/deleted.json` entries whose token names are active in the target version, even when there are no newly deleted tokens
 - Warns about any new source JSON files in the package that are not yet listed in `SPECTRUM_TOKENS` in `src/tokens.js`
 - Lists newly deprecated+renamed tokens (these are handled automatically after the bump via `extractRenamedTokenValues` — no curation needed)
 

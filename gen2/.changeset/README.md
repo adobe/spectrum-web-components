@@ -16,7 +16,7 @@ This runs `yarn changeset` from within `gen2/`, so the file lands here automatic
 
 ## Important: `@adobe/spectrum-wc-core` and component updates
 
-When a change touches `@adobe/spectrum-wc-core`, include the corresponding `@adobe/spectrum-wc` bump in the same changeset so the change shows up in the component-facing changelog — core changes are internal and don't otherwise surface there.
+When a change touches `@adobe/spectrum-wc-core`, include the corresponding `@adobe/spectrum-wc` bump in the same changeset so the change shows up in the component-facing changelog. Core is internal: it has no changelog of its own, and it's left out of the `Updated dependencies` lines, so a core-only changeset appears in no changelog. Describe the effect on components, and don't name core or its classes in the summary.
 
 ## Example changeset
 

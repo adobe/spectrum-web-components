@@ -31,7 +31,7 @@
      box-shadow so it is not counted in the handle's size (Figma box model). */
   margin-block: calc(-1 * calc(token("color-handle-size") / 2));
   margin-inline: calc(-1 * calc(token("color-handle-size") / 2));
-  border-color: token("white");
+  border-color: token("transparent-static-white-1000");
   border-style: solid;
   border-width: token("color-handle-border-width");
   border-radius: 100%;

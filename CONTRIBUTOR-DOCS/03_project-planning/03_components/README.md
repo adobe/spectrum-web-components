@@ -55,6 +55,7 @@
     - [Card family plan](card/migration-plan.md)
 - Checkbox
     - [Checkbox accessibility migration analysis](checkbox/accessibility-migration-analysis.md)
+    - [Checkbox migration plan](checkbox/migration-plan.md)
     - [Checkbox migration roadmap](checkbox/rendering-and-styling-migration-analysis.md)
 - Checkbox Group
     - [Checkbox group accessibility migration analysis](checkbox-group/accessibility-migration-analysis.md)
@@ -117,6 +118,7 @@
     - [Menu item migration plan](menu-item/migration-plan.md)
 - Menu Separator
     - [Menu separator accessibility migration analysis](menu-separator/accessibility-migration-analysis.md)
+    - [Menu separator migration plan](menu-separator/migration-plan.md)
 - Meter
     - [Meter accessibility migration analysis](meter/accessibility-migration-analysis.md)
     - [Meter migration plan](meter/migration-plan.md)
@@ -181,6 +183,7 @@
     - [Text area accessibility migration analysis](text-area/accessibility-migration-analysis.md)
 - Text Field
     - [Text field accessibility migration analysis](text-field/accessibility-migration-analysis.md)
+    - [Text field migration plan](text-field/migration-plan.md)
 - Textfield
     - [Textfield and Textarea migration roadmap](textfield/rendering-and-styling-migration-analysis.md)
 - Thumbnail
