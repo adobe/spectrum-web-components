@@ -40,13 +40,16 @@
   border-radius: token("corner-radius-800");
 }
 
-.swc-UserMessage-galleryContainer {
-  inline-size: max-content;
-  max-inline-size: 100%;
-  border-radius: token("corner-radius-medium-default");
+:host([type="card"]) {
+  max-inline-size: min(100%, 480px, max(calc(220px + 2 * token("spacing-300") + 2 * token("border-width-100")), calc(round(down, min(100%, 480px) - 2 * token("spacing-300") - 2 * token("border-width-100") + 6px, 226px) + 2 * token("spacing-300") + 2 * token("border-width-100") - 6px)));
 }
 
-.swc-UserMessage-galleryContainer:has(> .swc-UserMessage-galleryViewport:focus-visible) {
+/* Snap the width limit to whole columns while allowing two previews to shrink. */
+:host([type="media"]) {
+  max-inline-size: min(100%, max(calc(2 * 64px + 6px + 2 * token("spacing-300") + 2 * token("border-width-100")), calc(round(down, 100% - 2 * token("spacing-300") - 2 * token("border-width-100") + 6px, 70px) + 2 * token("spacing-300") + 2 * token("border-width-100") - 6px)));
+}
+
+:host(:where([type="card"], [type="media"]):focus-within) {
   outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
   outline-offset: token("focus-ring-gap");
 }
@@ -107,16 +110,17 @@
   object-fit: cover;
 }
 
-.swc-UserMessage-gallery--multiple::slotted(*) {
+/* Test thumbnail siblings in light DOM, not through :host(:has()). */
+:host([type="media"]) .swc-UserMessage-gallery::slotted(:where(:not(:nth-child(1 of [slot="thumbnail"]):nth-last-child(1 of [slot="thumbnail"])))) {
   box-sizing: border-box;
   max-inline-size: calc((100% - 6px) / 2);
 }
 
-.swc-UserMessage-gallery--card {
+:host([type="card"]) .swc-UserMessage-gallery {
   --_swc-user-message-gallery-thumbnail-size: 220px;
 }
 
-.swc-UserMessage-gallery--card::slotted(*) {
+:host([type="card"]) .swc-UserMessage-gallery::slotted(*) {
   --swc-upload-attachment-card-min-block-size: 64px;
   --swc-upload-attachment-card-thumbnail-size: token("thumbnail-size-300");
 
@@ -125,11 +129,10 @@
 }
 
 @supports (animation-timeline: scroll()) {
-  .swc-UserMessage-galleryViewport--overflow {
+  .swc-UserMessage-galleryViewport {
     animation-timeline: scroll(self block);
     animation-name: swc-user-message-gallery-fade;
     animation-timing-function: linear;
-    animation-fill-mode: both;
   }
 
   @keyframes swc-user-message-gallery-fade {
@@ -154,7 +157,7 @@
     animation: none;
   }
 
-  .swc-UserMessage-galleryContainer:has(> .swc-UserMessage-galleryViewport:focus-visible) {
+  :host(:where([type="card"], [type="media"]):focus-within) {
     outline-color: CanvasText;
   }
 }

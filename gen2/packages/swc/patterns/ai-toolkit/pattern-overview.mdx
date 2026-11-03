@@ -187,12 +187,12 @@ Read the [conversation turn docs](/docs/patterns-ai-toolkit-conversation-turn--d
 
 #### `swc-user-message`
 
-The user's message bubble. Use `type="copy"` for text, `type="card"` for one or more document cards, or `type="media"` for one or more images. Media messages use square previews without visible metadata. Card messages contain complete upload-attachment tiles with their own filenames and file sizes, using two columns when space allows and one on narrower messages. Both attachment types share a content-hugging bubble with a 240px height cap and scrolling overflow. Group each attachment bubble and the separate message copy inside one user turn.
+The user's message bubble. Use `type="copy"` for text, `type="card"` for one or more document cards, or `type="media"` for one or more images. Media messages use square previews without visible metadata. Card messages contain complete upload-attachment tiles with their own filenames and file sizes, using two columns when space allows and one on narrower messages. Both attachment types use CSS wrapping with a 240px height cap and native scrolling. Group each attachment bubble and the separate message copy inside one user turn.
 
 Read the [user message docs](/docs/patterns-ai-toolkit-user-message--docs).
 
 <Canvas
-  of={UserMessageStories.Content}
+  of={UserMessageStories.Playground}
   additionalActions={[
     {
       title: 'Component docs',

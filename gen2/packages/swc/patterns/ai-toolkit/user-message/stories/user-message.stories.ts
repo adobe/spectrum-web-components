@@ -37,18 +37,10 @@ argTypes.type = {
   },
 };
 
-// Wraps a single swc-user-message in a conversation turn for proper alignment.
-const withUserTurn = (story: () => unknown) => html`
-  <swc-conversation-turn type="user">${story()}</swc-conversation-turn>
-`;
-
 /**
  * User-authored message bubble. Use inside `<swc-conversation-turn type="user">` for thread alignment.
  *
- *
- * Note: This component does not sanitize slotted content. When rendering user-provided
- * or AI-generated markup, consumers must sanitize input to prevent XSS and
- * validate link targets. This is the consumer's responsibility.
+ * Consumers must sanitize user-provided or AI-generated markup and validate link targets.
  */
 const meta: Meta = {
   title: 'AI Toolkit/User message',
@@ -63,6 +55,13 @@ const meta: Meta = {
     },
     layout: 'padded',
   },
+  decorators: [
+    (story) => html`
+      <div style="max-inline-size:640px;">
+        <swc-conversation-turn type="user">${story()}</swc-conversation-turn>
+      </div>
+    `,
+  ],
   excludeStories: ['meta'],
   tags: ['migrated'],
 };
@@ -74,24 +73,24 @@ export default meta;
 //    HELPERS
 // ────────────────────
 
-const galleryImages = (count: number) =>
-  Array.from(
-    { length: count },
-    (_, index) => html`
-      <img
-        slot="thumbnail"
-        src="images/card-preview.jpg"
-        alt="Photobook reference ${index + 1}"
-      />
-    `
-  );
-
-const documentCard = (title: string, size: string) => html`
-  <swc-upload-attachment slot="thumbnail" type="card">
-    <swc-thumbnail slot="thumbnail" decorative></swc-thumbnail>
-    <span slot="title">${title}</span>
-    <span slot="subtitle">${size}</span>
-  </swc-upload-attachment>
+const attachments = (type: unknown, count: number) => html`
+  ${Array.from({ length: count }, (_, index) =>
+    type === 'card'
+      ? html`
+          <swc-upload-attachment slot="thumbnail" type="card">
+            <swc-thumbnail slot="thumbnail" decorative></swc-thumbnail>
+            <span slot="title">Campaign reference ${index + 1}.pdf</span>
+            <span slot="subtitle">1.2 MB</span>
+          </swc-upload-attachment>
+        `
+      : html`
+          <img
+            slot="thumbnail"
+            src="images/card-preview.jpg"
+            alt="Photobook reference ${index + 1}"
+          />
+        `
+  )}
 `;
 
 // ────────────────────
@@ -101,183 +100,30 @@ const documentCard = (title: string, size: string) => html`
 export const Playground: Story = {
   args: {
     type: 'copy',
-    'default-slot':
-      'Can you help me create a 45-minute presentation, with animations, for an executive update?',
+    'default-slot': 'Can you summarize these campaign references?',
   },
   render: (args) =>
     template(
       args,
-      args['thumbnail-slot']
+      args['thumbnail-slot'] || args.type === 'copy'
         ? undefined
-        : args.type === 'card'
-          ? documentCard('Brand guidelines.pdf', '1.2 MB')
-          : args.type === 'media'
-            ? html`
-                ${galleryImages(7)}
-              `
-            : undefined
+        : attachments(args.type, 2)
     ),
-  decorators: [withUserTurn],
-  tags: ['dev'],
-};
-
-// ──────────────────────────────
-//    OVERVIEW STORY
-// ──────────────────────────────
-
-export const Overview: Story = {
-  args: {
-    type: 'copy',
-    'default-slot':
-      'Can you help me create a 45-minute presentation, with animations, for an executive update?',
-  },
-  decorators: [withUserTurn],
-  tags: ['overview'],
-};
-
-// ──────────────────────────
-//    ANATOMY STORY
-// ──────────────────────────
-
-export const Anatomy: Story = {
-  args: {
-    'default-slot': 'Can you help me create a 45-minute presentation?',
-  },
-  decorators: [withUserTurn],
-  tags: ['anatomy'],
-};
-
-// ──────────────────────────
-//    OPTIONS STORIES
-// ──────────────────────────
-
-export const Content: Story = {
-  render: () => html`
-    <div
-      style="display:flex;flex-direction:column;gap:32px;max-inline-size:640px;"
-    >
-      <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-conversation-turn type="user">
-          <swc-user-message>
-            Can you help me create a 45-minute presentation, with animations,
-            for an executive update?
-          </swc-user-message>
-        </swc-conversation-turn>
-        <span class="swc-Detail swc-Detail--sizeS">Copy</span>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-conversation-turn type="user">
-          <swc-user-message type="card">
-            ${documentCard('Hilton commercial assets', '2026')}
-          </swc-user-message>
-        </swc-conversation-turn>
-        <span class="swc-Detail swc-Detail--sizeS">Card</span>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-conversation-turn type="user">
-          <swc-user-message type="media">
-            <div
-              slot="thumbnail"
-              style="background:linear-gradient(135deg,#a78bfa,#f472b6);"
-              role="img"
-              aria-label="Campaign preview"
-            ></div>
-          </swc-user-message>
-        </swc-conversation-turn>
-        <span class="swc-Detail swc-Detail--sizeS">Media</span>
-      </div>
-    </div>
-  `,
-  tags: ['options'],
-};
-
-export const Card: Story = {
-  render: () => html`
-    <div
-      style="display:flex;flex-direction:column;gap:32px;max-inline-size:640px;"
-    >
-      <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-conversation-turn type="user">
-          <swc-user-message type="card">
-            ${documentCard('Brand guidelines.pdf', '1.2 MB')}
-          </swc-user-message>
-          <swc-user-message>
-            Summarize the key brand guidelines for our campaign.
-          </swc-user-message>
-        </swc-conversation-turn>
-        <span class="swc-Detail swc-Detail--sizeS">Single document</span>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-conversation-turn type="user">
-          <swc-user-message type="card">
-            ${documentCard('Campaign brief.pdf', '840 KB')}
-            ${documentCard('Research notes.txt', '24 KB')}
-            ${documentCard('Audience research.pdf', '2.4 MB')}
-            ${documentCard('Brand voice.txt', '18 KB')}
-            ${documentCard('Launch timeline.pdf', '640 KB')}
-            ${documentCard('Budget summary.pdf', '96 KB')}
-          </swc-user-message>
-          <swc-user-message>
-            Use this campaign brief and the research notes to draft a launch
-            plan.
-          </swc-user-message>
-        </swc-conversation-turn>
-        <span class="swc-Detail swc-Detail--sizeS">Multiple documents</span>
-      </div>
-    </div>
-  `,
-  tags: ['options'],
-};
-
-export const Media: Story = {
-  render: () => html`
-    <div style="max-inline-size:640px;">
-      <swc-conversation-turn type="user">
-        <swc-user-message type="media">${galleryImages(7)}</swc-user-message>
-        <swc-user-message>
-          Could you help me brainstorm creative directions for an end-of-year
-          photobook I'm putting together? I have a lot of photos scattered
-          across my phone, a few cloud albums, and some disposable camera scans
-          I never organized, so the raw material is there. I just don't know how
-          to turn it into something cohesive rather than a random chronological
-          dump.
-        </swc-user-message>
-      </swc-conversation-turn>
-    </div>
-  `,
-  tags: ['options'],
+  tags: ['dev', 'overview'],
 };
 
 // ──────────────────────────────
 //    BEHAVIORS STORIES
 // ──────────────────────────────
 
-export const GalleryOverflow: Story = {
-  render: () => html`
-    <div style="max-inline-size:640px;">
-      <swc-conversation-turn type="user">
-        <swc-user-message type="media">${galleryImages(24)}</swc-user-message>
-        <swc-user-message>
-          Help me group these photobook references into a cohesive visual
-          direction.
-        </swc-user-message>
-      </swc-conversation-turn>
-    </div>
-  `,
+export const Overflow: Story = {
+  args: { ...Playground.args, type: 'media' },
+  render: (args) =>
+    template(
+      args,
+      args['thumbnail-slot'] || args.type === 'copy'
+        ? undefined
+        : attachments(args.type, 24)
+    ),
   tags: ['behaviors'],
-};
-GalleryOverflow.storyName = 'Gallery overflow';
-
-// ────────────────────────────────
-//    ACCESSIBILITY STORY
-// ────────────────────────────────
-
-export const Accessibility: Story = {
-  args: {
-    type: 'copy',
-    'default-slot':
-      'Can you help me create a 45-minute presentation, with animations, for an executive update?',
-  },
-  decorators: [withUserTurn],
-  tags: ['a11y'],
 };
