@@ -49,7 +49,7 @@ Read the migration plan at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[
 
 Before writing anything, read the `### Documentation` section of the migration plan at `CONTRIBUTOR-DOCS/03_project-planning/03_components/[component]/migration-plan.md`. Make a note of every unchecked item. These are the documentation gaps Phase 7 must close. Return to this checklist at the end and confirm which items are now covered by the per-component MDX (or by JSDoc on the public API in `Component.ts`) and which remain outstanding.
 
-**Form-associated components:** also check the page against [forms strategy RFC §3.9](../../../CONTRIBUTOR-DOCS/03_project-planning/05_strategies/forms-strategy-rfc.md#39-form-documentation-until-a-forms-page-exists) (validation timing, `novalidate` and the submit handler, focus, status barring, reset, and styling hooks), using `text-field.mdx` as the reference. Do not copy claims the component does not implement.
+**Form-associated components:** also check the page against [forms strategy RFC §3.9](../../../CONTRIBUTOR-DOCS/03_project-planning/05_strategies/forms-strategy-rfc.md#39-form-documentation-until-a-forms-page-exists) (validation timing, `novalidate` and the submit handler, focus, status barring, reset, and styling hooks), using `text-field.mdx` as the reference. Do not copy claims the component does not implement. Once a Forms guide page exists, link to it for the shared consumer-facing points; the RFC stays the source for implementation details.
 
 ### Step 1: Ask for guidance resources
 
