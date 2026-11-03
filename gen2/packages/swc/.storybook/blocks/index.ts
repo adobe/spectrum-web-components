@@ -9,11 +9,11 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-export * from './ApiTable';
-export * from './DocsFooter';
-export * from './DocsHeader';
-export * from './GettingStarted';
-export * from './OverviewStory';
-export * from './SpectrumDocs';
-export * from './SpectrumStories';
-export * from './StatusBadge';
+export * from './ApiTable.js';
+export * from './DocsFooter.js';
+export * from './DocsHeader.js';
+export * from './GettingStarted.js';
+export * from './OverviewStory.js';
+export * from './SpectrumDocs.js';
+export * from './SpectrumStories.js';
+export * from './StatusBadge.js';

@@ -10,10 +10,11 @@
  * governing permissions and limitations under the License.
  */
 
-import React from 'react';
 import { createComponent } from '@lit/react';
-import { addons, types } from '@storybook/manager-api';
 import { AddonPanel } from '@storybook/components';
+import { addons, types } from '@storybook/manager-api';
+import React from 'react';
+
 import { ScreenReaderPanel } from './components/screen-reader-panel.js';
 
 // Create React wrapper for our Lit component
