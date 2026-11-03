@@ -47,10 +47,6 @@ export const OverviewTest: Story = {
         expect(el.dismissLabel).toBe('');
         expect(el.getAttribute('role')).toBe('group');
         expect(el.getAttribute('aria-label')).toBe('Hilton commercial assets');
-        const thumbnail = await getComponent<LitElement>(el, 'swc-thumbnail');
-        expect(thumbnail.hasAttribute('decorative')).toBe(true);
-        expect(thumbnail.children).toHaveLength(0);
-        expect(el.querySelector('swc-asset, img')).toBeNull();
 
         const dismissButton = el.shadowRoot?.querySelector<HTMLButtonElement>(
           '.swc-UploadAttachment-dismiss'

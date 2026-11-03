@@ -29,6 +29,7 @@ test.describe('UploadAttachment - ARIA Snapshots', () => {
     await expect(attachment).toMatchAriaSnapshot(`
       - group "Hilton commercial assets":
         - button "Remove Hilton commercial assets"
+        - img "Campaign preview"
         - text: "2026"
     `);
   });
