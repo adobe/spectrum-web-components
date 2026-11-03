@@ -213,12 +213,6 @@ const renderField = ({
   `;
 };
 
-// Renders content in light/ltr and dark/rtl (that pair covers both axes) in one
-// story so each matrix costs a single snapshot.
-const bothThemes = (content: unknown) => html`
-  ${theme(content, 'light', 'ltr')} ${theme(content, 'dark', 'rtl')}
-`;
-
 // The AI brand treatment (ring/hue-sweep/gloss/inset-shadow) across every
 // variant x generating combination.
 const VARIANT_PERMUTATIONS = createPermutations([
@@ -468,19 +462,39 @@ const sizeRows = () =>
     row(stack(cases as FieldCase[]), group)
   );
 
+const permutationContent = () => [
+  ...variantRows(),
+  ...anatomyRows(),
+  ...sizeRows(),
+];
+
+const forcePermutationStates = async (context: {
+  canvasElement: HTMLElement;
+}) => {
+  await forceButtonStates(context);
+  await forceDraggedStates(context);
+  forceFieldHover(context);
+  forceFieldFocus(context);
+  await pauseLoaders(context);
+};
+
 // VRT stories
 
+// Light / LTR. Each theme has its own story: both in one snapshot exceed
+// Chromatic's 25,000,000 px limit.
 export const Permutations: Story = {
-  render: () => bothThemes([...variantRows(), ...anatomyRows(), ...sizeRows()]),
+  render: () => theme(permutationContent(), 'light', 'ltr'),
   parameters: vrtParameters,
-  play: async (context) => {
-    await forceButtonStates(context);
-    await forceDraggedStates(context);
-    forceFieldHover(context);
-    forceFieldFocus(context);
-    await pauseLoaders(context);
-  },
+  play: forcePermutationStates,
 };
+
+// Dark / RTL: the same permutations, also covering RTL layout.
+export const PermutationsRtl: Story = {
+  render: () => theme(permutationContent(), 'dark', 'rtl'),
+  parameters: vrtParameters,
+  play: forcePermutationStates,
+};
+PermutationsRtl.storyName = 'Permutations RTL';
 
 // Forced-colors replaces the whole palette, so it gets its own story:
 // checks the opaque card boundary the treatment falls back to when the
