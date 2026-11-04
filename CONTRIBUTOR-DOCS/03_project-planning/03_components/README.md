@@ -114,6 +114,8 @@
     - [Menu group component accessibility specification](menu-group/component-accessibility-specification.md)
 - Menu Item
     - [Menu item component accessibility specification](menu-item/component-accessibility-specification.md)
+- Menu Item Radio
+    - [Menu item radio component accessibility specification](menu-item-radio/component-accessibility-specification.md)
 - Menu Separator
     - [Menu separator component accessibility specification](menu-separator/component-accessibility-specification.md)
     - [Menu separator migration plan](menu-separator/migration-plan.md)
