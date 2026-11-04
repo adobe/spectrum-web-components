@@ -191,7 +191,7 @@ These are accessibility test requirements for the component's future implementat
 | Kind of test | What to check |
 | --- | --- |
 | Unit / Storybook interaction | Fixed `menuitemradio`, clear name, boolean checked state, and disabled state. Activating an unchecked item checks only that choice in its set; activating the checked item does not clear it. No nested interactive control or duplicate activation. |
-| Keyboard interaction | Arrows and <kbd>Home</kbd>/<kbd>End</kbd> move focus only. Verify activation, disabled rows, keep-open selection, dismissal, focus return, and a working exit from the menu. |
+| Keyboard interaction | <kbd>ArrowDown</kbd>/<kbd>ArrowUp</kbd>, and <kbd>Home</kbd>/<kbd>End</kbd> move focus only. Verify activation, disabled rows, keep-open selection, dismissal, focus return, and a working exit from the menu. |
 | aXe / Storybook | Test radio items in a complete menu, including checked, unchecked, disabled, and supported thumbnail/non-thumbnail presentations. |
 | Playwright / ARIA snapshots | Verify menu/group hierarchy, item names, checked/disabled states, and no duplicate semantic rows. Confirm names with assistive technology where snapshot tooling cannot expose an ARIA relationship. |
 | With menu / group | Independent sets preserve each other's selections when supported. Checked state persists through closing and reopening; supported shadow-root compositions preserve naming and keyboard access. |
