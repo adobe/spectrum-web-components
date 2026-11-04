@@ -76,11 +76,56 @@ ToastQueue.clear();
 
 These options apply to a toast when you add it. Changing them later does not affect toasts that are already in the queue. This differs from `placement` on the container, which updates right away.
 
-The queue keeps every toast you add, but the container renders only the newest one. When it closes, the next toast in the queue appears. The region label counts every queued toast, including the ones that are waiting.
+`ToastQueue.addAll()` adds several toasts in one change. Pass an array of objects with a `message` and the same options. The first item shows in front, and the returned keys are in the same order. See [Restoring toasts](#restoring-toasts).
+
+The queue keeps every toast you add, but the container renders only the newest one as a real toast. When it closes, the next toast in the queue appears. The region label counts every queued toast, including the ones that are waiting.
 
 `ToastQueue.close(key)` closes one toast and calls its `onClose`. `ToastQueue.clear()` removes all toasts and does not call any `onClose` callbacks. A toast that a listener keeps open by canceling its `swc-close` event stays in the queue and does not call `onClose`.
 
 Connect only one `<swc-toast-container>` per page. A second container logs a warning during development.
+
+### Stack
+
+When more than one toast is queued, empty layers appear behind the front toast to show that more are waiting. The newest toast is closest to the edge where the container is anchored, and the layers peek out on the opposite side. Each layer takes the color of its toast's variant. The stack shows three toasts at most: the front toast and the two layers behind it. Layers beyond them stay in the DOM at `opacity: 0`.
+
+The layers are decorative. They use `role="presentation"`, contain no content, and cannot receive focus, so <kbd>Tab</kbd> never reaches a toast that is behind the front one.
+
+To see the stack, select several buttons in the Variants example above. Each layer takes the color of its toast.
+
+When the focused toast closes and others remain, focus depends on how the user closed it:
+
+- With the keyboard, focus moves to the toast that takes its place.
+- With a pointer, focus returns to the element that was focused before the user entered the region, so the new front toast's timer is not left paused.
+
+### Restoring toasts
+
+The queue lives in memory, so it is empty after a page load. If your app reloads, navigates to another page, or signs a user in, rebuild the toasts you still want to show.
+
+`ToastQueue.entries` lists the front toast first, and `ToastQueue.addAll()` takes toasts in the same order, so the first item shows in front. Save only the toast data. Callbacks cannot be stored, so attach `onAction` and `onClose` again when you restore.
+
+```javascript
+// Save, leaving out the key and the callbacks.
+const saved = ToastQueue.entries.map(
+  ({ key, onAction, onClose, ...toast }) => toast
+);
+sessionStorage.setItem('toasts', JSON.stringify(saved));
+
+// Restore on the next page in one queue change, attaching the callbacks again.
+const restored = JSON.parse(sessionStorage.getItem('toasts') ?? '[]');
+ToastQueue.addAll(
+  restored.map((toast) => ({
+    ...toast,
+    onAction: toast.actionLabel ? undoArchive : undefined,
+    onClose: markSeen,
+  }))
+);
+```
+
+Give `onAction` only to toasts that have an `actionLabel`, because a toast needs both. If your toasts have different actions, choose the handler from the saved data, for example from `actionLabel` or from a field of your own.
+
+You can restore before the container connects. `addAll()` renders one toast with the stack behind it. Calling `add()` several times in a row also renders once, but each `add()` puts its toast in front, so the last one added shows first. An `await` between calls renders each toast separately.
+
+Each restored toast animates in and announces its message when it reaches the front. A toast with a `timeout` starts its full countdown at that point. Leave out `timeout` to keep a toast until it is dismissed. For a long backlog, restore only the toasts that still matter, or show one summary toast.
 
 ### Auto-dismiss
 
@@ -114,7 +159,7 @@ Opening a toast does not move focus. When the last toast closes while focus is i
 
 ### Features
 
-The region has `role="region"` and an accessible name that reads "1 notification." or "N notifications." based on the number of queued toasts. To localize it, set the `getRegionLabel` property on `<swc-toast-container>` to a function that takes the count and returns the label, for example `container.getRegionLabel = (count) => ...`. A function lets you handle plural forms for your language. It is a property only, not an attribute. The region has `tabindex="-1"`, so it can receive focus from script but is not part of the normal Tab sequence.
+The region has `role="region"` and an accessible name that reads "1 notification." or "N notifications." based on the number of queued toasts. To localize it, set the `getRegionLabel` property on `<swc-toast-container>` to a function that takes the count and returns the label, for example `container.getRegionLabel = (count) => ...`. A function lets you handle plural forms for your language. It is a property only, not an attribute. The region has `tabindex="-1"`, so it can receive focus from script but is not part of the normal <kbd>Tab</kbd> sequence.
 
 While a toast is showing, <kbd>F6</kbd> and <kbd>Shift</kbd> + <kbd>F6</kbd> move focus into the region from anywhere on the page. Pressing either key again returns focus to where it was. Both keys keep their normal browser behavior when no toast is showing.
 
@@ -130,7 +175,6 @@ Each `<swc-toast>` has `role="alertdialog"`, `aria-modal="false"`, and `tabindex
 
 ## Upcoming features
 
-- A stacked presentation for waiting toasts, an expanded view, and actions to show all or clear all toasts.
-- Moving focus to the nearest remaining toast when a focused toast closes.
+- An expanded view, and actions to show all or clear all toasts.
 
 <DocsFooter />

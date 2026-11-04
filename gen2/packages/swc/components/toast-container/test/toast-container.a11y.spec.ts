@@ -127,7 +127,7 @@ test('only the front counts down and promotion starts a full timeout', async ({
 
 // Runs on the real clock: Playwright's fake clock also stops requestAnimationFrame,
 // which hid the stuck countdown this test guards against.
-test('closing the focused toast with the keyboard lets the promoted toast auto-dismiss', async ({
+test('closing the focused toast with the keyboard focuses the promoted toast, which auto-dismisses once focus leaves', async ({
   page,
 }) => {
   await gotoStory(
@@ -149,7 +149,109 @@ test('closing the focused toast with the keyboard lets the promoted toast auto-d
   await expect(page.getByRole('button', { name: 'Close' })).toBeFocused();
   await page.keyboard.press('Enter');
   await expect(region).toHaveAttribute('aria-label', '1 notification.');
+  await expect(page.locator('swc-toast')).toBeFocused();
+  // Moving focus out of the region resumes the countdown, which then dismisses the promoted toast.
+  await add.focus();
   await expect(page.locator('swc-toast')).toHaveCount(0, { timeout: 10000 });
+});
+
+test('closing the focused toast with a pointer leaves the region and gives the promoted toast a full timeout', async ({
+  page,
+}) => {
+  await openTimedStory(page);
+  const add = page.getByRole('button', { name: 'Add toast', exact: true });
+  await add.click();
+  await add.click();
+  const region = page.getByRole('region');
+  await expect(region).toHaveAttribute('aria-label', '2 notifications.');
+  await disableCloseTransition(page);
+  await page.getByRole('button', { name: 'Close' }).click();
+  await expect(region).toHaveAttribute('aria-label', '1 notification.');
+  await expect(add).toBeFocused();
+  await page.mouse.move(0, 0);
+  await disableCloseTransition(page);
+  await page.clock.runFor(5999);
+  await expect(page.locator('swc-toast')).toHaveCount(1);
+  await page.clock.runFor(1);
+  await expect(page.locator('swc-toast')).toHaveCount(0);
+});
+
+test('the stack exposes one named toast; the layers behind it are not in the accessibility tree', async ({
+  page,
+}) => {
+  await gotoStory(page, 'components-toast-container--overview', 'swc-button');
+  const add = page.getByRole('button', { name: 'Add toast', exact: true });
+  await add.click();
+  await add.click();
+  await add.click();
+  const region = page.getByRole('region', { name: '3 notifications.' });
+  // The host's name comes from ElementInternals, which Playwright's snapshots cannot see (see toast.a11y.spec.ts).
+  await expect(region).toMatchAriaSnapshot(`
+    - region "3 notifications.":
+      - alertdialog:
+        - alert:
+          - img "Success"
+          - text: File saved (3)
+        - button "Close"
+  `);
+  await expect(page.getByRole('alertdialog')).toHaveCount(1);
+  await expect(page.locator('.swc-ToastContainer-layer')).toHaveCount(2);
+});
+
+test('Tab only reaches the front toast, never a layer or a queued toast behind it', async ({
+  page,
+}) => {
+  await gotoStory(page, 'components-toast-container--overview', 'swc-button');
+  const add = page.getByRole('button', { name: 'Add toast', exact: true });
+  for (let count = 0; count < 4; count += 1) {
+    await add.click();
+  }
+  await expect(page.getByRole('region')).toHaveAttribute(
+    'aria-label',
+    '4 notifications.'
+  );
+  await add.focus();
+  // Enough presses to pass every stop on the page and wrap around.
+  const stops: { inToast: boolean; inLayer: boolean; inRegion: boolean }[] = [];
+  for (let press = 0; press < 8; press += 1) {
+    await page.keyboard.press('Tab');
+    stops.push(
+      await page.evaluate(() => {
+        let active: Element | null = document.activeElement;
+        while (active?.shadowRoot?.activeElement) {
+          active = active.shadowRoot.activeElement;
+        }
+        // Walks up through slots and shadow hosts.
+        const closest = (selector: string): Element | null => {
+          let node: Element | null = active;
+          while (node) {
+            if (node.matches(selector)) {
+              return node;
+            }
+            node =
+              node.assignedSlot ??
+              node.parentElement ??
+              (node.getRootNode() as ShadowRoot).host ??
+              null;
+          }
+          return null;
+        };
+        return {
+          inToast: Boolean(closest('swc-toast')),
+          inLayer: Boolean(closest('.swc-ToastContainer-layer')),
+          inRegion: Boolean(closest('swc-toast-container')),
+        };
+      })
+    );
+  }
+  // Without this, a page where Tab never reached the toast would pass.
+  expect(stops.filter((stop) => stop.inToast).length).toBeGreaterThanOrEqual(2);
+  for (const stop of stops) {
+    expect(stop.inLayer).toBe(false);
+    if (stop.inRegion) {
+      expect(stop.inToast).toBe(true);
+    }
+  }
 });
 
 test('a pointer still inside the region keeps the promoted toast paused', async ({
@@ -213,7 +315,10 @@ test('F6 and Shift+F6 move focus into the region and back', async ({
   page,
 }) => {
   await gotoStory(page, 'components-toast-container--playground', 'swc-button');
-  const add = page.getByRole('button', { name: 'Add toast', exact: true });
+  const add = page.getByRole('button', {
+    name: 'Show custom toast',
+    exact: true,
+  });
   await add.click();
   const region = page.getByRole('region');
   await expect(region).toHaveAttribute('aria-label', '1 notification.');
@@ -242,7 +347,9 @@ test('F6 keeps its browser behavior while no toast is showing', async ({
       }
     });
   });
-  await page.getByRole('button', { name: 'Add toast', exact: true }).focus();
+  await page
+    .getByRole('button', { name: 'Show custom toast', exact: true })
+    .focus();
   await page.keyboard.press('F6');
   expect(
     await page.evaluate(

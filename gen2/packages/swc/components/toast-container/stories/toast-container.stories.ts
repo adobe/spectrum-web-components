@@ -15,6 +15,7 @@ import { fn } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
+import type { ButtonVariant } from '@adobe/spectrum-wc-core/components/button';
 import {
   TOAST_CONTAINER_PLACEMENTS,
   TOAST_VARIANTS,
@@ -171,6 +172,24 @@ const variantMessages = {
 const nextMessageSuffix = (): string =>
   ToastQueue.entries.length === 0 ? '' : ` (${ToastQueue.entries.length + 1})`;
 
+// Each Playground button's own variant mirrors the toast it adds.
+const playgroundVariantButtons = [
+  { variant: 'neutral', buttonVariant: 'secondary' },
+  { variant: 'positive', buttonVariant: 'primary' },
+  { variant: 'negative', buttonVariant: 'negative' },
+  { variant: 'info', buttonVariant: 'accent' },
+] as const satisfies readonly {
+  variant: ToastVariant;
+  buttonVariant: ButtonVariant;
+}[];
+
+// Adds `count` toasts, oldest first.
+const addStack = (args: ToastContainerArgs, count: number): void => {
+  for (let index = 0; index < count; index += 1) {
+    addToast(args, ` (${index + 1})`);
+  }
+};
+
 const addToast = (args: ToastContainerArgs, suffix = ''): string =>
   ToastQueue.add(`${args.message}${suffix}`, {
     variant: args.variant,
@@ -220,6 +239,56 @@ const staticStackParameters = {
 
 export const Playground: Story<ToastContainerArgs> = {
   tags: ['dev'],
+  render: (args) => {
+    const clear = (): void => ToastQueue.clear();
+    const addOne = (): void => {
+      addToast(args, nextMessageSuffix());
+    };
+    const addVariant = (event: Event): void => {
+      const variant = (event.currentTarget as HTMLElement).dataset
+        .variant as ToastVariant;
+      ToastQueue.add(`${variantMessages[variant]}${nextMessageSuffix()}`, {
+        variant,
+      });
+    };
+    const addTimeout = (): void => {
+      ToastQueue.add(`Closes after 6 seconds${nextMessageSuffix()}`, {
+        variant: 'info',
+        timeout: 6000,
+      });
+    };
+    const addAction = (): void => {
+      ToastQueue.add(`Message archived${nextMessageSuffix()}`, {
+        variant: 'neutral',
+        actionLabel: 'Undo',
+        onAction: args.onAction,
+      });
+    };
+    return html`
+      ${playgroundVariantButtons.map(
+        ({ variant, buttonVariant }) => html`
+          <swc-button
+            variant=${buttonVariant}
+            data-variant=${variant}
+            @click=${addVariant}
+          >
+            Show ${variant} toast
+          </swc-button>
+        `
+      )}
+      <swc-button variant="secondary" fill-style="outline" @click=${addTimeout}>
+        Show toast with timeout
+      </swc-button>
+      <swc-button variant="secondary" fill-style="outline" @click=${addAction}>
+        Show toast with action
+      </swc-button>
+      <swc-button variant="secondary" fill-style="outline" @click=${addOne}>
+        Show custom toast
+      </swc-button>
+      <swc-button variant="secondary" @click=${clear}>Clear</swc-button>
+      <swc-toast-container .placement=${args.placement}></swc-toast-container>
+    `;
+  },
 };
 
 // ──────────────────
@@ -275,24 +344,28 @@ export const Variants: Story<ToastContainerArgs> = {
 export const Top: Story<ToastContainerArgs> = {
   ...Overview,
   args: { ...Overview.args, placement: 'top' },
+  play: ({ args }) => addStack(args, 3),
   tags: ['options'],
 };
 
 export const TopEnd: Story<ToastContainerArgs> = {
   ...Overview,
   args: { ...Overview.args, placement: 'top-end' },
+  play: ({ args }) => addStack(args, 3),
   tags: ['options'],
 };
 
 export const Bottom: Story<ToastContainerArgs> = {
   ...Overview,
   args: { ...Overview.args, placement: 'bottom' },
+  play: ({ args }) => addStack(args, 3),
   tags: ['options'],
 };
 
 export const BottomEnd: Story<ToastContainerArgs> = {
   ...Overview,
   args: { ...Overview.args, placement: 'bottom-end' },
+  play: ({ args }) => addStack(args, 3),
   tags: ['options'],
 };
 

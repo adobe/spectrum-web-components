@@ -10,6 +10,15 @@
  * governing permissions and limitations under the License.
  */
 
+* {
+  box-sizing: border-box;
+}
+
+/*
+ * The stack depth is real 3D: layers sit at the front toast's position and are
+ * pushed back along Z. The perspective origin lies beyond the edge away from
+ * the anchor, so layers peek out on that side.
+ */
 .swc-ToastContainer {
   position: fixed;
   inset-block: auto token("spacing-300");
@@ -25,6 +34,8 @@
   border-radius: token("corner-radius-700");
   overflow: visible;
   outline: none;
+  perspective: 80px;
+  perspective-origin: center -55px;
 }
 
 .swc-ToastContainer:focus-visible {
@@ -35,9 +46,62 @@
 .swc-ToastContainer--top,
 .swc-ToastContainer--top-end {
   inset-block: token("spacing-300") auto;
+  perspective-origin: center calc(100% + 55px);
 }
 
 .swc-ToastContainer--top-end,
 .swc-ToastContainer--bottom-end {
   margin-inline: auto 0;
+}
+
+.swc-ToastContainer > :where(swc-toast) {
+  position: relative;
+  z-index: 1;
+}
+
+/*
+ * The stacked state carries the elevated shadow on every toast. A filter
+ * follows the toast's rounded shape and fades with it, which a shadow on the
+ * host box would not. Same three layers as `--swc-drop-shadow-elevated`.
+ */
+.swc-ToastContainer--stacked > :where(swc-toast) {
+  filter: drop-shadow(0 4px 12px token("drop-shadow-ambient-color")) drop-shadow(0 2px 6px token("drop-shadow-transition-color")) drop-shadow(0 0 2px token("drop-shadow-elevated-key-color"));
+}
+
+.swc-ToastContainer-layer {
+  --_swc-toast-container-layer-background-color: token("neutral-subdued-background-color-default");
+
+  position: absolute;
+  inset: 0;
+
+  /* Nearer layers paint above farther ones, and all stay behind the front toast. */
+  z-index: calc(-1 * var(--_swc-toast-container-layer-index));
+  background-color: var(--_swc-toast-container-layer-background-color);
+  border-radius: token("corner-radius-700");
+  box-shadow: token("drop-shadow-elevated");
+  pointer-events: none;
+  translate: 0 0 calc(-1 * token("spacing-200") * var(--_swc-toast-container-layer-index));
+}
+
+/* Only the nearest layers show, but every layer stays in the DOM. */
+.swc-ToastContainer-layer--hidden {
+  opacity: 0;
+}
+
+.swc-ToastContainer-layer--info {
+  --_swc-toast-container-layer-background-color: token("informative-background-color-default");
+}
+
+.swc-ToastContainer-layer--positive {
+  --_swc-toast-container-layer-background-color: token("positive-background-color-default");
+}
+
+.swc-ToastContainer-layer--negative {
+  --_swc-toast-container-layer-background-color: token("negative-background-color-default");
+}
+
+@media (forced-colors: active) {
+  .swc-ToastContainer-layer {
+    border: token("border-width-100") solid CanvasText;
+  }
 }
