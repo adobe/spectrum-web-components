@@ -202,6 +202,13 @@ jobs:
         working-directory: gen2
         run: yarn changeset publish --no-git-tag --tag ${{ steps.extract-tag.outputs.tag }}
 
+      # Confirms npm serves every gen2 package at the snapshot version with the snapshot
+      # dist-tag pointing at it. Runs after a partial publish failure too - that's when a
+      # registry mismatch is most likely.
+      - name: Verify the registry
+        if: ${{ !cancelled() && steps.publish.outcome != 'skipped' }}
+        run: node scripts/verify-registry.js --gen=gen2 --tag=${{ steps.extract-tag.outputs.tag }}
+
       - name: Snapshot summary
         if: always()
         env:
