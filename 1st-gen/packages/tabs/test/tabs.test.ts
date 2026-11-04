@@ -841,7 +841,7 @@ describe('Tabs', () => {
 
     it('links a plain role="tab" element to its panel by the value attribute', async () => {
       const el = await fixture<Tabs>(html`
-        <sp-tabs selected="plain">
+        <sp-tabs>
           <div role="tab" id="plain-tab" value="plain">Plain tab</div>
           <sp-tab-panel value="plain">Plain tab content</sp-tab-panel>
         </sp-tabs>
@@ -897,6 +897,65 @@ describe('Tabs', () => {
 
       const second = el.querySelector('[value="second"]') as Tab;
       expect(second.getAttribute('aria-controls')).to.equal('external-region');
+    });
+
+    it('keeps consumer-provided ARIA references that already match', async () => {
+      const el = await fixture<Tabs>(html`
+        <sp-tabs selected="first">
+          <sp-tab
+            id="consumer-tab"
+            value="first"
+            aria-controls="consumer-panel"
+          >
+            Tab 1
+          </sp-tab>
+          <sp-tab-panel
+            id="consumer-panel"
+            value="first"
+            aria-labelledby="consumer-tab"
+          >
+            First tab content
+          </sp-tab-panel>
+        </sp-tabs>
+      `);
+      await elementUpdated(el);
+
+      const tab = el.querySelector('sp-tab') as Tab;
+      const panel = el.querySelector('sp-tab-panel') as TabPanel;
+      const outside = el.parentElement as HTMLElement;
+
+      outside.append(panel);
+      await elementUpdated(el);
+      expect(tab.getAttribute('aria-controls')).to.equal('consumer-panel');
+
+      el.append(panel);
+      await elementUpdated(el);
+      outside.append(tab);
+      await elementUpdated(el);
+      expect(panel.getAttribute('aria-labelledby')).to.equal('consumer-tab');
+    });
+
+    it('does not match a cleared tab value through the stale attribute', async () => {
+      const el = await fixture<Tabs>(html`
+        <sp-tabs selected="first">
+          <sp-tab value="first">Tab 1</sp-tab>
+          <sp-tab-panel value="first">First tab content</sp-tab-panel>
+        </sp-tabs>
+      `);
+      await elementUpdated(el);
+
+      const tab = el.querySelector('sp-tab') as Tab;
+      const panel = el.querySelector('sp-tab-panel') as TabPanel;
+      expect(panel.getAttribute('aria-labelledby')).to.equal(tab.id);
+
+      panel.remove();
+      el.append(panel);
+      tab.value = '';
+      await elementUpdated(el);
+      await elementUpdated(tab);
+
+      expect(tab.getAttribute('value')).to.equal('');
+      expect(panel.hasAttribute('aria-labelledby')).to.be.false;
     });
   });
   it('updates selection indicator in response to tab updates', async () => {

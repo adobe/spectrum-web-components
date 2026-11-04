@@ -100,6 +100,37 @@ export function calculateScrollTargetForLeftSide(
 }
 
 /**
+ * Sets an ARIA reference and records it as set by `sp-tabs`. A value that the
+ * consumer already set is left alone and not recorded.
+ */
+function setManagedAttribute<T extends Element>(
+  el: T,
+  name: string,
+  value: string,
+  managed: WeakMap<T, string>
+): void {
+  if (managed.has(el) || el.getAttribute(name) !== value) {
+    el.setAttribute(name, value);
+    managed.set(el, value);
+  }
+}
+
+/**
+ * Removes an ARIA reference only if `sp-tabs` set it and it was not changed
+ * since.
+ */
+function clearManagedAttribute<T extends Element>(
+  el: T,
+  name: string,
+  managed: WeakMap<T, string>
+): void {
+  if (managed.has(el) && el.getAttribute(name) === managed.get(el)) {
+    el.removeAttribute(name);
+  }
+  managed.delete(el);
+}
+
+/**
  * @element sp-tabs
  *
  * @slot - Tab elements to manage as a group
@@ -384,36 +415,31 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
       // to the attribute.
       const tab = value
         ? this.tabs.find(
-            (el) => (el.value || el.getAttribute('value')) === value
+            (el) => (el.value ?? el.getAttribute('value')) === value
           )
         : undefined;
       if (tab) {
-        tab.setAttribute('aria-controls', id);
-        this.managedTabControls.set(tab, id);
+        setManagedAttribute(tab, 'aria-controls', id, this.managedTabControls);
         linkedTabs.add(tab);
-        panel.setAttribute('aria-labelledby', tab.id);
-        this.managedPanelLabels.set(panel, tab.id);
+        setManagedAttribute(
+          panel,
+          'aria-labelledby',
+          tab.id,
+          this.managedPanelLabels
+        );
       } else {
-        if (
-          panel.getAttribute('aria-labelledby') ===
-          this.managedPanelLabels.get(panel)
-        ) {
-          panel.removeAttribute('aria-labelledby');
-        }
-        this.managedPanelLabels.delete(panel);
+        clearManagedAttribute(
+          panel,
+          'aria-labelledby',
+          this.managedPanelLabels
+        );
       }
       panel.selected = value === this.selected;
     });
     this.tabs.forEach((tab) => {
-      if (linkedTabs.has(tab)) {
-        return;
+      if (!linkedTabs.has(tab)) {
+        clearManagedAttribute(tab, 'aria-controls', this.managedTabControls);
       }
-      if (
-        tab.getAttribute('aria-controls') === this.managedTabControls.get(tab)
-      ) {
-        tab.removeAttribute('aria-controls');
-      }
-      this.managedTabControls.delete(tab);
     });
   }
 

@@ -457,40 +457,75 @@ export abstract class TabsBase extends SpectrumElement {
       // to the attribute.
       const tab = tabId
         ? this._tabs.find(
-            (el) => (el.tabId || el.getAttribute('tab-id')) === tabId
+            (el) => (el.tabId ?? el.getAttribute('tab-id')) === tabId
           )
         : undefined;
 
       if (tab) {
-        tab.setAttribute('aria-controls', id);
-        this.managedTabControls.set(tab, id);
+        TabsBase.setManagedAttribute(
+          tab,
+          'aria-controls',
+          id,
+          this.managedTabControls
+        );
         linkedTabs.add(tab);
-        panel.setAttribute('aria-labelledby', tab.id);
-        this.managedPanelLabels.set(panel, tab.id);
+        TabsBase.setManagedAttribute(
+          panel,
+          'aria-labelledby',
+          tab.id,
+          this.managedPanelLabels
+        );
       } else {
-        if (
-          panel.getAttribute('aria-labelledby') ===
-          this.managedPanelLabels.get(panel)
-        ) {
-          panel.removeAttribute('aria-labelledby');
-        }
-        this.managedPanelLabels.delete(panel);
+        TabsBase.clearManagedAttribute(
+          panel,
+          'aria-labelledby',
+          this.managedPanelLabels
+        );
       }
 
       panel.selected = tabId === this.selected;
     }
 
     for (const tab of this._tabs) {
-      if (linkedTabs.has(tab)) {
-        continue;
+      if (!linkedTabs.has(tab)) {
+        TabsBase.clearManagedAttribute(
+          tab,
+          'aria-controls',
+          this.managedTabControls
+        );
       }
-      if (
-        tab.getAttribute('aria-controls') === this.managedTabControls.get(tab)
-      ) {
-        tab.removeAttribute('aria-controls');
-      }
-      this.managedTabControls.delete(tab);
     }
+  }
+
+  /**
+   * Sets an ARIA reference and records it as set by this component. A value
+   * that the consumer already set is left alone and not recorded.
+   */
+  private static setManagedAttribute<T extends Element>(
+    el: T,
+    name: string,
+    value: string,
+    managed: WeakMap<T, string>
+  ): void {
+    if (managed.has(el) || el.getAttribute(name) !== value) {
+      el.setAttribute(name, value);
+      managed.set(el, value);
+    }
+  }
+
+  /**
+   * Removes an ARIA reference only if this component set it and it was not
+   * changed since.
+   */
+  private static clearManagedAttribute<T extends Element>(
+    el: T,
+    name: string,
+    managed: WeakMap<T, string>
+  ): void {
+    if (managed.has(el) && el.getAttribute(name) === managed.get(el)) {
+      el.removeAttribute(name);
+    }
+    managed.delete(el);
   }
 
   // ───────────────────────────────────
