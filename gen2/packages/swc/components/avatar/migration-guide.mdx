@@ -42,11 +42,11 @@ import '@adobe/spectrum-wc/components/avatar/swc-avatar.js';
 
 ### Added in Spectrum 2
 
-| Addition                     | Notes                                                |
-| ---------------------------- | ---------------------------------------------------- |
-| `outline` boolean attribute  | Renders a visible border around the avatar           |
-| `disabled` boolean attribute | Applies reduced opacity to indicate a disabled state |
-| Sizes 800–1500               | Valid `size` values expanded from 50–700 to 50–1500  |
+| Addition                     | Notes                                                       |
+| ---------------------------- | ----------------------------------------------------------- |
+| `outline` boolean attribute  | Renders a visible border around the avatar                  |
+| `disabled` boolean attribute | Applies reduced opacity to indicate a disabled state        |
+| Sizes `800`–`1500`           | Valid `size` values expanded from `50`–`700` to `50`–`1500` |
 
 ### Removed in Spectrum 2
 
@@ -103,24 +103,24 @@ The built-in link capability has been removed. Wrap `<swc-avatar>` in a standard
 
 ### 5. Check rendered avatar sizes
 
-The `size` values stay the same, but most render larger in Spectrum 2. The default (`100`) grows from 20 px to 24 px. To keep a 20 px avatar, set `size="75"`.
+The `size` values stay the same, but most render larger in Spectrum 2. The default (`100`) grows from `20px` to `24px`. To keep a `20px` avatar, set `size="75"`.
 
 | `size` | Spectrum 1 | Spectrum 2 |
 | ------ | ---------- | ---------- |
-| `50`   | 16 px      | 16 px      |
-| `75`   | 18 px      | 20 px      |
-| `100`  | 20 px      | 24 px      |
-| `200`  | 22 px      | 28 px      |
-| `300`  | 26 px      | 32 px      |
-| `400`  | 28 px      | 36 px      |
-| `500`  | 32 px      | 40 px      |
-| `600`  | 36 px      | 44 px      |
-| `700`  | 40 px      | 48 px      |
+| `50`   | `16px`     | `16px`     |
+| `75`   | `18px`     | `20px`     |
+| `100`  | `20px`     | `24px`     |
+| `200`  | `22px`     | `28px`     |
+| `300`  | `26px`     | `32px`     |
+| `400`  | `28px`     | `36px`     |
+| `500`  | `32px`     | `40px`     |
+| `600`  | `36px`     | `44px`     |
+| `700`  | `40px`     | `48px`     |
 
 ```html
-<!-- Before (20 px by default) -->
+<!-- Before (20px by default) -->
 <sp-avatar src="photo.jpg" label="Jane Smith"></sp-avatar>
-<!-- After (keeps 20 px) -->
+<!-- After (keeps 20px) -->
 <swc-avatar src="photo.jpg" alt="Jane Smith" size="75"></swc-avatar>
 ```
 
