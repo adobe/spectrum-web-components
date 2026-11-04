@@ -80,7 +80,7 @@ export class Toast extends ToastBase {
           class="swc-Toast-close"
           size="m"
           static-color="white"
-          accessible-label="Close"
+          accessible-label=${this.closeLabel || 'Close'}
           @click=${this.requestClose}
         ></swc-close-button>
       </div>

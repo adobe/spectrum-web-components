@@ -67,6 +67,7 @@ ToastQueue.clear();
 
 - `variant`: `neutral` (default), `info`, `positive`, or `negative`
 - `iconLabel`: overrides the variant icon's default label (an empty string makes the icon decorative)
+- `closeLabel`: the accessible name of the close button, default "Close"
 - `timeout`: the auto-dismiss duration in milliseconds
 - `actionLabel`: the label for the action button
 - `onAction`: called when the action button is activated
@@ -111,7 +112,7 @@ Opening a toast does not move focus. When the last toast closes while focus is i
 
 ### Features
 
-The region has `role="region"` and an accessible name that reads "1 notification." or "N notifications." based on the number of queued toasts. It has `tabindex="-1"`, so it can receive focus from script but is not part of the normal Tab sequence.
+The region has `role="region"` and an accessible name that reads "1 notification." or "N notifications." based on the number of queued toasts. To localize it, set the `getRegionLabel` property on `<swc-toast-container>` to a function that takes the count and returns the label, for example `container.getRegionLabel = (count) => ...`. A function lets you handle plural forms for your language. It is a property only, not an attribute. The region has `tabindex="-1"`, so it can receive focus from script but is not part of the normal Tab sequence.
 
 While a toast is showing, <kbd>F6</kbd> and <kbd>Shift</kbd> + <kbd>F6</kbd> move focus into the region from anywhere on the page. Pressing either key again returns focus to where it was. Both keys keep their normal browser behavior when no toast is showing.
 

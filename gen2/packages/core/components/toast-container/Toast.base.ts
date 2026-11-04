@@ -94,6 +94,16 @@ export abstract class ToastBase extends SpectrumElement {
   }
 
   /**
+   * The accessible name of the close button. Set it to localize the name.
+   * Defaults to "Close" when omitted or empty.
+   *
+   * @todo Localize the default via LanguageResolutionController once a runtime
+   * i18n system for static strings is available.
+   */
+  @property({ type: String, attribute: 'close-label' })
+  public closeLabel?: string;
+
+  /**
    * The label for the optional action button. When set, Toast renders its own button.
    */
   @property({ type: String, attribute: 'action-label' })

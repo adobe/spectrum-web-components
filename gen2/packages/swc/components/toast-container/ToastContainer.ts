@@ -69,6 +69,7 @@ export class ToastContainer extends ToastContainerBase {
     const toast = this.ownerDocument.createElement('swc-toast');
     toast.variant = entry.variant ?? 'neutral';
     toast.iconLabel = entry.iconLabel;
+    toast.closeLabel = entry.closeLabel;
     toast.actionLabel = entry.actionLabel;
     toast.timeout = entry.timeout ?? null;
     const message = this.ownerDocument.createElement('span');
@@ -112,7 +113,7 @@ export class ToastContainer extends ToastContainerBase {
         role="region"
         popover="manual"
         tabindex="-1"
-        aria-label=${`${count} ${count === 1 ? 'notification' : 'notifications'}.`}
+        aria-label=${this.getRegionLabel(count)}
         @pointerenter=${this.handlePointerEnter}
         @pointerleave=${this.handlePointerLeave}
         @focusin=${this.handleFocusIn}

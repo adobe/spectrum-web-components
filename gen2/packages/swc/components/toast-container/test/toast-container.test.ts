@@ -237,6 +237,70 @@ export const RenderingAndClosureTest: Story = {
   },
 };
 
+export const RegionLabelTest: Story = {
+  play: async ({ canvasElement, step }) => {
+    ToastQueue.clear();
+    const container = await getComponent<ToastContainer>(
+      canvasElement,
+      'swc-toast-container'
+    );
+    const regionLabel = (): string | null | undefined =>
+      container.shadowRoot
+        ?.querySelector('[role="region"]')
+        ?.getAttribute('aria-label');
+
+    try {
+      ToastQueue.add('First notification');
+      await getFront(container);
+
+      await step('names the region in English by default', () => {
+        expect(regionLabel(), 'default region label').toBe('1 notification.');
+      });
+
+      await step('getRegionLabel receives the queue count', async () => {
+        const counts: number[] = [];
+        container.getRegionLabel = (count) => {
+          counts.push(count);
+          return `${count} notificaciones`;
+        };
+        ToastQueue.add('Second notification');
+        await container.updateComplete;
+
+        expect(regionLabel(), 'custom region label').toBe('2 notificaciones');
+        expect(counts.at(-1), 'last count').toBe(2);
+      });
+    } finally {
+      ToastQueue.clear();
+    }
+  },
+};
+
+export const CloseLabelTest: Story = {
+  play: async ({ canvasElement, step }) => {
+    ToastQueue.clear();
+    const container = await getComponent<ToastContainer>(
+      canvasElement,
+      'swc-toast-container'
+    );
+
+    try {
+      ToastQueue.add('Fermeture', { closeLabel: 'Fermer' });
+      const toast = await getFront(container);
+
+      await step('forwards the queue closeLabel to the close button', () => {
+        expect(
+          toast.shadowRoot
+            ?.querySelector('swc-close-button')
+            ?.getAttribute('accessible-label'),
+          'close button label'
+        ).toBe('Fermer');
+      });
+    } finally {
+      ToastQueue.clear();
+    }
+  },
+};
+
 export const ConnectsClosedThenOpensTest: Story = {
   play: async ({ canvasElement, step }) => {
     ToastQueue.clear();

@@ -594,6 +594,24 @@ export const CloseInteractionTest: Story = {
       }
     );
 
+    await step('close-label overrides the close button name', async () => {
+      toast.closeLabel = 'Fermer';
+      await toast.updateComplete;
+
+      expect(
+        closeButton.getAttribute('accessible-label'),
+        'overridden close button label'
+      ).toBe('Fermer');
+
+      toast.closeLabel = '';
+      await toast.updateComplete;
+
+      expect(
+        closeButton.getAttribute('accessible-label'),
+        'close button label for an empty close-label'
+      ).toBe('Close');
+    });
+
     await step('swc-close can cancel dismissal', async () => {
       cancelNextClose(toast);
       closeButton.click();

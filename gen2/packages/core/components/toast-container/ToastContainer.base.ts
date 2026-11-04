@@ -38,6 +38,18 @@ export abstract class ToastContainerBase extends SpectrumElement {
   @property({ type: String, reflect: true })
   public placement: ToastContainerPlacement = 'bottom';
 
+  /**
+   * Builds the accessible name of the notification region from the number of
+   * queued notifications. Set it to localize the name, including plural forms.
+   * Property only: a function cannot be set as an attribute.
+   *
+   * @todo Localize the default via LanguageResolutionController once a runtime
+   * i18n system for static strings is available.
+   */
+  @property({ attribute: false })
+  public getRegionLabel: (count: number) => string = (count) =>
+    `${count} ${count === 1 ? 'notification' : 'notifications'}.`;
+
   protected readonly countdown = new ToastCountdown(this);
   private _unsubscribe?: () => void;
   private _unregisterToast?: () => void;

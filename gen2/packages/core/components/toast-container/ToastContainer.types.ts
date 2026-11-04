@@ -24,6 +24,7 @@ export type ToastContainerPlacement =
 export interface ToastQueueOptions {
   variant?: ToastVariant;
   iconLabel?: string;
+  closeLabel?: string;
   timeout?: number | null;
   actionLabel?: string;
   onAction?: () => void;

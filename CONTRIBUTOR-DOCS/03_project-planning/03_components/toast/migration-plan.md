@@ -227,7 +227,7 @@ Q5, Q9, and Q13 are agreed implementation decisions, recorded in the [Decision l
 | A4 | Timer pause | `focusin`/`focusout` only; restarts full timeout | Pause on `pointerenter` + `focusin` while the toast is the collapsed front toast; preserve remaining time only while it stays front; resume only when both clear. Region-wide pause (Q7) pauses that one running timer when pointer or focus is anywhere in the collapsed region. No auto-dismiss in the expanded view (Q12). Mouseout must not resume a timer for any toast that is not the collapsed front toast | None |
 | A5 | Timeout minimum | 6000ms | 6000ms (Q1) | None |
 | A6 | Action + auto-dismiss | Unguarded | Hard-disabled when the queue configures an action with `actionLabel` and `onAction`; paired with a `warnIf()` dev warning (Q2) | None |
-| A7 | Close button label | `label="Close"` | `accessible-label="Close"` on `swc-close-button` | None |
+| A7 | Close button label | `label="Close"` | `accessible-label` on `swc-close-button`, default "Close", overridable through `close-label` on `swc-toast` and `closeLabel` on queue entries (SWC-2567 review) | Added override for localization |
 
 #### Container and queue
 
@@ -309,7 +309,7 @@ No properties are exposed in the initial set. Add a `--swc-toast-*` property onl
 
 **Only one container per app view:** because the queue export is decoupled from the container element, nothing else stops a consumer from placing two `<swc-toast-container>` instances, which would double-render every toast. The container's `connectedCallback()` should warn via `warnIf()` (see [Dependencies](#dependencies)) if a second instance connects while one is already present.
 
-The container's `role="region"` wrapper carries `tabindex="-1"` and a dynamic `aria-label` reflecting the full queue count (for example, `"1 notification."` or `"2 notifications."`), including waiting entries.
+The container's `role="region"` wrapper carries `tabindex="-1"` and a dynamic `aria-label` reflecting the full queue count (for example, `"1 notification."` or `"2 notifications."`), including waiting entries. The default English text can be replaced through the container's `getRegionLabel(count)` function property, which lets consumers localize the name and handle plural forms (SWC-2567 review). Both this default and the close button default are English until a runtime i18n solution for static strings exists (`@todo` in code).
 
 **How content flows from the queue export to a rendered toast:** `ToastQueue.add()` stores the message string and options as queue data in core. The SWC container subscribes to queue changes, creates the front `<swc-toast>` element, applies its properties (including `timeout`), and creates its default-slot message wrapper with a `uniqueId()` ID. Insert the message as text, not HTML. Toast derives `aria-labelledby` from that wrapper (Q9). The container connects each toast closed, waits for its first update, then opens it so the two-frame live-region delay runs (Q11). Core does not create or render elements. `swc-toast` is meant to be used with `swc-toast-container` and its queue; standalone hand-authored Toast is not an intended supported configuration (Q15).
 
