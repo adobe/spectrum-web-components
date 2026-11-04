@@ -67,7 +67,7 @@ Menus can own commands, navigation, and checked selection state without particip
 - Use a picker or combobox with the appropriate listbox pattern for a dropdown form field.
 - Use `swc-menu-item` for an action with no checked state.
 - Use a separate menu item checkbox component for independent on/off choices or multiple selection.
-- Use the menu family's dedicated link component for navigation. A radio menu item is not also a link or submenu trigger.
+- Use `swc-menu-item` with a slotted `<a href>` for navigation . A radio menu item is not also a link or submenu trigger.
 
 ---
 
