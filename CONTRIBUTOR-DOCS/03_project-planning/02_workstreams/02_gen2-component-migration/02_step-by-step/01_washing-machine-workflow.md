@@ -391,7 +391,8 @@ Adopt the shared [`FieldAssociationController`](../../../../../2nd-gen/packages/
 - Push the value with `setValue()`; pass `null` to exclude the field from `FormData` (unchecked, unselected, or disabled).
 - Restore `defaultValue` from the element's `formResetCallback`.
 - Forward the element's `formDisabledCallback` to the controller for the ancestor form / `<fieldset disabled>` cascade.
-- Compute effective disabled as the element's own `disabled` OR `fieldAssoc.formDisabled`, never the attribute alone.
+- Compute effective disabled from the authored status and the cascade: `fieldStatus === 'disabled' || fieldAssoc.formDisabled`, or `fieldAssoc.disabled` once the controller's status-aware API is available. Never read a host `disabled` attribute; fields do not reflect one ([forms strategy §3.7](../../../05_strategies/forms-strategy-rfc.md#37-field-status-and-validation-sources)).
+- Write validity from one private `syncValidity()` that calls `setValidity()`, per [forms strategy §3.7](../../../05_strategies/forms-strategy-rfc.md#37-field-status-and-validation-sources).
 
 `swc-text-field` is the reference adoption. Name the public API from its [naming table](../../../05_strategies/forms-strategy-rfc.md#4-naming-table) so property, slot, and event names match; do not invent per-component names, and align text-like fields and pickers to the same table.
 
@@ -404,7 +405,7 @@ Adopt the shared [`FieldAssociationController`](../../../../../2nd-gen/packages/
 - [ ] Invalid prop combinations emit `window.__swc.warn()` when debug is on (where the component has combination rules).
 - [ ] Every applicable dev-warning category is covered: enum values, required properties, conditionally required properties, mutually exclusive/no-effect combinations, required slots, allowed children.
 - [ ] Dev-warning checks use the shared helpers (`validateEnum`, `warnIf`, `validateRequiredSlot`, `validateAllowedChildren`) rather than hand-rolled `includes()` + `warn()` code.
-- [ ] **Form fields:** the field adopts `FieldAssociationController` for form participation (value with `null` exclusion, `defaultValue` reset, and the disabled cascade) rather than hand-wiring `ElementInternals`; `static formAssociated = true`, `attachInternals()`, and `setValidity()` stay on the element; effective disabled is `disabled || fieldAssoc.formDisabled`; and property, slot, and event names match the forms strategy naming table. (Populating validity via `setValidity()` is deferred to the labelling and render work; do not block on it.)
+- [ ] **Form fields:** the field adopts `FieldAssociationController` for form participation (value with `null` exclusion, `defaultValue` reset, and the disabled cascade) rather than hand-wiring `ElementInternals`; `static formAssociated = true`, `attachInternals()`, and `setValidity()` stay on the element; effective disabled is `fieldStatus === 'disabled' || fieldAssoc.formDisabled` (or `fieldAssoc.disabled` where the controller provides it); validity is written by a private `syncValidity()` per the forms strategy; and property, slot, and event names match the forms strategy naming table.
 
 ### Common problems and solutions
 
@@ -665,7 +666,8 @@ Use these when you are not sure how to structure the migration.
 
 - **Small, fixed set** (e.g. size: S/M/L): Use a **string attribute** and reflect it; use a const array for type and Storybook options.
 - Match the **primary role** of the component (button, listbox, combobox, dialog, etc.) to native HTML or an existing accessible [pattern](https://www.w3.org/WAI/ARIA/apg/patterns/).
-- **Boolean toggles** (e.g. disabled, readonly): Use **boolean attributes** and reflect.
+- **Boolean toggles** (e.g. pending, emphasized): Use **boolean attributes** and reflect.
+- **Form-field status** (`disabled`, `invalid`, `valid`, `readonly`): Use one mutually exclusive `field-status` attribute instead of separate booleans, per [forms strategy RFC §3.7](../../../05_strategies/forms-strategy-rfc.md#37-field-status-and-validation-sources).
 - **Stop and ask** when the 1st-gen uses a different pattern (e.g. only classes) and you want to change to attributes.
 
 ### What accessibility pattern applies?
