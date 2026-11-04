@@ -167,6 +167,8 @@ Intentionally omitted. This specification adds no row animation requirement. Lay
 
 Follow the parent menu's roving `tabindex` pattern and `FocusgroupNavigationController`. There is one focus target per row and one navigation scope per menu list, not one per exclusive set. The following recommendations use the APG editor example's distinction between activation with and without dismissal.
 
+The parent `swc-menu` currently collects only `swc-menu-item` rows, so radio rows receive neither a managed `tabindex` nor arrow-key focus; satisfying this keyboard contract depends on extending parent-menu support as part of the [menu migration plan](../menu/migration-plan.md).
+
 | Input | Recommended behavior |
 | --- | --- |
 | <kbd>ArrowDown</kbd> / <kbd>ArrowUp</kbd> | Move focus through the parent menu's item sequence, wrapping per its existing configuration. Do not change checked state, including when moving across groups or disabled rows. |
