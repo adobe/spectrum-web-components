@@ -11,9 +11,20 @@ references). Use this when **creating or updating** `component-accessibility-spe
 
 ## Mindset
 
-You are an accessibility auditor, not a documenter. Read available source first and verify claims about implemented behavior against that source. For new or unimplemented components, use approved designs, APG patterns, WCAG criteria, and related component specifications to define requirements. Clearly distinguish verified implementation behavior from proposed requirements and unresolved decisions; never present planned behavior as already implemented. Inspect a 1st-gen predecessor only when one exists.
+You are an accessibility auditor, not a documenter. Read available source first and verify claims about implemented behavior against that source. For new or unimplemented components, use approved designs, APG patterns, WCAG criteria, and related component specifications to define requirements. Clearly distinguish verified implementation behavior from proposed requirements and unresolved accessibility questions; never present planned behavior as already implemented. Inspect a 1st-gen predecessor only when one exists.
 
 When source or design suggests **more than one host ARIA role** for the same component, treat that as a **design smell**: pause, **prompt the user**, and default to **one role per component** (or split into distinct components) before writing Recommendations.
+
+## Scope: accessibility specification, not migration plan
+
+Match the structure, level of detail, and phrasing of existing component accessibility specifications, especially siblings in the same component family. Keep the document focused on semantic roles, names, states, relationships, accessible interaction, focus, form-association boundaries, and accessibility testing.
+
+- Leave public API and slot design, event names/payloads/cancellation contracts, state-management architecture, dependency sequencing, implementation tasks, and migration decision tables for the component's migration plan. Do not create that plan as a side effect of writing the accessibility specification.
+- Research source and design evidence thoroughly, but summarize relevant findings within the required sections and cite sources under **References**. Do not add standalone evidence inventories, implementation-readiness reviews, or sections such as **Decisions to resolve before implementation**.
+- Keep necessary accessibility questions close to the affected recommendation. Ask the user when a semantic decision blocks the specification; do not turn unrelated API or delivery questions into accessibility blockers.
+- Specify observable accessibility outcomes without prescribing an unreviewed API or implementation. For example, require one checked item per exclusive set and focus-only arrow navigation without choosing property names, event contracts, or parent allow-list changes.
+- Retain accessibility requirements even when implementation comes later, including keyboard behavior, cross-root naming constraints, form participation or its absence, and testing. Link to available migration plans for context without duplicating their task lists or changing their agreed scope.
+- Keep **Summary checklist** limited to verifiable accessibility outcomes, not migration readiness, scheduling, or implementation sign-off.
 
 ## When to use this skill
 
@@ -57,7 +68,7 @@ Use these existing docs when matching structure, headings, tables, and phrasing:
 
 ### Important
 
-- Verify behavior and ARIA in **gen2 source** before stating what the component currently exposes. When source does not exist yet, label the content as proposed requirements and record unresolved decisions; do not require a predecessor or imply implementation verification.
+- Verify behavior and ARIA in **gen2 source** before stating what the component currently exposes. When source does not exist yet, label the content as proposed requirements and record only relevant unresolved accessibility questions; do not require a predecessor or imply implementation verification.
 - **React Spectrum references:** Treat **RSP** as shorthand for **React Spectrum**. When the user supplies a React Spectrum component URL such as `https://react-spectrum.adobe.com/ComponentName`, include that URL as the link in the specification. Before using the reference, read the full API from its LLM-friendly counterpart at `https://react-spectrum.adobe.com/ComponentName.md`; use the `.md` page for research, but do not replace the user-facing component link with the `.md` URL. Apply this rule to every supplied React Spectrum component URL.
 - Ask clarifying questions for uncertain mappings instead of guessing
 - **Dual or conditional host roles:** When 1st-gen source, RSP/Figma, or migration notes show the **same component** taking **more than one host `role`** (for example `toolbar` vs `radiogroup`, or a property that swaps roles), **stop and prompt the user** before writing Recommendations. A component that legitimately serves **two or more ARIA roles** should **most likely be two distinct components**—not one element whose role changes. Do not document multiple host roles as acceptable without an explicit product decision; see [Dual or conditional ARIA roles](#dual-or-conditional-aria-roles) in **Full instructions**.
@@ -99,6 +110,7 @@ The **H2** list above is mandatory. **Within Recommendations** and **Testing**, 
 
 - Start with a short paragraph: what the doc covers, **`swc-*` name**, and **WCAG 2.2 Level AA** as the target.
 - Use **`###` subheadings** for structured bits—**do not** use bold-only labels like `**Also read:**` as section titles.
+- When the component is not implemented, state that briefly. Do not expand the overview into an API analysis, evidence inventory, or migration-planning decision log.
 
 **Typical subheadings** (include what fits the component):
 
@@ -168,13 +180,13 @@ Use a **table** (`Topic | What to do`).
 - **Never** recommend **`aria-live="assertive"`** for loading or routine progress.
 - Treat **`aria-live="polite"`** as **rare**: polite regions still **queue** speech, and **several** components or regions updating together becomes **noisy** (bursts, backlog). Prefer **native role semantics** (e.g. **`progressbar`**) and **one** primary message for related loaders when possible.
 
-Then add rows for **name**, **states**, **properties**, **visual-only props**, **docs expectations**, etc. Verify claims about current behavior against the real implementation; label requirements for unimplemented behavior as proposed and cite their design or standards evidence.
+Then add rows for **name**, **states**, **ARIA properties**, **accessibility effects of visual variants**, **docs expectations**, etc. Describe existing public properties only when needed to explain verified accessibility behavior; do not design new component properties or slots here. Verify claims about current behavior against the real implementation; label requirements for unimplemented behavior as proposed and cite their design or standards evidence.
 
 ### Shadow DOM and cross-root ARIA Issues
 
 - **Heading text must be exactly:** `### Shadow DOM and cross-root ARIA Issues` (word **Issues** capitalized).
 - **If** the component has **no** cross-root ARIA concerns (no reliance on **ID references** that must resolve across shadow boundaries, e.g. `aria-labelledby` / `aria-describedby` pointing at shadow-only IDs) **and** it is **not** a **form-associated** control (or otherwise dependent on cross-root labeling in ways that need a written plan), the **entire body** of the subsection should be a single word: **`None`** (no extra sentences).
-- **Otherwise** describe the concrete issues and expectations (e.g. `ElementInternals`, `aria-*` delegation, proposed ID strategies).
+- **Otherwise** describe the concrete issues and required accessibility outcomes (e.g. names and descriptions must resolve across supported compositions). Reference existing supported mechanisms such as `ElementInternals` or `aria-*` delegation when relevant; leave new implementation-strategy selection to the migration plan.
 
 ## Accessibility tree expectations
 
@@ -210,6 +222,7 @@ Use a **single** `### Keyboard and focus` subsection under `## Recommendations`.
 ### Automated tests
 
 - Table: **Kind of test** | **What to check** (unit, aXe/Storybook, Playwright ARIA snapshots, contrast, etc.—match what the repo actually uses for that component).
+- Describe accessibility acceptance requirements, not code-change tasks or event/API test matrices. For unimplemented components, make clear that these are future test requirements rather than completed coverage.
 - **Form-associated components:** if the component participates in a `<form>` (text field, checkbox, checkbox group, radio group, picker, combobox, and similar), the Automated tests table **must** include a form-participation row and the doc **must** state that stories demonstrate the component inside a native `<form>` (native `<form>` for now; a dedicated form component later). Cover the full form lifecycle required for every form-associated component by [forms strategy RFC §3.5](../../../CONTRIBUTOR-DOCS/03_project-planning/05_strategies/forms-strategy-rfc.md#35-testing-form-participation): value on submit (`FormData`), validation of required/constrained state at the level the constraint lives, reset (`formResetCallback`), and getting the value. Add a matching **Summary checklist** item.
 
 ### Manual screen reader testing (non-focusable components)
@@ -229,6 +242,7 @@ In the **body**, point to the **Browse mode (document/scan mode)** section. Add 
 ## Summary checklist
 
 - Markdown task list (`- [ ]`) of concrete, verifiable items (stories, docs, tree, focus, tooling, and for non-focusable components manual screen reader / browse mode per the Storybook guide when `### Manual screen reader testing` is present).
+- Check accessible behavior and verification, not API finalization, dependency readiness, parent implementation changes, migration sequencing, or design sign-off.
 - When the component had **conditional or multiple plausible host roles** in 1st-gen, include a checklist item that **gen2 uses one fixed host role** (or **split components / wrapper pattern** per user decision)—not role switching on one tag.
 
 ## References
@@ -241,7 +255,7 @@ In the **body**, point to the **Browse mode (document/scan mode)** section. Add 
 
 - Follow text-formatting workspace rules: sentence case for headings; proper nouns (ARIA, WCAG, APG) as usual.
 - Prefer plain, scannable wording; link to the rendering doc instead of duplicating it.
-- Verify behavior and ARIA in available gen2 source before stating what the component currently exposes. For unimplemented behavior, document proposed requirements and unresolved decisions without claiming source verification.
+- Verify behavior and ARIA in available gen2 source before stating what the component currently exposes. For unimplemented behavior, document proposed requirements and unresolved accessibility questions without claiming source verification.
 - For optional `###` subsections copied from peer docs that do not apply to the component, keep the heading and add a short “Does not apply” (or “Intentionally omitted”) body—do not leave readers to infer omission; match the “subsections that do not apply (keep the heading)” guidance in Full instructions.
 - **Bold:** You may use `**…**` sparingly when it helps scanning (constraints, out-of-scope callouts, critical negations)—not for whole paragraphs or decoration. When estimating load, count only body prose: exclude markdown heading title lines (`#`…`####`), text inside link labels (`[…](…)`), fenced code, inline code, paths, generated breadcrumbs/TOC, and obvious boilerplate. Non-header, non-link prose should not sit more than about 30% inside bold markup; trim if above that.
 - **Bold (runs):** When adjacent words share the same emphasis, use one bold span (`**migration wave**`), not separate pairs per word (`**migration** **wave**`). Do not merge across words that should stay unstyled, or around links or code where splitting is clearer.
