@@ -105,10 +105,53 @@ test.describe('Menu - native dismissal', () => {
   // reopens the menu. Holding the key is what exposes it, because the repeats
   // are what reach the refocused trigger. Only trusted input runs the
   // browser's own activation behavior, so this cannot be a play function.
+  // The other half of the same problem. A native button fires `click` on
+  // Enter *keydown*, so the menu opens and focuses its first row before the
+  // trigger's own keyup arrives. That keyup lands on the row, which must not
+  // read it as its own press. Play functions cannot show this either: a
+  // synthetic Enter never makes the trigger's inner button activate.
   for (const [name, key] of [
-    ['Space', ' '],
     ['Enter', 'Enter'],
+    ['Space', ' '],
   ] as const) {
+    test(`opening with ${name} does not activate the first row`, async ({
+      page,
+    }) => {
+      await gotoStory(page, 'components-menu--open-and-close', 'swc-button');
+      const menu = page.locator('swc-menu');
+      const trigger = page.getByRole('button', { name: 'Edit' });
+
+      await page.evaluate(() => {
+        const w = window as unknown as Record<string, number>;
+        w.__rowClicks = 0;
+        document.addEventListener(
+          'click',
+          (event) => {
+            const onRow = event
+              .composedPath()
+              .some(
+                (node) => (node as HTMLElement)?.localName === 'swc-menu-item'
+              );
+            if (onRow) {
+              w.__rowClicks += 1;
+            }
+          },
+          true
+        );
+      });
+
+      // Focus the trigger by keyboard, then open it with the key under test,
+      // so the whole press is delivered the way a real user's would be.
+      await trigger.focus();
+      await page.keyboard.press(key);
+
+      await expect(menu).toHaveJSProperty('open', true);
+      const rowClicks = await page.evaluate(
+        () => (window as unknown as Record<string, number>).__rowClicks
+      );
+      expect(rowClicks, 'no row activates while the menu is opening').toBe(0);
+    });
+
     test(`a held ${name} on a row activates it once`, async ({ page }) => {
       await gotoStory(page, 'components-menu--open-and-close', 'swc-button');
       const menu = page.locator('swc-menu');

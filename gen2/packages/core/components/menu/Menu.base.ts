@@ -17,6 +17,7 @@ import {
   FocusgroupNavigationController,
   PlacementController,
   type PlacementOptions,
+  SlotAttributePropagationController,
   TriggerPressController,
 } from '@adobe/spectrum-wc-core/controllers/index.js';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
@@ -41,6 +42,7 @@ import {
   type MenuPlacement,
   type MenuSize,
 } from './Menu.types.js';
+import { isMenuActivationKey } from './MenuItem.base.js';
 
 // Element-reference IDL, Baseline but not yet in every TypeScript DOM lib.
 interface ARIAControlsElements {
@@ -180,21 +182,27 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
   // cycle, matching `Popover.base.ts`'s own field of the same name.
   private _cancelAfterTransition?: () => void;
 
+  // The menu owns its rows' size, the way `swc-accordion` owns its items'.
+  // Authoring it per row would let one menu render mismatched rows, and
+  // `menu.mdx` tells consumers to set it once on the menu. Writing the
+  // attribute rather than the property means it lands whether or not the row
+  // class has upgraded yet, the same reason `isRowDisabled` reads an
+  // attribute.
+  private readonly _sizePropagation = new SlotAttributePropagationController(
+    this,
+    {
+      attribute: 'size',
+      getValue: () => this.size,
+      selector: 'swc-menu-item',
+    }
+  );
+
   // Direct `swc-menu-item` children only this phase; `swc-menu-group` joins
   // once it exists (Phase B).
   private getMenuItems(): HTMLElement[] {
     return Array.from(
       this.querySelectorAll<HTMLElement>(':scope > swc-menu-item')
     );
-  }
-
-  // The menu owns its rows' size, the way `swc-accordion` owns its items'.
-  // Authoring it per row would let a single menu render mismatched rows, and
-  // `menu.mdx` tells consumers to set it once on the menu.
-  protected syncMenuItems(): void {
-    for (const item of this.getMenuItems()) {
-      (item as HTMLElement & { size: MenuSize }).size = this.size;
-    }
   }
 
   // `deepContains` crosses shadow boundaries, so focus inside a slotted
@@ -228,7 +236,7 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
       event.preventDefault();
       return;
     }
-    if (event.key === 'Enter' || event.key === ' ') {
+    if (isMenuActivationKey(event)) {
       // Claim the key only. The row activates on keyup and closes the menu
       // through its own click, so keyboard and pointer share one path:
       // activate, then close. Closing here instead would close first and
@@ -417,7 +425,7 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
       DOCS_URL
     );
     this.focusNavigation.refresh();
-    this.syncMenuItems();
+    this._sizePropagation.propagate();
   }
 
   // Enters the top layer; the rest of the open side effects only run once
@@ -523,10 +531,6 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
 
   protected override updated(changedProperties: PropertyValues): void {
     super.updated(changedProperties);
-
-    if (changedProperties.has('size')) {
-      this.syncMenuItems();
-    }
 
     if (changedProperties.has('placement')) {
       validateEnum(this, {

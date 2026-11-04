@@ -161,7 +161,7 @@ Two things worth noting against this plan:
 
 | Property | Attribute | Type | Default | Status |
 | --- | --- | --- | --- | --- |
-| `size` | `size` | `'s' \| 'm' \| 'l' \| 'xl'` | `'m'` | Confirmed. Owned by the parent: `swc-menu` copies its own `size` onto every row, matching `swc-accordion`, so one menu cannot render mismatched rows |
+| `size` | `size` | `'s' \| 'm' \| 'l' \| 'xl'` | `'m'` | Confirmed. Owned by the parent: `swc-menu` propagates its own `size` onto every row via `SlotAttributePropagationController`, so one menu cannot render mismatched rows. The attribute is written rather than the property, so it lands whether or not the row class has upgraded |
 | `disabled` | `disabled` | `boolean` | `false` | Confirmed; mapping via [Q20](#blockers-and-open-questions) |
 
 Slots: `label` (text), `visual` (optional leading icon or thumbnail), `description` (optional secondary text).
@@ -219,7 +219,9 @@ Red/green TDD. Each item below should fail before the implementation exists.
 - [x] <kbd>Enter</kbd> and <kbd>Space</kbd> reach a consumer `click` handler on an enabled row, and neither activates a disabled one
 - [x] A pointer click on a disabled row reaches no consumer handler and leaves the menu open
 - [x] Rows activate on `keyup`, so a held key activates once and never reopens the menu (Playwright; synthetic events cannot show it)
-- [x] `size` cascades from `swc-menu` onto its rows, overriding a row-authored value
+- [x] `size` propagates from `swc-menu` onto its rows, overriding a row-authored value
+- [x] Enter on the trigger opens the menu without the same press activating the first row
+- [x] Modified presses (<kbd>Shift</kbd> + <kbd>Enter</kbd>, <kbd>Ctrl</kbd> + <kbd>Space</kbd>) do not activate a row
 - [ ] Playwright: ARIA tree shows `menu` containing named `menuitem` rows
 - [ ] VRT: sizes, disabled, with and without a visual, with and without a description, forced colors
 

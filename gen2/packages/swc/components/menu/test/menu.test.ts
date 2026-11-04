@@ -1857,6 +1857,57 @@ export const ItemKeyboardActivationTest: Story = {
       expect(menu.open, 'the menu stays open').toBe(true);
     });
 
+    // Modified presses belong to the app or to assistive technology, so the
+    // row leaves them alone rather than treating them as activation.
+    await step('a modified press does not activate a row', async () => {
+      // The previous step leaves the menu open; clicking the trigger here
+      // would toggle it shut.
+      if (!menu.open) {
+        await userEvent.click(trigger);
+      }
+      await waitFor(() => expect(menu.open).toBe(true));
+
+      const [firstRow] = getRows(canvasElement);
+      let clicked = false;
+      firstRow.addEventListener('click', () => {
+        clicked = true;
+      });
+
+      for (const modifier of [
+        'shiftKey',
+        'ctrlKey',
+        'altKey',
+        'metaKey',
+      ] as const) {
+        for (const key of ['Enter', ' ']) {
+          const down = new KeyboardEvent('keydown', {
+            key,
+            [modifier]: true,
+            bubbles: true,
+            composed: true,
+            cancelable: true,
+          });
+          firstRow.dispatchEvent(down);
+          firstRow.dispatchEvent(
+            new KeyboardEvent('keyup', {
+              key,
+              [modifier]: true,
+              bubbles: true,
+              composed: true,
+              cancelable: true,
+            })
+          );
+          expect(
+            down.defaultPrevented,
+            `${modifier} + ${key} stays available to the app`
+          ).toBe(false);
+        }
+      }
+
+      expect(clicked, 'no modified press activates the row').toBe(false);
+      expect(menu.open, 'the menu stays open').toBe(true);
+    });
+
     await step('Enter on an enabled row reaches its handler', async () => {
       const [firstRow] = getRows(canvasElement);
       let clicked = false;
