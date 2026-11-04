@@ -94,7 +94,7 @@ export class Toast extends ToastBase {
   };
 
   private renderIcon(): TemplateResult | typeof nothing {
-    const accessibleLabel = this.iconLabel || undefined;
+    const accessibleLabel = this.variantIconLabel || undefined;
     switch (this.variant) {
       case 'info':
         return html`

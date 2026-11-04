@@ -127,8 +127,44 @@ export const VariantIconTest: Story = {
       }
     });
 
-    await step('renders a decorative icon without icon-label', async () => {
+    await step(
+      'labels each semantic variant icon by default without reflecting icon-label',
+      async () => {
+        const expectedLabels: Record<string, string> = {
+          info: 'Information',
+          positive: 'Success',
+          negative: 'Error',
+        };
+
+        for (const [variant, label] of Object.entries(expectedLabels)) {
+          toast.variant = variant as ToastVariant;
+          await toast.updateComplete;
+
+          expect(
+            icon()?.getAttribute('accessible-label'),
+            `default icon label for ${variant}`
+          ).toBe(label);
+          expect(
+            toast.hasAttribute('icon-label'),
+            `icon-label attribute for ${variant}`
+          ).toBe(false);
+        }
+      }
+    );
+
+    await step('icon-label overrides the default label', async () => {
       toast.variant = 'info';
+      toast.iconLabel = 'Nouvelle version';
+      await toast.updateComplete;
+
+      expect(
+        icon()?.getAttribute('accessible-label'),
+        'overridden icon label'
+      ).toBe('Nouvelle version');
+    });
+
+    await step('an empty icon-label renders a decorative icon', async () => {
+      toast.iconLabel = '';
       await toast.updateComplete;
 
       expect(
@@ -137,28 +173,23 @@ export const VariantIconTest: Story = {
       ).toBe(false);
     });
 
-    await step('icon-label is forwarded to the icon', async () => {
-      toast.iconLabel = 'Information';
+    await step('removing icon-label restores the default label', async () => {
+      toast.iconLabel = undefined;
       await toast.updateComplete;
 
       expect(
         icon()?.getAttribute('accessible-label'),
-        'forwarded icon label'
+        'restored default icon label'
       ).toBe('Information');
     });
 
-    await step(
-      'renders a decorative icon for an empty icon-label',
-      async () => {
-        toast.iconLabel = '';
-        await toast.updateComplete;
+    await step('neutral ignores icon-label and renders no icon', async () => {
+      toast.variant = 'neutral';
+      toast.iconLabel = 'Ignored';
+      await toast.updateComplete;
 
-        expect(
-          icon()?.hasAttribute('accessible-label'),
-          'icon accessible-label presence'
-        ).toBe(false);
-      }
-    );
+      expect(icon(), 'neutral icon').toBeNull();
+    });
   },
 };
 

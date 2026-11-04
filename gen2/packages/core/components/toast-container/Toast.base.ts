@@ -66,11 +66,32 @@ export abstract class ToastBase extends SpectrumElement {
   /**
    * An accessible label for the semantic variant icon.
    *
-   * When omitted or empty, the icon is decorative, so the message text must
-   * communicate the variant. Set a nonempty label to expose the icon.
+   * When omitted, the icon is labeled with the variant's default English
+   * label. Set a different label to override it, for example to localize it,
+   * or set an empty label to make the icon decorative when the message
+   * already states the status. Ignored for the `neutral` variant, which has no icon.
    */
   @property({ type: String, attribute: 'icon-label' })
   public iconLabel?: string;
+
+  /**
+   * @todo Localize the default labels via LanguageResolutionController once a
+   * runtime i18n solution exists. Consumers can override them with `iconLabel`.
+   */
+  private static readonly DEFAULT_ICON_LABELS: Partial<
+    Record<ToastVariant, string>
+  > = {
+    info: 'Information',
+    positive: 'Success',
+    negative: 'Error',
+  };
+
+  /** The label for the variant icon, or `undefined` when the icon is decorative. */
+  protected get variantIconLabel(): string | undefined {
+    return (
+      this.iconLabel ?? ToastBase.DEFAULT_ICON_LABELS[this.variant] ?? undefined
+    );
+  }
 
   /**
    * The label for the optional action button. When set, Toast renders its own button.

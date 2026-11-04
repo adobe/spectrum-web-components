@@ -92,7 +92,7 @@ const meta: Meta<ToastContainerArgs> = {
     iconLabel: {
       control: 'text',
       description:
-        'An accessible label for the variant icon. Leave empty when the message already states the status.',
+        'An accessible label for the variant icon. Leave empty to use the default label for the variant.',
       table: queueOptions,
     },
     timeout: {
@@ -171,7 +171,7 @@ const nextMessageSuffix = (): string =>
 const addToast = (args: ToastContainerArgs, suffix = ''): string =>
   ToastQueue.add(`${args.message}${suffix}`, {
     variant: args.variant,
-    iconLabel: args.iconLabel,
+    iconLabel: args.iconLabel || undefined,
     timeout: args.timeout,
     actionLabel: args.actionLabel,
     onAction: args.onAction,

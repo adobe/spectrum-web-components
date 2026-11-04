@@ -56,7 +56,30 @@ test.describe('Toast - ARIA Snapshots', () => {
     `);
   });
 
-  test('icon-label exposes the variant icon inside the alert', async ({
+  test('icon-label overrides the default icon label', async ({ page }) => {
+    const root = await gotoStory(
+      page,
+      'components-toast-container--toast-playground',
+      'swc-toast'
+    );
+    await page.evaluate(async () => {
+      const toast = document.querySelector('swc-toast') as HTMLElement & {
+        updateComplete: Promise<boolean>;
+      };
+      toast.setAttribute('variant', 'info');
+      toast.setAttribute('icon-label', 'Nouvelle version');
+      await toast.updateComplete;
+    });
+    await expect(root).toMatchAriaSnapshot(`
+      - alertdialog "File saved":
+        - alert:
+          - img "Nouvelle version"
+          - text: File saved
+        - button "Close"
+    `);
+  });
+
+  test('empty icon-label hides the variant icon from the alert', async ({
     page,
   }) => {
     const root = await gotoStory(
@@ -69,14 +92,12 @@ test.describe('Toast - ARIA Snapshots', () => {
         updateComplete: Promise<boolean>;
       };
       toast.setAttribute('variant', 'info');
-      toast.setAttribute('icon-label', 'Information');
+      toast.setAttribute('icon-label', '');
       await toast.updateComplete;
     });
     await expect(root).toMatchAriaSnapshot(`
       - alertdialog "File saved":
-        - alert:
-          - img "Information"
-          - text: File saved
+        - alert: File saved
         - button "Close"
     `);
   });
@@ -94,13 +115,19 @@ test.describe('Toast - ARIA Snapshots', () => {
         - alert: Draft moved to archive
         - button "Close"
       - alertdialog "A new version is available":
-        - alert: A new version is available
+        - alert:
+          - img "Information"
+          - text: A new version is available
         - button "Close"
       - alertdialog "File saved":
-        - alert: File saved
+        - alert:
+          - img "Success"
+          - text: File saved
         - button "Close"
       - alertdialog "File could not be saved":
-        - alert: File could not be saved
+        - alert:
+          - img "Error"
+          - text: File could not be saved
         - button "Close"
     `);
   });

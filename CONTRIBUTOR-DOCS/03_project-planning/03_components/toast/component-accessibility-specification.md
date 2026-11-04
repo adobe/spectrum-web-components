@@ -109,7 +109,7 @@ Not a replacement for critical error messaging or decisions requiring mandatory 
 | **`aria-labelledby` on host** | The `role="alertdialog"` host must have an accessible name. Align with React Spectrum: the host carries `aria-labelledby` referencing a stable ID on the content element. `swc-toast-container` creates the message wrapper and writes that ID with the shared `uniqueId()` utility; consumers submit message text through the queue and do not wrap it themselves. Because the notification text is in the default slot (light DOM), the ID is resolvable from the host without crossing a shadow boundary. There is no `aria-label` fallback for bare text. React Spectrum's actual implementation splits this further: `aria-labelledby` points at a separate title element and `aria-describedby` at a separate description element. This doc's single content ID is a deliberate simplification, since `swc-toast` has one default slot for message text rather than separate title/description slots. |
 | **`aria-hidden` when closed** | When the toast is not open, set `aria-hidden="true"` on the host to suppress the alertdialog and its inner live region from the accessibility tree. Remove `aria-hidden` (or set `aria-hidden="false"`) when the toast opens. This is more reliable across browsers than relying on CSS `visibility: hidden` to suppress live region announcements, and prevents unexpected announcements when DOM content changes while the toast is hidden. |
 | **Timer pause (hover and focus-within)** | The auto-dismiss timer must pause both when the pointer is over the component (`pointerenter`) and when focus is within the component (`focusin`). Resume the timer only when both conditions have ended (`pointerleave` and `focusout`). These two conditions are independent: if both are active simultaneously, the timer must not resume until both have cleared. Pausing on pointer hover satisfies WCAG 1.4.13; pausing on focus-within ensures keyboard and screen reader users have sufficient time to read and interact with the toast before it dismisses. The pause is region-wide: pointer or focus anywhere in the container region pauses the one running countdown, which belongs to the collapsed front toast only. |
-| **Variant icon labels** | Variant icons are decorative by default, matching React Spectrum. The message text must convey the variant meaning (for example, "Error: Your upload failed"). Authors can set the `icon-label` attribute to a nonempty value to render the icon with `role="img"` and `aria-label` as part of the live region content. Document that a label may produce redundant announcements when the message already states the type. Omitted or empty `icon-label` renders the icon `aria-hidden`. |
+| **Variant icon labels** | Semantic variant icons (`info`, `positive`, `negative`) have a default English label ("Information", "Success", "Error") so the variant is not conveyed by icon and color alone. The icon renders with `role="img"` and `aria-label` as part of the live region content. Authors can set `icon-label` to a different value to override or localize it, or to an empty string to make the icon decorative (`aria-hidden`) when the message already states the type and a label would be redundant. The `neutral` variant has no icon, so `icon-label` is ignored. Open: Chrome and Edge with VoiceOver have read a supplied icon label twice (see Q11 in the migration plan). Re-test the default labels manually before treating this as accepted. Localizing the defaults through `LanguageResolutionController` is a follow-up once a runtime i18n solution exists. |
 | **Close button** | Must have an accessible name ("Close"). 1st-gen uses `label="Close"` on `sp-close-button`. gen2 should use `swc-close-button` with `accessible-label="Close"`. The name is on the close button itself; no cross-root ARIA concern. |
 | **Action button** | Design allows a maximum of one action button per toast. There is no `action` slot: the queue's `actionLabel` makes Toast render one `swc-button`, so authors must provide a descriptive label (for example, "Undo file deletion" rather than just "Undo"). Docs must state the one-action limit explicitly. |
 | **`variant` and color** | `variant` is visual-only. Do not auto-map `variant` to `aria-invalid`, `aria-relevant`, or other ARIA properties. The icon label and message text carry semantic meaning; color is supplementary and must not be the only differentiator. |
@@ -153,19 +153,19 @@ Screen reader announces assertively when toast opens: "[message text]". Focus do
 ```
 host [role="alertdialog", aria-modal="false", tabindex="0", aria-labelledby="[content-id]"]
   └── (shadow) alert [role="alert", aria-atomic="true"]
-        └── icon [aria-hidden="true" by default; role="img" with aria-label only when icon-label is set]
+        └── icon [role="img" with the variant default aria-label, or the icon-label override; aria-hidden="true" when icon-label is empty; no icon for neutral]
         └── [text content from default slot, id="[content-id]"]
   └── (shadow) close button: "Close"
 ```
 
-Screen reader announces assertively: "[message text]" — for example, "Error: Toast is burned!". When `icon-label` is set, it is announced before the message text.
+Screen reader announces assertively: "[message text]" — for example, "Error: Toast is burned!". For `info`, `positive`, and `negative`, the icon label (the variant default or the `icon-label` override) is announced before the message text unless `icon-label` is empty.
 
 **Toast with action button (open)**
 
 ```
 host [role="alertdialog", aria-modal="false", tabindex="0", aria-labelledby="[content-id]"]
   └── (shadow) alert [role="alert", aria-atomic="true"]
-        └── icon [aria-hidden="true" by default; role="img" with aria-label only when icon-label is set]
+        └── icon [role="img" with the variant default aria-label, or the icon-label override; aria-hidden="true" when icon-label is empty; no icon for neutral]
         └── [text content from default slot, id="[content-id]"]
   └── (shadow) action button: [actionLabel]
   └── (shadow) close button: "Close"
@@ -257,7 +257,7 @@ The 1st-gen README mentions the minimum timeout and the `role="region"` containe
 |--------------|----------------|
 | **Unit** | Host has `role="alertdialog"`, `aria-modal="false"`, `tabindex="0"`. Inner shadow element has `role="alert"` and `aria-atomic="true"`. Host has `aria-hidden="true"` when `open` is false. Countdown pauses on `focusin` and `pointerenter`; resumes on `focusout` and `pointerleave`. Close button has accessible name "Close". Timeout below 6000ms is raised to 6000ms. Variant icons are decorative when `icon-label` is omitted or empty; a nonempty `icon-label` renders `role="img"` with that label. |
 | **aXe + Storybook** | Run WCAG 2.x rules on all toast stories: default (no variant), positive, negative, info; with and without action button; closed state. |
-| **Playwright ARIA snapshots** | `toast.a11y.spec.ts`: cover closed state (aria-hidden), text-only, icon + text, and with action button. Verify `role="alertdialog"` on host, `role="alert"` on inner element, button accessible names, and icon semantics (decorative by default, labeled when `icon-label` is set). Also cover the peek stack (only the front toast is a real `alertdialog`; layers behind it carry `role="presentation"`) and the expanded list (every toast becomes a real `alertdialog` with its own `tabindex="0"` host). |
+| **Playwright ARIA snapshots** | `toast.a11y.spec.ts`: cover closed state (aria-hidden), text-only, icon + text, and with action button. Verify `role="alertdialog"` on host, `role="alert"` on inner element, button accessible names, and icon semantics (labeled by default per variant, overridden by `icon-label`, decorative when `icon-label` is empty). Also cover the peek stack (only the front toast is a real `alertdialog`; layers behind it carry `role="presentation"`) and the expanded list (every toast becomes a real `alertdialog` with its own `tabindex="0"` host). |
 | **Color contrast** | Verify text contrast (4.5:1) and close button non-text contrast (3:1) for all variants. Check forced-colors (high-contrast) mode. |
 
 ### Manual screen reader testing
@@ -286,7 +286,7 @@ See the gen2 Storybook [Screen reader testing](../../../../gen2/packages/swc/.st
 - [ ] Auto-dismiss timer enforces a minimum of 6000ms.
 - [ ] Countdown pauses on both `focusin` and `pointerenter`; resumes on `focusout` and `pointerleave`.
 - [ ] Close button has an accessible name ("Close" by default).
-- [ ] Variant icons are decorative (`aria-hidden`) by default; a nonempty `icon-label` renders `role="img"` with that `aria-label` (a `warning` variant is deprecated and not part of gen2's four variants).
+- [ ] Semantic variant icons render `role="img"` with a default per-variant `aria-label`; a nonempty `icon-label` overrides it and an empty `icon-label` makes the icon decorative (`aria-hidden`) (a `warning` variant is deprecated and not part of gen2's four variants).
 - [ ] Only one action is supported; docs state this limit explicitly.
 - [ ] Docs warn against using `timeout` together with an action.
 - [ ] Docs include the `role="region"` container pattern (with `aria-label` and notification count).

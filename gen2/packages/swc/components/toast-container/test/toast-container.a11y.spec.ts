@@ -23,7 +23,9 @@ test('the container exposes a counted region with a single named toast', async (
   await expect(region).toMatchAriaSnapshot(`
     - region "1 notification.":
       - alertdialog "File saved":
-        - alert: File saved
+        - alert:
+          - img "Success"
+          - text: File saved
         - button "Close"
   `);
 });
