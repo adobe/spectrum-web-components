@@ -27,7 +27,8 @@
  *             Defaults to `latest`.
  * --include   Extra parent directory whose child packages are also published,
  *             for example the generated `1st-gen/react` wrappers. Repeatable.
- * --timeout   How long to keep polling each package. Defaults to 600 seconds.
+ * --timeout   How long to keep polling each package. Defaults to 1800 seconds;
+ *             npm has taken over 15 minutes to serve a large package.
  *
  * Exits 1 if any package fails. Writes a Markdown report to $GITHUB_STEP_SUMMARY
  * when set.
@@ -55,7 +56,7 @@ const values = (name) =>
 const [gen] = values('gen');
 const tags = values('tag').length ? values('tag') : ['latest'];
 const includes = values('include');
-const timeoutMs = Number(values('timeout')[0] ?? 600) * 1000;
+const timeoutMs = Number(values('timeout')[0] ?? 1800) * 1000;
 
 if (!GENERATIONS.includes(gen) || !Number.isFinite(timeoutMs)) {
   console.error(
