@@ -10,14 +10,25 @@
  * governing permissions and limitations under the License.
  */
 
-import { useOf } from '@storybook/addon-docs/blocks';
+import { type Of, useOf } from '@storybook/addon-docs/blocks';
+import type {
+  CustomElementDeclaration,
+  Package,
+} from 'custom-elements-manifest/schema';
 import React, { useEffect, useRef } from 'react';
-import customElements from '../../dist/custom-elements.json' with { type: 'json' };
 
 // Register the badge component for use in the docs iframe
 import '@adobe/spectrum-wc/components/badge/swc-badge.js';
 
+import customElements from '../../dist/custom-elements.json' with { type: 'json' };
+
 type Status = 'preview' | 'deprecated' | 'internal';
+
+/** A CEM element declaration, plus the tags that `statusPlugin` adds. */
+type StatusDeclaration = CustomElementDeclaration & {
+  status?: string;
+  since?: string;
+};
 
 const STATUS_CONFIG: Record<
   Status,
@@ -45,7 +56,9 @@ const Badge = ({
 
   useEffect(() => {
     const el = ref.current;
-    if (!el) return;
+    if (!el) {
+      return;
+    }
     el.setAttribute('size', 's');
     el.setAttribute('variant', variant);
     if (outline) {
@@ -81,22 +94,24 @@ export const StatusBadge = ({
   of,
   showSince = false,
 }: {
-  of?: any;
+  of?: Of;
   showSince?: boolean;
 }) => {
   const resolvedOf = useOf(of || 'meta', ['meta']);
   const componentTag = resolvedOf.preparedMeta?.component;
 
-  if (!componentTag) return null;
+  if (!componentTag) {
+    return null;
+  }
 
   // Look up component declaration in the CEM
   let status: string | undefined;
   let since: string | undefined;
 
-  for (const mod of (customElements as any).modules ?? []) {
+  for (const mod of (customElements as unknown as Package).modules ?? []) {
     const decl = (mod.declarations ?? []).find(
-      (d: any) => d.tagName === componentTag
-    );
+      (d) => 'tagName' in d && d.tagName === componentTag
+    ) as StatusDeclaration | undefined;
     if (decl) {
       status = decl.status;
       since = showSince ? decl.since : undefined;
@@ -106,7 +121,9 @@ export const StatusBadge = ({
 
   const hasStatus = status && status in STATUS_CONFIG;
 
-  if (!hasStatus && !since) return null;
+  if (!hasStatus && !since) {
+    return null;
+  }
 
   const statusConfig = hasStatus ? STATUS_CONFIG[status as Status] : undefined;
 
