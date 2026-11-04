@@ -106,7 +106,7 @@ export class ToastContainer extends ToastContainerBase {
     return html`
       <div
         class=${classMap({
-          'swc-ToastContainer': true,
+          ['swc-ToastContainer']: true,
           [`swc-ToastContainer--${this.placement}`]: true,
         })}
         role="region"

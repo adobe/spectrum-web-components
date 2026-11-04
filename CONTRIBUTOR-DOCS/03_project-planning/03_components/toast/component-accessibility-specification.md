@@ -43,7 +43,7 @@
 
 ## Overview
 
-This doc covers how `swc-toast` should work for accessibility. It targets WCAG 2.2 Level AA. Until `swc-toast` exists under `gen2/`, use `1st-gen/packages/toast/src/Toast.ts` (`<sp-toast>`) to validate behavior, and update this spec against the real gen2 source when it ships.
+This doc covers how `swc-toast` and `swc-toast-container` should work for accessibility. It targets WCAG 2.2 Level AA. Validate behavior against the gen2 source in `gen2/packages/swc/components/toast-container/`; `1st-gen/packages/toast/src/Toast.ts` (`<sp-toast>`) is a reference only.
 
 ### What a toast is
 
