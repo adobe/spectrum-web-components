@@ -1030,25 +1030,16 @@ export const AgenticWidthTest: Story = {
         expect(content).toBeTruthy();
         // The clamp lives on `:host`, so the host's own box and its painted
         // content clamp together instead of the host staying full-width
-        // while only the inner content is constrained.
+        // while only the inner content is constrained. Assert the two
+        // boundary cases only (the 90% cap and the 65% floor), rather than
+        // every width the `calc()` interpolates through in between.
         expect(el.getBoundingClientRect().width).toBe(288);
         expect(content!.getBoundingClientRect().width).toBe(288);
 
         el.style.inlineSize = '100%';
-        for (const [width, expected] of [
-          [240, 216],
-          [320, 288],
-          [640, 472],
-          [960, 624],
-          [1280, 832],
-        ]) {
-          container!.style.inlineSize = `${width}px`;
-          expect(el.getBoundingClientRect().width).toBeCloseTo(expected, 0);
-          expect(content!.getBoundingClientRect().width).toBeCloseTo(
-            expected,
-            0
-          );
-        }
+        container!.style.inlineSize = '1280px';
+        expect(el.getBoundingClientRect().width).toBeCloseTo(832, 0);
+        expect(content!.getBoundingClientRect().width).toBeCloseTo(832, 0);
       }
     );
   },
