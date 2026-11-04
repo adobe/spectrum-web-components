@@ -50,11 +50,10 @@ import '@adobe/spectrum-wc/components/avatar/swc-avatar.js';
 
 ### Removed in Spectrum 2
 
-| Removed                            | Replacement                                                                                    |
-| ---------------------------------- | ---------------------------------------------------------------------------------------------- |
-| `href` attribute                   | No replacement (wrap `<swc-avatar>` in an `<a>` element if link behavior is needed)            |
-| `--mod-avatar-*` custom properties | `--swc-avatar-*` equivalents (see [Styling](#styling))                                         |
-| Default `size` of `100`            | Default is now `500` — set `size="100"` explicitly if your design requires the smaller default |
+| Removed                            | Replacement                                                                         |
+| ---------------------------------- | ----------------------------------------------------------------------------------- |
+| `href` attribute                   | No replacement (wrap `<swc-avatar>` in an `<a>` element if link behavior is needed) |
+| `--mod-avatar-*` custom properties | `--swc-avatar-*` equivalents (see [Styling](#styling))                              |
 
 ## Update your code
 
@@ -102,15 +101,27 @@ The built-in link capability has been removed. Wrap `<swc-avatar>` in a standard
 </a>
 ```
 
-### 5. Verify your `size` value
+### 5. Check rendered avatar sizes
 
-The default `size` changed from `100` to `500`. If you relied on the default, set the size explicitly.
+The `size` values stay the same, but most render larger in Spectrum 2. The default (`100`) grows from 20 px to 24 px. To keep a 20 px avatar, set `size="75"`.
+
+| `size` | Spectrum 1 | Spectrum 2 |
+| ------ | ---------- | ---------- |
+| `50`   | 16 px      | 16 px      |
+| `75`   | 18 px      | 20 px      |
+| `100`  | 20 px      | 24 px      |
+| `200`  | 22 px      | 28 px      |
+| `300`  | 26 px      | 32 px      |
+| `400`  | 28 px      | 36 px      |
+| `500`  | 32 px      | 40 px      |
+| `600`  | 36 px      | 44 px      |
+| `700`  | 40 px      | 48 px      |
 
 ```html
-<!-- Before (implicitly size="100") -->
+<!-- Before (20 px by default) -->
 <sp-avatar src="photo.jpg" label="Jane Smith"></sp-avatar>
-<!-- After — set size explicitly to preserve the previous default -->
-<swc-avatar src="photo.jpg" alt="Jane Smith" size="100"></swc-avatar>
+<!-- After (keeps 20 px) -->
+<swc-avatar src="photo.jpg" alt="Jane Smith" size="75"></swc-avatar>
 ```
 
 ## Accessibility
@@ -186,5 +197,5 @@ Replace every `--mod-avatar-*` property with its `--swc-avatar-*` equivalent:
 - [ ] Rename `label` attribute to `alt`
 - [ ] Rename `is-decorative` to `decorative`
 - [ ] Replace `href` with an `<a>` wrapper
-- [ ] Verify `size` value (default changed from `100` to `500`)
+- [ ] Check rendered avatar sizes (most sizes render larger)
 - [ ] Replace `--mod-avatar-*` overrides with `--swc-avatar-*` equivalents
