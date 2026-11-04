@@ -328,15 +328,10 @@
    shorter content stays auto-sized via `fit-content`. Override the custom
    property to tune the height cap. `content-box` so the space reserved for
    the scrollbar is added to the fit-content size instead of eating into the
-   content. `max-inline-size` matches `.swc-ResponseStatusStep-detail`'s own
-   cap so unwrapped code scrolls here instead of growing the panel.
-   The `100%` half of `min()` matters when the step's own container is
-   narrower than 340px (e.g. a narrow `swc-response-status` host): without
-   it, this `fit-content` box's shrink-to-fit sizing uses its max-content
-   (up to 340px) rather than its actual available space, so it renders
-   wider than its `overflow: hidden` `.detailScroll`'s own clip ancestor and
-   gets clipped there, scrolling fully internally while the clip still cuts
-   off the last stretch of content. */
+   content. The `100%` half of `max-inline-size: min(340px, 100%)` matters in
+   a narrow host: without it, unwrapped code can render wider than this
+   element's own clip ancestor and get clipped before the end of its scroll
+   range. */
 .swc-ResponseStatusStep-detailScroll {
   box-sizing: content-box;
   inline-size: fit-content;

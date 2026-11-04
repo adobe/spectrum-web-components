@@ -10,15 +10,12 @@
  * governing permissions and limitations under the License.
  */
 
-/* Per SWC-2626: fills its parent down to a 90% cap in narrow containers
-   (e.g. a mobile-width conversation thread), scaling down to a 65% floor
-   in wide ones, so the status never reads as the full width of its row.
-   `calc(168px + 47.5%)` is the straight line between the two anchor
-   points design specified in px-at-container-width terms: 90% of a 395px
-   container (≈356px) and 65% of a 960px container (624px); solving
-   `y = mx + b` for those two points gives the `47.5%` slope and `168px`
-   intercept used here. `clamp()` holds the result at 90%/65% outside that
-   ~395-960px range. */
+/* Fills its parent down to a 90% cap in narrow containers (e.g. a
+   mobile-width conversation thread), scaling down to a 65% floor in wide
+   ones, so the status never reads as the full width of its row.
+   `clamp()` holds 90%/65% outside a ~395-960px container-width range;
+   `calc(168px + 47.5%)` is the line through 90% at 395px and 65% at
+   960px in between. */
 :host {
   display: block;
   inline-size: 100%;

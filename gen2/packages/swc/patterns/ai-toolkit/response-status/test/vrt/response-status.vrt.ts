@@ -162,6 +162,11 @@ type StatusCase = {
   open?: boolean;
   steps?: unknown;
   forceState?: ForcedState;
+  // `''` leaves the host unstyled so its own `max-inline-size` clamp()
+  // applies; a fixed value (the suite's default) overrides it for a stable
+  // snapshot width. Can't use `undefined` for this: it's a default
+  // parameter value below, so an explicit `undefined` still resolves to
+  // `'320px'`.
   maxInlineSize?: string;
 };
 
@@ -180,7 +185,7 @@ const renderStatus = ({
     accessible-label="Execution steps"
     data-force-state=${forceState ?? nothing}
     lang=${lang ?? nothing}
-    style="max-inline-size: ${maxInlineSize};"
+    style=${maxInlineSize ? `max-inline-size: ${maxInlineSize};` : nothing}
   >
     <span slot="label">${label ?? statusLabels[status]}</span>
     ${steps ?? nothing}
@@ -497,10 +502,11 @@ const containerCheckStatus = (
     status,
     label: statusLabels[status],
     open: true,
-    // Fluid, not the suite's default 320px cap: this story snapshots the
+    // `''`, not the suite's default 320px cap: this story snapshots the
     // component's own min/max clamp() reacting to the Chromatic viewport
-    // modes below, which a fixed inline size would otherwise override.
-    maxInlineSize: '100%',
+    // modes below, which a fixed inline size would otherwise override
+    // (inline styles win over the host's own `:host` rule).
+    maxInlineSize: '',
     steps: html`
       ${CONTAINER_CHECK_PRIOR_STEPS.slice(0, priorStepCount).map(
         (step) => html`
