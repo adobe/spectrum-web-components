@@ -34,6 +34,7 @@
     - [Testing](#testing)
     - [Documentation](#documentation)
 - [Blockers and open questions](#blockers-and-open-questions)
+- [Styling notes](#styling-notes)
 - [Decision log](#decision-log)
 - [References](#references)
 
@@ -192,12 +193,15 @@ Row chrome belongs here, not in `swc-menu`: in `spectrum-css`, `.spectrum-Menu` 
 
 ### CSS
 
-- [ ] Row chrome: background, border, radius, padding, and hover/focus/disabled treatments
-- [ ] Description typography and colour, including the disabled and focused variants 1st-gen tracks separately from the label
-- [ ] Key the focus treatment off `:host(:focus)`, **not** `:focus-visible`. Raised in review from a recording: after a mouse open the row holds focus but Chrome paints no ring, so the first arrow press looks like it skipped a row. Safari paints it. 1st-gen `spectrum-menu-item.css` uses `:host(:focus)` for the same reason
-- [ ] No public custom properties this pass
-- [ ] Forced-colors treatment
-- [ ] Stylelint clean
+- [x] Row chrome: background, border, radius, padding, and hover/focus/disabled treatments
+- [x] Description typography and colour, including the disabled and focused variants 1st-gen tracks separately from the label. S2 has a single `disabled-content-color`, so the disabled label and description share it rather than tracking separately
+- [x] Key the focus treatment off `:host(:focus)`, **not** `:focus-visible`. Raised in review from a recording: after a mouse open the row holds focus but Chrome paints no ring, so the first arrow press looks like it skipped a row. Safari paints it. 1st-gen `spectrum-menu-item.css` uses `:host(:focus)` for the same reason
+- [x] No public custom properties this pass
+- [x] Forced-colors treatment
+- [x] Stylelint clean
+- [x] Chrome moved onto an internal `.swc-MenuItem` element; the host keeps only layout participation and the internal property definitions, per the CSS rule order
+- [ ] Chromatic baseline reviewed and approved (needs a reviewer; `Row permutations`, `Row permutations (dark)` and `Row forced colors` are the new snapshots)
+- [ ] Verify against Figma once [Q21](#blockers-and-open-questions) names the superseding file
 
 ### Accessibility
 
@@ -246,6 +250,20 @@ Red/green TDD. Each item below should fail before the implementation exists.
 | **Q24** | Should a row be able to mark itself as the current one? `menuitem` cannot carry `aria-selected`, but `aria-current` is available and would cover "this is where you are" without implying selection. Needs a product answer on whether menus need it at all before any `current` property is designed. | No | Open |
 | **Q23** | Authoring ergonomics of the named `label` slot. | No | **Closed.** Named slot kept: with `description` alongside it, an unnamed label is both ambiguous and harder to place in a grid. See [B22](#must-ship) |
 | **Q25** | A `menuitem` takes its accessible name from its contents, so a `description` is announced as part of the row's name rather than as a separate description. 1st-gen behaves the same way. Wiring it as a real description instead would mean naming the row from its label alone, which the default slot makes awkward since the label can be a bare text node. Worth doing, or is name-from-contents the right answer here? | No | **Closed.** Reviewer confirmed React Spectrum references the label as `aria-labelledby` and the description as `aria-describedby`, so the row is named from its label alone. `MenuItemBase.handleTextSlotChange()` sets `ariaLabelledByElements` and `ariaDescribedByElements` from the slotted elements; the named `label` slot ([Q23](#blockers-and-open-questions)) is what makes this possible, since element references need an element |
+
+## Styling notes
+
+The S1 token names 1st-gen used (`menu-item-min-height`, `menu-item-corner-radius`, `menu-item-label-content-color-*`, `menu-item-description-color-*`, the `menu-item-focus-indicator-*` set) do not exist in Spectrum 2. S2 keeps only the row backgrounds as component tokens and expects everything else to come from semantic scales:
+
+| Need | S2 source |
+| --- | --- |
+| Row background, all states | `menu-item-background-color-{default,hover,keyboard-focus,down,disabled}` |
+| Label and description colour | `neutral-content-color-*`, `neutral-subdued-content-color-*`, `disabled-content-color` |
+| Padding, gap, height, radius | `base-padding-{vertical,horizontal}-*`, `base-gap-*`, `component-height-*`, `corner-radius-medium-size-*` |
+| Label to description gap | `text-gap-*` |
+| Focus ring | `focus-indicator-thickness`, `focus-indicator-color`, `focus-ring-gap` |
+
+Two upstream tokens look like they should apply and deliberately are not used. `menu-item-edge-to-content-not-selected-*` is deprecated upstream ("should not be a single token but either calculated or structurally determined"), and `menu-item-label-to-description-*` is deprecated with an explicit rename to `text-gap-*`. Both are filtered out of the generated token set, so `token()` cannot resolve them.
 
 ## Decision log
 

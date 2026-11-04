@@ -10,21 +10,196 @@
  * governing permissions and limitations under the License.
  */
 
-/* Layout only. Row chrome (background, border, radius, hover and focus
- * treatments) is the next story; see the migration plan's styling section. */
+/* Row chrome lives here, not in `swc-menu`: in spectrum-css `.spectrum-Menu`
+ * carries no background, border, radius or shadow, and every visual property
+ * is scoped under the item.
+ *
+ * The `--_swc-*` properties are internal. Phase A exposes no public custom
+ * properties, so none of them carry a `@cssprop` tag. They are declared on
+ * `:host` rather than on `.swc-MenuItem` so the size rules below can override
+ * them by inheritance; a declaration on the internal class would beat the
+ * inherited value and the size variants would never apply. */
 
 :host {
+  /* Medium is the default size, so its values are the base set. */
+  --_swc-menu-item-min-block-size: token("component-height-100");
+  --_swc-menu-item-padding-block: token("base-padding-vertical-medium");
+  --_swc-menu-item-padding-inline: token("base-padding-horizontal-medium");
+  --_swc-menu-item-gap: token("base-gap-medium");
+  --_swc-menu-item-corner-radius: token("corner-radius-medium-size-medium");
+  --_swc-menu-item-label-font-size: token("font-size-100");
+  --_swc-menu-item-label-line-height: token("line-height-font-size-100");
+  --_swc-menu-item-description-font-size: token("font-size-75");
+  --_swc-menu-item-description-line-height: token("line-height-font-size-75");
+  --_swc-menu-item-text-gap: token("text-gap-medium");
+  --_swc-menu-item-visual-size: token("workflow-icon-medium");
+  --_swc-menu-item-background-color: token("menu-item-background-color-default");
+  --_swc-menu-item-label-color: token("neutral-content-color-default");
+  --_swc-menu-item-description-color: token("neutral-subdued-content-color-default");
+
+  display: block;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.swc-MenuItem {
   display: flex;
-  gap: token("spacing-100");
+  gap: var(--_swc-menu-item-gap);
   align-items: center;
+  min-block-size: var(--_swc-menu-item-min-block-size);
+  padding-block: var(--_swc-menu-item-padding-block);
+  padding-inline: var(--_swc-menu-item-padding-inline);
+  color: var(--_swc-menu-item-label-color);
+  background-color: var(--_swc-menu-item-background-color);
+  border-radius: var(--_swc-menu-item-corner-radius);
 }
 
 /* The label and its description stack; the visual sits beside both. */
 .swc-MenuItem-text {
   display: flex;
   flex-direction: column;
+  gap: var(--_swc-menu-item-text-gap);
+
+  /* A long row wraps rather than overflowing the surface, which caps its
+   * width at 320px. `min-inline-size: 0` lets the flex item shrink below its
+   * content width so the wrap actually happens. */
+  min-inline-size: 0;
+  font-size: var(--_swc-menu-item-label-font-size);
+  line-height: var(--_swc-menu-item-label-line-height);
+  hyphens: auto;
+  overflow-wrap: break-word;
 }
 
-* {
+/* ──────────────
+ *    SIZES
+ * ────────────── */
+
+:host([size="s"]) {
+  --_swc-menu-item-min-block-size: token("component-height-75");
+  --_swc-menu-item-padding-block: token("base-padding-vertical-small");
+  --_swc-menu-item-padding-inline: token("base-padding-horizontal-small");
+  --_swc-menu-item-gap: token("base-gap-small");
+  --_swc-menu-item-corner-radius: token("corner-radius-medium-size-small");
+  --_swc-menu-item-label-font-size: token("font-size-75");
+  --_swc-menu-item-label-line-height: token("line-height-font-size-75");
+  --_swc-menu-item-description-font-size: token("font-size-50");
+  --_swc-menu-item-description-line-height: token("line-height-font-size-50");
+  --_swc-menu-item-text-gap: token("text-gap-small");
+  --_swc-menu-item-visual-size: token("workflow-icon-small");
+}
+
+:host([size="l"]) {
+  --_swc-menu-item-min-block-size: token("component-height-200");
+  --_swc-menu-item-padding-block: token("base-padding-vertical-large");
+  --_swc-menu-item-padding-inline: token("base-padding-horizontal-large");
+  --_swc-menu-item-gap: token("base-gap-large");
+  --_swc-menu-item-corner-radius: token("corner-radius-medium-size-large");
+  --_swc-menu-item-label-font-size: token("font-size-200");
+  --_swc-menu-item-label-line-height: token("line-height-font-size-200");
+  --_swc-menu-item-description-font-size: token("font-size-100");
+  --_swc-menu-item-description-line-height: token("line-height-font-size-100");
+  --_swc-menu-item-text-gap: token("text-gap-large");
+  --_swc-menu-item-visual-size: token("workflow-icon-large");
+}
+
+:host([size="xl"]) {
+  --_swc-menu-item-min-block-size: token("component-height-300");
+  --_swc-menu-item-padding-block: token("base-padding-vertical-extra-large");
+  --_swc-menu-item-padding-inline: token("base-padding-horizontal-extra-large");
+  --_swc-menu-item-gap: token("base-gap-extra-large");
+  --_swc-menu-item-corner-radius: token("corner-radius-medium-size-extra-large");
+  --_swc-menu-item-label-font-size: token("font-size-300");
+  --_swc-menu-item-label-line-height: token("line-height-font-size-300");
+  --_swc-menu-item-description-font-size: token("font-size-200");
+  --_swc-menu-item-description-line-height: token("line-height-font-size-200");
+  --_swc-menu-item-text-gap: token("text-gap-extra-large");
+  --_swc-menu-item-visual-size: token("workflow-icon-extra-large");
+}
+
+/* ──────────────
+ *    STATES
+ * ────────────── */
+
+:host(:hover:not([disabled])) {
+  --_swc-menu-item-background-color: token("menu-item-background-color-hover");
+  --_swc-menu-item-label-color: token("neutral-content-color-hover");
+  --_swc-menu-item-description-color: token("neutral-subdued-content-color-hover");
+}
+
+/* Keyed off `:focus`, not `:focus-visible`: after a mouse-driven open the row
+ * holds focus but Chrome paints no `:focus-visible` ring, so the first arrow
+ * press looks like it skipped a row. 1st-gen keys off `:host(:focus)` for the
+ * same reason. */
+:host(:focus:not([disabled])) {
+  --_swc-menu-item-background-color: token("menu-item-background-color-keyboard-focus");
+  --_swc-menu-item-label-color: token("neutral-content-color-key-focus");
+  --_swc-menu-item-description-color: token("neutral-subdued-content-color-key-focus");
+}
+
+:host(:active:not([disabled])) {
+  --_swc-menu-item-background-color: token("menu-item-background-color-down");
+  --_swc-menu-item-label-color: token("neutral-content-color-down");
+  --_swc-menu-item-description-color: token("neutral-subdued-content-color-down");
+}
+
+/* Both text parts go to the same disabled colour; 1st-gen tracked them
+ * separately but S2 has one disabled content colour. */
+:host([disabled]) {
+  --_swc-menu-item-background-color: token("menu-item-background-color-disabled");
+  --_swc-menu-item-label-color: token("disabled-content-color");
+  --_swc-menu-item-description-color: token("disabled-content-color");
+}
+
+/* The host owns focus, so the ring is drawn on the chrome element. Inset, so
+ * it is not clipped by the menu surface's own `overflow: auto`. */
+:host(:focus) .swc-MenuItem {
+  outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
+  outline-offset: calc(token("focus-ring-gap") * -1);
+}
+
+:host(:focus) {
+  outline: none;
+}
+
+/* ──────────────
+ *    SLOTS
+ * ────────────── */
+
+::slotted([slot="description"]) {
+  font-size: var(--_swc-menu-item-description-font-size);
+  line-height: var(--_swc-menu-item-description-line-height);
+  color: var(--_swc-menu-item-description-color);
+}
+
+/* Sized here rather than left to the icon's own intrinsic size so a row keeps
+ * its proportions across sizes. `box-sizing` is restated because the `*`
+ * reset above does not reach slotted light-DOM content. */
+::slotted([slot="visual"]) {
   box-sizing: border-box;
+  flex-shrink: 0;
+  inline-size: var(--_swc-menu-item-visual-size);
+  block-size: var(--_swc-menu-item-visual-size);
+  color: inherit;
+}
+
+@media (forced-colors: active) {
+  .swc-MenuItem {
+    border-radius: 0;
+  }
+
+  /* Forced colours flatten the background tints the states rely on, so the
+   * focused row is marked with a border instead. */
+  :host(:focus) .swc-MenuItem {
+    outline-color: Highlight;
+  }
+
+  :host([disabled]) .swc-MenuItem {
+    color: GrayText;
+  }
+
+  :host([disabled]) ::slotted([slot="description"]) {
+    color: GrayText;
+  }
 }

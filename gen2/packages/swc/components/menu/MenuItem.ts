@@ -49,13 +49,15 @@ export class MenuItem extends MenuItemBase {
 
   protected override render(): TemplateResult {
     return html`
-      <slot name="visual"></slot>
-      <div class="swc-MenuItem-text">
-        <slot name="label" @slotchange=${this.handleTextSlotChange}></slot>
-        <slot
-          name="description"
-          @slotchange=${this.handleTextSlotChange}
-        ></slot>
+      <div class="swc-MenuItem">
+        <slot name="visual"></slot>
+        <div class="swc-MenuItem-text">
+          <slot name="label" @slotchange=${this.handleTextSlotChange}></slot>
+          <slot
+            name="description"
+            @slotchange=${this.handleTextSlotChange}
+          ></slot>
+        </div>
       </div>
     `;
   }

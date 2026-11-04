@@ -15,7 +15,10 @@ import { expect, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import { Menu } from '@adobe/spectrum-wc/menu';
-import { MENU_PLACEMENTS } from '@adobe/spectrum-wc-core/components/menu';
+import {
+  MENU_PLACEMENTS,
+  MENU_VALID_SIZES,
+} from '@adobe/spectrum-wc-core/components/menu';
 
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc/components/menu/swc-menu.js';
@@ -39,9 +42,11 @@ export default meta;
 
 // Helpers
 //
-// No `size` axis: menu.css has no size-dependent rules, so all four would
-// render identically. No reduced-motion axis: it only zeroes the entry
-// transition, invisible in a still.
+// The placement stories carry no `size` axis: menu.css itself has no
+// size-dependent rules, so all four surfaces would render identically. Row
+// chrome does vary by size, which `RowPermutations` below covers instead. No
+// reduced-motion axis: it only zeroes the entry transition, invisible in a
+// still.
 
 // Top-layer surfaces don't expand their ancestor, hence the wide gaps.
 // Groups run horizontally: stacking pushed triggers off-viewport, where
@@ -225,6 +230,53 @@ const openManyMenusForVrt: NonNullable<Story['play']> = async ({
   (document.activeElement as HTMLElement | null)?.blur();
 };
 
+// Every row content shape, so a Chromatic diff shows padding, gap, text gap
+// and the stacked description at each size rather than one representative.
+const ROW_SHAPES = [
+  { name: 'label', visual: false, description: false, disabled: false },
+  { name: 'visual', visual: true, description: false, disabled: false },
+  { name: 'description', visual: false, description: true, disabled: false },
+  { name: 'both', visual: true, description: true, disabled: false },
+  { name: 'disabled', visual: true, description: true, disabled: true },
+] as const;
+
+const shapeRow = (shape: (typeof ROW_SHAPES)[number]) => html`
+  <swc-menu-item ?disabled=${shape.disabled}>
+    ${shape.visual
+      ? html`
+          <span slot="visual" aria-hidden="true">■</span>
+        `
+      : nothing}
+    <span slot="label">Paste special</span>
+    ${shape.description
+      ? html`
+          <span slot="description">Keeps the source formatting</span>
+        `
+      : nothing}
+  </swc-menu-item>
+`;
+
+// Rows are only styled inside a menu surface, so each size gets its own open
+// menu rather than bare rows on the page.
+const sizeMenus = (prefix: string) => html`
+  <div style="display: flex; gap: ${WIDE_ROW_GAP}px;">
+    ${MENU_VALID_SIZES.map(
+      (size) => html`
+        <div>
+          <swc-button id="${prefix}-${size}">${size}</swc-button>
+          <swc-menu
+            for="${prefix}-${size}"
+            size=${size}
+            placement="bottom-start"
+          >
+            ${ROW_SHAPES.map(shapeRow)}
+          </swc-menu>
+        </div>
+      `
+    )}
+  </div>
+`;
+
 // VRT stories
 
 export const Permutations: Story = {
@@ -278,3 +330,28 @@ export const ForcedColors: Story = {
   parameters: menuForcedColorsVrtParameters,
   play: openManyMenusForVrt,
 };
+
+// Row chrome: sizes against every content shape, in both themes, since the
+// background and content colours are `light-dark()` pairs.
+export const RowPermutations: Story = {
+  render: () => theme(vrtPage(sizeMenus('rows-light')), 'light', 'ltr'),
+  parameters: menuVrtParameters,
+  play: openManyMenusForVrt,
+};
+RowPermutations.storyName = 'Row permutations';
+
+export const RowPermutationsDark: Story = {
+  render: () => theme(vrtPage(sizeMenus('rows-dark')), 'dark', 'ltr'),
+  parameters: menuVrtParameters,
+  play: openManyMenusForVrt,
+};
+RowPermutationsDark.storyName = 'Row permutations (dark)';
+
+// Forced colours flatten the state backgrounds, so the row treatment needs
+// its own snapshot to show the disabled text and focus ring survive.
+export const RowForcedColors: Story = {
+  render: () => theme(vrtPage(sizeMenus('rows-forced')), 'light', 'ltr'),
+  parameters: menuForcedColorsVrtParameters,
+  play: openManyMenusForVrt,
+};
+RowForcedColors.storyName = 'Row forced colors';
