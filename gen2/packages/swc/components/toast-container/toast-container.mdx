@@ -76,11 +76,26 @@ ToastQueue.clear();
 
 These options apply to a toast when you add it. Changing them later does not affect toasts that are already in the queue. This differs from `placement` on the container, which updates right away.
 
-The queue keeps every toast you add, but the container renders only the newest one. When it closes, the next toast in the queue appears. The region label counts every queued toast, including the ones that are waiting.
+The queue keeps every toast you add, but the container renders only the newest one as a real toast. When it closes, the next toast in the queue appears. The region label counts every queued toast, including the ones that are waiting.
 
 `ToastQueue.close(key)` closes one toast and calls its `onClose`. `ToastQueue.clear()` removes all toasts and does not call any `onClose` callbacks. A toast that a listener keeps open by canceling its `swc-close` event stays in the queue and does not call `onClose`.
 
 Connect only one `<swc-toast-container>` per page. A second container logs a warning during development.
+
+### Stack
+
+When more than one toast is queued, empty layers appear behind the front toast to show that more are waiting. The newest toast is closest to the edge where the container is anchored, and the layers peek out on the opposite side. Each layer takes the color of its toast's variant. Only the first two layers are visible. Layers beyond them stay in the DOM at `opacity: 0`.
+
+The layers are decorative. They use `role="presentation"`, contain no content, and cannot receive focus, so Tab never reaches a toast that is behind the front one.
+
+<Canvas of={ToastContainerStories.Stack} />
+
+<Canvas of={ToastContainerStories.StackDepth} />
+
+When the focused toast closes and others remain, focus depends on how the user closed it:
+
+- With the keyboard, focus moves to the toast that takes its place.
+- With a pointer, focus returns to the element that was focused before the user entered the region, so the new front toast's timer is not left paused.
 
 ### Auto-dismiss
 
@@ -130,7 +145,6 @@ Each `<swc-toast>` has `role="alertdialog"`, `aria-modal="false"`, and `tabindex
 
 ## Upcoming features
 
-- A stacked presentation for waiting toasts, an expanded view, and actions to show all or clear all toasts.
-- Moving focus to the nearest remaining toast when a focused toast closes.
+- An expanded view, and actions to show all or clear all toasts.
 
 <DocsFooter />

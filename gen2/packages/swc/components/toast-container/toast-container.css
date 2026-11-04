@@ -10,7 +10,15 @@
  * governing permissions and limitations under the License.
  */
 
+/*
+ * The stack depth is real 3D: layers sit at the front toast's position and are
+ * pushed back along Z. The perspective origin lies beyond the edge away from
+ * the anchor, so layers peek out on that side. Hover moves the origin farther
+ * to reveal more of them.
+ */
 .swc-ToastContainer {
+  --_swc-toast-container-perspective-origin: -55px;
+
   position: fixed;
   inset-block: auto token("spacing-300");
   inset-inline: token("spacing-300");
@@ -25,6 +33,13 @@
   border-radius: token("corner-radius-700");
   overflow: visible;
   outline: none;
+  perspective: 80px;
+  perspective-origin: center var(--_swc-toast-container-perspective-origin);
+  transition: perspective-origin token("animation-duration-500") ease-in-out;
+}
+
+.swc-ToastContainer:hover {
+  --_swc-toast-container-perspective-origin: -95px;
 }
 
 .swc-ToastContainer:focus-visible {
@@ -34,10 +49,66 @@
 
 .swc-ToastContainer--top,
 .swc-ToastContainer--top-end {
+  --_swc-toast-container-perspective-origin: calc(100% + 55px);
+
   inset-block: token("spacing-300") auto;
 }
 
 .swc-ToastContainer--top-end,
 .swc-ToastContainer--bottom-end {
   margin-inline: auto 0;
+}
+
+.swc-ToastContainer--top:hover,
+.swc-ToastContainer--top-end:hover {
+  --_swc-toast-container-perspective-origin: calc(100% + 95px);
+}
+
+.swc-ToastContainer > swc-toast {
+  position: relative;
+  z-index: 1;
+}
+
+.swc-ToastContainer-layer {
+  --_swc-toast-container-layer-background-color: token("neutral-subdued-background-color-default");
+
+  position: absolute;
+  inset: 0;
+
+  /* Nearer layers paint above farther ones, and all stay behind the front toast. */
+  z-index: calc(-1 * var(--_swc-toast-container-layer-index));
+  background-color: var(--_swc-toast-container-layer-background-color);
+  border-radius: token("corner-radius-700");
+  pointer-events: none;
+  opacity: 1;
+  translate: 0 0 calc(-0.75rem * var(--_swc-toast-container-layer-index));
+}
+
+/* Only three toasts show in the stack, but every layer stays in the DOM. */
+.swc-ToastContainer-layer:nth-child(n + 3) {
+  opacity: 0;
+}
+
+.swc-ToastContainer-layer--info {
+  --_swc-toast-container-layer-background-color: token("informative-background-color-default");
+}
+
+.swc-ToastContainer-layer--positive {
+  --_swc-toast-container-layer-background-color: token("positive-background-color-default");
+}
+
+.swc-ToastContainer-layer--negative {
+  --_swc-toast-container-layer-background-color: token("negative-background-color-default");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .swc-ToastContainer {
+    transition-duration: 0ms;
+  }
+}
+
+@media (forced-colors: active) {
+  .swc-ToastContainer-layer {
+    border: token("border-width-100") solid CanvasText;
+  }
 }

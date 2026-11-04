@@ -17,6 +17,7 @@ import {
   TemplateResult,
 } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
+import { repeat } from 'lit/directives/repeat.js';
 
 import {
   ToastContainerBase,
@@ -116,12 +117,25 @@ export class ToastContainer extends ToastContainerBase {
         aria-label=${this.getRegionLabel(count)}
         @pointerenter=${this.handlePointerEnter}
         @pointerleave=${this.handlePointerLeave}
+        @pointerdown=${this.handlePointerDown}
+        @keydown=${this.handleKeyDown}
         @focusin=${this.handleFocusIn}
         @focusout=${this.handleFocusOut}
         @swc-close=${this.handleClose}
         @swc-after-close=${this.handleAfterClose}
         @swc-toast-action=${this.handleAction}
       >
+        ${repeat(
+          this.layerEntries,
+          (entry) => entry.key,
+          (entry, index) => html`
+            <div
+              class=${`swc-ToastContainer-layer swc-ToastContainer-layer--${entry.variant ?? 'neutral'}`}
+              role="presentation"
+              style=${`--_swc-toast-container-layer-index: ${index + 1}`}
+            ></div>
+          `
+        )}
         ${this._toast}
       </div>
     `;
