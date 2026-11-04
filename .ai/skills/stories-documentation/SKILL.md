@@ -334,6 +334,8 @@ export const States: Story = {
 };
 ```
 
+For a **form field**, the Disabled, Read-only, and Error states are values of `field-status`, not separate boolean attributes. Document them in the field's state sections, and cover the form participation points in [forms strategy RFC §3.9](../../../CONTRIBUTOR-DOCS/03_project-planning/05_strategies/forms-strategy-rfc.md#39-form-documentation-until-a-forms-page-exists), using `text-field.mdx` as the reference.
+
 **Pattern for complex states** (when animation or interaction is critical — states no longer combine into one story, so each gets its own per-story `### Title`):
 
 ```mdx
@@ -557,7 +559,7 @@ Component-names come in [X] sizes...
 
 The component exposes the following public methods...
 
-> **Migration note**: the `validate()` method from 1st-gen has been removed in gen2. Use the `invalid` property instead. See the [consumer migration guide](?path=/docs/components-<name>-migration-guide--docs) for full upgrade steps.
+> **Migration note**: the `validate()` method from 1st-gen has been removed in gen2. Set `field-status="invalid"` instead (for a form field), or use the component's own property. See the [consumer migration guide](?path=/docs/components-<name>-migration-guide--docs) for full upgrade steps.
 
 <Canvas of={Stories.Methods} />
 ```
