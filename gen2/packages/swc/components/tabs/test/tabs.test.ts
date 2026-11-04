@@ -2230,3 +2230,33 @@ export const ClearedTabIdRelinkTest: Story = {
     );
   },
 };
+
+export const ConsumerReplacedAriaTest: Story = {
+  render: () => html`
+    <swc-tabs selected="1" accessible-label="Consumer replaced ARIA test">
+      <swc-tab tab-id="1">Tab 1</swc-tab>
+      <swc-tab-panel tab-id="1"><p>Panel 1</p></swc-tab-panel>
+    </swc-tabs>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const tabs = await getComponent<Tabs>(canvasElement, 'swc-tabs');
+    const tab = await getComponent<Tab>(canvasElement, 'swc-tab');
+    const panel = await getComponent<TabPanel>(canvasElement, 'swc-tab-panel');
+    await settle(tabs, [tab, panel]);
+
+    await step(
+      'a consumer value set after a managed link is kept on unlink',
+      async () => {
+        expect(tab.getAttribute('aria-controls')).toBe(panel.id);
+        panel.id = 'consumer-panel';
+        tab.setAttribute('aria-controls', 'consumer-panel');
+        tabs.append(document.createElement('span'));
+        await settle(tabs, [tab, panel]);
+
+        canvasElement.append(panel);
+        await settle(tabs, [tab, panel]);
+        expect(tab.getAttribute('aria-controls')).toBe('consumer-panel');
+      }
+    );
+  },
+};

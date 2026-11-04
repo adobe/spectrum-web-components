@@ -935,6 +935,29 @@ describe('Tabs', () => {
       expect(panel.getAttribute('aria-labelledby')).to.equal('consumer-tab');
     });
 
+    it('keeps a consumer ARIA reference set after a managed link', async () => {
+      const el = await fixture<Tabs>(html`
+        <sp-tabs selected="first">
+          <sp-tab value="first">Tab 1</sp-tab>
+          <sp-tab-panel value="first">First tab content</sp-tab-panel>
+        </sp-tabs>
+      `);
+      await elementUpdated(el);
+
+      const tab = el.querySelector('sp-tab') as Tab;
+      const panel = el.querySelector('sp-tab-panel') as TabPanel;
+      expect(tab.getAttribute('aria-controls')).to.equal(panel.id);
+
+      panel.id = 'consumer-panel';
+      tab.setAttribute('aria-controls', 'consumer-panel');
+      el.append(document.createElement('span'));
+      await elementUpdated(el);
+
+      (el.parentElement as HTMLElement).append(panel);
+      await elementUpdated(el);
+      expect(tab.getAttribute('aria-controls')).to.equal('consumer-panel');
+    });
+
     it('does not match a cleared tab value through the stale attribute', async () => {
       const el = await fixture<Tabs>(html`
         <sp-tabs selected="first">

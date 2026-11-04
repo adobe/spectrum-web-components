@@ -507,10 +507,15 @@ export abstract class TabsBase extends SpectrumElement {
     value: string,
     managed: WeakMap<T, string>
   ): void {
-    if (managed.has(el) || el.getAttribute(name) !== value) {
-      el.setAttribute(name, value);
-      managed.set(el, value);
+    if (el.getAttribute(name) === value) {
+      // Keep ownership only if this component set this exact value.
+      if (managed.get(el) !== value) {
+        managed.delete(el);
+      }
+      return;
     }
+    el.setAttribute(name, value);
+    managed.set(el, value);
   }
 
   /**
