@@ -841,6 +841,38 @@ export const DetailOverflowVisibilityTest: Story = {
         freshStep.remove();
       }
     );
+
+    await step(
+      'a short, non-overflowing description does not get a tabindex',
+      async () => {
+        // Regression: the sticky fade pseudo-elements (see .css) reserve
+        // their own negative-margined layout space inside the scroll
+        // region, which can inflate `scrollHeight` even when the content
+        // doesn't visually overflow. A short description must not be
+        // measured as overflowing because of that.
+        const shortStep = document.createElement(
+          'swc-response-status-step'
+        ) as ResponseStatusStep;
+        shortStep.setAttribute('status', 'complete');
+        shortStep.innerHTML = `
+          <span slot="label">Short step</span>
+          <span slot="description">A short one-line description.</span>
+        `;
+        canvasElement.appendChild(shortStep);
+        await shortStep.updateComplete;
+
+        shortStep.open = true;
+        await shortStep.updateComplete;
+        await new Promise((resolve) => requestAnimationFrame(resolve));
+
+        const shortRegion = shortStep.shadowRoot?.querySelector<HTMLElement>(
+          '.swc-ResponseStatusStep-detailScroll'
+        );
+        expect(shortRegion?.hasAttribute('tabindex')).toBe(false);
+
+        shortStep.remove();
+      }
+    );
   },
 };
 

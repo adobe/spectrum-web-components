@@ -256,11 +256,19 @@ export class ResponseStatusStep extends SpectrumElement {
     const region = this.shadowRoot?.querySelector<HTMLElement>(
       '.swc-ResponseStatusStep-detailScroll'
     );
-    if (!region) {
+    // `region.scrollHeight` itself isn't reliable here: its sticky fade
+    // pseudo-elements (see .css) use negative margins that can inflate
+    // scrollHeight even when the content doesn't visually overflow. `.detail`
+    // wraps only the slotted content with no sticky children of its own, so
+    // its scrollHeight reflects the content's real rendered height.
+    const content = this.shadowRoot?.querySelector<HTMLElement>(
+      '.swc-ResponseStatusStep-detail'
+    );
+    if (!region || !content) {
       return;
     }
 
-    const overflows = region.scrollHeight - region.clientHeight > 1;
+    const overflows = content.scrollHeight - region.clientHeight > 1;
     if (overflows !== this._overflows) {
       this._overflows = overflows;
     }
