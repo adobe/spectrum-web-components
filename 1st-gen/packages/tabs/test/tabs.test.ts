@@ -838,6 +838,66 @@ describe('Tabs', () => {
         `transform: translateX(${second.offsetLeft}px) scaleX(${width / 100});`
       );
     });
+
+    it('links a plain role="tab" element to its panel by the value attribute', async () => {
+      const el = await fixture<Tabs>(html`
+        <sp-tabs selected="plain">
+          <div role="tab" id="plain-tab" value="plain">Plain tab</div>
+          <sp-tab-panel value="plain">Plain tab content</sp-tab-panel>
+        </sp-tabs>
+      `);
+      await elementUpdated(el);
+
+      const tab = el.querySelector('#plain-tab') as HTMLElement;
+      const panel = el.querySelector('sp-tab-panel') as TabPanel;
+      expect(tab.getAttribute('aria-controls')).to.equal(panel.id);
+      expect(panel.getAttribute('aria-labelledby')).to.equal('plain-tab');
+    });
+
+    it('clears tab aria-controls when its panel is removed', async () => {
+      const el = await fixture<Tabs>(html`
+        <sp-tabs selected="first">
+          <sp-tab value="first">Tab 1</sp-tab>
+          <sp-tab value="second">Tab 2</sp-tab>
+          <sp-tab-panel value="first">First tab content</sp-tab-panel>
+          <sp-tab-panel value="second">Second tab content</sp-tab-panel>
+        </sp-tabs>
+      `);
+      await elementUpdated(el);
+
+      const [first, second] = [...el.querySelectorAll('sp-tab')] as Tab[];
+      const [firstPanel, secondPanel] = [
+        ...el.querySelectorAll('sp-tab-panel'),
+      ] as TabPanel[];
+      expect(second.getAttribute('aria-controls')).to.equal(secondPanel.id);
+
+      secondPanel.remove();
+      await elementUpdated(el);
+
+      expect(second.hasAttribute('aria-controls')).to.be.false;
+      expect(first.getAttribute('aria-controls')).to.equal(firstPanel.id);
+
+      const replacement = createPanel('second');
+      el.append(replacement);
+      await elementUpdated(el);
+      await elementUpdated(replacement);
+
+      expect(second.getAttribute('aria-controls')).to.equal(replacement.id);
+    });
+
+    it('preserves a consumer-provided aria-controls when no panel matches the tab', async () => {
+      const el = await fixture<Tabs>(html`
+        <sp-tabs selected="first">
+          <sp-tab value="first">Tab 1</sp-tab>
+          <sp-tab value="second" aria-controls="external-region">Tab 2</sp-tab>
+          <sp-tab-panel value="first">First tab content</sp-tab-panel>
+        </sp-tabs>
+      `);
+      await elementUpdated(el);
+
+      const second = el.querySelector('[value="second"]') as Tab;
+      expect(second.getAttribute('aria-controls')).to.equal('external-region');
+    });
   });
   it('updates selection indicator in response to tab updates', async () => {
     const el = await fixture<Tabs>(html`

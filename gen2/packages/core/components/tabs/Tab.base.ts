@@ -77,8 +77,10 @@ export abstract class TabBase extends SpectrumElement {
   public override connectedCallback(): void {
     super.connectedCallback();
 
-    // Assign the ID before the parent `swc-tabs` handles `slotchange`, so
-    // tabs added after the initial render can be linked to their panels.
+    // Set the role and ID before the parent `swc-tabs` handles `slotchange`,
+    // so tabs added after the initial render are picked up and linked to
+    // their panels.
+    this.setAttribute('role', 'tab');
     if (!this.hasAttribute('id')) {
       this.id = `swc-tab-${tabIdCounter++}`;
     }
@@ -86,8 +88,6 @@ export abstract class TabBase extends SpectrumElement {
 
   protected override firstUpdated(changes: PropertyValues): void {
     super.firstUpdated(changes);
-
-    this.setAttribute('role', 'tab');
 
     this.syncAriaSelected();
     this.syncAriaDisabled();

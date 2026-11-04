@@ -247,6 +247,8 @@ export abstract class TabsBase extends SpectrumElement {
 
   private readonly managedPanelLabels = new WeakMap<TabPanelLike, string>();
 
+  private readonly managedTabControls = new WeakMap<TabLike, string>();
+
   /**
    * @internal
    *
@@ -300,8 +302,9 @@ export abstract class TabsBase extends SpectrumElement {
 
   /**
    * Whether an assigned node is treated as a tab. `role="tab"` is set in
-   * each tab's `firstUpdated`, so `slotchange` may run before that — accept
-   * known tab host tag names so the tab list and selection indicator sync.
+   * each tab's `connectedCallback`, but a `swc-tab` that is not yet defined
+   * when `slotchange` runs has no role — accept the tag name so it is still
+   * registered.
    */
   private static isTabSlotNode(el: Element): el is TabLike {
     if (!(el instanceof HTMLElement)) {
@@ -442,17 +445,26 @@ export abstract class TabsBase extends SpectrumElement {
    * Wires up cross-element ARIA relationships between tabs and
    * panels. Each tab gets `aria-controls` pointing at its panel's
    * `id`, and each panel gets `aria-labelledby` pointing at its
-   * tab's `id`.
+   * tab's `id`. Values set here are removed when the link goes away;
+   * consumer-provided values are kept.
    */
   private managePanels(panels: TabPanelLike[]): void {
+    const linkedTabs = new Set<TabLike>();
+
     for (const panel of panels) {
       const { tabId, id } = panel;
+      // Plain `role="tab"` elements have no `tabId` property, so fall back
+      // to the attribute.
       const tab = tabId
-        ? this._tabs.find((el) => el.tabId === tabId)
+        ? this._tabs.find(
+            (el) => (el.tabId || el.getAttribute('tab-id')) === tabId
+          )
         : undefined;
 
       if (tab) {
         tab.setAttribute('aria-controls', id);
+        this.managedTabControls.set(tab, id);
+        linkedTabs.add(tab);
         panel.setAttribute('aria-labelledby', tab.id);
         this.managedPanelLabels.set(panel, tab.id);
       } else {
@@ -466,6 +478,18 @@ export abstract class TabsBase extends SpectrumElement {
       }
 
       panel.selected = tabId === this.selected;
+    }
+
+    for (const tab of this._tabs) {
+      if (linkedTabs.has(tab)) {
+        continue;
+      }
+      if (
+        tab.getAttribute('aria-controls') === this.managedTabControls.get(tab)
+      ) {
+        tab.removeAttribute('aria-controls');
+      }
+      this.managedTabControls.delete(tab);
     }
   }
 

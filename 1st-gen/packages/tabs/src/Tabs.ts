@@ -162,6 +162,8 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
 
   private readonly managedPanelLabels = new WeakMap<TabPanel, string>();
 
+  private readonly managedTabControls = new WeakMap<Tab, string>();
+
   @query('#list')
   private tabList!: HTMLDivElement;
 
@@ -375,13 +377,20 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
   }
 
   private linkPanels(panels: TabPanel[]): void {
+    const linkedTabs = new Set<Tab>();
     panels.map((panel) => {
       const { value, id } = panel;
+      // Plain `role="tab"` elements have no `value` property, so fall back
+      // to the attribute.
       const tab = value
-        ? this.tabs.find((el) => el.value === value)
+        ? this.tabs.find(
+            (el) => (el.value || el.getAttribute('value')) === value
+          )
         : undefined;
       if (tab) {
         tab.setAttribute('aria-controls', id);
+        this.managedTabControls.set(tab, id);
+        linkedTabs.add(tab);
         panel.setAttribute('aria-labelledby', tab.id);
         this.managedPanelLabels.set(panel, tab.id);
       } else {
@@ -394,6 +403,17 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
         this.managedPanelLabels.delete(panel);
       }
       panel.selected = value === this.selected;
+    });
+    this.tabs.forEach((tab) => {
+      if (linkedTabs.has(tab)) {
+        return;
+      }
+      if (
+        tab.getAttribute('aria-controls') === this.managedTabControls.get(tab)
+      ) {
+        tab.removeAttribute('aria-controls');
+      }
+      this.managedTabControls.delete(tab);
     });
   }
 
