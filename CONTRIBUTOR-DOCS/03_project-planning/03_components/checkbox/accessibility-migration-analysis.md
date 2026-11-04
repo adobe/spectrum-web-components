@@ -41,10 +41,21 @@ This doc tells you how **`swc-checkbox`** should work for **accessibility**, tar
 
 The defining difference from [`swc-radio`](../radio/accessibility-migration-analysis.md) is that **a checkbox is a complete control on its own**. A single checkbox is a valid, common pattern (for example a required "I agree to the terms of service" box), so `swc-checkbox` keeps its own Tab stop, its own accessible name, its own `invalid`/`required` state, and its own form participation, whether or not it is inside a group. When checkboxes are grouped, the group is **multi-select**: every item is an independent boolean, unlike a radio group's single mutually-exclusive value. Because of that, this doc treats `swc-checkbox` as the primary, self-contained unit and defers only the group-wide concerns (a shared visible label, "select at least one" validation) to the checkbox group.
 
+> ⚠️ **Important:** The [migration plan's decision log](./migration-plan.md#decision-log) supersedes these statements in this doc, and the implementation follows the plan:
+>
+> - **Host `tabIndex`:** the host has no default `tabindex` and no host/input `tabindex` swap. `delegatesFocus` gives the checkbox one Tab stop, a host `tabindex="-1"` removes it, and native `disabled` on the input skips it (B6, C3).
+> - **Status properties:** `disabled`, `readonly`, and `invalid` are values of one `field-status` attribute (B22).
+> - **Label wiring:** the `label` slot names the input through an in-shadow `<label for>`, not `ariaLabelledByElements`; `accessible-labelledby` still uses element references (Q13).
+> - **Description with error text:** `error-text` replaces `description` while invalid, in the rendering and in the description association (Q7).
+> - **Invalid inside a group:** the group owns the invalid state and its message, not each item (B18).
+> - **`required`:** native `required` on the input supplies the implicit `aria-required`; no explicit attribute is set.
+> - **axe:** the roleless host's `label` false positive wasn't observed, so no exclusion is needed so far.
+> - **<kbd>Enter</kbd>:** it doesn't toggle, but in a form with a submit button it submits the form, as on a native checkbox (C11).
+
 ### Also read
 
 - [Checkbox migration roadmap](./rendering-and-styling-migration-analysis.md) for layout, CSS, and DOM.
-- Checkbox group accessibility migration analysis, for the multi-select container that supplies a group label and group-level validation across a set of checkboxes (not yet written as of this doc; whether the group ships as part of the checkbox epic or as a migrated `swc-field-group` is a research spike, [SWC-2548](https://jira.corp.adobe.com/browse/SWC-2548)).
+- [Checkbox group accessibility migration analysis](../checkbox-group/accessibility-migration-analysis.md), for the multi-select container that supplies a group label and group-level validation across a set of checkboxes.
 - [Radio accessibility migration analysis](../radio/accessibility-migration-analysis.md), the single-select sibling pattern, for the contrast in how selection, form value, and keyboard focus are owned.
 - [Forms Strategy: 2nd-Gen Proposal](../../05_strategies/forms-strategy-rfc.md), specifically [§3.1](../../05_strategies/forms-strategy-rfc.md#31-form-participation-elementinternals--face) on form participation and [§3.2](../../05_strategies/forms-strategy-rfc.md#32-where-aria-roles-live) on where the ARIA role lives.
 

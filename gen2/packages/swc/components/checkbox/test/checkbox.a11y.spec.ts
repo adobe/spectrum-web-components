@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { expect, test } from '@playwright/test';
+import { expect, type Locator, type Page, test } from '@playwright/test';
 
 import type { Checkbox } from '@adobe/spectrum-wc/checkbox';
 
@@ -19,9 +19,10 @@ import { gotoStory } from '../../../utils/a11y-helpers.js';
 /**
  * Accessibility tests for the gen2 Checkbox component.
  *
- * Tests that need trusted input, which play functions can't produce. Each
- * test configures the Playground story because the CI Storybook build
- * excludes `test/*.test.ts` stories.
+ * ARIA snapshots, name and state checks, and tests that need trusted pointer
+ * or keyboard input, which play functions can't produce. aXe runs through
+ * test-storybook. Each test configures the Playground story because the CI
+ * Storybook build excludes `test/*.test.ts` stories.
  */
 
 const PLAYGROUND = 'components-checkbox--playground';
@@ -186,5 +187,337 @@ test.describe('Checkbox - Trusted input', () => {
     }
     await expect(checkbox).toHaveJSProperty('indeterminate', true);
     await expect(checkbox).toHaveJSProperty('checked', true);
+  });
+});
+
+type SubmitLog = { submitters: string[] };
+
+/** Moves the Playground checkbox into a form and records each submitter id. */
+async function wrapInForm(checkbox: Locator): Promise<void> {
+  await checkbox.evaluate((element: Checkbox) => {
+    const form = document.createElement('form');
+    form.id = 'form';
+    element.replaceWith(form);
+    form.append(element);
+    const log: SubmitLog = { submitters: [] };
+    (window as Window & { __submits?: SubmitLog }).__submits = log;
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      log.submitters.push(event.submitter?.id ?? 'none');
+    });
+  });
+}
+
+function submitters(page: Page): () => Promise<string[] | undefined> {
+  return () =>
+    page.evaluate(
+      () => (window as Window & { __submits?: SubmitLog }).__submits?.submitters
+    );
+}
+
+/** Adds a native button; `where` places it relative to the form. */
+async function addButton(
+  page: Page,
+  id: string,
+  where: 'append' | 'prepend' | 'outside',
+  options: { disabled?: boolean } = {}
+): Promise<void> {
+  await page.evaluate(
+    ({ id, where, disabled }) => {
+      const form = document.querySelector('#form') as HTMLFormElement;
+      const button = document.createElement('button');
+      button.id = id;
+      button.type = 'submit';
+      button.textContent = id;
+      button.disabled = !!disabled;
+      if (where === 'outside') {
+        button.setAttribute('form', 'form');
+        form.after(button);
+      } else {
+        form[where](button);
+      }
+    },
+    { id, where, disabled: options.disabled }
+  );
+}
+
+/**
+ * Runs `change` after the checkbox's deferred Enter handler for the next
+ * keydown. Same-delay timers run in the order they're scheduled, and this
+ * listener runs after the inner input's, so no wait is needed.
+ */
+async function afterNextEnter(
+  checkbox: Locator,
+  change: 'add-submit' | 'remove-disabled'
+): Promise<void> {
+  await checkbox.evaluate((element: Checkbox, change) => {
+    element.addEventListener(
+      'keydown',
+      () => {
+        setTimeout(() => {
+          const form = document.querySelector('#form') as HTMLFormElement;
+          if (change === 'add-submit') {
+            const button = document.createElement('button');
+            button.id = 'submit';
+            button.type = 'submit';
+            form.append(button);
+          } else {
+            form.querySelector('#disabled')?.remove();
+          }
+        });
+      },
+      { once: true }
+    );
+  }, change);
+}
+
+test.describe('Checkbox - Accessibility', () => {
+  test('exposes role, name, and checked state from the inner input', async ({
+    page,
+  }) => {
+    const root = await gotoStory(page, PLAYGROUND, 'swc-checkbox');
+    const checkbox = root.locator('swc-checkbox');
+    await expect(root).toMatchAriaSnapshot(`
+      - checkbox "Send me product updates"
+    `);
+
+    for (const [setup, snapshot] of [
+      [{ checked: true }, '[checked]'],
+      [{ indeterminate: true }, '[checked=mixed]'],
+      [{ fieldStatus: 'disabled' }, '[disabled]'],
+    ] as const) {
+      await checkbox.evaluate(async (element: Checkbox, props) => {
+        element.checked = false;
+        element.indeterminate = false;
+        element.fieldStatus = undefined;
+        Object.assign(element, props);
+        await element.updateComplete;
+      }, setup);
+      await expect(root).toMatchAriaSnapshot(`
+        - checkbox "Send me product updates" ${snapshot}
+      `);
+    }
+  });
+
+  test('read-only, invalid, and required reach the inner input', async ({
+    page,
+  }) => {
+    const root = await gotoStory(page, PLAYGROUND, 'swc-checkbox');
+    const checkbox = root.locator('swc-checkbox');
+    const input = root.getByRole('checkbox', {
+      name: 'Send me product updates',
+    });
+
+    await checkbox.evaluate(async (element: Checkbox) => {
+      element.fieldStatus = 'readonly';
+      await element.updateComplete;
+    });
+    await expect(root).toMatchAriaSnapshot(`
+      - checkbox "Send me product updates"
+    `);
+    await expect(input).toHaveAttribute('aria-readonly', 'true');
+    await expect(input).toBeEnabled();
+
+    await checkbox.evaluate(async (element: Checkbox) => {
+      element.fieldStatus = 'invalid';
+      element.required = true;
+      await element.updateComplete;
+    });
+    await expect(root).toMatchAriaSnapshot(`
+      - checkbox "Send me product updates"
+    `);
+    await expect(input).toHaveAttribute('aria-invalid', 'true');
+    await expect(input).toHaveJSProperty('required', true);
+  });
+
+  test('accessible-labelledby and accessible-label take precedence over the label slot', async ({
+    page,
+  }) => {
+    const root = await gotoStory(page, PLAYGROUND, 'swc-checkbox');
+    const checkbox = root.locator('swc-checkbox');
+
+    await checkbox.evaluate(async (element: Checkbox) => {
+      element.accessibleLabel = 'Product updates';
+      await element.updateComplete;
+    });
+    await expect(root).toMatchAriaSnapshot(`
+      - checkbox "Product updates"
+    `);
+
+    // Playwright's name matchers don't follow element references across
+    // shadow roots, so assert the reference the browser ranks first.
+    const labelledBy = await checkbox.evaluate(async (element: Checkbox) => {
+      const heading = document.createElement('span');
+      heading.id = 'external-name';
+      heading.textContent = 'Newsletter';
+      element.before(heading);
+      element.accessibleLabelledby = 'external-name';
+      await element.updateComplete;
+      const input = element.shadowRoot?.querySelector('input');
+      return input?.ariaLabelledByElements?.map((ref) => ref.textContent);
+    });
+    expect(labelledBy).toEqual(['Newsletter']);
+  });
+
+  test('focus() and a host tabindex route through the inner input', async ({
+    page,
+  }) => {
+    const root = await gotoStory(page, PLAYGROUND, 'swc-checkbox');
+    const checkbox = root.locator('swc-checkbox');
+    const input = checkbox.locator('input');
+
+    await checkbox.evaluate((element: Checkbox) => element.focus());
+    await expect(input).toBeFocused();
+
+    await checkbox.evaluate(async (element: Checkbox) => {
+      element.blur();
+      for (const [id, place] of [
+        ['before', 'before'],
+        ['after', 'after'],
+      ] as const) {
+        const button = document.createElement('button');
+        button.id = id;
+        button.textContent = id;
+        element[place](button);
+      }
+      element.setAttribute('tabindex', '-1');
+      await element.updateComplete;
+    });
+    await page.locator('#before').focus();
+    await page.keyboard.press('Tab');
+    await expect(page.locator('#after')).toBeFocused();
+  });
+
+  test('Tab skips a disabled checkbox and stops on each enabled one', async ({
+    page,
+  }) => {
+    const root = await gotoStory(page, PLAYGROUND, 'swc-checkbox');
+    await root.evaluate(async (element) => {
+      element.innerHTML = `
+        <button id="before">Before</button>
+        <swc-checkbox id="first" accessible-label="First"></swc-checkbox>
+        <swc-checkbox id="disabled" field-status="disabled" accessible-label="Disabled"></swc-checkbox>
+        <swc-checkbox id="last" accessible-label="Last"></swc-checkbox>
+        <button id="after">After</button>
+      `;
+      await Promise.all(
+        Array.from(
+          element.querySelectorAll('swc-checkbox'),
+          (checkbox) => (checkbox as Checkbox).updateComplete
+        )
+      );
+    });
+
+    await page.locator('#before').focus();
+    await page.keyboard.press('Tab');
+    await expect(root.locator('#first input')).toBeFocused();
+    await page.keyboard.press('ArrowDown');
+    await expect(root.locator('#first input')).toBeFocused();
+    await page.keyboard.press('Tab');
+    await expect(root.locator('#last input')).toBeFocused();
+    await page.keyboard.press('Tab');
+    await expect(root.locator('#after')).toBeFocused();
+  });
+
+  test('autofocus focuses the inner input', async ({ page }) => {
+    const root = await gotoStory(page, PLAYGROUND, 'swc-checkbox');
+    await root.evaluate(async (element) => {
+      const checkbox = document.createElement('swc-checkbox');
+      checkbox.id = 'autofocused';
+      checkbox.setAttribute('autofocus', '');
+      checkbox.setAttribute('accessible-label', 'Autofocused');
+      element.append(checkbox);
+    });
+
+    await expect(root.locator('#autofocused input')).toBeFocused();
+  });
+
+  test('Enter submits through the default button and can be canceled', async ({
+    page,
+  }) => {
+    const root = await gotoStory(page, PLAYGROUND, 'swc-checkbox');
+    const checkbox = root.locator('swc-checkbox');
+    const input = checkbox.locator('input');
+    await wrapInForm(checkbox);
+    const submitted = submitters(page);
+
+    // With no submit button, Enter does nothing; the button arrives only after
+    // the handler has run, so the single submit comes from the second press.
+    await afterNextEnter(checkbox, 'add-submit');
+    await input.focus();
+    await page.keyboard.press('Enter');
+    await page.keyboard.press('Enter');
+    await expect.poll(submitted).toEqual(['submit']);
+    await expect(checkbox).toHaveJSProperty('checked', false);
+
+    await checkbox.evaluate((element: Checkbox) => {
+      element.addEventListener('keydown', (event) => event.preventDefault(), {
+        once: true,
+      });
+    });
+    await page.keyboard.press('Enter');
+    await page.keyboard.press('Enter');
+    await expect.poll(submitted).toEqual(['submit', 'submit']);
+  });
+
+  test('Enter uses the first submit button, including form-associated and read-only cases', async ({
+    page,
+  }) => {
+    const root = await gotoStory(page, PLAYGROUND, 'swc-checkbox');
+    const checkbox = root.locator('swc-checkbox');
+    const input = checkbox.locator('input');
+    await wrapInForm(checkbox);
+    const submitted = submitters(page);
+
+    await addButton(page, 'outside', 'outside');
+    await input.focus();
+    await page.keyboard.press('Enter');
+    await expect.poll(submitted).toEqual(['outside']);
+
+    await addButton(page, 'first', 'prepend');
+    await addButton(page, 'last', 'append');
+    await checkbox.evaluate(async (element: Checkbox) => {
+      element.fieldStatus = 'readonly';
+      await element.updateComplete;
+    });
+    await input.focus();
+    await page.keyboard.press('Enter');
+    await expect.poll(submitted).toEqual(['outside', 'first']);
+  });
+
+  test('Enter does nothing when the default button is disabled', async ({
+    page,
+  }) => {
+    const root = await gotoStory(page, PLAYGROUND, 'swc-checkbox');
+    const checkbox = root.locator('swc-checkbox');
+    const input = checkbox.locator('input');
+    await wrapInForm(checkbox);
+    const submitted = submitters(page);
+    await addButton(page, 'disabled', 'append', { disabled: true });
+    await addButton(page, 'enabled', 'append');
+
+    // The HTML spec skips implicit submission here; Chromium submits through
+    // the next button instead. Follow the spec, as swc-text-field does.
+    await afterNextEnter(checkbox, 'remove-disabled');
+    await input.focus();
+    await page.keyboard.press('Enter');
+    await page.keyboard.press('Enter');
+    await expect.poll(submitted).toEqual(['enabled']);
+  });
+
+  test('a blocked submit focuses the required checkbox', async ({ page }) => {
+    const root = await gotoStory(page, PLAYGROUND, 'swc-checkbox');
+    const checkbox = root.locator('swc-checkbox');
+    await wrapInForm(checkbox);
+    await addButton(page, 'submit', 'append');
+    await checkbox.evaluate(async (element: Checkbox) => {
+      element.required = true;
+      await element.updateComplete;
+    });
+
+    await page.locator('#submit').click();
+
+    await expect(checkbox.locator('input')).toBeFocused();
+    await expect.poll(submitters(page)).toEqual([]);
   });
 });

@@ -11,6 +11,7 @@
  */
 
 import { CSSResultArray, html, TemplateResult } from 'lit';
+import { ifDefined } from 'lit/directives/if-defined.js';
 
 import { CheckboxBase } from '@adobe/spectrum-wc-core/components/checkbox';
 
@@ -68,8 +69,15 @@ export class Checkbox extends CheckboxBase {
           class="swc-Checkbox-input"
           ?required=${this.required}
           ?disabled=${this.effectiveDisabled}
+          aria-readonly=${ifDefined(
+            this.fieldStatus === 'readonly' ? 'true' : undefined
+          )}
+          aria-invalid=${ifDefined(
+            this.fieldStatus === 'invalid' ? 'true' : undefined
+          )}
           @input=${this.handleInput}
           @change=${this.handleChange}
+          @keydown=${this.handleKeydown}
         />
         ${this.renderLabel(INPUT_ID)}
       </div>
