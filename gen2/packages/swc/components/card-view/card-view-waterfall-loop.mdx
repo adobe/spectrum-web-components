@@ -1,0 +1,28 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
+import * as Stories from './stories/card-view-waterfall-loop.stories';
+
+<Meta of={Stories} />
+
+<DocsHeader />
+
+## Anatomy
+
+`swc-card-view-waterfall-loop` places 50 unequal-height cards into the shortest available visual column. Each card contains a Picsum photo, selection checkbox, primary action, and Share action. The collection exposes one semantic row with 50 gridcells, independent of the visual layout.
+
+## Behaviors
+
+### Playground
+
+Arrow keys move spatially to enabled neighbors. At an edge, focus loops to the opposite edge of the overlapping visual band or column. Horizontal candidates must overlap vertically; vertical candidates must overlap horizontally. Waterfall bands are geometric relationships, not aligned horizontal rows or additional semantic rows.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## Accessibility
+
+We recommend a single-row grid for collection-position feedback such as "x of y." Stable one-based column indices describe semantic position, while visual geometry determines movement in this experiment. Screen reader announcements still need verification.
+
+Test whether looping across an overlapping band is predictable when waterfall cards have different heights. Sighted users see two-dimensional neighbors; users relying on semantics encounter one sequence and may not anticipate the same destination. The horizontal-neighbor problem remains open because waterfall cards do not share aligned rows. <kbd>Home</kbd> and <kbd>End</kbd> reach collection boundaries; <kbd>Space</kbd> toggles selection and <kbd>Enter</kbd> opens the active card.
+
+<DocsFooter />

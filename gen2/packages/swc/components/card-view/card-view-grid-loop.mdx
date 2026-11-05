@@ -1,0 +1,28 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
+import * as Stories from './stories/card-view-grid-loop.stories';
+
+<Meta of={Stories} />
+
+<DocsHeader />
+
+## Anatomy
+
+`swc-card-view-grid-loop` places 50 cards in uniform visual rows. Each card contains a Picsum photo, selection checkbox, primary action, and Share action. All cards belong to one semantic row, with one gridcell and one semantic column index per card.
+
+## Behaviors
+
+### Playground
+
+Arrow keys move spatially to enabled neighbors. At a visual boundary, focus loops to the opposite edge of the same visual row or column. It does not advance to the next row or column. Disabled cards are skipped.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## Accessibility
+
+We recommend a single-row grid for collection-position feedback such as "x of y." The grid exposes one row and 50 columns, with stable semantic indices regardless of responsive visual rows. Screen reader announcements require testing with actual assistive technology.
+
+This example tests whether same-row and same-column looping works for both sighted users navigating a two-dimensional grid and users who encounter one semantic sequence. Looping does not provide sequential access to every semantic neighbor. <kbd>Home</kbd> and <kbd>End</kbd> reach collection boundaries; <kbd>Space</kbd> toggles selection and <kbd>Enter</kbd> opens the active card.
+
+<DocsFooter />

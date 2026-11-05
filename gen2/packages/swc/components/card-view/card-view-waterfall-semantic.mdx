@@ -1,0 +1,35 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
+import * as Stories from './stories/card-view-waterfall-semantic.stories';
+
+<Meta of={Stories} />
+
+<DocsHeader />
+
+## Anatomy
+
+`swc-card-view-waterfall-semantic` places 50 unequal-height cards top to bottom within a visual column, then continues across columns. Each card contains a Picsum photo, selection checkbox, primary action, and Share action. The accessibility tree remains one semantic row with 50 gridcells and stable one-based column indices.
+
+## Behaviors
+
+### Playground
+
+<kbd>ArrowRight</kbd> and <kbd>ArrowDown</kbd> move to the next enabled semantic
+item. <kbd>ArrowLeft</kbd> and <kbd>ArrowUp</kbd> move to the previous enabled
+semantic item, independent of visual geometry and directionality. Traversal
+cycles at either end. Column-major placement makes semantic order follow the
+top-to-bottom visual reading order; visual columns proceed from the inline start
+in right-to-left layouts too.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+Compare [Waterfall top to bottom](./?path=/docs/components-card-view-waterfall-top-to-bottom--docs) for shortest-column placement with navigation based on visual column positions rather than collection indices.
+
+## Accessibility
+
+We recommend a single-row grid for collection-position feedback such as "x of y." The row count and 50 semantic columns describe collection position rather than physical rows and columns. Actual spoken output depends on the screen reader, browser, and navigation mode and needs verification.
+
+Semantic traversal avoids choosing a horizontal neighbor in a waterfall that has no aligned horizontal rows. Every enabled semantic item is reachable in order, but sighted users may expect <kbd>ArrowRight</kbd> to cross to a neighboring visual column rather than move down the current column. This tradeoff remains a keyboard-navigation research question, not another choice of semantics. <kbd>Home</kbd> and <kbd>End</kbd> reach collection boundaries; <kbd>Space</kbd> toggles selection and <kbd>Enter</kbd> opens the active card.
+
+<DocsFooter />

@@ -1,0 +1,47 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
+import * as Stories from './stories/card-view-waterfall-top-to-bottom.stories';
+
+<Meta of={Stories} />
+
+<DocsHeader />
+
+## Anatomy
+
+- The waterfall contains 50 cards. Each new card goes into the shortest visual column.
+- Each card contains a Picsum photo, a selection checkbox, an Open action, and a Share action.
+- The accessibility tree has one row with 50 gridcells. Each cell has a stable column index that describes its position in the collection.
+
+## Behaviors
+
+### Playground
+
+<kbd>ArrowDown</kbd> and <kbd>ArrowRight</kbd> move down the current visual
+column. After its last enabled card, focus moves to the top of the next column
+to the right. <kbd>ArrowUp</kbd> and <kbd>ArrowLeft</kbd> follow the same route
+in reverse.
+
+Navigation skips disabled cards. At the end of the last column, it returns to the first enabled card in the leftmost column. Reverse navigation cycles in the other direction. Columns are visited physically left to right, including in right-to-left layouts (RTL).
+
+<kbd>Home</kbd> reaches the first enabled card in the leftmost column.
+<kbd>End</kbd> reaches the last enabled card in the rightmost column. Resizing
+can change which cards belong to each column, so it can also change the
+navigation order.
+
+Unlike [Semantic waterfall](./?path=/docs/components-card-view-waterfall-semantic--docs), this example does not place cards in collection order down each column. It keeps shortest-column placement and chooses the next card from measured visual positions. The next visual card can have a nonconsecutive collection index.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## Accessibility
+
+We recommend a single-row grid for position feedback such as "7 of 50." Visual navigation does not change the order of the accessibility tree. Test whether skipped position numbers are clear to screen reader users. Also test whether sighted keyboard users expect <kbd>ArrowRight</kbd> to move down the current column. Spoken feedback depends on the screen reader, browser, and navigation mode.
+
+<kbd>Space</kbd> toggles selection. <kbd>Enter</kbd> opens the active card.
+<kbd>Tab</kbd> reaches the active card's checkbox and actions, then leaves the
+collection. Shift-selection ranges follow collection order, not visual
+navigation order.
+
+Test resizing, RTL, reverse navigation, disabled cards, and visible focus before choosing this policy.
+
+<DocsFooter />

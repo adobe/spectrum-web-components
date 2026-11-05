@@ -1,0 +1,28 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
+import * as Stories from './stories/card-view-waterfall-advance.stories';
+
+<Meta of={Stories} />
+
+<DocsHeader />
+
+## Anatomy
+
+`swc-card-view-waterfall-advance` places 50 unequal-height cards into the shortest available visual column. Each card contains a Picsum photo, selection checkbox, primary action, and Share action. One semantic row contains all 50 gridcells, each with its collection-order column index.
+
+## Behaviors
+
+### Playground
+
+Arrow keys first choose the nearest enabled visual neighbor with perpendicular overlap. At a horizontal edge, focus advances or retreats in visual top-to-bottom band order. At a vertical edge, it advances or retreats in column order. Traversal cycles at the outer collection boundary. These visual bands do not create semantic rows.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## Accessibility
+
+We recommend a single-row grid for collection-position feedback such as "x of y," keeping semantic indices stable as cards reflow. Actual positional announcements require screen reader and browser testing.
+
+This example tests whether advancement between waterfall bands gives a predictable route for both sighted keyboard users and users who encounter only one semantic sequence. Horizontal neighbors are still ambiguous because card heights differ and no aligned horizontal rows exist. Compare the resulting order with Waterfall Semantic. <kbd>Home</kbd> and <kbd>End</kbd> reach collection boundaries; <kbd>Space</kbd> toggles selection and <kbd>Enter</kbd> opens the active card.
+
+<DocsFooter />

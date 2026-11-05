@@ -1,0 +1,28 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
+import * as Stories from './stories/card-view-grid-advance.stories';
+
+<Meta of={Stories} />
+
+<DocsHeader />
+
+## Anatomy
+
+`swc-card-view-grid-advance` places 50 cards in uniform visual rows. Each card contains a Picsum photo, selection checkbox, primary action, and Share action. The accessibility tree remains one row with 50 gridcells and collection-order column indices.
+
+## Behaviors
+
+### Playground
+
+Arrow keys first move spatially to enabled neighbors. At a horizontal boundary, focus advances to the next visual row or retreats to the previous row. At a vertical boundary, focus advances to the next visual column or retreats to the previous column. Crossing the collection boundary cycles to the opposite end of the relevant traversal order.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## Accessibility
+
+We recommend a single-row grid for collection-position feedback such as "x of y," without changing semantics as the visual grid reflows. Actual positional speech depends on the screen reader and browser and still needs verification.
+
+This example tests whether advancement makes visual navigation compatible with a one-dimensional semantic collection. Visual row and column boundaries are not semantic boundaries, and vertical traversal can skip semantic neighbors. Compare that predictability with Grid Semantic. <kbd>Home</kbd> and <kbd>End</kbd> reach collection boundaries; <kbd>Space</kbd> toggles selection and <kbd>Enter</kbd> opens the active card.
+
+<DocsFooter />
