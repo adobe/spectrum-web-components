@@ -427,7 +427,7 @@ export const InvalidStateTest: Story = {
     await step(
       'invalid input never carries aria-errormessage (decision B9, describedby only)',
       () => {
-        // Decision B9 in accessibility-migration-analysis.md: gen2 associates
+        // Decision B9 in component-accessibility-specification.md: gen2 associates
         // the error via aria-describedby only, because AT support for
         // aria-errormessage is inconsistent while aria-describedby is universal.
         expect(
@@ -769,7 +769,7 @@ export const BindingsTest: Story = {
     await step(
       'placeholder passes through natively, not as aria-placeholder',
       () => {
-        // accessibility-migration-analysis.md (placeholder section): the
+        // component-accessibility-specification.md (placeholder section): the
         // browser exposes native `placeholder` to the a11y tree, so gen2 does
         // not duplicate via `aria-placeholder`.
         expect(

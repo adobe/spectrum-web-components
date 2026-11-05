@@ -11,6 +11,32 @@ index 9cc8051ce3da4a375b0b4fce80179987b6cf14d8..38eab65179f4370a3d369084d9f8315a
          window?.addEventListener?.("error", onError), window?.addEventListener?.("unhandledrejection", onUnhandledRejection), this.disableKeyListeners = !0;
          try {
            if (isMountDestructured ? await playFunction(context) : (context.mount = async () => {
+diff --git a/dist/manager/globals-runtime.js b/dist/manager/globals-runtime.js
+index a4b7a8798fc884d06c522db89dc84cbca5f863da..8dbc211aea33023dea1ad03e58480f76821e4561 100644
+--- a/dist/manager/globals-runtime.js
++++ b/dist/manager/globals-runtime.js
+@@ -62689,7 +62689,7 @@ var BUILT_IN_URL_TAG_MAP = {
+   );
+   return (item) => {
+     let tags2 = item.tags ?? [], isCsfAutodocsEntry = item.type === "docs" && !tags2.includes(Tag.ATTACHED_MDX) && !tags2.includes(Tag.UNATTACHED_MDX);
+-    return (tags2.includes(Tag.DEV) || isCsfAutodocsEntry) && tags2.filter((tag) => staticExcludeTags[tag]).length === 0;
++    return (tags2.includes(Tag.DEV) || item.type === "docs") && tags2.filter((tag) => staticExcludeTags[tag]).length === 0;
+   };
+ }, computeTagsFilterFn = (includedTagFilters, excludedTagFilters) => {
+   let computeFilterFunctions = (set3) => Object.values(
+diff --git a/dist/manager-api/index.js b/dist/manager-api/index.js
+index 5add741a32f606605dab47781467e36b63934a37..bf1a96add6919078cbaaa6d220ae73efda868418 100644
+--- a/dist/manager-api/index.js
++++ b/dist/manager-api/index.js
+@@ -1894,7 +1894,7 @@ var BUILT_IN_URL_TAG_MAP = {
+   );
+   return (item) => {
+     let tags = item.tags ?? [], isCsfAutodocsEntry = item.type === "docs" && !tags.includes(Tag.ATTACHED_MDX) && !tags.includes(Tag.UNATTACHED_MDX);
+-    return (tags.includes(Tag.DEV) || isCsfAutodocsEntry) && tags.filter((tag) => staticExcludeTags[tag]).length === 0;
++    return (tags.includes(Tag.DEV) || item.type === "docs") && tags.filter((tag) => staticExcludeTags[tag]).length === 0;
+   };
+ }, computeTagsFilterFn = (includedTagFilters, excludedTagFilters) => {
+   let computeFilterFunctions = (set2) => Object.values(
 diff --git a/dist/preview/runtime.js b/dist/preview/runtime.js
 index 3c4762f6e8f334fddf3e97c1cfb79b7a05779308..db23204bf65897df0ec64f61cf596f6a20327590 100644
 --- a/dist/preview/runtime.js
