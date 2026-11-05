@@ -463,9 +463,9 @@ Retain this section for any components with visual rendering, modifying as neede
 
 #### General
 
-- [ ] JSDoc on all public props, slots, and CSS custom properties
+- [x] JSDoc on all public props, slots, and CSS custom properties
 - [x] The component page covers the form participation points in [forms strategy §3.9](../../05_strategies/forms-strategy-rfc.md#39-form-documentation-until-a-forms-page-exists): errors set by the application, validation timing, `novalidate` and the submit handler, focus, status barring, reset, and styling hooks
-- [ ] Storybook stories cover both `swc-radio-group` and `swc-radio` together, since the item has no standalone docs page (per [`radio/migration-plan.md`](../radio/migration-plan.md))
+- [x] Storybook stories cover both `swc-radio-group` and `swc-radio` together, since the item has no standalone docs page (per [`radio/migration-plan.md`](../radio/migration-plan.md))
 
 #### Breaking changes
 

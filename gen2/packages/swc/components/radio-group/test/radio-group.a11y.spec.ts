@@ -38,10 +38,11 @@ test.describe('Radio group - ARIA snapshots', () => {
   }) => {
     const requiredRoot = await gotoStory(
       page,
-      'components-radio-group--required',
+      'components-radio-group--necessity-indicator',
       'swc-radio-group'
     );
-    await expect(requiredRoot.getByRole('radiogroup')).toHaveAttribute(
+    // The first group is required.
+    await expect(requiredRoot.getByRole('radiogroup').first()).toHaveAttribute(
       'aria-required',
       'true'
     );

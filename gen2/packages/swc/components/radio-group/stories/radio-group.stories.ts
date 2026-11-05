@@ -34,6 +34,10 @@ argTypes['field-status'] = {
 };
 args['field-status'] = undefined;
 
+/**
+ * Groups `swc-radio` items into a single selection that submits to forms under
+ * one name. `swc-radio` is only supported inside a radio group.
+ */
 const meta: Meta = {
   title: 'Radio group',
   component: 'swc-radio-group',
@@ -46,6 +50,9 @@ const meta: Meta = {
     actions: {
       handles: events,
     },
+    docs: {
+      subtitle: 'A set of options where only one can be selected',
+    },
   },
   tags: ['migrated', '!autodocs'],
 };
@@ -56,15 +63,16 @@ export default meta;
 //    HELPERS
 // ────────────────
 
+/** `description: null` omits the item description. */
 const radio = (
   value: string,
   label: string,
   attributes = '',
-  description = ''
+  description: string | null = `Description for ${label}`
 ): string => `
   <swc-radio value="${value}" ${attributes}>
     <span slot="label">${label}</span>
-    <span slot="description">${description ? `${description}` : `Description for ${label}`}</span>
+    ${description === null ? '' : `<span slot="description">${description}</span>`}
   </swc-radio>
 `;
 
@@ -74,9 +82,25 @@ const ITEMS = [
   radio('3', 'Option 3'),
 ].join('');
 
+// Items without descriptions, for compact layout comparisons.
+const PLAIN_ITEMS = [
+  radio('1', 'Option 1', '', null),
+  radio('2', 'Option 2', '', null),
+  radio('3', 'Option 3', '', null),
+].join('');
+
 const SIZES = ['s', 'm', 'l', 'xl'] as const;
 
-const group = (args: Record<string, unknown>, overrides = {}) =>
+const SHIPPING_ITEMS = html`
+  <swc-radio value="standard"><span slot="label">Standard</span></swc-radio>
+  <swc-radio value="express"><span slot="label">Express</span></swc-radio>
+`;
+
+// Use `''` to omit a slot; `undefined` renders the text "undefined".
+const group = (
+  args: Record<string, unknown>,
+  overrides: Record<string, unknown> = {}
+) =>
   template({
     ...args,
     'label-slot': 'Example radios',
@@ -95,8 +119,7 @@ const handleFormSubmit = async (event: SubmitEvent): Promise<void> => {
     return;
   }
 
-  // Clear the previous submit's error before checking the current constraints.
-  // Only `invalid`: clearing any status would also drop `disabled` and `readonly`.
+  // Clear only `invalid` so `disabled` and `readonly` survive.
   if (field.fieldStatus === 'invalid') {
     field.fieldStatus = undefined;
   }
@@ -143,8 +166,8 @@ export const Anatomy: Story = {
     ${group(args, {
       selected: '1',
       'default-slot': [
-        radio('1', 'Option 1', ''),
-        radio('2', 'Option 2', ''),
+        radio('1', 'Option 1'),
+        radio('2', 'Option 2', '', null),
       ].join(''),
     })}
   `,
@@ -155,6 +178,34 @@ export const Anatomy: Story = {
 //    OPTIONS STORIES
 // ──────────────────────────
 
+export const Labelling: Story = {
+  render: () => html`
+    <swc-radio-group selected="standard">
+      <span slot="label">Slotted label</span>
+      ${SHIPPING_ITEMS}
+    </swc-radio-group>
+    <swc-radio-group accessible-label="Shipping speed" selected="standard">
+      ${SHIPPING_ITEMS}
+    </swc-radio-group>
+    <section style="display: grid; gap: var(--swc-spacing-100);">
+      <h4 id="labelling-heading" class="swc-Heading swc-Heading--sizeXS">
+        Return shipping
+      </h4>
+      <swc-radio-group
+        accessible-labelledby="labelling-heading"
+        selected="standard"
+      >
+        ${SHIPPING_ITEMS}
+      </swc-radio-group>
+    </section>
+  `,
+  parameters: {
+    flexLayout: 'column-stretch',
+    styles: { gap: 'var(--swc-spacing-500)' },
+  },
+  tags: ['options'],
+};
+
 export const Sizes: Story = {
   render: (args) => html`
     ${SIZES.map(
@@ -163,17 +214,16 @@ export const Sizes: Story = {
           size,
           selected: '2',
           'label-slot': `Size ${size}`,
+          'description-slot': '',
+          'default-slot': PLAIN_ITEMS,
         })}
       `
     )}
   `,
   parameters: {
-    flexLayout: 'column-stretch',
-    styles: {
-      gap: 'var(--swc-spacing-500)',
-    },
+    flexLayout: 'row-wrap',
+    styles: { gap: 'var(--swc-spacing-500)' },
   },
-
   tags: ['options'],
 };
 
@@ -183,11 +233,13 @@ export const LabelPosition: Story = {
       'label-position': 'top',
       'label-slot': 'Top label',
       selected: '1',
+      'default-slot': PLAIN_ITEMS,
     })}
     ${group(args, {
       'label-position': 'side',
       'label-slot': 'Side label',
       selected: '1',
+      'default-slot': PLAIN_ITEMS,
     })}
   `,
   parameters: {
@@ -196,6 +248,7 @@ export const LabelPosition: Story = {
   },
   tags: ['options'],
 };
+LabelPosition.storyName = 'Label position';
 
 export const NecessityIndicator: Story = {
   render: (args) => html`
@@ -203,23 +256,27 @@ export const NecessityIndicator: Story = {
       required: true,
       'necessity-indicator': 'icon',
       'label-slot': 'Icon',
+      'default-slot': PLAIN_ITEMS,
     })}
     ${group(args, {
       required: true,
       'necessity-indicator': 'label',
       'label-slot': 'Label',
+      'default-slot': PLAIN_ITEMS,
     })}
     ${group(args, {
       'necessity-indicator': 'label',
       'label-slot': 'Label',
+      'default-slot': PLAIN_ITEMS,
     })}
   `,
   parameters: {
-    flexLayout: 'column-center',
+    flexLayout: 'row-wrap',
     styles: { gap: 'var(--swc-spacing-500)' },
   },
   tags: ['options'],
 };
+NecessityIndicator.storyName = 'Necessity indicator';
 
 export const Orientation: Story = {
   render: (args) => html`
@@ -227,11 +284,15 @@ export const Orientation: Story = {
       orientation: 'vertical',
       'label-slot': 'Vertical',
       selected: '1',
+      'description-slot': '',
+      'default-slot': PLAIN_ITEMS,
     })}
     ${group(args, {
       orientation: 'horizontal',
       'label-slot': 'Horizontal',
       selected: '1',
+      'description-slot': '',
+      'default-slot': PLAIN_ITEMS,
     })}
   `,
   parameters: {
@@ -243,24 +304,26 @@ export const Orientation: Story = {
 
 export const Emphasized: Story = {
   render: (args) => html`
-    ${group(args, { emphasized: true, selected: '1' })}
-  `,
-  tags: ['options'],
-};
-
-export const WithItemDescription: Story = {
-  render: (args) => html`
     ${group(args, {
+      'label-slot': 'Default',
       selected: '1',
-      'default-slot': [
-        radio('1', 'Option 1', ''),
-        radio('2', 'Option 2', ''),
-      ].join(''),
+      'description-slot': '',
+      'default-slot': PLAIN_ITEMS,
+    })}
+    ${group(args, {
+      'label-slot': 'Emphasized',
+      emphasized: true,
+      selected: '1',
+      'description-slot': '',
+      'default-slot': PLAIN_ITEMS,
     })}
   `,
+  parameters: {
+    flexLayout: 'row-wrap',
+    styles: { gap: 'var(--swc-spacing-500)' },
+  },
   tags: ['options'],
 };
-WithItemDescription.storyName = 'Item description';
 
 // ──────────────────────────
 //    STATES STORIES
@@ -268,8 +331,17 @@ WithItemDescription.storyName = 'Item description';
 
 export const Selection: Story = {
   render: (args) => html`
-    ${group(args, { 'label-slot': 'Nothing selected' })}
-    ${group(args, { 'label-slot': 'Option 2 selected', selected: '2' })}
+    ${group(args, {
+      'label-slot': 'Nothing selected',
+      'description-slot': '',
+      'default-slot': PLAIN_ITEMS,
+    })}
+    ${group(args, {
+      'label-slot': 'Option 2 selected',
+      selected: '2',
+      'description-slot': '',
+      'default-slot': PLAIN_ITEMS,
+    })}
   `,
   parameters: {
     flexLayout: 'row-wrap',
@@ -295,9 +367,7 @@ export const Disabled: Story = {
       ].join(''),
     })}
   `,
-  // axe reports false-positive contrast failures: WCAG 1.4.3 exempts text in
-  // an inactive component, but axe can't tell the slotted label and
-  // description spans belong to the disabled group.
+  // Skipped: axe flags disabled text contrast, which WCAG 1.4.3 exempts.
   parameters: {
     flexLayout: 'row-wrap',
     styles: { gap: 'var(--swc-spacing-500)' },
@@ -316,13 +386,6 @@ export const Invalid: Story = {
   tags: ['states'],
 };
 
-export const Required: Story = {
-  render: (args) => html`
-    ${group(args, { required: true })}
-  `,
-  tags: ['states'],
-};
-
 export const ReadOnly: Story = {
   render: (args) => html`
     ${group(args, { 'field-status': 'readonly', selected: '2' })}
@@ -334,30 +397,6 @@ ReadOnly.storyName = 'Read-only';
 // ──────────────────────────────
 //    BEHAVIORS STORIES
 // ──────────────────────────────
-
-export const TextWrapping: Story = {
-  render: (args) => html`
-    ${group(args, {
-      selected: '1',
-      'label-slot': `Text wrapping`,
-      'default-slot': [
-        radio(
-          '1',
-          'A long option label that wraps onto a second line to check alignment of the control and text',
-          '',
-          'A long description that also wraps to confirm spacing between lines'
-        ),
-        radio('2', 'Short option'),
-      ].join(''),
-    })}
-  `,
-  parameters: {
-    flexLayout: 'row-wrap',
-    styles: { 'max-inline-size': '40ch' },
-  },
-  tags: ['behaviors'],
-};
-TextWrapping.storyName = 'Text wrapping';
 
 export const FormParticipation: Story = {
   render: () => html`
@@ -390,4 +429,40 @@ export const FormParticipation: Story = {
     styles: { 'inline-size': 'min(240px, 100vw)' },
   },
   tags: ['behaviors'],
+};
+FormParticipation.storyName = 'Form participation';
+
+// ────────────────────────────────
+//    ACCESSIBILITY STORIES
+// ────────────────────────────────
+
+export const Accessibility: Story = {
+  render: () => html`
+    <div style="display: grid; gap: var(--swc-spacing-100);">
+      <p id="accessibility-delivery-note" style="margin: 0;">
+        Delivery times exclude weekends and holidays.
+      </p>
+      <swc-radio-group
+        accessible-describedby="accessibility-delivery-note"
+        selected="standard"
+      >
+        <span slot="label">Delivery speed</span>
+        <span slot="description">
+          You can change this until the order ships.
+        </span>
+        <swc-radio value="standard">
+          <span slot="label">Standard</span>
+          <span slot="description">3 to 5 business days</span>
+        </swc-radio>
+        <swc-radio value="express">
+          <span slot="label">Express</span>
+          <span slot="description">1 to 2 business days</span>
+        </swc-radio>
+      </swc-radio-group>
+    </div>
+  `,
+  parameters: {
+    styles: { 'max-inline-size': '40ch' },
+  },
+  tags: ['a11y'],
 };

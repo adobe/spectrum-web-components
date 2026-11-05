@@ -17,15 +17,18 @@ import { RadioBase } from '@adobe/spectrum-wc-core/components/radio-group';
 import styles from './radio.css';
 
 /**
- * A single selectable option within `swc-radio-group`.
+ * A single option within `swc-radio-group`. Size and emphasis come from the group.
  *
  * @element swc-radio
  * @since 2.0.0-beta.5
  *
- * @cssprop --swc-radio-control-size - Diameter of the radio control.
- * @cssprop --swc-radio-text-to-control - Space between the control and the text.
- * @cssprop --swc-radio-font-size - Font size of the label.
- * @cssprop --swc-radio-description-font-size - Font size of the description.
+ * @slot label - Visible label content.
+ * @slot description - Optional secondary text, included in the accessible name.
+ *
+ * @cssprop --swc-radio-control-size - Diameter of the radio control. Changes by size.
+ * @cssprop --swc-radio-text-to-control - Space between the control and the text. Changes by size.
+ * @cssprop --swc-radio-font-size - Font size of the label. Changes by size.
+ * @cssprop --swc-radio-description-font-size - Font size of the description. Changes by size.
  * @cssprop --swc-radio-border-color-default - Border color of the control at rest.
  * @cssprop --swc-radio-border-color-hover - Border color of the control on hover.
  * @cssprop --swc-radio-border-color-down - Border color of the control while pressed.

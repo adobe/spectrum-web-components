@@ -9,37 +9,79 @@ import * as RadioGroupStories from './stories/radio-group.stories';
 
 ## Anatomy
 
+A radio group consists of:
+
+- **Label** (optional), provided through the `label` slot: visible text that names the group
+- **Necessity indicator** (optional): an asterisk (`icon`) or `(required)`/`(optional)` text (`label`) appended to the label, controlled by `necessity-indicator` (see [Necessity indicator](#necessity-indicator))
+- **Description** (optional), provided through the `description` slot: guidance text for the whole group
+- **Error text** (optional), provided through the `error-text` slot: shown with an alert icon in place of the description while `field-status="invalid"`
+- **Radio items**: `swc-radio` elements in the default slot, each with:
+  - **Control**: a circle that shows a center dot when the item is checked
+  - **Label**, provided through the item's `label` slot
+  - **Description** (optional), provided through the item's `description` slot
+
+Labels and descriptions wrap onto multiple lines, and each control stays aligned with the first line of its label. `swc-radio` is only supported inside `swc-radio-group`. Used on its own, it logs a warning in debug mode.
+
 <Canvas of={RadioGroupStories.Anatomy} />
 
 ## Options
 
+### Labelling
+
+Three sources can provide the group's accessible name. When more than one is set, the first one in this order is announced:
+
+1. **`accessible-labelledby`**: space-separated element `id`s, resolved against the group's root node, for naming the group with content it does not own, such as a nearby heading.
+2. **`accessible-label`**: a string accessible name for a group with no visible label.
+3. **A slotted `label`**: the default for a group with a visible label.
+
+The examples show a slotted label, `accessible-label`, and `accessible-labelledby` referencing the "Return shipping" heading.
+
+<Canvas of={RadioGroupStories.Labelling} />
+
 ### Sizes
+
+Radio groups come in four sizes: small (`s`), medium (`m`), large (`l`), and extra-large (`xl`). Medium is the default. The group applies its `size` to every item, which changes the control size, font sizes, and spacing. Items do not have their own `size`.
 
 <Canvas of={RadioGroupStories.Sizes} />
 
 ### Label position
 
+The `label-position` attribute places the label above the items (`top`, the default) or beside them (`side`). In `side` position, the label column is at most `25ch` wide by default; set `--swc-field-label-max-inline-size` to change it.
+
 <Canvas of={RadioGroupStories.LabelPosition} />
 
 ### Necessity indicator
+
+Use `necessity-indicator` to choose how the visible label marks necessity:
+
+- `icon` (default): a decorative asterisk on required groups only.
+- `label`: "(required)" or "(optional)" on every group.
+
+Requires a visible label. Text indicators contribute to the accessible name, and the requirement is conveyed to assistive technology in both modes.
 
 <Canvas of={RadioGroupStories.NecessityIndicator} />
 
 ### Orientation
 
+The `orientation` attribute stacks items in a column (`vertical`, the default) or places them in a row (`horizontal`). Horizontal items wrap onto new rows when they do not fit. All four arrow keys move between items in either orientation.
+
 <Canvas of={RadioGroupStories.Orientation} />
 
 ### Emphasized
 
+The `emphasized` attribute applies to every item and draws the checked item's control in the accent color. Unchecked items are not affected.
+
 <Canvas of={RadioGroupStories.Emphasized} />
-
-### Item description
-
-<Canvas of={RadioGroupStories.WithItemDescription} />
 
 ## States
 
 ### Selection
+
+The `selected` attribute holds the `value` of the checked item. It is empty by default, so no item is selected until the user chooses one or you set `selected`. Give every item a unique `value`. Items that share a value can't be told apart, and a debug-mode warning flags them.
+
+On first render, an item with `checked` takes precedence over `selected`. If more than one item is checked, the first one wins and a debug-mode warning is logged. After that, set `selected` on the group to change the selection in code.
+
+When the user selects an item, the group fires a cancelable `change` event. Call `preventDefault()` to keep the previous selection. Setting `selected` in code does not fire `change`.
 
 <Canvas of={RadioGroupStories.Selection} />
 
@@ -52,6 +94,8 @@ The `field-status` attribute (`fieldStatus` property) accepts one status at a ti
 `field-status="disabled"` disables every item and prevents selection and <kbd>Tab</kbd> access. The group does not block form validation and is excluded from `FormData`. To style a disabled group from outside, select `:state(disabled)`, which also matches when a `<fieldset disabled>` ancestor disables the group.
 
 Use `field-status="readonly"` instead when users need to review the selection.
+
+To disable a single option, set `disabled` on that `swc-radio`. Arrow keys skip disabled items. When a group is disabled and then enabled again, items that were disabled on their own stay disabled.
 
 <Canvas of={RadioGroupStories.Disabled} />
 
@@ -73,15 +117,9 @@ Native validation, such as `required`, does not set `field-status="invalid"` aut
 
 ### Required
 
-`required` prevents a group with no selection from passing constraint validation. It does not set `field-status` or show an error. With a visible label, the default [necessity indicator](#necessity-indicator) adds a decorative asterisk.
-
-<Canvas of={RadioGroupStories.Required} />
+`required` prevents a group with no selection from passing constraint validation and sets `aria-required="true"`. It does not set `field-status` or show an error. With a visible label, the default [necessity indicator](#necessity-indicator) adds a decorative asterisk, as shown in the first necessity indicator example.
 
 ## Behaviors
-
-### Text wrapping
-
-<Canvas of={RadioGroupStories.TextWrapping} />
 
 ### Form participation
 
@@ -163,5 +201,42 @@ Reset restores the initial selection, which is the pre-checked item or the `sele
 - **Styling hooks**: style the invalid state from `field-status="invalid"`, and the disabled state from `:state(disabled)`. The group's `:invalid` match follows live validity, including before your application shows any error.
 
 </details>
+
+## Accessibility
+
+### Features
+
+#### Keyboard navigation
+
+- <kbd>Tab</kbd>: moves focus into the group, onto the selected item or onto the
+  first enabled item when nothing is selected. Entering the group does not
+  change the selection.
+- <kbd>Arrow keys</kbd>: move focus to the next or previous enabled item and
+  select it, wrapping at either end. <kbd>Left</kbd> and <kbd>Right</kbd> follow
+  the reading direction, including right-to-left.
+- <kbd>Home</kbd> and <kbd>End</kbd>: move focus to the first or last enabled
+  item and select it.
+- <kbd>Space</kbd>: selects the focused item.
+
+With `field-status="readonly"`, these keys move focus without changing the selection.
+
+#### ARIA implementation
+
+- **Group role and state**: the group is exposed as a `radiogroup` with `aria-required`, `aria-invalid`, and `aria-readonly`.
+- **Item role and state**: each `swc-radio` is exposed as a `radio` with `aria-checked`, `aria-disabled` when disabled, and its position in the set (`aria-posinset` and `aria-setsize`).
+- **Group name**: the browser announces one name, in the order `accessible-labelledby`, `accessible-label`, then the slotted label. See [Labelling](#labelling).
+- **Group description**: the slotted `description`, or the `error-text` while invalid, is associated through `aria-describedby`. An `accessible-describedby` reference is combined with it rather than replacing it. Error text is not a live region.
+- **Item name**: an item's label and description together form its accessible name.
+- **Debug-mode warnings**: the console warns when a group has no accessible name, sets both `accessible-label` and `accessible-labelledby`, references an `id` that does not exist, or has `aria-label` or `aria-labelledby` set on the host. It also warns about duplicate item values, more than one initially checked item, `swc-radio` used outside `swc-radio-group`, and unsupported attribute values.
+
+### Best practices
+
+- Prefer a slotted `label` so the group's name is visible. Use `accessible-label` or `accessible-labelledby` only when the group has no visible label of its own, and do not set both.
+- Set `accessible-label` or `accessible-labelledby` instead of `aria-label` or `aria-labelledby` on the host. Host ARIA attributes do not name the group.
+- Keep item descriptions short. Assistive technology reads them as part of each option's name.
+- Use `accessible-describedby` for guidance that lives outside the group, such as a note shared with other fields. This example combines an external note with the slotted description.
+- Always pair `field-status="invalid"` with slotted `error-text` so the error is not conveyed by color and icon alone.
+
+<Canvas of={RadioGroupStories.Accessibility} />
 
 <DocsFooter />

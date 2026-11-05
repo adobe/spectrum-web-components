@@ -34,19 +34,25 @@ const NECESSITY_INDICATOR_TEXT = {
  * @slot - The `swc-radio` items to manage.
  * @slot label - Visible group label.
  * @slot description - Group-level guidance text.
- * @slot error-text - Error message shown while `field-status="invalid"`.
+ * @slot error-text - Error message shown while `field-status="invalid"`; also the validation message.
  *
- * @cssprop --swc-radio-group-item-gap - Space between radio button items.
- * @cssprop --swc-radio-group-side-label-gap - Space between the radio items and the side label.
- * @cssprop --swc-radio-group-row-gap - Space between the labels and group of radio items.
+ * @fires change - User selection only, not `selected` changes in code. Cancelable; `preventDefault()` reverts it.
+ *
+ * @cssprop --swc-radio-group-item-gap - Space between items, or between wrapped rows when horizontal. Changes by size.
+ * @cssprop --swc-radio-group-side-label-gap - Space between a side label and the items. Changes by size.
+ * @cssprop --swc-radio-group-row-gap - Space between the label, items, and description. Changes by size.
  * @cssprop --swc-field-label-max-inline-size - `label-position="side"` only: max inline size of the label's grid column. Defaults to 25ch.
- * @cssprop --swc-form-field-label-font-size - Font size of the visible group label. Defaults to the group size typography scale.
- * @cssprop --swc-form-field-description-font-size - Font size of the description and error text. Defaults to the group size typography scale.
+ * @cssprop --swc-form-field-label-font-size - Font size of the visible group label. Changes by size.
+ * @cssprop --swc-form-field-description-font-size - Font size of the description and error text. Changes by size.
  * @cssprop --swc-form-field-necessity-gap - Space between the label text and the necessity indicator. Changes by size.
  * @cssprop --swc-form-field-invalid-icon-gap - Space between the error icon and the error message. Changes by size.
  *
  * @example
- * <swc-radio-group><swc-radio value="1"></swc-radio></swc-radio-group>
+ * <swc-radio-group name="shipping">
+ *   <span slot="label">Shipping method</span>
+ *   <swc-radio value="standard"><span slot="label">Standard</span></swc-radio>
+ *   <swc-radio value="express"><span slot="label">Express</span></swc-radio>
+ * </swc-radio-group>
  */
 export class RadioGroup extends RadioGroupBase {
   public static override get styles(): CSSResultArray {

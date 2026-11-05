@@ -462,8 +462,8 @@ Retain this section for any components with visual rendering, modifying as neede
 
 #### General
 
-- [ ] JSDoc on all public props, slots, and CSS custom properties
-- [ ] No standalone `swc-radio` Storybook docs page; document its sizes, emphasis, checked/unchecked, disabled, description, and standalone-usage dev-warning behavior (B15) as part of `swc-radio-group`'s docs page instead
+- [x] JSDoc on all public props, slots, and CSS custom properties
+- [x] No standalone `swc-radio` Storybook docs page; document its sizes, emphasis, checked/unchecked, disabled, description, and standalone-usage dev-warning behavior (B15) as part of `swc-radio-group`'s docs page instead
 
 #### Breaking changes
 
