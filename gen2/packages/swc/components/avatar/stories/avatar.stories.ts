@@ -102,7 +102,7 @@ export const Playground: Story = {
   args: {
     src: PLACEHOLDER_SRC,
     alt: 'Jane Doe',
-    size: '500',
+    size: '100',
     outline: false,
     disabled: false,
   },
@@ -118,7 +118,6 @@ export const Overview: Story = {
   args: {
     src: PLACEHOLDER_SRC,
     alt: 'Jane Doe',
-    size: '500',
   },
 };
 
