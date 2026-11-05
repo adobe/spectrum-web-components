@@ -143,6 +143,12 @@ export default defineConfig([
       '**/.tmp/**',
       '**/playwright-report/**',
       '**/test-results/**',
+      // The a11y suites write their HTML report and JUnit output here, not to
+      // `playwright-report/`. See `reportOutputFolder` / `junitOutputFile` in
+      // playwright.a11y.shared.config.ts. Both are gitignored, but eslint
+      // still walks them and chokes on the bundled report assets.
+      'gen2/test/playwright-a11y/report/**',
+      'gen2/test/playwright-a11y/results/**',
       '**/playwright.config.js',
       '**/*.d.ts',
       '1st-gen/packages/icons/src/icons-*.svg.ts',
