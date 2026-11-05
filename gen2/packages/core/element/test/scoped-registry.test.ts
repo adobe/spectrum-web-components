@@ -351,6 +351,50 @@ export const ScopedConsumerHelpersTest: Story = {
     });
 
     await step(
+      'ScopedElementMixin scopes a render that a controller runs on connection',
+      async () => {
+        // Lit notifies controllers right after it creates the render root, and
+        // a controller can render synchronously from `hostConnected()`.
+        class EagerView extends ScopedElementMixin(LitElement) {
+          constructor() {
+            super();
+            this.addController({ hostConnected: () => this.performUpdate() });
+          }
+
+          protected override render(): unknown {
+            return html`
+              <scoped-test-child></scoped-test-child>
+            `;
+          }
+        }
+        const registry = new CustomElementRegistry();
+        ScopedChildA.define(registry);
+        registry.define('scoped-test-eager-view', EagerView);
+
+        const view = await mount<EagerView>(registry, 'scoped-test-eager-view');
+        expect(
+          view.shadowRoot?.querySelector('scoped-test-child')
+        ).toBeInstanceOf(ScopedChildA);
+
+        // A light-DOM render root never calls attachShadow().
+        class EagerLightView extends EagerView {
+          protected override createRenderRoot(): HTMLElement {
+            return this;
+          }
+        }
+        registry.define('scoped-test-eager-light-view', EagerLightView);
+        const lightView = await mount<EagerLightView>(
+          registry,
+          'scoped-test-eager-light-view'
+        );
+        expect(lightView.querySelector('scoped-test-child')).toBeInstanceOf(
+          ScopedChildA
+        );
+        cleanup();
+      }
+    );
+
+    await step(
       'ScopedElementMixin scopes a light-DOM render root',
       async () => {
         class LightView extends ScopedElementMixin(LitElement) {

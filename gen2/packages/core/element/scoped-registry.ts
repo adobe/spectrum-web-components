@@ -90,6 +90,29 @@ function scopedOnly(
   return registry && registry !== globalRegistry ? registry : null;
 }
 
+// Makes `host` create its template content in the registry of its render root:
+// a scoped shadow root's registry, or else the host's own registry. The
+// registry is resolved when Lit clones a template, so this can be installed
+// before the render root exists. A creation scope the host already has wins.
+function useRenderRootRegistry(host: LitElement): void {
+  host.renderOptions.creationScope ??= {
+    importNode: (node, deep = false) => {
+      const root = host.renderRoot;
+      const registry = scopedOnly(
+        (root instanceof ShadowRoot ? root.customElementRegistry : null) ??
+          host.customElementRegistry,
+        host
+      );
+      return registry
+        ? host.ownerDocument.importNode(node, {
+            customElementRegistry: registry,
+            selfOnly: !deep,
+          })
+        : host.ownerDocument.importNode(node, deep);
+    },
+  };
+}
+
 /**
  * Makes a Lit element render with the registry the element was created in: its
  * shadow root uses that registry, and its template content is created in it.
@@ -110,6 +133,9 @@ export function ScopedElementMixin<T extends Constructor<LitElement>>(
       const registry =
         init.customElementRegistry ??
         scopedOnly(this.customElementRegistry, this);
+      if (scopedOnly(registry, this)) {
+        useRenderRootRegistry(this);
+      }
       return super.attachShadow(
         registry ? { ...init, customElementRegistry: registry } : init
       );
@@ -119,25 +145,19 @@ export function ScopedElementMixin<T extends Constructor<LitElement>>(
      * @internal
      */
     public override connectedCallback(): void {
+      // Lit creates the render root and notifies controllers, which can render
+      // synchronously, inside `super.connectedCallback()`, so set this first.
+      // It also covers shadow roots Lit reuses, such as declarative ones, and
+      // light-DOM render roots, which never call `attachShadow()`.
+      if (
+        scopedOnly(
+          this.shadowRoot?.customElementRegistry ?? this.customElementRegistry,
+          this
+        )
+      ) {
+        useRenderRootRegistry(this);
+      }
       super.connectedCallback();
-      // The render root exists now, and the first render hasn't run yet. Lit
-      // reuses an existing shadow root, such as a declarative one, and a
-      // light-DOM render root attaches none, so `attachShadow()` can't set this.
-      if (this.renderOptions.creationScope) {
-        return;
-      }
-      const root = this.renderRoot;
-      const registry = scopedOnly(
-        (root instanceof ShadowRoot ? root.customElementRegistry : null) ??
-          this.customElementRegistry,
-        this
-      );
-      if (registry) {
-        this.renderOptions.creationScope = creationScope(
-          this.ownerDocument,
-          registry
-        );
-      }
     }
   }
   return ScopedElement as unknown as T;
