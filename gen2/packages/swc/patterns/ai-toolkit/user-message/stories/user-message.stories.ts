@@ -10,12 +10,15 @@
  * governing permissions and limitations under the License.
  */
 
-import { html } from 'lit';
+import { html, type TemplateResult } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import '../../conversation-turn/swc-conversation-turn.js';
+import '../../upload-attachment/swc-upload-attachment.js';
 import '../swc-user-message.js';
+
+import { renderAttachmentPreview } from '../../stories/attachment-preview.js';
 
 // ────────────────
 //    METADATA
@@ -27,7 +30,10 @@ delete (argTypes as Record<string, unknown>).content;
 
 argTypes.type = {
   ...argTypes.type,
-  control: { type: 'select' },
+  control: {
+    type: 'select',
+    labels: { copy: 'Copy (default)' },
+  },
   options: ['copy', 'card', 'media'],
   table: {
     category: 'attributes',
@@ -35,18 +41,10 @@ argTypes.type = {
   },
 };
 
-// Wraps a single swc-user-message in a conversation turn for proper alignment.
-const withUserTurn = (story: () => unknown) => html`
-  <swc-conversation-turn type="user">${story()}</swc-conversation-turn>
-`;
-
 /**
  * User-authored message bubble. Use inside `<swc-conversation-turn type="user">` for thread alignment.
  *
- *
- * Note: This component does not sanitize slotted content. When rendering user-provided
- * or AI-generated markup, consumers must sanitize input to prevent XSS and
- * validate link targets. This is the consumer's responsibility.
+ * Consumers must sanitize user-provided or AI-generated markup and validate link targets.
  */
 const meta: Meta = {
   title: 'AI Toolkit/User message',
@@ -61,6 +59,13 @@ const meta: Meta = {
     },
     layout: 'padded',
   },
+  decorators: [
+    (story) => html`
+      <div style="max-inline-size:640px;">
+        <swc-conversation-turn type="user">${story()}</swc-conversation-turn>
+      </div>
+    `,
+  ],
   excludeStories: ['meta'],
   tags: ['migrated'],
 };
@@ -69,116 +74,121 @@ export { meta };
 export default meta;
 
 // ────────────────────
+//    HELPERS
+// ────────────────────
+
+const attachments = (type: unknown, count: number) => html`
+  ${Array.from({ length: count }, (_, index) =>
+    type === 'card'
+      ? html`
+          <swc-upload-attachment slot="thumbnail" type="card">
+            ${renderAttachmentPreview({
+              fileName: `Campaign reference ${index + 1}.pdf`,
+            })}
+            <span slot="title">Campaign reference ${index + 1}.pdf</span>
+            <span slot="subtitle">1.2 MB</span>
+          </swc-upload-attachment>
+        `
+      : html`
+          <img
+            slot="thumbnail"
+            src="images/card-preview.jpg"
+            alt="Photobook reference ${index + 1}"
+          />
+        `
+  )}
+`;
+
+const renderWithAttachments = (
+  storyArgs: typeof args,
+  content: TemplateResult
+) =>
+  template(
+    storyArgs,
+    storyArgs['thumbnail-slot'] || !storyArgs.type || storyArgs.type === 'copy'
+      ? undefined
+      : content
+  );
+
+// ────────────────────
 //    PLAYGROUND STORY
 // ────────────────────
 
 export const Playground: Story = {
   args: {
     type: 'copy',
-    'default-slot':
-      'Can you help me create a 45-minute presentation, with animations, for an executive update?',
-    'thumbnail-slot':
-      '<img src="https://placehold.co/180x180" alt="Placeholder" />',
-    'title-slot': 'Hilton commercial assets',
-    'subtitle-slot': '2026',
+    'default-slot': 'Can you summarize these campaign references?',
   },
-  decorators: [withUserTurn],
+  render: (args) => renderWithAttachments(args, attachments(args.type, 2)),
   tags: ['dev'],
 };
 
-// ──────────────────────────────
+// ──────────────────────────
 //    OVERVIEW STORY
-// ──────────────────────────────
+// ──────────────────────────
 
 export const Overview: Story = {
-  args: {
-    type: 'copy',
-    'default-slot':
-      'Can you help me create a 45-minute presentation, with animations, for an executive update?',
-    'thumbnail-slot':
-      '<img src="https://placehold.co/180x180" alt="Placeholder" />',
-    'title-slot': 'Hilton commercial assets',
-    'subtitle-slot': '2026',
-  },
-  decorators: [withUserTurn],
+  args: Playground.args,
+  render: Playground.render,
   tags: ['overview'],
 };
 
-// ──────────────────────────
-//    ANATOMY STORY
-// ──────────────────────────
-
-export const Anatomy: Story = {
-  args: {
-    'default-slot': 'Can you help me create a 45-minute presentation?',
-  },
-  decorators: [withUserTurn],
-  tags: ['anatomy'],
-};
-
-// ──────────────────────────
+// ────────────────────
 //    OPTIONS STORIES
-// ──────────────────────────
+// ────────────────────
 
-export const Content: Story = {
-  render: () => html`
-    <div
-      style="display:flex;flex-direction:column;gap:32px;max-inline-size:640px;"
-    >
-      <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-conversation-turn type="user">
-          <swc-user-message>
-            Can you help me create a 45-minute presentation, with animations,
-            for an executive update?
-          </swc-user-message>
-        </swc-conversation-turn>
-        <span class="swc-Detail swc-Detail--sizeS">Copy</span>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-conversation-turn type="user">
-          <swc-user-message type="card">
-            <div
-              slot="thumbnail"
-              style="inline-size:32px;block-size:32px;border-radius:3px;background:var(--swc-gray-200);flex-shrink:0;"
-              role="img"
-              aria-label="File"
-            ></div>
-            <span slot="title">Hilton commercial assets</span>
-            <span slot="subtitle">2026</span>
-          </swc-user-message>
-        </swc-conversation-turn>
-        <span class="swc-Detail swc-Detail--sizeS">Card</span>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:8px;">
-        <swc-conversation-turn type="user">
-          <swc-user-message type="media">
-            <div
-              slot="thumbnail"
-              style="background:linear-gradient(135deg,#a78bfa,#f472b6);"
-              role="img"
-              aria-label="Campaign preview"
-            ></div>
-            <span slot="title">Hilton commercial assets</span>
-            <span slot="subtitle">2026</span>
-          </swc-user-message>
-        </swc-conversation-turn>
-        <span class="swc-Detail swc-Detail--sizeS">Media</span>
-      </div>
-    </div>
-  `,
+export const Card: Story = {
+  args: { type: 'card' },
+  render: Playground.render,
   tags: ['options'],
 };
 
+export const Media: Story = {
+  args: { type: 'media' },
+  render: (args) =>
+    renderWithAttachments(
+      args,
+      args.type === 'card'
+        ? attachments('card', 4)
+        : html`
+            ${attachments('media', 2)}
+            ${['PDF', 'DOCX'].map(
+              (extension) => html`
+                <swc-upload-attachment
+                  slot="thumbnail"
+                  type="media"
+                  accessible-label=${`Campaign brief.${extension.toLowerCase()}`}
+                >
+                  ${renderAttachmentPreview({
+                    fileName: `Campaign brief.${extension.toLowerCase()}`,
+                  })}
+                  <span slot="title">
+                    Campaign brief.${extension.toLowerCase()}
+                  </span>
+                </swc-upload-attachment>
+              `
+            )}
+          `
+    ),
+  tags: ['options'],
+};
+
+// ──────────────────────────────
+//    BEHAVIORS STORIES
+// ──────────────────────────────
+
+export const Overflow: Story = {
+  args: { ...Playground.args, type: 'media' },
+  render: (args) => renderWithAttachments(args, attachments(args.type, 24)),
+  tags: ['behaviors'],
+};
+
 // ────────────────────────────────
-//    ACCESSIBILITY STORY
+//    ACCESSIBILITY STORIES
 // ────────────────────────────────
 
 export const Accessibility: Story = {
-  args: {
-    type: 'copy',
-    'default-slot':
-      'Can you help me create a 45-minute presentation, with animations, for an executive update?',
-  },
-  decorators: [withUserTurn],
+  args: Overflow.args,
+  render: Overflow.render,
   tags: ['a11y'],
 };

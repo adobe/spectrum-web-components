@@ -11,9 +11,11 @@
  */
 
 import { html, nothing } from 'lit';
+import { expect, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import '../../swc-user-message.js';
+import '../../../upload-attachment/swc-upload-attachment.js';
 
 import {
   createPermutations,
@@ -23,7 +25,8 @@ import {
   theme,
   vrtParameters,
 } from '../../../../../.storybook/helpers/index.js';
-import type { UserMessageType } from '../../UserMessage.js';
+import { renderAttachmentPreview } from '../../../stories/attachment-preview.js';
+import type { UserMessage, UserMessageType } from '../../UserMessage.js';
 
 // Metadata
 
@@ -52,27 +55,27 @@ type AttachmentSlots = 'titleAndSubtitle' | 'titleOnly' | 'truncated';
 
 type MessageCase = {
   type?: UserMessageType;
+  count?: number;
   slots?: AttachmentSlots;
   copy?: string;
   lang?: string;
   maxInlineSize?: string;
 };
 
-const cardThumbnail = html`
-  <img slot="thumbnail" src="images/card-preview.jpg" alt="File preview" />
-`;
+const cardThumbnail = renderAttachmentPreview({
+  fileName: 'Campaign brief.pdf',
+});
 
 const mediaThumbnail = html`
   <img slot="thumbnail" src="images/card-preview.jpg" alt="Campaign preview" />
 `;
 
-const attachmentSlots = (type: 'card' | 'media', slots: AttachmentSlots) => {
-  const thumbnail = type === 'card' ? cardThumbnail : mediaThumbnail;
+const attachmentSlots = (slots: AttachmentSlots) => {
   const title = slots === 'truncated' ? LONG_FILE_NAME : TITLE;
   const subtitle = slots === 'truncated' ? LONG_FILE_NAME : SUBTITLE;
 
   return html`
-    ${thumbnail}
+    ${cardThumbnail}
     <span slot="title">${title}</span>
     ${slots === 'titleOnly'
       ? nothing
@@ -83,22 +86,31 @@ const attachmentSlots = (type: 'card' | 'media', slots: AttachmentSlots) => {
 };
 
 const renderMessage = ({
-  type = 'copy',
+  type,
+  count = 1,
   slots = 'titleAndSubtitle',
   copy = SHORT_COPY,
   lang,
   maxInlineSize,
 }: MessageCase) => {
   const message =
-    type === 'copy'
+    !type || type === 'copy'
       ? html`
-          <swc-user-message type="copy" lang=${lang ?? nothing}>
+          <swc-user-message type=${type ?? nothing} lang=${lang ?? nothing}>
             ${copy}
           </swc-user-message>
         `
       : html`
           <swc-user-message type=${type} lang=${lang ?? nothing}>
-            ${attachmentSlots(type, slots)}
+            ${Array.from({ length: count }, () =>
+              type === 'card'
+                ? html`
+                    <swc-upload-attachment slot="thumbnail" type="card">
+                      ${attachmentSlots(slots)}
+                    </swc-upload-attachment>
+                  `
+                : mediaThumbnail
+            )}
           </swc-user-message>
         `;
 
@@ -118,22 +130,30 @@ const captioned = (content: unknown, label: string) => html`
   </div>
 `;
 
-// Type is the primary visual axis (copy bubble vs card vs media). Card and
-// media also cover title+subtitle vs title-only slot anatomy.
+// Card tiles also cover title+subtitle vs title-only slot anatomy.
 const SLOT_LABELS = {
   titleAndSubtitle: 'Title + subtitle',
   titleOnly: 'Title only',
 } as const satisfies Record<Exclude<AttachmentSlots, 'truncated'>, string>;
 
 const TYPE_PERMUTATIONS = createPermutations([
+  {},
   { type: ['copy'] },
-  { type: ['card', 'media'], slots: ['titleAndSubtitle', 'titleOnly'] },
+  { type: ['card'], slots: ['titleAndSubtitle', 'titleOnly'] },
+  { type: ['media'], count: [1, 2, 7] },
+  { type: ['card'], count: [2, 6] },
 ]);
 
 const renderTypePermutation = (permutation: MessageCase) => {
   const message = renderMessage(permutation);
+  if (permutation.count) {
+    return captioned(
+      message,
+      `${permutation.count} ${permutation.type === 'card' ? 'documents' : 'images'}`
+    );
+  }
   const { slots } = permutation;
-  // Copy is identifiable from its own text. Card/media title-only vs
+  // Copy is identifiable from its own text. Card title-only vs
   // title+subtitle are near-identical without a caption.
   return slots === 'titleAndSubtitle' || slots === 'titleOnly'
     ? captioned(message, SLOT_LABELS[slots])
@@ -150,6 +170,108 @@ const typeRows = () =>
     )
   );
 
+const mixedMediaRow = () =>
+  row(
+    [
+      html`
+        <swc-user-message type="media">
+          ${mediaThumbnail}
+          ${['PDF', 'DOCX', 'BIN'].map(
+            (extension) => html`
+              <swc-upload-attachment
+                slot="thumbnail"
+                type="media"
+                accessible-label=${`Campaign brief.${extension.toLowerCase()}`}
+              >
+                ${renderAttachmentPreview({
+                  fileName: `Campaign brief.${extension.toLowerCase()}`,
+                })}
+                <span slot="title">
+                  Campaign brief.${extension.toLowerCase()}
+                </span>
+              </swc-upload-attachment>
+            `
+          )}
+        </swc-user-message>
+      `,
+    ],
+    'Media: images and documents'
+  );
+
+const mixedCardRow = () =>
+  row(
+    [
+      html`
+        <swc-user-message type="card">
+          ${['JPG', 'PDF', 'DOCX', 'BIN'].map((extension) => {
+            const fileName = `Campaign brief.${extension.toLowerCase()}`;
+
+            return html`
+              <swc-upload-attachment
+                slot="thumbnail"
+                type="card"
+                accessible-label=${fileName}
+              >
+                ${renderAttachmentPreview({
+                  fileName,
+                  src:
+                    extension === 'JPG' ? 'images/card-preview.jpg' : undefined,
+                })}
+                <span slot="title">${fileName}</span>
+                <span slot="subtitle">2026</span>
+              </swc-upload-attachment>
+            `;
+          })}
+        </swc-user-message>
+      `,
+    ],
+    'Card: images and documents'
+  );
+
+const galleryOverflowRow = (type: 'media' | 'card' = 'media') =>
+  row(
+    [
+      html`
+        <div data-gallery-overflow data-attachment-type=${type}>
+          ${renderMessage({
+            type,
+            count: type === 'media' ? 24 : 14,
+            maxInlineSize: '480px',
+          })}
+        </div>
+      `,
+    ],
+    type === 'card' ? 'Document gallery overflow' : 'Gallery overflow'
+  );
+
+const verifyGalleryOverflow = async ({
+  canvasElement,
+}: {
+  canvasElement: HTMLElement;
+}) => {
+  for (const wrapper of canvasElement.querySelectorAll<HTMLElement>(
+    '[data-gallery-overflow]'
+  )) {
+    const gallery = wrapper.querySelector<UserMessage>('swc-user-message')!;
+    await gallery.updateComplete;
+    const viewport = gallery.shadowRoot!.querySelector<HTMLElement>(
+      '.swc-UserMessage-galleryViewport'
+    )!;
+    await waitFor(() => expect(viewport.getAttribute('tabindex')).toBe('0'));
+    viewport.scrollTop = 0;
+    if (
+      CSS.supports('animation-timeline: scroll()') &&
+      !matchMedia('(forced-colors: active)').matches
+    ) {
+      await waitFor(() =>
+        expect(
+          getComputedStyle(viewport).maskImage.match(/rgba?\(/g)?.length
+        ).toBe(2)
+      );
+    }
+  }
+};
+
 const extraRows = () => [
   // Narrow vs. capped column; the 75% cap normally lives on the parent turn,
   // so maxInlineSize reproduces it here in isolation.
@@ -163,15 +285,30 @@ const extraRows = () => [
         renderMessage({ copy: LONG_COPY, maxInlineSize: '75%' }),
         'Max inline size (75%)'
       ),
+      captioned(
+        renderMessage({ type: 'media', count: 7, maxInlineSize: '220px' }),
+        'Narrow gallery (220px)'
+      ),
+      captioned(
+        renderMessage({
+          type: 'card',
+          count: 6,
+          maxInlineSize: '220px',
+        }),
+        'Single-column document gallery (220px)'
+      ),
     ],
     'Wrapping'
   ),
-  // Unbroken filenames exercise the ellipsis rules on card and media title
-  // and subtitle slots.
+  // Unbroken filenames exercise the card tile's title and subtitle truncation.
   row(
     [
       renderMessage({ type: 'card', slots: 'truncated' }),
-      renderMessage({ type: 'media', slots: 'truncated' }),
+      renderMessage({
+        type: 'card',
+        slots: 'truncated',
+        maxInlineSize: '180px',
+      }),
     ],
     'Truncation'
   ),
@@ -194,7 +331,14 @@ const extraRows = () => [
   ),
 ];
 
-const permutationContent = () => [...typeRows(), ...extraRows()];
+const permutationContent = () => [
+  ...typeRows(),
+  mixedMediaRow(),
+  mixedCardRow(),
+  ...extraRows(),
+  galleryOverflowRow(),
+  galleryOverflowRow('card'),
+];
 
 // Renders content in light/ltr and dark/rtl (that pair covers both axes) in one
 // story so each matrix costs a single snapshot.
@@ -204,13 +348,14 @@ const bothThemes = (content: unknown) => html`
 
 // VRT stories
 
-// Copy / card / media types (including title-only attachment anatomy), wrapping
+// Copy / card / media types (including title-only card anatomy), wrapping
 // at a narrow column and at the 536px cap, ellipsis truncation, and CJK
 // line-height. User message has no :hover/:focus/:active rules of its own
 // (focus rings live on swc-conversation-turn), so there is no forced
 // pseudo-state row.
 export const Permutations: Story = {
   render: () => bothThemes(permutationContent()),
+  play: verifyGalleryOverflow,
   parameters: vrtParameters,
 };
 
@@ -218,6 +363,18 @@ export const Permutations: Story = {
 // transparent border. Those tokens do not vary across wrapping, truncation, or
 // CJK, so the three types are enough.
 export const ForcedColors: Story = {
-  render: () => theme(typeRows(), 'light', 'ltr'),
+  render: () =>
+    theme(
+      [
+        ...typeRows(),
+        mixedMediaRow(),
+        mixedCardRow(),
+        galleryOverflowRow(),
+        galleryOverflowRow('card'),
+      ],
+      'light',
+      'ltr'
+    ),
+  play: verifyGalleryOverflow,
   parameters: forcedColorsVrtParameters,
 };

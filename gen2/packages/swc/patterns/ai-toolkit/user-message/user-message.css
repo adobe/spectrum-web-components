@@ -10,10 +10,6 @@
  * governing permissions and limitations under the License.
  */
 
-/* Per-type sizing (Figma 5-2281): copy fills the column (cap owned by the
- * parent turn); card 324px, capped 440px; media ~196px (180px + padding).
- * The host is the visible bubble. */
-
 :host {
   display: block;
   inline-size: fit-content;
@@ -35,137 +31,133 @@
   box-sizing: border-box;
 }
 
-/* Card: fixed 324px per Figma spec (content 292px = 324px − 2×16px padding). */
-:host([type="card"]) {
-  inline-size: 324px;
-  min-inline-size: 212px;
-  max-inline-size: 440px;
-  padding: token("spacing-300");
-}
-
-/* Image: shrinks to the fixed 180px inner card + 2×8px padding. */
+:host([type="card"]),
 :host([type="media"]) {
-  inline-size: fit-content;
-  padding: token("spacing-100");
-}
-
-.swc-UserMessage-attachment {
-  display: flex;
-  min-inline-size: 0;
-}
-
-.swc-UserMessage-attachment--card {
-  gap: token("spacing-300");
-  align-items: center;
-}
-
-/* Media inner card is fixed 180 × 180px, constrained by min/max (Figma spec). */
-.swc-UserMessage-attachment--media {
-  flex-direction: column;
-  gap: token("spacing-100");
-  inline-size: 180px;
-  min-inline-size: 150px;
-  max-inline-size: 210px;
-  block-size: 180px;
-  min-block-size: 135px;
-}
-
-.swc-UserMessage-thumbnail {
-  min-inline-size: 0;
-}
-
-.swc-UserMessage-thumbnail ::slotted(*) {
-  display: block;
-}
-
-:host([type="card"]) .swc-UserMessage-thumbnail {
-  display: flex;
-  flex-shrink: 0;
-  align-items: center;
-  justify-content: center;
-}
-
-:host([type="card"]) .swc-UserMessage-thumbnail ::slotted(*) {
   box-sizing: border-box;
-  flex-shrink: 0;
-  inline-size: token("thumbnail-size-300");
-  block-size: token("thumbnail-size-300");
-  border: token("border-width-100") solid transparent;
-  border-radius: token("corner-radius-75");
-  object-fit: cover;
+  max-inline-size: 100%;
+  padding-block: token("spacing-200");
+  padding-inline: token("spacing-300");
+  border-radius: token("corner-radius-800");
 }
 
-/* Thumbnail fills the available vertical space, image covers it fully. */
-:host([type="media"]) .swc-UserMessage-thumbnail {
-  position: relative;
-  flex: 1 0 0;
-  inline-size: 100%;
-  min-block-size: 0;
-  background: token("gray-100");
-  border: token("border-width-100") solid transparent;
-  border-radius: token("corner-radius-200");
-  overflow: hidden;
+:host([type="card"]) {
+  max-inline-size: min(100%, 480px, max(calc(220px + 2 * token("spacing-300") + 2 * token("border-width-100")), calc(round(down, min(100%, 480px) - 2 * token("spacing-300") - 2 * token("border-width-100") + 6px, 226px) + 2 * token("spacing-300") + 2 * token("border-width-100") - 6px)));
 }
 
-:host([type="media"]) .swc-UserMessage-thumbnail ::slotted(*) {
-  box-sizing: border-box;
-  position: absolute;
-  inset: 0;
-  inline-size: 100%;
-  block-size: 100%;
-  object-fit: cover;
+/* Snap the width limit to whole columns while allowing two previews to shrink. */
+:host([type="media"]) {
+  max-inline-size: min(100%, max(calc(2 * 64px + 6px + 2 * token("spacing-300") + 2 * token("border-width-100")), calc(round(down, 100% - 2 * token("spacing-300") - 2 * token("border-width-100") + 6px, 70px) + 2 * token("spacing-300") + 2 * token("border-width-100") - 6px)));
 }
 
-.swc-UserMessage-meta {
+:host(:where([type="card"], [type="media"]):focus-within) {
+  outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
+  outline-offset: token("focus-ring-gap");
+}
+
+.swc-UserMessage-galleryViewport {
+  /* The 240px bubble cap includes its padding and borders. */
+  max-block-size: calc(240px - 2 * token("spacing-200") - 2 * token("border-width-100"));
+  padding-inline-end: token("spacing-200");
+
+  /* Use the bubble's end padding for the scrollbar, not the thumbnails. */
+  margin-inline-end: calc(-1 * token("spacing-200"));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-color: token("gray-500") transparent;
+  scrollbar-width: thin;
+}
+
+.swc-UserMessage-galleryViewport::-webkit-scrollbar {
+  width: 4px;
+}
+
+.swc-UserMessage-galleryViewport::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.swc-UserMessage-galleryViewport::-webkit-scrollbar-thumb {
+  background: token("gray-500");
+  border-radius: token("corner-radius-medium-default");
+}
+
+.swc-UserMessage-galleryViewport:focus-visible {
+  outline: none;
+}
+
+.swc-UserMessage-gallery {
+  --_swc-user-message-gallery-thumbnail-size: 64px;
+
   display: flex;
-  flex-direction: column;
-  gap: token("spacing-50");
-  min-inline-size: 0;
-}
-
-:host([type="card"]) .swc-UserMessage-meta {
-  flex: 1;
+  flex-wrap: wrap;
+  gap: 6px;
   align-items: flex-start;
+  inline-size: max-content;
+  max-inline-size: 100%;
 }
 
-:host([type="media"]) .swc-UserMessage-meta {
-  inline-size: 100%;
-}
-
-.swc-UserMessage-title {
-  font-family: token("sans-serif-font");
-  font-size: token("font-size-100");
-  font-weight: token("bold-font-weight");
-  line-height: token("line-height-font-size-100");
-  color: token("gray-900");
-}
-
-.swc-UserMessage-subtitle {
-  font-family: token("sans-serif-font");
-  font-size: token("font-size-75");
-  font-weight: token("regular-font-weight");
-  line-height: token("line-height-font-size-75");
-  color: token("gray-800");
-  text-overflow: ellipsis;
-}
-
-:host([type="card"]) .swc-UserMessage-title,
-:host([type="card"]) .swc-UserMessage-subtitle,
-:host([type="media"]) .swc-UserMessage-title {
-  inline-size: 100%;
-  min-inline-size: 0;
-  text-align: start;
-}
-
-/* Long, unbroken tokens (e.g. filenames without spaces) break at any character
- * so the title wraps inside the meta column instead of overflowing the bubble. */
-:host([type="card"]) .swc-UserMessage-title ::slotted(*),
-:host([type="media"]) .swc-UserMessage-title ::slotted(*),
-:host([type="card"]) .swc-UserMessage-subtitle ::slotted(*),
-:host([type="media"]) .swc-UserMessage-subtitle ::slotted(*) {
+.swc-UserMessage-gallery::slotted(*) {
+  box-sizing: border-box;
   display: block;
+  flex: 0 0 auto;
+  inline-size: var(--_swc-user-message-gallery-thumbnail-size);
   min-inline-size: 0;
-  white-space: nowrap;
+  max-inline-size: 100%;
+  block-size: auto;
+  min-block-size: 0;
+  aspect-ratio: 1;
+  border-radius: token("corner-radius-medium-default");
   overflow: hidden;
-  text-overflow: ellipsis;
+  object-fit: cover;
+}
+
+/* Test thumbnail siblings in light DOM, not through :host(:has()). */
+:host([type="media"]) .swc-UserMessage-gallery::slotted(:where(:not(:nth-child(1 of [slot="thumbnail"]):nth-last-child(1 of [slot="thumbnail"])))) {
+  box-sizing: border-box;
+  max-inline-size: calc((100% - 6px) / 2);
+}
+
+:host([type="card"]) .swc-UserMessage-gallery {
+  --_swc-user-message-gallery-thumbnail-size: 220px;
+}
+
+:host([type="card"]) .swc-UserMessage-gallery::slotted(*) {
+  --swc-upload-attachment-card-min-block-size: 64px;
+  --swc-upload-attachment-card-thumbnail-size: token("thumbnail-size-300");
+
+  box-sizing: border-box;
+  aspect-ratio: auto;
+}
+
+@supports (animation-timeline: scroll()) {
+  .swc-UserMessage-galleryViewport {
+    animation-timeline: scroll(self block);
+    animation-name: swc-user-message-gallery-fade;
+    animation-timing-function: linear;
+  }
+
+  @keyframes swc-user-message-gallery-fade {
+    0% {
+      mask-image: linear-gradient(to bottom, rgb(0 0 0 / 100%) calc(100% - 24px), rgb(0 0 0 / 0%) 100%);
+    }
+
+    15%,
+    85% {
+      mask-image: linear-gradient(to bottom, rgb(0 0 0 / 0%) 0, rgb(0 0 0 / 100%) 24px, rgb(0 0 0 / 100%) calc(100% - 24px), rgb(0 0 0 / 0%) 100%);
+    }
+
+    100% {
+      mask-image: linear-gradient(to bottom, rgb(0 0 0 / 0%) 0, rgb(0 0 0 / 100%) 24px, rgb(0 0 0 / 100%) 100%);
+    }
+  }
+}
+
+@media (forced-colors: active) {
+  .swc-UserMessage-galleryViewport {
+    mask-image: none;
+    animation: none;
+  }
+
+  :host(:where([type="card"], [type="media"]):focus-within) {
+    outline-color: CanvasText;
+  }
 }
