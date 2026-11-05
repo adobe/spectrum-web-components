@@ -263,6 +263,11 @@ export abstract class ToastContainerBase extends SpectrumElement {
     if (!this.isConnected || this.frontEntry?.key !== entry.key) {
       return;
     }
+    // A close requested before the toast was open had nothing to close, so finish it here.
+    if (ToastQueue.isClosing(entry.key)) {
+      ToastQueue.remove(entry.key);
+      return;
+    }
     toast.open = true;
     await toast.updateComplete;
     if (!this.isConnected || this.frontEntry?.key !== entry.key) {

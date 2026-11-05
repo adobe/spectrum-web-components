@@ -83,6 +83,11 @@ class ToastQueueState {
     }
   }
 
+  /** @internal Whether a close was requested for the entry and is still pending removal. */
+  public isClosing(key: string): boolean {
+    return this._closing.has(key);
+  }
+
   /** @internal Connects the rendered entry to its cancelable close lifecycle. */
   public setRendered(key: string, requestClose: () => boolean): () => void {
     this._rendered.set(key, requestClose);

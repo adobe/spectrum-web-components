@@ -301,6 +301,67 @@ export const CloseLabelTest: Story = {
   },
 };
 
+export const CloseBeforeOpenTest: Story = {
+  play: async ({ canvasElement, step }) => {
+    ToastQueue.clear();
+    const container = await getComponent<ToastContainer>(
+      canvasElement,
+      'swc-toast-container'
+    );
+    const root = container.shadowRoot!;
+    const onClose = fn();
+    const openedKeys: boolean[] = [];
+    const recordOpen = (): void => {
+      openedKeys.push(true);
+    };
+    root.addEventListener('swc-open', recordOpen);
+
+    try {
+      await step(
+        'closing right after the toast renders but before it opens removes it without opening',
+        async () => {
+          const key = ToastQueue.add('Closed before open', { onClose });
+          let toastWasOpenAtClose: boolean | undefined;
+          // The observer callback runs as soon as the toast is committed, before openToast() resolves.
+          await new Promise<void>((resolve) => {
+            const observer = new MutationObserver(() => {
+              const toast = root.querySelector<Toast>('swc-toast');
+              if (!toast) {
+                return;
+              }
+              observer.disconnect();
+              toastWasOpenAtClose = toast.open;
+              ToastQueue.close(key);
+              resolve();
+            });
+            observer.observe(root, { childList: true, subtree: true });
+          });
+
+          expect(toastWasOpenAtClose, 'open when close was requested').toBe(
+            false
+          );
+          await waitFor(() =>
+            expect(
+              ToastQueue.entries.some((entry) => entry.key === key),
+              'entry still queued'
+            ).toBe(false)
+          );
+          await container.updateComplete;
+          expect(onClose, 'onClose calls').toHaveBeenCalledTimes(1);
+          expect(openedKeys, 'swc-open events').toHaveLength(0);
+          expect(
+            root.querySelector('swc-toast'),
+            'rendered toast after close'
+          ).toBeNull();
+        }
+      );
+    } finally {
+      root.removeEventListener('swc-open', recordOpen);
+      ToastQueue.clear();
+    }
+  },
+};
+
 export const ConnectsClosedThenOpensTest: Story = {
   play: async ({ canvasElement, step }) => {
     ToastQueue.clear();
