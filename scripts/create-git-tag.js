@@ -13,7 +13,7 @@
  */
 
 import { execSync } from 'child_process';
-import { readFileSync } from 'fs';
+import { appendFileSync, readFileSync } from 'fs';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -39,6 +39,11 @@ if (!GENERATIONS[gen]) {
 const pkgPath = join(root, GENERATIONS[gen]);
 const pkg = JSON.parse(readFileSync(pkgPath, 'utf-8'));
 const tag = `${gen}-${pkg.version}`;
+
+// Hand the tag to the workflow so the GitHub Release step doesn't recompute it.
+if (process.env.GITHUB_OUTPUT) {
+  appendFileSync(process.env.GITHUB_OUTPUT, `tag=${tag}\n`);
+}
 
 try {
   // Check if the tag already exists

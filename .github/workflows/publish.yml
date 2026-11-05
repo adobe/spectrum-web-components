@@ -366,14 +366,32 @@ jobs:
           node ./scripts/create-git-tag.js gen1
           echo "published=true" >> $GITHUB_OUTPUT
 
+      # The pushed tag carries no release notes of its own, so without this the Releases
+      # page stays frozen at the last hand-made release while npm moves on.
+      - name: Create GitHub Release
+        if: steps.publish.outputs.published == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ steps.publish.outputs.tag }}
+        run: |
+          node ./scripts/extract-release-notes.js gen1 "$RUNNER_TEMP/release-notes.md"
+          # Unquoted on purpose: FLAGS carries one or two separate gh flags.
+          FLAGS=$(node ./scripts/release-flags.js gen1)
+          gh release create "$TAG" \
+            --title "v${TAG#gen1-} (gen1)" \
+            --notes-file "$RUNNER_TEMP/release-notes.md" \
+            --verify-tag \
+            $FLAGS
+
       - name: Publish summary
         if: always()
         env:
           PUBLISHED: ${{ steps.publish.outputs.published }}
+          TAG: ${{ steps.publish.outputs.tag }}
         run: |
           echo "## Publish summary (gen1)" >> $GITHUB_STEP_SUMMARY
           if [ "$PUBLISHED" == "true" ]; then
-            echo "✅ Published a new release" >> $GITHUB_STEP_SUMMARY
+            echo "✅ Published a new release and created [\`${TAG}\`](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/tag/${TAG})" >> $GITHUB_STEP_SUMMARY
           else
             echo "ℹ️ No pending changesets and nothing new to publish" >> $GITHUB_STEP_SUMMARY
           fi
