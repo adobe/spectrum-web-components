@@ -447,7 +447,7 @@ export abstract class TabsBase extends SpectrumElement {
    * linked to a panel (or a panel to a tab) that was already removed.
    */
   private syncPanels(): void {
-    const tabs = this.assignedTo('slot:not([name])').filter(
+    const tabs = this.assignedTo('slot:not([name]), slot[name=""]').filter(
       TabsBase.isTabSlotNode
     ) as TabLike[];
     const panels = this.assignedTo('slot[name="tab-panel"]') as TabPanelLike[];
