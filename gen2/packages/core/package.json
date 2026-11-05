@@ -391,6 +391,18 @@
       "types": "./dist/mixins/sized-mixin.d.ts",
       "import": "./dist/mixins/sized-mixin.js"
     },
+    "./types": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/types/index.js"
+    },
+    "./types/field-status.js": {
+      "types": "./dist/types/field-status.d.ts",
+      "import": "./dist/types/field-status.js"
+    },
+    "./types/index.js": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/types/index.js"
+    },
     "./utils": {
       "types": "./dist/utils/index.d.ts",
       "import": "./dist/utils/index.js"
@@ -710,6 +722,15 @@
       ],
       "mixins/sized-mixin.js": [
         "dist/mixins/sized-mixin.d.ts"
+      ],
+      "types": [
+        "dist/types/index.d.ts"
+      ],
+      "types/field-status.js": [
+        "dist/types/field-status.d.ts"
+      ],
+      "types/index.js": [
+        "dist/types/index.d.ts"
       ],
       "utils": [
         "dist/utils/index.d.ts"

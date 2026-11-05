@@ -85,9 +85,10 @@ export const StatusTransitions: Story = {
           expect(input.readOnly).toBe(status === 'readonly');
           expect(field.required).toBe(true);
           expect(input.required).toBe(true);
-          expect(field.hasAttribute('disabled')).toBe(status === 'disabled');
-          expect(field.hasAttribute('readonly')).toBe(status === 'readonly');
-          expect(field.matches(':disabled')).toBe(status === 'disabled');
+          expect(field).not.toHaveAttribute('disabled');
+          expect(field).not.toHaveAttribute('readonly');
+          expect(field.matches(':disabled')).toBe(false);
+          expect(field.matches(':state(disabled)')).toBe(status === 'disabled');
           expect(field.willValidate).toBe(
             status !== 'disabled' && status !== 'readonly'
           );

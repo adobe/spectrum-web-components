@@ -101,9 +101,15 @@ const renderGroup = ({
       selected ? (selected === true ? 'standard' : selected) : undefined
     )}
     ?emphasized=${emphasized}
-    ?invalid=${invalid}
-    ?disabled=${disabled}
-    ?readonly=${readonly}
+    field-status=${ifDefined(
+      invalid
+        ? 'invalid'
+        : disabled
+          ? 'disabled'
+          : readonly
+            ? 'readonly'
+            : undefined
+    )}
     ?required=${required}
     style=${ifDefined(
       inlineSize ? `inline-size: ${inlineSize}; ${style ?? ''}` : style

@@ -27,12 +27,14 @@ import type {
   DemoFieldCombobox,
   DemoFieldHostBase,
   DemoFieldRadio,
+  DemoFieldStatus,
   DemoFieldText,
 } from './demo-hosts.js';
 import fieldMeta, {
   DefaultValueReset,
   DisabledCascade,
   Exclusion,
+  FieldStatusBarring,
   FormValue,
   Validity,
 } from './field-association-controller.stories.js';
@@ -270,3 +272,50 @@ export const ValidityTest: Story = {
   },
 };
 ValidityTest.storyName = 'Validity pass-throughs (test)';
+
+// getStatus drives disabled, barred, the custom state, and click suppression.
+export const FieldStatusBarringTest: Story = {
+  ...FieldStatusBarring,
+  play: async ({ canvasElement, step }) => {
+    const form = getForm(canvasElement);
+    const [locked, viewOnly] = [
+      ...form.querySelectorAll<DemoFieldStatus>('demo-field-status'),
+    ];
+    await locked.updateComplete;
+    await viewOnly.updateComplete;
+
+    await step('disabled status bars, sets the state, drops the value', () => {
+      expect(locked.barred, 'disabled is barred').toBe(true);
+      expect(locked.willValidate, 'disabled does not validate').toBe(false);
+      expect(locked.matches(':state(disabled)')).toBe(true);
+      expect(new FormData(form).has('locked')).toBe(false);
+    });
+
+    await step('readonly bars validation without the disabled state', () => {
+      expect(viewOnly.barred, 'readonly is barred').toBe(true);
+      expect(viewOnly.willValidate, 'readonly does not validate').toBe(false);
+      expect(viewOnly.matches(':state(disabled)')).toBe(false);
+    });
+
+    await step('clicks are suppressed only while disabled', async () => {
+      let lockedClicks = 0;
+      let viewOnlyClicks = 0;
+      locked.addEventListener('click', () => (lockedClicks += 1));
+      viewOnly.addEventListener('click', () => (viewOnlyClicks += 1));
+      locked.click();
+      viewOnly.click();
+      expect(lockedClicks, 'disabled click dropped').toBe(0);
+      expect(viewOnlyClicks, 'readonly click delivered').toBe(1);
+    });
+
+    await step('clearing the status restores everything', async () => {
+      locked.fieldStatus = undefined;
+      await locked.updateComplete;
+      expect(locked.barred).toBe(false);
+      expect(locked.willValidate).toBe(true);
+      expect(locked.matches(':state(disabled)')).toBe(false);
+      expect(new FormData(form).get('locked')).toBe('Example');
+    });
+  },
+};
+FieldStatusBarringTest.storyName = 'Field status barring (test)';

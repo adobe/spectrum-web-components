@@ -34,7 +34,7 @@ const NECESSITY_INDICATOR_TEXT = {
  * @slot - The `swc-radio` items to manage.
  * @slot label - Visible group label.
  * @slot description - Group-level guidance text.
- * @slot error-text - Error message shown when `invalid`.
+ * @slot error-text - Error message shown while `field-status="invalid"`.
  *
  * @cssprop --swc-radio-group-item-gap - Space between radio button items.
  * @cssprop --swc-radio-group-side-label-gap - Space between the radio items and the side label.
@@ -94,14 +94,15 @@ export class RadioGroup extends RadioGroupBase {
     // item position or group name announcements in some browser/AT
     // combinations. A `div` can't use `<label for>`, so `updated()` wires the
     // slotted label.
+    const invalid = this.fieldStatus === 'invalid';
     return html`
       <div
         class="swc-FormField swc-RadioGroup"
         role="radiogroup"
         tabindex="-1"
         aria-required=${this.required ? 'true' : 'false'}
-        aria-invalid=${this.invalid ? 'true' : 'false'}
-        aria-readonly=${this.readonly ? 'true' : 'false'}
+        aria-invalid=${invalid ? 'true' : 'false'}
+        aria-readonly=${this.fieldStatus === 'readonly' ? 'true' : 'false'}
       >
         ${this.renderLabel(undefined, {
           required: this.required,
@@ -115,10 +116,12 @@ export class RadioGroup extends RadioGroupBase {
           <slot></slot>
         </div>
         ${this.renderFieldDescription({
-          invalid: this.invalid,
-          errorIcon: html`
-            <swc-icon-alert-triangle></swc-icon-alert-triangle>
-          `,
+          invalid,
+          errorIcon: this.effectiveDisabled
+            ? undefined
+            : html`
+                <swc-icon-alert-triangle></swc-icon-alert-triangle>
+              `,
         })}
       </div>
     `;

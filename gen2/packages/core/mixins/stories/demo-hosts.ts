@@ -76,6 +76,10 @@ export class DemoFieldDescriptionHost extends FieldDescriptionMixin(
   @property({ type: Boolean, reflect: true })
   public invalid = false;
 
+  /** Passes a decorative `errorIcon` to `renderFieldDescription()`. */
+  @property({ type: Boolean, attribute: 'show-error-icon' })
+  public showErrorIcon = false;
+
   public override get roleElement(): HTMLInputElement | null {
     return this.renderRoot.querySelector('input');
   }
@@ -87,7 +91,13 @@ export class DemoFieldDescriptionHost extends FieldDescriptionMixin(
         id=${this._inputId}
         aria-invalid=${ifDefined(this.invalid ? 'true' : undefined)}
       />
-      ${this.renderFieldDescription()}
+      ${this.renderFieldDescription({
+        errorIcon: this.showErrorIcon
+          ? html`
+              <span class="demo-error-icon"></span>
+            `
+          : undefined,
+      })}
     `;
   }
 }
@@ -114,13 +124,17 @@ export class DemoLabellingHost extends LabellingMixin(LitElement) {
   @property({ type: String })
   public override placeholder?: string;
 
+  /** Renders the label with no `for` target, as a group with no labelable control would. */
+  @property({ type: Boolean, attribute: 'no-control' })
+  public noControl = false;
+
   public override get roleElement(): HTMLInputElement | null {
     return this.renderRoot.querySelector('input');
   }
 
   protected override render(): TemplateResult {
     return html`
-      ${this.renderLabel(this._inputId)}
+      ${this.renderLabel(this.noControl ? undefined : this._inputId)}
       <input id=${this._inputId} placeholder=${ifDefined(this.placeholder)} />
     `;
   }

@@ -18,6 +18,12 @@
  * the `label-position` grid so every field lays them out identically. Vertical
  * spacing between the label / control / messages rows is applied as margins on
  * the label and messages, so an empty row never contributes perceived gap.
+ *
+ * Consumer contract: the disabled treatment selects on `:host(:state(disabled))`.
+ * Each consuming component must set the `disabled` custom state from its
+ * effective disabled state (the authored `field-status="disabled"` OR the
+ * `<fieldset disabled>` cascade) with `internals.states.add('disabled')`. Without
+ * it the label, description, and error text won't dim.
  */
 
 /* ── Field template grid ──────────────────────────── */
@@ -151,7 +157,8 @@
 :host([label-position="side"]) .swc-FormField {
   grid-template-areas:
     "label input"
-    ".     messages";
+    "label messages";
+  grid-template-rows: auto 1fr;
 
   /* `fit-content(50%)` lets the label grow up to half the field width and then
      wrap, preventing a long side label from kicking the input out of view while
@@ -170,16 +177,16 @@
 
 /* ── Disabled ─────────────────────────────────────── */
 
-:host(:disabled) .swc-FormFieldLabel,
-:host(:disabled) .swc-FormFieldDescription,
-:host(:disabled) .swc-FormFieldErrorText {
+:host(:state(disabled)) .swc-FormFieldLabel,
+:host(:state(disabled)) .swc-FormFieldDescription,
+:host(:state(disabled)) .swc-FormFieldErrorText {
   color: token("disabled-content-color");
 }
 
 @media (forced-colors: active) {
-  :host(:disabled) .swc-FormFieldLabel,
-  :host(:disabled) .swc-FormFieldDescription,
-  :host(:disabled) .swc-FormFieldErrorText {
+  :host(:state(disabled)) .swc-FormFieldLabel,
+  :host(:state(disabled)) .swc-FormFieldDescription,
+  :host(:state(disabled)) .swc-FormFieldErrorText {
     color: GrayText;
   }
 

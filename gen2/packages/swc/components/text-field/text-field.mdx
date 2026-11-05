@@ -107,7 +107,7 @@ The `field-status` attribute (`fieldStatus` property) accepts one status at a ti
 
 #### Disabled
 
-`field-status="disabled"` may retain the field's value but prevents editing and <kbd>Tab</kbd> access. The field does not block form validation and is excluded from `FormData`. Because it cannot receive focus, it is skipped during [focus-mode navigation](../?path=/docs/guides-accessibility-screen-reader-testing--docs#screen-reader-modes).
+`field-status="disabled"` may retain the field's value but prevents editing and <kbd>Tab</kbd> access. The field does not block form validation and is excluded from `FormData`. Because it cannot receive focus, it is skipped during [focus-mode navigation](../?path=/docs/guides-accessibility-screen-reader-testing--docs#screen-reader-modes). To style a disabled field from outside, select `:state(disabled)`, which also matches when a `<fieldset disabled>` ancestor disables the field.
 
 Use `field-status="readonly"` instead when users need to review or copy the value.
 

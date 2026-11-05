@@ -32,10 +32,12 @@ import {
   RADIO_GROUP_LABEL_POSITIONS,
   RADIO_GROUP_NECESSITY_INDICATORS,
   RADIO_GROUP_ORIENTATIONS,
+  RADIO_GROUP_STATUSES,
   RADIO_VALID_SIZES,
   type RadioGroupLabelPosition,
   type RadioGroupNecessityIndicator,
   type RadioGroupOrientation,
+  type RadioGroupStatus,
   type RadioSize,
 } from './RadioGroup.types.js';
 
@@ -51,7 +53,7 @@ const DOCS_URL =
  * @slot - The `swc-radio` items to manage.
  * @slot label - Visible group label.
  * @slot description - Group-level guidance text.
- * @slot error-text - Error message shown when `invalid`.
+ * @slot error-text - Error message shown while `field-status="invalid"`.
  */
 export abstract class RadioGroupBase extends SizedMixin(
   FieldDescriptionMixin(LabellingMixin(SpectrumElement)),
@@ -79,6 +81,8 @@ export abstract class RadioGroupBase extends SizedMixin(
 
   private readonly fieldAssoc = new FieldAssociationController(this.internals, {
     onDisabledChange: () => this.requestUpdate(),
+    getStatus: () => this.fieldStatus,
+    host: this,
   });
 
   constructor() {
@@ -99,11 +103,18 @@ export abstract class RadioGroupBase extends SizedMixin(
   public emphasized = false;
 
   /**
-   * Disabled state cascaded to every slotted item. Combined with the ancestor
-   * `<form>`/`<fieldset disabled>` cascade via `effectiveDisabled`.
+   * Sets one interaction or validation status; `undefined` clears it.
+   * `disabled` cascades to every slotted item and blocks form participation.
+   * `invalid` sets a custom error that blocks form submission even when an
+   * item is selected. `readonly` blocks selection changes while keeping focus
+   * movement working. `required` is separate.
    */
-  @property({ type: Boolean, reflect: true })
-  public disabled = false;
+  @property({
+    attribute: 'field-status',
+    reflect: true,
+    converter: { fromAttribute: (value: string | null) => value ?? undefined },
+  })
+  public fieldStatus?: RadioGroupStatus;
 
   /**
    * The form control name submitted with the group's selected value.
@@ -119,22 +130,10 @@ export abstract class RadioGroupBase extends SizedMixin(
   public selected = '';
 
   /**
-   * Marks the group's current selection as invalid and blocks form submission.
-   */
-  @property({ type: Boolean, reflect: true })
-  public invalid = false;
-
-  /**
    * Requires a selection for form submission.
    */
   @property({ type: Boolean, reflect: true })
   public required = false;
-
-  /**
-   * Blocks selection changes while keeping focus movement working.
-   */
-  @property({ type: Boolean, reflect: true })
-  public readonly = false;
 
   /**
    * Position of the group's label relative to its items.
@@ -171,11 +170,11 @@ export abstract class RadioGroupBase extends SizedMixin(
   // ──────────────────────
 
   /**
-   * The host's own `disabled` OR the cascaded form / `<fieldset disabled>`
+   * The authored `disabled` status OR the cascaded form / `<fieldset disabled>`
    * state. Cascaded to every slotted item while preserving its own disabled state.
    */
   protected get effectiveDisabled(): boolean {
-    return this.disabled || this.fieldAssoc.formDisabled;
+    return this.fieldAssoc.disabled;
   }
 
   /** The form the group participates in, or `null`. */
@@ -222,7 +221,9 @@ export abstract class RadioGroupBase extends SizedMixin(
   /** Restores the initial selection and clears custom invalid state on reset. */
   public formResetCallback(): void {
     this.selected = this.defaultSelected;
-    this.invalid = false;
+    if (this.fieldStatus === 'invalid') {
+      this.fieldStatus = undefined;
+    }
   }
 
   /** Delegates the ancestor form / fieldset disabled cascade to the controller. */
@@ -310,7 +311,7 @@ export abstract class RadioGroupBase extends SizedMixin(
   }
 
   /**
-   * Proposed selection changes from item activation. When `readonly`, reverts
+   * Proposed selection changes from item activation. When `field-status="readonly"`, reverts
    * the item's `checked` so focus still moves but selection does not.
    */
   private readonly handleItemChange = (event: Event): void => {
@@ -319,7 +320,7 @@ export abstract class RadioGroupBase extends SizedMixin(
       return;
     }
     event.stopPropagation();
-    if (this.readonly) {
+    if (this.fieldStatus === 'readonly') {
       target.checked = target.value === this.selected;
       return;
     }
@@ -349,7 +350,7 @@ export abstract class RadioGroupBase extends SizedMixin(
     ).detail;
     if (
       source !== 'keyboard' ||
-      this.readonly ||
+      this.fieldStatus === 'readonly' ||
       !(activeElement instanceof RadioBase)
     ) {
       return;
@@ -504,6 +505,15 @@ export abstract class RadioGroupBase extends SizedMixin(
       valid: RADIO_GROUP_NECESSITY_INDICATORS,
       url: DOCS_URL,
     });
+    if (this.fieldStatus !== undefined) {
+      validateEnum(this, {
+        prop: 'field-status',
+        value: this.fieldStatus,
+        valid: RADIO_GROUP_STATUSES,
+        url: DOCS_URL,
+      });
+    }
+    this.fieldAssoc.syncDisabledState();
     super.update(changedProperties);
     const disabledChanged = this.syncDisabledState();
     if (disabledChanged) {
@@ -516,11 +526,15 @@ export abstract class RadioGroupBase extends SizedMixin(
     // `valueMissing`; an invalid selection is `customError`. The message is
     // required by `setValidity` (it throws if empty); the UI is rendered elsewhere.
     // The role element is the validation anchor, so a blocked submit focuses it.
-    const valueMissing = this.required && !this.selected;
+    // Disabled and read-only groups are barred from validation, as native
+    // controls are.
+    const barred = this.fieldAssoc.barred;
+    const valueMissing = !barred && this.required && !this.selected;
     const anchor = this.roleElement;
+    const invalid = this.fieldStatus === 'invalid';
     this.internals.setValidity(
-      { valueMissing, customError: this.invalid },
-      valueMissing || this.invalid ? 'error' : '',
+      { valueMissing, customError: invalid },
+      valueMissing || invalid ? 'error' : '',
       anchor instanceof HTMLElement ? anchor : undefined
     );
     // Push the current selection into the form; exclude it when nothing is
