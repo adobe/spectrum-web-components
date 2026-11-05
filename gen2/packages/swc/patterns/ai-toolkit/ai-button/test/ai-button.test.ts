@@ -263,6 +263,8 @@ export const StandardButtonParityTest: Story = {
         standardIcon: standardHost.querySelector('svg')!,
       };
     });
+    // Rectangles of boxes at fractional positions differ by float noise, for
+    // example 13.00006 instead of 13 in Firefox, so these allow 0.05px.
     const iconInset = (button: Element, icon: Element) =>
       icon.getBoundingClientRect().left - button.getBoundingClientRect().left;
 
@@ -295,9 +297,10 @@ export const StandardButtonParityTest: Story = {
           expect(styles.fontSize, `${name} font size`).toBe(
             standardStyles.fontSize
           );
-          expect(icon.getBoundingClientRect().width, `${name} icon size`).toBe(
-            standardIcon.getBoundingClientRect().width
-          );
+          expect(
+            icon.getBoundingClientRect().width,
+            `${name} icon size`
+          ).toBeCloseTo(standardIcon.getBoundingClientRect().width, 1);
         }
       }
     );
@@ -320,9 +323,10 @@ export const StandardButtonParityTest: Story = {
           expect(button.offsetHeight, `${name} icon-only block size`).toBe(
             parseFloat(getComputedStyle(standard).minBlockSize)
           );
-          expect(iconInset(button, icon), `${name} icon-only icon inset`).toBe(
-            iconInset(standard, standardIcon)
-          );
+          expect(
+            iconInset(button, icon),
+            `${name} icon-only icon inset`
+          ).toBeCloseTo(iconInset(standard, standardIcon), 1);
         }
       }
     );
