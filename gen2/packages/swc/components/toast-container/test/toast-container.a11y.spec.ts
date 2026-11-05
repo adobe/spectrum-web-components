@@ -190,8 +190,10 @@ test('the stack exposes one named toast; the layers behind it are not in the acc
   const region = page.getByRole('region', { name: '3 notifications.' });
   await expect(region).toMatchAriaSnapshot(`
     - region "3 notifications.":
-      - alertdialog "File saved (3)":
-        - alert: File saved (3)
+      - alertdialog "Success File saved (3)":
+        - alert:
+          - img "Success"
+          - text: File saved (3)
         - button "Close"
   `);
   await expect(page.getByRole('alertdialog')).toHaveCount(1);
