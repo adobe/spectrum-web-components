@@ -362,17 +362,36 @@ jobs:
           node ./scripts/create-git-tag.js gen2
           echo "published=true" >> $GITHUB_OUTPUT
 
+      # release-flags.js decides the "Latest" badge rather than hardcoding it, so a beta
+      # never displaces the gen1 stable release and gen2 takes the badge at its 2.0.0.
+      - name: Create GitHub Release
+        if: steps.publish.outputs.published == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ steps.publish.outputs.tag }}
+        run: |
+          node ./scripts/extract-release-notes.js gen2 "$RUNNER_TEMP/release-notes.md"
+          # Unquoted on purpose: FLAGS carries one or two separate gh flags.
+          FLAGS=$(node ./scripts/release-flags.js gen2)
+          gh release create "$TAG" \
+            --title "v${TAG#gen2-} (gen2)" \
+            --notes-file "$RUNNER_TEMP/release-notes.md" \
+            --verify-tag \
+            $FLAGS
+
       - name: Publish summary
         if: always()
         env:
           AUTH_OUTCOME: ${{ steps.npm-auth.outcome }}
           PUBLISHED: ${{ steps.publish.outputs.published }}
+          TAG: ${{ steps.publish.outputs.tag }}
         run: |
           echo "## Publish summary (gen2)" >> $GITHUB_STEP_SUMMARY
           if [ "$PUBLISHED" == "false" ]; then
             echo "ℹ️ Current version already published - nothing new to ship" >> $GITHUB_STEP_SUMMARY
           elif [ "$AUTH_OUTCOME" == "success" ]; then
             echo "✅ Publish step ran - check the changeset publish output above for what shipped" >> $GITHUB_STEP_SUMMARY
+            [ -n "$TAG" ] && echo "📦 Release: [\`${TAG}\`](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/tag/${TAG})" >> $GITHUB_STEP_SUMMARY
           else
             echo "❌ Publish failed — NPM authentication did not succeed" >> $GITHUB_STEP_SUMMARY
           fi
