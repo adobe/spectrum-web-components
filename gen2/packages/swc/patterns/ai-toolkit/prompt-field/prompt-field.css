@@ -594,7 +594,9 @@
 .swc-PromptField-text-group {
   display: flex;
   gap: var(--_swc-prompt-field-text-group-gap, token("spacing-200"));
-  align-items: center;
+
+  /* Top-aligned so the padding-block-start below alone centers one line of text in the row; centering would add the leftover row height on top of it. */
+  align-items: flex-start;
   min-inline-size: 0;
 
   /* One button height in both states, so the collapse only removes the action bar below — the row never changes height, and the bottom-anchored send button reads centered on it when collapsed. */
