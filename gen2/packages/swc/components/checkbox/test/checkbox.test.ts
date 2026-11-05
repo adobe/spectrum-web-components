@@ -845,7 +845,7 @@ export const AriaStatesTest: Story = {
       expect(input).toHaveAttribute('aria-invalid', 'true');
       checkbox.fieldStatus = 'readonly';
       await checkbox.updateComplete;
-      expect(input).toHaveAttribute('aria-invalid', 'false');
+      expect(input).not.toHaveAttribute('aria-invalid');
       checkbox.fieldStatus = undefined;
       await checkbox.updateComplete;
     });
@@ -862,12 +862,17 @@ export const AriaStatesTest: Story = {
       async () => {
         checkbox.fieldStatus = 'readonly';
         await checkbox.updateComplete;
+        // Firefox reports a native required, unchecked input as invalid even
+        // with aria-invalid="false", so required moves to aria-required.
         expect(checkbox.willValidate).toBe(false);
-        expect(input.required).toBe(true);
-        expect(input).toHaveAttribute('aria-invalid', 'false');
+        expect(input.required).toBe(false);
+        expect(input).toHaveAttribute('aria-required', 'true');
+        expect(input).not.toHaveAttribute('aria-invalid');
+        expect(input.validity.valid).toBe(true);
         checkbox.fieldStatus = undefined;
         await checkbox.updateComplete;
-        expect(input).not.toHaveAttribute('aria-invalid');
+        expect(input.required).toBe(true);
+        expect(input).not.toHaveAttribute('aria-required');
       }
     );
   },

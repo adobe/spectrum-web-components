@@ -58,18 +58,11 @@ export class Checkbox extends CheckboxBase {
     return this.renderRoot?.querySelector(`input#${INPUT_ID}`) ?? null;
   }
 
-  /**
-   * A read-only checkbox is barred from validation, but its native input still
-   * reports a required, unchecked state as invalid, so override it.
-   */
-  private get inputAriaInvalid(): 'true' | 'false' | undefined {
-    if (this.fieldStatus === 'invalid') {
-      return 'true';
-    }
-    return this.fieldStatus === 'readonly' ? 'false' : undefined;
-  }
-
   protected override render(): TemplateResult {
+    // A read-only checkbox is barred from validation, but a native required,
+    // unchecked input still reports itself invalid, and Firefox ignores
+    // aria-invalid="false". Move required to aria-required while read-only.
+    const readOnly = this.fieldStatus === 'readonly';
     // `checked` and `indeterminate` aren't bound here: the base class writes
     // them to the input directly, from their setters and on first render.
     return html`
@@ -78,12 +71,15 @@ export class Checkbox extends CheckboxBase {
           id=${INPUT_ID}
           type="checkbox"
           class="swc-Checkbox-input"
-          ?required=${this.required}
-          ?disabled=${this.effectiveDisabled}
-          aria-readonly=${ifDefined(
-            this.fieldStatus === 'readonly' ? 'true' : undefined
+          ?required=${this.required && !readOnly}
+          aria-required=${ifDefined(
+            this.required && readOnly ? 'true' : undefined
           )}
-          aria-invalid=${ifDefined(this.inputAriaInvalid)}
+          ?disabled=${this.effectiveDisabled}
+          aria-readonly=${ifDefined(readOnly ? 'true' : undefined)}
+          aria-invalid=${ifDefined(
+            this.fieldStatus === 'invalid' ? 'true' : undefined
+          )}
           @input=${this.handleInput}
           @change=${this.handleChange}
           @keydown=${this.handleKeydown}
