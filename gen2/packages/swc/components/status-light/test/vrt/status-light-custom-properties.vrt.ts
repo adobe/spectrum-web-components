@@ -92,3 +92,25 @@ export const CustomProperties: Story = {
   parameters: vrtParameters,
   play: verifyCoverage,
 };
+
+export const CJKLineHeight: Story = {
+  render: () =>
+    theme(
+      ['ja', 'zh-TW', 'ko'].map(
+        (language) => html`
+          <div lang=${language}>
+            <span class="swc-Detail swc-Detail--sizeM">${language}</span>
+            ${customPropertyRows(
+              STATUS_LIGHT_PROPERTY_CASES.filter(
+                ({ property }) => property === '--swc-status-light-line-height'
+              ),
+              renderPropertyCase
+            )}
+          </div>
+        `
+      ),
+      'light',
+      'ltr'
+    ),
+  parameters: vrtParameters,
+};
