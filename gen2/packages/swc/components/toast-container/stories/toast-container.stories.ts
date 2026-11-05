@@ -50,7 +50,10 @@ const { argTypes: toastArgTypes } = getStorybookHelpers('swc-toast');
 
 const hiddenControl = { table: { disable: true }, control: false } as const;
 
-const queueOptions = { category: 'queue options' } as const;
+// These options are read when a toast is added to the queue, so changing them leaves already-queued toasts as they were.
+const queueOptions = {
+  category: 'queue options (apply to newly added toasts)',
+} as const;
 
 /**
  * The toast container shows temporary notifications from a shared queue. Add

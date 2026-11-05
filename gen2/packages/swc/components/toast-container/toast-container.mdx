@@ -74,6 +74,8 @@ ToastQueue.clear();
 - `shouldCloseOnAction`: closes the toast after the action runs, default `false`
 - `onClose`: called once when the toast is removed
 
+These options apply to a toast when you add it. Changing them later does not affect toasts that are already in the queue. This differs from `placement` on the container, which updates right away.
+
 The queue keeps every toast you add, but the container renders only the newest one. When it closes, the next toast in the queue appears. The region label counts every queued toast, including the ones that are waiting.
 
 `ToastQueue.close(key)` closes one toast and calls its `onClose`. `ToastQueue.clear()` removes all toasts and does not call any `onClose` callbacks. A toast that a listener keeps open by canceling its `swc-close` event stays in the queue and does not call `onClose`.
