@@ -22,7 +22,7 @@ test('the container exposes a counted region with a single named toast', async (
   await expect(region).toHaveAttribute('tabindex', '-1');
   await expect(region).toMatchAriaSnapshot(`
     - region "1 notification.":
-      - alertdialog "File saved":
+      - alertdialog "Success File saved":
         - alert:
           - img "Success"
           - text: File saved

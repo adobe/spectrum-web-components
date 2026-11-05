@@ -21,6 +21,8 @@ import {
 
 import { TOAST_VARIANTS, type ToastVariant } from './Toast.types.js';
 
+let variantLabelCount = 0;
+
 /**
  * Abstract base class for toast. Owns shared API and behavior; rendering lives in SWC.
  *
@@ -32,6 +34,8 @@ export abstract class ToastBase extends SpectrumElement {
   private _pendingAfterTransition?: () => void;
   // True once `swc-close` has fired, so the next update must not dispatch it again.
   private _closeEventDispatched = false;
+  // Hidden node carrying the variant label so the host's name can lead with it.
+  private _variantLabelElement?: HTMLElement;
   private _contentRevealed = true;
   private _cancelContentReveal?: () => void;
   private readonly _contentObserver = new MutationObserver(() => {
@@ -86,11 +90,12 @@ export abstract class ToastBase extends SpectrumElement {
     negative: 'Error',
   };
 
-  /** The label for the variant icon, or `undefined` when the icon is decorative. */
+  /** The label for the variant icon, or `undefined` when there is no icon or it is decorative. */
   protected get variantIconLabel(): string | undefined {
-    return (
-      this.iconLabel ?? ToastBase.DEFAULT_ICON_LABELS[this.variant] ?? undefined
-    );
+    const defaultLabel = ToastBase.DEFAULT_ICON_LABELS[this.variant];
+    return defaultLabel === undefined
+      ? undefined
+      : (this.iconLabel ?? defaultLabel);
   }
 
   /**
@@ -272,6 +277,38 @@ export abstract class ToastBase extends SpectrumElement {
     });
   }
 
+  /**
+   * The icon label lives in the live region, which is read when the toast
+   * appears. Focusing the host reads its name instead, and the host's
+   * `aria-labelledby` cannot reference the shadow icon. So the label is also
+   * kept as a hidden light-DOM node, slotted so the host can reference it, and
+   * listed ahead of the message in the name.
+   */
+  private updateVariantLabelElement(label: string | undefined): void {
+    if (!label) {
+      this._variantLabelElement?.remove();
+      this._variantLabelElement = undefined;
+      return;
+    }
+
+    let element = this._variantLabelElement;
+    if (!element) {
+      element = this.ownerDocument.createElement('span');
+      element.id = `swc-toast-variant-label-${++variantLabelCount}`;
+      element.slot = 'variant-label';
+      // Directly referenced by aria-labelledby, so it still names the host, but the live region already reads the icon label.
+      element.setAttribute('aria-hidden', 'true');
+      this._variantLabelElement = element;
+    }
+    // Skip no-op writes, which would trigger the content observer again.
+    if (element.textContent !== label) {
+      element.textContent = label;
+    }
+    if (element.parentNode !== this) {
+      this.prepend(element);
+    }
+  }
+
   private updateAccessibleName(): void {
     const messageNodes = [...this.childNodes].filter((node) => {
       if (node.nodeType === Node.TEXT_NODE) {
@@ -289,8 +326,18 @@ export abstract class ToastBase extends SpectrumElement {
         ? messageNodes[0].id
         : '';
 
+    // Without a message to name the host, the variant label has nothing to lead.
+    this.updateVariantLabelElement(
+      idTarget ? this.variantIconLabel : undefined
+    );
+
     if (idTarget) {
-      this.setAttribute('aria-labelledby', idTarget);
+      this.setAttribute(
+        'aria-labelledby',
+        this._variantLabelElement
+          ? `${this._variantLabelElement.id} ${idTarget}`
+          : idTarget
+      );
       return;
     }
 

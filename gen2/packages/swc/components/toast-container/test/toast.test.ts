@@ -193,6 +193,99 @@ export const VariantIconTest: Story = {
   },
 };
 
+// Focusing the host reads its name, not the live region, so the variant label leads the name too.
+export const VariantNameTest: Story = {
+  render: () => html`
+    <swc-toast open variant="info">
+      <span id="variant-name-message">File saved</span>
+    </swc-toast>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const toast = await getComponent<Toast>(canvasElement, 'swc-toast');
+    const variantLabel = (): HTMLElement | null =>
+      toast.querySelector<HTMLElement>(':scope > [slot="variant-label"]');
+
+    await step(
+      'names the host from the variant label, then the message',
+      async () => {
+        await toast.updateComplete;
+
+        expect(variantLabel()?.textContent, 'variant label text').toBe(
+          'Information'
+        );
+        expect(
+          variantLabel()?.getAttribute('aria-hidden'),
+          'variant label aria-hidden'
+        ).toBe('true');
+        expect(
+          toast.getAttribute('aria-labelledby'),
+          'host aria-labelledby'
+        ).toBe(`${variantLabel()?.id} variant-name-message`);
+        expect(
+          toast.hasAttribute('aria-description'),
+          'host aria-description presence'
+        ).toBe(false);
+      }
+    );
+
+    await step('the variant label does not count as the message', () => {
+      expect(
+        messageSlot(toast)
+          ?.assignedElements()
+          .map((element) => element.textContent),
+        'default slot message'
+      ).toEqual(['File saved']);
+    });
+
+    await step('each semantic variant uses its default label', async () => {
+      for (const [variant, label] of Object.entries({
+        positive: 'Success',
+        negative: 'Error',
+      })) {
+        toast.variant = variant as ToastVariant;
+        await toast.updateComplete;
+
+        expect(variantLabel()?.textContent, `label for ${variant}`).toBe(label);
+      }
+    });
+
+    await step('icon-label overrides the variant label', async () => {
+      toast.iconLabel = 'Nouvelle version';
+      await toast.updateComplete;
+
+      expect(variantLabel()?.textContent, 'overridden label').toBe(
+        'Nouvelle version'
+      );
+    });
+
+    await step(
+      'an empty icon-label names the host from the message alone',
+      async () => {
+        toast.iconLabel = '';
+        await toast.updateComplete;
+
+        expect(variantLabel(), 'variant label').toBeNull();
+        expect(
+          toast.getAttribute('aria-labelledby'),
+          'host aria-labelledby'
+        ).toBe('variant-name-message');
+      }
+    );
+
+    await step('neutral has no variant label', async () => {
+      toast.iconLabel = undefined;
+      toast.variant = 'neutral';
+      await toast.updateComplete;
+
+      expect(variantLabel(), 'variant label').toBeNull();
+      expect(
+        toast.getAttribute('aria-labelledby'),
+        'host aria-labelledby'
+      ).toBe('variant-name-message');
+    });
+  },
+};
+
 export const ActionButtonTest: Story = {
   render: () => html`
     <swc-toast open>File archived</swc-toast>
@@ -697,7 +790,13 @@ export const ReconnectTest: Story = {
       expect(
         toast.getAttribute('aria-labelledby'),
         'host aria-labelledby'
-      ).toBe('toast-message');
+      ).toBe(
+        `${toast.querySelector('[slot="variant-label"]')?.id} toast-message`
+      );
+      expect(
+        toast.querySelectorAll('[slot="variant-label"]'),
+        'variant label nodes after reconnection'
+      ).toHaveLength(1);
     });
 
     await step(

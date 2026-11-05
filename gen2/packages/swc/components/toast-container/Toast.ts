@@ -24,6 +24,7 @@ import '@adobe/spectrum-wc-icons/swc-icon-info-circle.js';
 import '../button/swc-button.js';
 import '../close-button/swc-close-button.js';
 
+import visuallyHiddenStyles from '../../stylesheets/_lit-styles/visually-hidden.css';
 import styles from './toast.css';
 
 /**
@@ -42,7 +43,7 @@ import styles from './toast.css';
  */
 export class Toast extends ToastBase {
   public static override get styles(): CSSResultArray {
-    return [styles];
+    return [visuallyHiddenStyles, styles];
   }
 
   protected override get internalElement(): HTMLElement | null {
@@ -52,6 +53,9 @@ export class Toast extends ToastBase {
   protected override render(): TemplateResult {
     return html`
       <div class="swc-Toast">
+        <div class="swc-VisuallyHidden">
+          <slot name="variant-label"></slot>
+        </div>
         <div class="swc-Toast-main">
           <div class="swc-Toast-body" role="alert" aria-atomic="true">
             ${this.contentRevealed

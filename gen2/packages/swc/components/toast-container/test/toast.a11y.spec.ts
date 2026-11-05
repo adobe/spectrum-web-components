@@ -49,7 +49,7 @@ test.describe('Toast - ARIA Snapshots', () => {
       'swc-toast'
     );
     await expect(root).toMatchAriaSnapshot(`
-      - alertdialog "File archived":
+      - alertdialog "Information File archived":
         - alert: File archived
         - button "Undo"
         - button "Close"
@@ -71,7 +71,7 @@ test.describe('Toast - ARIA Snapshots', () => {
       await toast.updateComplete;
     });
     await expect(root).toMatchAriaSnapshot(`
-      - alertdialog "File saved":
+      - alertdialog "Nouvelle version File saved":
         - alert:
           - img "Nouvelle version"
           - text: File saved
@@ -102,6 +102,28 @@ test.describe('Toast - ARIA Snapshots', () => {
     `);
   });
 
+  // Focusing the host reads its name, so read Chrome's accessibility tree to check the variant leads it.
+  test('the variant label leads the host name', async ({ page }) => {
+    await gotoStory(
+      page,
+      'components-toast-container--toast-playground',
+      'swc-toast'
+    );
+    await page.evaluate(async () => {
+      const toast = document.querySelector('swc-toast') as HTMLElement & {
+        updateComplete: Promise<boolean>;
+      };
+      toast.setAttribute('variant', 'negative');
+      await toast.updateComplete;
+    });
+    const cdp = await page.context().newCDPSession(page);
+    await cdp.send('Accessibility.enable');
+    const { nodes } = await cdp.send('Accessibility.getFullAXTree');
+    const dialog = nodes.find((node) => node.role?.value === 'alertdialog');
+    expect(dialog?.name?.value, 'host name').toBe('Error File saved');
+    expect(dialog?.description?.value ?? '', 'host description').toBe('');
+  });
+
   test('ID-bearing message names the alertdialog by reference', async ({
     page,
   }) => {
@@ -114,17 +136,17 @@ test.describe('Toast - ARIA Snapshots', () => {
       - alertdialog "Draft moved to archive":
         - alert: Draft moved to archive
         - button "Close"
-      - alertdialog "A new version is available":
+      - alertdialog "Information A new version is available":
         - alert:
           - img "Information"
           - text: A new version is available
         - button "Close"
-      - alertdialog "File saved":
+      - alertdialog "Success File saved":
         - alert:
           - img "Success"
           - text: File saved
         - button "Close"
-      - alertdialog "File could not be saved":
+      - alertdialog "Error File could not be saved":
         - alert:
           - img "Error"
           - text: File could not be saved
