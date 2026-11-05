@@ -100,8 +100,9 @@ export function calculateScrollTargetForLeftSide(
 }
 
 /**
- * Sets an ARIA reference and records it as set by `sp-tabs`. A value that the
- * consumer already set is left alone and not recorded.
+ * Sets an ARIA reference. `sp-tabs` owns the attribute only while it is
+ * absent or still holds the last value written here. If the consumer set or
+ * changed it, their value is kept and no longer tracked.
  */
 function setManagedAttribute<T extends Element>(
   el: T,
@@ -109,14 +110,14 @@ function setManagedAttribute<T extends Element>(
   value: string,
   managed: WeakMap<T, string>
 ): void {
-  if (el.getAttribute(name) === value) {
-    // Keep ownership only if this component set this exact value.
-    if (managed.get(el) !== value) {
-      managed.delete(el);
-    }
+  const current = el.getAttribute(name);
+  if (current !== null && current !== managed.get(el)) {
+    managed.delete(el);
     return;
   }
-  el.setAttribute(name, value);
+  if (current !== value) {
+    el.setAttribute(name, value);
+  }
   managed.set(el, value);
 }
 
@@ -406,22 +407,29 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
     }
   }
 
-  protected managePanels({
-    target,
-  }: Event & { target: HTMLSlotElement }): void {
-    this.linkPanels(target.assignedElements() as TabPanel[]);
+  protected managePanels(): void {
+    this.linkPanels();
   }
 
-  private linkPanels(panels: TabPanel[]): void {
+  /**
+   * Both lists are read from the slots on every call, so a tab is never
+   * linked to a panel (or a panel to a tab) that was already removed.
+   */
+  private linkPanels(): void {
+    if (!this.slotEl || !this.panelSlotEl) {
+      return;
+    }
+    const tabs = this.slotEl
+      .assignedElements()
+      .filter((el) => el.getAttribute('role') === 'tab') as Tab[];
+    const panels = this.panelSlotEl.assignedElements() as TabPanel[];
     const linkedTabs = new Set<Tab>();
     panels.map((panel) => {
       const { value, id } = panel;
       // Plain `role="tab"` elements have no `value` property, so fall back
       // to the attribute.
       const tab = value
-        ? this.tabs.find(
-            (el) => (el.value ?? el.getAttribute('value')) === value
-          )
+        ? tabs.find((el) => (el.value ?? el.getAttribute('value')) === value)
         : undefined;
       if (tab) {
         setManagedAttribute(tab, 'aria-controls', id, this.managedTabControls);
@@ -441,7 +449,7 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
       }
       panel.selected = value === this.selected;
     });
-    this.tabs.forEach((tab) => {
+    tabs.forEach((tab) => {
       if (!linkedTabs.has(tab)) {
         clearManagedAttribute(tab, 'aria-controls', this.managedTabControls);
       }
@@ -577,9 +585,7 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
       .filter((el) => el.getAttribute('role') === 'tab') as Tab[];
     this.updateCheckedState();
     // Tabs can change without the panel slot changing, so relink the panels.
-    if (this.panelSlotEl) {
-      this.linkPanels(this.panelSlotEl.assignedElements() as TabPanel[]);
-    }
+    this.linkPanels();
   }
 
   private updateCheckedState = (): void => {

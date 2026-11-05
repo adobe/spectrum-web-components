@@ -983,6 +983,41 @@ describe('Tabs', () => {
       expect(tab.getAttribute('aria-controls')).to.equal('app-panel');
     });
 
+    it('keeps ARIA references that the app changed after the tabs render', async () => {
+      const el = await fixture<Tabs>(html`
+        <sp-tabs selected="first">
+          <h2 id="external-heading">External heading</h2>
+          <sp-tab value="first">Tab 1</sp-tab>
+          <sp-tab-panel value="first">First tab content</sp-tab-panel>
+        </sp-tabs>
+      `);
+      await elementUpdated(el);
+
+      const tab = el.querySelector('sp-tab') as Tab;
+      const panel = el.querySelector('sp-tab-panel') as TabPanel;
+      expect(panel.getAttribute('aria-labelledby')).to.equal(tab.id);
+
+      panel.setAttribute('aria-labelledby', 'external-heading');
+      tab.setAttribute('aria-controls', 'external-region');
+      el.append(document.createElement('span'));
+      await elementUpdated(el);
+
+      expect(panel.getAttribute('aria-labelledby')).to.equal(
+        'external-heading'
+      );
+      expect(tab.getAttribute('aria-controls')).to.equal('external-region');
+
+      panel.remove();
+      el.append(panel);
+      tab.remove();
+      await elementUpdated(el);
+
+      expect(panel.getAttribute('aria-labelledby')).to.equal(
+        'external-heading'
+      );
+      expect(tab.getAttribute('aria-controls')).to.equal('external-region');
+    });
+
     it('does not match a cleared tab value through the stale attribute', async () => {
       const el = await fixture<Tabs>(html`
         <sp-tabs selected="first">

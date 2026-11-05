@@ -323,12 +323,7 @@ export abstract class TabsBase extends SpectrumElement {
     this.updateCheckedState();
     this.updateSelectionIndicator();
     // Tabs can change without the panel slot changing, so relink the panels.
-    // Read the panels from the slot, not a cached list, so new tabs are never
-    // linked to panels that were removed in the same change.
-    const panelSlot = this.renderRoot?.querySelector<HTMLSlotElement>(
-      'slot[name="tab-panel"]'
-    );
-    this.managePanels((panelSlot?.assignedElements() ?? []) as TabPanelLike[]);
+    this.syncPanels();
   }
 
   /**
@@ -336,9 +331,8 @@ export abstract class TabsBase extends SpectrumElement {
    * changes. Wires up `aria-controls` / `aria-labelledby` between
    * each tab and its panel.
    */
-  protected handlePanelSlotChange(event: Event): void {
-    const slot = event.target as HTMLSlotElement;
-    this.managePanels(slot.assignedElements() as TabPanelLike[]);
+  protected handlePanelSlotChange(_event: Event): void {
+    this.syncPanels();
   }
 
   /**
@@ -443,8 +437,15 @@ export abstract class TabsBase extends SpectrumElement {
    * `id`, and each panel gets `aria-labelledby` pointing at its
    * tab's `id`. Values set here are removed when the link goes away;
    * consumer-provided values are kept.
+   *
+   * Both lists are read from the slots on every call, so a tab is never
+   * linked to a panel (or a panel to a tab) that was already removed.
    */
-  private managePanels(panels: TabPanelLike[]): void {
+  private syncPanels(): void {
+    const tabs = this.assignedTo('slot:not([name])').filter(
+      TabsBase.isTabSlotNode
+    ) as TabLike[];
+    const panels = this.assignedTo('slot[name="tab-panel"]') as TabPanelLike[];
     const linkedTabs = new Set<TabLike>();
 
     for (const panel of panels) {
@@ -452,9 +453,7 @@ export abstract class TabsBase extends SpectrumElement {
       // Plain `role="tab"` elements have no `tabId` property, so fall back
       // to the attribute.
       const tab = tabId
-        ? this._tabs.find(
-            (el) => (el.tabId ?? el.getAttribute('tab-id')) === tabId
-          )
+        ? tabs.find((el) => (el.tabId ?? el.getAttribute('tab-id')) === tabId)
         : undefined;
 
       if (tab) {
@@ -482,7 +481,7 @@ export abstract class TabsBase extends SpectrumElement {
       panel.selected = tabId === this.selected;
     }
 
-    for (const tab of this._tabs) {
+    for (const tab of tabs) {
       if (!linkedTabs.has(tab)) {
         TabsBase.clearManagedAttribute(
           tab,
@@ -493,9 +492,18 @@ export abstract class TabsBase extends SpectrumElement {
     }
   }
 
+  private assignedTo(selector: string): Element[] {
+    return (
+      this.renderRoot
+        ?.querySelector<HTMLSlotElement>(selector)
+        ?.assignedElements() ?? []
+    );
+  }
+
   /**
-   * Sets an ARIA reference and records it as set by this component. A value
-   * that the consumer already set is left alone and not recorded.
+   * Sets an ARIA reference. This component owns the attribute only while it
+   * is absent or still holds the last value written here. If the consumer
+   * set or changed it, their value is kept and no longer tracked.
    */
   private static setManagedAttribute<T extends Element>(
     el: T,
@@ -503,14 +511,14 @@ export abstract class TabsBase extends SpectrumElement {
     value: string,
     managed: WeakMap<T, string>
   ): void {
-    if (el.getAttribute(name) === value) {
-      // Keep ownership only if this component set this exact value.
-      if (managed.get(el) !== value) {
-        managed.delete(el);
-      }
+    const current = el.getAttribute(name);
+    if (current !== null && current !== managed.get(el)) {
+      managed.delete(el);
       return;
     }
-    el.setAttribute(name, value);
+    if (current !== value) {
+      el.setAttribute(name, value);
+    }
     managed.set(el, value);
   }
 

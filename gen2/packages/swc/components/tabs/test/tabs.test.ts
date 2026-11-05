@@ -2301,3 +2301,45 @@ export const ReplacedTabsAndPanelsConsumerAriaTest: Story = {
     );
   },
 };
+
+export const ConsumerChangedAriaTest: Story = {
+  render: () => html`
+    <swc-tabs selected="1" accessible-label="Consumer changed ARIA test">
+      <h2 id="external-heading">External heading</h2>
+      <swc-tab tab-id="1">Tab 1</swc-tab>
+      <swc-tab-panel tab-id="1"><p>Panel 1</p></swc-tab-panel>
+    </swc-tabs>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const tabs = await getComponent<Tabs>(canvasElement, 'swc-tabs');
+    const tab = await getComponent<Tab>(canvasElement, 'swc-tab');
+    const panel = await getComponent<TabPanel>(canvasElement, 'swc-tab-panel');
+    await settle(tabs, [tab, panel]);
+
+    await step('relinking keeps values the app changed', async () => {
+      expect(panel.getAttribute('aria-labelledby')).toBe(tab.id);
+      panel.setAttribute('aria-labelledby', 'external-heading');
+      tab.setAttribute('aria-controls', 'external-region');
+      tabs.append(document.createElement('span'));
+      await settle(tabs, [tab, panel]);
+
+      expect(
+        panel.getAttribute('aria-labelledby'),
+        'panel keeps the app label'
+      ).toBe('external-heading');
+      expect(
+        tab.getAttribute('aria-controls'),
+        'tab keeps the app aria-controls'
+      ).toBe('external-region');
+    });
+
+    await step('unlinking keeps values the app changed', async () => {
+      panel.remove();
+      tabs.append(panel);
+      tab.remove();
+      await settle(tabs, [panel]);
+      expect(panel.getAttribute('aria-labelledby')).toBe('external-heading');
+      expect(tab.getAttribute('aria-controls')).toBe('external-region');
+    });
+  },
+};
