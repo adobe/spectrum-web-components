@@ -388,6 +388,9 @@ const preview = {
   argTypes: {
     VERSION: { table: { disable: true } },
     CORE_VERSION: { table: { disable: true } },
+    tagName: { table: { disable: true } },
+    dependencies: { table: { disable: true } },
+    define: { table: { disable: true } },
   },
   tags: ['!autodocs', '!dev'], // We only want the playground stories to be visible in the docs and sidenav. Since a majority of our stories are tagged with '!autodocs' and '!dev', we set those tags globally. We can opt in to visibility by adding the 'autodocs' or 'dev' tags to individual stories.
   loaders: [FontLoader],

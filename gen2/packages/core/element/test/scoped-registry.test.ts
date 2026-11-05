@@ -42,16 +42,27 @@ const uniqueTag = (name: string): string =>
 // `VITEST_BROWSER_CHANNEL=chrome`.
 const scoped = supportsScopedRegistries();
 
+// Chrome 146 shipped scoped registries natively. A Chrome 146+ run must detect
+// them, so a detection regression can't skip the scoped stories silently.
+const chromeMajor = Number(/Chrome\/(\d+)/.exec(navigator.userAgent)?.[1] ?? 0);
+
+const hosts: HTMLElement[] = [];
+const cleanup = (): void => {
+  hosts.splice(0).forEach((host) => host.remove());
+};
+
+const scopedHost = (registry: CustomElementRegistry): ShadowRoot => {
+  const host = document.createElement('div');
+  hosts.push(host);
+  document.body.append(host);
+  return host.attachShadow({ mode: 'open', customElementRegistry: registry });
+};
+
 const mount = async <T extends HTMLElement>(
   registry: CustomElementRegistry,
   tag: string
 ): Promise<T> => {
-  const host = document.createElement('div');
-  document.body.append(host);
-  const root = host.attachShadow({
-    mode: 'open',
-    customElementRegistry: registry,
-  });
+  const root = scopedHost(registry);
   root.innerHTML = `<${tag}></${tag}>`;
   const element = root.querySelector(tag) as T;
   await (element as unknown as LitElement).updateComplete;
@@ -198,6 +209,17 @@ export const SupportDetectionTest: Story = {
   },
 };
 
+export const NativeSupportTest: Story = {
+  play: async ({ step }) => {
+    if (chromeMajor < 146) {
+      return;
+    }
+    await step('Chrome 146 or later reports native support', () => {
+      expect(supportsScopedRegistries()).toBe(true);
+    });
+  },
+};
+
 export const UnsupportedBrowserTest: Story = {
   play: async ({ step }) => {
     if (scoped) {
@@ -223,10 +245,11 @@ export const ScopedRegistryIndexTest: Story = {
       );
     });
 
-    await step('keeps the first registry when a version loads twice', () => {
+    await step('rejects a second copy of the same version', () => {
       const first = window.__swc.scopedRegistries?.get('0.0.0-index-test');
-      const second = createScopedRegistry('0.0.0-index-test');
-      expect(second).not.toBe(first);
+      expect(() => createScopedRegistry('0.0.0-index-test')).toThrow(
+        /0\.0\.0-index-test/
+      );
       expect(window.__swc.scopedRegistries?.get('0.0.0-index-test')).toBe(
         first
       );
@@ -276,8 +299,30 @@ export const ScopedRenderRootTest: Story = {
         expect(parentB.shadowRoot?.customElementRegistry).toBe(registryB);
         expect(childA).toBeInstanceOf(ScopedChildA);
         expect(childB).toBeInstanceOf(ScopedChildB);
+        cleanup();
       }
     );
+
+    await step('scopes a shadow root that Lit reuses', async () => {
+      // Declarative shadow DOM gives an element its shadow root before it
+      // upgrades, so Lit reuses that root instead of calling attachShadow().
+      const registry = new CustomElementRegistry();
+      ScopedChildA.define(registry);
+      const root = scopedHost(registry);
+      const parent = document.createElement('scoped-test-parent', {
+        customElementRegistry: registry,
+      });
+      parent.attachShadow({ mode: 'open', customElementRegistry: registry });
+      root.append(parent);
+      ScopedParent.define(registry);
+      await (parent as ScopedParent).updateComplete;
+
+      expect(parent).toBeInstanceOf(ScopedParent);
+      expect(
+        parent.shadowRoot?.querySelector('scoped-test-child')
+      ).toBeInstanceOf(ScopedChildA);
+      cleanup();
+    });
   },
 };
 
@@ -302,17 +347,81 @@ export const ScopedConsumerHelpersTest: Story = {
       expect(
         view.shadowRoot?.querySelector('scoped-test-child')
       ).toBeInstanceOf(ScopedChildA);
+      cleanup();
     });
+
+    await step(
+      'ScopedElementMixin scopes a light-DOM render root',
+      async () => {
+        class LightView extends ScopedElementMixin(LitElement) {
+          protected override createRenderRoot(): HTMLElement {
+            return this;
+          }
+
+          protected override render(): unknown {
+            return html`
+              <scoped-test-child></scoped-test-child>
+            `;
+          }
+        }
+        const registry = new CustomElementRegistry();
+        ScopedChildA.define(registry);
+        registry.define('scoped-test-light-view', LightView);
+
+        const view = await mount<LightView>(registry, 'scoped-test-light-view');
+        expect(view.querySelector('scoped-test-child')).toBeInstanceOf(
+          ScopedChildA
+        );
+        cleanup();
+      }
+    );
+
+    await step(
+      'ScopedElementMixin honors a registry passed to attachShadow',
+      async () => {
+        const registry = new CustomElementRegistry();
+        ScopedChildB.define(registry);
+        class PrivateRegistryView extends ScopedElementMixin(LitElement) {
+          static override shadowRootOptions: ShadowRootInit = {
+            mode: 'open',
+            customElementRegistry: registry,
+          };
+
+          protected override render(): unknown {
+            return html`
+              <scoped-test-child></scoped-test-child>
+            `;
+          }
+        }
+        const tag = uniqueTag('private-registry-view');
+        customElements.define(tag, PrivateRegistryView);
+        const view = document.createElement(tag) as PrivateRegistryView;
+        hosts.push(view);
+        document.body.append(view);
+        await view.updateComplete;
+
+        expect(view.shadowRoot?.customElementRegistry).toBe(registry);
+        expect(
+          view.shadowRoot?.querySelector('scoped-test-child')
+        ).toBeInstanceOf(ScopedChildB);
+
+        // A host created in another scoped registry keeps the explicit one.
+        const hostRegistry = new CustomElementRegistry();
+        ScopedChildA.define(hostRegistry);
+        hostRegistry.define(tag, PrivateRegistryView);
+        const scopedView = await mount<PrivateRegistryView>(hostRegistry, tag);
+        expect(scopedView.shadowRoot?.customElementRegistry).toBe(registry);
+        expect(
+          scopedView.shadowRoot?.querySelector('scoped-test-child')
+        ).toBeInstanceOf(ScopedChildB);
+        cleanup();
+      }
+    );
 
     await step('scopedRenderOptions scopes a top-level render', () => {
       const registry = new CustomElementRegistry();
       ScopedChildB.define(registry);
-      const host = document.createElement('div');
-      document.body.append(host);
-      const root = host.attachShadow({
-        mode: 'open',
-        customElementRegistry: registry,
-      });
+      const root = scopedHost(registry);
       render(
         html`
           <scoped-test-child></scoped-test-child>
@@ -323,6 +432,7 @@ export const ScopedConsumerHelpersTest: Story = {
       expect(root.querySelector('scoped-test-child')).toBeInstanceOf(
         ScopedChildB
       );
+      cleanup();
     });
   },
 };

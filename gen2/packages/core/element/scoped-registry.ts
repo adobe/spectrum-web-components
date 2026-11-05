@@ -12,10 +12,27 @@
 
 import type { LitElement, RenderOptions } from 'lit';
 
-type Constructor<T> = {
+// Scoped custom element registry members that the TypeScript DOM lib doesn't
+// include yet. They're declared in this module, not in an ambient file, so they
+// ship with the package's type declarations.
+declare global {
+  interface CustomElementRegistry {
+    initialize(root: Node): void;
+  }
+
+  interface Element {
+    readonly customElementRegistry: CustomElementRegistry | null;
+  }
+
+  interface ShadowRoot {
+    readonly customElementRegistry: CustomElementRegistry | null;
+  }
+}
+
+// Abstract-capable so the mixin can be applied over abstract base classes.
+type Constructor<T> =
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  new (...args: any[]): T;
-};
+  abstract new (...args: any[]) => T;
 
 /**
  * Returns `true` when the browser implements the standard scoped custom element
@@ -59,16 +76,25 @@ export function scopedRenderOptions(
   return { creationScope: creationScope(document, registry) };
 }
 
-function scopedRegistryOf(element: Element): CustomElementRegistry | null {
-  const registry = element.customElementRegistry;
-  const globalRegistry = element.ownerDocument.defaultView?.customElements;
+// Returns `registry` unless it's missing or it's the global registry. A node in
+// a document without a window, such as one from
+// `document.implementation.createHTMLDocument()`, compares against this
+// window's registry.
+function scopedOnly(
+  registry: CustomElementRegistry | null | undefined,
+  node: Node
+): CustomElementRegistry | null {
+  const globalRegistry =
+    node.ownerDocument?.defaultView?.customElements ??
+    globalThis.customElements;
   return registry && registry !== globalRegistry ? registry : null;
 }
 
 /**
- * Makes a Lit element render into a shadow root that uses the registry the
- * element was created in, and create its template content in that registry.
- * Elements created in the global registry render as usual.
+ * Makes a Lit element render with the registry the element was created in: its
+ * shadow root uses that registry, and its template content is created in it.
+ * An explicit `customElementRegistry` in the shadow root options takes
+ * precedence. Elements created in the global registry render as usual.
  *
  * This bridges a gap in Lit and will be deprecated when Lit supports scoped
  * registries.
@@ -76,28 +102,53 @@ function scopedRegistryOf(element: Element): CustomElementRegistry | null {
 export function ScopedElementMixin<T extends Constructor<LitElement>>(
   Base: T
 ): T {
-  class ScopedElement extends Base {
+  abstract class ScopedElement extends Base {
+    /**
+     * @internal
+     */
     public override attachShadow(init: ShadowRootInit): ShadowRoot {
-      const registry = scopedRegistryOf(this);
-      if (!registry) {
-        return super.attachShadow(init);
-      }
-      this.renderOptions.creationScope = creationScope(
-        this.ownerDocument,
-        registry
+      const registry =
+        init.customElementRegistry ??
+        scopedOnly(this.customElementRegistry, this);
+      return super.attachShadow(
+        registry ? { ...init, customElementRegistry: registry } : init
       );
-      return super.attachShadow({ ...init, customElementRegistry: registry });
+    }
+
+    /**
+     * @internal
+     */
+    public override connectedCallback(): void {
+      super.connectedCallback();
+      // The render root exists now, and the first render hasn't run yet. Lit
+      // reuses an existing shadow root, such as a declarative one, and a
+      // light-DOM render root attaches none, so `attachShadow()` can't set this.
+      if (this.renderOptions.creationScope) {
+        return;
+      }
+      const root = this.renderRoot;
+      const registry = scopedOnly(
+        (root instanceof ShadowRoot ? root.customElementRegistry : null) ??
+          this.customElementRegistry,
+        this
+      );
+      if (registry) {
+        this.renderOptions.creationScope = creationScope(
+          this.ownerDocument,
+          registry
+        );
+      }
     }
   }
-  return ScopedElement;
+  return ScopedElement as unknown as T;
 }
 
 /**
- * Creates a scoped registry for one loaded copy of Spectrum Web Components and
- * publishes it at `window.__swc.scopedRegistries`, keyed by version. When two
- * copies of the same version load, the index keeps the first.
+ * Creates the scoped registry of one loaded copy of Spectrum Web Components and
+ * publishes it at `window.__swc.scopedRegistries`, keyed by version.
  *
- * @throws When the browser does not support scoped registries.
+ * @throws When the browser does not support scoped registries, or when another
+ * copy of the same version already published its registry.
  */
 export function createScopedRegistry(version: string): CustomElementRegistry {
   if (!supportsScopedRegistries()) {
@@ -105,17 +156,16 @@ export function createScopedRegistry(version: string): CustomElementRegistry {
       'Scoped custom element registries are not supported in this browser. Load a polyfill that implements the standard API, render the app in an iframe, or load one version of Spectrum Web Components per page.'
     );
   }
-  const registry = new CustomElementRegistry();
   window.__swc ??= {} as Window['__swc'];
   const registries = (window.__swc.scopedRegistries ??= new Map());
-  if (!registries.has(version)) {
-    registries.set(version, registry);
-  } else if (window.__swc.DEBUG) {
-    window.__swc.warn(
-      undefined,
-      `Spectrum Web Components ${version} was loaded more than once. window.__swc.scopedRegistries keeps the registry of the first copy.`,
-      'https://spectrum-web-components.adobe.com/registry-conflicts'
+  // A second copy can't share the first copy's registry: their classes differ,
+  // and components check each other with `instanceof`.
+  if (registries.has(version)) {
+    throw new Error(
+      `Another copy of Spectrum Web Components ${version} already published its scoped registry. Load one copy of each version per page, or give each app its own registry with \`new CustomElementRegistry()\` and \`Component.define(registry)\`.`
     );
   }
+  const registry = new CustomElementRegistry();
+  registries.set(version, registry);
   return registry;
 }

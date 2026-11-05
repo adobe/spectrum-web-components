@@ -87,19 +87,34 @@ export const ScopedRegistryTest: Story = {
   },
 };
 
-export const PackageRegistryTest: Story = {
+export const RegistryEntryTest: Story = {
   play: async ({ step }) => {
-    if (!scoped) {
+    const entry = await import('@adobe/spectrum-wc/registry');
+
+    await step('importing the entry creates no registry', () => {
+      expect(window.__swc?.scopedRegistries?.has(entry.version) ?? false).toBe(
+        false
+      );
+    });
+
+    if (!entry.supportsScopedRegistries()) {
+      await step('getRegistry() throws a clear error', () => {
+        expect(() => entry.getRegistry()).toThrow(
+          /Scoped custom element registries are not supported/
+        );
+      });
       return;
     }
-    const { registry, version } = await import('@adobe/spectrum-wc/registry');
 
-    await step('the package registry is published by version', () => {
+    await step('getRegistry() creates and publishes one registry', () => {
+      const registry = entry.getRegistry();
       expect(registry).toBeInstanceOf(CustomElementRegistry);
-      expect(window.__swc.scopedRegistries?.get(version)).toBe(registry);
+      expect(entry.getRegistry()).toBe(registry);
+      expect(window.__swc.scopedRegistries?.get(entry.version)).toBe(registry);
     });
 
     await step('components can be defined in the package registry', () => {
+      const registry = entry.getRegistry();
       CloseButton.define(registry);
       expect(registry.get('swc-close-button')).toBe(CloseButton);
     });

@@ -17,8 +17,8 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import '../swc-response-status.js';
 
 import { getComponent } from '../../../../utils/test-utils.js';
-import type { ResponseStatusStep } from '../response-status-step/ResponseStatusStep.js';
-import type { ResponseStatus } from '../ResponseStatus.js';
+import { ResponseStatusStep } from '../response-status-step/ResponseStatusStep.js';
+import { ResponseStatus } from '../ResponseStatus.js';
 import { LongDescription, meta } from '../stories/response-status.stories.js';
 
 export default {
@@ -831,5 +831,17 @@ export const LoaderReconnectTest: Story = {
     await el.updateComplete;
 
     expect(loader()?.hasAttribute('paused')).toBe(false);
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Registration
+// ──────────────────────────────────────────────────────────────
+
+export const DependenciesTest: Story = {
+  play: async ({ step }) => {
+    await step('ResponseStatus.define() also defines its steps', () => {
+      expect(ResponseStatus.dependencies).toContain(ResponseStatusStep);
+    });
   },
 };

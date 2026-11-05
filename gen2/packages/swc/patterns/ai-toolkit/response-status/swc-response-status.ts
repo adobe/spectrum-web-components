@@ -9,13 +9,13 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import './response-status-step/swc-response-status-step.js';
-
+import type { ResponseStatusStep } from './response-status-step/ResponseStatusStep.js';
 import { ResponseStatus } from './ResponseStatus.js';
 
 declare global {
   interface HTMLElementTagNameMap {
     'swc-response-status': ResponseStatus;
+    'swc-response-status-step': ResponseStatusStep;
   }
 }
 

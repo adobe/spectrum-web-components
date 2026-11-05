@@ -14,6 +14,9 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 
 import { TabsBase } from '@adobe/spectrum-wc-core/components/tabs';
 
+import { Tab } from './Tab.js';
+import { TabPanel } from './TabPanel.js';
+
 import styles from './tabs.css';
 
 /**
@@ -46,6 +49,7 @@ import styles from './tabs.css';
  */
 export class Tabs extends TabsBase {
   public static override readonly tagName = 'swc-tabs';
+  public static override readonly dependencies = [Tab, TabPanel];
 
   /**
    * @internal

@@ -54,23 +54,8 @@ interface Window {
     verbose?: boolean;
     /**
      * Scoped registries of loaded Spectrum Web Components copies, by version.
-     * The first copy of a version to load keeps its entry.
+     * Only one copy of each version can publish its registry.
      */
     scopedRegistries?: Map<string, CustomElementRegistry>;
   };
-}
-
-/**
- * Scoped custom element registry members. Not yet in the TypeScript DOM lib.
- */
-interface CustomElementRegistry {
-  initialize(root: Node): void;
-}
-
-interface Element {
-  readonly customElementRegistry: CustomElementRegistry | null;
-}
-
-interface ShadowRoot {
-  readonly customElementRegistry: CustomElementRegistry | null;
 }

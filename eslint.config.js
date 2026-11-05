@@ -418,9 +418,11 @@ export default defineConfig([
   },
 
   // ────────────────────────────────────────────────────────────────────────────
-  // gen2 class modules: declare rendered elements in `static dependencies`
-  // instead of importing global `swc-*.js` registration files, so class imports
-  // stay free of global registration and work with scoped registries.
+  // gen2 component modules: declare rendered and required child elements in
+  // `static dependencies` instead of importing global `swc-*.js` registration
+  // files, so `Component.define(registry)` registers the same elements as the
+  // component's `swc-*.js` file, and class imports stay free of global
+  // registration.
   // ────────────────────────────────────────────────────────────────────────────
   {
     files: [
@@ -428,7 +430,6 @@ export default defineConfig([
       'gen2/packages/swc/patterns/**/*.ts',
     ],
     ignores: [
-      '**/swc-*.ts',
       '**/stories/**',
       '**/test/**',
       '**/*.stories.ts',
@@ -444,7 +445,7 @@ export default defineConfig([
               regex:
                 '^(?!@adobe/spectrum-wc-icons/).*(^|/)swc-[a-z0-9-]+(\\.js)?$',
               message:
-                'Import the class and list it in `static dependencies` instead. Only `swc-*.ts` files register elements globally.',
+                'Import the class and list it in `static dependencies` instead of importing its registration file.',
             },
             {
               regex: '^@adobe/spectrum-wc-icons/swc-icon-[a-z0-9-]+(\\.js)?$',

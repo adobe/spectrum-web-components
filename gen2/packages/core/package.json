@@ -630,6 +630,9 @@
       "element/index.js": [
         "dist/element/index.d.ts"
       ],
+      "element/scoped-registry.js": [
+        "dist/element/scoped-registry.d.ts"
+      ],
       "element/spectrum-element.js": [
         "dist/element/spectrum-element.d.ts"
       ],

@@ -1697,3 +1697,17 @@ export const IconOnlyTabAriaLabelTest: Story = {
     );
   },
 };
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Registration
+// ──────────────────────────────────────────────────────────────
+
+export const DependenciesTest: Story = {
+  play: async ({ step }) => {
+    await step('Tabs.define() also defines tabs and tab panels', () => {
+      expect(Tabs.dependencies).toEqual(
+        expect.arrayContaining([Tab, TabPanel])
+      );
+    });
+  },
+};

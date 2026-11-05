@@ -71,7 +71,12 @@ export type ResponseStatusStatus = (typeof RESPONSE_STATUSES)[number];
  */
 export class ResponseStatus extends SpectrumElement {
   public static override readonly tagName = 'swc-response-status';
-  public static override readonly dependencies = [Icon, UiIcon, PixelLoader];
+  public static override readonly dependencies = [
+    Icon,
+    UiIcon,
+    PixelLoader,
+    ResponseStatusStep,
+  ];
 
   private static readonly STATUS_LABEL_CLASS =
     'swc-ResponseStatus-label swc-Body swc-Body--sizeS';

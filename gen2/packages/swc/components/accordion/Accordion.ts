@@ -14,6 +14,8 @@ import { CSSResultArray, html, TemplateResult } from 'lit';
 
 import { AccordionBase } from '@adobe/spectrum-wc-core/components/accordion';
 
+import { AccordionItem } from './AccordionItem.js';
+
 import styles from './accordion.css';
 
 /**
@@ -34,6 +36,7 @@ import styles from './accordion.css';
  */
 export class Accordion extends AccordionBase {
   public static override readonly tagName = 'swc-accordion';
+  public static override readonly dependencies = [AccordionItem];
 
   public static override get styles(): CSSResultArray {
     return [styles];

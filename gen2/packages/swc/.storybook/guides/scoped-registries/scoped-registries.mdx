@@ -20,34 +20,46 @@ import '@adobe/spectrum-wc/components/button/swc-button.js';
 
 ## Define components in a registry
 
-Every component class has a static `define()` method. It defines the component and the elements it renders internally. With no argument, it uses the global registry.
+Every component class has a static `define()` method. It defines the component, the elements it renders internally, and the child elements it needs, such as `<swc-tab>` and `<swc-tab-panel>` for `<swc-tabs>`. It registers the same elements as the component's `swc-*.js` file. With no argument, it uses the global registry.
+
+Give each app its own registry, and export it so the host can mount the app:
 
 ```js
+// apps/image/registry.js
+import { Badge } from '@adobe/spectrum-wc/badge';
 import { CloseButton } from '@adobe/spectrum-wc/close-button';
 
-const registry = new CustomElementRegistry();
+export const registry = new CustomElementRegistry();
 // Defines <swc-close-button> and its internal <swc-ui-icon>.
 CloseButton.define(registry);
+Badge.define(registry);
 ```
 
-Each loaded copy of `@adobe/spectrum-wc` also owns a registry. Import it from `@adobe/spectrum-wc/registry`. It is also published at `window.__swc.scopedRegistries.get(version)`, so a host can find the registry of a copy that another app loaded. Apps that load the same copy can share it:
+Importing a component class has no side effects. Only `define()` and the `swc-*.js` files register elements.
+
+### Share a registry between apps
+
+Apps that load the same copy of `@adobe/spectrum-wc` can share that copy's registry instead. `getRegistry()` creates it on the first call and publishes it at `window.__swc.scopedRegistries`, keyed by version, so a host can find it:
 
 ```js
 import { Button } from '@adobe/spectrum-wc/button';
-import { registry } from '@adobe/spectrum-wc/registry';
+import { getRegistry } from '@adobe/spectrum-wc/registry';
 
-Button.define(registry);
+Button.define(getRegistry());
 ```
 
-Create a registry for each app instead when apps on the same copy define their own elements with the same names, or when you remount an app to change its version.
+Each version can publish one registry. If a second copy of the same version calls `getRegistry()`, it throws, because the two copies have different classes, and components check each other with `instanceof`. Load one copy of each version per page, for example with an import map or a shared chunk, or give each app its own registry.
+
+Give apps their own registries when they define elements of their own with the same names.
 
 ## Mount an app
 
-Define the app's own elements in the registry, attach the registry to the app's shadow root, and render with `scopedRenderOptions()`:
+Define the app's own elements in its registry, attach the registry to the app's shadow root, and render with `scopedRenderOptions()`:
 
 ```js
 import { html, render } from 'lit';
 import { scopedRenderOptions } from '@adobe/spectrum-wc/registry';
+import { registry } from './apps/image/registry.js';
 
 registry.define('image-panel', ImagePanel);
 
@@ -64,7 +76,7 @@ render(
 );
 ```
 
-App elements built with Lit that render Spectrum Web Components use `ScopedElementMixin`. Their shadow roots and templates then use the registry the element was created in:
+App elements built with Lit that render Spectrum Web Components use `ScopedElementMixin`. Their templates then create elements in the registry the element was created in. This works for shadow roots the mixin attaches, existing shadow roots, and light-DOM render roots:
 
 ```js
 import { html, LitElement } from 'lit';
@@ -84,28 +96,27 @@ Spectrum Web Components use the same mechanism internally. Lit creates elements 
 ## Things to know
 
 - **No fallback to global:** A scoped shadow root never uses global definitions. Define every element the app renders, including its own, in the app's registry.
-- **Creation decides the registry:** `document.createElement('swc-button')` creates a global element, even after you append it to a scoped root. Pass `{ customElementRegistry: registry }`.
-- **No redefinition:** A registry can't replace a definition. To change an app's version, mount the app again with a new registry.
+- **Creation decides the registry:** `document.createElement('swc-button')` creates a global element, even after you append it to a scoped root. Pass `{ customElementRegistry: registry }`. Don't create components with `new`: `new Button()` throws "Illegal constructor" when `Button` is defined only in scoped registries.
+- **Lit's `templateContent` directive:** It clones template content with `document.importNode()`, which creates elements in the global registry. Render that content with a regular Lit template instead.
+- **No redefinition:** A registry can't replace a definition. To change an app's version, mount the app again in a new host element with a new registry.
+- **Shared page state:** Each version keeps its own page scroll lock and stack of dismissible overlays, so overlays from two versions don't coordinate with each other.
 - **Design tokens:** `tokens.css` targets `:root`, so all apps on the page share one set of token values.
 - **Workflow icons:** Each `swc-icon-*.js` module from `@adobe/spectrum-wc-icons` defines its element globally when imported, so two copies on one page conflict. In a scoped app, render the icon's SVG function inside `<swc-icon>` instead, for example `` html`<swc-icon>${unsafeSVG(Icon_Star())}</swc-icon>` `` with `Icon_Star` from `@adobe/spectrum-wc-icons/Star.js`.
+- **Not a security boundary:** Scoped registries isolate element definitions, not scripts. Any script on the page can read or change `window.__swc.scopedRegistries`.
 
 ## Browser support
 
 Chrome and Edge 146+, and Safari 26+, support scoped registries natively. Firefox supports them in Nightly only.
 
-In unsupported browsers, importing `@adobe/spectrum-wc/registry` throws an error. Spectrum Web Components never fall back to the global registry, because two versions would then collide without an error. Check support before you load the scoped path, and render the app in an iframe or load one version per page otherwise:
+Spectrum Web Components never fall back to the global registry, because two versions would then collide without an error. In unsupported browsers, `getRegistry()` throws an error. Importing `@adobe/spectrum-wc/registry` is safe in any browser, so check support first, and render the app in an iframe or load one version per page otherwise:
 
 ```js
-function supportsScopedRegistries() {
-  try {
-    return typeof new CustomElementRegistry().initialize === 'function';
-  } catch {
-    return false;
-  }
-}
+import { supportsScopedRegistries } from '@adobe/spectrum-wc/registry';
 
 if (supportsScopedRegistries()) {
-  const { registry } = await import('@adobe/spectrum-wc/registry');
+  const { registry } = await import('./apps/image/registry.js');
   // Mount the app with `registry`.
+} else {
+  // Render the app in an iframe.
 }
 ```

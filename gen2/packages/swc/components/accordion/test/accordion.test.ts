@@ -1623,3 +1623,15 @@ export const NestedAccordionIsolationTest: Story = {
     );
   },
 };
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Registration
+// ──────────────────────────────────────────────────────────────
+
+export const DependenciesTest: Story = {
+  play: async ({ step }) => {
+    await step('Accordion.define() also defines accordion items', () => {
+      expect(Accordion.dependencies).toContain(AccordionItem);
+    });
+  },
+};

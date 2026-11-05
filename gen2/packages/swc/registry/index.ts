@@ -17,16 +17,25 @@ import { version } from './version.js';
 export {
   ScopedElementMixin,
   scopedRenderOptions,
+  supportsScopedRegistries,
 } from '@adobe/spectrum-wc-core/element/index.js';
 export { version };
 
+let registry: CustomElementRegistry | undefined;
+
 /**
- * The scoped custom element registry of this copy of Spectrum Web Components.
- * Define components in it with `Component.define(registry)`, then attach it to
- * an app's shadow root. Also published at
- * `window.__swc.scopedRegistries.get(version)`.
+ * Returns the scoped custom element registry of this copy of Spectrum Web
+ * Components. The first call creates it and publishes it at
+ * `window.__swc.scopedRegistries.get(version)`. Define components in it with
+ * `Component.define(registry)`, then attach it to an app's shadow root.
  *
- * Importing this module throws when the browser does not support scoped
- * registries.
+ * Importing this module has no side effects, so apps can import the helpers in
+ * any browser.
+ *
+ * @throws When the browser does not support scoped registries, or when another
+ * copy of the same version already published its registry.
  */
-export const registry: CustomElementRegistry = createScopedRegistry(version);
+export function getRegistry(): CustomElementRegistry {
+  registry ??= createScopedRegistry(version);
+  return registry;
+}

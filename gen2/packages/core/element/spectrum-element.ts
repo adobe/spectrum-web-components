@@ -43,17 +43,18 @@ export class SpectrumElement extends ScopedElementMixin(LitElement) {
   declare static readonly tagName?: string;
 
   /**
-   * Elements this component renders in its shadow root. `define()` defines
-   * them in the same registry first.
+   * Elements this component renders in its shadow root, and child elements it
+   * needs to work, such as `swc-tab` for `swc-tabs`. `define()` defines them in
+   * the same registry first.
    *
    * @internal
    */
   static readonly dependencies: readonly DefinableElement[] = [];
 
   /**
-   * Defines this component, and the elements it renders, in `registry`. The
-   * global registry is the default. Pass a scoped registry to use more than
-   * one version of Spectrum Web Components on a page.
+   * Defines this component and its `dependencies` in `registry`. The global
+   * registry is the default. Pass a scoped registry to use more than one
+   * version of Spectrum Web Components on a page.
    *
    * @param registry - The registry to define the elements in.
    */
