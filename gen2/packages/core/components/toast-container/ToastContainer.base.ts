@@ -34,6 +34,19 @@ const docsUrl =
   'https://spectrum-web-components.adobe.com/?path=/docs/components-toast-container--docs';
 
 export abstract class ToastContainerBase extends SpectrumElement {
+  // ─────────────────────────
+  //     API TO OVERRIDE
+  // ─────────────────────────
+
+  protected abstract get currentToast(): ToastBase | undefined;
+
+  /** The rendered `role="region"` wrapper, absent while the queue is empty. */
+  protected abstract get region(): HTMLElement | undefined;
+
+  // ──────────────────
+  //     SHARED API
+  // ──────────────────
+
   /** The viewport edge at which notifications appear. End is logical. */
   @property({ type: String, reflect: true })
   public placement: ToastContainerPlacement = 'bottom';
@@ -50,6 +63,10 @@ export abstract class ToastContainerBase extends SpectrumElement {
   public getRegionLabel: (count: number) => string = (count) =>
     `${count} ${count === 1 ? 'notification' : 'notifications'}.`;
 
+  // ──────────────────────
+  //     IMPLEMENTATION
+  // ──────────────────────
+
   protected readonly countdown = new ToastCountdown(this);
   private _unsubscribe?: () => void;
   private _unregisterToast?: () => void;
@@ -58,11 +75,6 @@ export abstract class ToastContainerBase extends SpectrumElement {
   private _closingToast?: ToastBase;
   private _focusWithin = false;
   private _lastFocused?: HTMLElement;
-
-  protected abstract get currentToast(): ToastBase | undefined;
-
-  /** The rendered `role="region"` wrapper, absent while the queue is empty. */
-  protected abstract get region(): HTMLElement | undefined;
 
   protected get frontEntry(): ToastQueueEntry | undefined {
     return ToastQueue.entries[0];

@@ -29,18 +29,18 @@ let variantLabelCount = 0;
  * @slot - Toast message text.
  */
 export abstract class ToastBase extends SpectrumElement {
-  private _cancelAfterTransition?: () => void;
-  // Kept until it runs so a reconnect can restart an event that disconnection canceled.
-  private _pendingAfterTransition?: () => void;
-  // True once `swc-close` has fired, so the next update must not dispatch it again.
-  private _closeEventDispatched = false;
-  // Hidden node carrying the variant label so the host's name can lead with it.
-  private _variantLabelElement?: HTMLElement;
-  private _contentRevealed = true;
-  private _cancelContentReveal?: () => void;
-  private readonly _contentObserver = new MutationObserver(() => {
-    this.requestUpdate();
-  });
+  // ─────────────────────────
+  //     API TO OVERRIDE
+  // ─────────────────────────
+
+  /**
+   * The rendered element whose CSS transition gates the open/close lifecycle events.
+   */
+  protected abstract get internalElement(): HTMLElement | null;
+
+  // ──────────────────
+  //     SHARED API
+  // ──────────────────
 
   /**
    * Whether the toast is visible.
@@ -79,6 +79,39 @@ export abstract class ToastBase extends SpectrumElement {
   public iconLabel?: string;
 
   /**
+   * The accessible name of the close button. Set it to localize the name.
+   * Defaults to "Close" when omitted or empty.
+   *
+   * @todo Localize the default via LanguageResolutionController once a runtime
+   * i18n system for static strings is available.
+   */
+  @property({ type: String, attribute: 'close-label' })
+  public closeLabel?: string;
+
+  /**
+   * The label for the optional action button. When set, Toast renders its own button.
+   */
+  @property({ type: String, attribute: 'action-label' })
+  public actionLabel?: string;
+
+  // ──────────────────────
+  //     IMPLEMENTATION
+  // ──────────────────────
+
+  private _cancelAfterTransition?: () => void;
+  // Kept until it runs so a reconnect can restart an event that disconnection canceled.
+  private _pendingAfterTransition?: () => void;
+  // True once `swc-close` has fired, so the next update must not dispatch it again.
+  private _closeEventDispatched = false;
+  // Hidden node carrying the variant label so the host's name can lead with it.
+  private variantLabelElement?: HTMLElement;
+  private _contentRevealed = true;
+  private _cancelContentReveal?: () => void;
+  private readonly _contentObserver = new MutationObserver(() => {
+    this.requestUpdate();
+  });
+
+  /**
    * @todo Localize the default labels via LanguageResolutionController once a
    * runtime i18n solution exists. Consumers can override them with `iconLabel`.
    */
@@ -99,22 +132,6 @@ export abstract class ToastBase extends SpectrumElement {
   }
 
   /**
-   * The accessible name of the close button. Set it to localize the name.
-   * Defaults to "Close" when omitted or empty.
-   *
-   * @todo Localize the default via LanguageResolutionController once a runtime
-   * i18n system for static strings is available.
-   */
-  @property({ type: String, attribute: 'close-label' })
-  public closeLabel?: string;
-
-  /**
-   * The label for the optional action button. When set, Toast renders its own button.
-   */
-  @property({ type: String, attribute: 'action-label' })
-  public actionLabel?: string;
-
-  /**
    * Whether the message content is rendered inside the live region.
    *
    * False for two frames after opening so the live region is exposed empty
@@ -126,11 +143,6 @@ export abstract class ToastBase extends SpectrumElement {
   protected get contentRevealed(): boolean {
     return this._contentRevealed;
   }
-
-  /**
-   * The rendered element whose CSS transition gates the open/close lifecycle events.
-   */
-  protected abstract get internalElement(): HTMLElement | null;
 
   public override connectedCallback(): void {
     super.connectedCallback();
@@ -286,19 +298,19 @@ export abstract class ToastBase extends SpectrumElement {
    */
   private updateVariantLabelElement(label: string | undefined): void {
     if (!label) {
-      this._variantLabelElement?.remove();
-      this._variantLabelElement = undefined;
+      this.variantLabelElement?.remove();
+      this.variantLabelElement = undefined;
       return;
     }
 
-    let element = this._variantLabelElement;
+    let element = this.variantLabelElement;
     if (!element) {
       element = this.ownerDocument.createElement('span');
       element.id = `swc-toast-variant-label-${++variantLabelCount}`;
       element.slot = 'variant-label';
       // Directly referenced by aria-labelledby, so it still names the host, but the live region already reads the icon label.
       element.setAttribute('aria-hidden', 'true');
-      this._variantLabelElement = element;
+      this.variantLabelElement = element;
     }
     // Skip no-op writes, which would trigger the content observer again.
     if (element.textContent !== label) {
@@ -334,8 +346,8 @@ export abstract class ToastBase extends SpectrumElement {
     if (idTarget) {
       this.setAttribute(
         'aria-labelledby',
-        this._variantLabelElement
-          ? `${this._variantLabelElement.id} ${idTarget}`
+        this.variantLabelElement
+          ? `${this.variantLabelElement.id} ${idTarget}`
           : idTarget
       );
       return;
