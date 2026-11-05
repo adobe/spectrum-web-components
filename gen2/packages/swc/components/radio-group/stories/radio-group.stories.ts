@@ -95,11 +95,16 @@ const handleFormSubmit = async (event: SubmitEvent): Promise<void> => {
     return;
   }
 
-  // Clear the demo's previous error before checking the current constraints.
-  field.fieldStatus = undefined;
+  // Clear the previous submit's error before checking the current constraints.
+  // Only `invalid`: clearing any status would also drop `disabled` and `readonly`.
+  if (field.fieldStatus === 'invalid') {
+    field.fieldStatus = undefined;
+  }
 
   await field.updateComplete;
-  field.fieldStatus = field.checkValidity() ? undefined : 'invalid';
+  if (!field.checkValidity()) {
+    field.fieldStatus = 'invalid';
+  }
 };
 
 // ────────────────────

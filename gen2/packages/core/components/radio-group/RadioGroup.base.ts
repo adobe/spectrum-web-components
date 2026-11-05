@@ -44,6 +44,9 @@ import {
 const DOCS_URL =
   'https://spectrum-web-components.adobe.com/?path=/docs/components-radio-group--docs';
 
+/** The validation message when no `error-text` is supplied. */
+const FALLBACK_VALIDATION_MESSAGE = 'Select an option.';
+
 /**
  * Coordinates a set of `swc-radio` items as a single mutually-exclusive selection.
  * Rendering lives in `swc-radio-group`.
@@ -53,7 +56,7 @@ const DOCS_URL =
  * @slot - The `swc-radio` items to manage.
  * @slot label - Visible group label.
  * @slot description - Group-level guidance text.
- * @slot error-text - Error message shown while `field-status="invalid"`.
+ * @slot error-text - Error text shown while `field-status="invalid"`. Its plain text is also the validation message; supply translated text when needed. Without it the message is "Select an option."
  */
 export abstract class RadioGroupBase extends SizedMixin(
   FieldDescriptionMixin(LabellingMixin(SpectrumElement)),
@@ -340,6 +343,12 @@ export abstract class RadioGroupBase extends SizedMixin(
 
   private itemDisabledObserver: MutationObserver | null = null;
 
+  // Slot-presence tracking does not notify when only the message text changes,
+  // and a change to the text sets no reactive property, so observe it directly.
+  private readonly errorTextObserver = new MutationObserver(() => {
+    this.syncValidity();
+  });
+
   /**
    * Only keyboard movement (arrows, Home, End) selects the active item;
    * Tab-entry and `.focus()` do not.
@@ -370,6 +379,13 @@ export abstract class RadioGroupBase extends SizedMixin(
       attributeFilter: ['disabled'],
       subtree: true,
     });
+    this.errorTextObserver.observe(this, {
+      childList: true,
+      characterData: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ['slot'],
+    });
     this.addEventListener(
       focusgroupNavigationActiveChange,
       this.handleNavigationActiveChange
@@ -382,6 +398,7 @@ export abstract class RadioGroupBase extends SizedMixin(
       this.handleNavigationActiveChange
     );
     this.itemDisabledObserver?.disconnect();
+    this.errorTextObserver.disconnect();
     super.disconnectedCallback();
   }
 
@@ -522,25 +539,44 @@ export abstract class RadioGroupBase extends SizedMixin(
     if (disabledChanged || changedProperties.has('selected')) {
       this.syncCheckedState();
     }
-    // Constraint validity: a required group with nothing selected is
-    // `valueMissing`; an invalid selection is `customError`. The message is
-    // required by `setValidity` (it throws if empty); the UI is rendered elsewhere.
-    // The role element is the validation anchor, so a blocked submit focuses it.
-    // Disabled and read-only groups are barred from validation, as native
-    // controls are.
-    const barred = this.fieldAssoc.barred;
-    const valueMissing = !barred && this.required && !this.selected;
-    const anchor = this.roleElement;
-    const invalid = this.fieldStatus === 'invalid';
-    this.internals.setValidity(
-      { valueMissing, customError: invalid },
-      valueMissing || invalid ? 'error' : '',
-      anchor instanceof HTMLElement ? anchor : undefined
-    );
+    this.syncValidity();
     // Push the current selection into the form; exclude it when nothing is
     // selected or the group is disabled, matching an unchecked native radio set.
     this.fieldAssoc.setValue(
       this.effectiveDisabled || !this.selected ? null : this.selected
+    );
+  }
+
+  /** The plain text of the slotted `error-text`, or `''` when there is none. */
+  private get errorTextMessage(): string {
+    return Array.from(
+      this.querySelectorAll(':scope > [slot="error-text"]'),
+      (element) => element.textContent ?? ''
+    )
+      .join(' ')
+      .trim();
+  }
+
+  /**
+   * The only writer of `setValidity()`. A required group with nothing selected
+   * is `valueMissing`; `field-status="invalid"` is `customError`. While
+   * invalid, the plain text of `error-text` is the validation message,
+   * otherwise a standard fallback. `setValidity` throws on an empty message
+   * when a flag is set; the inline UI is rendered elsewhere. The role element is
+   * the validation anchor, so a blocked submit focuses it. Disabled and
+   * read-only groups are barred from validation, as native controls are.
+   */
+  private syncValidity(): void {
+    const valueMissing =
+      !this.fieldAssoc.barred && this.required && !this.selected;
+    const invalid = this.fieldStatus === 'invalid';
+    const anchor = this.roleElement;
+    this.internals.setValidity(
+      { valueMissing, customError: invalid },
+      valueMissing || invalid
+        ? (invalid && this.errorTextMessage) || FALLBACK_VALIDATION_MESSAGE
+        : '',
+      anchor instanceof HTMLElement ? anchor : undefined
     );
   }
 }

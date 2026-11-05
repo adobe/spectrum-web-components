@@ -861,6 +861,142 @@ export const InvalidSubmitNoValidateTest: Story = {
   },
 };
 
+// With `error-text`, the validation message is its plain text while the group
+// is invalid; otherwise it is the standard fallback. There is no host
+// `setCustomValidity()`.
+export const ValidationMessageTest: Story = {
+  render: () => html`
+    <swc-radio-group name="shipping" required field-status="invalid">
+      <span slot="label">Shipping</span>
+      <span slot="error-text">Express is unavailable.</span>
+      <swc-radio value="express"><span slot="label">Express</span></swc-radio>
+      <swc-radio value="standard"><span slot="label">Standard</span></swc-radio>
+    </swc-radio-group>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const group = await getComponent<RadioGroup>(
+      canvasElement,
+      'swc-radio-group'
+    );
+    const error = group.querySelector<HTMLElement>('[slot="error-text"]')!;
+
+    await step('uses error-text present before the first render', () => {
+      expect(group.validationMessage).toBe('Express is unavailable.');
+      expect(group.validity.customError).toBe(true);
+      expect('setCustomValidity' in group).toBe(false);
+    });
+
+    await step('tracks text-only edits to error-text', async () => {
+      error.textContent = 'Choose another shipping method.';
+      await waitFor(() =>
+        expect(group.validationMessage).toBe('Choose another shipping method.')
+      );
+    });
+
+    await step('tracks a replacement error-text element', async () => {
+      const replacement = document.createElement('span');
+      replacement.slot = 'error-text';
+      replacement.textContent = 'Express needs an address.';
+      error.replaceWith(replacement);
+      await waitFor(() =>
+        expect(group.validationMessage).toBe('Express needs an address.')
+      );
+      replacement.remove();
+    });
+
+    await step('falls back when there is no error-text', async () => {
+      await waitFor(() =>
+        expect(group.validationMessage).toBe('Select an option.')
+      );
+    });
+
+    await step(
+      'error-text is not the message while the group is not invalid',
+      async () => {
+        const replacement = document.createElement('span');
+        replacement.slot = 'error-text';
+        replacement.textContent = 'Express needs an address.';
+        group.append(replacement);
+        group.fieldStatus = undefined;
+        await group.updateComplete;
+        expect(group.validity.customError).toBe(false);
+        expect(group.validity.valueMissing).toBe(true);
+        expect(group.validationMessage).toBe('Select an option.');
+      }
+    );
+
+    await step('is empty once the group is valid', async () => {
+      group.selected = 'standard';
+      await group.updateComplete;
+      expect(group.checkValidity()).toBe(true);
+      expect(group.validationMessage).toBe('');
+    });
+  },
+};
+
+export const StatusWarningsTest: Story = {
+  play: async ({ step }) => {
+    const statusWarnings = (calls: unknown[][]): unknown[][] =>
+      calls.filter(([, message]) => String(message).includes('field-status'));
+
+    await step('undefined is accepted without a warning', () =>
+      withWarningSpy(async (calls) => {
+        const group = await fixture<RadioGroup>(html`
+          <swc-radio-group>
+            <span slot="label">Shipping</span>
+            <swc-radio value="express">
+              <span slot="label">Express</span>
+            </swc-radio>
+          </swc-radio-group>
+        `);
+        try {
+          expect(statusWarnings(calls)).toHaveLength(0);
+        } finally {
+          group.remove();
+        }
+      })
+    );
+
+    await step('valid is not accepted and produces a warning', () =>
+      withWarningSpy(async (calls) => {
+        const group = await fixture<RadioGroup>(html`
+          <swc-radio-group field-status="valid">
+            <span slot="label">Shipping</span>
+            <swc-radio value="express">
+              <span slot="label">Express</span>
+            </swc-radio>
+          </swc-radio-group>
+        `);
+        try {
+          expect(statusWarnings(calls).length).toBeGreaterThan(0);
+        } finally {
+          group.remove();
+        }
+      })
+    );
+
+    await step('an unsupported status produces a warning', () =>
+      withWarningSpy(async (calls) => {
+        const group = await fixture<RadioGroup>(html`
+          <!-- @ts-ignore: Intentionally unsupported status tests the enum warning. -->
+          <swc-radio-group field-status="unsupported">
+            <span slot="label">Shipping</span>
+            <swc-radio value="express">
+              <span slot="label">Express</span>
+            </swc-radio>
+          </swc-radio-group>
+        `);
+        try {
+          expect(statusWarnings(calls).length).toBeGreaterThan(0);
+        } finally {
+          group.remove();
+        }
+      })
+    );
+  },
+};
+StatusWarningsTest.storyName = 'Status validation warnings';
+
 export const ItemStylingAttributesTest: Story = {
   render: () => html`
     <swc-radio-group size="l" emphasized field-status="invalid">
