@@ -116,10 +116,9 @@
   padding-block-start: token("spacing-100");
 }
 
-/* Placed after the has-attachment rule above so the pill's 12px block padding wins over it; the attachment case below then trims only the top. */
+/* Placed after the has-attachment rule above so the pill's 12px block padding wins over it; the attachment case below then trims only the top. The inline-end padding stays at the expanded value so the send button doesn't shift when the field collapses. */
 :host([collapsed]) .swc-PromptField-box {
   padding-block: token("spacing-200");
-  padding-inline-end: token("spacing-200");
   border-radius: var(--_swc-prompt-field-collapsed-radius);
 }
 
