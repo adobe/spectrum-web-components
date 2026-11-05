@@ -13,7 +13,7 @@ A `<swc-menu>` consists of:
 
 - An externally-referenced **trigger**, set via the `for` or `triggerElement` property. `swc-menu` does not render a trigger of its own.
 - A shadow-internal surface carrying `role="menu"`, anchored to the trigger.
-- **Default slot**: the menu's rows. `swc-menu-item` has not shipped yet, so these examples slot placeholder rows with `role="menuitem"` until it does.
+- **Default slot**: the menu's items, as `swc-menu-item` elements.
 
 <Canvas of={MenuStories.Anatomy} />
 
@@ -31,17 +31,31 @@ The menu's `PlacementController` handles pixel positioning automatically. When t
 
 ### Sizes
 
-`size` accepts `s`, `m`, `l`, and `xl` (default `m`). `swc-menu-item` doesn't exist yet, so no row content currently reflects this size; set it now so your markup carries the right value once row-level sizing ships.
+`size` accepts `s`, `m`, `l`, and `xl` (default `m`). Set it on `swc-menu`, which propagates its own size onto every `swc-menu-item` it slots. A `size` set on an item directly is not rejected: it holds until the next propagation, which runs when the menu's size changes or when its slotted items change. Set the size on the menu rather than per item.
 
 <Canvas of={MenuStories.Sizes} />
 
+### Item content
+
+A menu item is composed from three named slots: `label` for its text, `visual` for an optional leading icon or thumbnail, and `description` for optional secondary text below the label. `label` is required. Naming the label keeps it distinct from `description` and gives each part a handle for grid placement in the item layout.
+
+A menu item is named from its `label` slot and described from its `description` slot, so the description is announced as a description rather than folded into the item's name. Keep descriptions short, and do not repeat the label in them.
+
+<Canvas of={MenuStories.ItemContent} />
+
 ## States
 
-`open` is the single source of truth for visibility: the menu is either open or closed. Clicking the trigger, clicking a row, pressing <kbd>Escape</kbd>, or clicking outside all reconcile back to `open`. There are no disabled or selected states.
+`open` is the single source of truth for visibility: the menu is either open or closed. Clicking the trigger, clicking an item, pressing <kbd>Escape</kbd>, or clicking outside all reconcile back to `open`. There are no disabled or selected states.
 
 Because `<swc-menu>` uses `popover="auto"`, opening it dismisses any other open auto popover in the document, including other menus, popovers, and pickers.
 
 <Canvas of={MenuStories.States} />
+
+### Item states
+
+A menu item is either default or `disabled`. A disabled item is exposed with `aria-disabled="true"` rather than removed from the tab order, so arrow keys still reach it and a screen reader can announce that the option exists but is unavailable. It does not activate on click, <kbd>Enter</kbd>, or <kbd>Space</kbd>, and it does not close the menu.
+
+<Canvas of={MenuStories.ItemStates} />
 
 ## Behaviors
 
@@ -58,7 +72,7 @@ menu.triggerElement = someElement; // replaces any `for` wiring
 
 ### Open and close
 
-Clicking the trigger opens the menu and moves focus to the first row. Clicking a row, pressing <kbd>Enter</kbd> on a row, pressing <kbd>Escape</kbd>, or clicking outside the menu closes it; closing returns focus to the trigger if focus was still inside the menu.
+Clicking the trigger opens the menu and moves focus to the first item. Clicking an item, pressing <kbd>Enter</kbd> or <kbd>Space</kbd> on an item, pressing <kbd>Escape</kbd>, or clicking outside the menu closes it; closing returns focus to the trigger if focus was still inside the menu.
 
 The menu is a native `popover="auto"` element: it renders in the browser's top layer, so it is never clipped by an ancestor's `overflow`, and Escape/outside-click light-dismiss come from the platform rather than a hand-rolled listener.
 
@@ -84,23 +98,24 @@ When no CSS transition is active (for example when `prefers-reduced-motion` remo
 1. **`role="menu"`**: set on the shadow-internal surface.
 2. **`aria-haspopup="menu"` and `aria-expanded`**: wired onto the trigger's interactive element (for a gen2 SWC trigger with an open shadow root, its inner `<button>`) as the menu opens and closes.
 3. **Accessible name**: `swc-menu` has no `label` property. The menu's accessible name comes entirely from the trigger you author; give the trigger its own accessible name (visible text, `aria-label`, or `accessible-label` on a gen2 SWC trigger).
+4. **Item name and description**: each `swc-menu-item` points its own accessible name at its `label` slot and its accessible description at its `description` slot. The references are to the slotted elements themselves, so your markup needs no `id` attributes. To name an item differently, set `aria-labelledby` on it; that attribute replaces the component's reference. `aria-label` does not take effect, because a label reference is resolved ahead of it. A menu item with no `label` warns in development builds.
 
 #### Keyboard navigation
 
-- <kbd>Arrow Up</kbd> / <kbd>Arrow Down</kbd>: move focus between rows, wrapping
-  at the ends.
-- <kbd>Home</kbd> / <kbd>End</kbd>: move focus to the first or last row.
-- <kbd>Tab</kbd> / <kbd>Shift</kbd> + <kbd>Tab</kbd>: trapped on the active row
+- <kbd>Arrow Up</kbd> / <kbd>Arrow Down</kbd>: move focus between items,
+  wrapping at the ends.
+- <kbd>Home</kbd> / <kbd>End</kbd>: move focus to the first or last item.
+- <kbd>Tab</kbd> / <kbd>Shift</kbd> + <kbd>Tab</kbd>: trapped on the active item
   while the menu is open.
-- <kbd>Enter</kbd>: closes the menu. Running the row's own action is
-  `swc-menu-item`'s responsibility and arrives with it; <kbd>Space</kbd> is not
-  handled yet for the same reason.
+- <kbd>Enter</kbd> / <kbd>Space</kbd>: activate the focused item and close the
+  menu. `swc-menu-item` turns both keys into a click, so keyboard and pointer
+  activation reach the same handler.
 - <kbd>Escape</kbd>: closes the menu and returns focus to the trigger.
 
 ### Best practices
 
 - **Give the trigger an accessible name.** The menu has no accessible-name property of its own; an unlabeled trigger leaves the whole menu unlabeled too.
-- **Don't slot interactive descendants.** Rows carry text and, once `swc-menu-item` ships, decorative icons only. Slotting a button, link, or other focusable element inside a row breaks the roving-tabindex model.
+- **Don't slot interactive descendants.** Menu items carry text and decorative icons only. Slotting a button, link, or other focusable element inside an item breaks the roving-tabindex model.
 
 <Canvas of={MenuStories.Accessibility} />
 
@@ -108,10 +123,9 @@ When no CSS transition is active (for example when `prefers-reduced-motion` remo
 
 The following are planned for future releases:
 
-- Icons and thumbnails within each row.
-- Descriptions and trailing values on rows.
+- Trailing values on items.
 - Single- and multi-select modes.
-- Grouped sections with headers, and dividers as separators between rows.
+- Grouped sections with headers, and dividers as separators between items.
 - Nested submenus.
 
 <DocsFooter />

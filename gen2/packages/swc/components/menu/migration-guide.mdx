@@ -4,7 +4,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 # Menu migration guide
 
-Replace `<sp-menu>` with `<swc-menu>`, update the import, and author a real trigger element for `swc-menu` to reference; this guide covers the menu host only, since `sp-menu-item`, `sp-menu-group`, and `sp-menu-divider` have not migrated yet.
+Replace `<sp-menu>` with `<swc-menu>`, update the import, and author a real trigger element for `swc-menu` to reference. Command rows migrate too, as `swc-menu-item`; `sp-menu-group` and `sp-menu-divider` have not migrated yet.
 
 ## Installation
 
@@ -24,6 +24,7 @@ import '@spectrum-web-components/menu/sp-menu.js';
 
 // After
 import '@adobe/spectrum-wc/components/menu/swc-menu.js';
+import '@adobe/spectrum-wc/components/menu/swc-menu-item.js';
 ```
 
 > `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g., `@adobe/spectrum-wc/components/menu/swc-menu.js`) registers and loads only that component's bundle.
@@ -58,6 +59,7 @@ import '@adobe/spectrum-wc/components/menu/swc-menu.js';
 | `ignore` property                                                                           | No replacement.                                                                                                                             |
 | `getNeighboringFocusableElement()` method                                                   | No public replacement; arrow-key navigation is handled internally.                                                                          |
 | `role="menu"` on the host element                                                           | Moved to the shadow-internal surface. Do not select `sp-menu[role="menu"]`-style host selectors.                                            |
+| `setRole()` on menu items                                                                   | No replacement. A row is always `role="menuitem"`; checkbox and radio rows arrive as dedicated components.                                  |
 | `mobile-view` / `mobile-back-label` (mobile drilldown tray)                                 | No replacement. Not currently planned.                                                                                                      |
 | `selects` / `value` / `selectedItems` / `selectOrToggleItem()` / `change` event (selection) | Not yet available in Spectrum 2.                                                                                                            |
 | Link items (`href`, `target`, `download`, `rel`, `referrerpolicy` on menu items)            | Not yet available. A dedicated link-row component is planned but has not shipped.                                                           |
@@ -75,7 +77,7 @@ import '@adobe/spectrum-wc/components/menu/swc-menu.js';
 
 <!-- After -->
 <swc-menu for="menu-trigger">
-  <swc-menu-item>Deselect</swc-menu-item>
+  <swc-menu-item><span slot="label">Deselect</span></swc-menu-item>
 </swc-menu>
 ```
 
@@ -92,9 +94,9 @@ import '@adobe/spectrum-wc/components/menu/swc-menu.js';
 </sp-popover>
 
 <!-- After -->
-<sp-button id="menu-trigger">Selection type</sp-button>
+<swc-button id="menu-trigger">Selection type</swc-button>
 <swc-menu for="menu-trigger">
-  <swc-menu-item>Deselect</swc-menu-item>
+  <swc-menu-item><span slot="label">Deselect</span></swc-menu-item>
 </swc-menu>
 ```
 
@@ -120,6 +122,7 @@ menu.addEventListener('swc-close', () => {
 
 - The menu's accessible name comes from the trigger you author, not a `label` property. See [step 2](#2-author-and-reference-a-trigger).
 - `<swc-menu>` does not carry `role="menu"` on its host element; it is set on the shadow-internal surface instead.
+- Remove any `role` attribute you set on a menu item. A row is always `role="menuitem"`, set each time it connects to the DOM, so an authored value is overwritten.
 
 ## Styling
 

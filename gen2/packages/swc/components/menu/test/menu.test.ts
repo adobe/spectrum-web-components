@@ -14,8 +14,9 @@ import { html } from 'lit';
 import { expect, userEvent, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import { Menu } from '@adobe/spectrum-wc/menu';
+import { Menu, MenuItem } from '@adobe/spectrum-wc/menu';
 import {
+  MENU_ITEM_VALID_SIZES,
   MENU_PLACEMENTS,
   MENU_VALID_SIZES,
 } from '@adobe/spectrum-wc-core/components/menu';
@@ -23,6 +24,7 @@ import { isTopDismissible } from '@adobe/spectrum-wc-core/utils/index.js';
 
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc/components/menu/swc-menu.js';
+import '@adobe/spectrum-wc/components/menu/swc-menu-item.js';
 
 import {
   getComponent,
@@ -44,13 +46,44 @@ export default {
 
 // ─── Test helpers ─────────────────────────────────────────────────────────────
 
-// Placeholders for `swc-menu-item`, which doesn't exist yet; matches its
-// eventual tag name and `role="menuitem"` so tests stay aXe-clean.
 const defaultItems = html`
-  <swc-menu-item role="menuitem">Cut</swc-menu-item>
-  <swc-menu-item role="menuitem">Copy</swc-menu-item>
-  <swc-menu-item role="menuitem">Paste</swc-menu-item>
+  <swc-menu-item><span slot="label">Cut</span></swc-menu-item>
+  <swc-menu-item><span slot="label">Copy</span></swc-menu-item>
+  <swc-menu-item><span slot="label">Paste</span></swc-menu-item>
 `;
+
+// `userEvent.keyboard` tracks its own notion of focus and stops reaching the
+// menu once a row has a shadow root, landing the key on `body`. Dispatching
+// from the focused row is what a real key press does.
+const keyEvent = (type: 'keydown' | 'keyup', key: string): KeyboardEvent =>
+  new KeyboardEvent(type, {
+    key,
+    bubbles: true,
+    composed: true,
+    cancelable: true,
+  });
+
+// Rows activate on `keyup`, so a synthetic press has to send both halves or
+// nothing is activated. The keydown is returned because that is the half the
+// component cancels, for example to trap Tab.
+const pressFromActiveRow = (key: string): KeyboardEvent => {
+  const target = document.activeElement ?? document.body;
+  const down = keyEvent('keydown', key);
+  target.dispatchEvent(down);
+  (document.activeElement ?? document.body).dispatchEvent(
+    keyEvent('keyup', key)
+  );
+  return down;
+};
+
+// Rows take their text from a named `label` slot, so a bare text node renders
+// nowhere; every programmatically built row needs a real slotted element.
+const labelSpan = (text: string): HTMLSpanElement => {
+  const span = document.createElement('span');
+  span.slot = 'label';
+  span.textContent = text;
+  return span;
+};
 
 const getItems = (canvasElement: HTMLElement): HTMLElement[] =>
   Array.from(canvasElement.querySelectorAll('swc-menu-item')) as HTMLElement[];
@@ -244,7 +277,8 @@ export const StartsOpenNoPhantomEventTest: Story = {
         menu.addEventListener('swc-open', () => (openFired = true));
         menu.setAttribute('for', 'starts-open-trigger');
         menu.open = true;
-        menu.innerHTML = '<swc-menu-item role="menuitem">Cut</swc-menu-item>';
+        menu.innerHTML =
+          '<swc-menu-item><span slot="label">Cut</span></swc-menu-item>';
         mount.appendChild(menu);
 
         await menu.updateComplete;
@@ -560,7 +594,8 @@ export const ShadowRootScopeTest: Story = {
     trigger.textContent = 'Trigger';
 
     const menu = document.createElement('swc-menu') as Menu;
-    menu.innerHTML = '<swc-menu-item role="menuitem">Cut</swc-menu-item>';
+    menu.innerHTML =
+      '<swc-menu-item><span slot="label">Cut</span></swc-menu-item>';
 
     shadow.append(trigger, menu);
 
@@ -675,6 +710,13 @@ export const TabTrapAndEnterClosesTest: Story = {
 
     await step('Tab does not move focus out of the menu', async () => {
       const active = document.activeElement;
+      // The trap is `preventDefault()` on the row's keydown, so assert that
+      // directly; `userEvent.tab()` moves focus itself and would pass here
+      // even if the menu stopped trapping.
+      expect(
+        pressFromActiveRow('Tab').defaultPrevented,
+        'Tab is trapped on the row'
+      ).toBe(true);
       await userEvent.tab();
       expect(document.activeElement, 'focus stays on the active row').toBe(
         active
@@ -692,7 +734,7 @@ export const TabTrapAndEnterClosesTest: Story = {
     await step('Enter on the focused row closes the menu', async () => {
       let closeCount = 0;
       menu.addEventListener('swc-close', () => closeCount++);
-      await userEvent.keyboard('{Enter}');
+      pressFromActiveRow('Enter');
       await waitFor(() => expect(isMenuOpen(menu)).toBe(false));
       expect(menu.open, 'menu closes on Enter').toBe(false);
       expect(closeCount, 'swc-close fires exactly once').toBe(1);
@@ -718,25 +760,25 @@ export const ArrowKeyNavigationTest: Story = {
     });
 
     await step('ArrowDown moves focus to the next row', async () => {
-      await userEvent.keyboard('{ArrowDown}');
+      pressFromActiveRow('ArrowDown');
       expect(document.activeElement, 'focus on second row').toBe(
         getItems(canvasElement)[1]
       );
     });
 
     await step('ArrowDown wraps from the last row to the first', async () => {
-      await userEvent.keyboard('{ArrowDown}');
+      pressFromActiveRow('ArrowDown');
       expect(document.activeElement, 'focus on third row').toBe(
         getItems(canvasElement)[2]
       );
-      await userEvent.keyboard('{ArrowDown}');
+      pressFromActiveRow('ArrowDown');
       expect(document.activeElement, 'focus wraps to first row').toBe(
         getItems(canvasElement)[0]
       );
     });
 
     await step('ArrowUp wraps from the first row to the last', async () => {
-      await userEvent.keyboard('{ArrowUp}');
+      pressFromActiveRow('ArrowUp');
       expect(document.activeElement, 'focus wraps to last row').toBe(
         getItems(canvasElement)[2]
       );
@@ -745,11 +787,11 @@ export const ArrowKeyNavigationTest: Story = {
     await step(
       'End moves focus to the last row, Home to the first',
       async () => {
-        await userEvent.keyboard('{Home}');
+        pressFromActiveRow('Home');
         expect(document.activeElement, 'focus on first row').toBe(
           getItems(canvasElement)[0]
         );
-        await userEvent.keyboard('{End}');
+        pressFromActiveRow('End');
         expect(document.activeElement, 'focus on last row').toBe(
           getItems(canvasElement)[2]
         );
@@ -760,13 +802,12 @@ export const ArrowKeyNavigationTest: Story = {
       'picks up a row added while open (slotchange refreshes navigation)',
       async () => {
         const newRow = document.createElement('swc-menu-item');
-        newRow.setAttribute('role', 'menuitem');
         newRow.setAttribute('tabindex', '-1');
-        newRow.textContent = 'Duplicate';
+        newRow.append(labelSpan('Duplicate'));
         menu.appendChild(newRow);
         await new Promise((r) => requestAnimationFrame(r));
 
-        await userEvent.keyboard('{End}');
+        pressFromActiveRow('End');
         expect(
           document.activeElement,
           'End moves focus to the newly added row'
@@ -775,7 +816,7 @@ export const ArrowKeyNavigationTest: Story = {
         // Move focus off the row before removing it, so this exercises the
         // roving set picking up the removal rather than focus recovery for
         // a removed-while-focused row (a separate, untested concern).
-        await userEvent.keyboard('{Home}');
+        pressFromActiveRow('Home');
         expect(document.activeElement, 'focus back on the first row').toBe(
           getItems(canvasElement)[0]
         );
@@ -783,7 +824,7 @@ export const ArrowKeyNavigationTest: Story = {
         newRow.remove();
         await new Promise((r) => requestAnimationFrame(r));
 
-        await userEvent.keyboard('{End}');
+        pressFromActiveRow('End');
         expect(
           document.activeElement,
           'End moves focus to the last row again once the added row is removed'
@@ -883,9 +924,8 @@ export const SlotRestrictionValidNoWarningTest: Story = {
     await step('does not warn when adding another allowed child', () =>
       withWarningSpy(async (warnCalls) => {
         const item = document.createElement('swc-menu-item');
-        item.setAttribute('role', 'menuitem');
         item.setAttribute('tabindex', '-1');
-        item.textContent = 'Delete';
+        item.append(labelSpan('Delete'));
         menu.appendChild(item);
         await menu.updateComplete;
         await new Promise((r) => requestAnimationFrame(r));
@@ -1270,7 +1310,8 @@ export const DisconnectCleanupTest: Story = {
     ) as HTMLElement;
     const menu = document.createElement('swc-menu') as Menu;
     menu.setAttribute('for', 'disconnect-trigger');
-    menu.innerHTML = '<swc-menu-item role="menuitem">Cut</swc-menu-item>';
+    menu.innerHTML =
+      '<swc-menu-item><span slot="label">Cut</span></swc-menu-item>';
     mount.appendChild(menu);
     await menu.updateComplete;
 
@@ -1309,7 +1350,8 @@ export const DisconnectCleanupTest: Story = {
 
         const menu2 = document.createElement('swc-menu') as Menu;
         menu2.setAttribute('for', 'disconnect-trigger-2');
-        menu2.innerHTML = '<swc-menu-item role="menuitem">Cut</swc-menu-item>';
+        menu2.innerHTML =
+          '<swc-menu-item><span slot="label">Cut</span></swc-menu-item>';
         canvasElement.appendChild(menu2);
         await menu2.updateComplete;
 
@@ -1343,7 +1385,8 @@ export const DisconnectCleanupTest: Story = {
 
         const menu3 = document.createElement('swc-menu') as Menu;
         menu3.setAttribute('for', 'disconnect-trigger-3');
-        menu3.innerHTML = '<swc-menu-item role="menuitem">Cut</swc-menu-item>';
+        menu3.innerHTML =
+          '<swc-menu-item><span slot="label">Cut</span></swc-menu-item>';
         canvasElement.appendChild(menu3);
         await menu3.updateComplete;
 
@@ -1372,5 +1415,739 @@ export const DisconnectCleanupTest: Story = {
         ).toBe(false);
       }
     );
+  },
+};
+
+// ══════════════════════════════════════════════════════════════
+// swc-menu-item
+// ══════════════════════════════════════════════════════════════
+
+const getRows = (canvasElement: HTMLElement): MenuItem[] =>
+  Array.from(canvasElement.querySelectorAll('swc-menu-item'));
+
+const rowsInMenu = (rows: unknown, id: string) => html`
+  <swc-button id=${id}>Edit</swc-button>
+  <swc-menu for=${id}>${rows}</swc-menu>
+`;
+
+const threeRows = html`
+  <swc-menu-item><span slot="label">Cut</span></swc-menu-item>
+  <swc-menu-item disabled><span slot="label">Copy</span></swc-menu-item>
+  <swc-menu-item><span slot="label">Paste</span></swc-menu-item>
+`;
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Defaults
+// ──────────────────────────────────────────────────────────────
+
+export const ItemDefaultsTest: Story = {
+  render: () => html`
+    <swc-menu-item><span slot="label">Cut</span></swc-menu-item>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const item = await getComponent<MenuItem>(canvasElement, 'swc-menu-item');
+
+    await step('renders expected default property values', async () => {
+      expect(item.size, 'default size is m').toBe('m');
+      expect(item.disabled, 'default disabled is false').toBe(false);
+    });
+
+    await step('carries role="menuitem" on the host', async () => {
+      expect(item.getAttribute('role'), 'host role').toBe('menuitem');
+    });
+
+    await step('exposes no aria-disabled when enabled', async () => {
+      expect(item.hasAttribute('aria-disabled'), 'no aria-disabled').toBe(
+        false
+      );
+    });
+
+    // Order is the reading order the row is announced in, so a swap is a
+    // regression even though both slots still render.
+    await step('renders the visual slot ahead of the label', async () => {
+      const slots = Array.from(
+        item.shadowRoot?.querySelectorAll('slot') ?? []
+      ).map((slot) => slot.name);
+      expect(slots, 'visual, then the label, then its description').toEqual([
+        'visual',
+        'label',
+        'description',
+      ]);
+    });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Properties / Attributes
+// ──────────────────────────────────────────────────────────────
+
+export const ItemPropertyMutationTest: Story = {
+  render: () => html`
+    <swc-menu-item><span slot="label">Cut</span></swc-menu-item>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const item = await getComponent<MenuItem>(canvasElement, 'swc-menu-item');
+
+    await step('renders in every valid size', async () => {
+      for (const size of MENU_ITEM_VALID_SIZES) {
+        item.size = size;
+        await item.updateComplete;
+        expect(item.getAttribute('size'), `size attribute is "${size}"`).toBe(
+          size
+        );
+      }
+    });
+
+    await step('reflects disabled and maps it to aria-disabled', async () => {
+      item.disabled = true;
+      await item.updateComplete;
+      expect(item.hasAttribute('disabled'), 'disabled reflects').toBe(true);
+      expect(item.getAttribute('aria-disabled'), 'aria-disabled set').toBe(
+        'true'
+      );
+
+      item.disabled = false;
+      await item.updateComplete;
+      expect(item.hasAttribute('aria-disabled'), 'aria-disabled cleared').toBe(
+        false
+      );
+    });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Accessible name and description
+// ──────────────────────────────────────────────────────────────
+
+// `internals` is protected, and ARIA element references are invisible to both
+// the DOM and Playwright's accessible-name computation, so the references are
+// read off internals directly rather than asserted through an ARIA snapshot.
+const ariaOf = (row: MenuItem): ElementInternals =>
+  (row as unknown as { internals: ElementInternals }).internals;
+
+export const ItemAriaTextWiringTest: Story = {
+  render: () => html`
+    <swc-menu-item>
+      <span slot="label">Paste special</span>
+      <span slot="description">Keeps the source formatting</span>
+    </swc-menu-item>
+    <swc-menu-item><span slot="label">Cut</span></swc-menu-item>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const [described, plain] = getRows(canvasElement);
+    await described.updateComplete;
+    await plain.updateComplete;
+
+    await step('names the row from its label alone', async () => {
+      expect(
+        ariaOf(described).ariaLabelledByElements,
+        'the label slot is the only name source'
+      ).toEqual([described.querySelector('[slot="label"]')]);
+    });
+
+    await step('describes the row from its description', async () => {
+      expect(
+        ariaOf(described).ariaDescribedByElements,
+        'the description slot is the description'
+      ).toEqual([described.querySelector('[slot="description"]')]);
+    });
+
+    await step('leaves a row with no description undescribed', async () => {
+      expect(
+        ariaOf(plain).ariaDescribedByElements,
+        'no description reference'
+      ).toBe(null);
+    });
+
+    // The reason the references go on internals rather than on the host:
+    // writing them to `this` reflects onto these attributes and would discard
+    // whatever a consumer put there.
+    await step('writes no ARIA attributes onto the host', async () => {
+      expect(
+        described.hasAttribute('aria-labelledby'),
+        'no aria-labelledby on the host'
+      ).toBe(false);
+      expect(
+        described.hasAttribute('aria-describedby'),
+        'no aria-describedby on the host'
+      ).toBe(false);
+    });
+
+    await step("preserves a consumer's own aria-describedby", async () => {
+      plain.setAttribute('aria-describedby', 'consumer-note');
+      plain.append(labelSpan('Cut again'));
+      await waitFor(() => {
+        expect(
+          ariaOf(plain).ariaLabelledByElements?.length,
+          'the re-run picked up the new label'
+        ).toBe(2);
+      });
+      expect(
+        plain.getAttribute('aria-describedby'),
+        'the consumer value survives'
+      ).toBe('consumer-note');
+    });
+
+    // Proves the wiring tracks the slot instead of running once: a stale
+    // reference would leave the row with no accessible name at all.
+    await step('re-points the name when the label is swapped', async () => {
+      described.querySelector('[slot="label"]')?.remove();
+      const replacement = labelSpan('Paste and match style');
+      described.prepend(replacement);
+
+      await waitFor(() => {
+        expect(
+          ariaOf(described).ariaLabelledByElements,
+          'the name follows the swap'
+        ).toEqual([replacement]);
+      });
+    });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Missing label warning
+// ──────────────────────────────────────────────────────────────
+
+export const ItemMissingLabelWarningTest: Story = {
+  render: () => html`
+    <div></div>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const host = canvasElement.querySelector('div') as HTMLElement;
+
+    // An entirely empty row fires no `slotchange` at all, so the first render
+    // is the only thing that can reach the warning. Remove the `firstUpdated`
+    // call and this step is the one that fails.
+    await step('warns for a row with no slotted content at all', () =>
+      withWarningSpy(async (warnCalls) => {
+        const row = document.createElement('swc-menu-item');
+        host.append(row);
+        await (row as MenuItem).updateComplete;
+
+        expect(warnCalls.length, 'warns on an empty row').toBeGreaterThan(0);
+        expect(String(warnCalls[0][1]), 'names the label slot').toContain(
+          'requires content in the "label" slot'
+        );
+        row.remove();
+      })
+    );
+
+    await step('warns for a row with a description but no label', () =>
+      withWarningSpy(async (warnCalls) => {
+        const row = document.createElement('swc-menu-item');
+        row.append(
+          Object.assign(document.createElement('span'), {
+            slot: 'description',
+            textContent: 'Orphaned description',
+          })
+        );
+        host.append(row);
+        await (row as MenuItem).updateComplete;
+
+        // Count is not pinned: the handler runs on first render and again on
+        // the description slot's `slotchange`, and the spy bypasses the
+        // `issuedWarnings` dedupe that collapses them in real dev use.
+        expect(warnCalls.length, 'warns at least once').toBeGreaterThan(0);
+        row.remove();
+      })
+    );
+
+    await step('stays quiet once the row has a label', () =>
+      withWarningSpy(async (warnCalls) => {
+        const row = document.createElement('swc-menu-item');
+        row.append(labelSpan('Cut'));
+        host.append(row);
+        await (row as MenuItem).updateComplete;
+
+        expect(warnCalls.length, 'no warning for a labelled row').toBe(0);
+        row.remove();
+      })
+    );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Role
+// ──────────────────────────────────────────────────────────────
+
+export const ItemRoleIsAlwaysMenuitemTest: Story = {
+  render: () => html`
+    <swc-menu-item role="menuitemcheckbox">
+      <span slot="label">Wrap</span>
+    </swc-menu-item>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const item = await getComponent<MenuItem>(canvasElement, 'swc-menu-item');
+
+    // Selection rows ship as their own components. Letting an author swap in
+    // `menuitemcheckbox` would promise visuals and behavior this row has not
+    // got, so the role is fixed rather than a default.
+    await step('overwrites an author-supplied role', async () => {
+      expect(item.getAttribute('role'), 'role is always menuitem').toBe(
+        'menuitem'
+      );
+    });
+
+    await step('keeps the role fixed when re-set after connect', async () => {
+      item.setAttribute('role', 'menuitemradio');
+      item.remove();
+      canvasElement.append(item);
+      await item.updateComplete;
+      expect(item.getAttribute('role'), 'reconnect restores menuitem').toBe(
+        'menuitem'
+      );
+    });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Menu integration
+// ──────────────────────────────────────────────────────────────
+
+export const ItemDiscoveryTest: Story = {
+  render: () => rowsInMenu(threeRows, 'discovery-trigger'),
+  play: async ({ canvasElement, step }) => {
+    const trigger = canvasElement.querySelector(
+      '#discovery-trigger'
+    ) as HTMLElement;
+
+    await step('opening focuses the first row', async () => {
+      await userEvent.click(trigger);
+      await waitFor(() =>
+        expect(document.activeElement, 'focus on the first row').toBe(
+          getRows(canvasElement)[0]
+        )
+      );
+    });
+
+    // Raised in review from a screen recording: after a mouse open, the
+    // first arrow press appears to land on row two. Focus is on row one
+    // either way; what differs is whether the browser paints a ring for
+    // programmatic focus, which `:focus-visible` withholds after a pointer
+    // interaction. Asserting both open paths keeps that an appearance
+    // question for the row chrome story rather than a focus bug.
+    await step('opening from the keyboard focuses the first row', async () => {
+      // Closed directly: native popover light-dismiss ignores a synthetic
+      // Escape, so `userEvent` cannot drive that path here.
+      const menu = canvasElement.querySelector('swc-menu') as HTMLElement & {
+        open: boolean;
+      };
+      menu.open = false;
+      await waitFor(() => expect(menu.open, 'menu closed').toBe(false));
+
+      trigger.focus();
+      await userEvent.keyboard('{Enter}');
+
+      await waitFor(() =>
+        expect(document.activeElement, 'focus on the first row').toBe(
+          getRows(canvasElement)[0]
+        )
+      );
+    });
+
+    // B20/Q20: disabled rows keep their place in the roving set. This is the
+    // test the plan named as the one that settles whether the hand-rolled
+    // mapping is enough.
+    await step('arrow keys still reach a disabled row', async () => {
+      await waitFor(() =>
+        expect(
+          getRows(canvasElement)[0].getAttribute('tabindex'),
+          'first row holds the tab stop before navigating'
+        ).toBe('0')
+      );
+
+      // Dispatched from the row rather than through `userEvent.keyboard`:
+      // that helper tracks its own notion of focus and stops reaching the
+      // menu once the row has a shadow root, landing the key on `body`.
+      getRows(canvasElement)[0].dispatchEvent(
+        new KeyboardEvent('keydown', {
+          key: 'ArrowDown',
+          bubbles: true,
+          composed: true,
+          cancelable: true,
+        })
+      );
+
+      await waitFor(() =>
+        expect(
+          document.activeElement,
+          'ArrowDown reaches the disabled row rather than skipping it'
+        ).toBe(getRows(canvasElement)[1])
+      );
+      expect(
+        getRows(canvasElement)[1].getAttribute('aria-disabled'),
+        'the row it reached is genuinely the disabled one'
+      ).toBe('true');
+    });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Keyboard activation
+// ──────────────────────────────────────────────────────────────
+
+// Dispatched from the row for the same reason as the arrow-key step above.
+// Both halves, since activation happens on `keyup`; the returned keydown is
+// the half the row cancels.
+const pressRowKey = (row: MenuItem, key: string): KeyboardEvent => {
+  const down = keyEvent('keydown', key);
+  row.dispatchEvent(down);
+  row.dispatchEvent(keyEvent('keyup', key));
+  return down;
+};
+
+export const ItemKeyboardActivationTest: Story = {
+  render: () => rowsInMenu(threeRows, 'activation-trigger'),
+  play: async ({ canvasElement, step }) => {
+    const trigger = canvasElement.querySelector(
+      '#activation-trigger'
+    ) as HTMLElement;
+    const menu = canvasElement.querySelector('swc-menu') as HTMLElement & {
+      open: boolean;
+    };
+
+    await step('Enter on a disabled row does nothing', async () => {
+      await userEvent.click(trigger);
+      await waitFor(() => expect(menu.open).toBe(true));
+
+      const [, disabledRow] = getRows(canvasElement);
+      let clicked = false;
+      disabledRow.addEventListener('click', () => {
+        clicked = true;
+      });
+
+      const event = pressRowKey(disabledRow, 'Enter');
+
+      expect(event.defaultPrevented, 'the key is still swallowed').toBe(true);
+      expect(clicked, 'no activation reaches the consumer').toBe(false);
+      expect(menu.open, 'the menu stays open').toBe(true);
+    });
+
+    // The a11y analysis requires Enter *and* Space (WCAG 2.1.1). Space is
+    // the one that was missing: the row never turned it into a click.
+    await step('Space on an enabled row activates and closes', async () => {
+      const [firstRow] = getRows(canvasElement);
+      let clicked = false;
+      firstRow.addEventListener('click', () => {
+        clicked = true;
+      });
+
+      const event = pressRowKey(firstRow, ' ');
+
+      expect(event.defaultPrevented, 'the page does not scroll').toBe(true);
+      expect(clicked, 'the consumer click handler runs').toBe(true);
+      await waitFor(() => expect(menu.open, 'the menu closes').toBe(false));
+    });
+
+    await step('Space on a disabled row does nothing', async () => {
+      await userEvent.click(trigger);
+      await waitFor(() => expect(menu.open).toBe(true));
+
+      const [, disabledRow] = getRows(canvasElement);
+      let clicked = false;
+      disabledRow.addEventListener('click', () => {
+        clicked = true;
+      });
+
+      const event = pressRowKey(disabledRow, ' ');
+
+      expect(event.defaultPrevented, 'the page does not scroll').toBe(true);
+      expect(clicked, 'no activation reaches the consumer').toBe(false);
+      expect(menu.open, 'the menu stays open').toBe(true);
+    });
+
+    // Modified presses belong to the app or to assistive technology, so the
+    // row leaves them alone rather than treating them as activation.
+    await step('a modified press does not activate a row', async () => {
+      // The previous step leaves the menu open; clicking the trigger here
+      // would toggle it shut.
+      if (!menu.open) {
+        await userEvent.click(trigger);
+      }
+      await waitFor(() => expect(menu.open).toBe(true));
+
+      const [firstRow] = getRows(canvasElement);
+      let clicked = false;
+      firstRow.addEventListener('click', () => {
+        clicked = true;
+      });
+
+      for (const modifier of [
+        'shiftKey',
+        'ctrlKey',
+        'altKey',
+        'metaKey',
+      ] as const) {
+        for (const key of ['Enter', ' ']) {
+          const down = new KeyboardEvent('keydown', {
+            key,
+            [modifier]: true,
+            bubbles: true,
+            composed: true,
+            cancelable: true,
+          });
+          firstRow.dispatchEvent(down);
+          firstRow.dispatchEvent(
+            new KeyboardEvent('keyup', {
+              key,
+              [modifier]: true,
+              bubbles: true,
+              composed: true,
+              cancelable: true,
+            })
+          );
+          expect(
+            down.defaultPrevented,
+            `${modifier} + ${key} stays available to the app`
+          ).toBe(false);
+        }
+      }
+
+      expect(clicked, 'no modified press activates the row').toBe(false);
+      expect(menu.open, 'the menu stays open').toBe(true);
+    });
+
+    await step('Enter on an enabled row reaches its handler', async () => {
+      const [firstRow] = getRows(canvasElement);
+      let clicked = false;
+      firstRow.addEventListener('click', () => {
+        clicked = true;
+      });
+
+      pressRowKey(firstRow, 'Enter');
+
+      expect(clicked, 'the consumer click handler runs').toBe(true);
+      await waitFor(() => expect(menu.open, 'the menu closes').toBe(false));
+    });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Armed-press bookkeeping
+// ──────────────────────────────────────────────────────────────
+
+// A row activates on `keyup` only for a press it saw begin, which means it
+// carries state between the two halves. Each step here leaves that state in a
+// way that used to strand it, then proves a later lone `keyup` is inert.
+const modifiedKeyEvent = (
+  type: 'keydown' | 'keyup',
+  key: string
+): KeyboardEvent =>
+  new KeyboardEvent(type, {
+    key,
+    shiftKey: true,
+    bubbles: true,
+    composed: true,
+    cancelable: true,
+  });
+
+export const ItemPressStateTest: Story = {
+  render: () => rowsInMenu(threeRows, 'press-state-trigger'),
+  play: async ({ canvasElement, step }) => {
+    const trigger = canvasElement.querySelector(
+      '#press-state-trigger'
+    ) as HTMLElement;
+    const menu = canvasElement.querySelector('swc-menu') as HTMLElement & {
+      open: boolean;
+    };
+    const reopen = async (): Promise<void> => {
+      if (!menu.open) {
+        await userEvent.click(trigger);
+      }
+      await waitFor(() => expect(menu.open).toBe(true));
+    };
+
+    await step('a press begun while disabled never activates', async () => {
+      await reopen();
+
+      const [, disabledRow] = getRows(canvasElement);
+      let clicked = false;
+      disabledRow.addEventListener('click', () => {
+        clicked = true;
+      });
+
+      disabledRow.dispatchEvent(keyEvent('keydown', 'Enter'));
+      // Enabled mid-press: the row was disabled when the press began, so it
+      // never armed and the keyup has nothing to act on.
+      disabledRow.disabled = false;
+      await disabledRow.updateComplete;
+      disabledRow.dispatchEvent(keyEvent('keyup', 'Enter'));
+
+      expect(clicked, 'the press does not survive being enabled').toBe(false);
+      expect(menu.open, 'the menu stays open').toBe(true);
+
+      disabledRow.disabled = true;
+      await disabledRow.updateComplete;
+    });
+
+    await step('modifiers added mid-press leave nothing armed', async () => {
+      await reopen();
+
+      const [firstRow] = getRows(canvasElement);
+      let clicked = false;
+      firstRow.addEventListener('click', () => {
+        clicked = true;
+      });
+
+      // Bare keydown arms the row; the keyup arrives modified, so it is not an
+      // activation. The row has to disarm anyway, or the next bare keyup it
+      // sees without a keydown of its own would activate it.
+      firstRow.dispatchEvent(keyEvent('keydown', 'Enter'));
+      firstRow.dispatchEvent(modifiedKeyEvent('keyup', 'Enter'));
+      expect(clicked, 'the modified keyup does not activate').toBe(false);
+
+      firstRow.dispatchEvent(keyEvent('keyup', 'Enter'));
+      expect(clicked, 'the stranded press does not activate later').toBe(false);
+      expect(menu.open, 'the menu stays open').toBe(true);
+    });
+
+    // Only reachable by dispatching keys at an unfocused row, which is why
+    // this row is built rather than taken from the menu: a row that armed
+    // while focused is already disarmed by the `blur` that removing it fires,
+    // so `disconnectedCallback` is the only thing covering the unfocused case.
+    await step('a row removed mid-press comes back disarmed', async () => {
+      await reopen();
+
+      const menuEl = canvasElement.querySelector('swc-menu') as HTMLElement;
+      const row = document.createElement('swc-menu-item') as MenuItem;
+      row.append(labelSpan('Never focused'));
+      menuEl.append(row);
+      await row.updateComplete;
+
+      let clicked = false;
+      row.addEventListener('click', () => {
+        clicked = true;
+      });
+
+      row.dispatchEvent(keyEvent('keydown', 'Enter'));
+      row.remove();
+      menuEl.append(row);
+      await row.updateComplete;
+      row.dispatchEvent(keyEvent('keyup', 'Enter'));
+
+      expect(clicked, 'the press does not survive re-slotting').toBe(false);
+      expect(menu.open, 'the menu stays open').toBe(true);
+      row.remove();
+    });
+
+    await step(
+      'another key released mid-press keeps the row armed',
+      async () => {
+        await reopen();
+
+        const [firstRow] = getRows(canvasElement);
+        let clicked = false;
+        firstRow.addEventListener('click', () => {
+          clicked = true;
+        });
+
+        // Arrow Down moves focus here and is still held when Enter goes down, so
+        // its keyup lands on this row. A press only ends on the release of the
+        // key that began it.
+        firstRow.dispatchEvent(keyEvent('keydown', 'Enter'));
+        firstRow.dispatchEvent(keyEvent('keyup', 'ArrowDown'));
+        firstRow.dispatchEvent(keyEvent('keyup', 'Enter'));
+
+        expect(clicked, 'the press survives the unrelated keyup').toBe(true);
+        await waitFor(() => expect(menu.open, 'the menu closes').toBe(false));
+      }
+    );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Size cascades from the menu
+// ──────────────────────────────────────────────────────────────
+
+export const ItemSizeCascadeTest: Story = {
+  render: () => rowsInMenu(threeRows, 'size-cascade-trigger'),
+  play: async ({ canvasElement, step }) => {
+    const menu = await getComponent<Menu>(canvasElement, 'swc-menu');
+
+    // The menu propagates its size on slot assignment and whenever its own
+    // size changes; it does not watch a row for a size set out of band.
+    await step('rows take the menu size on slot assignment', async () => {
+      await waitFor(() => {
+        for (const row of getRows(canvasElement)) {
+          expect(row.size, 'row matches the default menu size').toBe('m');
+        }
+      });
+    });
+
+    await step('changing the menu size updates every row', async () => {
+      for (const size of MENU_VALID_SIZES) {
+        menu.size = size;
+        await menu.updateComplete;
+        await waitFor(() => {
+          for (const row of getRows(canvasElement)) {
+            expect(row.size, `row follows menu size "${size}"`).toBe(size);
+          }
+        });
+      }
+    });
+
+    await step('a row authored with its own size is overridden', async () => {
+      menu.size = 'l';
+      await menu.updateComplete;
+
+      const row = document.createElement('swc-menu-item') as MenuItem;
+      row.setAttribute('size', 's');
+      row.append(labelSpan('Late arrival'));
+      menu.append(row);
+
+      await waitFor(() =>
+        expect(row.size, 'the menu wins over the authored size').toBe('l')
+      );
+      row.remove();
+    });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Disabled row swallows a pointer click
+// ──────────────────────────────────────────────────────────────
+
+export const ItemDisabledClickTest: Story = {
+  render: () => rowsInMenu(threeRows, 'disabled-click-trigger'),
+  play: async ({ canvasElement, step }) => {
+    const trigger = canvasElement.querySelector(
+      '#disabled-click-trigger'
+    ) as HTMLElement;
+    const menu = canvasElement.querySelector('swc-menu') as HTMLElement & {
+      open: boolean;
+    };
+
+    // `aria-disabled` keeps the row focusable, so it stays clickable unless
+    // the row stops the event. Without the capture listener the consumer's
+    // own handler runs on a row the user was told is unavailable.
+    await step('a click on a disabled row reaches no handler', async () => {
+      await userEvent.click(trigger);
+      await waitFor(() => expect(menu.open).toBe(true));
+
+      const [, disabledRow] = getRows(canvasElement);
+      let clicked = false;
+      disabledRow.addEventListener('click', () => {
+        clicked = true;
+      });
+
+      await userEvent.click(disabledRow);
+
+      expect(clicked, 'no activation reaches the consumer').toBe(false);
+      expect(menu.open, 'the menu stays open').toBe(true);
+    });
+
+    await step('a click on an enabled row still activates', async () => {
+      const [firstRow] = getRows(canvasElement);
+      let clicked = false;
+      firstRow.addEventListener('click', () => {
+        clicked = true;
+      });
+
+      await userEvent.click(firstRow);
+
+      expect(clicked, 'the consumer click handler runs').toBe(true);
+      await waitFor(() => expect(menu.open, 'the menu closes').toBe(false));
+    });
   },
 };

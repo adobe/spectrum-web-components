@@ -99,6 +99,125 @@ test.describe('Menu - native dismissal', () => {
     await expect(trigger).toBeFocused();
   });
 
+  // Activating a row closes the menu and restores focus to the trigger. If
+  // that happened on keydown, the rest of the same physical press (the
+  // repeats, then the keyup) would land on the trigger, which activates and
+  // reopens the menu. Holding the key is what exposes it, because the repeats
+  // are what reach the refocused trigger. Only trusted input runs the
+  // browser's own activation behavior, so this cannot be a play function.
+  // The other half of the same problem. A native button fires `click` on
+  // Enter *keydown*, so the menu opens and focuses its first row before the
+  // trigger's own keyup arrives. That keyup lands on the row, which must not
+  // read it as its own press. Play functions cannot show this either: a
+  // synthetic Enter never makes the trigger's inner button activate.
+  for (const [name, key] of [
+    ['Enter', 'Enter'],
+    ['Space', ' '],
+  ] as const) {
+    test(`opening with ${name} does not activate the first row`, async ({
+      page,
+    }) => {
+      await gotoStory(page, 'components-menu--open-and-close', 'swc-button');
+      const menu = page.locator('swc-menu');
+      const trigger = page.getByRole('button', { name: 'Edit' });
+
+      await page.evaluate(() => {
+        const w = window as unknown as Record<string, number>;
+        w.__rowClicks = 0;
+        document.addEventListener(
+          'click',
+          (event) => {
+            const onRow = event
+              .composedPath()
+              .some(
+                (node) => (node as HTMLElement)?.localName === 'swc-menu-item'
+              );
+            if (onRow) {
+              w.__rowClicks += 1;
+            }
+          },
+          true
+        );
+      });
+
+      // Focus the trigger by keyboard, then open it with the key under test,
+      // so the whole press is delivered the way a real user's would be.
+      await trigger.focus();
+      await page.keyboard.press(key);
+
+      await expect(menu).toHaveJSProperty('open', true);
+      const rowClicks = await page.evaluate(
+        () => (window as unknown as Record<string, number>).__rowClicks
+      );
+      expect(rowClicks, 'no row activates while the menu is opening').toBe(0);
+    });
+
+    test(`a held ${name} on a row activates it once`, async ({ page }) => {
+      await gotoStory(page, 'components-menu--open-and-close', 'swc-button');
+      const menu = page.locator('swc-menu');
+      const trigger = page.getByRole('button', { name: 'Edit' });
+
+      await trigger.click();
+      await expect(menu).toHaveJSProperty('open', true);
+
+      // `open` alone is too weak a signal: held Enter used to reopen the menu
+      // and then close it again, ending back at `false` while having run a
+      // row twice. Counting activations and reopens catches both shapes.
+      await page.evaluate(() => {
+        const w = window as unknown as Record<string, number>;
+        w.__rowClicks = 0;
+        w.__reopens = 0;
+        document.addEventListener(
+          'click',
+          (event) => {
+            const onRow = event
+              .composedPath()
+              .some(
+                (node) => (node as HTMLElement)?.localName === 'swc-menu-item'
+              );
+            if (onRow) {
+              w.__rowClicks += 1;
+            }
+          },
+          true
+        );
+        document.querySelector('swc-menu')?.addEventListener('swc-open', () => {
+          w.__reopens += 1;
+        });
+      });
+
+      // No awaits between the presses: a real held key gives the component no
+      // gap to settle in, and an await here hides the bug entirely.
+      await page.keyboard.down(key);
+      await page.keyboard.down(key);
+      await page.keyboard.down(key);
+      await page.keyboard.up(key);
+
+      const counts = await page.evaluate(() => {
+        const w = window as unknown as Record<string, number>;
+        return { rowClicks: w.__rowClicks, reopens: w.__reopens };
+      });
+      expect(counts.rowClicks, 'the row activates exactly once').toBe(1);
+      expect(counts.reopens, 'the menu never reopens').toBe(0);
+      await expect(menu).toHaveJSProperty('open', false);
+      await expect(trigger).toBeFocused();
+    });
+
+    test(`a single ${name} on a row closes the menu once`, async ({ page }) => {
+      await gotoStory(page, 'components-menu--open-and-close', 'swc-button');
+      const menu = page.locator('swc-menu');
+      const trigger = page.getByRole('button', { name: 'Edit' });
+
+      await trigger.click();
+      await expect(menu).toHaveJSProperty('open', true);
+
+      await page.keyboard.press(key);
+
+      await expect(menu).toHaveJSProperty('open', false);
+      await expect(trigger).toBeFocused();
+    });
+  }
+
   test('an outside click closes the menu', async ({ page }) => {
     await gotoStory(page, 'components-menu--open-and-close', 'swc-button');
     const menu = page.locator('swc-menu');

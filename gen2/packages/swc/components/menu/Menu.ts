@@ -32,9 +32,9 @@ import styles from './menu.css';
  *
  * @example
  * <swc-menu>
- *   <swc-menu-item>Cut</swc-menu-item>
- *   <swc-menu-item>Copy</swc-menu-item>
- *   <swc-menu-item>Paste</swc-menu-item>
+ *   <swc-menu-item><span slot="label">Cut</span></swc-menu-item>
+ *   <swc-menu-item><span slot="label">Copy</span></swc-menu-item>
+ *   <swc-menu-item><span slot="label">Paste</span></swc-menu-item>
  * </swc-menu>
  *
  * @slot - `swc-menu-item` elements.

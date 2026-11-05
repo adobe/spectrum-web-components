@@ -17,6 +17,7 @@ import {
   FocusgroupNavigationController,
   PlacementController,
   type PlacementOptions,
+  SlotAttributePropagationController,
   TriggerPressController,
 } from '@adobe/spectrum-wc-core/controllers/index.js';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
@@ -41,6 +42,7 @@ import {
   type MenuPlacement,
   type MenuSize,
 } from './Menu.types.js';
+import { isMenuActivationKey } from './MenuItem.base.js';
 
 // Element-reference IDL, Baseline but not yet in every TypeScript DOM lib.
 interface ARIAControlsElements {
@@ -56,6 +58,12 @@ interface ARIALabelledByElements {
 
 const DOCS_URL =
   'https://spectrum-web-components.adobe.com/?path=/docs/components-menu--docs';
+
+// Read off the attribute, not a `disabled` property: rows stay in the roving
+// set via `aria-disabled`, and the menu never requires the `swc-menu-item`
+// class to be loaded to read one.
+const isRowDisabled = (row: HTMLElement): boolean =>
+  row.getAttribute('aria-disabled') === 'true';
 
 /**
  * Base class for the menu host. Implements the
@@ -174,6 +182,21 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
   // cycle, matching `Popover.base.ts`'s own field of the same name.
   private _cancelAfterTransition?: () => void;
 
+  // The menu owns its rows' size, the way `swc-accordion` owns its items'.
+  // Authoring it per row would let one menu render mismatched rows, and
+  // `menu.mdx` tells consumers to set it once on the menu. Writing the
+  // attribute rather than the property means it lands whether or not the row
+  // class has upgraded yet, the same reason `isRowDisabled` reads an
+  // attribute.
+  private readonly _sizePropagation = new SlotAttributePropagationController(
+    this,
+    {
+      attribute: 'size',
+      getValue: () => this.size,
+      selector: 'swc-menu-item',
+    }
+  );
+
   // Direct `swc-menu-item` children only this phase; `swc-menu-group` joins
   // once it exists (Phase B).
   private getMenuItems(): HTMLElement[] {
@@ -188,38 +211,48 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
     return deepContains(this, getActiveElement());
   }
 
-  // Whether the event's path crosses a roving-tabindex row, so keyboard and
+  // The roving-tabindex row the event passed through, so keyboard and
   // pointer activation agree on what counts as a row.
-  private isMenuItemEventTarget(event: Event): boolean {
+  private menuItemFromEvent(event: Event): HTMLElement | null {
     const items = new Set(this.getMenuItems());
-    return event.composedPath().some((node) => items.has(node as HTMLElement));
+    const row = event
+      .composedPath()
+      .find((node) => items.has(node as HTMLElement));
+    return (row as HTMLElement) ?? null;
   }
 
-  // Traps Tab on the active row; Enter only closes. Row activation (and
-  // Space) belong to `swc-menu-item`, unshipped. Escape is native.
+  // Traps Tab on the active row and claims Enter and Space without acting on
+  // them: the row turns those into a click on keyup, and that click is what
+  // closes the menu. Escape is native.
   private readonly handleKeyDown = (event: KeyboardEvent): void => {
     if (!this.open) {
       return;
     }
-    if (event.key === 'Tab' && this.isMenuItemEventTarget(event)) {
+    const item = this.menuItemFromEvent(event);
+    if (!item) {
+      return;
+    }
+    if (event.key === 'Tab') {
       event.preventDefault();
       return;
     }
-    if (event.key === 'Enter' && this.isMenuItemEventTarget(event)) {
-      // Else the deferred default-action re-activates the refocused trigger.
+    if (isMenuActivationKey(event)) {
+      // Claim the key only. The row activates on keyup and closes the menu
+      // through its own click, so keyboard and pointer share one path:
+      // activate, then close. Closing here instead would close first and
+      // activate afterwards, and would move focus mid-press.
       event.preventDefault();
-      this.open = false;
     }
-    // No Space branch: per the menu-button pattern Space activates a row
-    // the same way Enter does, but activation lives on `swc-menu-item`.
-    // Add it there rather than closing from the host on a key that cannot
-    // yet activate anything.
   };
 
   // Closes the menu when a slotted row is clicked; no submenus/selection to
-  // special-case yet, so any click on a roving-tabindex item counts.
+  // special-case yet, so any click on an enabled roving-tabindex item counts.
   private readonly handleItemActivate = (event: MouseEvent): void => {
-    if (!this.open || !this.isMenuItemEventTarget(event)) {
+    if (!this.open) {
+      return;
+    }
+    const item = this.menuItemFromEvent(event);
+    if (!item || isRowDisabled(item)) {
       return;
     }
     this.open = false;
@@ -392,6 +425,7 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
       DOCS_URL
     );
     this.focusNavigation.refresh();
+    this._sizePropagation.propagate();
   }
 
   // Enters the top layer; the rest of the open side effects only run once
