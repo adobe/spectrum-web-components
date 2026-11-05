@@ -643,6 +643,11 @@
   --swc-pixel-loader-size: 21px;
 }
 
+/* Small size's row is as tall as the icon (24px), so the row's text-centering top padding would push the icon down and grow the row. Pull the icon back up to keep it, the text, and the send button centered in a 24px row. */
+:host([size="s"]) .swc-PromptField-status-icon {
+  margin-block-start: calc((token("component-height-75") - token("spacing-400")) / 2 - var(--_swc-prompt-field-text-group-padding-block-start));
+}
+
 /* ─────────────────────────────────────
    Uploaded attachments
    ───────────────────────────────────── */
