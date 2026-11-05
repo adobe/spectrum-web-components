@@ -27,170 +27,10 @@ import { gotoStory } from '../../../utils/a11y-helpers.js';
 
 const PLAYGROUND = 'components-checkbox--playground';
 
-test.describe('Checkbox - Trusted input', () => {
-  test('keeps a user click when a click listener updates the checkbox', async ({
-    page,
-  }) => {
-    const root = await gotoStory(page, PLAYGROUND, 'swc-checkbox');
-    const checkbox = root.locator('swc-checkbox');
-    await checkbox.evaluate(async (element: Checkbox) => {
-      element.fieldStatus = 'invalid';
-      await element.updateComplete;
-      const changes: boolean[] = [];
-      (window as Window & { __changes?: boolean[] }).__changes = changes;
-      element.addEventListener('click', () => {
-        element.fieldStatus = undefined;
-      });
-      element.addEventListener('change', () => changes.push(element.checked));
-    });
-
-    await checkbox.locator('input').click();
-
-    await expect(checkbox).toHaveJSProperty('checked', true);
-    await expect(checkbox.locator('input')).toBeChecked();
-    expect(
-      await page.evaluate(
-        () => (window as Window & { __changes?: boolean[] }).__changes
-      )
-    ).toEqual([true]);
-  });
-
-  test('Space toggles, Enter does not', async ({ page }) => {
-    const root = await gotoStory(page, PLAYGROUND, 'swc-checkbox');
-    const checkbox = root.locator('swc-checkbox');
-
-    await page.keyboard.press('Tab');
-    await expect(checkbox.locator('input')).toBeFocused();
-    await page.keyboard.press('Enter');
-    await expect(checkbox).toHaveJSProperty('checked', false);
-    await page.keyboard.press('Space');
-    await expect(checkbox).toHaveJSProperty('checked', true);
-    await expect(checkbox).toMatchAriaSnapshot(`
-      - checkbox "Send me product updates" [checked]
-    `);
-  });
-
-  test('a read-only checkbox is a Tab stop that Space does not toggle', async ({
-    page,
-  }) => {
-    const root = await gotoStory(page, PLAYGROUND, 'swc-checkbox');
-    const checkbox = root.locator('swc-checkbox');
-    await checkbox.evaluate(async (element: Checkbox) => {
-      element.checked = true;
-      element.fieldStatus = 'readonly';
-      await element.updateComplete;
-    });
-
-    await page.keyboard.press('Tab');
-    await expect(checkbox.locator('input')).toBeFocused();
-    await page.keyboard.press('Space');
-
-    await expect(checkbox.locator('input')).toBeChecked();
-    await expect(checkbox).toHaveJSProperty('checked', true);
-    await expect(checkbox).toMatchAriaSnapshot(`
-      - checkbox "Send me product updates" [checked]
-    `);
-  });
-
-  for (const initial of [false, true]) {
-    test(`a click listener that sets checked to ${initial} again keeps it ${initial}, as on a native checkbox`, async ({
-      page,
-    }) => {
-      const root = await gotoStory(page, PLAYGROUND, 'swc-checkbox');
-      const checkbox = root.locator('swc-checkbox');
-      await checkbox.evaluate(async (element: Checkbox, value: boolean) => {
-        element.checked = value;
-        await element.updateComplete;
-        const native = document.createElement('input');
-        native.type = 'checkbox';
-        native.id = 'native';
-        native.checked = value;
-        element.after(native);
-        for (const target of [element, native]) {
-          target.addEventListener('click', () => {
-            target.checked = value;
-          });
-        }
-        const changes: boolean[] = [];
-        (window as Window & { __changes?: boolean[] }).__changes = changes;
-        element.addEventListener('change', () => changes.push(element.checked));
-      }, initial);
-
-      await page.locator('#native').click();
-      await checkbox.locator('input').click();
-
-      await expect(page.locator('#native')).toBeChecked({ checked: initial });
-      await expect(checkbox).toHaveJSProperty('checked', initial);
-      await expect(checkbox.locator('input')).toBeChecked({ checked: initial });
-      expect(
-        await page.evaluate(
-          () => (window as Window & { __changes?: boolean[] }).__changes
-        )
-      ).toEqual([initial]);
-    });
-  }
-
-  test('a click listener that re-adds the checked attribute keeps the user toggle, as on a native checkbox', async ({
-    page,
-  }) => {
-    const root = await gotoStory(page, PLAYGROUND, 'swc-checkbox');
-    const checkbox = root.locator('swc-checkbox');
-    await checkbox.evaluate(async (element: Checkbox) => {
-      element.setAttribute('checked', '');
-      await element.updateComplete;
-      const native = document.createElement('input');
-      native.type = 'checkbox';
-      native.id = 'native';
-      native.setAttribute('checked', '');
-      element.after(native);
-      for (const target of [element, native]) {
-        target.addEventListener('click', () => {
-          target.setAttribute('checked', '');
-        });
-      }
-    });
-
-    await page.locator('#native').click();
-    await checkbox.locator('input').click();
-
-    await expect(page.locator('#native')).not.toBeChecked();
-    await expect(checkbox).toHaveJSProperty('checked', false);
-    await expect(checkbox.locator('input')).not.toBeChecked();
-  });
-
-  test('a click listener that sets indeterminate again keeps it, as on a native checkbox', async ({
-    page,
-  }) => {
-    const root = await gotoStory(page, PLAYGROUND, 'swc-checkbox');
-    const checkbox = root.locator('swc-checkbox');
-    await checkbox.evaluate(async (element: Checkbox) => {
-      element.indeterminate = true;
-      await element.updateComplete;
-      const native = document.createElement('input');
-      native.type = 'checkbox';
-      native.id = 'native';
-      native.indeterminate = true;
-      element.after(native);
-      for (const target of [element, native]) {
-        target.addEventListener('click', () => {
-          target.indeterminate = true;
-        });
-      }
-    });
-
-    await page.locator('#native').click();
-    await checkbox.locator('input').click();
-
-    for (const input of [page.locator('#native'), checkbox.locator('input')]) {
-      await expect(input).toHaveJSProperty('indeterminate', true);
-      await expect(input).toBeChecked();
-    }
-    await expect(checkbox).toHaveJSProperty('indeterminate', true);
-    await expect(checkbox).toHaveJSProperty('checked', true);
-  });
-});
-
 type SubmitLog = { submitters: string[] };
+
+/** Values the tests record on the page's `window`. */
+type TestWindow = Window & { __submits?: SubmitLog; __changes?: boolean[] };
 
 /** Moves the Playground checkbox into a form and records each submitter id. */
 async function wrapInForm(checkbox: Locator): Promise<void> {
@@ -200,7 +40,7 @@ async function wrapInForm(checkbox: Locator): Promise<void> {
     element.replaceWith(form);
     form.append(element);
     const log: SubmitLog = { submitters: [] };
-    (window as Window & { __submits?: SubmitLog }).__submits = log;
+    (window as TestWindow).__submits = log;
     form.addEventListener('submit', (event) => {
       event.preventDefault();
       log.submitters.push(event.submitter?.id ?? 'none');
@@ -208,11 +48,9 @@ async function wrapInForm(checkbox: Locator): Promise<void> {
   });
 }
 
-function submitters(page: Page): () => Promise<string[] | undefined> {
+function readSubmitters(page: Page): () => Promise<string[] | undefined> {
   return () =>
-    page.evaluate(
-      () => (window as Window & { __submits?: SubmitLog }).__submits?.submitters
-    );
+    page.evaluate(() => (window as TestWindow).__submits?.submitters);
 }
 
 /** Adds a native button; `where` places it relative to the form. */
@@ -220,7 +58,7 @@ async function addButton(
   page: Page,
   id: string,
   where: 'append' | 'prepend' | 'outside',
-  options: { disabled?: boolean } = {}
+  disabled = false
 ): Promise<void> {
   await page.evaluate(
     ({ id, where, disabled }) => {
@@ -237,7 +75,7 @@ async function addButton(
         form[where](button);
       }
     },
-    { id, where, disabled: options.disabled }
+    { id, where, disabled }
   );
 }
 
@@ -271,7 +109,7 @@ async function afterNextEnter(
   }, change);
 }
 
-test.describe('Checkbox - Accessibility', () => {
+test.describe('Checkbox - ARIA snapshots', () => {
   test('exposes role, name, and checked state from the inner input', async ({
     page,
   }) => {
@@ -344,6 +182,17 @@ test.describe('Checkbox - Accessibility', () => {
       - checkbox "Product updates"
     `);
 
+    await checkbox.evaluate(async (element: Checkbox) => {
+      element.querySelector('[slot="label"]')?.remove();
+      await element.updateComplete;
+    });
+    // The label slot change re-renders after `updateComplete`, so wait for the
+    // in-shadow label to go before reading the name.
+    await expect(checkbox.locator('label')).toHaveCount(0);
+    await expect(root).toMatchAriaSnapshot(`
+      - checkbox "Product updates"
+    `);
+
     // Playwright's name matchers don't follow element references across
     // shadow roots, so assert the reference the browser ranks first.
     const labelledBy = await checkbox.evaluate(async (element: Checkbox) => {
@@ -357,6 +206,69 @@ test.describe('Checkbox - Accessibility', () => {
       return input?.ariaLabelledByElements?.map((ref) => ref.textContent);
     });
     expect(labelledBy).toEqual(['Newsletter']);
+  });
+});
+
+test.describe('Checkbox - Keyboard interactions', () => {
+  test('Space toggles, Enter does not', async ({ page }) => {
+    const root = await gotoStory(page, PLAYGROUND, 'swc-checkbox');
+    const checkbox = root.locator('swc-checkbox');
+
+    await page.keyboard.press('Tab');
+    await expect(checkbox.locator('input')).toBeFocused();
+    await page.keyboard.press('Enter');
+    await expect(checkbox).toHaveJSProperty('checked', false);
+    await page.keyboard.press('Space');
+    await expect(checkbox).toHaveJSProperty('checked', true);
+    await expect(checkbox).toMatchAriaSnapshot(`
+      - checkbox "Send me product updates" [checked]
+    `);
+  });
+
+  test('a read-only checkbox is a Tab stop that Space does not toggle', async ({
+    page,
+  }) => {
+    const root = await gotoStory(page, PLAYGROUND, 'swc-checkbox');
+    const checkbox = root.locator('swc-checkbox');
+    await checkbox.evaluate(async (element: Checkbox) => {
+      element.checked = true;
+      element.fieldStatus = 'readonly';
+      await element.updateComplete;
+    });
+
+    await page.keyboard.press('Tab');
+    await expect(checkbox.locator('input')).toBeFocused();
+    await page.keyboard.press('Space');
+
+    await expect(checkbox.locator('input')).toBeChecked();
+    await expect(checkbox).toHaveJSProperty('checked', true);
+    await expect(checkbox).toMatchAriaSnapshot(`
+      - checkbox "Send me product updates" [checked]
+    `);
+  });
+
+  test('Space on a mixed checkbox clears the mixed state and checks it', async ({
+    page,
+  }) => {
+    const root = await gotoStory(page, PLAYGROUND, 'swc-checkbox');
+    const checkbox = root.locator('swc-checkbox');
+    await checkbox.evaluate(async (element: Checkbox) => {
+      element.indeterminate = true;
+      await element.updateComplete;
+    });
+    await expect(root).toMatchAriaSnapshot(`
+      - checkbox "Send me product updates" [checked=mixed]
+    `);
+
+    await page.keyboard.press('Tab');
+    await expect(checkbox.locator('input')).toBeFocused();
+    await page.keyboard.press('Space');
+
+    await expect(checkbox).toHaveJSProperty('indeterminate', false);
+    await expect(checkbox).toHaveJSProperty('checked', true);
+    await expect(root).toMatchAriaSnapshot(`
+      - checkbox "Send me product updates" [checked]
+    `);
   });
 
   test('focus() and a host tabindex route through the inner input', async ({
@@ -431,7 +343,161 @@ test.describe('Checkbox - Accessibility', () => {
 
     await expect(root.locator('#autofocused input')).toBeFocused();
   });
+});
 
+test.describe('Checkbox - Pointer input', () => {
+  test('keeps a user click when a click listener updates the checkbox', async ({
+    page,
+  }) => {
+    const root = await gotoStory(page, PLAYGROUND, 'swc-checkbox');
+    const checkbox = root.locator('swc-checkbox');
+    await checkbox.evaluate(async (element: Checkbox) => {
+      element.fieldStatus = 'invalid';
+      await element.updateComplete;
+      const changes: boolean[] = [];
+      (window as TestWindow).__changes = changes;
+      element.addEventListener('click', () => {
+        element.fieldStatus = undefined;
+      });
+      element.addEventListener('change', () => changes.push(element.checked));
+    });
+
+    await checkbox.locator('input').click();
+
+    await expect(checkbox).toHaveJSProperty('checked', true);
+    await expect(checkbox.locator('input')).toBeChecked();
+    expect(await page.evaluate(() => (window as TestWindow).__changes)).toEqual(
+      [true]
+    );
+  });
+
+  test('clicking the visible label toggles the checkbox', async ({ page }) => {
+    const root = await gotoStory(page, PLAYGROUND, 'swc-checkbox');
+    const checkbox = root.locator('swc-checkbox');
+    const label = checkbox.locator('[slot="label"]');
+
+    await label.click();
+    await expect(checkbox).toHaveJSProperty('checked', true);
+    await expect(root).toMatchAriaSnapshot(`
+      - checkbox "Send me product updates" [checked]
+    `);
+    await label.click();
+    await expect(checkbox).toHaveJSProperty('checked', false);
+  });
+
+  test('clicking the label of a read-only checkbox does not toggle it', async ({
+    page,
+  }) => {
+    const root = await gotoStory(page, PLAYGROUND, 'swc-checkbox');
+    const checkbox = root.locator('swc-checkbox');
+    await checkbox.evaluate(async (element: Checkbox) => {
+      element.fieldStatus = 'readonly';
+      await element.updateComplete;
+    });
+
+    await checkbox.locator('[slot="label"]').click();
+
+    await expect(checkbox).toHaveJSProperty('checked', false);
+    await expect(checkbox.locator('input')).not.toBeChecked();
+  });
+
+  for (const initial of [false, true]) {
+    test(`a click listener that sets checked to ${initial} again keeps it ${initial}, as on a native checkbox`, async ({
+      page,
+    }) => {
+      const root = await gotoStory(page, PLAYGROUND, 'swc-checkbox');
+      const checkbox = root.locator('swc-checkbox');
+      await checkbox.evaluate(async (element: Checkbox, value: boolean) => {
+        element.checked = value;
+        await element.updateComplete;
+        const native = document.createElement('input');
+        native.type = 'checkbox';
+        native.id = 'native';
+        native.checked = value;
+        element.after(native);
+        for (const target of [element, native]) {
+          target.addEventListener('click', () => {
+            target.checked = value;
+          });
+        }
+        const changes: boolean[] = [];
+        (window as TestWindow).__changes = changes;
+        element.addEventListener('change', () => changes.push(element.checked));
+      }, initial);
+
+      await page.locator('#native').click();
+      await checkbox.locator('input').click();
+
+      await expect(page.locator('#native')).toBeChecked({ checked: initial });
+      await expect(checkbox).toHaveJSProperty('checked', initial);
+      await expect(checkbox.locator('input')).toBeChecked({ checked: initial });
+      expect(
+        await page.evaluate(() => (window as TestWindow).__changes)
+      ).toEqual([initial]);
+    });
+  }
+
+  test('a click listener that re-adds the checked attribute keeps the user toggle, as on a native checkbox', async ({
+    page,
+  }) => {
+    const root = await gotoStory(page, PLAYGROUND, 'swc-checkbox');
+    const checkbox = root.locator('swc-checkbox');
+    await checkbox.evaluate(async (element: Checkbox) => {
+      element.setAttribute('checked', '');
+      await element.updateComplete;
+      const native = document.createElement('input');
+      native.type = 'checkbox';
+      native.id = 'native';
+      native.setAttribute('checked', '');
+      element.after(native);
+      for (const target of [element, native]) {
+        target.addEventListener('click', () => {
+          target.setAttribute('checked', '');
+        });
+      }
+    });
+
+    await page.locator('#native').click();
+    await checkbox.locator('input').click();
+
+    await expect(page.locator('#native')).not.toBeChecked();
+    await expect(checkbox).toHaveJSProperty('checked', false);
+    await expect(checkbox.locator('input')).not.toBeChecked();
+  });
+
+  test('a click listener that sets indeterminate again keeps it, as on a native checkbox', async ({
+    page,
+  }) => {
+    const root = await gotoStory(page, PLAYGROUND, 'swc-checkbox');
+    const checkbox = root.locator('swc-checkbox');
+    await checkbox.evaluate(async (element: Checkbox) => {
+      element.indeterminate = true;
+      await element.updateComplete;
+      const native = document.createElement('input');
+      native.type = 'checkbox';
+      native.id = 'native';
+      native.indeterminate = true;
+      element.after(native);
+      for (const target of [element, native]) {
+        target.addEventListener('click', () => {
+          target.indeterminate = true;
+        });
+      }
+    });
+
+    await page.locator('#native').click();
+    await checkbox.locator('input').click();
+
+    for (const input of [page.locator('#native'), checkbox.locator('input')]) {
+      await expect(input).toHaveJSProperty('indeterminate', true);
+      await expect(input).toBeChecked();
+    }
+    await expect(checkbox).toHaveJSProperty('indeterminate', true);
+    await expect(checkbox).toHaveJSProperty('checked', true);
+  });
+});
+
+test.describe('Checkbox - Form submission', () => {
   test('Enter submits through the default button and can be canceled', async ({
     page,
   }) => {
@@ -439,7 +505,7 @@ test.describe('Checkbox - Accessibility', () => {
     const checkbox = root.locator('swc-checkbox');
     const input = checkbox.locator('input');
     await wrapInForm(checkbox);
-    const submitted = submitters(page);
+    const submitted = readSubmitters(page);
 
     // With no submit button, Enter does nothing; the button arrives only after
     // the handler has run, so the single submit comes from the second press.
@@ -460,14 +526,14 @@ test.describe('Checkbox - Accessibility', () => {
     await expect.poll(submitted).toEqual(['submit', 'submit']);
   });
 
-  test('Enter uses the first submit button, including form-associated and read-only cases', async ({
+  test('Enter uses the first submit button, including a form= button and a read-only checkbox', async ({
     page,
   }) => {
     const root = await gotoStory(page, PLAYGROUND, 'swc-checkbox');
     const checkbox = root.locator('swc-checkbox');
     const input = checkbox.locator('input');
     await wrapInForm(checkbox);
-    const submitted = submitters(page);
+    const submitted = readSubmitters(page);
 
     await addButton(page, 'outside', 'outside');
     await input.focus();
@@ -492,8 +558,8 @@ test.describe('Checkbox - Accessibility', () => {
     const checkbox = root.locator('swc-checkbox');
     const input = checkbox.locator('input');
     await wrapInForm(checkbox);
-    const submitted = submitters(page);
-    await addButton(page, 'disabled', 'append', { disabled: true });
+    const submitted = readSubmitters(page);
+    await addButton(page, 'disabled', 'append', true);
     await addButton(page, 'enabled', 'append');
 
     // The HTML spec skips implicit submission here; Chromium submits through
@@ -518,6 +584,6 @@ test.describe('Checkbox - Accessibility', () => {
     await page.locator('#submit').click();
 
     await expect(checkbox.locator('input')).toBeFocused();
-    await expect.poll(submitters(page)).toEqual([]);
+    await expect.poll(readSubmitters(page)).toEqual([]);
   });
 });

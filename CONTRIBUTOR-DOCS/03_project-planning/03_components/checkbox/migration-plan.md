@@ -598,11 +598,11 @@ Unit (`test/checkbox.test.ts`):
 - [ ] `willValidate` is `false` for `field-status="disabled"` and `field-status="readonly"`, and `true` otherwise (B22)
 - [ ] A required, unchecked checkbox that is disabled, by `field-status="disabled"` or an ancestor `<fieldset disabled>`, does not report `valueMissing` (B17)
 - [ ] `required`: inner input `required`
-- [ ] Label slot content names the input; `accessible-label` names it without a label slot and wins over slotted label content; `accessible-labelledby` wins over both
+- [x] Label slot content names the input; `accessible-label` names it without a label slot and wins over slotted label content; `accessible-labelledby` wins over both
 - [ ] `description` associated by default; while `field-status="invalid"` with error text, `error-text` replaces it in the rendering and the association; `description` returns when the status clears (Q7)
 - [ ] While `field-status="invalid"`, the `aria-hidden` error icon renders beside the error text, beside the description when there is no error text, and alone when there is neither; it is gone when the status clears (B14)
 - [ ] Inside `<fieldset disabled>`, a `field-status="invalid"` checkbox hides the error icon and keeps `aria-invalid="true"` and the error text; re-enabling restores the icon (B14)
-- [ ] `accessible-describedby` adds the referenced elements to the inner input's description
+- [x] `accessible-describedby` adds the referenced elements to the inner input's description
 - [ ] Dev warning fires with no name source
 
 Form participation (in a native `<form>` with native submit and reset buttons, per forms RFC §3.5):

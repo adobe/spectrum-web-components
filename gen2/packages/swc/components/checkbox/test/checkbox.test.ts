@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { html } from 'lit';
+import { html, type TemplateResult } from 'lit';
 import { expect, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
@@ -724,13 +724,14 @@ export const DescriptionTest: Story = {
     });
 
     await step(
-      'a disabled fieldset hides the icon but keeps error text',
+      'a disabled fieldset hides the icon but keeps error text and aria-invalid',
       async () => {
         fieldset.disabled = true;
         await waitFor(() => expect(icon(both)).toBe(null));
         expect(
           both.shadowRoot?.querySelector('.swc-FormFieldErrorText')
         ).toBeTruthy();
+        expect(inputOf(both)).toHaveAttribute('aria-invalid', 'true');
         fieldset.disabled = false;
         await waitFor(() => expect(icon(both)).toBeTruthy());
       }
@@ -747,6 +748,33 @@ export const DescriptionTest: Story = {
   },
 };
 DescriptionTest.storyName = 'Description, error text, and error icon';
+
+export const DescribedByTest: Story = {
+  render: () => html`
+    <p id="checkbox-external-description">Applies to all mailing lists.</p>
+    <swc-checkbox accessible-describedby="checkbox-external-description">
+      <span slot="label">Unsubscribe</span>
+      <span slot="description">Takes effect within a day.</span>
+    </swc-checkbox>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const checkbox = await getComponent<Checkbox>(
+      canvasElement,
+      'swc-checkbox'
+    );
+
+    await step(
+      'accessible-describedby adds the external element to the description',
+      () => {
+        const described = inputOf(checkbox).ariaDescribedByElements ?? [];
+        expect(described).toHaveLength(2);
+        expect(described[0]).toHaveClass('swc-FormFieldDescription');
+        expect(described[1]?.id).toBe('checkbox-external-description');
+      }
+    );
+  },
+};
+DescribedByTest.storyName = 'accessible-describedby';
 
 export const DescriptionClickTest: Story = {
   render: () => html`
@@ -817,7 +845,7 @@ export const AriaStatesTest: Story = {
       expect(input).toHaveAttribute('aria-invalid', 'true');
       checkbox.fieldStatus = 'readonly';
       await checkbox.updateComplete;
-      expect(input).not.toHaveAttribute('aria-invalid');
+      expect(input).toHaveAttribute('aria-invalid', 'false');
       checkbox.fieldStatus = undefined;
       await checkbox.updateComplete;
     });
@@ -828,6 +856,20 @@ export const AriaStatesTest: Story = {
       expect(input.required).toBe(true);
       expect(input).not.toHaveAttribute('aria-required');
     });
+
+    await step(
+      'a required read-only checkbox is not reported as invalid',
+      async () => {
+        checkbox.fieldStatus = 'readonly';
+        await checkbox.updateComplete;
+        expect(checkbox.willValidate).toBe(false);
+        expect(input.required).toBe(true);
+        expect(input).toHaveAttribute('aria-invalid', 'false');
+        checkbox.fieldStatus = undefined;
+        await checkbox.updateComplete;
+        expect(input).not.toHaveAttribute('aria-invalid');
+      }
+    );
   },
 };
 AriaStatesTest.storyName = 'ARIA states on the inner input';
@@ -839,10 +881,7 @@ export const LabellingWarningsTest: Story = {
   play: async ({ step }) => {
     const messages = (warnCalls: unknown[][]): string[] =>
       warnCalls.map((call) => String(call?.[1] ?? ''));
-    // Renders a checkbox, collects its warnings, then removes it.
-    const warningsFor = async (
-      template: ReturnType<typeof html>
-    ): Promise<string[]> => {
+    const warningsFor = async (template: TemplateResult): Promise<string[]> => {
       let result: string[] = [];
       await withWarningSpy(async (warnCalls) => {
         const checkbox = await fixture<Checkbox>(template);

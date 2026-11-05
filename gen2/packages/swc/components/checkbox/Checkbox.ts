@@ -58,6 +58,17 @@ export class Checkbox extends CheckboxBase {
     return this.renderRoot?.querySelector(`input#${INPUT_ID}`) ?? null;
   }
 
+  /**
+   * A read-only checkbox is barred from validation, but its native input still
+   * reports a required, unchecked state as invalid, so override it.
+   */
+  private get inputAriaInvalid(): 'true' | 'false' | undefined {
+    if (this.fieldStatus === 'invalid') {
+      return 'true';
+    }
+    return this.fieldStatus === 'readonly' ? 'false' : undefined;
+  }
+
   protected override render(): TemplateResult {
     // `checked` and `indeterminate` aren't bound here: the base class writes
     // them to the input directly, from their setters and on first render.
@@ -72,9 +83,7 @@ export class Checkbox extends CheckboxBase {
           aria-readonly=${ifDefined(
             this.fieldStatus === 'readonly' ? 'true' : undefined
           )}
-          aria-invalid=${ifDefined(
-            this.fieldStatus === 'invalid' ? 'true' : undefined
-          )}
+          aria-invalid=${ifDefined(this.inputAriaInvalid)}
           @input=${this.handleInput}
           @change=${this.handleChange}
           @keydown=${this.handleKeydown}
