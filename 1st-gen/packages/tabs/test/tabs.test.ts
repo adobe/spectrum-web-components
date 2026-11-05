@@ -1006,16 +1006,74 @@ describe('Tabs', () => {
         'external-heading'
       );
       expect(tab.getAttribute('aria-controls')).to.equal('external-region');
+    });
 
-      panel.remove();
-      el.append(panel);
-      tab.remove();
+    it('keeps app-changed ARIA references when the link is removed', async () => {
+      const el = await fixture<Tabs>(html`
+        <sp-tabs selected="first">
+          <sp-tab value="first">Tab 1</sp-tab>
+          <sp-tab-panel value="first">First tab content</sp-tab-panel>
+        </sp-tabs>
+      `);
       await elementUpdated(el);
 
+      const tab = el.querySelector('sp-tab') as Tab;
+      const panel = el.querySelector('sp-tab-panel') as TabPanel;
+      expect(tab.getAttribute('aria-controls')).to.equal(panel.id);
+
+      panel.setAttribute('aria-labelledby', 'external-heading');
+      tab.setAttribute('aria-controls', 'external-region');
+      panel.remove();
+      await elementUpdated(el);
+      expect(tab.getAttribute('aria-controls')).to.equal('external-region');
+
+      el.append(panel);
+      await elementUpdated(el);
+      tab.remove();
+      await elementUpdated(el);
       expect(panel.getAttribute('aria-labelledby')).to.equal(
         'external-heading'
       );
-      expect(tab.getAttribute('aria-controls')).to.equal('external-region');
+    });
+
+    it('relinks a tab or panel moved to another sp-tabs', async () => {
+      const container = await fixture<HTMLDivElement>(html`
+        <div>
+          <sp-tabs id="group-a" selected="first">
+            <sp-tab id="tab-a" value="first">Tab A</sp-tab>
+            <sp-tab-panel id="panel-a" value="first">Panel A</sp-tab-panel>
+          </sp-tabs>
+          <sp-tabs id="group-b" selected="first">
+            <sp-tab id="tab-b" value="first">Tab B</sp-tab>
+            <sp-tab-panel id="panel-b" value="first">Panel B</sp-tab-panel>
+          </sp-tabs>
+        </div>
+      `);
+      const groupA = container.querySelector('#group-a') as Tabs;
+      const groupB = container.querySelector('#group-b') as Tabs;
+      const tabA = container.querySelector('#tab-a') as Tab;
+      const tabB = container.querySelector('#tab-b') as Tab;
+      const panelA = container.querySelector('#panel-a') as TabPanel;
+      const panelB = container.querySelector('#panel-b') as TabPanel;
+      await elementUpdated(groupA);
+      await elementUpdated(groupB);
+
+      panelB.remove();
+      groupB.append(panelA);
+      await elementUpdated(groupA);
+      await elementUpdated(groupB);
+      expect(panelA.getAttribute('aria-labelledby')).to.equal('tab-b');
+      expect(tabB.getAttribute('aria-controls')).to.equal('panel-a');
+
+      groupA.append(panelB);
+      await elementUpdated(groupA);
+      tabA.remove();
+      tabB.remove();
+      groupA.prepend(tabB);
+      await elementUpdated(groupA);
+      await elementUpdated(groupB);
+      expect(tabB.getAttribute('aria-controls')).to.equal('panel-b');
+      expect(panelB.getAttribute('aria-labelledby')).to.equal('tab-b');
     });
 
     it('does not match a cleared tab value through the stale attribute', async () => {

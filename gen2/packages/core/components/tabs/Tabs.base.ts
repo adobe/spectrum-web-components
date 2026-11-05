@@ -237,9 +237,14 @@ export abstract class TabsBase extends SpectrumElement {
    */
   private _tabs: TabLike[] = [];
 
-  private readonly managedPanelLabels = new WeakMap<TabPanelLike, string>();
+  // Shared by every instance, so a link written by one tabs container is
+  // still treated as component-owned when the element moves to another one.
+  private static readonly managedPanelLabels = new WeakMap<
+    TabPanelLike,
+    string
+  >();
 
-  private readonly managedTabControls = new WeakMap<TabLike, string>();
+  private static readonly managedTabControls = new WeakMap<TabLike, string>();
 
   /**
    * @internal
@@ -461,20 +466,20 @@ export abstract class TabsBase extends SpectrumElement {
           tab,
           'aria-controls',
           id,
-          this.managedTabControls
+          TabsBase.managedTabControls
         );
         linkedTabs.add(tab);
         TabsBase.setManagedAttribute(
           panel,
           'aria-labelledby',
           tab.id,
-          this.managedPanelLabels
+          TabsBase.managedPanelLabels
         );
       } else {
         TabsBase.clearManagedAttribute(
           panel,
           'aria-labelledby',
-          this.managedPanelLabels
+          TabsBase.managedPanelLabels
         );
       }
 
@@ -486,7 +491,7 @@ export abstract class TabsBase extends SpectrumElement {
         TabsBase.clearManagedAttribute(
           tab,
           'aria-controls',
-          this.managedTabControls
+          TabsBase.managedTabControls
         );
       }
     }

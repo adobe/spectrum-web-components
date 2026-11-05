@@ -2334,12 +2334,76 @@ export const ConsumerChangedAriaTest: Story = {
     });
 
     await step('unlinking keeps values the app changed', async () => {
-      panel.remove();
-      tabs.append(panel);
-      tab.remove();
-      await settle(tabs, [panel]);
-      expect(panel.getAttribute('aria-labelledby')).toBe('external-heading');
-      expect(tab.getAttribute('aria-controls')).toBe('external-region');
+      const otherPanel = createPanel('1');
+      const otherTab = createTab('1');
+      tabs.replaceChildren(otherTab, otherPanel);
+      await settle(tabs, [otherTab, otherPanel]);
+      expect(otherTab.getAttribute('aria-controls')).toBe(otherPanel.id);
+
+      otherPanel.setAttribute('aria-labelledby', 'external-heading');
+      otherTab.setAttribute('aria-controls', 'external-region');
+      otherPanel.remove();
+      await settle(tabs, [otherTab]);
+      expect(
+        otherTab.getAttribute('aria-controls'),
+        'tab keeps the app value when its panel is removed'
+      ).toBe('external-region');
+
+      tabs.append(otherPanel);
+      await settle(tabs, [otherPanel]);
+      otherTab.remove();
+      await settle(tabs, [otherPanel]);
+      expect(
+        otherPanel.getAttribute('aria-labelledby'),
+        'panel keeps the app value when its tab is removed'
+      ).toBe('external-heading');
+    });
+  },
+};
+
+export const MovedBetweenTabsAriaTest: Story = {
+  render: () => html`
+    <swc-tabs id="group-a" selected="1" accessible-label="Group A">
+      <swc-tab id="tab-a" tab-id="1">Tab A</swc-tab>
+      <swc-tab-panel id="panel-a" tab-id="1"><p>Panel A</p></swc-tab-panel>
+    </swc-tabs>
+    <swc-tabs id="group-b" selected="1" accessible-label="Group B">
+      <swc-tab id="tab-b" tab-id="1">Tab B</swc-tab>
+      <swc-tab-panel id="panel-b" tab-id="1"><p>Panel B</p></swc-tab-panel>
+    </swc-tabs>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const [groupA, groupB] = await getComponents<Tabs>(
+      canvasElement,
+      'swc-tabs'
+    );
+    const tabA = canvasElement.querySelector('#tab-a') as Tab;
+    const tabB = canvasElement.querySelector('#tab-b') as Tab;
+    const panelA = canvasElement.querySelector('#panel-a') as TabPanel;
+    const panelB = canvasElement.querySelector('#panel-b') as TabPanel;
+    await settle(groupA, [tabA, panelA]);
+    await settle(groupB, [tabB, panelB]);
+
+    await step('a panel moved to another group is relinked', async () => {
+      panelB.remove();
+      groupB.append(panelA);
+      await settle(groupB, [tabB, panelA]);
+      await settle(groupA, [tabA]);
+
+      expect(panelA.getAttribute('aria-labelledby')).toBe('tab-b');
+      expect(tabB.getAttribute('aria-controls')).toBe('panel-a');
+    });
+
+    await step('a tab moved to another group is relinked', async () => {
+      groupA.append(panelB);
+      await settle(groupA, [panelB]);
+      tabA.remove();
+      tabB.remove();
+      groupA.prepend(tabB);
+      await settle(groupA, [tabB, panelB]);
+
+      expect(tabB.getAttribute('aria-controls')).toBe('panel-b');
+      expect(panelB.getAttribute('aria-labelledby')).toBe('tab-b');
     });
   },
 };

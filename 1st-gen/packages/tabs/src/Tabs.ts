@@ -99,6 +99,11 @@ export function calculateScrollTargetForLeftSide(
   return prevTab ? prevTab.offsetLeft + prevTab.offsetWidth : leftmostElement;
 }
 
+// Shared by every `sp-tabs`, so a link written by one tabs container is still
+// treated as component-owned when the element moves to another one.
+const managedPanelLabels = new WeakMap<TabPanel, string>();
+const managedTabControls = new WeakMap<Tab, string>();
+
 /**
  * Sets an ARIA reference. `sp-tabs` owns the attribute only while it is
  * absent or still holds the last value written here. If the consumer set or
@@ -196,10 +201,6 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
 
   @query('slot[name="tab-panel"]')
   private panelSlotEl!: HTMLSlotElement;
-
-  private readonly managedPanelLabels = new WeakMap<TabPanel, string>();
-
-  private readonly managedTabControls = new WeakMap<Tab, string>();
 
   @query('#list')
   private tabList!: HTMLDivElement;
@@ -432,26 +433,22 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
         ? tabs.find((el) => (el.value ?? el.getAttribute('value')) === value)
         : undefined;
       if (tab) {
-        setManagedAttribute(tab, 'aria-controls', id, this.managedTabControls);
+        setManagedAttribute(tab, 'aria-controls', id, managedTabControls);
         linkedTabs.add(tab);
         setManagedAttribute(
           panel,
           'aria-labelledby',
           tab.id,
-          this.managedPanelLabels
+          managedPanelLabels
         );
       } else {
-        clearManagedAttribute(
-          panel,
-          'aria-labelledby',
-          this.managedPanelLabels
-        );
+        clearManagedAttribute(panel, 'aria-labelledby', managedPanelLabels);
       }
       panel.selected = value === this.selected;
     });
     tabs.forEach((tab) => {
       if (!linkedTabs.has(tab)) {
-        clearManagedAttribute(tab, 'aria-controls', this.managedTabControls);
+        clearManagedAttribute(tab, 'aria-controls', managedTabControls);
       }
     });
   }
