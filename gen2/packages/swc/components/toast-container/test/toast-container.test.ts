@@ -362,6 +362,109 @@ export const CloseBeforeOpenTest: Story = {
   },
 };
 
+export const QueueOrderTest: Story = {
+  play: async ({ canvasElement, step }) => {
+    ToastQueue.clear();
+    const container = await getComponent<ToastContainer>(
+      canvasElement,
+      'swc-toast-container'
+    );
+    const messages = (): string[] =>
+      ToastQueue.entries.map((entry) => entry.message);
+    const frontMessage = (): string | null | undefined =>
+      container.shadowRoot?.querySelector('swc-toast')?.textContent;
+    const regionLabel = (): string | null | undefined =>
+      container.shadowRoot
+        ?.querySelector('[role="region"]')
+        ?.getAttribute('aria-label');
+    const closeFront = (): void => {
+      container.shadowRoot
+        ?.querySelector('swc-toast')
+        ?.shadowRoot?.querySelector<HTMLElement>('swc-close-button')
+        ?.click();
+    };
+
+    try {
+      const keys: Record<string, string> = {};
+      for (const name of ['A', 'B', 'C', 'D']) {
+        keys[name] = ToastQueue.add(name);
+      }
+      await getFront(container);
+
+      await step('lists the newest toast first and shows it', () => {
+        expect(messages(), 'queue order').toEqual(['D', 'C', 'B', 'A']);
+        expect(frontMessage(), 'front toast').toBe('D');
+        expect(regionLabel(), 'region label').toBe('4 notifications.');
+      });
+
+      await step(
+        'closing a waiting toast keeps the others in order',
+        async () => {
+          ToastQueue.close(keys.B);
+          await container.updateComplete;
+
+          expect(messages(), 'queue order after removing B').toEqual([
+            'D',
+            'C',
+            'A',
+          ]);
+          expect(frontMessage(), 'front toast after removing B').toBe('D');
+          expect(regionLabel(), 'region label after removing B').toBe(
+            '3 notifications.'
+          );
+        }
+      );
+
+      await step(
+        'closing the front toast promotes the next in order',
+        async () => {
+          closeFront();
+          await waitFor(() =>
+            expect(frontMessage(), 'promoted toast').toBe('C')
+          );
+          await getFront(container);
+
+          expect(messages(), 'queue order after closing D').toEqual(['C', 'A']);
+          expect(regionLabel(), 'region label after closing D').toBe(
+            '2 notifications.'
+          );
+        }
+      );
+
+      await step(
+        'a toast added later jumps ahead of waiting ones',
+        async () => {
+          ToastQueue.add('E');
+          await waitFor(() => expect(frontMessage(), 'newest toast').toBe('E'));
+
+          expect(messages(), 'queue order after adding E').toEqual([
+            'E',
+            'C',
+            'A',
+          ]);
+        }
+      );
+
+      await step('closing every toast empties the region', async () => {
+        for (const expected of ['E', 'C', 'A']) {
+          await waitFor(() =>
+            expect(frontMessage(), `front toast ${expected}`).toBe(expected)
+          );
+          await getFront(container);
+          closeFront();
+        }
+        await waitFor(() =>
+          expect(container.shadowRoot?.querySelector('swc-toast')).toBeNull()
+        );
+
+        expect(messages(), 'queue after closing all').toEqual([]);
+      });
+    } finally {
+      ToastQueue.clear();
+    }
+  },
+};
+
 export const ConnectsClosedThenOpensTest: Story = {
   play: async ({ canvasElement, step }) => {
     ToastQueue.clear();
