@@ -148,11 +148,13 @@ export abstract class MenuItemBase extends SizedMixin(SpectrumElement, {
   // activation reach the same consumer handler, and lets the owning menu
   // close through one path for both.
   private readonly handleKeyUp = (event: KeyboardEvent): void => {
-    // Disarm before the guard below: any keyup ends the press, including one
-    // whose modifiers changed mid-press, which would otherwise leave the row
-    // armed for a later keyup it never saw begin.
+    // Only the release of the key that armed the row ends the press, with or
+    // without modifiers, so a Shift+Enter release still disarms it. Another key
+    // released mid-press, like the arrow that moved focus here, leaves it armed.
     const armed = this.pressedKey === event.key;
-    this.pressedKey = null;
+    if (armed) {
+      this.pressedKey = null;
+    }
     if (!isMenuActivationKey(event)) {
       return;
     }

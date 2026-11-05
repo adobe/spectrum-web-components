@@ -2030,6 +2030,29 @@ export const ItemPressStateTest: Story = {
       expect(menu.open, 'the menu stays open').toBe(true);
       row.remove();
     });
+
+    await step(
+      'another key released mid-press keeps the row armed',
+      async () => {
+        await reopen();
+
+        const [firstRow] = getRows(canvasElement);
+        let clicked = false;
+        firstRow.addEventListener('click', () => {
+          clicked = true;
+        });
+
+        // Arrow Down moves focus here and is still held when Enter goes down, so
+        // its keyup lands on this row. A press only ends on the release of the
+        // key that began it.
+        firstRow.dispatchEvent(keyEvent('keydown', 'Enter'));
+        firstRow.dispatchEvent(keyEvent('keyup', 'ArrowDown'));
+        firstRow.dispatchEvent(keyEvent('keyup', 'Enter'));
+
+        expect(clicked, 'the press survives the unrelated keyup').toBe(true);
+        await waitFor(() => expect(menu.open, 'the menu closes').toBe(false));
+      }
+    );
   },
 };
 
