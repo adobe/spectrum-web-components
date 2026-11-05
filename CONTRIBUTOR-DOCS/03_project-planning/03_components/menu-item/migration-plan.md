@@ -161,7 +161,7 @@ Two things worth noting against this plan:
 
 | Property | Attribute | Type | Default | Status |
 | --- | --- | --- | --- | --- |
-| `size` | `size` | `'s' \| 'm' \| 'l' \| 'xl'` | `'m'` | Confirmed. Owned by the parent: `swc-menu` propagates its own `size` onto every row via `SlotAttributePropagationController`, so one menu cannot render mismatched rows. The attribute is written rather than the property, so it lands whether or not the row class has upgraded |
+| `size` | `size` | `'s' \| 'm' \| 'l' \| 'xl'` | `'m'` | Confirmed. Owned by the parent: `swc-menu` propagates its own `size` onto every row via `SlotAttributePropagationController`. The attribute is written rather than the property, so it lands whether or not the row class has upgraded. Propagation runs on slot assignment and when the menu's own size changes, not on a row's own `size` being set, so a value set on a row out of band holds until the next propagation |
 | `disabled` | `disabled` | `boolean` | `false` | Confirmed; mapping via [Q20](#blockers-and-open-questions) |
 
 Slots: `label` (text), `visual` (optional leading icon or thumbnail), `description` (optional secondary text).
@@ -222,6 +222,9 @@ Red/green TDD. Each item below should fail before the implementation exists.
 - [x] `size` propagates from `swc-menu` onto its rows, overriding a row-authored value
 - [x] Enter on the trigger opens the menu without the same press activating the first row
 - [x] Modified presses (<kbd>Shift</kbd> + <kbd>Enter</kbd>, <kbd>Ctrl</kbd> + <kbd>Space</kbd>) do not activate a row
+- [x] A press begun on a disabled row does not activate it if the row is enabled before the matching `keyup`
+- [x] A press whose modifiers change between `keydown` and `keyup` leaves no armed state behind for a later `keyup`
+- [x] A row removed between the halves of a press comes back disarmed when it is re-slotted
 - [ ] Playwright: ARIA tree shows `menu` containing named `menuitem` rows
 - [ ] VRT: sizes, disabled, with and without a visual, with and without a description, forced colors
 

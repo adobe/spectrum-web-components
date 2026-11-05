@@ -1924,6 +1924,116 @@ export const ItemKeyboardActivationTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
+// TEST: Armed-press bookkeeping
+// ──────────────────────────────────────────────────────────────
+
+// A row activates on `keyup` only for a press it saw begin, which means it
+// carries state between the two halves. Each step here leaves that state in a
+// way that used to strand it, then proves a later lone `keyup` is inert.
+const modifiedKeyEvent = (
+  type: 'keydown' | 'keyup',
+  key: string
+): KeyboardEvent =>
+  new KeyboardEvent(type, {
+    key,
+    shiftKey: true,
+    bubbles: true,
+    composed: true,
+    cancelable: true,
+  });
+
+export const ItemPressStateTest: Story = {
+  render: () => rowsInMenu(threeRows, 'press-state-trigger'),
+  play: async ({ canvasElement, step }) => {
+    const trigger = canvasElement.querySelector(
+      '#press-state-trigger'
+    ) as HTMLElement;
+    const menu = canvasElement.querySelector('swc-menu') as HTMLElement & {
+      open: boolean;
+    };
+    const reopen = async (): Promise<void> => {
+      if (!menu.open) {
+        await userEvent.click(trigger);
+      }
+      await waitFor(() => expect(menu.open).toBe(true));
+    };
+
+    await step('a press begun while disabled never activates', async () => {
+      await reopen();
+
+      const [, disabledRow] = getRows(canvasElement);
+      let clicked = false;
+      disabledRow.addEventListener('click', () => {
+        clicked = true;
+      });
+
+      disabledRow.dispatchEvent(keyEvent('keydown', 'Enter'));
+      // Enabled mid-press: the row was disabled when the press began, so it
+      // never armed and the keyup has nothing to act on.
+      disabledRow.disabled = false;
+      await disabledRow.updateComplete;
+      disabledRow.dispatchEvent(keyEvent('keyup', 'Enter'));
+
+      expect(clicked, 'the press does not survive being enabled').toBe(false);
+      expect(menu.open, 'the menu stays open').toBe(true);
+
+      disabledRow.disabled = true;
+      await disabledRow.updateComplete;
+    });
+
+    await step('modifiers added mid-press leave nothing armed', async () => {
+      await reopen();
+
+      const [firstRow] = getRows(canvasElement);
+      let clicked = false;
+      firstRow.addEventListener('click', () => {
+        clicked = true;
+      });
+
+      // Bare keydown arms the row; the keyup arrives modified, so it is not an
+      // activation. The row has to disarm anyway, or the next bare keyup it
+      // sees without a keydown of its own would activate it.
+      firstRow.dispatchEvent(keyEvent('keydown', 'Enter'));
+      firstRow.dispatchEvent(modifiedKeyEvent('keyup', 'Enter'));
+      expect(clicked, 'the modified keyup does not activate').toBe(false);
+
+      firstRow.dispatchEvent(keyEvent('keyup', 'Enter'));
+      expect(clicked, 'the stranded press does not activate later').toBe(false);
+      expect(menu.open, 'the menu stays open').toBe(true);
+    });
+
+    // Only reachable by dispatching keys at an unfocused row, which is why
+    // this row is built rather than taken from the menu: a row that armed
+    // while focused is already disarmed by the `blur` that removing it fires,
+    // so `disconnectedCallback` is the only thing covering the unfocused case.
+    await step('a row removed mid-press comes back disarmed', async () => {
+      await reopen();
+
+      const menuEl = canvasElement.querySelector('swc-menu') as HTMLElement;
+      const row = document.createElement('swc-menu-item') as MenuItem;
+      row.append(labelSpan('Never focused'));
+      menuEl.append(row);
+      await row.updateComplete;
+
+      let clicked = false;
+      row.addEventListener('click', () => {
+        clicked = true;
+      });
+
+      row.dispatchEvent(keyEvent('keydown', 'Enter'));
+      row.remove();
+      menuEl.append(row);
+      await row.updateComplete;
+      row.dispatchEvent(keyEvent('keyup', 'Enter'));
+
+      expect(clicked, 'the press does not survive re-slotting').toBe(false);
+      expect(menu.open, 'the menu stays open').toBe(true);
+      row.remove();
+    });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
 // TEST: Size cascades from the menu
 // ──────────────────────────────────────────────────────────────
 
@@ -1932,7 +2042,8 @@ export const ItemSizeCascadeTest: Story = {
   play: async ({ canvasElement, step }) => {
     const menu = await getComponent<Menu>(canvasElement, 'swc-menu');
 
-    // The menu owns its rows' size, so one menu can never render a mix.
+    // The menu propagates its size on slot assignment and whenever its own
+    // size changes; it does not watch a row for a size set out of band.
     await step('rows take the menu size on slot assignment', async () => {
       await waitFor(() => {
         for (const row of getRows(canvasElement)) {

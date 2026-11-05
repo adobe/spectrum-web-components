@@ -29,6 +29,8 @@ const DOCS_URL =
  *
  * A modified press belongs to the app or to assistive technology, not to the
  * row: Shift+Enter and Ctrl+Space stay available as shortcuts.
+ *
+ * @internal Exported only so `MenuBase` can share the definition.
  */
 export const isMenuActivationKey = (event: KeyboardEvent): boolean => {
   if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) {
@@ -42,6 +44,9 @@ export const isMenuActivationKey = (event: KeyboardEvent): boolean => {
  * {@link https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/ | menu button}
  * pattern: `role="menuitem"` on the host, with the owning `swc-menu` driving
  * arrow-key navigation and roving tabindex across its rows.
+ *
+ * @attribute {MenuItemSize} size - Size of the row. Set by the owning
+ *   `swc-menu`, which propagates its own size to every row it slots.
  *
  * @slot label - Required text of the row; provides its accessible name.
  * @slot visual - Optional leading icon or thumbnail.
@@ -113,6 +118,8 @@ export abstract class MenuItemBase extends SizedMixin(SpectrumElement, {
     this.removeEventListener('keydown', this.handleKeyDown);
     this.removeEventListener('keyup', this.handleKeyUp);
     this.removeEventListener('blur', this.handleBlur);
+    // A row torn out mid-press must not come back armed if it is re-slotted.
+    this.pressedKey = null;
     super.disconnectedCallback();
   }
 
@@ -129,7 +136,9 @@ export abstract class MenuItemBase extends SizedMixin(SpectrumElement, {
       return;
     }
     event.preventDefault();
-    if (!event.repeat) {
+    // A disabled row claims the key but never arms, so the press cannot
+    // survive the row being enabled before its own keyup.
+    if (!event.repeat && !this.disabled) {
       this.pressedKey = event.key;
     }
   };
@@ -139,6 +148,11 @@ export abstract class MenuItemBase extends SizedMixin(SpectrumElement, {
   // activation reach the same consumer handler, and lets the owning menu
   // close through one path for both.
   private readonly handleKeyUp = (event: KeyboardEvent): void => {
+    // Disarm before the guard below: any keyup ends the press, including one
+    // whose modifiers changed mid-press, which would otherwise leave the row
+    // armed for a later keyup it never saw begin.
+    const armed = this.pressedKey === event.key;
+    this.pressedKey = null;
     if (!isMenuActivationKey(event)) {
       return;
     }
@@ -146,8 +160,6 @@ export abstract class MenuItemBase extends SizedMixin(SpectrumElement, {
     // Only a press this row also saw start counts. Enter on the trigger opens
     // the menu and moves focus here before its own keyup, so without this the
     // first row would activate the instant the menu appeared.
-    const armed = this.pressedKey === event.key;
-    this.pressedKey = null;
     if (armed && !this.disabled) {
       this.click();
     }

@@ -221,9 +221,9 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
     return (row as HTMLElement) ?? null;
   }
 
-  // Traps Tab on the active row; Enter and Space close on an enabled one.
-  // `swc-menu-item` turns those same keys into a click, so the consumer's
-  // handler runs either way. Escape is native.
+  // Traps Tab on the active row and claims Enter and Space without acting on
+  // them: the row turns those into a click on keyup, and that click is what
+  // closes the menu. Escape is native.
   private readonly handleKeyDown = (event: KeyboardEvent): void => {
     if (!this.open) {
       return;
