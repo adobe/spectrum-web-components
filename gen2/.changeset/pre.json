@@ -6,6 +6,7 @@
     "bright-files-drop",
     "button-horizontal-padding",
     "card-2nd-gen-migration",
+    "card-grid-template-rows-property",
     "card-swc-asset-support",
     "close-button-2nd-gen-migration",
     "color-handle-migration",
@@ -18,6 +19,9 @@
     "fix-action-button-avatar-icon-size",
     "fix-action-button-label-slotchange",
     "fix-ai-toolkit-cssprop-cleanup",
+    "fix-avatar-default-size",
+    "fix-button-static-label-contrast",
+    "fix-duplicate-cssprop-manifest",
     "fix-global-link-css-import-path",
     "fix-global-reflected-aria-attribute-selectors",
     "fix-illustrated-message-actions-slot-alignment",
@@ -36,6 +40,7 @@
     "popover-focus-restore-prevent-scroll",
     "progress-circle-reduced-motion",
     "prompt-field-accessible-names",
+    "prompt-field-attachment-strip-fixes",
     "prompt-field-contrast",
     "prompt-field-pixel-loader",
     "publish-custom-elements-manifest",
@@ -56,6 +61,7 @@
     "tokens-15-2-0-opacity",
     "tooltip-popover-manual-coexistence",
     "trigger-press-controller",
+    "upload-attachment-media-swc-card-composition",
     "workflow-icons-package"
   ],
   "initialVersions": {
