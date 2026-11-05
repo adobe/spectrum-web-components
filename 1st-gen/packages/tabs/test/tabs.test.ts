@@ -958,6 +958,31 @@ describe('Tabs', () => {
       expect(tab.getAttribute('aria-controls')).to.equal('consumer-panel');
     });
 
+    it('keeps the app aria-controls when tabs and panels are replaced together', async () => {
+      const el = await fixture<Tabs>(html`
+        <sp-tabs selected="first">
+          <sp-tab value="first">Tab 1</sp-tab>
+          <sp-tab-panel value="first">First tab content</sp-tab-panel>
+        </sp-tabs>
+      `);
+      await elementUpdated(el);
+
+      const tab = createTab('first');
+      tab.setAttribute('aria-controls', 'app-panel');
+      const panel = createPanel('first');
+      panel.id = 'app-panel';
+      el.replaceChildren(tab, panel);
+      await elementUpdated(el);
+      await elementUpdated(panel);
+      await nextFrame();
+
+      expect(tab.getAttribute('aria-controls')).to.equal('app-panel');
+
+      panel.remove();
+      await elementUpdated(el);
+      expect(tab.getAttribute('aria-controls')).to.equal('app-panel');
+    });
+
     it('does not match a cleared tab value through the stale attribute', async () => {
       const el = await fixture<Tabs>(html`
         <sp-tabs selected="first">

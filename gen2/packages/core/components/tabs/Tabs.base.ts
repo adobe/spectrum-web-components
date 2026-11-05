@@ -237,14 +237,6 @@ export abstract class TabsBase extends SpectrumElement {
    */
   private _tabs: TabLike[] = [];
 
-  /**
-   * @internal
-   *
-   * Cached list of tab panel elements. Updated via
-   * `handlePanelSlotChange`, and relinked when the tabs change.
-   */
-  private _panels: TabPanelLike[] = [];
-
   private readonly managedPanelLabels = new WeakMap<TabPanelLike, string>();
 
   private readonly managedTabControls = new WeakMap<TabLike, string>();
@@ -331,7 +323,12 @@ export abstract class TabsBase extends SpectrumElement {
     this.updateCheckedState();
     this.updateSelectionIndicator();
     // Tabs can change without the panel slot changing, so relink the panels.
-    this.managePanels(this._panels);
+    // Read the panels from the slot, not a cached list, so new tabs are never
+    // linked to panels that were removed in the same change.
+    const panelSlot = this.renderRoot?.querySelector<HTMLSlotElement>(
+      'slot[name="tab-panel"]'
+    );
+    this.managePanels((panelSlot?.assignedElements() ?? []) as TabPanelLike[]);
   }
 
   /**
@@ -341,8 +338,7 @@ export abstract class TabsBase extends SpectrumElement {
    */
   protected handlePanelSlotChange(event: Event): void {
     const slot = event.target as HTMLSlotElement;
-    this._panels = slot.assignedElements() as TabPanelLike[];
-    this.managePanels(this._panels);
+    this.managePanels(slot.assignedElements() as TabPanelLike[]);
   }
 
   /**

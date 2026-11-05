@@ -2260,3 +2260,44 @@ export const ConsumerReplacedAriaTest: Story = {
     );
   },
 };
+
+export const ReplacedTabsAndPanelsConsumerAriaTest: Story = {
+  render: () => html`
+    <swc-tabs selected="1" accessible-label="Replaced tabs and panels test">
+      <swc-tab tab-id="1">Tab 1</swc-tab>
+      <swc-tab-panel tab-id="1"><p>Panel 1</p></swc-tab-panel>
+    </swc-tabs>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const tabs = await getComponent<Tabs>(canvasElement, 'swc-tabs');
+    const oldPanel = await getComponent<TabPanel>(
+      canvasElement,
+      'swc-tab-panel'
+    );
+    await settle(tabs, [oldPanel]);
+
+    await step(
+      'replacing tabs and panels together keeps the app aria-controls',
+      async () => {
+        const tab = createTab('1');
+        tab.setAttribute('aria-controls', 'app-panel');
+        const panel = createPanel('1');
+        panel.id = 'app-panel';
+        tabs.replaceChildren(tab, panel);
+        await settle(tabs, [tab, panel]);
+
+        expect(
+          tab.getAttribute('aria-controls'),
+          'tab is never linked to the removed panel'
+        ).toBe('app-panel');
+
+        panel.remove();
+        await settle(tabs, [tab]);
+        expect(
+          tab.getAttribute('aria-controls'),
+          'app aria-controls is kept after the panel is removed'
+        ).toBe('app-panel');
+      }
+    );
+  },
+};
