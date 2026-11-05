@@ -36,18 +36,36 @@ export const ContentTest: Story = {
   render: () => html`
     <div style="inline-size:320px;max-inline-size:100%;">
       <swc-user-message>Summarize these references.</swc-user-message>
+      <swc-user-message type="copy">Explicit message text.</swc-user-message>
     </div>
   `,
   play: async ({ canvasElement, step }) => {
+    const stories = await import('../stories/user-message.stories.js');
+    expect(stories).toHaveProperty('Overview.tags', ['overview']);
+    expect(stories).toHaveProperty('Accessibility.tags', ['a11y']);
+    expect(stories).toHaveProperty('Playground.tags', ['dev']);
+    expect(meta.argTypes?.type?.options).toEqual(['copy', 'card', 'media']);
     const message = await getComponent<UserMessage>(
       canvasElement,
       'swc-user-message'
     );
-    expect(message.type).toBeUndefined();
-    expect(message.hasAttribute('type')).toBe(false);
+    expect(message.type).toBe('copy');
+    expect(message.getAttribute('type')).toBe('copy');
     expect(
       message.shadowRoot!.querySelector('slot')!.assignedNodes()[0].textContent
     ).toContain('Summarize these references.');
+
+    const explicitCopy = await getComponent<UserMessage>(
+      canvasElement,
+      'swc-user-message[type="copy"]:last-child'
+    );
+    expect(explicitCopy.type).toBe('copy');
+    expect(
+      explicitCopy
+        .shadowRoot!.querySelector<HTMLSlotElement>('slot:not([name])')!
+        .assignedNodes()[0].textContent
+    ).toBe('Explicit message text.');
+    expect(explicitCopy.shadowRoot!.querySelector('[role="group"]')).toBeNull();
 
     for (const type of ['media', 'card'] as const) {
       await step(
@@ -86,11 +104,18 @@ export const ContentTest: Story = {
               message.querySelector('img, swc-asset, [dismissible]')
             ).toBeNull();
           }
-          if (type === 'media') {
-            message.removeAttribute('type');
-          } else {
-            message.type = undefined;
-          }
+          message.setAttribute('type', 'copy');
+          await message.updateComplete;
+          expect(message.type).toBe('copy');
+          expect(
+            message.shadowRoot!.querySelector('slot:not([name])')
+          ).not.toBeNull();
+          expect(
+            message.shadowRoot!.querySelector('[role="group"]')
+          ).toBeNull();
+          message.type = type;
+          await message.updateComplete;
+          message.removeAttribute('type');
           await message.updateComplete;
           expect(message.hasAttribute('type')).toBe(false);
           expect(

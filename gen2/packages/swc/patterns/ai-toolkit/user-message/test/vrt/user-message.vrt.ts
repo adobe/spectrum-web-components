@@ -93,23 +93,26 @@ const renderMessage = ({
   lang,
   maxInlineSize,
 }: MessageCase) => {
-  const message = !type
-    ? html`
-        <swc-user-message lang=${lang ?? nothing}>${copy}</swc-user-message>
-      `
-    : html`
-        <swc-user-message type=${type} lang=${lang ?? nothing}>
-          ${Array.from({ length: count }, () =>
-            type === 'card'
-              ? html`
-                  <swc-upload-attachment slot="thumbnail" type="card">
-                    ${attachmentSlots(slots)}
-                  </swc-upload-attachment>
-                `
-              : mediaThumbnail
-          )}
-        </swc-user-message>
-      `;
+  const message =
+    !type || type === 'copy'
+      ? html`
+          <swc-user-message type=${type ?? nothing} lang=${lang ?? nothing}>
+            ${copy}
+          </swc-user-message>
+        `
+      : html`
+          <swc-user-message type=${type} lang=${lang ?? nothing}>
+            ${Array.from({ length: count }, () =>
+              type === 'card'
+                ? html`
+                    <swc-upload-attachment slot="thumbnail" type="card">
+                      ${attachmentSlots(slots)}
+                    </swc-upload-attachment>
+                  `
+                : mediaThumbnail
+            )}
+          </swc-user-message>
+        `;
 
   return maxInlineSize
     ? html`
@@ -135,6 +138,7 @@ const SLOT_LABELS = {
 
 const TYPE_PERMUTATIONS = createPermutations([
   {},
+  { type: ['copy'] },
   { type: ['card'], slots: ['titleAndSubtitle', 'titleOnly'] },
   { type: ['media'], count: [1, 2, 7] },
   { type: ['card'], count: [2, 6] },

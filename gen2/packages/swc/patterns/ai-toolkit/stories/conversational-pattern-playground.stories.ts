@@ -45,7 +45,7 @@ type PlaygroundArgs = {
   'animate-loader': boolean;
   placeholder: string;
   disabled: boolean;
-  'attachment-type': UserMessageType;
+  'attachment-type': Exclude<UserMessageType, 'copy'>;
   'step-duration': number;
   'show-feedback': boolean;
   'show-sources': boolean;
@@ -121,7 +121,7 @@ export default meta;
 
 type DemoAttachment = {
   id: string;
-  type: UserMessageType;
+  type: Exclude<UserMessageType, 'copy'>;
   title: string;
   subtitle: string;
   /** Image preview URL when the attachment is a visual file. */

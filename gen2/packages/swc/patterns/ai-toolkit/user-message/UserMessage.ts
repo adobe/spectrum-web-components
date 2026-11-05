@@ -17,29 +17,29 @@ import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 
 import styles from './user-message.css';
 
-export type UserMessageType = 'card' | 'media';
+export type UserMessageType = 'copy' | 'card' | 'media';
 
 /**
  * User-authored conversation bubble for AI Toolkit pattern exploration.
- * Default slot content is rendered when `type` is omitted and ignored when
- * `type="card"` or `type="media"`.
+ * Default slot content is rendered for `type="copy"` (the default) or when
+ * the `type` attribute is removed, and ignored for `type="card"` or `type="media"`.
  *
  * @element swc-user-message
- * @slot - Message text when `type` is omitted.
+ * @slot - Message text for `type="copy"` (the default) or when the `type` attribute is removed.
  * @slot thumbnail - Attachments grouped by their card or media presentation, regardless of file format.
  * @since 2.0.0-beta.3
  */
 export class UserMessage extends SpectrumElement {
-  /** Attachment layout. Omit for message text. */
+  /** Visual content type. Defaults to `copy` for message text. */
   @property({ type: String, reflect: true })
-  public type?: UserMessageType;
+  public type: UserMessageType = 'copy';
 
   public static override get styles(): CSSResultArray {
     return [styles];
   }
 
   protected override render(): TemplateResult {
-    return !this.type
+    return !this.type || this.type === 'copy'
       ? html`
           <slot></slot>
         `

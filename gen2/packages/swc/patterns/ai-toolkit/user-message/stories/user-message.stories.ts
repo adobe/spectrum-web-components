@@ -32,12 +32,12 @@ argTypes.type = {
   ...argTypes.type,
   control: {
     type: 'select',
-    labels: { undefined: 'Default (text)' },
+    labels: { copy: 'Copy (default)' },
   },
-  options: [undefined, 'card', 'media'],
+  options: ['copy', 'card', 'media'],
   table: {
     category: 'attributes',
-    defaultValue: { summary: 'undefined' },
+    defaultValue: { summary: 'copy' },
   },
 };
 
@@ -105,7 +105,9 @@ const renderWithAttachments = (
 ) =>
   template(
     storyArgs,
-    storyArgs['thumbnail-slot'] || !storyArgs.type ? undefined : content
+    storyArgs['thumbnail-slot'] || !storyArgs.type || storyArgs.type === 'copy'
+      ? undefined
+      : content
   );
 
 // ────────────────────
@@ -114,11 +116,21 @@ const renderWithAttachments = (
 
 export const Playground: Story = {
   args: {
-    type: undefined,
+    type: 'copy',
     'default-slot': 'Can you summarize these campaign references?',
   },
   render: (args) => renderWithAttachments(args, attachments(args.type, 2)),
-  tags: ['dev', 'overview'],
+  tags: ['dev'],
+};
+
+// ──────────────────────────
+//    OVERVIEW STORY
+// ──────────────────────────
+
+export const Overview: Story = {
+  args: Playground.args,
+  render: Playground.render,
+  tags: ['overview'],
 };
 
 // ────────────────────
@@ -169,4 +181,14 @@ export const Overflow: Story = {
   args: { ...Playground.args, type: 'media' },
   render: (args) => renderWithAttachments(args, attachments(args.type, 24)),
   tags: ['behaviors'],
+};
+
+// ────────────────────────────────
+//    ACCESSIBILITY STORIES
+// ────────────────────────────────
+
+export const Accessibility: Story = {
+  args: Overflow.args,
+  render: Overflow.render,
+  tags: ['a11y'],
 };

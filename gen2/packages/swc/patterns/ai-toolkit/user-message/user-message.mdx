@@ -12,7 +12,7 @@ import * as UserMessageStories from './stories/user-message.stories';
 A user message consists of:
 
 - **Bubble**: rounded container with a neutral gray background (`gray-50`)
-- **Message text**, provided through the default slot when `type` is omitted
+- **Message text**, provided through the default slot for `type="copy"` (the default)
 - **Attachments**, provided through the `thumbnail` slot for card and media messages
 - **File metadata**, provided through each nested upload card's `title` and `subtitle` slots
 
@@ -20,7 +20,7 @@ A user message consists of:
 
 ### Content
 
-User messages display text by default. Put the message in the default slot and leave `type` unset. Attachment types describe presentation, not file format:
+User messages display text by default (`type="copy"`). Put the message in the default slot and omit `type` or set it to `copy`. Removing the `type` attribute also renders text. Attachment types describe presentation, not file format:
 
 - **`card`**: attachments with visible filenames and file details
 - **`media`**: square attachment previews or file icons without visible metadata
@@ -62,7 +62,7 @@ The `<swc-user-message>` element implements the following accessibility features
 #### Semantic structure
 
 - The custom element acts as the visual bubble inside a semantic user turn
-- Omitting `type` uses the default slot for message text
+- `type="copy"` (the default) uses the default slot for message text
 - `type="card"` and `type="media"` render attachments through the `thumbnail` slot; title and subtitle content belongs to each card tile rather than the outer message
 - Every attachment collection is a keyboard-focusable group named "Uploaded attachments", including collections without overflow. Use <kbd>Tab</kbd> to enter it, native scrolling keys to explore overflowing attachments, and <kbd>Tab</kbd> or <kbd>Shift</kbd> + <kbd>Tab</kbd> to leave
 - The gallery scroll area's focus indicator is drawn outside the gradient mask so it remains visible
@@ -72,5 +72,7 @@ The `<swc-user-message>` element implements the following accessibility features
 - Ensure message text is descriptive and self-contained
 - For card attachments, provide descriptive filenames and metadata, and keep redundant previews and file icons decorative
 - For media attachments, provide a filename through the upload tile's `title` slot or `accessible-label`. Give standalone images descriptive `alt` text
+
+<Canvas of={UserMessageStories.Accessibility} />
 
 <DocsFooter />

@@ -103,6 +103,7 @@
  * swc-card's `align-items: start` on its grid means it otherwise renders at
  * its natural size instead of stretching to the cell. */
 :host([type="media"]) ::slotted(img[slot="thumbnail"]) {
+  box-sizing: border-box;
   display: block;
   inline-size: 100%;
   block-size: 100%;

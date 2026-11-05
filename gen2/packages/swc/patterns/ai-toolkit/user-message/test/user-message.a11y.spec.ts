@@ -37,7 +37,7 @@ test.describe('UserMessage - ARIA Snapshots', () => {
     }) => {
       const root = await gotoStory(
         page,
-        'patterns-ai-toolkit-user-message--overflow',
+        'patterns-ai-toolkit-user-message--accessibility',
         'swc-user-message'
       );
       const message = root.locator('swc-user-message');
@@ -73,10 +73,30 @@ test.describe('UserMessage - ARIA Snapshots', () => {
       await page.keyboard.press('Tab');
       await expect(viewport).toBeFocused();
       await expect(message).toHaveCSS('outline-style', 'solid');
-      await viewport.press('End');
       await expect
-        .poll(() => viewport.evaluate((element) => element.scrollTop))
+        .poll(() =>
+          viewport.evaluate(
+            (element) => element.scrollHeight - element.clientHeight
+          )
+        )
         .toBeGreaterThan(0);
+      await viewport.evaluate((element) => {
+        element.addEventListener(
+          'scrollend',
+          () => element.setAttribute('data-scroll-ended', ''),
+          { once: true }
+        );
+      });
+      await viewport.press('End');
+      await expect(viewport).toHaveAttribute('data-scroll-ended', '');
+      await expect
+        .poll(() =>
+          viewport.evaluate(
+            (element) =>
+              element.scrollHeight - element.clientHeight - element.scrollTop
+          )
+        )
+        .toBeLessThanOrEqual(1);
       await viewport.press('Home');
       await expect
         .poll(() => viewport.evaluate((element) => element.scrollTop))
@@ -98,7 +118,7 @@ test.describe('UserMessage - ARIA Snapshots', () => {
     await page.emulateMedia({ forcedColors: 'active' });
     const root = await gotoStory(
       page,
-      'patterns-ai-toolkit-user-message--overflow',
+      'patterns-ai-toolkit-user-message--accessibility',
       'swc-user-message'
     );
     const viewport = root.getByRole('group', { name: 'Uploaded attachments' });

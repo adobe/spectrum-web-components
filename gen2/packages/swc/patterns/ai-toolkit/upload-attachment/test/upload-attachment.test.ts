@@ -227,13 +227,14 @@ export const MediaPreviewOnlyTest: Story = {
 export const MediaBadgeTest: Story = {
   render: () => html`
     <div style="display:flex;gap:16px;">
-      <swc-upload-attachment type="media" dismissible>
+      <swc-upload-attachment type="media" size="l" dismissible>
         <img
           slot="thumbnail"
           src="./images/avatar-preview.png"
           alt="Tagged preview"
         />
         <swc-badge slot="badge">PDF</swc-badge>
+        <span slot="title">Campaign brief</span>
       </swc-upload-attachment>
       <swc-upload-attachment type="media" dismissible>
         <img
@@ -245,12 +246,20 @@ export const MediaBadgeTest: Story = {
     </div>
   `,
   play: async ({ canvasElement, step }) => {
-    const attachments = canvasElement.querySelectorAll('swc-upload-attachment');
+    const attachments = canvasElement.querySelectorAll<UploadAttachment>(
+      'swc-upload-attachment'
+    );
+    const withBadge = attachments[0];
+    const badge = withBadge.querySelector<HTMLElement>('[slot="badge"]')!;
+    const title = withBadge.querySelector<HTMLElement>('[slot="title"]')!;
+    const dismissLabel = () =>
+      withBadge.shadowRoot
+        ?.querySelector('.swc-UploadAttachment-dismiss')
+        ?.getAttribute('accessible-label');
 
     await step(
       'badge slot forwards content into the card media slot when provided',
       async () => {
-        const withBadge = attachments[0] as UploadAttachment;
         await withBadge.updateComplete;
 
         const badgeSlot = withBadge.shadowRoot?.querySelector(
@@ -260,17 +269,84 @@ export const MediaBadgeTest: Story = {
         expect(
           withBadge.querySelector('[slot="badge"]')?.textContent?.trim()
         ).toBe('PDF');
+        expect(dismissLabel()).toBe('Remove Campaign brief, PDF');
       }
     );
 
     await step('badge slot has no assigned content when empty', async () => {
-      const withoutBadge = attachments[1] as UploadAttachment;
+      const withoutBadge = attachments[1];
       await withoutBadge.updateComplete;
 
       const badgeSlot = withoutBadge.shadowRoot?.querySelector(
         'slot[name="badge"]'
       ) as HTMLSlotElement | null;
       expect(badgeSlot?.assignedElements().length ?? 0).toBe(0);
+      expect(
+        withoutBadge.shadowRoot
+          ?.querySelector('.swc-UploadAttachment-dismiss')
+          ?.getAttribute('accessible-label')
+      ).toBe('Remove attachment');
+    });
+
+    await step('keeps custom dismiss labels unchanged', async () => {
+      withBadge.dismissLabel = 'Discard campaign';
+      await withBadge.updateComplete;
+      expect(dismissLabel()).toBe('Discard campaign');
+      badge.textContent = 'DOCX';
+      await waitFor(() => expect(dismissLabel()).toBe('Discard campaign'));
+      withBadge.dismissLabel = '';
+      await withBadge.updateComplete;
+      expect(dismissLabel()).toBe('Remove Campaign brief, DOCX');
+    });
+
+    await step(
+      'updates the label when title or badge text changes',
+      async () => {
+        badge.firstChild!.textContent = ' TXT ';
+        await waitFor(() =>
+          expect(dismissLabel()).toBe('Remove Campaign brief, TXT')
+        );
+        title.firstChild!.textContent = 'Updated brief';
+        await waitFor(() =>
+          expect(dismissLabel()).toBe('Remove Updated brief, TXT')
+        );
+      }
+    );
+
+    await step('handles replaced, empty, and removed badges', async () => {
+      const replacement = document.createElement('swc-badge');
+      replacement.slot = 'badge';
+      replacement.textContent = 'ZIP';
+      badge.replaceWith(replacement);
+      await waitFor(() =>
+        expect(dismissLabel()).toBe('Remove Updated brief, ZIP')
+      );
+      replacement.textContent = '  ';
+      await waitFor(() => expect(dismissLabel()).toBe('Remove Updated brief'));
+      replacement.remove();
+      await waitFor(() => expect(dismissLabel()).toBe('Remove Updated brief'));
+      replacement.textContent = 'PDF';
+      withBadge.append(replacement);
+      await waitFor(() =>
+        expect(dismissLabel()).toBe('Remove Updated brief, PDF')
+      );
+      title.remove();
+      await waitFor(() =>
+        expect(dismissLabel()).toBe('Remove attachment, PDF')
+      );
+      withBadge.remove();
+      replacement.textContent = 'DOCX';
+      withBadge.append(title);
+      canvasElement.append(withBadge);
+      await waitFor(() =>
+        expect(dismissLabel()).toBe('Remove Updated brief, DOCX')
+      );
+      replacement.firstChild!.textContent = 'PDF';
+      await waitFor(() =>
+        expect(dismissLabel()).toBe('Remove Updated brief, PDF')
+      );
+      replacement.remove();
+      await waitFor(() => expect(dismissLabel()).toBe('Remove Updated brief'));
     });
   },
 };
