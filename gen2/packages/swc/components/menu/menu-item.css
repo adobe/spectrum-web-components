@@ -14,35 +14,12 @@
  * carries no background, border, radius or shadow, and every visual property
  * is scoped under the item.
  *
- * The `--_swc-*` properties are internal. Phase A exposes no public custom
- * properties, so none of them carry a `@cssprop` tag. They are declared on
- * `:host` rather than on `.swc-MenuItem` so the size rules below can override
- * them by inheritance; a declaration on the internal class would beat the
- * inherited value and the size variants would never apply. */
+ * Every value that changes across sizes or states is an exposed
+ * `--swc-menu-item-*` property, consumed inline on the CSS property it feeds
+ * and overridden from `:host()` below. Values that never change are plain
+ * `token()` calls. */
 
 :host {
-  /* Medium is the default size, so its values are the base set. */
-  --_swc-menu-item-min-block-size: token("component-height-100");
-  --_swc-menu-item-padding-block: token("base-padding-vertical-medium");
-  --_swc-menu-item-padding-inline: token("base-padding-horizontal-medium");
-  --_swc-menu-item-gap: token("base-gap-medium");
-  --_swc-menu-item-corner-radius: token("corner-radius-medium-size-medium");
-  --_swc-menu-item-label-font-size: token("font-size-100");
-  --_swc-menu-item-label-line-height: token("line-height-font-size-100");
-  --_swc-menu-item-description-font-size: token("font-size-75");
-  --_swc-menu-item-description-line-height: token("line-height-font-size-75");
-  --_swc-menu-item-text-gap: token("text-gap-medium");
-  --_swc-menu-item-visual-size: token("workflow-icon-medium");
-
-  /* Spectrum gives all five `menu-item-background-color-*` states the same
-   * grey and separates them with `menu-item-background-opacity`, which is 0 and
-   * has no per-state variants. That opacity is the only thing keeping a resting
-   * row flat, so it has to be applied here; the states below paint the same
-   * grey at full strength. */
-  --_swc-menu-item-background-color: color-mix(in srgb, token("menu-item-background-color-default") calc(token("menu-item-background-opacity") * 100%), transparent);
-  --_swc-menu-item-label-color: token("neutral-content-color-default");
-  --_swc-menu-item-description-color: token("neutral-subdued-content-color-default");
-
   display: block;
 }
 
@@ -51,29 +28,37 @@
 }
 
 .swc-MenuItem {
+  /* Spectrum gives all five `menu-item-background-color-*` states the same
+   * grey and separates them with `menu-item-background-opacity`, which is 0
+   * and has no per-state variants. That opacity is the only thing keeping a
+   * resting row flat; the states below paint the same grey at full strength.
+   * Named rather than inlined because the mix is what the value means, and
+   * only ever read as the fallback below, never overridden from `:host()`. */
+  --_swc-menu-item-background-color-default: color-mix(in srgb, token("menu-item-background-color-default") calc(token("menu-item-background-opacity") * 100%), transparent);
+
   display: flex;
-  gap: var(--_swc-menu-item-gap);
+  gap: var(--swc-menu-item-gap, token("base-gap-medium"));
   align-items: center;
-  min-block-size: var(--_swc-menu-item-min-block-size);
-  padding-block: var(--_swc-menu-item-padding-block);
-  padding-inline: var(--_swc-menu-item-padding-inline);
-  color: var(--_swc-menu-item-label-color);
-  background-color: var(--_swc-menu-item-background-color);
-  border-radius: var(--_swc-menu-item-corner-radius);
+  min-block-size: var(--swc-menu-item-min-block-size, token("component-height-100"));
+  padding-block: var(--swc-menu-item-padding-block, token("base-padding-vertical-medium"));
+  padding-inline: var(--swc-menu-item-padding-inline, token("base-padding-horizontal-medium"));
+  color: var(--swc-menu-item-label-color, token("neutral-content-color-default"));
+  background-color: var(--swc-menu-item-background-color, var(--_swc-menu-item-background-color-default));
+  border-radius: var(--swc-menu-item-corner-radius, token("corner-radius-medium-size-medium"));
 }
 
 /* The label and its description stack; the visual sits beside both. */
 .swc-MenuItem-text {
   display: flex;
   flex-direction: column;
-  gap: var(--_swc-menu-item-text-gap);
+  gap: var(--swc-menu-item-text-gap, token("text-gap-medium"));
 
   /* A long row wraps rather than overflowing the surface, which caps its
    * width at 320px. `min-inline-size: 0` lets the flex item shrink below its
    * content width so the wrap actually happens. */
   min-inline-size: 0;
-  font-size: var(--_swc-menu-item-label-font-size);
-  line-height: var(--_swc-menu-item-label-line-height);
+  font-size: var(--swc-menu-item-label-font-size, token("font-size-100"));
+  line-height: var(--swc-menu-item-label-line-height, token("line-height-font-size-100"));
   hyphens: auto;
   overflow-wrap: break-word;
 }
@@ -83,45 +68,45 @@
  * ────────────── */
 
 :host([size="s"]) {
-  --_swc-menu-item-min-block-size: token("component-height-75");
-  --_swc-menu-item-padding-block: token("base-padding-vertical-small");
-  --_swc-menu-item-padding-inline: token("base-padding-horizontal-small");
-  --_swc-menu-item-gap: token("base-gap-small");
-  --_swc-menu-item-corner-radius: token("corner-radius-medium-size-small");
-  --_swc-menu-item-label-font-size: token("font-size-75");
-  --_swc-menu-item-label-line-height: token("line-height-font-size-75");
-  --_swc-menu-item-description-font-size: token("font-size-50");
-  --_swc-menu-item-description-line-height: token("line-height-font-size-50");
-  --_swc-menu-item-text-gap: token("text-gap-small");
-  --_swc-menu-item-visual-size: token("workflow-icon-small");
+  --swc-menu-item-min-block-size: token("component-height-75");
+  --swc-menu-item-padding-block: token("base-padding-vertical-small");
+  --swc-menu-item-padding-inline: token("base-padding-horizontal-small");
+  --swc-menu-item-gap: token("base-gap-small");
+  --swc-menu-item-corner-radius: token("corner-radius-medium-size-small");
+  --swc-menu-item-label-font-size: token("font-size-75");
+  --swc-menu-item-label-line-height: token("line-height-font-size-75");
+  --swc-menu-item-description-font-size: token("font-size-50");
+  --swc-menu-item-description-line-height: token("line-height-font-size-50");
+  --swc-menu-item-text-gap: token("text-gap-small");
+  --swc-menu-item-visual-size: token("workflow-icon-small");
 }
 
 :host([size="l"]) {
-  --_swc-menu-item-min-block-size: token("component-height-200");
-  --_swc-menu-item-padding-block: token("base-padding-vertical-large");
-  --_swc-menu-item-padding-inline: token("base-padding-horizontal-large");
-  --_swc-menu-item-gap: token("base-gap-large");
-  --_swc-menu-item-corner-radius: token("corner-radius-medium-size-large");
-  --_swc-menu-item-label-font-size: token("font-size-200");
-  --_swc-menu-item-label-line-height: token("line-height-font-size-200");
-  --_swc-menu-item-description-font-size: token("font-size-100");
-  --_swc-menu-item-description-line-height: token("line-height-font-size-100");
-  --_swc-menu-item-text-gap: token("text-gap-large");
-  --_swc-menu-item-visual-size: token("workflow-icon-large");
+  --swc-menu-item-min-block-size: token("component-height-200");
+  --swc-menu-item-padding-block: token("base-padding-vertical-large");
+  --swc-menu-item-padding-inline: token("base-padding-horizontal-large");
+  --swc-menu-item-gap: token("base-gap-large");
+  --swc-menu-item-corner-radius: token("corner-radius-medium-size-large");
+  --swc-menu-item-label-font-size: token("font-size-200");
+  --swc-menu-item-label-line-height: token("line-height-font-size-200");
+  --swc-menu-item-description-font-size: token("font-size-100");
+  --swc-menu-item-description-line-height: token("line-height-font-size-100");
+  --swc-menu-item-text-gap: token("text-gap-large");
+  --swc-menu-item-visual-size: token("workflow-icon-large");
 }
 
 :host([size="xl"]) {
-  --_swc-menu-item-min-block-size: token("component-height-300");
-  --_swc-menu-item-padding-block: token("base-padding-vertical-extra-large");
-  --_swc-menu-item-padding-inline: token("base-padding-horizontal-extra-large");
-  --_swc-menu-item-gap: token("base-gap-extra-large");
-  --_swc-menu-item-corner-radius: token("corner-radius-medium-size-extra-large");
-  --_swc-menu-item-label-font-size: token("font-size-300");
-  --_swc-menu-item-label-line-height: token("line-height-font-size-300");
-  --_swc-menu-item-description-font-size: token("font-size-200");
-  --_swc-menu-item-description-line-height: token("line-height-font-size-200");
-  --_swc-menu-item-text-gap: token("text-gap-extra-large");
-  --_swc-menu-item-visual-size: token("workflow-icon-extra-large");
+  --swc-menu-item-min-block-size: token("component-height-300");
+  --swc-menu-item-padding-block: token("base-padding-vertical-extra-large");
+  --swc-menu-item-padding-inline: token("base-padding-horizontal-extra-large");
+  --swc-menu-item-gap: token("base-gap-extra-large");
+  --swc-menu-item-corner-radius: token("corner-radius-medium-size-extra-large");
+  --swc-menu-item-label-font-size: token("font-size-300");
+  --swc-menu-item-label-line-height: token("line-height-font-size-300");
+  --swc-menu-item-description-font-size: token("font-size-200");
+  --swc-menu-item-description-line-height: token("line-height-font-size-200");
+  --swc-menu-item-text-gap: token("text-gap-extra-large");
+  --swc-menu-item-visual-size: token("workflow-icon-extra-large");
 }
 
 /* ──────────────
@@ -129,9 +114,9 @@
  * ────────────── */
 
 :host(:hover:not([disabled])) {
-  --_swc-menu-item-background-color: token("menu-item-background-color-hover");
-  --_swc-menu-item-label-color: token("neutral-content-color-hover");
-  --_swc-menu-item-description-color: token("neutral-subdued-content-color-hover");
+  --swc-menu-item-background-color: token("menu-item-background-color-hover");
+  --swc-menu-item-label-color: token("neutral-content-color-hover");
+  --swc-menu-item-description-color: token("neutral-subdued-content-color-hover");
 }
 
 /* Keyed off `:focus-visible`, not `:focus`. Opening the menu moves focus to the
@@ -141,15 +126,15 @@
  * focused but not focus-visible, while a keyboard-driven one sets both, which
  * is exactly the distinction wanted here. */
 :host(:focus-visible:not([disabled])) {
-  --_swc-menu-item-background-color: token("menu-item-background-color-keyboard-focus");
-  --_swc-menu-item-label-color: token("neutral-content-color-key-focus");
-  --_swc-menu-item-description-color: token("neutral-subdued-content-color-key-focus");
+  --swc-menu-item-background-color: token("menu-item-background-color-keyboard-focus");
+  --swc-menu-item-label-color: token("neutral-content-color-key-focus");
+  --swc-menu-item-description-color: token("neutral-subdued-content-color-key-focus");
 }
 
 :host(:active:not([disabled])) {
-  --_swc-menu-item-background-color: token("menu-item-background-color-down");
-  --_swc-menu-item-label-color: token("neutral-content-color-down");
-  --_swc-menu-item-description-color: token("neutral-subdued-content-color-down");
+  --swc-menu-item-background-color: token("menu-item-background-color-down");
+  --swc-menu-item-label-color: token("neutral-content-color-down");
+  --swc-menu-item-description-color: token("neutral-subdued-content-color-down");
 }
 
 /* Both text parts go to the same disabled colour; 1st-gen tracked them
@@ -160,8 +145,8 @@
  * painting it would make a disabled row read as hovered. It keeps the flat
  * resting fill instead, which is what 1st-gen clears it to. */
 :host([disabled]) {
-  --_swc-menu-item-label-color: token("disabled-content-color");
-  --_swc-menu-item-description-color: token("disabled-content-color");
+  --swc-menu-item-label-color: token("disabled-content-color");
+  --swc-menu-item-description-color: token("disabled-content-color");
 }
 
 /* The host owns focus, so the ring is drawn on the chrome element. Inset, so
@@ -189,15 +174,19 @@
  * ────────────── */
 
 ::slotted([slot="description"]) {
-  font-size: var(--_swc-menu-item-description-font-size);
-  line-height: var(--_swc-menu-item-description-line-height);
-  color: var(--_swc-menu-item-description-color);
+  font-size: var(--swc-menu-item-description-font-size, token("font-size-75"));
+  line-height: var(--swc-menu-item-description-line-height, token("line-height-font-size-75"));
+  color: var(--swc-menu-item-description-color, token("neutral-subdued-content-color-default"));
 }
 
 /* Sized here rather than left to the icon's own intrinsic size so a row keeps
  * its proportions across sizes. `box-sizing` is restated because the `*`
  * reset above does not reach slotted light-DOM content. */
 ::slotted([slot="visual"]) {
+  /* Read twice, so the exposed property is captured once here rather than
+   * repeating its fallback on both axes. */
+  --_swc-menu-item-visual-size: var(--swc-menu-item-visual-size, token("workflow-icon-medium"));
+
   box-sizing: border-box;
   flex-shrink: 0;
   inline-size: var(--_swc-menu-item-visual-size);
