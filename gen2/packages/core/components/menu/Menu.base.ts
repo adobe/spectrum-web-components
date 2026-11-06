@@ -245,6 +245,28 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
     }
   };
 
+  // Focus follows the pointer, the way it does in 1st-gen and in the native
+  // menus this pattern imitates. Opening moves focus to the first row, so
+  // without this a keyboard-opened menu keeps its focus ring on row one while
+  // the pointer hovers another, showing two rows as active at once; arrow keys
+  // would then resume from the row the user stopped looking at.
+  //
+  // `pointerover` rather than `pointerenter`, which does not bubble and so
+  // never reaches the menu. It repeats as the pointer crosses a row's own
+  // children, hence the early return once the row already has focus.
+  private readonly handleItemPointerOver = (event: PointerEvent): void => {
+    if (!this.open) {
+      return;
+    }
+    const item = this.menuItemFromEvent(event);
+    if (!item || item === getActiveElement()) {
+      return;
+    }
+    this.focusNavigation.setActiveItem(item);
+    // `preventScroll`: the surface must not scroll out from under the pointer.
+    item.focus({ preventScroll: true });
+  };
+
   // Closes the menu when a slotted row is clicked; no submenus/selection to
   // special-case yet, so any click on an enabled roving-tabindex item counts.
   private readonly handleItemActivate = (event: MouseEvent): void => {
@@ -258,10 +280,11 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
     this.open = false;
   };
 
-  // Wired once for the connected lifetime; the handler no-ops when closed.
+  // Wired once for the connected lifetime; the handlers no-op when closed.
   public override connectedCallback(): void {
     super.connectedCallback();
     this.addEventListener('click', this.handleItemActivate);
+    this.addEventListener('pointerover', this.handleItemPointerOver);
   }
 
   // Clears aria-controls/expanded/haspopup from a previously-wired trigger.
@@ -588,5 +611,6 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
       capture: true,
     });
     this.removeEventListener('click', this.handleItemActivate);
+    this.removeEventListener('pointerover', this.handleItemPointerOver);
   }
 }
