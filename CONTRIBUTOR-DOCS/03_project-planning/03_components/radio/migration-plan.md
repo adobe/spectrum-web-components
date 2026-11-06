@@ -326,7 +326,7 @@ The exposed set follows the custom property guidelines: size-driven values (cont
   - **Declarative pre-check (item → group, first render only):** a consumer may mark a single `<swc-radio checked>` in markup to pre-select it. On its first update, `swc-radio-group` reads its light-DOM children for one with `checked` already set and adopts that item's `value` as its own initial `selected`, preferring the pre-checked item over any `selected` attribute the group itself was given (1st-gen's `willUpdate` does exactly this).
   - **Imperative sync (group → item, every selection change):** after the first render, `swc-radio-group` is the single source of truth. Whenever its `selected` changes (user interaction or a script setting `selected` directly), the group sets `checked` on each item to `item.value === this.selected`, so exactly one is ever checked and each item's own `checked` is always a reflection of the group's decision, never a competing source of truth (1st-gen's `validateRadios()` does this today).
   - `swc-radio` itself does not decide whether it's checked in steady state; it only proposes a change (via user activation, dispatching `change`) for the group to accept or reject.
-- **Disabled:** exposed as `aria-disabled` on the host as an attribute, and activation is a no-op. The group's roving tabindex skips disabled items. Group-level `field-status="disabled"` cascades to every item (the item keeps its own `disabled` as a styling hook); an item's own `disabled` is not independent of that cascade.
+- **Disabled:** exposed as `aria-disabled` on the host as an attribute, and activation is a no-op. The group's roving tabindex skips disabled items. Group-level `field-status="disabled"` disables every item through a separate group-disabled state; the item's own `disabled` is never changed by the group, and styling keys off `aria-disabled`, which reflects both.
 - **Form participation:** none on `swc-radio` itself. `swc-radio-group` alone is the `FieldAssociationController` consumer, driven by its own `selected` state (resolved — see [Decision log](#decision-log)).
 - **Value/name:** `value` is a plain attribute the group reads and the form submits. `name` is not forwarded onto items; see B12.
 - **Accessible name:** computed from content by the host's `role="radio"`: the slotted `label` content, plus the `description` content when present (see [Decision log](#decision-log)).
@@ -467,7 +467,7 @@ Retain this section for any components with visual rendering, modifying as neede
 
 #### Breaking changes
 
-- [ ] Consumer migration guide entries for B1–B3 (`invalid`/`readonly` move to the group; no standalone usage) and B14 (default slot → named `label` slot)
+- [x] Consumer migration guide entries for B1–B3 (`invalid`/`readonly` move to the group; no standalone usage) and B14 (default slot → named `label` slot)
 
 ### Review
 

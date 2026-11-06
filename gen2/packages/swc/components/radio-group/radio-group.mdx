@@ -95,7 +95,7 @@ The `field-status` attribute (`fieldStatus` property) accepts one status at a ti
 
 Use `field-status="readonly"` instead when users need to review the selection.
 
-To disable a single option, set `disabled` on that `swc-radio`. Arrow keys skip disabled items. When a group is disabled and then enabled again, items that were disabled on their own stay disabled.
+To disable a single option, set `disabled` on that `swc-radio`. Arrow keys skip disabled items. A disabled group disables every item without changing the item's own `disabled`, so each item returns to its own state when the group is enabled again.
 
 <Canvas of={RadioGroupStories.Disabled} />
 
