@@ -31,6 +31,9 @@ import type { Toast } from './Toast.js';
 
 import styles from './toast-container.css';
 
+// Layers deeper than this stay in the DOM at `opacity: 0`.
+const VISIBLE_LAYER_COUNT = 2;
+
 /**
  * Renders the front queued notification in a named region.
  *
@@ -127,21 +130,24 @@ export class ToastContainer extends ToastContainerBase {
         @swc-after-close=${this.handleAfterClose}
         @swc-toast-action=${this.handleAction}
       >
-        ${layers.map(
-          (entry, index) => html`
+        ${layers.map((entry, index) => {
+          const depth = index + 1;
+          return html`
             <div
               class=${classMap({
                 ['swc-ToastContainer-layer']: true,
                 [`swc-ToastContainer-layer--${entry.variant}`]:
                   entry.variant != null && entry.variant !== 'neutral',
+                ['swc-ToastContainer-layer--hidden']:
+                  depth > VISIBLE_LAYER_COUNT,
               })}
               role="presentation"
               style=${styleMap({
-                '--_swc-toast-container-layer-index': index + 1,
+                '--_swc-toast-container-layer-index': depth,
               })}
             ></div>
-          `
-        )}
+          `;
+        })}
         ${this._toast}
       </div>
     `;

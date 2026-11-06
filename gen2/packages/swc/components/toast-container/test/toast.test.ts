@@ -30,8 +30,7 @@ import {
 import { Toast } from '../Toast.js';
 
 // These tests cover standalone Toast only; queue and container behavior is tested in toast-container.
-// TODO(SWC-2655): add collapsed-stack tests: peek layers, Show all, front-toast countdown.
-// TODO(SWC-2654): add expanded-view tests: scrim, Escape, Collapse, Clear all, focus management.
+// TODO(SWC-2654): add expanded-view tests: Show all, scrim, Escape, Collapse, Clear all, focus management.
 
 export default {
   title: 'Toast container/Tests/Toast',

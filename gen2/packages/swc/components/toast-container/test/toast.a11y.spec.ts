@@ -22,7 +22,7 @@ import { gotoStory } from '../../../utils/a11y-helpers.js';
  * .storybook/test-runner.ts). Both are included in the `test:a11y` command.
  */
 
-// TODO(SWC-2654, SWC-2655): add peek-stack and expanded-view snapshots.
+// TODO(SWC-2654): add expanded-view snapshots.
 
 test.describe('Toast - ARIA Snapshots', () => {
   test('open toast exposes an alertdialog with an alert and close button', async ({

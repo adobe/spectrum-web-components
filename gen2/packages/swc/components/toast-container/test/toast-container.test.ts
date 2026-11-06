@@ -972,6 +972,12 @@ export const StackLayersTest: Story = {
             (layer) => getComputedStyle(layer).opacity
           );
           expect(opacities, 'layer opacities').toEqual(['1', '1', '0', '0']);
+          expect(
+            getLayers(container).map((layer) =>
+              layer.classList.contains('swc-ToastContainer-layer--hidden')
+            ),
+            'layers marked hidden by depth'
+          ).toEqual([false, false, true, true]);
           expect(getRegion(container).getAttribute('aria-label')).toBe(
             '5 notifications.'
           );
@@ -986,6 +992,14 @@ export const StackLayersTest: Story = {
         expect(getRegion(container).getAttribute('aria-label')).toBe(
           '4 notifications.'
         );
+      });
+
+      await step('layers include their border in their size', () => {
+        for (const layer of getLayers(container)) {
+          expect(getComputedStyle(layer).boxSizing, 'layer box-sizing').toBe(
+            'border-box'
+          );
+        }
       });
 
       await step('layers hold no focusable content', () => {

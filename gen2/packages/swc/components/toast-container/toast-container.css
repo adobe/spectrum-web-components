@@ -10,6 +10,10 @@
  * governing permissions and limitations under the License.
  */
 
+* {
+  box-sizing: border-box;
+}
+
 /*
  * The stack depth is real 3D: layers sit at the front toast's position and are
  * pushed back along Z. The perspective origin lies beyond the edge away from
@@ -79,8 +83,8 @@
   translate: 0 0 calc(-1 * token("spacing-200") * var(--_swc-toast-container-layer-index));
 }
 
-/* Only three toasts show in the stack, but every layer stays in the DOM. */
-.swc-ToastContainer-layer:nth-child(n + 3) {
+/* Only the nearest layers show, but every layer stays in the DOM. */
+.swc-ToastContainer-layer--hidden {
   opacity: 0;
 }
 

@@ -186,9 +186,10 @@ test('the stack exposes one named toast; the layers behind it are not in the acc
   await add.click();
   await add.click();
   const region = page.getByRole('region', { name: '3 notifications.' });
+  // The host's name comes from ElementInternals, which Playwright's snapshots cannot see (see toast.a11y.spec.ts).
   await expect(region).toMatchAriaSnapshot(`
     - region "3 notifications.":
-      - alertdialog "Success File saved (3)":
+      - alertdialog:
         - alert:
           - img "Success"
           - text: File saved (3)
