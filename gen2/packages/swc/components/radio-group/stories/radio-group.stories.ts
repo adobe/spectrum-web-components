@@ -53,6 +53,7 @@ const meta: Meta = {
     docs: {
       subtitle: 'A set of options where only one can be selected',
     },
+    additionalApiTables: ['swc-radio'],
   },
   tags: ['migrated'],
 };
@@ -222,7 +223,7 @@ export const Sizes: Story = {
   `,
   parameters: {
     flexLayout: 'row-wrap',
-    styles: { gap: 'var(--swc-spacing-500)' },
+    styles: { gap: 'var(--swc-spacing-500)', alignItems: 'start' },
   },
   tags: ['options'],
 };
