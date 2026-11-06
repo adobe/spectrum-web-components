@@ -12,10 +12,10 @@
 
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import { getComponent } from '@test-helpers/dom';
 
 import '../swc-conversation-thread.js';
 
-import { getComponent } from '../../../../utils/test-utils.js';
 import { ConversationThread } from '../ConversationThread.js';
 import { meta, Overview } from '../stories/conversation-thread.stories.js';
 

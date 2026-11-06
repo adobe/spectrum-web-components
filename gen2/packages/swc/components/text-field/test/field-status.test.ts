@@ -12,16 +12,11 @@
 import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import { fixture, getComponent, withWarningSpy } from '@test-helpers/dom';
 
 import type { TextField } from '@adobe/spectrum-wc/text-field';
 
 import '@adobe/spectrum-wc/components/text-field/swc-text-field.js';
-
-import {
-  fixture,
-  getComponent,
-  withWarningSpy,
-} from '../../../utils/test-utils.js';
 
 export default {
   title: 'Text field/Field status tests',

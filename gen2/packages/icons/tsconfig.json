@@ -6,7 +6,9 @@
     "noEmit": false,
     "outDir": "./dist",
     "paths": {
-      "@adobe/spectrum-wc-core/*": ["../core/*"]
+      "@adobe/spectrum-wc-core/*": ["../core/*"],
+      "@test-helpers/dom": ["../../test/helpers/dom/index.ts"],
+      "@test-helpers/playwright": ["../../test/helpers/playwright/index.ts"]
     },
     "rootDir": "./",
     "types": ["@vitest/browser-playwright"]

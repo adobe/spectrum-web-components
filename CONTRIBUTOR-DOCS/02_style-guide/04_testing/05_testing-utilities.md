@@ -23,14 +23,18 @@
 
 <!-- Document content (editable) -->
 
-Test utilities live in `gen2/packages/swc/utils/`.
+Shared test utilities live in [`gen2/test/helpers/`](../../../gen2/test/helpers/), with one file per helper and barrel exports for each entry point. Import DOM helpers from `@test-helpers/dom` and Playwright helpers from `@test-helpers/playwright`.
+
+Keep reusable helpers here and component- or controller-specific setup beside its tests. Test helpers are not a public component API.
+
+Run `yarn test:helper` to verify helper imports and editor discovery. These checks also run before `yarn test:gen2`.
 
 ## `getComponent<T>(canvasElement, selector)`
 
 Query a single component and await its `updateComplete`:
 
 ```typescript
-import { getComponent } from '../../../utils/test-utils.js';
+import { getComponent } from '@test-helpers/dom';
 
 const badge = await getComponent<Badge>(canvasElement, 'swc-badge');
 ```
@@ -47,7 +51,7 @@ await badge.updateComplete;
 Query multiple components and await all their updates:
 
 ```typescript
-import { getComponents } from '../../../utils/test-utils.js';
+import { getComponents } from '@test-helpers/dom';
 
 const badges = await getComponents<Badge>(canvasElement, 'swc-badge');
 ```
@@ -66,7 +70,7 @@ const staticCircles = await getComponents<ProgressCircle>(
 Render a Lit template and return the first element. Useful for standalone tests outside of Storybook stories:
 
 ```typescript
-import { fixture } from '../../../utils/test-utils.js';
+import { fixture } from '@test-helpers/dom';
 
 const badge = await fixture<Badge>(html`<swc-badge>Label</swc-badge>`);
 ```
@@ -76,7 +80,7 @@ const badge = await fixture<Badge>(html`<swc-badge>Label</swc-badge>`);
 Enable DEBUG mode, capture warning calls, and automatically restore state:
 
 ```typescript
-import { withWarningSpy } from '../../../utils/test-utils.js';
+import { withWarningSpy } from '@test-helpers/dom';
 
 await withWarningSpy(async (warnCalls) => {
   badge.variant = 'invalid' as Badge['variant'];
@@ -90,7 +94,7 @@ await withWarningSpy(async (warnCalls) => {
 Lower-level warning spy when you need direct access to `swcGlobals`. Remember to call `restore()` in a `finally` block:
 
 ```typescript
-import { setupSwcWarningSpy } from '../../../utils/test-utils.js';
+import { setupSwcWarningSpy } from '@test-helpers/dom';
 
 const { warnCalls, restore } = setupSwcWarningSpy();
 try {
@@ -109,7 +113,7 @@ Prefer `withWarningSpy` in most cases — it handles the try/finally for you.
 Navigate to a Storybook story and wait for the component to be ready (Playwright only):
 
 ```typescript
-import { gotoStory } from '../../../utils/a11y-helpers.js';
+import { gotoStory } from '@test-helpers/playwright';
 
 const badge = await gotoStory(page, 'components-badge--default', 'swc-badge');
 ```
@@ -128,7 +132,7 @@ This eliminates flaky tests caused by testing components before they are ready.
 Wait for a custom element to be defined in the registry (Playwright only):
 
 ```typescript
-import { waitForCustomElement } from '../../../utils/a11y-helpers.js';
+import { waitForCustomElement } from '@test-helpers/playwright';
 
 await waitForCustomElement(page, 'swc-badge');
 ```

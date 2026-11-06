@@ -12,6 +12,7 @@
 import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import { getComponent, withWarningSpy } from '@test-helpers/dom';
 
 import { ButtonGroup } from '@adobe/spectrum-wc/button-group';
 import {
@@ -23,7 +24,6 @@ import {
 import '@adobe/spectrum-wc/components/button-group/swc-button-group.js';
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 
-import { getComponent, withWarningSpy } from '../../../utils/test-utils.js';
 import meta, {
   Alignment,
   Disabled,

@@ -11,8 +11,7 @@
  */
 
 import { expect, type Page, test } from '@playwright/test';
-
-import { gotoStory } from '../../../utils/a11y-helpers.js';
+import { gotoStory } from '@test-helpers/playwright';
 
 /**
  * Playwright tests for Popover : ARIA-tree snapshots of the open states,

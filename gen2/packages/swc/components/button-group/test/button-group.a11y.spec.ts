@@ -12,8 +12,7 @@
 
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
-
-import { gotoStory } from '../../../utils/a11y-helpers.js';
+import { gotoStory } from '@test-helpers/playwright';
 
 /**
  * Accessibility tests for ButtonGroup component

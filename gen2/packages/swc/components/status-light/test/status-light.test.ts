@@ -16,6 +16,7 @@ import type {
   StoryContext,
   StoryObj as Story,
 } from '@storybook/web-components';
+import { getComponent, withWarningSpy } from '@test-helpers/dom';
 
 import { StatusLight } from '@adobe/spectrum-wc/status-light';
 import {
@@ -26,7 +27,6 @@ import {
 
 import '@adobe/spectrum-wc/components/status-light/swc-status-light.js';
 
-import { getComponent, withWarningSpy } from '../../../utils/test-utils.js';
 import meta, {
   Anatomy,
   NonSemanticVariants,

@@ -11,8 +11,7 @@
  */
 
 import { expect, test } from '@playwright/test';
-
-import { gotoStory } from '../../../../utils/a11y-helpers.js';
+import { gotoStory } from '@test-helpers/playwright';
 
 test.describe('PixelLoader - ARIA Snapshots', () => {
   test('exposes an indeterminate progressbar with an accessible label', async ({

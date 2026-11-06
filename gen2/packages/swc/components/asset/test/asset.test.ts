@@ -12,6 +12,7 @@
 import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import { getComponent, withWarningSpy } from '@test-helpers/dom';
 
 import { Asset } from '@adobe/spectrum-wc/asset';
 import {
@@ -21,7 +22,6 @@ import {
 
 import '@adobe/spectrum-wc/components/asset/swc-asset.js';
 
-import { getComponent, withWarningSpy } from '../../../utils/test-utils.js';
 import meta from '../stories/asset.stories.js';
 import { Overview } from '../stories/asset.stories.js';
 

@@ -13,6 +13,7 @@
 import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import { getComponent, getComponents } from '@test-helpers/dom';
 
 import { Accordion, AccordionItem } from '@adobe/spectrum-wc/accordion';
 
@@ -27,7 +28,6 @@ import {
   SWC_ACCORDION_ITEM_OPEN_EVENT,
   SWC_ACCORDION_ITEM_TOGGLE_EVENT,
 } from '../../../../core/components/accordion/Accordion.types.js';
-import { getComponent, getComponents } from '../../../utils/test-utils.js';
 import meta, {
   AllowMultiple,
   Anatomy,

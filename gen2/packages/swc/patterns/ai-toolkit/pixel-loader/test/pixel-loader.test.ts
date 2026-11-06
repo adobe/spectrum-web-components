@@ -12,10 +12,10 @@
 
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import { getComponent, withWarningSpy } from '@test-helpers/dom';
 
 import '../swc-pixel-loader.js';
 
-import { getComponent, withWarningSpy } from '../../../../utils/test-utils.js';
 import { exitStartOf } from '../animation.js';
 import { ICONS, PRESETS } from '../data.js';
 import { PixelLoader } from '../PixelLoader.js';

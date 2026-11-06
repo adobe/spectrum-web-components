@@ -12,6 +12,7 @@
 import { html } from 'lit';
 import { expect, userEvent } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import { getComponent, withWarningSpy } from '@test-helpers/dom';
 
 import { ActionGroup } from '@adobe/spectrum-wc/action-group';
 import {
@@ -23,7 +24,6 @@ import {
 import '@adobe/spectrum-wc/components/action-group/swc-action-group.js';
 import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
 
-import { getComponent, withWarningSpy } from '../../../utils/test-utils.js';
 import meta, {
   Compact,
   Disabled,

@@ -13,8 +13,8 @@
 import { html, LitElement } from 'lit';
 import { expect, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import { getComponent } from '@test-helpers/dom';
 
-import { getComponent } from '../../../../swc/utils/test-utils.js';
 import { DragAndDropController } from '../index.js';
 
 class DragAndDropTestHost extends LitElement {

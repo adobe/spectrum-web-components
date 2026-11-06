@@ -13,6 +13,7 @@
 import { html } from 'lit';
 import { expect, userEvent, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import { getComponent, waitForEvent, withWarningSpy } from '@test-helpers/dom';
 
 import { Menu } from '@adobe/spectrum-wc/menu';
 import {
@@ -24,11 +25,6 @@ import { isTopDismissible } from '@adobe/spectrum-wc-core/utils/index.js';
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc/components/menu/swc-menu.js';
 
-import {
-  getComponent,
-  waitForEvent,
-  withWarningSpy,
-} from '../../../utils/test-utils.js';
 import meta, { OpenAndClose } from '../stories/menu.stories.js';
 
 // This file defines dev-only test stories that reuse the main story metadata.

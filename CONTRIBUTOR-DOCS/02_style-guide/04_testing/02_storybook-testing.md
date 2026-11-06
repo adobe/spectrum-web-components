@@ -82,7 +82,7 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { Badge } from '@adobe/swc/badge';
 import '@adobe/swc/badge';
 
-import { getComponent, getComponents, withWarningSpy } from '../../../utils/test-utils.js';
+import { getComponent, getComponents, withWarningSpy } from '@test-helpers/dom';
 
 // Story imports
 import { meta, Overview, Sizes } from '../stories/badge.stories.js';
@@ -542,7 +542,7 @@ export const ComposedComponentTest: Story = {
 // test/<component>.a11y.spec.ts
 import { expect, test } from '@playwright/test';
 
-import { gotoStory } from '../../../utils/a11y-helpers.js';
+import { gotoStory } from '@test-helpers/playwright';
 
 test('Escape closes the popover (native light-dismiss)', async ({ page }) => {
   // gotoStory waits on a visible custom element (an swc-button trigger), not the

@@ -13,13 +13,13 @@
 import { html, nothing, render } from 'lit';
 import { expect, userEvent, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import { getComponent, withWarningSpy } from '@test-helpers/dom';
 
 import { getActiveElement } from '@adobe/spectrum-wc-core/utils/index.js';
 
 import '../../upload-attachment/swc-upload-attachment.js';
 import '../swc-prompt-field.js';
 
-import { getComponent, withWarningSpy } from '../../../../utils/test-utils.js';
 import { PromptField } from '../PromptField.js';
 import { meta, Overview, Playground } from '../stories/prompt-field.stories.js';
 

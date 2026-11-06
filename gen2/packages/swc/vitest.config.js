@@ -71,6 +71,7 @@ export default mergeConfig(
           '**/packages/core/utils/*.{ts,js}',
         ],
         exclude: [
+          '**/test/helpers/**',
           '**/*.test.ts',
           '**/*.stories.ts',
           '**/*.vrt.ts',
@@ -138,6 +139,14 @@ export default mergeConfig(
           ],
           resolve: {
             alias: {
+              '@test-helpers/playwright': path.resolve(
+                dirname,
+                '../../test/helpers/playwright/index.ts'
+              ),
+              '@test-helpers/dom': path.resolve(
+                dirname,
+                '../../test/helpers/dom/index.ts'
+              ),
               // Keep the Vite aliases from `vite.config.ts` for Storybook/Vitest.
               // Without these, imports can resolve to built output and/or be excluded from coverage.
               '@adobe/spectrum-wc-core': path.resolve(dirname, '../core'),
