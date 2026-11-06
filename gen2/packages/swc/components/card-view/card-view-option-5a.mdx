@@ -1,0 +1,71 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
+import * as Stories from './stories/card-view-option-5a.stories';
+
+<Meta of={Stories} />
+
+<DocsHeader />
+
+## Anatomy
+
+`swc-card-view-option-5a` puts cards in a labelled horizontal `toolbar`. Each card is a labelled `group` containing a real checkbox, Open button, and Share button. Cards themselves are not focusable controls. Arrows move between card checkboxes; Tab reaches the active card's actions.
+
+## Options
+
+### Grid
+
+Cards align visually in uniform rows. Horizontal arrows follow collection order; vertical arrows follow aligned cards above/below.
+
+<Canvas of={Stories.Grid} />
+
+### Waterfall
+
+Cards use shortest-column placement with varied heights. Horizontal arrows remain sequential; vertical arrows use measured geometry.
+
+<Canvas of={Stories.Waterfall} />
+
+## Behaviors
+
+<kbd>ArrowRight</kbd> and <kbd>ArrowLeft</kbd> move between enabled card
+checkboxes in collection order, mirrored in RTL. <kbd>ArrowUp</kbd> and
+<kbd>ArrowDown</kbd> move to the nearest enabled checkbox above/below with
+horizontal overlap. Movement stops at boundaries. <kbd>Home</kbd> and
+<kbd>End</kbd> reach the first/last enabled checkbox.
+
+<kbd>Tab</kbd> enters at the active card's checkbox, then visits Open and Share,
+then exits. <kbd>Shift</kbd> + <kbd>Tab</kbd> reverses that path. All three
+active-card controls have `tabindex="0"`; other cards' controls have
+`tabindex="-1"`. Arrow keys on action buttons are not intercepted.
+
+Checkboxes use native <kbd>Space</kbd> activation. Buttons use native <kbd>Space</kbd>/<kbd>Enter</kbd>. Selection and action events remain independent. There is no card-level activation or keyboard range selection. Disabled cards' controls are native disabled and skipped. When selection is disabled, Open becomes the arrow-navigation entry point and Tab reaches Share.
+
+## Accessibility
+
+### Features
+
+The toolbar announces a command grouping, not row/column metadata. Card groups are labelled by titles; each control has its own accessible name. Selection uses real checkboxes, not `aria-selected` on groups. Only active-card controls are tabbable. Reflow does not regroup or replace controls.
+
+<Canvas of={Stories.Accessibility} />
+
+### Pros
+
+- Preserves independent checkboxes and actions with efficient card-to-card arrows.
+- Uses native activation and a separate Tab path through active-card actions.
+- Avoids grid row/column framing and does not rebuild semantic structure during reflow.
+
+### Cons
+
+- A toolbar is a set of commands, not a general-purpose content collection; card imagery and descriptions can make that framing misleading.
+- Tab through card actions and four-direction movement depart from the conventional horizontal-toolbar model.
+- Logical horizontal navigation can disagree with visual neighbors in wrapped grid and waterfall layouts.
+- There is no standardized card-position/total announcement or composite range-selection model. A group name does not guarantee positional feedback.
+
+### Best practices
+
+Compare command-heavy tasks separately from content-reading tasks. Test whether users expect arrows to move between cards or between their controls, and whether grouped labels provide useful context. Verify real Tab/Shift+Tab entry and exit, native activation, disabled cards, RTL, zoom, responsive reflow, and action/selection independence with keyboard users and NVDA, JAWS, VoiceOver, Narrator, and mobile screen readers. Automated DOM and focus checks do not establish spoken output or approve toolbar semantics for asset browsing.
+
+## Upcoming features
+
+Virtualization and loading are deferred. This comparison renders every card and control; production decisions require manual assistive technology and task testing.
+
+<DocsFooter />

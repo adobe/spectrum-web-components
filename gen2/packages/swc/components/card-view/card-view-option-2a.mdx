@@ -1,0 +1,63 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
+import * as Stories from './stories/card-view-option-2a.stories';
+
+<Meta of={Stories} />
+
+<DocsHeader />
+
+## Anatomy
+
+- A labelled grid contains one semantic row for the entire collection.
+- Each card is a focusable `gridcell` with its collection-order column index.
+- Each cell contains a photo, selection checkbox, Open action, and Share action.
+
+## Options
+
+### Grid
+
+Cards align in uniform visual rows, without adding semantic rows. Horizontal arrows follow collection order; vertical arrows follow visual geometry.
+
+<Canvas of={Stories.Grid} />
+
+### Waterfall
+
+Cards fill visual columns from top to bottom in collection order, then continue across the layout. Horizontal arrows remain sequential, while vertical arrows choose aligned visual neighbors. This differs from option 1A's spatial horizontal navigation in waterfall.
+
+<Canvas of={Stories.Waterfall} />
+
+## Behaviors
+
+<kbd>ArrowRight</kbd> advances to the next enabled card and <kbd>ArrowLeft</kbd>
+returns to the previous enabled card in LTR; these horizontal directions reverse
+in RTL. Horizontal navigation stops at collection boundaries rather than
+wrapping. <kbd>ArrowUp</kbd> and <kbd>ArrowDown</kbd> move to aligned visual
+neighbors above and below, stopping when none exists. <kbd>Home</kbd> and
+<kbd>End</kbd> reach the first and last enabled cards.
+
+<kbd>Space</kbd> toggles selection and <kbd>Enter</kbd> opens the focused card.
+Holding <kbd>Shift</kbd> with an arrow key, <kbd>Home</kbd>, or <kbd>End</kbd>
+selects a collection-order range, skipping disabled cards. <kbd>Tab</kbd> visits
+the active card's checkbox and actions, then leaves the collection;
+<kbd>Shift</kbd> + <kbd>Tab</kbd> reverses that path. Child controls retain
+their own keyboard behavior.
+
+## Accessibility
+
+### Features
+
+The collection exposes `grid > row > gridcell`, `aria-rowcount="1"`, and a column count equal to the collection size. Each cell has a one-based collection-order column index, accessible name, and selection state when selection is enabled. Disabled cards remain represented but are skipped by navigation. Native checkboxes expose checked state, and a live status reports the selected count.
+
+### Best practices
+
+The horizontal pair provides a sequential route through the collection, but vertical navigation can skip intervening items. One announced semantic row does not describe those vertical movements. This option is the closest single-row comparison to the historical sequential-horizontal and spatial-vertical contract, not an exact reproduction of the current baseline.
+
+Test actual position and total announcements rather than inferring speech from indices. Compare with the single-column models and native list using keyboard and screen reader users. Cover child actions, range selection, disabled cards, keyboard entry and exit, RTL, zoom, and layout changes. This prototype is not an accessibility sign-off.
+
+<Canvas of={Stories.Accessibility} />
+
+## Upcoming features
+
+Virtualization and dynamic loading are deferred. All cards are loaded in this prototype.
+
+<DocsFooter />

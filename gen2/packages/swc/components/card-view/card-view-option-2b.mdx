@@ -1,0 +1,69 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
+import * as Stories from './stories/card-view-option-2b.stories';
+
+<Meta of={Stories} />
+
+<DocsHeader />
+
+## Anatomy
+
+`swc-card-view-option-2b` represents the entire collection as one semantic row, with one focusable `gridcell` per card. Each cell contains a photo, selection checkbox, primary action, and Share action. The grid reports one row and a column count equal to the number of cards; each cell reports its collection-order column index.
+
+## Options
+
+### Grid
+
+Cards align in uniform visual rows. These visual rows do not create additional semantic rows. All arrow keys follow visual geometry rather than wrapping in collection order.
+
+<Canvas of={Stories.Grid} />
+
+### Waterfall
+
+Cards fill each visual column from top to bottom in semantic collection order, then continue in the next column to the right (to the left in RTL). Measured heights preserve varied card sizes. The semantic row remains unchanged. All arrow keys move to enabled visual neighbors with overlap on the perpendicular axis.
+
+<Canvas of={Stories.Waterfall} />
+
+## Behaviors
+
+Left/Right moves spatially to the nearest enabled card to the left/right with vertical overlap. Up/Down moves spatially to the nearest enabled card above/below with horizontal overlap, skipping cards between them in collection order. These visual directions also apply in right-to-left layouts. Movement stops when no aligned card exists. Home/End reaches the first/last enabled card.
+
+Space toggles selection and Enter opens the focused card. Shift plus an arrow key or Home/End selects a collection-order range, skipping disabled cards. Tab enters the active card's checkbox and actions, then exits the collection. Shift+Tab reverses that path. Only the active card's controls are in the tab order. Child actions do not also select the card, and their arrow keys are not intercepted by collection navigation.
+
+## Accessibility
+
+### Features
+
+The collection exposes `grid > row > gridcell` semantics, `aria-rowcount="1"`, and `aria-colcount` equal to the collection size. The row has `aria-rowindex="1"`; each cell has its one-based `aria-colindex`, accessible name, and selection state when selection is enabled. Disabled cards remain represented but are skipped by keyboard navigation. Checkboxes expose their checked states, and a live status reports the selected count.
+
+Resizing, zooming, and switching layouts update visual geometry without regrouping cells or changing their semantic indices. Column counts and indices describe the logical collection, not visual columns. Actual positional announcements depend on the browser, screen reader, navigation mode, and verbosity; these attributes do not guarantee spoken “x of y.”
+
+<Canvas of={Stories.Accessibility} />
+
+### Pros
+
+- Aligns arrow-key navigation with visual geometry in both layouts.
+- Announces “x of y” in observed screen reader use, communicating each card's position and the collection size.
+- Arrow-key navigation is easy and intuitive for sighted users navigating items.
+- Keeps semantic collection order stable in both layouts.
+- Retains selection, a single collection tab stop, and independently interactive children.
+- Avoids semantic restructuring during responsive reflow.
+
+### Cons
+
+- Announced columns do not match visual columns once cards wrap or form a waterfall.
+- Screen reader users expect only one row from the announced structure, so vertical navigation with <kbd>ArrowUp</kbd> and <kbd>ArrowDown</kbd> may be unexpected.
+- Spatial navigation can skip intervening collection items and does not provide a single-axis route through every card.
+- Grid semantics still introduce screen reader mode changes and need user testing; column indices do not guarantee useful position announcements.
+
+### Best practices
+
+Treat this as a comparison prototype, not an accessibility sign-off. Compare it with the single-column models and native list using real screen reader users. Test finding the seventh card, identifying position and total count, selecting two cards, and operating child actions. Cover NVDA with Chrome/Firefox, JAWS with Chrome, VoiceOver with Safari using both ordinary arrows and VoiceOver commands, Narrator with Edge, VoiceOver on iOS, and TalkBack.
+
+Also test disabled cards, selection modes, Tab/Shift+Tab entry and exit, right-to-left direction, narrow viewports, zoom, and layout switches while focus remains in the collection. Do not infer spoken output from DOM attributes or simulated announcements.
+
+## Upcoming features
+
+Virtualization and dynamic loading are deferred. All cards are loaded in this prototype; future virtualization must preserve logical column indices and communicate the total count where known.
+
+<DocsFooter />

@@ -228,7 +228,18 @@ const config: StorybookConfig = {
       disabledAddons: [],
     },
   },
-  staticDirs: ['../public', { from: '../coverage', to: '/coverage' }],
+  staticDirs: [
+    '../public',
+    { from: '../coverage', to: '/coverage' },
+    {
+      from: '../../../../CONTRIBUTOR-DOCS/03_project-planning/05_strategies',
+      to: '/card-view-strategy',
+    },
+    {
+      from: '../components/card-view/docs/assets',
+      to: '/gen2/packages/swc/components/card-view/docs/assets',
+    },
+  ],
   addons,
   experimental_indexers: [testStoryIndexer, vrtStoryIndexer],
   // Cross-link to the 1st-gen Storybook. Omitted from the minimal ci-a11y test
