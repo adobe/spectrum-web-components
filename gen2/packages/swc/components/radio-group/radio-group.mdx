@@ -204,6 +204,8 @@ Reset restores the initial selection, which is the pre-checked item or the `sele
 - **Validation methods**: `checkValidity()` fires `invalid` on failure without changing `fieldStatus` or showing browser validation UI. `reportValidity()` also requests that UI, even with `novalidate`. Canceling `invalid` suppresses reporting without making validation pass. An invalid status sets `validity.customError`, and a required group with no selection sets `validity.valueMissing`.
 - **Styling hooks**: style the invalid state from `field-status="invalid"`, and the disabled state from `:state(disabled)`. The group's `:invalid` match follows live validity, including before your application shows any error.
 
+Setting `selected` in code and resetting the form do not fire `change`.
+
 </details>
 
 ## Accessibility
