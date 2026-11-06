@@ -19,7 +19,11 @@ import {
   LabellingMixin,
   SizedMixin,
 } from '@adobe/spectrum-wc-core/mixins/index.js';
-import { validateEnum } from '@adobe/spectrum-wc-core/utils/index.js';
+import {
+  isDebug,
+  validateEnum,
+  warnIf,
+} from '@adobe/spectrum-wc-core/utils/index.js';
 
 import {
   CHECKBOX_STATUSES,
@@ -53,6 +57,16 @@ export abstract class CheckboxBase extends SizedMixin(
 
   /** Opts the element into native form participation. */
   static formAssociated = true;
+
+  /**
+   * @internal
+   *
+   * Routes host focus, including `autofocus`, to the native input.
+   */
+  static override shadowRootOptions: ShadowRootInit = {
+    ...SpectrumElement.shadowRootOptions,
+    delegatesFocus: true,
+  };
 
   /**
    * Size of the box, label, and supporting text.
@@ -394,6 +408,42 @@ export abstract class CheckboxBase extends SizedMixin(
     return this.#toggleReverted;
   }
 
+  /**
+   * @internal
+   *
+   * <kbd>Enter</kbd> clicks the form's default submit button, as on a native
+   * checkbox, unless a listener cancels the keydown. With no submit button, it
+   * does nothing.
+   */
+  protected handleKeydown(event: KeyboardEvent): void {
+    if (event.key !== 'Enter' || event.isComposing || event.keyCode === 229) {
+      return;
+    }
+    // Let the event finish propagating so consumer handlers can cancel it.
+    setTimeout(() => {
+      const form = this.form;
+      if (
+        event.defaultPrevented ||
+        this.effectiveDisabled ||
+        !this.isConnected ||
+        !form
+      ) {
+        return;
+      }
+      const root = form.getRootNode();
+      const candidates = (
+        root instanceof Document || root instanceof ShadowRoot ? root : form
+      ).querySelectorAll<HTMLButtonElement | HTMLInputElement>('button, input');
+      Array.from(candidates)
+        .find(
+          (element) =>
+            element.form === form &&
+            (element.type === 'submit' || element.type === 'image')
+        )
+        ?.click();
+    });
+  }
+
   protected override update(changedProperties: PropertyValues): void {
     if (this.fieldStatus !== undefined) {
       validateEnum(this, {
@@ -420,6 +470,39 @@ export abstract class CheckboxBase extends SizedMixin(
       input.indeterminate = this.indeterminate;
     }
     this.syncValidity();
+    if (isDebug()) {
+      this.warnUnsupportedMarkup();
+    }
+  }
+
+  private warnUnsupportedMarkup(): void {
+    warnIf(
+      this,
+      this.internals.labels.length > 0,
+      `<${this.localName}> is targeted by a <label> element, which neither toggles nor names it.`,
+      DOCS_URL,
+      {
+        type: 'accessibility',
+        issues: [
+          'put the visible label in the "label" slot, or',
+          'reference the label with "accessible-labelledby".',
+        ],
+      }
+    );
+    warnIf(
+      this,
+      this.hasAttribute('readonly'),
+      `<${this.localName}> doesn't become read-only from the "readonly" attribute, which only bars it from validation.`,
+      DOCS_URL,
+      { type: 'api', issues: ['use field-status="readonly" instead.'] }
+    );
+    warnIf(
+      this,
+      this.hasAttribute('invalid'),
+      `<${this.localName}> ignores the "invalid" attribute.`,
+      DOCS_URL,
+      { type: 'api', issues: ['use field-status="invalid" instead.'] }
+    );
   }
 
   private get inputElement(): HTMLInputElement | null {

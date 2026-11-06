@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { html } from 'lit';
+import { html, type TemplateResult } from 'lit';
 import { expect, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
@@ -20,6 +20,7 @@ import { CHECKBOX_VALID_SIZES } from '@adobe/spectrum-wc-core/components/checkbo
 import '@adobe/spectrum-wc/components/checkbox/swc-checkbox.js';
 
 import {
+  fixture,
   getComponent,
   getComponents,
   withWarningSpy,
@@ -723,13 +724,14 @@ export const DescriptionTest: Story = {
     });
 
     await step(
-      'a disabled fieldset hides the icon but keeps error text',
+      'a disabled fieldset hides the icon but keeps error text and aria-invalid',
       async () => {
         fieldset.disabled = true;
         await waitFor(() => expect(icon(both)).toBe(null));
         expect(
           both.shadowRoot?.querySelector('.swc-FormFieldErrorText')
         ).toBeTruthy();
+        expect(inputOf(both)).toHaveAttribute('aria-invalid', 'true');
         fieldset.disabled = false;
         await waitFor(() => expect(icon(both)).toBeTruthy());
       }
@@ -746,3 +748,261 @@ export const DescriptionTest: Story = {
   },
 };
 DescriptionTest.storyName = 'Description, error text, and error icon';
+
+export const DescribedByTest: Story = {
+  render: () => html`
+    <p id="checkbox-external-description">Applies to all mailing lists.</p>
+    <swc-checkbox accessible-describedby="checkbox-external-description">
+      <span slot="label">Unsubscribe</span>
+      <span slot="description">Takes effect within a day.</span>
+    </swc-checkbox>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const checkbox = await getComponent<Checkbox>(
+      canvasElement,
+      'swc-checkbox'
+    );
+
+    await step(
+      'accessible-describedby adds the external element to the description',
+      () => {
+        const described = inputOf(checkbox).ariaDescribedByElements ?? [];
+        expect(described).toHaveLength(2);
+        expect(described[0]).toHaveClass('swc-FormFieldDescription');
+        expect(described[1]?.id).toBe('checkbox-external-description');
+      }
+    );
+  },
+};
+DescribedByTest.storyName = 'accessible-describedby';
+
+export const DescriptionClickTest: Story = {
+  render: () => html`
+    <swc-checkbox>
+      <span slot="label">Terms</span>
+      <span slot="description">Read the terms first.</span>
+      <span slot="error-text">Accept the terms to continue.</span>
+    </swc-checkbox>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const checkbox = await getComponent<Checkbox>(
+      canvasElement,
+      'swc-checkbox'
+    );
+    const events = recordEvents(checkbox, ['input', 'change']);
+
+    await step('clicking the description does not toggle', async () => {
+      checkbox.querySelector<HTMLElement>('[slot="description"]')?.click();
+      await checkbox.updateComplete;
+      expect(checkbox.checked).toBe(false);
+      expect(events).toHaveLength(0);
+    });
+
+    await step('clicking the error text does not toggle', async () => {
+      checkbox.fieldStatus = 'invalid';
+      await checkbox.updateComplete;
+      checkbox.querySelector<HTMLElement>('[slot="error-text"]')?.click();
+      await checkbox.updateComplete;
+      expect(checkbox.checked).toBe(false);
+      expect(events).toHaveLength(0);
+    });
+  },
+};
+DescriptionClickTest.storyName = 'Description and error text clicks';
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Accessibility semantics
+// ──────────────────────────────────────────────────────────────
+
+export const AriaStatesTest: Story = {
+  render: () => html`
+    <swc-checkbox><span slot="label">Terms</span></swc-checkbox>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const checkbox = await getComponent<Checkbox>(
+      canvasElement,
+      'swc-checkbox'
+    );
+    const input = inputOf(checkbox);
+
+    await step('the host has no role', () => {
+      expect(checkbox).not.toHaveAttribute('role');
+    });
+
+    await step('read-only sets aria-disabled on the input only', async () => {
+      // Native readonly and aria-readonly do not apply to checkboxes, so
+      // read-only is exposed as aria-disabled on a focusable input.
+      checkbox.fieldStatus = 'readonly';
+      await checkbox.updateComplete;
+      expect(input).toHaveAttribute('aria-disabled', 'true');
+      expect(input).not.toHaveAttribute('aria-readonly');
+      expect(input.disabled).toBe(false);
+      expect(checkbox).not.toHaveAttribute('aria-disabled');
+      checkbox.fieldStatus = undefined;
+      await checkbox.updateComplete;
+      expect(input).not.toHaveAttribute('aria-disabled');
+    });
+
+    await step('invalid sets aria-invalid on the input only', async () => {
+      checkbox.fieldStatus = 'invalid';
+      await checkbox.updateComplete;
+      expect(input).toHaveAttribute('aria-invalid', 'true');
+      checkbox.fieldStatus = 'readonly';
+      await checkbox.updateComplete;
+      expect(input).not.toHaveAttribute('aria-invalid');
+      checkbox.fieldStatus = undefined;
+      await checkbox.updateComplete;
+    });
+
+    await step('required is native, not hand-written ARIA', async () => {
+      checkbox.required = true;
+      await checkbox.updateComplete;
+      expect(input.required).toBe(true);
+      expect(input).not.toHaveAttribute('aria-required');
+    });
+
+    await step(
+      'a required read-only checkbox is not reported as invalid',
+      async () => {
+        checkbox.fieldStatus = 'readonly';
+        await checkbox.updateComplete;
+        // Firefox reports a native required, unchecked input as invalid even
+        // with aria-invalid="false", so required moves to aria-required.
+        expect(checkbox.willValidate).toBe(false);
+        expect(input.required).toBe(false);
+        expect(input).toHaveAttribute('aria-required', 'true');
+        expect(input).not.toHaveAttribute('aria-invalid');
+        expect(input.validity.valid).toBe(true);
+        checkbox.fieldStatus = undefined;
+        await checkbox.updateComplete;
+        expect(input.required).toBe(true);
+        expect(input).not.toHaveAttribute('aria-required');
+      }
+    );
+  },
+};
+AriaStatesTest.storyName = 'ARIA states on the inner input';
+
+export const LabellingWarningsTest: Story = {
+  render: () => html`
+    <swc-checkbox><span slot="label">Named</span></swc-checkbox>
+  `,
+  play: async ({ step }) => {
+    const messages = (warnCalls: unknown[][]): string[] =>
+      warnCalls.map((call) => String(call?.[1] ?? ''));
+    const warningsFor = async (template: TemplateResult): Promise<string[]> => {
+      let result: string[] = [];
+      await withWarningSpy(async (warnCalls) => {
+        const checkbox = await fixture<Checkbox>(template);
+        result = messages(warnCalls);
+        checkbox.parentElement?.remove();
+      });
+      return result;
+    };
+
+    await step('warns when a checkbox has no accessible name', async () => {
+      const warnings = await warningsFor(html`
+        <swc-checkbox></swc-checkbox>
+      `);
+      expect(warnings.some((m) => m.includes('accessible name'))).toBe(true);
+    });
+
+    await step('warns about aria-label on the host', async () => {
+      const warnings = await warningsFor(html`
+        <swc-checkbox aria-label="Host name"></swc-checkbox>
+      `);
+      expect(warnings.some((m) => m.includes('"aria-label"'))).toBe(true);
+    });
+
+    await step(
+      'warns when accessible-labelledby and accessible-label are both set',
+      async () => {
+        const heading = document.createElement('span');
+        heading.id = 'warning-heading';
+        heading.textContent = 'Heading';
+        document.body.append(heading);
+        const warnings = await warningsFor(html`
+          <swc-checkbox
+            accessible-label="Label"
+            accessible-labelledby="warning-heading"
+          ></swc-checkbox>
+        `);
+        heading.remove();
+        expect(
+          warnings.some((m) =>
+            m.includes('both "accessible-labelledby" and "accessible-label"')
+          )
+        ).toBe(true);
+      }
+    );
+
+    await step(
+      'warns about an unresolved accessible-labelledby id',
+      async () => {
+        const warnings = await warningsFor(html`
+          <swc-checkbox
+            accessible-label="Label"
+            accessible-labelledby="missing-id"
+          ></swc-checkbox>
+        `);
+        expect(warnings.some((m) => m.includes('"missing-id"'))).toBe(true);
+      }
+    );
+
+    await step(
+      'warns when an external label targets the checkbox',
+      async () => {
+        await withWarningSpy(async (warnCalls) => {
+          const wrapper = document.createElement('div');
+          wrapper.innerHTML = `
+          <label for="external-target">External</label>
+          <swc-checkbox id="external-target" accessible-label="Named"></swc-checkbox>
+          <label>Wrapping <swc-checkbox accessible-label="Named"></swc-checkbox></label>
+        `;
+          document.body.append(wrapper);
+          const checkboxes = wrapper.querySelectorAll('swc-checkbox');
+          await Promise.all(
+            Array.from(checkboxes, (checkbox) => checkbox.updateComplete)
+          );
+          const labelWarnings = warnCalls.filter((call) =>
+            String(call?.[1] ?? '').includes('<label>')
+          );
+          expect(labelWarnings.map((call) => call[0])).toEqual(
+            Array.from(checkboxes)
+          );
+          wrapper.remove();
+        });
+      }
+    );
+
+    await step(
+      'warns about leftover readonly and invalid attributes',
+      async () => {
+        const warnings = await warningsFor(html`
+          <swc-checkbox
+            readonly
+            invalid
+            accessible-label="Named"
+          ></swc-checkbox>
+        `);
+        expect(warnings.some((m) => m.includes('"readonly" attribute'))).toBe(
+          true
+        );
+        expect(warnings.some((m) => m.includes('"invalid" attribute'))).toBe(
+          true
+        );
+      }
+    );
+
+    await step(
+      'stays quiet for a labelled checkbox and a host disabled attribute',
+      async () => {
+        const warnings = await warningsFor(html`
+          <swc-checkbox disabled><span slot="label">Named</span></swc-checkbox>
+        `);
+        expect(warnings).toHaveLength(0);
+      }
+    );
+  },
+};
+LabellingWarningsTest.storyName = 'Accessibility dev warnings';

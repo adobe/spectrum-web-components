@@ -11,6 +11,7 @@
  */
 
 import { CSSResultArray, html, TemplateResult } from 'lit';
+import { ifDefined } from 'lit/directives/if-defined.js';
 
 import { CheckboxBase } from '@adobe/spectrum-wc-core/components/checkbox';
 
@@ -58,6 +59,12 @@ export class Checkbox extends CheckboxBase {
   }
 
   protected override render(): TemplateResult {
+    // A read-only checkbox is barred from validation, but a native required,
+    // unchecked input still reports itself invalid, and Firefox ignores
+    // aria-invalid="false". Move required to aria-required while read-only.
+    // Native readonly and aria-readonly do not apply to checkboxes, so
+    // read-only is aria-disabled on an input that stays focusable.
+    const readOnly = this.fieldStatus === 'readonly';
     // `checked` and `indeterminate` aren't bound here: the base class writes
     // them to the input directly, from their setters and on first render.
     return html`
@@ -66,10 +73,18 @@ export class Checkbox extends CheckboxBase {
           id=${INPUT_ID}
           type="checkbox"
           class="swc-Checkbox-input"
-          ?required=${this.required}
+          ?required=${this.required && !readOnly}
+          aria-required=${ifDefined(
+            this.required && readOnly ? 'true' : undefined
+          )}
           ?disabled=${this.effectiveDisabled}
+          aria-disabled=${ifDefined(readOnly ? 'true' : undefined)}
+          aria-invalid=${ifDefined(
+            this.fieldStatus === 'invalid' ? 'true' : undefined
+          )}
           @input=${this.handleInput}
           @change=${this.handleChange}
+          @keydown=${this.handleKeydown}
         />
         ${this.renderLabel(INPUT_ID)}
       </div>
