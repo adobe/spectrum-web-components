@@ -2151,3 +2151,60 @@ export const ItemDisabledClickTest: Story = {
     });
   },
 };
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Resting rows carry no fill
+// ──────────────────────────────────────────────────────────────
+
+// Spectrum gives every `menu-item-background-color-*` state the same grey, so
+// the row chrome is only flat while `menu-item-background-opacity` is applied.
+// Reading the colour alone cannot tell a resting row from a hovered one; the
+// alpha is the whole difference.
+const backgroundAlpha = (row: MenuItem): number => {
+  const chrome = row.shadowRoot?.querySelector('.swc-MenuItem');
+  const color = getComputedStyle(chrome as Element).backgroundColor;
+  const channels = /\(([^)]+)\)/
+    .exec(color)?.[1]
+    .split(/[\s,/]+/)
+    .filter(Boolean);
+  return channels && channels.length > 3 ? Number(channels[3]) : 1;
+};
+
+export const ItemRestingFillTest: Story = {
+  render: () => rowsInMenu(threeRows, 'resting-fill-trigger'),
+  play: async ({ canvasElement, step }) => {
+    const trigger = canvasElement.querySelector(
+      '#resting-fill-trigger'
+    ) as HTMLElement;
+    const menu = canvasElement.querySelector('swc-menu') as HTMLElement & {
+      open: boolean;
+    };
+
+    await userEvent.click(trigger);
+    await waitFor(() => expect(menu.open).toBe(true));
+    const [firstRow, disabledRow, lastRow] = getRows(canvasElement);
+
+    await step('an untouched row paints no fill', async () => {
+      // Opening focuses the first row, so the last one is the only row in the
+      // menu that is neither hovered nor focused.
+      expect(backgroundAlpha(lastRow), 'resting row is transparent').toBe(0);
+    });
+
+    await step('a disabled row paints no fill', async () => {
+      expect(backgroundAlpha(disabledRow), 'disabled row is transparent').toBe(
+        0
+      );
+    });
+
+    await step('the focused row is filled', async () => {
+      // Guards the fix from the other side: if the opacity reached every state
+      // rather than the resting one, nothing would ever paint.
+      await waitFor(() =>
+        expect(
+          backgroundAlpha(firstRow),
+          'focused row is opaque'
+        ).toBeGreaterThan(0)
+      );
+    });
+  },
+};
