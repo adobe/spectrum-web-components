@@ -58,10 +58,29 @@ export abstract class RadioBase extends SpectrumElement {
   public checked = false;
 
   /**
-   * Reflected onto `aria-disabled`; also guards activation.
+   * The item's own disabled state. A disabled group also disables the item
+   * without changing this property, so the item's own state returns when the
+   * group is enabled.
    */
   @property({ type: Boolean, reflect: true })
   public disabled = false;
+
+  /**
+   * Set by the enclosing group while it is disabled.
+   *
+   * @internal
+   */
+  @property({ type: Boolean, attribute: false })
+  public groupDisabled = false;
+
+  /**
+   * Whether the item is disabled by itself or by its group.
+   *
+   * @internal
+   */
+  public get effectiveDisabled(): boolean {
+    return this.disabled || this.groupDisabled;
+  }
 
   /**
    * This item's 1-based position, for `aria-posinset`. Set by the enclosing
@@ -97,7 +116,7 @@ export abstract class RadioBase extends SpectrumElement {
   }
 
   private readonly handleActivate = (): void => {
-    if (this.disabled) {
+    if (this.effectiveDisabled) {
       return;
     }
     this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
@@ -137,7 +156,7 @@ export abstract class RadioBase extends SpectrumElement {
   protected override updated(changedProperties: PropertyValues): void {
     super.updated(changedProperties);
     this.setAttribute('aria-checked', this.checked ? 'true' : 'false');
-    if (this.disabled) {
+    if (this.effectiveDisabled) {
       this.setAttribute('aria-disabled', 'true');
     } else {
       this.removeAttribute('aria-disabled');

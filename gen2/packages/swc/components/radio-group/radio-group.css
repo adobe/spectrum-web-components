@@ -62,6 +62,8 @@
 
 :host([orientation="horizontal"]) .swc-RadioGroup-items {
   flex-direction: row;
+
+  /* Per RSP, spacing between items in a row stays medium at every size. */
   column-gap: token("group-gap-medium-spacious");
 }
 

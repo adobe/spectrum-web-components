@@ -326,7 +326,7 @@ The exposed set follows the custom property guidelines: size-driven values (cont
   - **Declarative pre-check (item → group, first render only):** a consumer may mark a single `<swc-radio checked>` in markup to pre-select it. On its first update, `swc-radio-group` reads its light-DOM children for one with `checked` already set and adopts that item's `value` as its own initial `selected`, preferring the pre-checked item over any `selected` attribute the group itself was given (1st-gen's `willUpdate` does exactly this).
   - **Imperative sync (group → item, every selection change):** after the first render, `swc-radio-group` is the single source of truth. Whenever its `selected` changes (user interaction or a script setting `selected` directly), the group sets `checked` on each item to `item.value === this.selected`, so exactly one is ever checked and each item's own `checked` is always a reflection of the group's decision, never a competing source of truth (1st-gen's `validateRadios()` does this today).
   - `swc-radio` itself does not decide whether it's checked in steady state; it only proposes a change (via user activation, dispatching `change`) for the group to accept or reject.
-- **Disabled:** exposed as `aria-disabled` on the host as an attribute, and activation is a no-op. The group's roving tabindex skips disabled items. Group-level `field-status="disabled"` cascades to every item (the item keeps its own `disabled` as a styling hook); an item's own `disabled` is not independent of that cascade.
+- **Disabled:** exposed as `aria-disabled` on the host as an attribute, and activation is a no-op. The group's roving tabindex skips disabled items. Group-level `field-status="disabled"` disables every item through a separate group-disabled state; the item's own `disabled` is never changed by the group, and styling keys off `aria-disabled`, which reflects both.
 - **Form participation:** none on `swc-radio` itself. `swc-radio-group` alone is the `FieldAssociationController` consumer, driven by its own `selected` state (resolved — see [Decision log](#decision-log)).
 - **Value/name:** `value` is a plain attribute the group reads and the form submits. `name` is not forwarded onto items; see B12.
 - **Accessible name:** computed from content by the host's `role="radio"`: the slotted `label` content, plus the `description` content when present (see [Decision log](#decision-log)).
@@ -462,17 +462,17 @@ Retain this section for any components with visual rendering, modifying as neede
 
 #### General
 
-- [ ] JSDoc on all public props, slots, and CSS custom properties
-- [ ] No standalone `swc-radio` Storybook docs page; document its sizes, emphasis, checked/unchecked, disabled, description, and standalone-usage dev-warning behavior (B15) as part of `swc-radio-group`'s docs page instead
+- [x] JSDoc on all public props, slots, and CSS custom properties
+- [x] No standalone `swc-radio` Storybook docs page; document its sizes, emphasis, checked/unchecked, disabled, description, and standalone-usage dev-warning behavior (B15) as part of `swc-radio-group`'s docs page instead
 
 #### Breaking changes
 
-- [ ] Consumer migration guide entries for B1–B3 (`invalid`/`readonly` move to the group; no standalone usage) and B14 (default slot → named `label` slot)
+- [x] Consumer migration guide entries for B1–B3 (`invalid`/`readonly` move to the group; no standalone usage) and B14 (default slot → named `label` slot)
 
 ### Review
 
-- [ ] `yarn lint:gen2` passes (ESLint, Stylelint, Prettier)
-- [ ] Status table in workstream doc updated
+- [x] `yarn lint:gen2` passes (ESLint, Stylelint, Prettier)
+- [x] Status table in workstream doc updated
 - [ ] PR created against the shared `swc-radio`/`swc-radio-group` feature branch (not directly against `main`), with a description referencing Epic SWC-2348
 - [ ] Peer engineer sign-off
 
@@ -493,7 +493,6 @@ _None currently — all resolved; see [Decision log](#decision-log)._
 
 | #   | Item | Blocking? | Status | Owner |
 | --- | ---- | --------- | ------ | ----- |
-| Q4 | `FieldAssociationController` does not exist yet (verified absent from `gen2/packages/core/controllers/`). It is `swc-radio-group`'s dependency, not this item's (see [Decision log](#decision-log)). Sequenced delivery tracked under `swc-text-field`'s epic (SWC-2323), not a blocker to this plan. | No | Open: track `swc-text-field`'s controller delivery | Architecture |
 | Q6 | Whether `swc-radio-group` needs a dedicated `RadioGroupController` or composes coordination inline (SWC-2470). Genuinely unresolved architecture question; see [Related components and ordering notes](#related-components-and-ordering-notes) for why it doesn't block this plan regardless of outcome. | No | Tracked as a subticket of SWC-2546, not blocking here | Architecture |
 
 ### Scope and prerequisites
@@ -527,6 +526,7 @@ Resolved decisions from planning, kept here as a historical record so [Blockers 
 | — | `swc-radio` no longer sets `aria-describedby` on itself for its own slotted `description`. | The description renders as plain content inside the item's own accessible subtree, so it already contributes to the item's accessible name computation alongside the label; adding `aria-describedby` on top caused VoiceOver to re-announce the same text a second time as a "description". |
 | — | Remove the component's Lit `autofocus` override; retain the inherited HTML attribute/property. | The override no longer has an inner input to forward to and does not implement automatic focus. Removing it avoids shadowing the native property or implying component-managed focus behavior. |
 | — | Radio VRT coverage uses labeled representative rows rather than the full size × emphasis × selection × state Cartesian product. | Phase 6 groups all sizes together, includes the emphasized selected state, hover and keyboard focus, and uses one default-size wrapped-label example. RadioGroup owns disabled and forced-colors coverage so those group-level states are not duplicated. |
+| Q4 | `FieldAssociationController` is delivered and used by `swc-radio-group`; `swc-radio` does not depend on it. | Shipped with the `swc-text-field` work (SWC-2467). The group owns form value and validity, so the item needs no form-association wiring of its own. |
 
 ---
 
