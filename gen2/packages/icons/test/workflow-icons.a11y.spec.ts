@@ -11,8 +11,7 @@
  */
 
 import { expect, test } from '@playwright/test';
-
-import { gotoStory } from '../../swc/utils/a11y-helpers.js';
+import { gotoStory } from '@test-helpers/playwright';
 
 /**
  * Accessibility tests for the public workflow icons .

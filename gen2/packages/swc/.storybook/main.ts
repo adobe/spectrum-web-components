@@ -281,6 +281,20 @@ const config: StorybookConfig = {
       resolve: {
         alias: [
           {
+            find: /^@test-helpers\/dom$/,
+            replacement: resolve(
+              __dirname,
+              '../../../test/helpers/dom/index.ts'
+            ),
+          },
+          {
+            find: /^@test-helpers\/playwright$/,
+            replacement: resolve(
+              __dirname,
+              '../../../test/helpers/playwright/index.ts'
+            ),
+          },
+          {
             find: '@adobe/spectrum-wc-core',
             replacement: resolve(__dirname, '../../core'),
           },

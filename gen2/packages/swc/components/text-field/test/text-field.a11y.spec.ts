@@ -11,10 +11,9 @@
  */
 
 import { expect, test } from '@playwright/test';
+import { gotoStory } from '@test-helpers/playwright';
 
 import type { TextField } from '@adobe/spectrum-wc/text-field';
-
-import { gotoStory } from '../../../utils/a11y-helpers.js';
 
 /**
  * Accessibility tests for the gen2 Text Field component.

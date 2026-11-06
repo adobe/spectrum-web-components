@@ -11,11 +11,7 @@
  */
 
 import { expect, test } from '@playwright/test';
-
-import {
-  gotoStory,
-  waitForCustomElement,
-} from '../../../../utils/a11y-helpers.js';
+import { gotoStory, waitForCustomElement } from '@test-helpers/playwright';
 
 /**
  * ARIA snapshot tests for response status.

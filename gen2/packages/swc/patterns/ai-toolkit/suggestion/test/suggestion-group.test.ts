@@ -12,11 +12,11 @@
 
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import { getComponent } from '@test-helpers/dom';
 
 import '../swc-suggestion-group.js';
 import '../../suggestion-item/swc-suggestion-item.js';
 
-import { getComponent } from '../../../../utils/test-utils.js';
 import { meta, Overview } from '../stories/suggestion-group.stories.js';
 import { SuggestionGroup } from '../SuggestionGroup.js';
 

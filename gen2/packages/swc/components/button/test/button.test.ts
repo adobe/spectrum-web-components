@@ -13,6 +13,7 @@
 import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import { getComponent, getComponents, withWarningSpy } from '@test-helpers/dom';
 
 import { Button } from '@adobe/spectrum-wc/button';
 import {
@@ -25,11 +26,6 @@ import {
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc-icons/swc-icon-add.js';
 
-import {
-  getComponent,
-  getComponents,
-  withWarningSpy,
-} from '../../../utils/test-utils.js';
 import meta, {
   Accessibility,
   Anatomy,
