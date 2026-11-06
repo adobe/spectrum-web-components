@@ -34,7 +34,7 @@ Three sources can provide the group's accessible name. When more than one is set
 2. **`accessible-label`**: a string accessible name for a group with no visible label.
 3. **A slotted `label`**: the default for a group with a visible label.
 
-The examples show a slotted label, `accessible-label`, and `accessible-labelledby` referencing the "Return shipping" heading.
+The examples show a slotted label, `accessible-label`, and `accessible-labelledby` referencing the "Favorite sport" heading.
 
 <Canvas of={RadioGroupStories.Labelling} />
 
@@ -149,10 +149,14 @@ Use `novalidate` on the form and `checkValidity()` in your submit handler for in
 ```html
 <form novalidate>
   <swc-radio-group name="shipping" required>
-    <span slot="label">Shipping method</span>
-    <span slot="error-text">You must select a shipping method.</span>
-    <swc-radio value="standard"><span slot="label">Standard</span></swc-radio>
-    <swc-radio value="express"><span slot="label">Express</span></swc-radio>
+    <span slot="label">Shipping options</span>
+    <span slot="error-text">Select a shipping option.</span>
+    <swc-radio value="standard">
+      <span slot="label">Standard Shipping (Free)</span>
+    </swc-radio>
+    <swc-radio value="expedited">
+      <span slot="label">Expedited Shipping ($9.99)</span>
+    </swc-radio>
   </swc-radio-group>
   <button type="submit">Submit</button>
 </form>

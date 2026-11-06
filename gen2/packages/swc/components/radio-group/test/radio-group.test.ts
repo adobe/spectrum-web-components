@@ -1445,16 +1445,16 @@ export const ReadOnlySelectionTest: Story = {
     expect(document.activeElement, 'ArrowRight moves focus').toBe(items[2]);
     press(items[2], 'Home');
     expect(document.activeElement, 'Home moves focus').toBe(items[0]);
-    expect(group.selected).toBe('2');
+    expect(group.selected).toBe('baseball');
     expect(items.map((item) => item.checked)).toEqual([false, true, false]);
 
     group.fieldStatus = undefined;
     await group.updateComplete;
     press(items[0], 'ArrowRight');
     expect(document.activeElement).toBe(items[1]);
-    expect(group.selected).toBe('2');
+    expect(group.selected).toBe('baseball');
     press(items[1], 'ArrowRight');
-    expect(group.selected).toBe('3');
+    expect(group.selected).toBe('basketball');
   },
 };
 

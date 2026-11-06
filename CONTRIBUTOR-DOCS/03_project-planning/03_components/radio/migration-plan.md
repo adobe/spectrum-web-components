@@ -471,8 +471,8 @@ Retain this section for any components with visual rendering, modifying as neede
 
 ### Review
 
-- [ ] `yarn lint:gen2` passes (ESLint, Stylelint, Prettier)
-- [ ] Status table in workstream doc updated
+- [x] `yarn lint:gen2` passes (ESLint, Stylelint, Prettier)
+- [x] Status table in workstream doc updated
 - [ ] PR created against the shared `swc-radio`/`swc-radio-group` feature branch (not directly against `main`), with a description referencing Epic SWC-2348
 - [ ] Peer engineer sign-off
 
@@ -493,7 +493,6 @@ _None currently — all resolved; see [Decision log](#decision-log)._
 
 | #   | Item | Blocking? | Status | Owner |
 | --- | ---- | --------- | ------ | ----- |
-| Q4 | `FieldAssociationController` does not exist yet (verified absent from `gen2/packages/core/controllers/`). It is `swc-radio-group`'s dependency, not this item's (see [Decision log](#decision-log)). Sequenced delivery tracked under `swc-text-field`'s epic (SWC-2323), not a blocker to this plan. | No | Open: track `swc-text-field`'s controller delivery | Architecture |
 | Q6 | Whether `swc-radio-group` needs a dedicated `RadioGroupController` or composes coordination inline (SWC-2470). Genuinely unresolved architecture question; see [Related components and ordering notes](#related-components-and-ordering-notes) for why it doesn't block this plan regardless of outcome. | No | Tracked as a subticket of SWC-2546, not blocking here | Architecture |
 
 ### Scope and prerequisites
@@ -527,6 +526,7 @@ Resolved decisions from planning, kept here as a historical record so [Blockers 
 | — | `swc-radio` no longer sets `aria-describedby` on itself for its own slotted `description`. | The description renders as plain content inside the item's own accessible subtree, so it already contributes to the item's accessible name computation alongside the label; adding `aria-describedby` on top caused VoiceOver to re-announce the same text a second time as a "description". |
 | — | Remove the component's Lit `autofocus` override; retain the inherited HTML attribute/property. | The override no longer has an inner input to forward to and does not implement automatic focus. Removing it avoids shadowing the native property or implying component-managed focus behavior. |
 | — | Radio VRT coverage uses labeled representative rows rather than the full size × emphasis × selection × state Cartesian product. | Phase 6 groups all sizes together, includes the emphasized selected state, hover and keyboard focus, and uses one default-size wrapped-label example. RadioGroup owns disabled and forced-colors coverage so those group-level states are not duplicated. |
+| Q4 | `FieldAssociationController` is delivered and used by `swc-radio-group`; `swc-radio` does not depend on it. | Shipped with the `swc-text-field` work (SWC-2467). The group owns form value and validity, so the item needs no form-association wiring of its own. |
 
 ---
 

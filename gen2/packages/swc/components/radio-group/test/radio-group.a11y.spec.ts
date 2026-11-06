@@ -23,13 +23,15 @@ test.describe('Radio group - ARIA snapshots', () => {
       'components-radio-group--overview',
       'swc-radio-group'
     );
-    const group = root.getByRole('radiogroup', { name: 'Example radios' });
+    const group = root.getByRole('radiogroup', {
+      name: 'Shipping options',
+    });
 
     await expect(group).toMatchAriaSnapshot(`
-      - radiogroup "Example radios":
-        - radio "Option 1 Description for Option 1" [checked]
-        - radio "Option 2 Description for Option 2"
-        - radio "Option 3 Description for Option 3"
+      - radiogroup "Shipping options":
+        - radio "Standard Shipping (Free) Delivers in 5–7 business days" [checked]
+        - radio "Expedited Shipping ($9.99) Delivers in 2–3 business days"
+        - radio "Overnight Shipping ($19.99) Next-day delivery"
     `);
   });
 
@@ -84,7 +86,9 @@ test.describe('Radio group - ARIA snapshots', () => {
     await client.send('Accessibility.enable');
     const { nodes } = await client.send('Accessibility.getFullAXTree');
     const group = nodes.find((node) => node.role?.value === 'radiogroup');
-    expect(group?.description?.value).toBe('This option is not available.');
+    expect(group?.description?.value).toBe(
+      'Overnight shipping is not available for this address.'
+    );
   });
 
   test('a disabled group exposes every item as disabled', async ({ page }) => {

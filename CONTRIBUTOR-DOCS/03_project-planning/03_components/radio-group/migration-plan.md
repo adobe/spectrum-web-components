@@ -107,7 +107,7 @@ No 1st-gen `required` or `readonly` property exists on either class; both are Re
 | Method | Signature | Source | Notes |
 | ------ | --------- | ------ | ----- |
 | `focus` | `() => void` | `RadioGroup` (override) | Delegates to `rovingTabindexController.focus()`. |
-| `buttons` | `Radio[]` (readonly getter) | `RadioGroup` | **Public**, not implementation detail: `public get buttons(): Radio[]` filters `defaultNodes` to `Radio` instances. Exercised directly in 1st-gen's own tests (`group.buttons.length`), not just used internally. gen2 carry-forward is undecided — see **Q7**. |
+| `buttons` | `Radio[]` (readonly getter) | `RadioGroup` | **Public**, not implementation detail: `public get buttons(): Radio[]` filters `defaultNodes` to `Radio` instances. Exercised directly in 1st-gen's own tests (`group.buttons.length`), not just used internally. Dropped in gen2; consumers use `querySelectorAll('swc-radio')` (see **Q7** in the [Decision log](#decision-log)). |
 
 `_setSelected()`, `validateRadios()`, and `handleSlotchange()` are implementation detail (`private`/`protected`), not public API.
 
@@ -473,8 +473,8 @@ Retain this section for any components with visual rendering, modifying as neede
 
 ### Review
 
-- [ ] `yarn lint:gen2` passes (ESLint, Stylelint, Prettier)
-- [ ] Status table in workstream doc updated
+- [x] `yarn lint:gen2` passes (ESLint, Stylelint, Prettier)
+- [x] Status table in workstream doc updated
 - [ ] PR created against the shared `swc-radio`/`swc-radio-group` feature branch (not directly against `main`), with a description referencing Epic SWC-2348
 - [ ] Peer engineer sign-off
 
@@ -495,8 +495,6 @@ During drafting, this section tracks active blockers and open questions. In the 
 | #   | Item | Blocking? | Status | Owner |
 | --- | ---- | --------- | ------ | ----- |
 | Q4 | `RadioGroupController` (SWC-2470) architecture decision. Genuinely unresolved; tracked as a subticket of this plan's own ticket (SWC-2546). Does not block this plan — see [Related components and ordering notes](#related-components-and-ordering-notes). | No | Tracked as a subticket of SWC-2546, not blocking here | Architecture |
-| Q5 | `FieldAssociationController`, `LabellingMixin`, and `FieldDescriptionMixin` are sequenced with `swc-text-field`. The mixin architecture is decided; delivery remains an implementation prerequisite, not a blocker to this plan. | No | Open: confirm form-controller and mixin delivery | Architecture |
-| Q7 | 1st-gen's public `buttons` getter (`Radio[]` over slotted children, exercised directly in 1st-gen's own tests) has no proposed gen2 equivalent in this plan. Decide whether to carry it forward, drop it as a documented breaking removal, or point consumers at standard DOM query instead. | No | Open | Architecture |
 
 ### Scope and prerequisites
 
@@ -536,6 +534,8 @@ Resolved decisions from planning, kept here as a historical record so [Blockers 
 | — | The group renders a decorative error icon inline whenever it is `invalid` and not disabled, so the state never relies on color alone. Statuses are exclusive, so only a `<fieldset disabled>` ancestor can disable an invalid group; the icon then hides while `aria-invalid` and the error text stay, matching `swc-text-field`. | `renderFieldDescription` takes an `errorIcon` option; the icon sits in `.swc-FormFieldErrorText-icon` (`aria-hidden`) and the message in `.swc-FormFieldErrorText-text`. Spacing follows `--swc-form-field-invalid-icon-gap`. | The icon shows beside the error text, beside the description when there is no error text, and alone when there is neither. A radio group has no input with its own invalid icon, unlike `swc-text-field`. The `core` directive can't import an `swc` icon, so the consumer supplies it. |
 | — | `necessity-indicator` (`icon` \| `label`) is exposed on the group. | Same values and default (`icon`) as `swc-text-field`; the `label` text is `(required)` or `(optional)`. | Resolves the earlier note that indicator presentation was not this component's decision. |
 | — | `renderLabel`'s `forId` is optional; without it a `<span class="swc-FormFieldLabel">` renders instead of `<label for>`. | `LabellingMixin` and `renderFieldLabel` accept `string \| undefined`. | A radio group has no labelable control to point `for` at; its name is wired through `aria-labelledby` on the role element. |
+| Q5 | `FieldAssociationController`, `LabellingMixin`, and `FieldDescriptionMixin` are delivered, and `swc-radio-group` consumes all three. | Shipped with the `swc-text-field` work (SWC-2466, SWC-2467). No remaining prerequisite. |
+| Q7 | Drop 1st-gen's `buttons` getter; consumers use `group.querySelectorAll('swc-radio')`. | The slotted items are light DOM, so a standard query returns the same list. Documented as a removal in the consumer migration guide. |
 
 ---
 
