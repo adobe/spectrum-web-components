@@ -21,7 +21,8 @@ import {
 
 import { TOAST_VARIANTS, type ToastVariant } from './Toast.types.js';
 
-let variantLabelCount = 0;
+// Whether this engine kept a shadow-tree icon in an ElementInternals name; unknown until the first attempt.
+let keepsShadowNameParts: boolean | undefined;
 
 /**
  * Abstract base class for toast. Owns shared API and behavior; rendering lives in SWC.
@@ -37,6 +38,12 @@ export abstract class ToastBase extends SpectrumElement {
    * The rendered element whose CSS transition gates the open/close lifecycle events.
    */
   protected abstract get internalElement(): HTMLElement | null;
+
+  /**
+   * The rendered variant icon, or `null` when there is none. Its label is read
+   * as the start of the host's accessible name.
+   */
+  protected abstract get variantIcon(): Element | null;
 
   // ──────────────────
   //     SHARED API
@@ -103,8 +110,8 @@ export abstract class ToastBase extends SpectrumElement {
   private _pendingAfterTransition?: () => void;
   // True once `swc-close` has fired, so the next update must not dispatch it again.
   private _closeEventDispatched = false;
-  // Hidden node carrying the variant label so the host's name can lead with it.
-  private variantLabelElement?: HTMLElement;
+  // Names the host from elements in its own shadow tree, which `aria-labelledby` cannot reach.
+  private readonly internals = this.attachInternals();
   private _contentRevealed = true;
   private _cancelContentReveal?: () => void;
   private readonly _contentObserver = new MutationObserver(() => {
@@ -246,12 +253,13 @@ export abstract class ToastBase extends SpectrumElement {
         this.setAttribute('aria-hidden', 'true');
       }
     }
-    this.updateAccessibleName();
     super.update(changedProperties);
   }
 
   protected override updated(changedProperties: PropertyValues): void {
     super.updated(changedProperties);
+    // After render, so the variant icon exists and is the current one.
+    this.updateAccessibleName();
     if (
       !changedProperties.has('open') ||
       changedProperties.get('open') === undefined
@@ -291,36 +299,12 @@ export abstract class ToastBase extends SpectrumElement {
 
   /**
    * The icon label lives in the live region, which is read when the toast
-   * appears. Focusing the host reads its name instead, and the host's
-   * `aria-labelledby` cannot reference the shadow icon. So the label is also
-   * kept as a hidden light-DOM node, slotted so the host can reference it, and
-   * listed ahead of the message in the name.
+   * appears. Focusing the host reads its name instead, so the name starts with
+   * the icon's own label, followed by the message. `aria-labelledby` cannot
+   * reference the shadow icon, so `ElementInternals` does it. Where that is not
+   * supported, the engine drops the icon, or there is no labeled icon, the name
+   * is the message alone, through a plain `aria-labelledby` attribute.
    */
-  private updateVariantLabelElement(label: string | undefined): void {
-    if (!label) {
-      this.variantLabelElement?.remove();
-      this.variantLabelElement = undefined;
-      return;
-    }
-
-    let element = this.variantLabelElement;
-    if (!element) {
-      element = this.ownerDocument.createElement('span');
-      element.id = `swc-toast-variant-label-${++variantLabelCount}`;
-      element.slot = 'variant-label';
-      // Directly referenced by aria-labelledby, so it still names the host, but the live region already reads the icon label.
-      element.setAttribute('aria-hidden', 'true');
-      this.variantLabelElement = element;
-    }
-    // Skip no-op writes, which would trigger the content observer again.
-    if (element.textContent !== label) {
-      element.textContent = label;
-    }
-    if (element.parentNode !== this) {
-      this.prepend(element);
-    }
-  }
-
   private updateAccessibleName(): void {
     const messageNodes = [...this.childNodes].filter((node) => {
       if (node.nodeType === Node.TEXT_NODE) {
@@ -333,23 +317,40 @@ export abstract class ToastBase extends SpectrumElement {
       // slot attribute at all.
       return !(node as Element).getAttribute('slot');
     });
-    const idTarget =
-      messageNodes.length === 1 && messageNodes[0] instanceof HTMLElement
-        ? messageNodes[0].id
-        : '';
+    const message =
+      messageNodes.length === 1 &&
+      messageNodes[0] instanceof HTMLElement &&
+      messageNodes[0].id
+        ? messageNodes[0]
+        : undefined;
+    const icon = this.variantIconLabel ? this.variantIcon : null;
+    const supportsElementNames = 'ariaLabelledByElements' in this.internals;
 
-    // Without a message to name the host, the variant label has nothing to lead.
-    this.updateVariantLabelElement(
-      idTarget ? this.variantIconLabel : undefined
-    );
+    if (
+      message &&
+      icon &&
+      supportsElementNames &&
+      keepsShadowNameParts !== false
+    ) {
+      this.internals.ariaLabelledByElements = [icon, message];
+      // WebKit silently drops a target in the host's own shadow tree. Trust the relationship only
+      // when the icon was kept, or removing the attribute below would leave the host without a name.
+      keepsShadowNameParts =
+        this.internals.ariaLabelledByElements?.[0] === icon;
+      if (keepsShadowNameParts) {
+        // A host `aria-labelledby` attribute overrides `ElementInternals`, so only one of them is set.
+        this.removeAttribute('aria-labelledby');
+        return;
+      }
+    }
 
-    if (idTarget) {
-      this.setAttribute(
-        'aria-labelledby',
-        this.variantLabelElement
-          ? `${this.variantLabelElement.id} ${idTarget}`
-          : idTarget
-      );
+    if (supportsElementNames && this.internals.ariaLabelledByElements) {
+      this.internals.ariaLabelledByElements = null;
+    }
+    if (message) {
+      if (this.getAttribute('aria-labelledby') !== message.id) {
+        this.setAttribute('aria-labelledby', message.id);
+      }
       return;
     }
 

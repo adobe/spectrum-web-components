@@ -267,7 +267,7 @@ export const RegionLabelTest: Story = {
         await container.updateComplete;
 
         expect(regionLabel(), 'custom region label').toBe('2 notificaciones');
-        expect(counts.at(-1), 'last count').toBe(2);
+        expect(counts[counts.length - 1], 'last count').toBe(2);
       });
     } finally {
       ToastQueue.clear();

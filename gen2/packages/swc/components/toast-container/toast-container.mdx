@@ -118,7 +118,7 @@ The region has `role="region"` and an accessible name that reads "1 notification
 
 While a toast is showing, <kbd>F6</kbd> and <kbd>Shift</kbd> + <kbd>F6</kbd> move focus into the region from anywhere on the page. Pressing either key again returns focus to where it was. Both keys keep their normal browser behavior when no toast is showing.
 
-Each `<swc-toast>` has `role="alertdialog"`, `aria-modal="false"`, and `tabindex="0"`, with an inner `role="alert"` wrapper so screen readers announce the message. The container reveals the message shortly after the toast opens, so assistive technology registers the live region first. The toast's accessible name comes from its message. For `info`, `positive`, and `negative` toasts, the name starts with the variant label (for example, "Error File could not be saved"), so a screen reader reads it when focus moves onto the toast.
+Each `<swc-toast>` has `role="alertdialog"`, `aria-modal="false"`, and `tabindex="0"`, with an inner `role="alert"` wrapper so screen readers announce the message. The container reveals the message shortly after the toast opens, so assistive technology registers the live region first. The toast's accessible name comes from its message. For `info`, `positive`, and `negative` toasts, the name starts with the icon's label (for example, "Error File could not be saved"), so a screen reader reads it when focus moves onto the toast. Test tooling that ignores `ElementInternals`, such as Playwright ARIA snapshots, shows these toasts without a name. In Safari, VoiceOver reads only the message when focus moves onto the toast, because WebKit does not include the icon in the name. The variant is still announced when the toast appears.
 
 ### Best practices
 

@@ -20,9 +20,10 @@ test('the container exposes a counted region with a single named toast', async (
   await page.getByRole('button', { name: 'Add toast', exact: true }).click();
   const region = page.getByRole('region', { name: '1 notification.' });
   await expect(region).toHaveAttribute('tabindex', '-1');
+  // The host's name comes from ElementInternals, which Playwright's snapshots cannot see (see toast.a11y.spec.ts).
   await expect(region).toMatchAriaSnapshot(`
     - region "1 notification.":
-      - alertdialog "Success File saved":
+      - alertdialog:
         - alert:
           - img "Success"
           - text: File saved
