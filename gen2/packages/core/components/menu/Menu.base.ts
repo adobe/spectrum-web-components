@@ -228,6 +228,10 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
     if (!this.open) {
       return;
     }
+    // Any key hands control back to the keyboard, so the row the pointer
+    // focused may show its ring again. Before the checks below, because a key
+    // that this menu does not handle still ends the pointer's turn.
+    this.clearPointerFocus();
     const item = this.menuItemFromEvent(event);
     if (!item) {
       return;
@@ -265,7 +269,27 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
     this.focusNavigation.setActiveItem(item);
     // `preventScroll`: the surface must not scroll out from under the pointer.
     item.focus({ preventScroll: true });
+    this.setPointerFocus(item);
   };
+
+  // The row whose focus ring is suppressed because the pointer, not the
+  // keyboard, put focus there. Tracked so it can be cleared again; reading it
+  // back off the DOM would miss a row that has since been removed.
+  private _pointerFocusedItem: HTMLElement | null = null;
+
+  // Marks the row the pointer focused. The flag lives on the row because the
+  // ring is drawn inside its shadow tree, where this menu's own state is not
+  // reachable from CSS.
+  private setPointerFocus(item: HTMLElement): void {
+    this.clearPointerFocus();
+    item.toggleAttribute('pointer-focus', true);
+    this._pointerFocusedItem = item;
+  }
+
+  private clearPointerFocus(): void {
+    this._pointerFocusedItem?.removeAttribute('pointer-focus');
+    this._pointerFocusedItem = null;
+  }
 
   // Closes the menu when a slotted row is clicked; no submenus/selection to
   // special-case yet, so any click on an enabled roving-tabindex item counts.
@@ -547,6 +571,9 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
     document.removeEventListener('keydown', this.handleKeyDown, {
       capture: true,
     });
+    // Rows outlive the menu being closed, so a flag left on one would suppress
+    // the ring on the next open.
+    this.clearPointerFocus();
     if (restoreFocusToTrigger) {
       this._interactiveElement?.focus({ preventScroll: true });
     }

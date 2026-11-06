@@ -370,8 +370,14 @@ test.describe('Menu - native dismissal', () => {
     expect(await outlineOf(1)).toBe('none');
     expect(await outlineOf(0)).toBe('none');
 
-    // Keyboard takes over again: the ring returns on the row it moves to,
-    // which the pointer is no longer over.
+    // Moving the pointer off the row must not hand the ring back. The row
+    // keeps focus, and hover alone cannot express that, because the gaps
+    // between rows are not hovered either.
+    await page.mouse.move(2, 2);
+    await expect(rows.nth(1)).toBeFocused();
+    expect(await outlineOf(1)).toBe('none');
+
+    // Keyboard takes over again: the ring returns on the row it moves to.
     await page.keyboard.press('ArrowDown');
     await expect(rows.nth(2)).toBeFocused();
     expect(await outlineOf(2)).toBe('solid');

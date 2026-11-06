@@ -75,6 +75,22 @@ export abstract class MenuItemBase extends SizedMixin(SpectrumElement, {
   public disabled = false;
 
   /**
+   * Whether the pointer, rather than the keyboard, last moved focus to this
+   * row. Suppresses the focus ring while it is set.
+   *
+   * The owning `swc-menu` sets it, because a row cannot tell which input moved
+   * focus to it. `:focus-visible` alone is not enough: it stays on once a key
+   * press has set the modality, so the ring would follow the pointer from row
+   * to row and stay behind on the row the pointer left. 1st-gen carries the
+   * same state the other way up, as a `focused` attribute it sets on keyboard
+   * focus and clears on `mouseover`.
+   *
+   * @internal Set by the owning menu; not part of the row's public API.
+   */
+  @property({ type: Boolean, reflect: true, attribute: 'pointer-focus' })
+  public pointerFocus = false;
+
+  /**
    * Carries the row's name and description references. On `internals` they are
    * defaults a consumer's own attributes replace; writing them to `this` would
    * reflect onto the host and clobber whatever was already there.
