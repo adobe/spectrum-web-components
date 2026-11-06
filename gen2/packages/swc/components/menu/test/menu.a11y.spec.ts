@@ -337,4 +337,43 @@ test.describe('Menu - native dismissal', () => {
     await page.keyboard.press('ArrowUp');
     await expect(rows.nth(1)).toBeFocused();
   });
+
+  // `:focus-visible` is sticky once a key press has set the modality, so moving
+  // focus to the hovered row would otherwise drag the keyboard ring along with
+  // the pointer.
+  test('a hovered row shows no focus ring after a keyboard open', async ({
+    page,
+  }) => {
+    await gotoStory(page, 'components-menu--open-and-close', 'swc-button');
+    const menu = page.locator('swc-menu');
+    const trigger = page.getByRole('button', { name: 'Edit' });
+
+    await trigger.focus();
+    await page.keyboard.press('Enter');
+    await expect(menu).toHaveJSProperty('open', true);
+
+    const rows = page.locator('swc-menu-item');
+    const outlineOf = (index: number) =>
+      rows.nth(index).evaluate((row) => {
+        const chrome = row.shadowRoot?.querySelector('.swc-MenuItem') as Element;
+        return getComputedStyle(chrome).outlineStyle;
+      });
+
+    // The keyboard put the ring on row one.
+    expect(await outlineOf(0)).toBe('solid');
+
+    await rows.nth(1).hover();
+    await expect(rows.nth(1)).toBeFocused();
+
+    // Focus moved, but the pointer marks its own row with the hover fill, so
+    // no ring on either.
+    expect(await outlineOf(1)).toBe('none');
+    expect(await outlineOf(0)).toBe('none');
+
+    // Keyboard takes over again: the ring returns on the row it moves to,
+    // which the pointer is no longer over.
+    await page.keyboard.press('ArrowDown');
+    await expect(rows.nth(2)).toBeFocused();
+    expect(await outlineOf(2)).toBe('solid');
+  });
 });

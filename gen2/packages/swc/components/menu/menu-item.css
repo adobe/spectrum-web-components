@@ -166,8 +166,15 @@
 
 /* The host owns focus, so the ring is drawn on the chrome element. Inset, so
  * it is not clipped by the menu surface's own `overflow: auto`. `:focus-visible`
- * for the reason above: a mouse-opened menu must not show a focus ring. */
-:host(:focus-visible) .swc-MenuItem {
+ * for the reason above: a mouse-opened menu must not show a focus ring.
+ *
+ * `:not(:hover)` because the menu moves focus to the row under the pointer, and
+ * `:focus-visible` is sticky: once a keyboard press has set the modality, the
+ * ring would follow the pointer from row to row. The pointer does not need to
+ * be told where it is; the hover fill already marks that row. Moving the
+ * pointer off the menu reveals the ring on the row it left, which is where the
+ * keyboard would resume. */
+:host(:focus-visible:not(:hover)) .swc-MenuItem {
   outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
   outline-offset: calc(token("focus-ring-gap") * -1);
 }
@@ -202,18 +209,20 @@
     border-radius: 0;
   }
 
-  /* Forced colours flatten the background tints the states rely on, so the
-   * focused row is marked with a border instead. Matches the selector that
-   * draws the ring above, or this would recolour an outline that is not there. */
-  :host(:focus-visible) .swc-MenuItem {
-    outline-color: Highlight;
-  }
-
   :host([disabled]) .swc-MenuItem {
     color: GrayText;
   }
 
   :host([disabled]) ::slotted([slot="description"]) {
     color: GrayText;
+  }
+
+  /* Forced colours flatten the background tints the states rely on, so the
+   * focused row is marked with a border instead. Matches the selector that
+   * draws the ring above, or this would recolour an outline that is not there.
+   * Last in the block so specificity ascends; the properties do not overlap
+   * with the disabled rules above, so the order carries no cascade meaning. */
+  :host(:focus-visible:not(:hover)) .swc-MenuItem {
+    outline-color: Highlight;
   }
 }
