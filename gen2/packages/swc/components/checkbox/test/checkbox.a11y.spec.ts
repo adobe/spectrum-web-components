@@ -151,10 +151,13 @@ test.describe('Checkbox - ARIA snapshots', () => {
       await element.updateComplete;
     });
     await expect(root).toMatchAriaSnapshot(`
-      - checkbox "Send me product updates"
+      - checkbox "Send me product updates" [disabled]
     `);
-    await expect(input).toHaveAttribute('aria-readonly', 'true');
-    await expect(input).toBeEnabled();
+    await expect(input).toHaveAttribute('aria-disabled', 'true');
+    await expect(input).not.toHaveAttribute('aria-readonly');
+    await expect(input).toHaveJSProperty('disabled', false);
+    await input.focus();
+    await expect(input).toBeFocused();
 
     await checkbox.evaluate(async (element: Checkbox) => {
       element.fieldStatus = 'invalid';

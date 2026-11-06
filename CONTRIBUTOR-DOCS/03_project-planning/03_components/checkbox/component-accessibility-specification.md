@@ -51,6 +51,7 @@ The defining difference from [`swc-radio`](../radio/component-accessibility-spec
 > - **`required`:** native `required` on the input supplies the implicit `aria-required`; no explicit attribute is set.
 > - **axe:** the roleless host's `label` false positive wasn't observed, so no exclusion is needed so far.
 > - **<kbd>Enter</kbd>:** it doesn't toggle, but in a form with a submit button it submits the form, as on a native checkbox (C11).
+> - **Read-only:** the inner input exposes `aria-disabled="true"`, not `aria-readonly`, and stays focusable with the toggle blocked. `aria-readonly` wasn't announced on checkboxes in manual testing (C14).
 
 ### Also read
 

@@ -829,14 +829,18 @@ export const AriaStatesTest: Story = {
       expect(checkbox).not.toHaveAttribute('role');
     });
 
-    await step('read-only sets aria-readonly on the input only', async () => {
+    await step('read-only sets aria-disabled on the input only', async () => {
+      // Native readonly and aria-readonly do not apply to checkboxes, so
+      // read-only is exposed as aria-disabled on a focusable input.
       checkbox.fieldStatus = 'readonly';
       await checkbox.updateComplete;
-      expect(input).toHaveAttribute('aria-readonly', 'true');
+      expect(input).toHaveAttribute('aria-disabled', 'true');
+      expect(input).not.toHaveAttribute('aria-readonly');
       expect(input.disabled).toBe(false);
+      expect(checkbox).not.toHaveAttribute('aria-disabled');
       checkbox.fieldStatus = undefined;
       await checkbox.updateComplete;
-      expect(input).not.toHaveAttribute('aria-readonly');
+      expect(input).not.toHaveAttribute('aria-disabled');
     });
 
     await step('invalid sets aria-invalid on the input only', async () => {
