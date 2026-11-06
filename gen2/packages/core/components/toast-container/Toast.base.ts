@@ -21,28 +21,52 @@ import {
 
 import { TOAST_VARIANTS, type ToastVariant } from './Toast.types.js';
 
+// Whether this engine kept a shadow-tree icon in an ElementInternals name; unknown until the first attempt.
+let keepsShadowNameParts: boolean | undefined;
+
 /**
  * Abstract base class for toast. Owns shared API and behavior; rendering lives in SWC.
  *
  * @slot - Toast message text.
  */
 export abstract class ToastBase extends SpectrumElement {
-  private _cancelAfterTransition?: () => void;
-  // Kept until it runs so a reconnect can restart an event that disconnection canceled.
-  private _pendingAfterTransition?: () => void;
-  // True once `swc-close` has fired, so the next update must not dispatch it again.
-  private _closeEventDispatched = false;
-  private _contentRevealed = true;
-  private _cancelContentReveal?: () => void;
-  private readonly _contentObserver = new MutationObserver(() => {
-    this.requestUpdate();
-  });
+  // ─────────────────────────
+  //     API TO OVERRIDE
+  // ─────────────────────────
+
+  /**
+   * The rendered element whose CSS transition gates the open/close lifecycle events.
+   */
+  protected abstract get internalElement(): HTMLElement | null;
+
+  /**
+   * The rendered variant icon, or `null` when there is none. Its label is read
+   * as the start of the host's accessible name.
+   */
+  protected abstract get variantIcon(): Element | null;
+
+  // ──────────────────
+  //     SHARED API
+  // ──────────────────
 
   /**
    * Whether the toast is visible.
    */
   @property({ type: Boolean, reflect: true })
   public open = false;
+
+  /** The configured auto-dismiss duration in milliseconds, not remaining time. */
+  @property({ type: Number, reflect: true })
+  public set timeout(value: number | null) {
+    const previous = this._timeout;
+    this._timeout = value !== null && value > 0 ? Math.max(6000, value) : null;
+    this.requestUpdate('timeout', previous);
+  }
+
+  public get timeout(): number | null {
+    return this._timeout;
+  }
+  private _timeout: number | null = null;
 
   /**
    * The semantic variant of the toast.
@@ -53,17 +77,66 @@ export abstract class ToastBase extends SpectrumElement {
   /**
    * An accessible label for the semantic variant icon.
    *
-   * When omitted or empty, the icon is decorative, so the message text must
-   * communicate the variant. Set a nonempty label to expose the icon.
+   * When omitted, the icon is labeled with the variant's default English
+   * label. Set a different label to override it, for example to localize it,
+   * or set an empty label to make the icon decorative when the message
+   * already states the status. Ignored for the `neutral` variant, which has no icon.
    */
   @property({ type: String, attribute: 'icon-label' })
   public iconLabel?: string;
+
+  /**
+   * The accessible name of the close button. Set it to localize the name.
+   * Defaults to "Close" when omitted or empty.
+   *
+   * @todo Localize the default via LanguageResolutionController once a runtime
+   * i18n system for static strings is available.
+   */
+  @property({ type: String, attribute: 'close-label' })
+  public closeLabel?: string;
 
   /**
    * The label for the optional action button. When set, Toast renders its own button.
    */
   @property({ type: String, attribute: 'action-label' })
   public actionLabel?: string;
+
+  // ──────────────────────
+  //     IMPLEMENTATION
+  // ──────────────────────
+
+  private _cancelAfterTransition?: () => void;
+  // Kept until it runs so a reconnect can restart an event that disconnection canceled.
+  private _pendingAfterTransition?: () => void;
+  // True once `swc-close` has fired, so the next update must not dispatch it again.
+  private _closeEventDispatched = false;
+  // Names the host from elements in its own shadow tree, which `aria-labelledby` cannot reach.
+  private readonly internals = this.attachInternals();
+  private _contentRevealed = true;
+  private _cancelContentReveal?: () => void;
+  private readonly _contentObserver = new MutationObserver(() => {
+    this.requestUpdate();
+  });
+
+  /**
+   * @todo Localize the default labels via LanguageResolutionController once a
+   * runtime i18n solution exists. Consumers can override them with `iconLabel`.
+   */
+  private static readonly DEFAULT_ICON_LABELS: Partial<
+    Record<ToastVariant, string>
+  > = {
+    info: 'Information',
+    positive: 'Success',
+    negative: 'Error',
+  };
+
+  /** The label for the variant icon, or `undefined` when there is no icon or it is decorative. */
+  protected get variantIconLabel(): string | undefined {
+    const defaultLabel = ToastBase.DEFAULT_ICON_LABELS[this.variant];
+    return defaultLabel === undefined
+      ? undefined
+      : (this.iconLabel ?? defaultLabel);
+  }
 
   /**
    * Whether the message content is rendered inside the live region.
@@ -78,19 +151,12 @@ export abstract class ToastBase extends SpectrumElement {
     return this._contentRevealed;
   }
 
-  /**
-   * The rendered element whose CSS transition gates the open/close lifecycle events.
-   */
-  protected abstract get internalElement(): HTMLElement | null;
-
   public override connectedCallback(): void {
     super.connectedCallback();
     this.setAttribute('role', 'alertdialog');
     this.setAttribute('aria-modal', 'false');
     this._contentObserver.observe(this, {
       childList: true,
-      characterData: true,
-      subtree: true,
     });
     // Restarts a reveal that disconnection interrupted, so the message is still announced.
     if (!this._contentRevealed) {
@@ -177,7 +243,7 @@ export abstract class ToastBase extends SpectrumElement {
       prop: 'variant',
       value: this.variant,
       valid: TOAST_VARIANTS,
-      url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-toast--docs',
+      url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-toast-container--docs',
     });
     if (!this.hasUpdated || changedProperties.has('open')) {
       this.setAttribute('tabindex', '0');
@@ -187,12 +253,13 @@ export abstract class ToastBase extends SpectrumElement {
         this.setAttribute('aria-hidden', 'true');
       }
     }
-    this.updateAccessibleName();
     super.update(changedProperties);
   }
 
   protected override updated(changedProperties: PropertyValues): void {
     super.updated(changedProperties);
+    // After render, so the variant icon exists and is the current one.
+    this.updateAccessibleName();
     if (
       !changedProperties.has('open') ||
       changedProperties.get('open') === undefined
@@ -230,6 +297,14 @@ export abstract class ToastBase extends SpectrumElement {
     });
   }
 
+  /**
+   * The icon label lives in the live region, which is read when the toast
+   * appears. Focusing the host reads its name instead, so the name starts with
+   * the icon's own label, followed by the message. `aria-labelledby` cannot
+   * reference the shadow icon, so `ElementInternals` does it. Where that is not
+   * supported, the engine drops the icon, or there is no labeled icon, the name
+   * is the message alone, through a plain `aria-labelledby` attribute.
+   */
   private updateAccessibleName(): void {
     const messageNodes = [...this.childNodes].filter((node) => {
       if (node.nodeType === Node.TEXT_NODE) {
@@ -242,29 +317,44 @@ export abstract class ToastBase extends SpectrumElement {
       // slot attribute at all.
       return !(node as Element).getAttribute('slot');
     });
-    // Prefers aria-labelledby when the message is one element with an id; SWC-2567 settles the final naming path with the container.
-    const idTarget =
-      messageNodes.length === 1 && messageNodes[0] instanceof HTMLElement
-        ? messageNodes[0].id
-        : '';
+    const message =
+      messageNodes.length === 1 &&
+      messageNodes[0] instanceof HTMLElement &&
+      messageNodes[0].id
+        ? messageNodes[0]
+        : undefined;
+    const icon = this.variantIconLabel ? this.variantIcon : null;
+    const supportsElementNames = 'ariaLabelledByElements' in this.internals;
 
-    if (idTarget) {
-      this.setAttribute('aria-labelledby', idTarget);
-      this.removeAttribute('aria-label');
+    if (
+      message &&
+      icon &&
+      supportsElementNames &&
+      keepsShadowNameParts !== false
+    ) {
+      this.internals.ariaLabelledByElements = [icon, message];
+      // WebKit silently drops a target in the host's own shadow tree. Trust the relationship only
+      // when the icon was kept, or removing the attribute below would leave the host without a name.
+      keepsShadowNameParts =
+        this.internals.ariaLabelledByElements?.[0] === icon;
+      if (keepsShadowNameParts) {
+        // A host `aria-labelledby` attribute overrides `ElementInternals`, so only one of them is set.
+        this.removeAttribute('aria-labelledby');
+        return;
+      }
+    }
+
+    if (supportsElementNames && this.internals.ariaLabelledByElements) {
+      this.internals.ariaLabelledByElements = null;
+    }
+    if (message) {
+      if (this.getAttribute('aria-labelledby') !== message.id) {
+        this.setAttribute('aria-labelledby', message.id);
+      }
       return;
     }
 
     this.removeAttribute('aria-labelledby');
-    const label = messageNodes
-      .map((node) => node.textContent ?? '')
-      .join(' ')
-      .replace(/\s+/g, ' ')
-      .trim();
-    if (label) {
-      this.setAttribute('aria-label', label);
-    } else {
-      this.removeAttribute('aria-label');
-    }
   }
 
   /**

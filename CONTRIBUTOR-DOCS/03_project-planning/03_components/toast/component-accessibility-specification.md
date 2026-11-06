@@ -43,7 +43,7 @@
 
 ## Overview
 
-This doc covers how `swc-toast` should work for accessibility. It targets WCAG 2.2 Level AA. Until `swc-toast` exists under `gen2/`, use `1st-gen/packages/toast/src/Toast.ts` (`<sp-toast>`) to validate behavior, and update this spec against the real gen2 source when it ships.
+This doc covers how `swc-toast` and `swc-toast-container` should work for accessibility. It targets WCAG 2.2 Level AA. Validate behavior against the gen2 source in `gen2/packages/swc/components/toast-container/`; `1st-gen/packages/toast/src/Toast.ts` (`<sp-toast>`) is a reference only.
 
 ### What a toast is
 
@@ -75,7 +75,7 @@ Not a replacement for critical error messaging or decisions requiring mandatory 
 | Idea | Plain meaning |
 |------|----------------|
 | [Status Messages (WCAG 4.1.3)](https://www.w3.org/TR/WCAG22/#status-messages) | Status messages must be programmatically determinable without receiving focus. The inner `role="alert"` live region on the host's `role="alertdialog"` satisfies this requirement. |
-| [Timing Adjustable (WCAG 2.2.1)](https://www.w3.org/TR/WCAG22/#timing-adjustable) | Auto-dismissing content must be visible long enough for users to read and interact with it. The minimum is 6 seconds; add 1 second per 120 words beyond the first 120. The timer must pause on focus and hover. React Spectrum's own S2 Toast floors its timeout at 5 seconds, not 6; this doc's 6-second requirement is not yet reconciled with that (see Q1 in `migration-plan.md`). |
+| [Timing Adjustable (WCAG 2.2.1)](https://www.w3.org/TR/WCAG22/#timing-adjustable) | Auto-dismissing content must be visible long enough for users to read and interact with it. The minimum is 6 seconds; add 1 second per 120 words beyond the first 120. The timer must pause on focus and hover. React Spectrum's own S2 Toast floors its timeout at 5 seconds, not 6; gen2 keeps the 6-second floor (Q1 in `migration-plan.md`). |
 | [Pause, Stop, Hide (WCAG 2.2.2)](https://www.w3.org/TR/WCAG22/#pause-stop-hide) | Moving or auto-updating content that lasts more than 5 seconds must be pausable by the user. Auto-dismiss timers apply. |
 | [Content on Hover or Focus (WCAG 1.4.13)](https://www.w3.org/TR/WCAG22/#content-on-hover-or-focus) | Content that appears on hover or focus must be dismissible, hoverable (without dismissing), and persistent. For toast, the countdown timer must pause when the pointer is over the component. |
 | [Use of Color (WCAG 1.4.1)](https://www.w3.org/TR/WCAG22/#use-of-color) | Variant meaning (negative, positive, informative) must not be conveyed by color alone. Icon labels or message text must carry the semantic meaning. |
@@ -106,23 +106,23 @@ Not a replacement for critical error messaging or decisions requiring mandatory 
 |-------|------------|
 | **Host role: `role="alertdialog"`** | Prescribed and fixed on the host element. `role="alertdialog"` conveys that the toast is a non-modal notification that may contain interactive controls (close button, optional action button). Set `aria-modal="false"` so assistive technologies do not restrict browsing outside the toast. Set `tabindex="0"` on the host so it is a normal tab stop, but do not move focus to it when the toast opens; a non-modal, non-programmatically-triggered notification should not steal focus from whatever the user is already doing. `tabindex="0"` also gives the host somewhere to receive focus when a control on the toast itself disappears (for example, an expand control that vanishes after activation hands focus to the host it lived on, rather than losing it). Do not allow authors to override this role. This pattern aligns with the [React Spectrum Toast](https://react-spectrum.adobe.com/react-spectrum/Toast.html) implementation: `tabIndex: 0` is present in its source, but nothing in that implementation autofocuses a newly opened toast. |
 | **Inner `role="alert"` (live region)** | An inner shadow DOM element wraps the notification content and carries `role="alert"` with `aria-atomic="true"`. This creates an assertive live region that announces the full toast message when the component opens, without requiring the user to navigate to it. The `role="alertdialog"` on the host provides the interactive dialog semantics; the inner `role="alert"` handles the automatic announcement. Render the message content (icon and default slot) into it two frames after opening, not by toggling `aria-hidden` on content that is already present; Safari and Chrome need opposite things from the `aria-hidden` approach. This matches the React Spectrum structure: `<div role="alert" aria-atomic="true">` inside the alertdialog. |
-| **`aria-labelledby` on host** | The `role="alertdialog"` host must have an accessible name. Align with React Spectrum: the host carries `aria-labelledby` referencing a stable ID on the content element. Write that ID with the shared `uniqueId()` utility rather than requiring the consumer to wrap their message. Because the notification text is in the default slot (light DOM), the ID is resolvable from the host without crossing a shadow boundary. When no explicit content ID is available, the component should fall back to setting `aria-label` dynamically from the resolved slot text content. React Spectrum's actual implementation splits this further: `aria-labelledby` points at a separate title element and `aria-describedby` at a separate description element. This doc's single content ID is a deliberate simplification, since `swc-toast` has one default slot for message text rather than separate title/description slots. |
+| **`aria-labelledby` on host** | The `role="alertdialog"` host must have an accessible name. Align with React Spectrum: the host carries `aria-labelledby` referencing a stable ID on the content element. `swc-toast-container` creates the message wrapper and writes that ID with the shared `uniqueId()` utility; consumers submit message text through the queue and do not wrap it themselves. Because the notification text is in the default slot (light DOM), the ID is resolvable from the host without crossing a shadow boundary. There is no `aria-label` fallback for bare text. React Spectrum's actual implementation splits this further: `aria-labelledby` points at a separate title element and `aria-describedby` at a separate description element. This doc's single content ID is a deliberate simplification, since `swc-toast` has one default slot for message text rather than separate title/description slots. |
 | **`aria-hidden` when closed** | When the toast is not open, set `aria-hidden="true"` on the host to suppress the alertdialog and its inner live region from the accessibility tree. Remove `aria-hidden` (or set `aria-hidden="false"`) when the toast opens. This is more reliable across browsers than relying on CSS `visibility: hidden` to suppress live region announcements, and prevents unexpected announcements when DOM content changes while the toast is hidden. |
-| **Timer pause (hover and focus-within)** | The auto-dismiss timer must pause both when the pointer is over the component (`pointerenter`) and when focus is within the component (`focusin`). Resume the timer only when both conditions have ended (`pointerleave` and `focusout`). These two conditions are independent: if both are active simultaneously, the timer must not resume until both have cleared. Pausing on pointer hover satisfies WCAG 1.4.13; pausing on focus-within ensures keyboard and screen reader users have sufficient time to read and interact with the toast before it dismisses. This describes per-toast pause. React Spectrum's actual implementation pauses every visible toast in the region together on hover or focus anywhere within it, not just the toast under the pointer; this doc has not yet reconciled per-toast vs. region-wide pause. |
-| **Variant icon labels** | Variant icons are decorative by default, matching React Spectrum. The message text must convey the variant meaning (for example, "Error: Your upload failed"). Authors can set the `icon-label` attribute to a nonempty value to render the icon with `role="img"` and `aria-label` as part of the live region content. Document that a label may produce redundant announcements when the message already states the type. Omitted or empty `icon-label` renders the icon `aria-hidden`. |
-| **Close button** | Must have an accessible name ("Close"). 1st-gen uses `label="Close"` on `sp-close-button`. gen2 should use `swc-close-button` with `accessible-label="Close"`. The name is on the close button itself; no cross-root ARIA concern. |
-| **Action button slot** | Design allows a maximum of one action button per toast. The `action` slot is light DOM; authors must provide a descriptive label (for example, "Undo file deletion" rather than just "Undo"). Docs must state the one-action limit explicitly. |
+| **Timer pause (hover and focus-within)** | The auto-dismiss timer must pause both when the pointer is over the component (`pointerenter`) and when focus is within the component (`focusin`). Resume the timer only when both conditions have ended (`pointerleave` and `focusout`). These two conditions are independent: if both are active simultaneously, the timer must not resume until both have cleared. Pausing on pointer hover satisfies WCAG 1.4.13; pausing on focus-within ensures keyboard and screen reader users have sufficient time to read and interact with the toast before it dismisses. The pause is region-wide: pointer or focus anywhere in the container region pauses the one running countdown, which belongs to the collapsed front toast only. |
+| **Variant icon labels** | Semantic variant icons (`info`, `positive`, `negative`) have a default English label ("Information", "Success", "Error") so the variant is not conveyed by icon and color alone. The icon renders with `role="img"` and `aria-label` as part of the live region content. Authors can set `icon-label` to a different value to override or localize it, or to an empty string to make the icon decorative (`aria-hidden`) when the message already states the type and a label would be redundant. The `neutral` variant has no icon, so `icon-label` is ignored. The icon's own label also leads the host's accessible name ("Success File saved"), because focusing the toast reads its name, not the live region, so the variant would otherwise be missed in focus mode. The host's `aria-labelledby` attribute cannot reference the shadow icon, so Toast names itself through `ElementInternals.ariaLabelledByElements` (`[icon, message]`). A host `aria-labelledby` attribute overrides it, so the attribute is used only when there is no labeled icon (an empty `icon-label`, the `neutral` variant) the browser does not support element reflection on `ElementInternals`, or the engine drops the shadow-DOM icon from the relationship (WebKit does; Toast checks the read-back and keeps the attribute); the name is then the message alone. Playwright ARIA snapshots and other name computations that ignore `ElementInternals` show such a host unnamed, so check the name in the browser's accessibility tree. Known gap: WebKit drops the shadow-DOM icon from an `ElementInternals` name, so on focus Safari with VoiceOver reads the message alone, through the `aria-labelledby` attribute; the variant is still announced through the live region. Unit tests ask the engine whether it keeps shadow name parts, so they expect the full name through `ElementInternals` in Chromium and Firefox and the message through `aria-labelledby` in WebKit. Open: Chrome and Edge with VoiceOver have read a supplied icon label twice (see Q11 in the migration plan). Re-test the default labels manually before treating this as accepted. Localizing the defaults through `LanguageResolutionController` is a follow-up once a runtime i18n solution exists. |
+| **Close button** | Must have an accessible name ("Close"). 1st-gen uses `label="Close"` on `sp-close-button`. gen2 should use `swc-close-button` with `accessible-label="Close"`. The name is on the close button itself; no cross-root ARIA concern. The default is English; `close-label` on `swc-toast` (or `closeLabel` on a queue entry) overrides it for localization. |
+| **Action button** | Design allows a maximum of one action button per toast. There is no `action` slot: the queue's `actionLabel` makes Toast render one `swc-button`, so authors must provide a descriptive label (for example, "Undo file deletion" rather than just "Undo"). Docs must state the one-action limit explicitly. |
 | **`variant` and color** | `variant` is visual-only. Do not auto-map `variant` to `aria-invalid`, `aria-relevant`, or other ARIA properties. The icon label and message text carry semantic meaning; color is supplementary and must not be the only differentiator. |
 | **Docs** | Document the `role="alertdialog"` + inner `role="alert"` pattern and why it is used. Document the 6-second minimum, the hover-and-focus pause behavior, and the one-action limit. Do not claim `variant` sets ARIA states. |
 | **Consumer docs (timing formula)** | The consumer migration guide must include the following timing guidance verbatim: "Auto-dismissing content must be visible long enough for users to read and interact with it. The minimum is 6 seconds; add 1 second per 120 words beyond the first 120. The timer must pause on focus and hover." This is a WCAG 2.2.1 requirement; it must not be omitted or paraphrased into vagueness. |
 
 ### Shadow DOM and cross-root ARIA Issues
 
-The `aria-labelledby` on the host (`role="alertdialog"`) must reference an ID that resolves from the host's perspective. Notification text lives in the default slot, which is light DOM authored by the consumer. As long as the ID is on a light DOM element (or the component sets `aria-label` dynamically from the slot text), no shadow boundary is crossed. If the component attempts to use `aria-labelledby` to reference an ID on an element inside the shadow root, that reference will not resolve for the host element — this is the standard cross-root ARIA limitation for non-`aria-owns` relationships. The implementation must avoid this: either use light DOM IDs from the slot content, or derive the label programmatically and apply it as `aria-label` on the host.
+The `aria-labelledby` on the host (`role="alertdialog"`) must reference an ID that resolves from the host's perspective. Notification text lives in the default slot, which is light DOM created by `swc-toast-container`. Because the ID is on a light DOM element, no shadow boundary is crossed. If the component attempts to use `aria-labelledby` to reference an ID on an element inside the shadow root, that reference will not resolve for the host element — this is the standard cross-root ARIA limitation for non-`aria-owns` relationships. The implementation avoids this by referencing the light DOM ID on the container-created message wrapper.
 
 The inner `role="alert"` element and its contents are entirely within the shadow DOM. The `aria-atomic` attribute and the live region behavior of that element do not require any cross-shadow ID references. However, the announcement will only fire reliably if the element is already present, empty, in the accessibility tree before its content is set: setting the message text in the same step that creates or reveals the node is unreliable and can be silently skipped.
 
-The action slot is light DOM; the author-provided button and its label do not create cross-root ARIA concerns.
+The action button is rendered inside the toast's shadow DOM as `swc-button`; its accessible name comes from `actionLabel` and does not require cross-root ARIA.
 
 The close button (`swc-close-button`) is a web component in shadow DOM; its accessible name is set via `accessible-label` and does not require cross-root ARIA.
 
@@ -140,7 +140,7 @@ host [aria-hidden="true"]
 **Toast with text only (open)**
 
 ```
-host [role="alertdialog", aria-modal="false", tabindex="0", aria-labelledby="[content-id]"]
+host [role="alertdialog", aria-modal="false", tabindex="0", aria-labelledby="[content-id]" (or, with a labeled icon, ElementInternals ariaLabelledByElements = [icon, message])]
   └── (shadow) alert [role="alert", aria-atomic="true"]
         └── [text content from default slot, id="[content-id]"]
   └── (shadow) close button: "Close"
@@ -151,23 +151,23 @@ Screen reader announces assertively when toast opens: "[message text]". Focus do
 **Toast with icon + text (open)**
 
 ```
-host [role="alertdialog", aria-modal="false", tabindex="0", aria-labelledby="[content-id]"]
+host [role="alertdialog", aria-modal="false", tabindex="0", aria-labelledby="[content-id]" (or, with a labeled icon, ElementInternals ariaLabelledByElements = [icon, message])]
   └── (shadow) alert [role="alert", aria-atomic="true"]
-        └── icon [aria-hidden="true" by default; role="img" with aria-label only when icon-label is set]
+        └── icon [role="img" with the variant default aria-label, or the icon-label override; aria-hidden="true" when icon-label is empty; no icon for neutral]
         └── [text content from default slot, id="[content-id]"]
   └── (shadow) close button: "Close"
 ```
 
-Screen reader announces assertively: "[message text]" — for example, "Error: Toast is burned!". When `icon-label` is set, it is announced before the message text.
+Screen reader announces assertively: "[message text]" — for example, "Error: Toast is burned!". For `info`, `positive`, and `negative`, the icon label (the variant default or the `icon-label` override) is announced before the message text unless `icon-label` is empty.
 
 **Toast with action button (open)**
 
 ```
-host [role="alertdialog", aria-modal="false", tabindex="0", aria-labelledby="[content-id]"]
+host [role="alertdialog", aria-modal="false", tabindex="0", aria-labelledby="[content-id]" (or, with a labeled icon, ElementInternals ariaLabelledByElements = [icon, message])]
   └── (shadow) alert [role="alert", aria-atomic="true"]
-        └── icon [aria-hidden="true" by default; role="img" with aria-label only when icon-label is set]
+        └── icon [role="img" with the variant default aria-label, or the icon-label override; aria-hidden="true" when icon-label is empty; no icon for neutral]
         └── [text content from default slot, id="[content-id]"]
-  └── (slot) action button: [author-provided label]   ← light DOM
+  └── (shadow) action button: [actionLabel]
   └── (shadow) close button: "Close"
 ```
 
@@ -194,13 +194,13 @@ Applying that pattern to `swc-toast`:
 
 **Assertive inner alert:** The inner `role="alert"` element uses assertive semantics by definition. This is appropriate because each toast is already scoped as an `alertdialog` — the announcement is bounded to a single dialog unit, reducing the interruption risk compared to a page-level assertive live region. Docs should still warn against stacking many toasts simultaneously and recommend batching updates (a single summary toast, or a progress bar) for bulk operations.
 
-**Container region and landmark navigation:** The `role="region"` wrapper, with a dynamic `aria-label` (for example, `"2 notifications."`), makes the toast area discoverable via landmark navigation (F6/Shift+F6 in JAWS and NVDA).
+**Container region and landmark navigation:** The `role="region"` wrapper, with a dynamic `aria-label` (for example, `"2 notifications."`), makes the toast area discoverable through screen reader landmark navigation. The container also handles F6 and Shift+F6 itself, moving focus into the region and back, as React Aria's toast region does.
 
 **Peek stack (decorative stacking):** When more than one toast is queued, only the front toast is a real, interactive `alertdialog`; toasts stacked behind it render as `role="presentation"` layers with no text content, hidden from the accessibility tree entirely. AT users are not told stacked toasts exist until the list is expanded; docs must state this explicitly rather than implying every queued toast is independently announced.
 
 **Expanding into a full list:** Clicking the stack, or an expand control shown once two or more toasts are queued, opens every toast in a scrollable list behind a dismissible scrim, closable via <kbd>Escape</kbd>, clicking the scrim, or a dedicated collapse control. Expanding turns every toast in the list into its own real `alertdialog`; the peek-stack exception above only applies while collapsed. Each toast's host is its own `tabindex="0"` stop, same as the single-toast case, so <kbd>Tab</kbd> reaches a toast's host, then that toast's action button (if present), then its close button, before moving to the next toast's host. While the list is expanded, focus must be trapped within it: <kbd>Tab</kbd> and <kbd>Shift</kbd> + <kbd>Tab</kbd> cycle only through the visible toasts' hosts and buttons and the expanded view's own controls, never escaping to the rest of the page. Collapsing moves focus to the container region. The view collapses automatically once the queue empties.
 
-**Actionable toasts and timing:** When an action button is present, auto-dismiss should generally be disabled or set to a much longer timeout. A screen reader user who hears the alert announcement and moves focus to the toast (via Tab or the live region) needs sufficient time to activate the action. The docs must warn against combining `timeout` with the `action` slot.
+**Actionable toasts and timing:** When an action button is present, auto-dismiss is disabled and a dev warning fires if `timeout` is also set. A screen reader user who hears the alert announcement and moves focus to the toast (via Tab or the live region) needs sufficient time to activate the action. The docs must warn against combining `timeout` with an action.
 
 ### Keyboard and focus
 
@@ -257,7 +257,7 @@ The 1st-gen README mentions the minimum timeout and the `role="region"` containe
 |--------------|----------------|
 | **Unit** | Host has `role="alertdialog"`, `aria-modal="false"`, `tabindex="0"`. Inner shadow element has `role="alert"` and `aria-atomic="true"`. Host has `aria-hidden="true"` when `open` is false. Countdown pauses on `focusin` and `pointerenter`; resumes on `focusout` and `pointerleave`. Close button has accessible name "Close". Timeout below 6000ms is raised to 6000ms. Variant icons are decorative when `icon-label` is omitted or empty; a nonempty `icon-label` renders `role="img"` with that label. |
 | **aXe + Storybook** | Run WCAG 2.x rules on all toast stories: default (no variant), positive, negative, info; with and without action button; closed state. |
-| **Playwright ARIA snapshots** | `toast.a11y.spec.ts`: cover closed state (aria-hidden), text-only, icon + text, and with action button. Verify `role="alertdialog"` on host, `role="alert"` on inner element, button accessible names, and icon semantics (decorative by default, labeled when `icon-label` is set). Also cover the peek stack (only the front toast is a real `alertdialog`; layers behind it carry `role="presentation"`) and the expanded list (every toast becomes a real `alertdialog` with its own `tabindex="0"` host). |
+| **Playwright ARIA snapshots** | `toast.a11y.spec.ts`: cover closed state (aria-hidden), text-only, icon + text, and with action button. Verify `role="alertdialog"` on host, `role="alert"` on inner element, button accessible names, and icon semantics (labeled by default per variant, overridden by `icon-label`, decorative when `icon-label` is empty). Also cover the peek stack (only the front toast is a real `alertdialog`; layers behind it carry `role="presentation"`) and the expanded list (every toast becomes a real `alertdialog` with its own `tabindex="0"` host). |
 | **Color contrast** | Verify text contrast (4.5:1) and close button non-text contrast (3:1) for all variants. Check forced-colors (high-contrast) mode. |
 
 ### Manual screen reader testing
@@ -279,21 +279,21 @@ See the gen2 Storybook [Screen reader testing](../../../../gen2/packages/swc/.st
 
 - [ ] Host element carries `role="alertdialog"`, `aria-modal="false"`, and `tabindex="0"`.
 - [ ] Inner shadow DOM element carries `role="alert"` and `aria-atomic="true"` (the live region).
-- [ ] Host carries `aria-labelledby` referencing the content element ID (light DOM), or `aria-label` derived dynamically from slot text content when no explicit ID is present.
+- [ ] Host carries `aria-labelledby` referencing the ID of the container-created message wrapper (light DOM); there is no `aria-label` fallback.
 - [ ] `aria-hidden="true"` is set on the host when `open` is false; removed when `open` is true.
 - [ ] Opening a toast does not move focus; `tabindex="0"` on the host makes it reachable via <kbd>Tab</kbd> and serves as a refocus target when a control on it disappears.
 - [ ] Tab navigates from the alertdialog host to the action button (if present), then to the close button; arrow keys are not used.
 - [ ] Auto-dismiss timer enforces a minimum of 6000ms.
 - [ ] Countdown pauses on both `focusin` and `pointerenter`; resumes on `focusout` and `pointerleave`.
 - [ ] Close button has an accessible name ("Close" by default).
-- [ ] Variant icons are decorative (`aria-hidden`) by default; a nonempty `icon-label` renders `role="img"` with that `aria-label` (a `warning` variant is deprecated and not part of gen2's four variants).
-- [ ] Action button slot is limited to one action; docs state this limit explicitly.
-- [ ] Docs warn against using `timeout` when the `action` slot is populated.
+- [ ] Semantic variant icons render `role="img"` with a default per-variant `aria-label`; a nonempty `icon-label` overrides it and an empty `icon-label` makes the icon decorative (`aria-hidden`) (a `warning` variant is deprecated and not part of gen2's four variants).
+- [ ] Only one action is supported; docs state this limit explicitly.
+- [ ] Docs warn against using `timeout` together with an action.
 - [ ] Docs include the `role="region"` container pattern (with `aria-label` and notification count).
 - [ ] Peek-stack layers behind the front toast use `role="presentation"` and are not independently announced.
 - [ ] Expanding the stack makes every toast a real `alertdialog` with its own `tabindex="0"` host; focus is trapped across all toasts' hosts and buttons plus the expanded view's own controls; collapsing moves focus to the container region; the view auto-collapses when the queue empties.
 - [ ] Docs do not claim `variant` sets ARIA states; color alone does not convey variant meaning.
-- [ ] Dev warning fires when `timeout` and the `action` slot are both set.
+- [ ] Dev warning fires when `timeout` and an action are both set.
 - [ ] aXe (WCAG 2.x) runs on all toast stories.
 - [ ] ARIA snapshot tests cover: closed state, text-only, icon + text, with action button, peek stack, and expanded list; verify `role="alertdialog"` on host and `role="alert"` on inner element.
 - [ ] Manual screen reader testing verifies the live region announcement fires without moving focus, and interactive elements are reachable per the [Storybook screen reader testing guide](../../../../gen2/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx).

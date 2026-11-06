@@ -14,32 +14,29 @@ import { html } from 'lit';
 import { expect, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import { Toast } from '@adobe/spectrum-wc/toast';
 import {
   SWC_TOAST_ACTION_EVENT,
   TOAST_VARIANTS,
   type ToastVariant,
-} from '@adobe/spectrum-wc-core/components/toast';
+} from '@adobe/spectrum-wc-core/components/toast-container/index.js';
 
-import '@adobe/spectrum-wc/components/toast/swc-toast.js';
+import '../swc-toast.js';
 
 import {
   getComponent,
   waitForEvent,
   withWarningSpy,
 } from '../../../utils/test-utils.js';
-import meta, { Overview } from '../stories/toast.stories.js';
+import { Toast } from '../Toast.js';
 
-// These tests cover standalone Toast only; queue and container behavior gets separate tests.
-// TODO(SWC-2567): add queue tests: timeout floor, action disables timeout with its dev warning, pause and resume.
+// These tests cover standalone Toast only; queue and container behavior is tested in toast-container.
 // TODO(SWC-2655): add collapsed-stack tests: peek layers, Show all, front-toast countdown.
 // TODO(SWC-2654): add expanded-view tests: scrim, Escape, Collapse, Clear all, focus management.
 
 export default {
-  ...meta,
-  title: 'Toast/Tests',
+  title: 'Toast container/Tests/Toast',
+  component: 'swc-toast',
   parameters: {
-    ...meta.parameters,
     docs: { disable: true, page: null },
   },
   tags: ['!autodocs', 'dev'],
@@ -47,6 +44,37 @@ export default {
 
 const nextFrame = (): Promise<void> =>
   new Promise((resolve) => requestAnimationFrame(() => resolve()));
+
+// Engines differ on whether ElementInternals can name a host from elements in its own shadow tree:
+// Chromium and Firefox keep them, WebKit drops them. Ask the engine, so a test expects what that
+// engine supports and starts expecting more on its own if WebKit ever keeps them.
+let keepsShadowNameParts: boolean | undefined;
+const engineKeepsShadowNameParts = (): boolean => {
+  if (keepsShadowNameParts === undefined) {
+    if (!customElements.get('swc-test-name-probe')) {
+      customElements.define(
+        'swc-test-name-probe',
+        class extends HTMLElement {
+          public readonly internals = this.attachInternals();
+        }
+      );
+    }
+    const probe = document.createElement(
+      'swc-test-name-probe'
+    ) as HTMLElement & {
+      internals: ElementInternals;
+    };
+    const inner = probe
+      .attachShadow({ mode: 'open' })
+      .appendChild(document.createElement('span'));
+    const outer = probe.appendChild(document.createElement('span'));
+    document.body.append(probe);
+    probe.internals.ariaLabelledByElements = [inner, outer];
+    keepsShadowNameParts = probe.internals.ariaLabelledByElements?.length === 2;
+    probe.remove();
+  }
+  return keepsShadowNameParts;
+};
 
 const messageSlot = (toast: Toast): HTMLSlotElement | null =>
   toast.shadowRoot?.querySelector('.swc-Toast-text slot') ?? null;
@@ -71,11 +99,9 @@ const cancelNextClose = (
 // ──────────────────────────────────────────────────────────────
 
 export const OverviewTest: Story = {
-  ...Overview,
-  args: {
-    ...Overview.args,
-    open: false,
-  },
+  render: () => html`
+    <swc-toast><span id="toast-message">File saved</span></swc-toast>
+  `,
   play: async ({ canvasElement, step }) => {
     const toast = await getComponent<Toast>(canvasElement, 'swc-toast');
 
@@ -132,8 +158,44 @@ export const VariantIconTest: Story = {
       }
     });
 
-    await step('renders a decorative icon without icon-label', async () => {
+    await step(
+      'labels each semantic variant icon by default without reflecting icon-label',
+      async () => {
+        const expectedLabels: Record<string, string> = {
+          info: 'Information',
+          positive: 'Success',
+          negative: 'Error',
+        };
+
+        for (const [variant, label] of Object.entries(expectedLabels)) {
+          toast.variant = variant as ToastVariant;
+          await toast.updateComplete;
+
+          expect(
+            icon()?.getAttribute('accessible-label'),
+            `default icon label for ${variant}`
+          ).toBe(label);
+          expect(
+            toast.hasAttribute('icon-label'),
+            `icon-label attribute for ${variant}`
+          ).toBe(false);
+        }
+      }
+    );
+
+    await step('icon-label overrides the default label', async () => {
       toast.variant = 'info';
+      toast.iconLabel = 'Nouvelle version';
+      await toast.updateComplete;
+
+      expect(
+        icon()?.getAttribute('accessible-label'),
+        'overridden icon label'
+      ).toBe('Nouvelle version');
+    });
+
+    await step('an empty icon-label renders a decorative icon', async () => {
+      toast.iconLabel = '';
       await toast.updateComplete;
 
       expect(
@@ -142,26 +204,135 @@ export const VariantIconTest: Story = {
       ).toBe(false);
     });
 
-    await step('icon-label is forwarded to the icon', async () => {
-      toast.iconLabel = 'Information';
+    await step('removing icon-label restores the default label', async () => {
+      toast.iconLabel = undefined;
       await toast.updateComplete;
 
       expect(
         icon()?.getAttribute('accessible-label'),
-        'forwarded icon label'
+        'restored default icon label'
       ).toBe('Information');
     });
 
+    await step('neutral ignores icon-label and renders no icon', async () => {
+      toast.variant = 'neutral';
+      toast.iconLabel = 'Ignored';
+      await toast.updateComplete;
+
+      expect(icon(), 'neutral icon').toBeNull();
+    });
+  },
+};
+
+// Focusing the host reads its name, not the live region, so the icon's own label leads the name too.
+export const VariantNameTest: Story = {
+  render: () => html`
+    <swc-toast open variant="info">
+      <span id="variant-name-message">File saved</span>
+    </swc-toast>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const toast = await getComponent<Toast>(canvasElement, 'swc-toast');
+    const icon = (): Element | null =>
+      toast.shadowRoot?.querySelector('.swc-Toast-icon') ?? null;
+    const message = (): Element | null =>
+      toast.querySelector('#variant-name-message');
+    // The host names itself through ElementInternals, so read it back from there.
+    const nameParts = (): readonly Element[] | null =>
+      toast['internals'].ariaLabelledByElements;
+    // Where the engine keeps the icon it leads the name through ElementInternals. Elsewhere the host
+    // falls back to naming itself from the message with a plain aria-labelledby attribute.
+    const expectLabeledNameParts = (label: string): void => {
+      if (engineKeepsShadowNameParts()) {
+        expect(nameParts()?.length, `${label} count`).toBe(2);
+        expect(nameParts()?.[0], `${label} first`).toBe(icon());
+        expect(nameParts()?.[1], `${label} second`).toBe(message());
+        expect(
+          toast.hasAttribute('aria-labelledby'),
+          `${label} aria-labelledby presence`
+        ).toBe(false);
+        return;
+      }
+      expect(nameParts(), `${label} ElementInternals parts`).toBeNull();
+      expect(
+        toast.getAttribute('aria-labelledby'),
+        `${label} aria-labelledby`
+      ).toBe(message()?.id);
+    };
+
     await step(
-      'renders a decorative icon for an empty icon-label',
+      'names the host from the icon, then the message, with no extra DOM',
+      async () => {
+        await toast.updateComplete;
+
+        expectLabeledNameParts('name parts');
+        expect(
+          toast.querySelector('[slot="variant-label"]'),
+          'hidden variant label node'
+        ).toBeNull();
+      }
+    );
+
+    await step(
+      'the name follows the icon when the variant changes',
+      async () => {
+        for (const variant of ['positive', 'negative'] as const) {
+          toast.variant = variant;
+          await toast.updateComplete;
+
+          expectLabeledNameParts(`name parts for ${variant}`);
+          expect(icon()?.localName, `icon for ${variant}`).toBe(
+            variant === 'positive'
+              ? 'swc-icon-checkmark-circle'
+              : 'swc-icon-alert-triangle'
+          );
+        }
+      }
+    );
+
+    await step('icon-label overrides the label the name reads', async () => {
+      toast.iconLabel = 'Nouvelle version';
+      await toast.updateComplete;
+
+      expectLabeledNameParts('name parts');
+      expect(icon()?.getAttribute('accessible-label'), 'icon label').toBe(
+        'Nouvelle version'
+      );
+    });
+
+    await step(
+      'an empty icon-label names the host from the message alone',
       async () => {
         toast.iconLabel = '';
         await toast.updateComplete;
 
+        expect(nameParts(), 'name parts').toBeNull();
         expect(
-          icon()?.hasAttribute('accessible-label'),
-          'icon accessible-label presence'
-        ).toBe(false);
+          toast.getAttribute('aria-labelledby'),
+          'host aria-labelledby'
+        ).toBe('variant-name-message');
+      }
+    );
+
+    await step('neutral names the host from the message alone', async () => {
+      toast.iconLabel = undefined;
+      toast.variant = 'neutral';
+      await toast.updateComplete;
+
+      expect(nameParts(), 'name parts').toBeNull();
+      expect(
+        toast.getAttribute('aria-labelledby'),
+        'host aria-labelledby'
+      ).toBe('variant-name-message');
+    });
+
+    await step(
+      'returning to a semantic variant restores the icon',
+      async () => {
+        toast.variant = 'info';
+        await toast.updateComplete;
+
+        expectLabeledNameParts('name parts');
       }
     );
   },
@@ -239,7 +410,7 @@ export const ActionButtonTest: Story = {
 
 export const AccessibilitySemanticsTest: Story = {
   render: () => html`
-    <swc-toast>File saved</swc-toast>
+    <swc-toast><span id="toast-message">File saved</span></swc-toast>
   `,
   play: async ({ canvasElement, step }) => {
     const toast = await getComponent<Toast>(canvasElement, 'swc-toast');
@@ -248,9 +419,10 @@ export const AccessibilitySemanticsTest: Story = {
       expect(toast.getAttribute('role'), 'host role').toBe('alertdialog');
       expect(toast.getAttribute('aria-modal'), 'host aria-modal').toBe('false');
       expect(toast.getAttribute('tabindex'), 'host tabindex').toBe('0');
-      expect(toast.getAttribute('aria-label'), 'host aria-label').toBe(
-        'File saved'
-      );
+      expect(
+        toast.getAttribute('aria-labelledby'),
+        'host aria-labelledby'
+      ).toBe('toast-message');
       expect(toast.getAttribute('aria-hidden'), 'host aria-hidden').toBe(
         'true'
       );
@@ -267,13 +439,15 @@ export const AccessibilitySemanticsTest: Story = {
     await step(
       'updates the accessible name when the message changes',
       async () => {
-        toast.textContent = 'Upload complete';
+        toast.innerHTML =
+          '<span id="updated-toast-message">Upload complete</span>';
         await Promise.resolve();
         await toast.updateComplete;
 
-        expect(toast.getAttribute('aria-label'), 'host aria-label').toBe(
-          'Upload complete'
-        );
+        expect(
+          toast.getAttribute('aria-labelledby'),
+          'host aria-labelledby'
+        ).toBe('updated-toast-message');
       }
     );
   },
@@ -296,14 +470,13 @@ export const LabelledMessageTest: Story = {
       );
     });
 
-    // TODO(SWC-2567): drop the bare-text fallback steps if the container becomes the only creator of toasts.
-    await step('bare text falls back to aria-label', async () => {
+    await step('bare text does not create an aria-label fallback', async () => {
       toast.textContent = 'Upload complete';
       await Promise.resolve();
       await toast.updateComplete;
 
-      expect(toast.getAttribute('aria-label'), 'host aria-label').toBe(
-        'Upload complete'
+      expect(toast.hasAttribute('aria-label'), 'host aria-label presence').toBe(
+        false
       );
       expect(
         toast.hasAttribute('aria-labelledby'),
@@ -312,20 +485,51 @@ export const LabelledMessageTest: Story = {
     });
 
     await step(
-      'more than one message element falls back to aria-label',
+      'more than one message element does not create an aria-label fallback',
       async () => {
         toast.innerHTML =
           '<span id="first-part">File</span> <span>saved</span>';
         await Promise.resolve();
         await toast.updateComplete;
 
-        expect(toast.getAttribute('aria-label'), 'host aria-label').toBe(
-          'File saved'
-        );
+        expect(
+          toast.hasAttribute('aria-label'),
+          'host aria-label presence'
+        ).toBe(false);
         expect(
           toast.hasAttribute('aria-labelledby'),
           'host aria-labelledby presence'
         ).toBe(false);
+      }
+    );
+    await step(
+      'naming updates leave a caller-provided aria-label untouched',
+      async () => {
+        toast.setAttribute('aria-label', 'Caller label');
+        toast.innerHTML = '<span id="updated-message">Upload complete</span>';
+        await Promise.resolve();
+        await toast.updateComplete;
+
+        expect(
+          toast.getAttribute('aria-labelledby'),
+          'host aria-labelledby'
+        ).toBe('updated-message');
+        expect(toast.getAttribute('aria-label'), 'host aria-label').toBe(
+          'Caller label'
+        );
+
+        toast.replaceChildren();
+        await Promise.resolve();
+        await toast.updateComplete;
+
+        expect(
+          toast.hasAttribute('aria-labelledby'),
+          'host aria-labelledby presence after clearing'
+        ).toBe(false);
+        expect(
+          toast.getAttribute('aria-label'),
+          'host aria-label after clearing'
+        ).toBe('Caller label');
       }
     );
   },
@@ -341,11 +545,12 @@ export const EmptySlotMessageTest: Story = {
     const toast = await getComponent<Toast>(canvasElement, 'swc-toast');
 
     await step(
-      'labels the host from a slot="" text element like default-slot content',
+      'a slot="" element without an ID does not create a naming fallback',
       () => {
-        expect(toast.getAttribute('aria-label'), 'host aria-label').toBe(
-          'File saved'
-        );
+        expect(
+          toast.hasAttribute('aria-label'),
+          'host aria-label presence'
+        ).toBe(false);
         expect(
           toast.hasAttribute('aria-labelledby'),
           'host aria-labelledby presence'
@@ -418,7 +623,6 @@ export const OpenLifecycleTest: Story = {
       expect(events, 'events after opening').toEqual(['swc-open']);
     });
 
-    // TODO(SWC-2567): confirm the container connects toasts closed and opens them after the first update (Q11).
     await step(
       'keeps the live region empty for two frames, then adds the message (Q10, Q11)',
       async () => {
@@ -535,6 +739,24 @@ export const CloseInteractionTest: Story = {
       }
     );
 
+    await step('close-label overrides the close button name', async () => {
+      toast.closeLabel = 'Fermer';
+      await toast.updateComplete;
+
+      expect(
+        closeButton.getAttribute('accessible-label'),
+        'overridden close button label'
+      ).toBe('Fermer');
+
+      toast.closeLabel = '';
+      await toast.updateComplete;
+
+      expect(
+        closeButton.getAttribute('accessible-label'),
+        'close button label for an empty close-label'
+      ).toBe('Close');
+    });
+
     await step('swc-close can cancel dismissal', async () => {
       cancelNextClose(toast);
       closeButton.click();
@@ -603,7 +825,9 @@ export const CloseInteractionTest: Story = {
 
 export const ReconnectTest: Story = {
   render: () => html`
-    <swc-toast variant="positive">File saved</swc-toast>
+    <swc-toast variant="positive">
+      <span id="toast-message">File saved</span>
+    </swc-toast>
   `,
   play: async ({ canvasElement, step }) => {
     const toast = await getComponent<Toast>(canvasElement, 'swc-toast');
@@ -615,9 +839,20 @@ export const ReconnectTest: Story = {
 
       expect(toast.getAttribute('variant'), 'host variant').toBe('positive');
       expect(toast.getAttribute('role'), 'host role').toBe('alertdialog');
-      expect(toast.getAttribute('aria-label'), 'host aria-label').toBe(
-        'File saved'
+      expect(
+        toast['internals'].ariaLabelledByElements?.map(
+          (part: Element) => part.id || part.localName
+        ),
+        'host name parts'
+      ).toEqual(
+        engineKeepsShadowNameParts()
+          ? ['swc-icon-checkmark-circle', 'toast-message']
+          : undefined
       );
+      expect(
+        toast.getAttribute('aria-labelledby'),
+        'host aria-labelledby'
+      ).toBe(engineKeepsShadowNameParts() ? null : 'toast-message');
     });
 
     await step(
