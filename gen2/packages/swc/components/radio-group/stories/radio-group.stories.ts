@@ -54,7 +54,7 @@ const meta: Meta = {
       subtitle: 'A set of options where only one can be selected',
     },
   },
-  tags: ['migrated', '!autodocs'],
+  tags: ['migrated'],
 };
 
 export default meta;

@@ -21,6 +21,7 @@ import '@adobe/spectrum-wc/components/radio-group/swc-radio.js';
 import {
   fixture,
   getComponent,
+  getComponents,
   withWarningSpy,
 } from '../../../utils/test-utils.js';
 import meta, {
@@ -482,27 +483,29 @@ export const DisabledCascadeTest: Story = {
       <swc-radio value="2"><span slot="label">Green</span></swc-radio>
     </swc-radio-group>
   `,
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement, step }) => {
     const group = await getComponent<RadioGroup>(
       canvasElement,
       'swc-radio-group'
     );
-    const items = Array.from(group.querySelectorAll<Radio>('swc-radio'));
+    const items = await getComponents<Radio>(group, 'swc-radio');
 
-    await waitFor(() =>
+    await step('a disabled group disables every item', async () => {
+      await waitFor(() =>
+        expect(
+          items.every(exposedDisabled),
+          'group-level disabled cascades to every item'
+        ).toBe(true)
+      );
       expect(
-        items.every(exposedDisabled),
-        'group-level disabled cascades to every item'
-      ).toBe(true)
-    );
-    expect(
-      items.some((item) => item.disabled),
-      "the cascade does not change an item's own disabled"
-    ).toBe(false);
-    expect(
-      group.matches(':state(disabled)'),
-      'the authored status sets the disabled state'
-    ).toBe(true);
+        items.some((item) => item.disabled),
+        "the cascade does not change an item's own disabled"
+      ).toBe(false);
+      expect(
+        group.matches(':state(disabled)'),
+        'the authored status sets the disabled state'
+      ).toBe(true);
+    });
   },
 };
 
@@ -573,59 +576,115 @@ export const DisabledStateLifecycleTest: Story = {
       </fieldset>
     </form>
   `,
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement, step }) => {
     const group = await getComponent<RadioGroup>(
       canvasElement,
       'swc-radio-group'
     );
-    const items = Array.from(group.querySelectorAll<Radio>('swc-radio'));
+    const items = await getComponents<Radio>(group, 'swc-radio');
     const fieldset = canvasElement.querySelector('fieldset')!;
-    await waitFor(() => {
-      expect(items.map((item) => item.disabled)).toEqual([false, true]);
-      expect(items.map((item) => item.tabIndex)).toEqual([0, -1]);
+
+    await step('only the authored item starts disabled', async () => {
+      await waitFor(() => {
+        expect(
+          items.map((item) => item.disabled),
+          'own disabled'
+        ).toEqual([false, true]);
+        expect(
+          items.map((item) => item.tabIndex),
+          'tab stops'
+        ).toEqual([0, -1]);
+      });
     });
 
-    group.fieldStatus = 'disabled';
-    await group.updateComplete;
-    await waitFor(() => {
-      expect(items.map(exposedDisabled)).toEqual([true, true]);
-      expect(items.map((item) => item.disabled)).toEqual([false, true]);
-      expect(items.map((item) => item.tabIndex)).toEqual([-1, -1]);
+    await step('a disabled group disables every item', async () => {
+      group.fieldStatus = 'disabled';
+      await group.updateComplete;
+      await waitFor(() => {
+        expect(items.map(exposedDisabled), 'exposed disabled').toEqual([
+          true,
+          true,
+        ]);
+        expect(
+          items.map((item) => item.disabled),
+          'own disabled is unchanged'
+        ).toEqual([false, true]);
+        expect(
+          items.map((item) => item.tabIndex),
+          'tab stops'
+        ).toEqual([-1, -1]);
+      });
     });
 
-    const added = document.createElement('swc-radio') as Radio;
-    added.value = 'pickup';
-    const label = document.createElement('span');
-    label.slot = 'label';
-    label.textContent = 'Pickup';
-    added.append(label);
-    group.append(added);
-    await waitFor(() => expect(exposedDisabled(added)).toBe(true));
-    added.remove();
-    await waitFor(() => expect(exposedDisabled(added)).toBe(false));
+    await step(
+      'items added or removed while disabled follow the group',
+      async () => {
+        const added = document.createElement('swc-radio') as Radio;
+        added.value = 'pickup';
+        const label = document.createElement('span');
+        label.slot = 'label';
+        label.textContent = 'Pickup';
+        added.append(label);
+        group.append(added);
+        await waitFor(() =>
+          expect(exposedDisabled(added), 'added item is disabled').toBe(true)
+        );
+        added.remove();
+        await waitFor(() =>
+          expect(exposedDisabled(added), 'removed item is released').toBe(false)
+        );
+      }
+    );
 
-    fieldset.disabled = true;
-    group.fieldStatus = undefined;
-    await group.updateComplete;
-    await waitFor(() => {
-      expect(items.map(exposedDisabled)).toEqual([true, true]);
-      expect(group.matches(':state(disabled)')).toBe(true);
+    await step('a disabled fieldset disables every item', async () => {
+      fieldset.disabled = true;
+      group.fieldStatus = undefined;
+      await group.updateComplete;
+      await waitFor(() => {
+        expect(items.map(exposedDisabled), 'exposed disabled').toEqual([
+          true,
+          true,
+        ]);
+        expect(
+          group.matches(':state(disabled)'),
+          'fieldset sets the disabled state'
+        ).toBe(true);
+      });
     });
 
-    fieldset.disabled = false;
-    await waitFor(() => {
-      expect(items.map((item) => item.disabled)).toEqual([false, true]);
-      expect(items.map((item) => item.tabIndex)).toEqual([0, -1]);
-      expect(group.matches(':state(disabled)')).toBe(false);
+    await step('enabling the fieldset restores own states', async () => {
+      fieldset.disabled = false;
+      await waitFor(() => {
+        expect(items.map(exposedDisabled), 'exposed disabled').toEqual([
+          false,
+          true,
+        ]);
+        expect(
+          items.map((item) => item.tabIndex),
+          'tab stops'
+        ).toEqual([0, -1]);
+        expect(
+          group.matches(':state(disabled)'),
+          'fieldset clears the disabled state'
+        ).toBe(false);
+      });
     });
 
-    group.fieldStatus = 'disabled';
-    await group.updateComplete;
-    group.fieldStatus = undefined;
-    await group.updateComplete;
-    await waitFor(() => {
-      expect(items.map((item) => item.disabled)).toEqual([false, true]);
-      expect(items.map((item) => item.tabIndex)).toEqual([0, -1]);
+    await step('toggling the group status restores own states', async () => {
+      group.fieldStatus = 'disabled';
+      await group.updateComplete;
+      group.fieldStatus = undefined;
+      await group.updateComplete;
+      await waitFor(() => {
+        expect(items.map(exposedDisabled), 'exposed disabled').toEqual([
+          false,
+          true,
+        ]);
+        expect(
+          items.map((item) => item.tabIndex),
+          'tab stops'
+        ).toEqual([0, -1]);
+      });
     });
   },
 };
@@ -640,37 +699,43 @@ export const AuthoredDisabledWhileGroupDisabledTest: Story = {
       </swc-radio>
     </swc-radio-group>
   `,
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement, step }) => {
     const group = await getComponent<RadioGroup>(
       canvasElement,
       'swc-radio-group'
     );
-    const [standard, express] = Array.from(
-      group.querySelectorAll<Radio>('swc-radio')
+    const [standard, express] = await getComponents<Radio>(group, 'swc-radio');
+
+    await step(
+      'app changes keep items disabled while the group is',
+      async () => {
+        await waitFor(() =>
+          expect(
+            [standard, express].map(exposedDisabled),
+            'every item starts disabled'
+          ).toEqual([true, true])
+        );
+        express.disabled = false;
+        standard.disabled = true;
+        await Promise.all([standard.updateComplete, express.updateComplete]);
+        expect(
+          [standard, express].map(exposedDisabled),
+          'the group keeps every item disabled'
+        ).toEqual([true, true]);
+        await userEvent.click(express);
+        expect(group.selected, 'a disabled group ignores clicks').toBe('');
+      }
     );
-    await waitFor(() => {
-      expect([standard, express].map(exposedDisabled)).toEqual([true, true]);
-    });
 
-    // App changes made while the group is disabled.
-    express.disabled = false;
-    standard.disabled = true;
-    await Promise.all([standard.updateComplete, express.updateComplete]);
-
-    expect(
-      [standard, express].map(exposedDisabled),
-      'the group keeps every item disabled'
-    ).toEqual([true, true]);
-    await userEvent.click(express);
-    expect(group.selected, 'a disabled group ignores clicks').toBe('');
-
-    group.fieldStatus = undefined;
-    await group.updateComplete;
-    await waitFor(() => {
-      expect(
-        [standard, express].map(exposedDisabled),
-        'enabling the group applies the latest app changes'
-      ).toEqual([true, false]);
+    await step('enabling the group applies the app changes', async () => {
+      group.fieldStatus = undefined;
+      await group.updateComplete;
+      await waitFor(() =>
+        expect(
+          [standard, express].map(exposedDisabled),
+          'each item follows its own disabled'
+        ).toEqual([true, false])
+      );
     });
   },
 };
@@ -1492,25 +1557,32 @@ export const SingleChangeEventTest: Story = {
       <swc-radio value="2"><span slot="label">Express</span></swc-radio>
     </swc-radio-group>
   `,
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement, step }) => {
     const group = await getComponent<RadioGroup>(
       canvasElement,
       'swc-radio-group'
     );
-    const items = Array.from(group.querySelectorAll<Radio>('swc-radio'));
-    const changes: Event[] = [];
-    const record = (event: Event): void => {
-      changes.push(event);
-    };
+    const items = await getComponents<Radio>(group, 'swc-radio');
 
-    group.addEventListener('change', record);
-    await userEvent.click(items[1]);
-    await group.updateComplete;
-    group.removeEventListener('change', record);
+    await step(
+      'a group listener receives one change per selection',
+      async () => {
+        const changes: Event[] = [];
+        const record = (event: Event): void => {
+          changes.push(event);
+        };
+        group.addEventListener('change', record);
+        await userEvent.click(items[1]);
+        await group.updateComplete;
+        group.removeEventListener('change', record);
 
-    expect(changes, 'one change per selection').toHaveLength(1);
-    expect(changes[0].target).toBe(group);
-    expect(changes[0].cancelable).toBe(true);
+        expect(changes, 'one change per selection').toHaveLength(1);
+        expect(changes[0].target, 'the group dispatches the change').toBe(
+          group
+        );
+        expect(changes[0].cancelable, 'the change is cancelable').toBe(true);
+      }
+    );
   },
 };
 

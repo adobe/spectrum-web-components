@@ -65,14 +65,14 @@ export abstract class RadioGroupBase extends SizedMixin(
     defaultSize: 'm',
   }
 ) {
-  static readonly LABEL_POSITIONS: readonly RadioGroupLabelPosition[] =
+  public static readonly LABEL_POSITIONS: readonly RadioGroupLabelPosition[] =
     RADIO_GROUP_LABEL_POSITIONS;
 
-  static readonly ORIENTATIONS: readonly RadioGroupOrientation[] =
+  public static readonly ORIENTATIONS: readonly RadioGroupOrientation[] =
     RADIO_GROUP_ORIENTATIONS;
 
   /** Opts the element into native form participation. */
-  static formAssociated = true;
+  public static formAssociated = true;
 
   /**
    * Form participation only. Do not move `role="radiogroup"` or ARIA state
@@ -166,15 +166,6 @@ export abstract class RadioGroupBase extends SizedMixin(
   //     IMPLEMENTATION
   // ──────────────────────
 
-  /**
-   * The authored `disabled` status OR the cascaded form / `<fieldset disabled>`
-   * state. Applied to every slotted item without changing the item's own
-   * `disabled`.
-   */
-  protected get effectiveDisabled(): boolean {
-    return this.fieldAssoc.disabled;
-  }
-
   /** The form the group participates in, or `null`. */
   public get form(): HTMLFormElement | null {
     return this.fieldAssoc.form;
@@ -229,16 +220,6 @@ export abstract class RadioGroupBase extends SizedMixin(
     this.fieldAssoc.formDisabledCallback(disabled);
   }
 
-  private assignedItems(): RadioBase[] {
-    const slot = this.renderRoot?.querySelector('slot:not([name])');
-    if (!slot) {
-      return [];
-    }
-    return (slot as HTMLSlotElement)
-      .assignedElements({ flatten: true })
-      .filter((el): el is RadioBase => el instanceof RadioBase);
-  }
-
   private readonly sizePropagation = new SlotAttributePropagationController(
     this,
     {
@@ -255,63 +236,6 @@ export abstract class RadioGroupBase extends SizedMixin(
 
   /** Items currently disabled by this group, so removed items can be released. */
   private readonly groupDisabledItems = new Set<RadioBase>();
-
-  private setItemGroupDisabled(item: RadioBase, disabled: boolean): void {
-    item.groupDisabled = disabled;
-    // Navigation refreshes before the child's Lit update can reflect this state.
-    if (item.effectiveDisabled) {
-      item.setAttribute('aria-disabled', 'true');
-    } else {
-      item.removeAttribute('aria-disabled');
-    }
-    if (disabled) {
-      this.groupDisabledItems.add(item);
-    } else {
-      this.groupDisabledItems.delete(item);
-    }
-  }
-
-  /**
-   * Applies the group's disabled state to every assigned item without
-   * touching the item's own `disabled`. Returns whether any item changed.
-   */
-  private syncDisabledState(): boolean {
-    const items = this.assignedItems();
-    const assigned = new Set(items);
-    let changed = false;
-    for (const item of this.groupDisabledItems) {
-      if (!assigned.has(item)) {
-        changed ||= !item.disabled;
-        this.setItemGroupDisabled(item, false);
-      }
-    }
-    for (const item of items) {
-      if (item.groupDisabled !== this.effectiveDisabled) {
-        changed ||= !item.disabled;
-        this.setItemGroupDisabled(item, this.effectiveDisabled);
-      }
-    }
-    return changed;
-  }
-
-  /**
-   * Adopts `value` unless already selected, dispatching a cancelable `change`
-   * and reverting on `preventDefault()`. Shared by item activation and
-   * keyboard navigation.
-   */
-  private proposeSelection(value: string): void {
-    if (value === this.selected) {
-      return;
-    }
-    const previous = this.selected;
-    this.selected = value;
-    const applyDefault = this.dispatchEvent(
-      new Event('change', { cancelable: true, bubbles: true, composed: true })
-    );
-    if (!applyDefault) {
-      this.selected = previous;
-    }
-  }
 
   /**
    * Proposed selection changes from item activation. When `field-status="readonly"`, reverts
@@ -402,62 +326,17 @@ export abstract class RadioGroupBase extends SizedMixin(
     super.disconnectedCallback();
   }
 
-  /** Sets each item's `checked` from `selected` and keeps the roving tab stop on the checked item. */
-  private syncCheckedState(): void {
-    let checkedItem: RadioBase | undefined;
-    for (const item of this.assignedItems()) {
-      item.checked = this.selected !== '' && item.value === this.selected;
-      if (item.checked) {
-        checkedItem = item;
-      }
-    }
-    if (checkedItem) {
-      this.navigation.setActiveItem(checkedItem);
-    }
-  }
-
-  private warnDuplicateValues(): void {
-    const seen = new Set<string>();
-    for (const item of this.assignedItems()) {
-      if (!item.value) {
-        continue;
-      }
-      warnIf(
-        this,
-        seen.has(item.value),
-        `Multiple <swc-radio> items share the value "${item.value}". Selection matching by value will not distinguish between them.`,
-        DOCS_URL,
-        { type: 'api', issues: [`value="${item.value}"`] }
-      );
-      seen.add(item.value);
-    }
-  }
-
-  /**
-   * Sets each item's `posInSet`/`setSize`. Items have separate shadow roots,
-   * so the browser can't compute position; without this, some AT
-   * announces every item as "1 of 1".
-   */
-  private syncItemPositions(): void {
-    const items = this.assignedItems();
-    items.forEach((item, index) => {
-      item.posInSet = index + 1;
-      item.setSize = items.length;
-    });
-  }
-
   private readonly handleSlotchange = (): void => {
     this.syncSlottedItems();
   };
 
-  private syncSlottedItems(): void {
-    this.sizePropagation.propagate();
-    this.emphasizedPropagation.propagate();
-    this.syncDisabledState();
-    this.warnDuplicateValues();
-    this.syncItemPositions();
-    this.navigation.refresh();
-    this.syncCheckedState();
+  /**
+   * The authored `disabled` status OR the cascaded form / `<fieldset disabled>`
+   * state. Applied to every slotted item without changing the item's own
+   * `disabled`.
+   */
+  protected get effectiveDisabled(): boolean {
+    return this.fieldAssoc.disabled;
   }
 
   protected override firstUpdated(changedProperties: PropertyValues): void {
@@ -548,6 +427,127 @@ export abstract class RadioGroupBase extends SizedMixin(
     this.fieldAssoc.setValue(
       this.effectiveDisabled || !this.selected ? null : this.selected
     );
+  }
+
+  private assignedItems(): RadioBase[] {
+    const slot = this.renderRoot?.querySelector('slot:not([name])');
+    if (!slot) {
+      return [];
+    }
+    return (slot as HTMLSlotElement)
+      .assignedElements({ flatten: true })
+      .filter((el): el is RadioBase => el instanceof RadioBase);
+  }
+
+  private setItemGroupDisabled(item: RadioBase, disabled: boolean): void {
+    item.groupDisabled = disabled;
+    // Navigation refreshes before the child's Lit update can reflect this state.
+    if (item.effectiveDisabled) {
+      item.setAttribute('aria-disabled', 'true');
+    } else {
+      item.removeAttribute('aria-disabled');
+    }
+    if (disabled) {
+      this.groupDisabledItems.add(item);
+    } else {
+      this.groupDisabledItems.delete(item);
+    }
+  }
+
+  /**
+   * Applies the group's disabled state to every assigned item without
+   * touching the item's own `disabled`. Returns whether any item changed.
+   */
+  private syncDisabledState(): boolean {
+    const items = this.assignedItems();
+    const assigned = new Set(items);
+    let changed = false;
+    for (const item of this.groupDisabledItems) {
+      if (!assigned.has(item)) {
+        changed ||= !item.disabled;
+        this.setItemGroupDisabled(item, false);
+      }
+    }
+    for (const item of items) {
+      if (item.groupDisabled !== this.effectiveDisabled) {
+        changed ||= !item.disabled;
+        this.setItemGroupDisabled(item, this.effectiveDisabled);
+      }
+    }
+    return changed;
+  }
+
+  /**
+   * Adopts `value` unless already selected, dispatching a cancelable `change`
+   * and reverting on `preventDefault()`. Shared by item activation and
+   * keyboard navigation.
+   */
+  private proposeSelection(value: string): void {
+    if (value === this.selected) {
+      return;
+    }
+    const previous = this.selected;
+    this.selected = value;
+    const applyDefault = this.dispatchEvent(
+      new Event('change', { cancelable: true, bubbles: true, composed: true })
+    );
+    if (!applyDefault) {
+      this.selected = previous;
+    }
+  }
+
+  /** Sets each item's `checked` from `selected` and keeps the roving tab stop on the checked item. */
+  private syncCheckedState(): void {
+    let checkedItem: RadioBase | undefined;
+    for (const item of this.assignedItems()) {
+      item.checked = this.selected !== '' && item.value === this.selected;
+      if (item.checked) {
+        checkedItem = item;
+      }
+    }
+    if (checkedItem) {
+      this.navigation.setActiveItem(checkedItem);
+    }
+  }
+
+  private warnDuplicateValues(): void {
+    const seen = new Set<string>();
+    for (const item of this.assignedItems()) {
+      if (!item.value) {
+        continue;
+      }
+      warnIf(
+        this,
+        seen.has(item.value),
+        `Multiple <swc-radio> items share the value "${item.value}". Selection matching by value will not distinguish between them.`,
+        DOCS_URL,
+        { type: 'api', issues: [`value="${item.value}"`] }
+      );
+      seen.add(item.value);
+    }
+  }
+
+  /**
+   * Sets each item's `posInSet`/`setSize`. Items have separate shadow roots,
+   * so the browser can't compute position; without this, some AT
+   * announces every item as "1 of 1".
+   */
+  private syncItemPositions(): void {
+    const items = this.assignedItems();
+    items.forEach((item, index) => {
+      item.posInSet = index + 1;
+      item.setSize = items.length;
+    });
+  }
+
+  private syncSlottedItems(): void {
+    this.sizePropagation.propagate();
+    this.emphasizedPropagation.propagate();
+    this.syncDisabledState();
+    this.warnDuplicateValues();
+    this.syncItemPositions();
+    this.navigation.refresh();
+    this.syncCheckedState();
   }
 
   /** The plain text of the slotted `error-text`, or `''` when there is none. */
