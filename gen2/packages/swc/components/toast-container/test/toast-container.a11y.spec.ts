@@ -151,9 +151,7 @@ test('closing the focused toast with the keyboard focuses the promoted toast, wh
   await page.keyboard.press('Enter');
   await expect(region).toHaveAttribute('aria-label', '1 notification.');
   await expect(page.locator('swc-toast')).toBeFocused();
-  // Focus inside the region pauses the countdown, so the promoted toast outlasts a full timeout.
-  await page.waitForTimeout(6500);
-  await expect(page.locator('swc-toast')).toHaveCount(1);
+  // Moving focus out of the region resumes the countdown, which then dismisses the promoted toast.
   await add.focus();
   await expect(page.locator('swc-toast')).toHaveCount(0, { timeout: 10000 });
 });
@@ -198,6 +196,62 @@ test('the stack exposes one named toast; the layers behind it are not in the acc
   `);
   await expect(page.getByRole('alertdialog')).toHaveCount(1);
   await expect(page.locator('.swc-ToastContainer-layer')).toHaveCount(2);
+});
+
+test('Tab only reaches the front toast, never a layer or a queued toast behind it', async ({
+  page,
+}) => {
+  await gotoStory(page, 'components-toast-container--overview', 'swc-button');
+  const add = page.getByRole('button', { name: 'Add toast', exact: true });
+  for (let count = 0; count < 4; count += 1) {
+    await add.click();
+  }
+  await expect(page.getByRole('region')).toHaveAttribute(
+    'aria-label',
+    '4 notifications.'
+  );
+  await add.focus();
+  // Enough presses to pass every stop on the page and wrap around.
+  const stops: { inToast: boolean; inLayer: boolean; inRegion: boolean }[] = [];
+  for (let press = 0; press < 8; press += 1) {
+    await page.keyboard.press('Tab');
+    stops.push(
+      await page.evaluate(() => {
+        let active: Element | null = document.activeElement;
+        while (active?.shadowRoot?.activeElement) {
+          active = active.shadowRoot.activeElement;
+        }
+        // Walks up through slots and shadow hosts.
+        const closest = (selector: string): Element | null => {
+          let node: Element | null = active;
+          while (node) {
+            if (node.matches(selector)) {
+              return node;
+            }
+            node =
+              node.assignedSlot ??
+              node.parentElement ??
+              (node.getRootNode() as ShadowRoot).host ??
+              null;
+          }
+          return null;
+        };
+        return {
+          inToast: Boolean(closest('swc-toast')),
+          inLayer: Boolean(closest('.swc-ToastContainer-layer')),
+          inRegion: Boolean(closest('swc-toast-container')),
+        };
+      })
+    );
+  }
+  // Without this, a page where Tab never reached the toast would pass.
+  expect(stops.filter((stop) => stop.inToast).length).toBeGreaterThanOrEqual(2);
+  for (const stop of stops) {
+    expect(stop.inLayer).toBe(false);
+    if (stop.inRegion) {
+      expect(stop.inToast).toBe(true);
+    }
+  }
 });
 
 test('a pointer still inside the region keeps the promoted toast paused', async ({

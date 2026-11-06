@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 import { html } from 'lit';
-import { expect, fn, userEvent, waitFor } from '@storybook/test';
+import { expect, fn, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import { ToastQueue } from '@adobe/spectrum-wc-core/components/toast-container/index.js';
@@ -876,10 +876,13 @@ export const StackLayersTest: Story = {
     );
 
     try {
-      await step('a single toast has no layers', async () => {
+      await step('a single toast has no layers and no shadow', async () => {
         ToastQueue.add('First notification');
-        await getFront(container);
+        const front = await getFront(container);
         expect(getLayers(container), 'layers').toHaveLength(0);
+        expect(getComputedStyle(front).filter, 'single toast filter').toBe(
+          'none'
+        );
       });
 
       await step(
@@ -912,6 +915,23 @@ export const StackLayersTest: Story = {
         );
       });
 
+      await step(
+        'a stack gives the layers and the front toast a shadow',
+        async () => {
+          const front = await getFront(container);
+          expect(
+            getComputedStyle(front).filter,
+            'stacked front toast filter'
+          ).toContain('drop-shadow');
+          for (const layer of getLayers(container)) {
+            expect(
+              getComputedStyle(layer).boxShadow,
+              'layer box shadow'
+            ).not.toBe('none');
+          }
+        }
+      );
+
       await step('each layer takes the variant of its toast', () => {
         const [first, second] = getLayers(container);
         expect(
@@ -919,9 +939,13 @@ export const StackLayersTest: Story = {
           'nearest layer is the info toast'
         ).toBe(true);
         expect(
-          second.classList.contains('swc-ToastContainer-layer--neutral'),
-          'farthest layer is the neutral toast'
-        ).toBe(true);
+          [...second.classList],
+          'neutral layer has no variant modifier'
+        ).toEqual(['swc-ToastContainer-layer']);
+        expect(
+          getComputedStyle(second).backgroundColor,
+          'neutral layer differs from the info layer'
+        ).not.toBe(getComputedStyle(first).backgroundColor);
       });
 
       await step('layers stay in the queue order, newest nearest', () => {
@@ -964,17 +988,19 @@ export const StackLayersTest: Story = {
         );
       });
 
-      await step('Tab never lands on a layer', async () => {
-        const seen = new Set<Element | null>();
-        const first = canvasElement.querySelector<HTMLElement>('#trigger')!;
-        first.focus();
-        for (let index = 0; index < 6; index += 1) {
-          await userEvent.tab();
-          seen.add(getActiveElement());
-        }
+      await step('layers hold no focusable content', () => {
         for (const layer of getLayers(container)) {
-          expect(seen.has(layer), 'layer was focused').toBe(false);
+          expect(layer.querySelectorAll('*'), 'layer descendants').toHaveLength(
+            0
+          );
+          expect(layer.hasAttribute('tabindex'), 'layer tabindex').toBe(false);
         }
+        // The queue still holds older toasts, and none render real controls.
+        expect(ToastQueue.entries.length, 'queued toasts').toBeGreaterThan(1);
+        expect(
+          container.shadowRoot!.querySelectorAll('swc-toast'),
+          'rendered toasts'
+        ).toHaveLength(1);
       });
     } finally {
       ToastQueue.clear();
@@ -1006,27 +1032,21 @@ export const StackPlacementTest: Story = {
           async () => {
             container.placement = placement;
             await container.updateComplete;
-            // The perspective origin eases to its new value after a placement change.
-            await waitFor(
-              () => {
-                const region = getRegion(container).getBoundingClientRect();
-                const rect = getLayers(container)[0].getBoundingClientRect();
-                if (placement.startsWith('bottom')) {
-                  expect(rect.top, 'layer top edge').toBeLessThan(region.top);
-                  expect(rect.bottom, 'layer bottom edge').toBeLessThanOrEqual(
-                    region.bottom
-                  );
-                } else {
-                  expect(rect.bottom, 'layer bottom edge').toBeGreaterThan(
-                    region.bottom
-                  );
-                  expect(rect.top, 'layer top edge').toBeGreaterThanOrEqual(
-                    region.top
-                  );
-                }
-              },
-              { timeout: 2000 }
-            );
+            const region = getRegion(container).getBoundingClientRect();
+            const rect = getLayers(container)[0].getBoundingClientRect();
+            if (placement.startsWith('bottom')) {
+              expect(rect.top, 'layer top edge').toBeLessThan(region.top);
+              expect(rect.bottom, 'layer bottom edge').toBeLessThanOrEqual(
+                region.bottom
+              );
+            } else {
+              expect(rect.bottom, 'layer bottom edge').toBeGreaterThan(
+                region.bottom
+              );
+              expect(rect.top, 'layer top edge').toBeGreaterThanOrEqual(
+                region.top
+              );
+            }
           }
         );
       }

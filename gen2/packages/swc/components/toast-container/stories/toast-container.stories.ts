@@ -403,6 +403,7 @@ export const StackDepth: Story<ToastContainerArgs> = {
   play: ({ args }) => addStack(args, 5, true),
   tags: ['behaviors'],
 };
+StackDepth.storyName = 'Stack depth';
 
 // ──────────────────────────
 //    ACCESSIBILITY STORY

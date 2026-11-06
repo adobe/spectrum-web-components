@@ -17,7 +17,7 @@ import {
   TemplateResult,
 } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
-import { repeat } from 'lit/directives/repeat.js';
+import { styleMap } from 'lit/directives/style-map.js';
 
 import {
   ToastContainerBase,
@@ -105,11 +105,13 @@ export class ToastContainer extends ToastContainerBase {
       return nothing;
     }
     const count = ToastQueue.entries.length;
+    const layers = this.layerEntries;
     return html`
       <div
         class=${classMap({
           ['swc-ToastContainer']: true,
           [`swc-ToastContainer--${this.placement}`]: true,
+          ['swc-ToastContainer--stacked']: layers.length > 0,
         })}
         role="region"
         popover="manual"
@@ -125,14 +127,18 @@ export class ToastContainer extends ToastContainerBase {
         @swc-after-close=${this.handleAfterClose}
         @swc-toast-action=${this.handleAction}
       >
-        ${repeat(
-          this.layerEntries,
-          (entry) => entry.key,
+        ${layers.map(
           (entry, index) => html`
             <div
-              class=${`swc-ToastContainer-layer swc-ToastContainer-layer--${entry.variant ?? 'neutral'}`}
+              class=${classMap({
+                ['swc-ToastContainer-layer']: true,
+                [`swc-ToastContainer-layer--${entry.variant}`]:
+                  entry.variant != null && entry.variant !== 'neutral',
+              })}
               role="presentation"
-              style=${`--_swc-toast-container-layer-index: ${index + 1}`}
+              style=${styleMap({
+                '--_swc-toast-container-layer-index': index + 1,
+              })}
             ></div>
           `
         )}

@@ -24,6 +24,8 @@ import '@adobe/spectrum-wc/components/toast-container/swc-toast-container.js';
 
 import {
   forcedColorsVrtParameters,
+  forcePseudoState,
+  theme,
   vrtParameters,
 } from '../../../../.storybook/helpers/index.js';
 
@@ -45,53 +47,98 @@ export default meta;
 
 // Helpers
 
-const stackVariants: ToastVariant[] = ['info', 'positive', 'negative'];
+type StackSpec = {
+  placement?: ToastContainerPlacement;
+  // Variants in the order they are added, so the last one is the front toast.
+  variants?: ToastVariant[];
+  mode?: 'light' | 'dark';
+  dir?: 'ltr' | 'rtl';
+  focusFront?: boolean;
+  parameters?: Story['parameters'];
+};
 
-// The container is a single fixed region, so each snapshot is its own story.
-const stackStory = (
-  placement: ToastContainerPlacement,
-  count: number,
-  parameters: Story['parameters'] = vrtParameters
-): Story => ({
-  render: () => html`
-    <swc-toast-container placement=${placement}></swc-toast-container>
-  `,
+const defaultVariants: ToastVariant[] = ['info', 'positive', 'negative'];
+
+// The container is a single fixed region and every container shares one
+// queue, so each snapshot is its own story.
+const stackStory = ({
+  placement = 'bottom',
+  variants = defaultVariants,
+  mode,
+  dir,
+  focusFront = false,
+  parameters = vrtParameters,
+}: StackSpec = {}): Story => ({
+  render: () => {
+    const container = html`
+      <swc-toast-container placement=${placement}></swc-toast-container>
+    `;
+    // The spacer stretches the themed background to the viewport, where the container is fixed.
+    return mode
+      ? theme(
+          html`
+            <div
+              style="inline-size: calc(100vw - 32px); min-block-size: calc(100vh - 32px);"
+            ></div>
+            ${container}
+          `,
+          mode,
+          dir
+        )
+      : container;
+  },
   parameters,
   play: async ({ canvasElement }) => {
-    for (let index = 0; index < count; index += 1) {
-      ToastQueue.add(`Notification ${index + 1}`, {
-        variant: stackVariants[index % stackVariants.length],
-      });
-    }
+    variants.forEach((variant, index) => {
+      ToastQueue.add(`Notification ${index + 1}`, { variant });
+    });
     const container = canvasElement.querySelector('swc-toast-container')!;
     await container.updateComplete;
+    const front = container.shadowRoot?.querySelector('swc-toast');
     // Waits for the front toast's enter transition so the snapshot is at rest.
     await waitFor(() => {
-      const toast = container.shadowRoot?.querySelector('swc-toast');
-      const surface = toast?.shadowRoot?.querySelector('.swc-Toast');
+      const surface = front?.shadowRoot?.querySelector('.swc-Toast');
       expect(
         surface && getComputedStyle(surface).opacity,
         'front toast opacity'
       ).toBe('1');
     });
+    if (focusFront && front) {
+      forcePseudoState(front, 'focus-visible');
+    }
   },
 });
 
 // VRT stories
 
-export const BottomStack: Story = stackStory('bottom', 3);
+export const BottomStack: Story = stackStory();
 
-export const BottomEndStack: Story = stackStory('bottom-end', 3);
+export const BottomEndStack: Story = stackStory({ placement: 'bottom-end' });
 
-export const TopStack: Story = stackStory('top', 3);
+export const TopStack: Story = stackStory({ placement: 'top' });
 
-export const TopEndStack: Story = stackStory('top-end', 3);
+export const TopEndStack: Story = stackStory({ placement: 'top-end' });
+
+// Neutral layers use the default background, which has no variant modifier.
+export const NeutralStack: Story = stackStory({
+  variants: ['neutral', 'neutral', 'negative'],
+});
 
 // Layers beyond the third position stay in the DOM but are invisible.
-export const StackBeyondThree: Story = stackStory('bottom', 5);
+export const StackBeyondThree: Story = stackStory({
+  variants: ['neutral', 'info', 'positive', 'negative', 'info'],
+});
 
-export const ForcedColors: Story = stackStory(
-  'bottom',
-  3,
-  forcedColorsVrtParameters
-);
+// The end placements are logical, so RTL moves the stack to the opposite side.
+export const DarkRtlStack: Story = stackStory({
+  placement: 'bottom-end',
+  mode: 'dark',
+  dir: 'rtl',
+});
+
+// The focus ring and the stacked shadow filter share the front toast.
+export const FocusedStack: Story = stackStory({ focusFront: true });
+
+export const ForcedColors: Story = stackStory({
+  parameters: forcedColorsVrtParameters,
+});
