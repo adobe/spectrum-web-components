@@ -228,6 +228,10 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
     if (!this.open) {
       return;
     }
+    // Any key hands control back to the keyboard, so the row the pointer
+    // focused may show its ring again. Before the checks below, because a key
+    // that this menu does not handle still ends the pointer's turn.
+    this.clearPointerFocus();
     const item = this.menuItemFromEvent(event);
     if (!item) {
       return;
@@ -245,6 +249,48 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
     }
   };
 
+  // Focus follows the pointer, the way it does in 1st-gen and in the native
+  // menus this pattern imitates. Opening moves focus to the first row, so
+  // without this a keyboard-opened menu keeps its focus ring on row one while
+  // the pointer hovers another, showing two rows as active at once; arrow keys
+  // would then resume from the row the user stopped looking at.
+  //
+  // `pointerover` rather than `pointerenter`, which does not bubble and so
+  // never reaches the menu. It repeats as the pointer crosses a row's own
+  // children, hence the early return once the row already has focus.
+  private readonly handleItemPointerOver = (event: PointerEvent): void => {
+    if (!this.open) {
+      return;
+    }
+    const item = this.menuItemFromEvent(event);
+    if (!item || item === getActiveElement()) {
+      return;
+    }
+    this.focusNavigation.setActiveItem(item);
+    // `preventScroll`: the surface must not scroll out from under the pointer.
+    item.focus({ preventScroll: true });
+    this.setPointerFocus(item);
+  };
+
+  // The row whose focus ring is suppressed because the pointer, not the
+  // keyboard, put focus there. Tracked so it can be cleared again; reading it
+  // back off the DOM would miss a row that has since been removed.
+  private _pointerFocusedItem: HTMLElement | null = null;
+
+  // Marks the row the pointer focused. The flag lives on the row because the
+  // ring is drawn inside its shadow tree, where this menu's own state is not
+  // reachable from CSS.
+  private setPointerFocus(item: HTMLElement): void {
+    this.clearPointerFocus();
+    item.toggleAttribute('pointer-focus', true);
+    this._pointerFocusedItem = item;
+  }
+
+  private clearPointerFocus(): void {
+    this._pointerFocusedItem?.removeAttribute('pointer-focus');
+    this._pointerFocusedItem = null;
+  }
+
   // Closes the menu when a slotted row is clicked; no submenus/selection to
   // special-case yet, so any click on an enabled roving-tabindex item counts.
   private readonly handleItemActivate = (event: MouseEvent): void => {
@@ -258,10 +304,11 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
     this.open = false;
   };
 
-  // Wired once for the connected lifetime; the handler no-ops when closed.
+  // Wired once for the connected lifetime; the handlers no-op when closed.
   public override connectedCallback(): void {
     super.connectedCallback();
     this.addEventListener('click', this.handleItemActivate);
+    this.addEventListener('pointerover', this.handleItemPointerOver);
   }
 
   // Clears aria-controls/expanded/haspopup from a previously-wired trigger.
@@ -524,6 +571,9 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
     document.removeEventListener('keydown', this.handleKeyDown, {
       capture: true,
     });
+    // Rows outlive the menu being closed, so a flag left on one would suppress
+    // the ring on the next open.
+    this.clearPointerFocus();
     if (restoreFocusToTrigger) {
       this._interactiveElement?.focus({ preventScroll: true });
     }
@@ -588,5 +638,6 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
       capture: true,
     });
     this.removeEventListener('click', this.handleItemActivate);
+    this.removeEventListener('pointerover', this.handleItemPointerOver);
   }
 }

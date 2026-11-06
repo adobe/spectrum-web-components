@@ -102,12 +102,6 @@
   }
 }
 
-/* Minimal padding so rows are visually distinct; not a real row treatment.
- * `swc-menu-item` owns its own padding once it exists. */
-::slotted(*) {
-  padding: token("spacing-100");
-}
-
 @media (prefers-reduced-motion: reduce) {
   .swc-Menu {
     transition: none;

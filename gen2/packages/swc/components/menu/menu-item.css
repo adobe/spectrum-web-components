@@ -10,21 +10,209 @@
  * governing permissions and limitations under the License.
  */
 
-/* Layout only. Row chrome (background, border, radius, hover and focus
- * treatments) is the next story; see the migration plan's styling section. */
+/* Row chrome lives here, not in `swc-menu`: in spectrum-css `.spectrum-Menu`
+ * carries no background, border, radius or shadow, and every visual property
+ * is scoped under the item.
+ *
+ * Every value that changes across sizes or states is an exposed
+ * `--swc-menu-item-*` property, consumed inline on the CSS property it feeds
+ * and overridden from `:host()` below. Values that never change are plain
+ * `token()` calls. */
 
 :host {
+  display: block;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.swc-MenuItem {
+  /* Spectrum gives all five `menu-item-background-color-*` states the same
+   * grey and separates them with `menu-item-background-opacity`, which is 0
+   * and has no per-state variants. That opacity is the only thing keeping a
+   * resting row flat; the states below paint the same grey at full strength.
+   * Named rather than inlined because the mix is what the value means, and
+   * only ever read as the fallback below, never overridden from `:host()`. */
+  --_swc-menu-item-background-color-default: color-mix(in srgb, token("menu-item-background-color-default") calc(token("menu-item-background-opacity") * 100%), transparent);
+
   display: flex;
-  gap: token("spacing-100");
+  gap: var(--swc-menu-item-gap, token("base-gap-medium"));
   align-items: center;
+  min-block-size: var(--swc-menu-item-min-block-size, token("component-height-100"));
+  padding-block: var(--swc-menu-item-padding-block, token("base-padding-vertical-medium"));
+  padding-inline: var(--swc-menu-item-padding-inline, token("base-padding-horizontal-medium"));
+  color: var(--swc-menu-item-label-color, token("neutral-content-color-default"));
+  background-color: var(--swc-menu-item-background-color, var(--_swc-menu-item-background-color-default));
+  border-radius: var(--swc-menu-item-corner-radius, token("corner-radius-medium-size-medium"));
 }
 
 /* The label and its description stack; the visual sits beside both. */
 .swc-MenuItem-text {
   display: flex;
   flex-direction: column;
+  gap: var(--swc-menu-item-text-gap, token("text-gap-medium"));
+
+  /* A long row wraps rather than overflowing the surface, which caps its
+   * width at 320px. `min-inline-size: 0` lets the flex item shrink below its
+   * content width so the wrap actually happens. */
+  min-inline-size: 0;
+  font-size: var(--swc-menu-item-label-font-size, token("font-size-100"));
+  line-height: var(--swc-menu-item-label-line-height, token("line-height-font-size-100"));
+  hyphens: auto;
+  overflow-wrap: break-word;
 }
 
-* {
+/* ──────────────
+ *    SIZES
+ * ────────────── */
+
+:host([size="s"]) {
+  --swc-menu-item-min-block-size: token("component-height-75");
+  --swc-menu-item-padding-block: token("base-padding-vertical-small");
+  --swc-menu-item-padding-inline: token("base-padding-horizontal-small");
+  --swc-menu-item-gap: token("base-gap-small");
+  --swc-menu-item-corner-radius: token("corner-radius-medium-size-small");
+  --swc-menu-item-label-font-size: token("font-size-75");
+  --swc-menu-item-label-line-height: token("line-height-font-size-75");
+  --swc-menu-item-description-font-size: token("font-size-50");
+  --swc-menu-item-description-line-height: token("line-height-font-size-50");
+  --swc-menu-item-text-gap: token("text-gap-small");
+  --swc-menu-item-visual-size: token("workflow-icon-small");
+}
+
+:host([size="l"]) {
+  --swc-menu-item-min-block-size: token("component-height-200");
+  --swc-menu-item-padding-block: token("base-padding-vertical-large");
+  --swc-menu-item-padding-inline: token("base-padding-horizontal-large");
+  --swc-menu-item-gap: token("base-gap-large");
+  --swc-menu-item-corner-radius: token("corner-radius-medium-size-large");
+  --swc-menu-item-label-font-size: token("font-size-200");
+  --swc-menu-item-label-line-height: token("line-height-font-size-200");
+  --swc-menu-item-description-font-size: token("font-size-100");
+  --swc-menu-item-description-line-height: token("line-height-font-size-100");
+  --swc-menu-item-text-gap: token("text-gap-large");
+  --swc-menu-item-visual-size: token("workflow-icon-large");
+}
+
+:host([size="xl"]) {
+  --swc-menu-item-min-block-size: token("component-height-300");
+  --swc-menu-item-padding-block: token("base-padding-vertical-extra-large");
+  --swc-menu-item-padding-inline: token("base-padding-horizontal-extra-large");
+  --swc-menu-item-gap: token("base-gap-extra-large");
+  --swc-menu-item-corner-radius: token("corner-radius-medium-size-extra-large");
+  --swc-menu-item-label-font-size: token("font-size-300");
+  --swc-menu-item-label-line-height: token("line-height-font-size-300");
+  --swc-menu-item-description-font-size: token("font-size-200");
+  --swc-menu-item-description-line-height: token("line-height-font-size-200");
+  --swc-menu-item-text-gap: token("text-gap-extra-large");
+  --swc-menu-item-visual-size: token("workflow-icon-extra-large");
+}
+
+/* ──────────────
+ *    STATES
+ * ────────────── */
+
+:host(:hover:not([disabled])) {
+  --swc-menu-item-background-color: token("menu-item-background-color-hover");
+  --swc-menu-item-label-color: token("neutral-content-color-hover");
+  --swc-menu-item-description-color: token("neutral-subdued-content-color-hover");
+}
+
+/* Keyed off `:focus-visible`, not `:focus`. Opening the menu moves focus to the
+ * first row however the menu was opened, so `:focus` paints that row after a
+ * plain mouse click and a whole menu reads as though row one were chosen.
+ * Measured in Chrome, Firefox and WebKit: a pointer-driven open leaves the row
+ * focused but not focus-visible, while a keyboard-driven one sets both, which
+ * is exactly the distinction wanted here. */
+:host(:focus-visible:not([disabled])) {
+  --swc-menu-item-background-color: token("menu-item-background-color-keyboard-focus");
+  --swc-menu-item-label-color: token("neutral-content-color-key-focus");
+  --swc-menu-item-description-color: token("neutral-subdued-content-color-key-focus");
+}
+
+:host(:active:not([disabled])) {
+  --swc-menu-item-background-color: token("menu-item-background-color-down");
+  --swc-menu-item-label-color: token("neutral-content-color-down");
+  --swc-menu-item-description-color: token("neutral-subdued-content-color-down");
+}
+
+/* Both text parts go to the same disabled colour; 1st-gen tracked them
+ * separately but S2 has one disabled content colour.
+ *
+ * No background here. `menu-item-background-color-disabled` is the same grey as
+ * every other state, and the opacity that hides it has no disabled variant, so
+ * painting it would make a disabled row read as hovered. It keeps the flat
+ * resting fill instead, which is what 1st-gen clears it to. */
+:host([disabled]) {
+  --swc-menu-item-label-color: token("disabled-content-color");
+  --swc-menu-item-description-color: token("disabled-content-color");
+}
+
+/* The host owns focus, so the ring is drawn on the chrome element. Inset, so
+ * it is not clipped by the menu surface's own `overflow: auto`. `:focus-visible`
+ * for the reason above: a mouse-opened menu must not show a focus ring.
+ *
+ * `pointer-focus` is set by the owning menu when the pointer, rather than the
+ * keyboard, moved focus here, and cleared again on the next key press.
+ * `:focus-visible` cannot carry that on its own: it stays on once a key press
+ * has set the modality, so the ring would follow the pointer from row to row
+ * and then stay behind on the row the pointer left. Hovering is the wrong test
+ * for the same job, because the gaps between rows are not hovered and the ring
+ * would blink through them. */
+:host(:focus-visible:not([pointer-focus])) .swc-MenuItem {
+  outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
+  outline-offset: calc(token("focus-ring-gap") * -1);
+}
+
+:host(:focus) {
+  outline: none;
+}
+
+/* ──────────────
+ *    SLOTS
+ * ────────────── */
+
+::slotted([slot="description"]) {
+  font-size: var(--swc-menu-item-description-font-size, token("font-size-75"));
+  line-height: var(--swc-menu-item-description-line-height, token("line-height-font-size-75"));
+  color: var(--swc-menu-item-description-color, token("neutral-subdued-content-color-default"));
+}
+
+/* Sized here rather than left to the icon's own intrinsic size so a row keeps
+ * its proportions across sizes. `box-sizing` is restated because the `*`
+ * reset above does not reach slotted light-DOM content. */
+::slotted([slot="visual"]) {
+  /* Read twice, so the exposed property is captured once here rather than
+   * repeating its fallback on both axes. */
+  --_swc-menu-item-visual-size: var(--swc-menu-item-visual-size, token("workflow-icon-medium"));
+
   box-sizing: border-box;
+  flex-shrink: 0;
+  inline-size: var(--_swc-menu-item-visual-size);
+  block-size: var(--_swc-menu-item-visual-size);
+  color: inherit;
+}
+
+@media (forced-colors: active) {
+  .swc-MenuItem {
+    border-radius: 0;
+  }
+
+  :host([disabled]) .swc-MenuItem {
+    color: GrayText;
+  }
+
+  :host([disabled]) ::slotted([slot="description"]) {
+    color: GrayText;
+  }
+
+  /* Forced colours flatten the background tints the states rely on, so the
+   * focused row is marked with a border instead. Matches the selector that
+   * draws the ring above, or this would recolour an outline that is not there.
+   * Last in the block so specificity ascends; the properties do not overlap
+   * with the disabled rules above, so the order carries no cascade meaning. */
+  :host(:focus-visible:not([pointer-focus])) .swc-MenuItem {
+    outline-color: Highlight;
+  }
 }

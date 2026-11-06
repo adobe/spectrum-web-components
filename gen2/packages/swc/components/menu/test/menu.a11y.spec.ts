@@ -250,4 +250,136 @@ test.describe('Menu - native dismissal', () => {
     await trigger.click();
     await expect(menu).toHaveJSProperty('open', false);
   });
+
+  // Opening the menu focuses the first row whichever way it was opened, so the
+  // only thing separating a mouse open from a keyboard one is `:focus-visible`.
+  // That distinction is a native modality heuristic: it needs trusted input and
+  // is invisible to the synthetic events in `menu.test.ts`, which report every
+  // open as focus-visible.
+  test('a mouse-opened menu paints no focus treatment on the first row', async ({
+    page,
+  }) => {
+    await gotoStory(page, 'components-menu--open-and-close', 'swc-button');
+    const menu = page.locator('swc-menu');
+    const trigger = page.getByRole('button', { name: 'Edit' });
+
+    await trigger.click();
+    await expect(menu).toHaveJSProperty('open', true);
+
+    const painted = await page.evaluate(() => {
+      const row = document.querySelector('swc-menu-item') as HTMLElement;
+      const chrome = row.shadowRoot?.querySelector('.swc-MenuItem') as Element;
+      const styles = getComputedStyle(chrome);
+      return {
+        focused: row.matches(':focus'),
+        outline: styles.outlineStyle,
+        background: styles.backgroundColor,
+      };
+    });
+
+    // Still focused: the row has to be, or arrow keys have nowhere to start.
+    expect(painted.focused).toBe(true);
+    expect(painted.outline).toBe('none');
+    expect(painted.background).toMatch(/\/\s*0\s*\)|,\s*0\)/);
+  });
+
+  test('a keyboard-opened menu paints the focus treatment on the first row', async ({
+    page,
+  }) => {
+    await gotoStory(page, 'components-menu--open-and-close', 'swc-button');
+    const menu = page.locator('swc-menu');
+    const trigger = page.getByRole('button', { name: 'Edit' });
+
+    await trigger.focus();
+    await page.keyboard.press('Enter');
+    await expect(menu).toHaveJSProperty('open', true);
+
+    const painted = await page.evaluate(() => {
+      const row = document.querySelector('swc-menu-item') as HTMLElement;
+      const chrome = row.shadowRoot?.querySelector('.swc-MenuItem') as Element;
+      const styles = getComputedStyle(chrome);
+      return {
+        outline: styles.outlineStyle,
+        background: styles.backgroundColor,
+      };
+    });
+
+    expect(painted.outline).toBe('solid');
+    // Opaque, so the row reads as the keyboard cursor position.
+    expect(painted.background).not.toMatch(/\/\s*0\s*\)|,\s*0\)/);
+  });
+
+  // Opening focuses the first row, so without focus following the pointer a
+  // keyboard-opened menu shows its focused row and a hovered row at once, and
+  // arrow keys resume from the row the user stopped looking at. Needs trusted
+  // input: `pointerover` from a synthetic hover does not move the real focus.
+  test('hovering a row moves focus off the row the keyboard left behind', async ({
+    page,
+  }) => {
+    await gotoStory(page, 'components-menu--open-and-close', 'swc-button');
+    const menu = page.locator('swc-menu');
+    const trigger = page.getByRole('button', { name: 'Edit' });
+
+    await trigger.focus();
+    await page.keyboard.press('Enter');
+    await expect(menu).toHaveJSProperty('open', true);
+
+    const rows = page.locator('swc-menu-item');
+    await expect(rows.first()).toBeFocused();
+
+    await rows.nth(2).hover();
+
+    await expect(rows.nth(2)).toBeFocused();
+    await expect(rows.first()).not.toBeFocused();
+
+    // The roving tab stop moves with focus, so arrow keys continue from the
+    // hovered row rather than from where the keyboard left off.
+    await page.keyboard.press('ArrowUp');
+    await expect(rows.nth(1)).toBeFocused();
+  });
+
+  // `:focus-visible` is sticky once a key press has set the modality, so moving
+  // focus to the hovered row would otherwise drag the keyboard ring along with
+  // the pointer.
+  test('a hovered row shows no focus ring after a keyboard open', async ({
+    page,
+  }) => {
+    await gotoStory(page, 'components-menu--open-and-close', 'swc-button');
+    const menu = page.locator('swc-menu');
+    const trigger = page.getByRole('button', { name: 'Edit' });
+
+    await trigger.focus();
+    await page.keyboard.press('Enter');
+    await expect(menu).toHaveJSProperty('open', true);
+
+    const rows = page.locator('swc-menu-item');
+    const outlineOf = (index: number) =>
+      rows.nth(index).evaluate((row) => {
+        const chrome = row.shadowRoot?.querySelector('.swc-MenuItem') as Element;
+        return getComputedStyle(chrome).outlineStyle;
+      });
+
+    // The keyboard put the ring on row one.
+    expect(await outlineOf(0)).toBe('solid');
+
+    await rows.nth(1).hover();
+    await expect(rows.nth(1)).toBeFocused();
+
+    // Focus moved, but the pointer marks its own row with the hover fill, so
+    // no ring on either.
+    expect(await outlineOf(1)).toBe('none');
+    expect(await outlineOf(0)).toBe('none');
+
+    // Moving the pointer off the row must not hand the ring back. The row
+    // keeps focus, and hover alone cannot express that, because the gaps
+    // between rows are not hovered either.
+    await page.mouse.move(2, 2);
+    await expect(rows.nth(1)).toBeFocused();
+    expect(await outlineOf(1)).toBe('none');
+
+    // Keyboard takes over again: the ring returns on the row it moves to.
+    await page.keyboard.press('ArrowDown');
+    await expect(rows.nth(2)).toBeFocused();
+    expect(await outlineOf(2)).toBe('solid');
+  });
 });

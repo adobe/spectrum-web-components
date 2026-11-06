@@ -41,6 +41,21 @@ import styles from './menu-item.css';
  * @slot label - Required text of the row; provides its accessible name.
  * @slot visual - Optional leading icon or thumbnail.
  * @slot description - Optional secondary text; provides the accessible description.
+ *
+ * @cssprop --swc-menu-item-min-block-size - Minimum height of the row. Defaults to the medium component height token.
+ * @cssprop --swc-menu-item-padding-block - Block padding of the row. Defaults to the medium vertical padding token.
+ * @cssprop --swc-menu-item-padding-inline - Inline padding of the row. Defaults to the medium horizontal padding token.
+ * @cssprop --swc-menu-item-gap - Gap between the visual and the text. Defaults to the medium gap token.
+ * @cssprop --swc-menu-item-corner-radius - Corner radius of the row. Defaults to the medium corner radius token.
+ * @cssprop --swc-menu-item-background-color - Fill of the row. Unset, the row is flat; the hover, focus, and down states set it to the menu item background token.
+ * @cssprop --swc-menu-item-label-color - Color of the label. Defaults to the neutral content color token.
+ * @cssprop --swc-menu-item-label-font-size - Font size of the label. Defaults to the 100 font-size token.
+ * @cssprop --swc-menu-item-label-line-height - Line height of the label. Defaults to the 100 line-height token.
+ * @cssprop --swc-menu-item-text-gap - Gap between the label and the description. Defaults to the medium text-gap token.
+ * @cssprop --swc-menu-item-description-color - Color of the description. Defaults to the neutral subdued content color token.
+ * @cssprop --swc-menu-item-description-font-size - Font size of the description. Defaults to the 75 font-size token.
+ * @cssprop --swc-menu-item-description-line-height - Line height of the description. Defaults to the 75 line-height token.
+ * @cssprop --swc-menu-item-visual-size - Size of the slotted visual on both axes. Defaults to the medium workflow icon token.
  */
 export class MenuItem extends MenuItemBase {
   public static override get styles(): CSSResultArray {
@@ -49,13 +64,15 @@ export class MenuItem extends MenuItemBase {
 
   protected override render(): TemplateResult {
     return html`
-      <slot name="visual"></slot>
-      <div class="swc-MenuItem-text">
-        <slot name="label" @slotchange=${this.handleTextSlotChange}></slot>
-        <slot
-          name="description"
-          @slotchange=${this.handleTextSlotChange}
-        ></slot>
+      <div class="swc-MenuItem">
+        <slot name="visual"></slot>
+        <div class="swc-MenuItem-text">
+          <slot name="label" @slotchange=${this.handleTextSlotChange}></slot>
+          <slot
+            name="description"
+            @slotchange=${this.handleTextSlotChange}
+          ></slot>
+        </div>
       </div>
     `;
   }
