@@ -134,11 +134,13 @@
   --_swc-menu-item-description-color: token("neutral-subdued-content-color-hover");
 }
 
-/* Keyed off `:focus`, not `:focus-visible`: after a mouse-driven open the row
- * holds focus but Chrome paints no `:focus-visible` ring, so the first arrow
- * press looks like it skipped a row. 1st-gen keys off `:host(:focus)` for the
- * same reason. */
-:host(:focus:not([disabled])) {
+/* Keyed off `:focus-visible`, not `:focus`. Opening the menu moves focus to the
+ * first row however the menu was opened, so `:focus` paints that row after a
+ * plain mouse click and a whole menu reads as though row one were chosen.
+ * Measured in Chrome, Firefox and WebKit: a pointer-driven open leaves the row
+ * focused but not focus-visible, while a keyboard-driven one sets both, which
+ * is exactly the distinction wanted here. */
+:host(:focus-visible:not([disabled])) {
   --_swc-menu-item-background-color: token("menu-item-background-color-keyboard-focus");
   --_swc-menu-item-label-color: token("neutral-content-color-key-focus");
   --_swc-menu-item-description-color: token("neutral-subdued-content-color-key-focus");
@@ -163,8 +165,9 @@
 }
 
 /* The host owns focus, so the ring is drawn on the chrome element. Inset, so
- * it is not clipped by the menu surface's own `overflow: auto`. */
-:host(:focus) .swc-MenuItem {
+ * it is not clipped by the menu surface's own `overflow: auto`. `:focus-visible`
+ * for the reason above: a mouse-opened menu must not show a focus ring. */
+:host(:focus-visible) .swc-MenuItem {
   outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
   outline-offset: calc(token("focus-ring-gap") * -1);
 }
@@ -200,8 +203,9 @@
   }
 
   /* Forced colours flatten the background tints the states rely on, so the
-   * focused row is marked with a border instead. */
-  :host(:focus) .swc-MenuItem {
+   * focused row is marked with a border instead. Matches the selector that
+   * draws the ring above, or this would recolour an outline that is not there. */
+  :host(:focus-visible) .swc-MenuItem {
     outline-color: Highlight;
   }
 

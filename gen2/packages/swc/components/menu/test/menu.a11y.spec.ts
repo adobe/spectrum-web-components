@@ -250,4 +250,59 @@ test.describe('Menu - native dismissal', () => {
     await trigger.click();
     await expect(menu).toHaveJSProperty('open', false);
   });
+
+  // Opening the menu focuses the first row whichever way it was opened, so the
+  // only thing separating a mouse open from a keyboard one is `:focus-visible`.
+  // That distinction is a native modality heuristic: it needs trusted input and
+  // is invisible to the synthetic events in `menu.test.ts`, which report every
+  // open as focus-visible.
+  test('a mouse-opened menu paints no focus treatment on the first row', async ({
+    page,
+  }) => {
+    await gotoStory(page, 'components-menu--open-and-close', 'swc-button');
+    const menu = page.locator('swc-menu');
+    const trigger = page.getByRole('button', { name: 'Edit' });
+
+    await trigger.click();
+    await expect(menu).toHaveJSProperty('open', true);
+
+    const painted = await page.evaluate(() => {
+      const row = document.querySelector('swc-menu-item') as HTMLElement;
+      const chrome = row.shadowRoot?.querySelector('.swc-MenuItem') as Element;
+      const styles = getComputedStyle(chrome);
+      return {
+        focused: row.matches(':focus'),
+        outline: styles.outlineStyle,
+        background: styles.backgroundColor,
+      };
+    });
+
+    // Still focused: the row has to be, or arrow keys have nowhere to start.
+    expect(painted.focused).toBe(true);
+    expect(painted.outline).toBe('none');
+    expect(painted.background).toMatch(/\/\s*0\s*\)|,\s*0\)/);
+  });
+
+  test('a keyboard-opened menu paints the focus treatment on the first row', async ({
+    page,
+  }) => {
+    await gotoStory(page, 'components-menu--open-and-close', 'swc-button');
+    const menu = page.locator('swc-menu');
+    const trigger = page.getByRole('button', { name: 'Edit' });
+
+    await trigger.focus();
+    await page.keyboard.press('Enter');
+    await expect(menu).toHaveJSProperty('open', true);
+
+    const painted = await page.evaluate(() => {
+      const row = document.querySelector('swc-menu-item') as HTMLElement;
+      const chrome = row.shadowRoot?.querySelector('.swc-MenuItem') as Element;
+      const styles = getComputedStyle(chrome);
+      return { outline: styles.outlineStyle, background: styles.backgroundColor };
+    });
+
+    expect(painted.outline).toBe('solid');
+    // Opaque, so the row reads as the keyboard cursor position.
+    expect(painted.background).not.toMatch(/\/\s*0\s*\)|,\s*0\)/);
+  });
 });
