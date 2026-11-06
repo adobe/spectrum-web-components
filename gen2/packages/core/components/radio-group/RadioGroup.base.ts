@@ -88,12 +88,6 @@ export abstract class RadioGroupBase extends SizedMixin(
     host: this,
   });
 
-  constructor() {
-    super();
-    // Items dispatch a composed `change` on activation.
-    this.addEventListener('change', this.handleItemChange);
-  }
-
   /**
    * Size applied to all items. Defaults to `m`.
    */
@@ -174,7 +168,8 @@ export abstract class RadioGroupBase extends SizedMixin(
 
   /**
    * The authored `disabled` status OR the cascaded form / `<fieldset disabled>`
-   * state. Cascaded to every slotted item while preserving its own disabled state.
+   * state. Applied to every slotted item without changing the item's own
+   * `disabled`.
    */
   protected get effectiveDisabled(): boolean {
     return this.fieldAssoc.disabled;
@@ -258,38 +253,43 @@ export abstract class RadioGroupBase extends SizedMixin(
       getValue: () => (this.emphasized ? '' : null),
     });
 
-  private readonly disabledItemStates = new Map<RadioBase, boolean>();
+  /** Items currently disabled by this group, so removed items can be released. */
+  private readonly groupDisabledItems = new Set<RadioBase>();
 
-  private setItemDisabled(item: RadioBase, disabled: boolean): void {
-    item.disabled = disabled;
+  private setItemGroupDisabled(item: RadioBase, disabled: boolean): void {
+    item.groupDisabled = disabled;
     // Navigation refreshes before the child's Lit update can reflect this state.
-    if (disabled) {
+    if (item.effectiveDisabled) {
       item.setAttribute('aria-disabled', 'true');
     } else {
       item.removeAttribute('aria-disabled');
     }
+    if (disabled) {
+      this.groupDisabledItems.add(item);
+    } else {
+      this.groupDisabledItems.delete(item);
+    }
   }
 
+  /**
+   * Applies the group's disabled state to every assigned item without
+   * touching the item's own `disabled`. Returns whether any item changed.
+   */
   private syncDisabledState(): boolean {
     const items = this.assignedItems();
     const assigned = new Set(items);
     let changed = false;
-    for (const [item, disabled] of this.disabledItemStates) {
-      if (!this.effectiveDisabled || !assigned.has(item)) {
-        changed ||= item.disabled !== disabled;
-        this.setItemDisabled(item, disabled);
-        this.disabledItemStates.delete(item);
+    for (const item of this.groupDisabledItems) {
+      if (!assigned.has(item)) {
+        changed ||= !item.disabled;
+        this.setItemGroupDisabled(item, false);
       }
-    }
-    if (!this.effectiveDisabled) {
-      return changed;
     }
     for (const item of items) {
-      if (!this.disabledItemStates.has(item)) {
-        this.disabledItemStates.set(item, item.disabled);
+      if (item.groupDisabled !== this.effectiveDisabled) {
+        changed ||= !item.disabled;
+        this.setItemGroupDisabled(item, this.effectiveDisabled);
       }
-      changed ||= !item.disabled;
-      this.setItemDisabled(item, true);
     }
     return changed;
   }
@@ -462,6 +462,9 @@ export abstract class RadioGroupBase extends SizedMixin(
 
   protected override firstUpdated(changedProperties: PropertyValues): void {
     super.firstUpdated(changedProperties);
+    // A slotted item's `change` passes through this shadow root before the
+    // host, so stopping it here keeps it from every group listener.
+    this.renderRoot.addEventListener('change', this.handleItemChange);
     this.renderRoot
       ?.querySelector('slot:not([name])')
       ?.addEventListener('slotchange', this.handleSlotchange);

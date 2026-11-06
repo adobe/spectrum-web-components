@@ -37,6 +37,10 @@ type ReflectedAriaElement = Element & {
   ariaDescribedByElements: Element[] | null;
 };
 
+/** Whether an item is exposed as disabled, by itself or by its group. */
+const exposedDisabled = (item: Element): boolean =>
+  item.getAttribute('aria-disabled') === 'true';
+
 // This file defines dev-only test stories that reuse the main story metadata.
 export default {
   ...meta,
@@ -485,10 +489,16 @@ export const DisabledCascadeTest: Story = {
     );
     const items = Array.from(group.querySelectorAll<Radio>('swc-radio'));
 
+    await waitFor(() =>
+      expect(
+        items.every(exposedDisabled),
+        'group-level disabled cascades to every item'
+      ).toBe(true)
+    );
     expect(
-      items.every((item) => item.disabled),
-      'group-level disabled cascades to every item'
-    ).toBe(true);
+      items.some((item) => item.disabled),
+      "the cascade does not change an item's own disabled"
+    ).toBe(false);
     expect(
       group.matches(':state(disabled)'),
       'the authored status sets the disabled state'
@@ -578,7 +588,8 @@ export const DisabledStateLifecycleTest: Story = {
     group.fieldStatus = 'disabled';
     await group.updateComplete;
     await waitFor(() => {
-      expect(items.map((item) => item.disabled)).toEqual([true, true]);
+      expect(items.map(exposedDisabled)).toEqual([true, true]);
+      expect(items.map((item) => item.disabled)).toEqual([false, true]);
       expect(items.map((item) => item.tabIndex)).toEqual([-1, -1]);
     });
 
@@ -589,15 +600,15 @@ export const DisabledStateLifecycleTest: Story = {
     label.textContent = 'Pickup';
     added.append(label);
     group.append(added);
-    await waitFor(() => expect(added.disabled).toBe(true));
+    await waitFor(() => expect(exposedDisabled(added)).toBe(true));
     added.remove();
-    await waitFor(() => expect(added.disabled).toBe(false));
+    await waitFor(() => expect(exposedDisabled(added)).toBe(false));
 
     fieldset.disabled = true;
     group.fieldStatus = undefined;
     await group.updateComplete;
     await waitFor(() => {
-      expect(items.map((item) => item.disabled)).toEqual([true, true]);
+      expect(items.map(exposedDisabled)).toEqual([true, true]);
       expect(group.matches(':state(disabled)')).toBe(true);
     });
 
@@ -615,6 +626,51 @@ export const DisabledStateLifecycleTest: Story = {
     await waitFor(() => {
       expect(items.map((item) => item.disabled)).toEqual([false, true]);
       expect(items.map((item) => item.tabIndex)).toEqual([0, -1]);
+    });
+  },
+};
+
+export const AuthoredDisabledWhileGroupDisabledTest: Story = {
+  render: () => html`
+    <swc-radio-group field-status="disabled">
+      <span slot="label">Shipping</span>
+      <swc-radio value="standard"><span slot="label">Standard</span></swc-radio>
+      <swc-radio value="express" disabled>
+        <span slot="label">Express</span>
+      </swc-radio>
+    </swc-radio-group>
+  `,
+  play: async ({ canvasElement }) => {
+    const group = await getComponent<RadioGroup>(
+      canvasElement,
+      'swc-radio-group'
+    );
+    const [standard, express] = Array.from(
+      group.querySelectorAll<Radio>('swc-radio')
+    );
+    await waitFor(() => {
+      expect([standard, express].map(exposedDisabled)).toEqual([true, true]);
+    });
+
+    // App changes made while the group is disabled.
+    express.disabled = false;
+    standard.disabled = true;
+    await Promise.all([standard.updateComplete, express.updateComplete]);
+
+    expect(
+      [standard, express].map(exposedDisabled),
+      'the group keeps every item disabled'
+    ).toEqual([true, true]);
+    await userEvent.click(express);
+    expect(group.selected, 'a disabled group ignores clicks').toBe('');
+
+    group.fieldStatus = undefined;
+    await group.updateComplete;
+    await waitFor(() => {
+      expect(
+        [standard, express].map(exposedDisabled),
+        'enabling the group applies the latest app changes'
+      ).toEqual([true, false]);
     });
   },
 };
@@ -1425,6 +1481,36 @@ export const ChangeCancellationTest: Story = {
       '1'
     );
     expect(items.map((item) => item.checked)).toEqual([true, false]);
+  },
+};
+
+export const SingleChangeEventTest: Story = {
+  render: () => html`
+    <swc-radio-group selected="1">
+      <span slot="label">Shipping method</span>
+      <swc-radio value="1"><span slot="label">Standard</span></swc-radio>
+      <swc-radio value="2"><span slot="label">Express</span></swc-radio>
+    </swc-radio-group>
+  `,
+  play: async ({ canvasElement }) => {
+    const group = await getComponent<RadioGroup>(
+      canvasElement,
+      'swc-radio-group'
+    );
+    const items = Array.from(group.querySelectorAll<Radio>('swc-radio'));
+    const changes: Event[] = [];
+    const record = (event: Event): void => {
+      changes.push(event);
+    };
+
+    group.addEventListener('change', record);
+    await userEvent.click(items[1]);
+    await group.updateComplete;
+    group.removeEventListener('change', record);
+
+    expect(changes, 'one change per selection').toHaveLength(1);
+    expect(changes[0].target).toBe(group);
+    expect(changes[0].cancelable).toBe(true);
   },
 };
 
