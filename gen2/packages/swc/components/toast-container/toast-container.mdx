@@ -97,6 +97,30 @@ When the focused toast closes and others remain, focus depends on how the user c
 - With the keyboard, focus moves to the toast that takes its place.
 - With a pointer, focus returns to the element that was focused before the user entered the region, so the new front toast's timer is not left paused.
 
+### Restoring toasts
+
+The queue lives in memory, so it is empty after a page load. If your app reloads, navigates to another page, or signs a user in, rebuild the toasts you still want to show.
+
+`ToastQueue.entries` lists the front toast first, so reverse it to replay the toasts oldest first, and the newest ends up in front. Save only the toast data. Callbacks cannot be stored, so attach `onAction` and `onClose` again when you restore.
+
+```javascript
+// Save, leaving out the key and the callbacks.
+const saved = [...ToastQueue.entries]
+  .reverse()
+  .map(({ key, onAction, onClose, ...toast }) => toast);
+sessionStorage.setItem('toasts', JSON.stringify(saved));
+
+// Restore on the next page, oldest first.
+const stored = JSON.parse(sessionStorage.getItem('toasts') ?? '[]');
+for (const { message, ...options } of stored) {
+  ToastQueue.add(message, options);
+}
+```
+
+You can restore before the container connects. Adding several toasts in the same tick renders one toast with the stack behind it.
+
+Each restored toast animates in and announces its message when it reaches the front. A toast with a `timeout` starts its full countdown at that point. Leave out `timeout` to keep a toast until it is dismissed. For a long backlog, restore only the toasts that still matter, or show one summary toast.
+
 ### Auto-dismiss
 
 A toast stays until it is closed unless you set `timeout`. Positive values are raised to a minimum of 6000 milliseconds. `null`, `0`, and negative values turn auto-dismiss off.

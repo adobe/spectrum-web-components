@@ -13,7 +13,10 @@ import { html } from 'lit';
 import { expect, fn, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import { ToastQueue } from '@adobe/spectrum-wc-core/components/toast-container/index.js';
+import {
+  ToastQueue,
+  type ToastQueueOptions,
+} from '@adobe/spectrum-wc-core/components/toast-container/index.js';
 import {
   deepContains,
   getActiveElement,
@@ -1017,6 +1020,121 @@ export const StackLayersTest: Story = {
         ).toHaveLength(1);
       });
     } finally {
+      ToastQueue.clear();
+    }
+  },
+};
+
+// Apps that reload or navigate rebuild their toasts from saved data, so this is the documented restore recipe.
+export const RestoreToastsTest: Story = {
+  play: async ({ canvasElement, step }) => {
+    ToastQueue.clear();
+    const container = await getComponent<ToastContainer>(
+      canvasElement,
+      'swc-toast-container'
+    );
+    let renderedToasts = 0;
+    const observer = new MutationObserver((records) => {
+      for (const record of records) {
+        // The first render adds the region with its toast already inside, so count nested toasts too.
+        for (const node of record.addedNodes) {
+          if (node instanceof HTMLElement) {
+            renderedToasts +=
+              (node.localName === 'swc-toast' ? 1 : 0) +
+              node.querySelectorAll('swc-toast').length;
+          }
+        }
+      }
+    });
+    observer.observe(container.shadowRoot!, { childList: true, subtree: true });
+    const messages = (): string[] =>
+      ToastQueue.entries.map((entry) => entry.message);
+    const expectStack = (label: string): void => {
+      expect(messages(), `${label} queue order`).toEqual(['C', 'B', 'A']);
+      expect(
+        container.shadowRoot?.querySelector('swc-toast')?.textContent,
+        `${label} front toast`
+      ).toBe('C');
+      expect(getRegion(container).getAttribute('aria-label'), label).toBe(
+        '3 notifications.'
+      );
+      expect(getLayers(container), `${label} layers`).toHaveLength(2);
+    };
+    const onClose = fn();
+    let saved: ({ message: string } & ToastQueueOptions)[] = [];
+
+    try {
+      await step(
+        'several adds in the same tick render a single toast',
+        async () => {
+          for (const message of ['A', 'B', 'C']) {
+            ToastQueue.add(message, { variant: 'info', onClose });
+          }
+          await getFront(container);
+
+          expect(renderedToasts, 'toasts rendered for the batch').toBe(1);
+          expectStack('batch');
+        }
+      );
+
+      await step(
+        'entries list the front toast first and save without callbacks',
+        () => {
+          // entries lists the front toast first, so reverse it to replay oldest first.
+          saved = [...ToastQueue.entries]
+            .reverse()
+            .map(
+              ({
+                key: _key,
+                onAction: _onAction,
+                onClose: _onClose,
+                ...toast
+              }) => toast
+            );
+
+          expect(
+            saved.map((toast) => toast.message),
+            'saved order, oldest first'
+          ).toEqual(['A', 'B', 'C']);
+          for (const toast of saved) {
+            expect(Object.keys(toast), 'saved properties').toEqual([
+              'variant',
+              'message',
+            ]);
+          }
+        }
+      );
+
+      await step(
+        'replaying the saved list, before the container connects, restores the same stack',
+        async () => {
+          // A reload: the old page's queue is gone, and the container connects after the app restores.
+          container.remove();
+          ToastQueue.clear();
+          expect(ToastQueue.entries, 'queue after the reload').toHaveLength(0);
+
+          for (const { message, ...options } of saved) {
+            ToastQueue.add(message, options);
+          }
+          expect(messages(), 'restored queue order').toEqual(['C', 'B', 'A']);
+          expect(
+            ToastQueue.entries.some((entry) => entry.onClose !== undefined),
+            'restored callbacks'
+          ).toBe(false);
+
+          renderedToasts = 0;
+          canvasElement.append(container);
+          await getFront(container);
+
+          expect(renderedToasts, 'toasts rendered for the restore').toBe(1);
+          expectStack('restored');
+        }
+      );
+    } finally {
+      observer.disconnect();
+      if (!container.isConnected) {
+        canvasElement.append(container);
+      }
       ToastQueue.clear();
     }
   },

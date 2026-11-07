@@ -240,6 +240,10 @@ Q5, Q9, and Q13 are agreed implementation decisions, recorded in the [Decision l
 | # | What is added | Notes |
 | --- | ------------- | ----- |
 | P1 | `--swc-*` custom properties | None in the initial set; add a property only once a concrete override need surfaces, see [CSS custom properties (gen2)](#css-custom-properties-gen2) |
+| P2 | `ToastQueue.addAll()` | Adds several entries in one change, with an explicit order. Not needed now: replaying `add()` calls in the same tick already renders once, and `RestoreToastsTest` covers it. Can be added later without breaking anything |
+| P3 | `ToastQueue.snapshot()` | Returns the serializable parts of the entries. `ToastQueue.entries` is already public, and `toast-container.mdx` shows how to save from it |
+| P4 | `restored` (or no-animation) queue option | Lets a restored toast skip the enter transition, so a restored backlog does not animate in repeatedly. Decide in the expanded view and motion work (SWC-2654), and build it only if it is a small change |
+| P5 | Announcing a restored backlog once | Announce through the region's count label instead of one alert per toast. Needs an accessibility decision, see Q10 and Q11 |
 
 ---
 
@@ -419,6 +423,7 @@ Planned rendering shape:
 - [x] Queue construct: `clear()` method removes waiting entries directly and closes the rendered entry through its lifecycle, without `onClose` callbacks
 - [ ] Surface `clear()` as a Clear all `swc-action-button` at size `s` in the later expanded view
 - [x] Queue construct: new toasts join the front, not the back; no cap on how many stay tracked
+- [x] Restoring toasts after a reload, navigation, or sign-in needs no new API: `RestoreToastsTest` covers saving from `ToastQueue.entries` (front toast first, without callbacks), replaying oldest first, restoring before the container connects, and a same-tick batch rendering one toast; `toast-container.mdx` documents the recipe. `addAll()`, `snapshot()`, a no-animation option, and announcing a backlog once are additive (P2 to P5)
 - [x] Peek-stack rendering: only the front toast is a real `alertdialog`; the rest render as empty, non-interactive `role="presentation"` layers (Q14); anything further back stays in the DOM at `opacity: 0`
 - [ ] Show all control on the front toast, shown once two or more toasts are queued: `swc-action-button` with `quiet` and `static-color="white"` at the default size (`m`), plus an accordion-style chevron (`swc-ui-icon` `icon="chevron"`), laid out below the message alongside the toast action
 - [ ] Expanded-list rendering: every toast becomes its own real `alertdialog`
