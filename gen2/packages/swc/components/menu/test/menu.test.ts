@@ -2170,6 +2170,29 @@ const backgroundAlpha = (row: MenuItem): number => {
   return channels && channels.length > 3 ? Number(channels[3]) : 1;
 };
 
+// ──────────────────────────────────────────────────────────────
+// TEST: A row reads as a control, not as prose
+// ──────────────────────────────────────────────────────────────
+
+export const ItemTextIsNotSelectableTest: Story = {
+  render: () => rowsInMenu(threeRows, 'text-selection-trigger'),
+  play: async ({ canvasElement, step }) => {
+    // Asserted on the slotted label rather than the chrome element: the label
+    // is light DOM the consumer owns, and it is what the pointer is over when
+    // hovering the text, so it is the element that has to inherit both.
+    await step('the label shows no text caret', async () => {
+      const [firstRow] = getRows(canvasElement);
+      const label = firstRow.querySelector('[slot="label"]') as HTMLElement;
+      const styles = getComputedStyle(label);
+
+      expect(styles.cursor, 'no text caret over the label').toBe('default');
+      expect(styles.userSelect, 'the label text is not selectable').toBe(
+        'none'
+      );
+    });
+  },
+};
+
 export const ItemRestingFillTest: Story = {
   render: () => rowsInMenu(threeRows, 'resting-fill-trigger'),
   play: async ({ canvasElement, step }) => {

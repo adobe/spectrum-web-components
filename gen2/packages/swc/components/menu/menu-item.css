@@ -45,6 +45,12 @@
   color: var(--swc-menu-item-label-color, token("neutral-content-color-default"));
   background-color: var(--swc-menu-item-background-color, var(--_swc-menu-item-background-color-default));
   border-radius: var(--swc-menu-item-corner-radius, token("corner-radius-medium-size-medium"));
+
+  /* A row is a control, not prose: the text caret would invite a selection the
+   * row cancels anyway, since dragging across it still ends in activation.
+   * Both properties inherit, so slotted label and description text follows. */
+  cursor: default;
+  user-select: none;
 }
 
 /* The label and its description stack; the visual sits beside both. */
@@ -131,6 +137,13 @@
   --swc-menu-item-description-color: token("neutral-subdued-content-color-key-focus");
 }
 
+/* This rule matches but currently paints nothing new: Spectrum resolves the
+ * down background and both down content colours to the same values as hover,
+ * so pressing a row looks exactly like pointing at it. 1st-gen resolves the
+ * same way, where hover, down and key-focus are all `transparent-white-200`.
+ * Kept, rather than deleted as dead, so a row still follows the tokens if
+ * those values ever diverge. The press is not mapped to a transform either:
+ * that treatment belongs to the button family, not to a menu row. */
 :host(:active:not([disabled])) {
   --swc-menu-item-background-color: token("menu-item-background-color-down");
   --swc-menu-item-label-color: token("neutral-content-color-down");
