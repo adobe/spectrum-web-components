@@ -117,7 +117,7 @@ Native validation, such as `required`, does not set `field-status="invalid"` aut
 
 ### Required
 
-`required` prevents a group with no selection from passing constraint validation and sets `aria-required="true"`. It does not set `field-status` or show an error. With a visible label, the default [necessity indicator](#necessity-indicator) adds a decorative asterisk, as shown in the first necessity indicator example.
+`required` prevents a group with no selection from passing constraint validation and sets `aria-required="true"`. It does not set `field-status` or show an error. A read-only group is barred from validation, so while `field-status="readonly"`, `required` has no effect and the group isn't announced as required. With a visible label, the default [necessity indicator](#necessity-indicator) adds a decorative asterisk, as shown in the first necessity indicator example.
 
 ## Behaviors
 
@@ -232,7 +232,7 @@ With `field-status="readonly"`, these keys move focus without changing the selec
 
 #### ARIA implementation
 
-- **Group role and state**: the group is exposed as a `radiogroup` with `aria-required`, `aria-invalid`, and `aria-readonly`.
+- **Group role and state**: the group is exposed as a `radiogroup` with `aria-required`, `aria-invalid`, and `aria-readonly`. `aria-required` is `false` while the group is read-only.
 - **Item role and state**: each `swc-radio` is exposed as a `radio` with `aria-checked`, `aria-disabled` when disabled, and its position in the set (`aria-posinset` and `aria-setsize`).
 - **Group name**: the browser announces one name, in the order `accessible-labelledby`, `accessible-label`, then the slotted label. See [Labelling](#labelling).
 - **Group description**: the slotted `description`, or the `error-text` while invalid, is associated through `aria-describedby`. An `accessible-describedby` reference is combined with it rather than replacing it. Error text is not a live region.

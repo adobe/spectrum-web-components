@@ -91,7 +91,7 @@ The default state is editable and accepts keyboard input.
 
 ### Required
 
-`required` sets the native input's required state and prevents an empty field from passing constraint validation. With a visible label, the default [necessity indicator](#necessity-indicator) adds a decorative asterisk. The input uses native `required`.
+`required` sets the native input's required state and prevents an empty field from passing constraint validation. A read-only field is barred from validation, so while `field-status="readonly"`, `required` has no effect and the input isn't announced as required. With a visible label, the default [necessity indicator](#necessity-indicator) adds a decorative asterisk. The input uses native `required`.
 
 <Canvas of={TextFieldStories.Required} />
 

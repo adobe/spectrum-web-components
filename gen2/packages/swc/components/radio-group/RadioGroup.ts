@@ -101,14 +101,17 @@ export class RadioGroup extends RadioGroupBase {
     // combinations. A `div` can't use `<label for>`, so `updated()` wires the
     // slotted label.
     const invalid = this.fieldStatus === 'invalid';
+    // Read-only groups are barred from validation, so `required` has no effect
+    // and isn't exposed to assistive technology.
+    const readOnly = this.fieldStatus === 'readonly';
     return html`
       <div
         class="swc-FormField swc-RadioGroup"
         role="radiogroup"
         tabindex="-1"
-        aria-required=${this.required ? 'true' : 'false'}
+        aria-required=${this.required && !readOnly ? 'true' : 'false'}
         aria-invalid=${invalid ? 'true' : 'false'}
-        aria-readonly=${this.fieldStatus === 'readonly' ? 'true' : 'false'}
+        aria-readonly=${readOnly ? 'true' : 'false'}
       >
         ${this.renderLabel(undefined, {
           required: this.required,

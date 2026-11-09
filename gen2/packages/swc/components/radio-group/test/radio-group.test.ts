@@ -462,9 +462,14 @@ export const GroupStateLifecycleTest: Story = {
 
     group.fieldStatus = 'readonly';
     await group.updateComplete;
+    expect(target?.getAttribute('aria-required')).toBe('false');
     expect(target?.getAttribute('aria-invalid')).toBe('false');
     expect(target?.getAttribute('aria-readonly')).toBe('true');
     expect(group.getAttribute('aria-readonly')).toBeNull();
+
+    group.fieldStatus = undefined;
+    await group.updateComplete;
+    expect(target?.getAttribute('aria-required')).toBe('true');
 
     group.required = false;
     group.fieldStatus = undefined;
