@@ -181,3 +181,7 @@ debug-storybook.log
 # only the raw .svg assets are ignored. See each folder's README.md.
 gen2/packages/swc/components/ui-icons/icon-source/*.svg
 gen2/packages/icons/icon-source/*.svg
+
+# plans and specs written by the optional Superpowers plugin (see .ai/README.md);
+# personal working notes that never belong in a pull request
+docs/superpowers/
