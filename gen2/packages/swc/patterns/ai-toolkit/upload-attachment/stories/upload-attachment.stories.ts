@@ -57,7 +57,6 @@ const meta: Meta = {
   render: (args) => template(args),
   parameters: {
     docs: {
-      packagePath: 'patterns/ai-toolkit/upload-attachment',
       subtitle:
         'Card and media tiles for attachments. Use one layout type per strip; normalize mixed uploads to media with badges.',
     },
