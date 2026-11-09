@@ -653,6 +653,34 @@ export const PrefixTest: Story = {
         'prefix slot precedes the input in the control'
       ).toBeLessThan(nodes.indexOf(input as Element));
     });
+
+    await step('pressing the prefix focuses the input', () => {
+      const avatar = field.querySelector('swc-avatar') as HTMLElement;
+      const input = field.shadowRoot?.querySelector('.swc-TextField-input');
+      const press = new PointerEvent('pointerdown', {
+        bubbles: true,
+        composed: true,
+        cancelable: true,
+      });
+      avatar.dispatchEvent(press);
+      expect(press.defaultPrevented, 'prefix press is prevented').toBe(true);
+      expect(field.shadowRoot?.activeElement, 'input is focused').toBe(input);
+    });
+
+    await step('pressing the input itself is not intercepted', () => {
+      const input = field.shadowRoot?.querySelector(
+        '.swc-TextField-input'
+      ) as HTMLInputElement;
+      const press = new PointerEvent('pointerdown', {
+        bubbles: true,
+        composed: true,
+        cancelable: true,
+      });
+      input.dispatchEvent(press);
+      expect(press.defaultPrevented, 'input press is not prevented').toBe(
+        false
+      );
+    });
   },
 };
 PrefixTest.storyName = 'Prefix';
