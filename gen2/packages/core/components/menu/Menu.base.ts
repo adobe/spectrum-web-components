@@ -241,12 +241,41 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
       return;
     }
     if (isMenuActivationKey(event)) {
-      // Claim the key only. The row activates on keyup and closes the menu
-      // through its own click, so keyboard and pointer share one path:
-      // activate, then close. Closing here instead would close first and
-      // activate afterwards, and would move focus mid-press.
+      // Claim the key only. The row activates on this same keydown and closes
+      // the menu through its own click, so keyboard and pointer share one
+      // path: activate, then close. Closing here instead would close first and
+      // activate afterwards.
       event.preventDefault();
+      // Closing restores focus to the trigger, so the auto-repeats and the
+      // keyup of this same press land on a button that would treat them as its
+      // own activation and reopen the menu. The press is held off until the
+      // key that began it is released. Capture on `document`, because by then
+      // neither this menu nor the row is in the event's path.
+      this._activationKeyHeld = true;
+      document.addEventListener('keyup', this.releaseActivationKey, {
+        capture: true,
+      });
     }
+  };
+
+  // True from the keydown that chose a row until that key comes back up. See
+  // `handleKeyDown` for why the trigger has to ignore the rest of that press.
+  private _activationKeyHeld = false;
+
+  private _releaseTimer?: ReturnType<typeof setTimeout>;
+
+  private readonly releaseActivationKey = (): void => {
+    document.removeEventListener('keyup', this.releaseActivationKey, {
+      capture: true,
+    });
+    // Not cleared on the keyup itself. A button activates Space on its keyup,
+    // and this capture-phase listener runs before that: clearing here would
+    // let the click the keyup produces reopen the menu, which is the very
+    // thing being guarded against. The timer clears it once the key's own
+    // default action has run. Enter needs no such wait, but shares the path.
+    this._releaseTimer = setTimeout(() => {
+      this._activationKeyHeld = false;
+    });
   };
 
   // Focus follows the pointer, the way it does in 1st-gen and in the native
@@ -377,7 +406,14 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
 
     // `attach` is a no-op for an unchanged trigger.
     this._pressGuard.attach(trigger, {
-      onToggle: () => (this.open = !this.open),
+      onToggle: () => {
+        // The rest of the press that just chose a row belongs to that press,
+        // not to the trigger it lands on once focus is restored.
+        if (this._activationKeyHeld) {
+          return;
+        }
+        this.open = !this.open;
+      },
     });
     this._trigger = trigger;
   }
@@ -639,5 +675,10 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
     });
     this.removeEventListener('click', this.handleItemActivate);
     this.removeEventListener('pointerover', this.handleItemPointerOver);
+    document.removeEventListener('keyup', this.releaseActivationKey, {
+      capture: true,
+    });
+    clearTimeout(this._releaseTimer);
+    this._activationKeyHeld = false;
   }
 }

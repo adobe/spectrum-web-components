@@ -1924,12 +1924,12 @@ export const ItemKeyboardActivationTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
-// TEST: Armed-press bookkeeping
+// TEST: Activation happens on keydown
 // ──────────────────────────────────────────────────────────────
 
-// A row activates on `keyup` only for a press it saw begin, which means it
-// carries state between the two halves. Each step here leaves that state in a
-// way that used to strand it, then proves a later lone `keyup` is inert.
+// Selection and closing happen on `keydown`, matching React Spectrum. The row
+// that receives the keydown is the row that activates, so no state spans the
+// two halves of a press and a stray `keyup` is inert wherever it lands.
 const modifiedKeyEvent = (
   type: 'keydown' | 'keyup',
   key: string
@@ -1937,6 +1937,19 @@ const modifiedKeyEvent = (
   new KeyboardEvent(type, {
     key,
     shiftKey: true,
+    bubbles: true,
+    composed: true,
+    cancelable: true,
+  });
+
+// Auto-repeat, which the browser sends while an activation key is held down.
+const repeatKeyEvent = (
+  type: 'keydown' | 'keyup',
+  key: string
+): KeyboardEvent =>
+  new KeyboardEvent(type, {
+    key,
+    repeat: true,
     bubbles: true,
     composed: true,
     cancelable: true,
@@ -1958,7 +1971,25 @@ export const ItemPressStateTest: Story = {
       await waitFor(() => expect(menu.open).toBe(true));
     };
 
-    await step('a press begun while disabled never activates', async () => {
+    await step('a lone keyup never activates a row', async () => {
+      await reopen();
+
+      const [firstRow] = getRows(canvasElement);
+      let clicked = false;
+      firstRow.addEventListener('click', () => {
+        clicked = true;
+      });
+
+      // The shape of the trigger-press bug: Enter opens the menu and moves
+      // focus here before its own keyup, so the row sees a keyup it never saw
+      // begin. Acting on keydown is what makes that inert.
+      firstRow.dispatchEvent(keyEvent('keyup', 'Enter'));
+
+      expect(clicked, 'the orphan keyup does not activate').toBe(false);
+      expect(menu.open, 'the menu stays open').toBe(true);
+    });
+
+    await step('a disabled row does not activate', async () => {
       await reopen();
 
       const [, disabledRow] = getRows(canvasElement);
@@ -1968,20 +1999,12 @@ export const ItemPressStateTest: Story = {
       });
 
       disabledRow.dispatchEvent(keyEvent('keydown', 'Enter'));
-      // Enabled mid-press: the row was disabled when the press began, so it
-      // never armed and the keyup has nothing to act on.
-      disabledRow.disabled = false;
-      await disabledRow.updateComplete;
-      disabledRow.dispatchEvent(keyEvent('keyup', 'Enter'));
 
-      expect(clicked, 'the press does not survive being enabled').toBe(false);
+      expect(clicked, 'no activation reaches the consumer').toBe(false);
       expect(menu.open, 'the menu stays open').toBe(true);
-
-      disabledRow.disabled = true;
-      await disabledRow.updateComplete;
     });
 
-    await step('modifiers added mid-press leave nothing armed', async () => {
+    await step('a modified press does not activate', async () => {
       await reopen();
 
       const [firstRow] = getRows(canvasElement);
@@ -1990,69 +2013,30 @@ export const ItemPressStateTest: Story = {
         clicked = true;
       });
 
-      // Bare keydown arms the row; the keyup arrives modified, so it is not an
-      // activation. The row has to disarm anyway, or the next bare keyup it
-      // sees without a keydown of its own would activate it.
-      firstRow.dispatchEvent(keyEvent('keydown', 'Enter'));
-      firstRow.dispatchEvent(modifiedKeyEvent('keyup', 'Enter'));
-      expect(clicked, 'the modified keyup does not activate').toBe(false);
+      // Shift+Enter belongs to the app or to assistive technology.
+      firstRow.dispatchEvent(modifiedKeyEvent('keydown', 'Enter'));
 
-      firstRow.dispatchEvent(keyEvent('keyup', 'Enter'));
-      expect(clicked, 'the stranded press does not activate later').toBe(false);
+      expect(clicked, 'the modified press does not activate').toBe(false);
       expect(menu.open, 'the menu stays open').toBe(true);
     });
 
-    // Only reachable by dispatching keys at an unfocused row, which is why
-    // this row is built rather than taken from the menu: a row that armed
-    // while focused is already disarmed by the `blur` that removing it fires,
-    // so `disconnectedCallback` is the only thing covering the unfocused case.
-    await step('a row removed mid-press comes back disarmed', async () => {
+    await step('a held key does not activate twice', async () => {
       await reopen();
 
-      const menuEl = canvasElement.querySelector('swc-menu') as HTMLElement;
-      const row = document.createElement('swc-menu-item') as MenuItem;
-      row.append(labelSpan('Never focused'));
-      menuEl.append(row);
-      await row.updateComplete;
-
-      let clicked = false;
-      row.addEventListener('click', () => {
-        clicked = true;
+      const [firstRow] = getRows(canvasElement);
+      let clicks = 0;
+      firstRow.addEventListener('click', () => {
+        clicks += 1;
       });
 
-      row.dispatchEvent(keyEvent('keydown', 'Enter'));
-      row.remove();
-      menuEl.append(row);
-      await row.updateComplete;
-      row.dispatchEvent(keyEvent('keyup', 'Enter'));
+      firstRow.dispatchEvent(keyEvent('keydown', 'Enter'));
+      // Auto-repeat while the key is held, then the release.
+      firstRow.dispatchEvent(repeatKeyEvent('keydown', 'Enter'));
+      firstRow.dispatchEvent(keyEvent('keyup', 'Enter'));
 
-      expect(clicked, 'the press does not survive re-slotting').toBe(false);
-      expect(menu.open, 'the menu stays open').toBe(true);
-      row.remove();
+      expect(clicks, 'one press, one activation').toBe(1);
+      await waitFor(() => expect(menu.open, 'the menu closes').toBe(false));
     });
-
-    await step(
-      'another key released mid-press keeps the row armed',
-      async () => {
-        await reopen();
-
-        const [firstRow] = getRows(canvasElement);
-        let clicked = false;
-        firstRow.addEventListener('click', () => {
-          clicked = true;
-        });
-
-        // Arrow Down moves focus here and is still held when Enter goes down, so
-        // its keyup lands on this row. A press only ends on the release of the
-        // key that began it.
-        firstRow.dispatchEvent(keyEvent('keydown', 'Enter'));
-        firstRow.dispatchEvent(keyEvent('keyup', 'ArrowDown'));
-        firstRow.dispatchEvent(keyEvent('keyup', 'Enter'));
-
-        expect(clicked, 'the press survives the unrelated keyup').toBe(true);
-        await waitFor(() => expect(menu.open, 'the menu closes').toBe(false));
-      }
-    );
   },
 };
 

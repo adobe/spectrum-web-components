@@ -294,19 +294,22 @@ test.describe('Menu - native dismissal', () => {
     await page.keyboard.press('Enter');
     await expect(menu).toHaveJSProperty('open', true);
 
-    const painted = await page.evaluate(() => {
-      const row = document.querySelector('swc-menu-item') as HTMLElement;
-      const chrome = row.shadowRoot?.querySelector('.swc-MenuItem') as Element;
-      const styles = getComputedStyle(chrome);
-      return {
-        outline: styles.outlineStyle,
-        background: styles.backgroundColor,
-      };
-    });
+    const read = (property: 'outlineStyle' | 'backgroundColor') => () =>
+      page.evaluate((prop) => {
+        const row = document.querySelector('swc-menu-item') as HTMLElement;
+        const chrome = row.shadowRoot?.querySelector(
+          '.swc-MenuItem'
+        ) as Element;
+        return getComputedStyle(chrome)[prop as 'backgroundColor'];
+      }, property);
 
-    expect(painted.outline).toBe('solid');
-    // Opaque, so the row reads as the keyboard cursor position.
-    expect(painted.background).not.toMatch(/\/\s*0\s*\)|,\s*0\)/);
+    await expect.poll(read('outlineStyle')).toBe('solid');
+    // Opaque, so the row reads as the keyboard cursor position. Polled rather
+    // than read once: the fill transitions in, so a single read can catch it
+    // still transparent at the start of the transition.
+    await expect
+      .poll(read('backgroundColor'))
+      .not.toMatch(/\/\s*0\s*\)|,\s*0\)/);
   });
 
   // Opening focuses the first row, so without focus following the pointer a
@@ -360,7 +363,11 @@ test.describe('Menu - native dismissal', () => {
 
     const box = (await row.boundingBox())!;
     await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
-    expect(await chromeTransform(), 'flat until pressed').toBe('none');
+    // Polled on both sides of the press: the transform rides a transition, so
+    // a single read can catch either end of it mid-flight.
+    await expect
+      .poll(chromeTransform, { message: 'flat until pressed' })
+      .toBe('none');
 
     await page.mouse.down();
     // The transition has to land before the transform is read.
@@ -387,7 +394,9 @@ test.describe('Menu - native dismissal', () => {
     const rows = page.locator('swc-menu-item');
     const outlineOf = (index: number) =>
       rows.nth(index).evaluate((row) => {
-        const chrome = row.shadowRoot?.querySelector('.swc-MenuItem') as Element;
+        const chrome = row.shadowRoot?.querySelector(
+          '.swc-MenuItem'
+        ) as Element;
         return getComputedStyle(chrome).outlineStyle;
       });
 
