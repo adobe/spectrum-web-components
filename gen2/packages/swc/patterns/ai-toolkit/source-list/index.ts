@@ -9,14 +9,6 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { defineElement } from '@adobe/spectrum-wc-core/element/index.js';
-
-import { CitationListitemCard } from './CitationListitemCard.js';
-
-declare global {
-  interface HTMLElementTagNameMap {
-    'swc-citation-listitem-card': CitationListitemCard;
-  }
-}
-
-defineElement('swc-citation-listitem-card', CitationListitemCard);
+export * from './SourceList.js';
+export * from './SourceList.types.js';
+export * from './source-list-item/SourceListItem.js';

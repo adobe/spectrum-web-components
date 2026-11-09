@@ -1,0 +1,241 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+/* Renders like a native `<li>`. The native marker is replaced by the number
+   box, and `list-item` is incremented explicitly because Chromium skips the
+   implicit increment on slotted custom elements. `counter-set` applies the
+   `value` property; it falls back to `none` while the custom property is
+   unset. */
+:host {
+  display: list-item;
+  list-style: none;
+  counter-set: list-item var(--_swc-source-list-item-value);
+  counter-increment: list-item;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.swc-SourceListItem {
+  --_swc-source-list-item-border-radius: token("corner-radius-500");
+  --_swc-source-list-item-text-color: token("neutral-content-color-default");
+  --_swc-source-list-item-padding: token("container-padding-small");
+  --_swc-source-list-item-body-gap: token("list-item-gap-medium");
+  --_swc-source-list-item-content-gap: token("text-gap-large");
+  --_swc-source-list-item-lockup-gap: token("base-gap-large");
+  --_swc-source-list-item-source-font-size: token("font-size-200");
+  --_swc-source-list-item-source-line-height: token("line-height-200");
+  --_swc-source-list-item-description-font-size: token("font-size-100");
+  --_swc-source-list-item-description-line-height: token("line-height-200");
+  --_swc-source-list-item-marker-size: token("component-height-75");
+  --_swc-source-list-item-marker-font-size: token("font-size-75");
+
+  display: grid;
+  position: relative;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+  padding: var(--_swc-source-list-item-padding);
+  color: var(--_swc-source-list-item-text-color);
+  background-color: var(--swc-source-list-item-background-color, transparent);
+  border-radius: var(--_swc-source-list-item-border-radius);
+  transition: background-color token("animation-duration-100") token("animation-ease-in-out");
+  column-gap: var(--_swc-source-list-item-lockup-gap);
+}
+
+.swc-SourceListItem--ordered {
+  grid-template-columns: auto minmax(0, 1fr);
+}
+
+:host(:hover) .swc-SourceListItem {
+  background-color: var(--swc-source-list-item-background-color-hover, token("gray-100"));
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   SIZES
+   ───────────────────────────────────────────────────────────────────────────── */
+
+:host([size="s"]) .swc-SourceListItem {
+  --_swc-source-list-item-padding: token("container-padding-extra-small");
+  --_swc-source-list-item-body-gap: token("spacing-75");
+  --_swc-source-list-item-content-gap: token("text-gap-medium");
+  --_swc-source-list-item-lockup-gap: token("base-gap-medium");
+  --_swc-source-list-item-source-font-size: token("font-size-100");
+  --_swc-source-list-item-source-line-height: token("line-height-100");
+  --_swc-source-list-item-description-font-size: token("font-size-75");
+  --_swc-source-list-item-description-line-height: token("line-height-100");
+  --_swc-source-list-item-marker-size: token("component-height-50");
+  --_swc-source-list-item-marker-font-size: token("font-size-50");
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   NUMBER BOX
+   Styling is provisional until the design is final.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.swc-SourceListItem-marker {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-inline-size: var(--_swc-source-list-item-marker-size);
+  block-size: var(--_swc-source-list-item-marker-size);
+  padding-inline: token("spacing-75");
+  font-size: var(--_swc-source-list-item-marker-font-size);
+  font-weight: token("medium-font-weight");
+  line-height: token("line-height-100");
+  color: token("neutral-subdued-content-color-default");
+  background-color: token("gray-200");
+  border-radius: token("corner-radius-100");
+}
+
+.swc-SourceListItem-marker::before {
+  content: counter(list-item);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   BODY
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.swc-SourceListItem-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--_swc-source-list-item-body-gap);
+  min-inline-size: 0;
+}
+
+.swc-SourceListItem-lockup {
+  display: flex;
+  gap: var(--_swc-source-list-item-lockup-gap);
+  align-items: center;
+}
+
+.swc-SourceListItem-thumbnail {
+  flex-shrink: 0;
+}
+
+.swc-SourceListItem-source {
+  min-inline-size: 0;
+  font-size: var(--_swc-source-list-item-source-font-size);
+  line-height: var(--_swc-source-list-item-source-line-height);
+  overflow-wrap: anywhere;
+}
+
+.swc-SourceListItem-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--_swc-source-list-item-content-gap);
+}
+
+.swc-SourceListItem-description {
+  margin: 0;
+  font-size: var(--_swc-source-list-item-description-font-size);
+  line-height: var(--_swc-source-list-item-description-line-height);
+  overflow-wrap: anywhere;
+}
+
+::slotted([slot="description"]) {
+  margin: 0;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   TITLE
+   Shadow-local copy of the `.swc-Title` rules in `typography.css`, which
+   doesn't reach the shadow root. Always paired with a size modifier: the
+   bare class picks up the global `--swc-title-line-height` token.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.swc-Title {
+  margin-block: 0;
+  font-family: var(--swc-title-font-family, token("sans-serif-font"));
+  font-size: var(--swc-title-font-size, token("title-size-m"));
+  font-weight: var(--swc-title-font-weight, token("title-sans-serif-font-weight"));
+  line-height: var(--swc-title-line-height, token("line-height-font-size-200"));
+  color: var(--_swc-source-list-item-text-color);
+  letter-spacing: var(--swc-title-letter-spacing, normal);
+
+  &:lang(zh),
+  &:lang(ja),
+  &:lang(ko) {
+    --swc-title-line-height: var(--swc-title-cjk-line-height, token("cjk-line-height-100"));
+    --swc-title-letter-spacing: var(--swc-title-cjk-letter-spacing, token("cjk-letter-spacing"));
+    --swc-title-font-size: var(--swc-title-cjk-font-size, token("font-size-100"));
+  }
+}
+
+.swc-Title--sizeS {
+  --swc-title-font-size: token("title-size-s");
+  --swc-title-line-height: token("line-height-font-size-100");
+}
+
+.swc-Title--sizeM {
+  --swc-title-font-size: token("title-size-m");
+  --swc-title-line-height: token("line-height-font-size-200");
+
+  &:lang(zh),
+  &:lang(ja),
+  &:lang(ko) {
+    --swc-title-cjk-font-size: token("font-size-100");
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   LINK
+   The slotted link takes the title's typography. Its `::before` is stretched
+   over the card, so the whole card follows the link, and the focus indicator
+   is drawn around the card.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+::slotted([slot="link"]) {
+  font: inherit;
+  color: inherit;
+  letter-spacing: inherit;
+  overflow-wrap: anywhere;
+  text-decoration: none;
+}
+
+::slotted([slot="link"]:hover) {
+  text-decoration: underline;
+}
+
+::slotted([slot="link"]:focus-visible) {
+  outline: none;
+}
+
+::slotted([slot="link"])::before {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--_swc-source-list-item-border-radius);
+  content: "";
+}
+
+::slotted([slot="link"]:focus-visible)::before {
+  outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
+  outline-offset: token("focus-ring-gap");
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   FORCED COLORS
+   ───────────────────────────────────────────────────────────────────────────── */
+
+@media (forced-colors: active) {
+  :host(:hover) .swc-SourceListItem {
+    outline: 1px solid CanvasText;
+  }
+
+  .swc-SourceListItem-marker {
+    border: 1px solid CanvasText;
+  }
+
+  ::slotted([slot="link"]:focus-visible)::before {
+    outline-color: Highlight;
+  }
+}

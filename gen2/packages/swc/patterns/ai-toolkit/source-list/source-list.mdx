@@ -1,0 +1,120 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../../.storybook/blocks';
+
+import * as SourceListStories from './stories/source-list.stories';
+
+<Meta of={SourceListStories} />
+
+<DocsHeader />
+
+## Anatomy
+
+A source list shows the sources behind an AI response. `<swc-source-list>` renders a native ordered or unordered list, and each `<swc-source-list-item>` is a card that follows its source link when clicked anywhere. A source list consists of:
+
+- **Heading** (optional): a visible heading in the list's `heading` slot that names the list.
+- **List**: a native `<ol>` or `<ul>` that the list renders for its items.
+- **Number box**: a box with the item's position, shown in ordered lists. It's hidden from assistive technology, which gets the position from the list.
+- **Thumbnail**: a decorative favicon or logo from the item's `thumbnail-src` attribute.
+- **Source**: the item's `source` attribute, or the hostname of its link.
+- **Title link**: an `<a href>` with the title text in the item's `link` slot. It's the item's only focusable element.
+- **Description**: the quoted snippet in the item's `description` slot. The item wraps it in a `<blockquote>`.
+
+<Canvas of={SourceListStories.Anatomy} />
+
+## Options
+
+### Verbosity
+
+`verbosity` sets which parts every item renders. Set it on the list; the list applies it to every item, so all items in a list match. Consumers write the same item markup at every level.
+
+- `verbose` (default): thumbnail and source, title link, and description. Use it when there are few sources and room to read the quotes, such as in a drawer or dialog.
+- `regular`: thumbnail and source, and title link.
+- `concise`: title link only. Use it in tight spaces, such as a popover with many sources.
+
+Parts a level leaves out aren't rendered, so screen readers skip them too.
+
+<Canvas of={SourceListStories.Verbosity} />
+
+### Sizes
+
+Set `size` to `s` or `m` (default) on the list; the list applies it to every item. Small steps each text and spacing token down one level, following prompt field.
+
+<Canvas of={SourceListStories.Sizes} />
+
+### List types
+
+`type="ordered"` (default) renders an `<ol>` and shows a number box on every item. Use it when inline citation markers such as "[2]" refer to the list. `type="unordered"` renders a `<ul>` without number boxes. Use it only when nothing refers to the sources by number.
+
+<Canvas of={SourceListStories.ListTypes} />
+
+## Behaviors
+
+### Numbering
+
+Ordered lists count from `start` (default 1), like `<ol start>`. Set `value` on an item to give it a specific number, like `<li value>`; following items count up from it. Keep the numbers in step with the response's inline citation markers.
+
+<Canvas of={SourceListStories.Numbering} />
+
+### Source fallback
+
+When an item has no `source`, it shows the hostname of an `http:` or `https:` link, without a leading `www.`. A `source` attribute always wins. With neither, no source name is shown, and in dev mode the item logs a notice.
+
+<Canvas of={SourceListStories.SourceFallback} />
+
+### Description length
+
+The description is never truncated: the card grows to fit the whole snippet, so no part of the quote is hidden. Length is a content decision:
+
+- Keep snippets to about 150 characters or fewer.
+- Quote the passage that supports the statement, not the whole paragraph. If you shorten a quote, mark the omission with an ellipsis (…) in the text.
+- Keep cards in the same list to similar lengths, so they're easy to scan.
+
+<Canvas of={SourceListStories.DescriptionLength} />
+
+## Accessibility
+
+### Features
+
+The `<swc-source-list>` element implements:
+
+- **Native list semantics:** a native `<ol>` or `<ul>` with no added role.
+- **List item semantics:** each `<swc-source-list-item>` gets `role="listitem"`, because custom elements have no native role. A role you set on the item is kept.
+- **List name:** the slotted heading names the list, as does the element in `labelElement`. Otherwise, `accessible-label` sets the name. Inside a titled dialog or drawer, the container's name is usually enough.
+- **One focusable element per item:** the title link. Its hit area covers the card, and the focus indicator is drawn around the whole card.
+- **Hidden decoration:** the thumbnail and number box are hidden from assistive technology.
+- **Quoted description:** the snippet is in a `<blockquote>` whose `cite` is the link's URL.
+- **Opt-in headings:** `heading-level` exposes an item's title as a heading at levels 2–6. Leave it unset in popovers and drawers, where per-source headings clutter the page outline.
+- **Forced colors:** hover shows an outline, the number box gets a border, and the focus indicator uses the system highlight color.
+- **Dev-mode warnings** when an item's `link` slot is empty, holds something other than an `<a>`, has an `<a>` without `href` or text, or holds more than one element; and when the list holds elements other than `<swc-source-list-item>`.
+
+### Best practices
+
+- Write link text that makes sense on its own: in `concise`, the source isn't shown.
+- Pass a localized `accessible-label` when nothing else names the list. The list has no built-in default.
+- If a link opens a new tab, say so in the link text or with visually hidden text.
+- Don't put other interactive elements in an item. The link's hit area covers them.
+- The source list doesn't manage focus, trap focus, or close on Escape. The popover, drawer, or dialog it's placed in owns that behavior. See the full pattern examples.
+
+<Canvas of={SourceListStories.Accessibility} />
+
+## Full pattern
+
+### In a popover
+
+An action button opens a non-modal popover. `<swc-popover>` sets `aria-expanded` on the trigger, moves focus to its surface (a dialog named by its `accessible-label`), and closes on Escape or an outside click. If focus was inside, it returns to the trigger. The popover's name labels the sources, so the list doesn't need its own label.
+
+<Canvas of={SourceListStories.InPopover} />
+
+### In a modal dialog
+
+When the sources cover the conversation, as on small screens, set `modal` on the popover. It opens with `showModal()`, which traps focus and makes the page inert until it closes. It needs a visible close button, and closing it returns focus to the trigger.
+
+<Canvas of={SourceListStories.InModalDialog} />
+
+## Upcoming features
+
+- Final number box styling and spacing for each verbosity level.
+- Visual regression tests.
+- Using `<swc-source-list>` in `<swc-message-sources>`.
+
+<DocsFooter />

@@ -9,14 +9,31 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { defineElement } from '@adobe/spectrum-wc-core/element/index.js';
 
-import { CitationCard } from './CitationCard.js';
-
-declare global {
-  interface HTMLElementTagNameMap {
-    'swc-citation-card': CitationCard;
-  }
+:host {
+  display: block;
 }
 
-defineElement('swc-citation-card', CitationCard);
+* {
+  box-sizing: border-box;
+}
+
+.swc-SourceList {
+  display: flex;
+  flex-direction: column;
+  gap: token("spacing-100");
+}
+
+/* The native list supplies list semantics; no role is added. Items replace
+   the native marker with their own number box. */
+.swc-SourceList-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--swc-source-list-gap, token("spacing-50"));
+  padding: 0;
+  margin: 0;
+}
+
+::slotted([slot="heading"]) {
+  margin: 0;
+}

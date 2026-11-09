@@ -9,8 +9,16 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+import { defineElement } from '@adobe/spectrum-wc-core/element/index.js';
 
-/* Renders like a native `<li>`, so `<ol>` numbering and list markers apply. */
-:host {
-  display: list-item;
+import './source-list-item/swc-source-list-item.js';
+
+import { SourceList } from './SourceList.js';
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'swc-source-list': SourceList;
+  }
 }
+
+defineElement('swc-source-list', SourceList);
