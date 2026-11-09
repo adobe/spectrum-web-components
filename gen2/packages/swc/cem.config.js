@@ -237,6 +237,10 @@ function expandRemainingTypeAliases() {
 
   return {
     name: 'cem-plugin-expand-remaining-type-aliases',
+    // `--watch` reuses plugin instances, so start each pass empty.
+    initialize() {
+      expansions.clear();
+    },
     packageLinkPhase({ customElementsManifest }) {
       dropStructuralTypes(customElementsManifest);
 
@@ -326,6 +330,10 @@ function accessorDefaults() {
 
   return {
     name: 'cem-plugin-accessor-defaults',
+    // `--watch` reuses plugin instances, so start each pass empty.
+    initialize() {
+      defaults.clear();
+    },
     analyzePhase({ ts, node }) {
       if (!ts.isClassDeclaration(node) || !node.name) return;
 

@@ -18,12 +18,15 @@
  *   yarn workspace @adobe/spectrum-wc test:cem
  */
 
+import { create, ts } from '@custom-elements-manifest/analyzer';
 import { cli } from '@custom-elements-manifest/analyzer/cli.js';
 import assert from 'node:assert/strict';
 import path from 'node:path';
 import process from 'node:process';
 import { before, describe, test } from 'node:test';
 import { fileURLToPath } from 'node:url';
+
+import config from './cem.config.js';
 
 const packageDir = path.dirname(fileURLToPath(import.meta.url));
 
@@ -101,6 +104,30 @@ describe('cem.config.js', () => {
       field(element('swc-accordion-item'), 'open')?.default,
       'false'
     );
+  });
+
+  test('keeps no accessor default from the previous watch pass', () => {
+    // `cem analyze --watch` calls `create()` again with the same plugins.
+    const plugins = config.plugins.filter(
+      (plugin) => plugin.name === 'cem-plugin-accessor-defaults'
+    );
+    const densityDefault = (backingField) => {
+      const source = ts.createSourceFile(
+        'fixture.ts',
+        `export class Fixture {
+          private ${backingField};
+          get density() { return this._density; }
+        }`,
+        ts.ScriptTarget.ES2015,
+        true
+      );
+      const [fixture] = create({ modules: [source], plugins }).modules[0]
+        .declarations;
+      return field(fixture, 'density')?.default;
+    };
+
+    assert.equal(densityDefault("_density = 'regular'"), 'regular');
+    assert.equal(densityDefault('_density?: string'), undefined);
   });
 
   test('gives each attribute the parsedType of the field it reflects', () => {
