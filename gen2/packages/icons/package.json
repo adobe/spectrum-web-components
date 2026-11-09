@@ -39,8 +39,8 @@
     "generate:icon-styles": "node scripts/copy-icon-base-styles.mjs",
     "generate:workflow-icons": "node scripts/generate-workflow-icons.mjs && prettier --write \"src/*.ts\" && yarn generate:icon-styles",
     "prepublishOnly": "yarn build",
-    "test": "node scripts/verify-tree-shaking.mjs",
-    "verify:tree-shaking": "node scripts/verify-tree-shaking.mjs"
+    "test": "node --test scripts/test/generate-workflow-icons.test.mjs && node scripts/test/verify-tree-shaking.test.mjs",
+    "verify:tree-shaking": "node scripts/test/verify-tree-shaking.test.mjs"
   },
   "sideEffects": [
     "**/swc-icon-*.js",
