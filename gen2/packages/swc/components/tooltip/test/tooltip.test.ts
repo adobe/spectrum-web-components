@@ -1136,7 +1136,7 @@ export const PlacementControllerTest: Story = {
       );
     });
 
-    await step('clears translate when closed', async () => {
+    await step('clears the inline position styles when closed', async () => {
       const tip = tooltip.shadowRoot?.querySelector(
         '.swc-Tooltip-tip'
       ) as HTMLElement | null;
@@ -1155,12 +1155,30 @@ export const PlacementControllerTest: Story = {
           ).toBeFalsy(),
         { timeout: 2000 }
       );
-      // Tip translate is also cleared by dispatchAfterEvent — both are cleared
-      // in the same call, so no additional polling is needed here.
+      // The bubble and tip styles are all cleared by dispatchAfterEvent in the
+      // same call, so no additional polling is needed here.
+      for (const property of [
+        'top',
+        'left',
+        'translate',
+        '--swc-placement-available-width',
+        '--swc-placement-available-height',
+      ]) {
+        expect(
+          tooltip.style.getPropertyValue(property),
+          `bubble ${property} is cleared after close`
+        ).toBe('');
+      }
+      for (const property of ['top', 'left', 'translate']) {
+        expect(
+          tip?.style.getPropertyValue(property),
+          `tip ${property} is cleared after close`
+        ).toBe('');
+      }
       expect(
-        tip?.style.translate,
-        'tip translate is cleared after close'
-      ).toBeFalsy();
+        tooltip.style.getPropertyValue('--_swc-tooltip-animation-distance'),
+        'the tooltip keeps its own inline animation distance'
+      ).toBe('4px');
     });
 
     await step(

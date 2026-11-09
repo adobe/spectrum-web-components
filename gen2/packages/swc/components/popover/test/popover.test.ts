@@ -495,6 +495,64 @@ export const ActualPlacementTest: Story = {
   },
 };
 
+export const PositionStylesClearedOnCloseTest: Story = {
+  render: () => html`
+    <button id="position-styles-trigger">Trigger</button>
+    <swc-popover
+      for="position-styles-trigger"
+      placement="bottom"
+      accessible-label="Positioned content"
+    >
+      Content
+    </swc-popover>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const popover = await getComponent<Popover>(canvasElement, 'swc-popover');
+    await popover.updateComplete;
+    const surface = popover.shadowRoot?.querySelector(
+      '.swc-Popover'
+    ) as HTMLElement;
+    const tip = popover.shadowRoot?.querySelector(
+      '.swc-Popover-tip'
+    ) as HTMLElement;
+
+    await step('positions the surface and the tip while open', async () => {
+      popover.open = true;
+      await waitFor(() => expect(surface.style.translate).toMatch(/\dpx/));
+      expect(tip.style.translate).toMatch(/\dpx/);
+    });
+
+    await step(
+      'removes the inline position styles after the close transition',
+      async () => {
+        popover.open = false;
+        // Cleared in the same post-transition teardown as `actual-placement`.
+        await waitFor(() =>
+          expect(popover.hasAttribute('actual-placement')).toBe(false)
+        );
+        for (const property of [
+          'top',
+          'left',
+          'translate',
+          '--swc-placement-available-width',
+          '--swc-placement-available-height',
+        ]) {
+          expect(
+            surface.style.getPropertyValue(property),
+            `surface ${property} is removed`
+          ).toBe('');
+        }
+        for (const property of ['top', 'left', 'translate']) {
+          expect(
+            tip.style.getPropertyValue(property),
+            `tip ${property} is removed`
+          ).toBe('');
+        }
+      }
+    );
+  },
+};
+
 export const ActualPlacementFlipTest: Story = {
   // The trigger is pinned to the top of the viewport (position: fixed) so a
   // placement="top" popover has no room above; the flip middleware resolves to
@@ -580,8 +638,9 @@ export const PositionedFadeGateTest: Story = {
 
     await step('re-gates on a rapid reopen during the close fade', async () => {
       // Close, then reopen before the close transition finishes. Restarting
-      // positioning clears `actual-placement` (and the surface translate), so the
-      // fade is re-gated; otherwise the surface would briefly paint at 0,0 and jump.
+      // positioning clears `actual-placement`, so the fade is re-gated; otherwise
+      // the surface would fade in from the previous session's position before the
+      // new session anchors it.
       popover.open = false;
       await popover.updateComplete;
       popover.open = true;

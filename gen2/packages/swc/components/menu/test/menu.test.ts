@@ -942,6 +942,22 @@ export const PlacementControllerIntegrationTest: Story = {
         { timeout: 2000 }
       );
     });
+
+    await step('clears the inline position styles once the menu closes', () => {
+      // Cleared in the same post-transition teardown as `actual-placement`.
+      for (const property of [
+        'top',
+        'left',
+        'translate',
+        '--swc-placement-available-width',
+        '--swc-placement-available-height',
+      ]) {
+        expect(
+          surface()?.style.getPropertyValue(property),
+          `surface ${property} is removed`
+        ).toBe('');
+      }
+    });
   },
 };
 
