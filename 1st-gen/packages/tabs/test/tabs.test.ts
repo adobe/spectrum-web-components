@@ -9,6 +9,7 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+import { html as litHtml, render } from 'lit';
 import { html } from 'lit/static-html.js';
 import {
   elementUpdated,
@@ -554,6 +555,549 @@ describe('Tabs', () => {
     await elementUpdated(el);
 
     expect(el.selected).to.equal('second');
+  });
+  describe('slotted tabs added after the initial render', () => {
+    const createTab = (value: string, label = value): Tab => {
+      const tab = document.createElement('sp-tab') as Tab;
+      tab.value = value;
+      tab.label = label;
+      return tab;
+    };
+
+    const createPanel = (value: string): TabPanel => {
+      const panel = document.createElement('sp-tab-panel') as TabPanel;
+      panel.value = value;
+      panel.textContent = `${value} content`;
+      return panel;
+    };
+
+    it('manages tabs that replace the slotted content', async () => {
+      const el = await fixture<Tabs>(html`
+        <sp-tabs selected="first">
+          <sp-tab value="first">Tab 1</sp-tab>
+        </sp-tabs>
+      `);
+      await elementUpdated(el);
+
+      const first = document.createElement('sp-tab') as Tab;
+      first.value = 'first';
+      const second = document.createElement('sp-tab') as Tab;
+      second.value = 'second';
+      el.replaceChildren(first, second);
+      await elementUpdated(el);
+
+      expect(el.selected).to.equal('first');
+      expect(first.selected).to.be.true;
+      expect(first.getAttribute('aria-selected')).to.equal('true');
+      expect(second.getAttribute('aria-selected')).to.equal('false');
+
+      second.click();
+      await elementUpdated(el);
+
+      expect(el.selected).to.equal('second');
+      expect(second.selected).to.be.true;
+      expect(second.getAttribute('aria-selected')).to.equal('true');
+      expect(first.getAttribute('aria-selected')).to.equal('false');
+    });
+
+    it('manages tabs rendered by a switching Lit template', async () => {
+      const el = await fixture<Tabs>(html`
+        <sp-tabs selected="a"></sp-tabs>
+      `);
+      const renderTabs = (values: string[]): void => {
+        render(
+          litHtml`
+            ${values.map(
+              (value) => litHtml`
+                <sp-tab value=${value} label=${value}></sp-tab>
+              `
+            )}
+          `,
+          el
+        );
+      };
+
+      renderTabs(['a', 'b']);
+      await elementUpdated(el);
+      expect(el.selected).to.equal('a');
+
+      renderTabs(['a', 'c', 'd']);
+      await elementUpdated(el);
+
+      const tabs = [...el.querySelectorAll('sp-tab')] as Tab[];
+      expect(tabs.map((tab) => tab.getAttribute('role'))).to.deep.equal([
+        'tab',
+        'tab',
+        'tab',
+      ]);
+      expect(el.selected).to.equal('a');
+
+      const last = el.querySelector('[value="d"]') as Tab;
+      last.click();
+      await elementUpdated(el);
+
+      expect(el.selected).to.equal('d');
+      expect(last.selected).to.be.true;
+    });
+
+    it('selects a tab that is appended to the existing tabs', async () => {
+      const el = await fixture<Tabs>(html`
+        <sp-tabs selected="first">
+          <sp-tab value="first">Tab 1</sp-tab>
+        </sp-tabs>
+      `);
+      await elementUpdated(el);
+
+      const second = createTab('second');
+      el.append(second);
+      await elementUpdated(el);
+
+      second.click();
+      await elementUpdated(el);
+
+      expect(el.selected).to.equal('second');
+      expect(second.selected).to.be.true;
+      expect(second.tabIndex).to.equal(0);
+    });
+
+    it('links replacement tabs to the existing tab panels', async () => {
+      const el = await fixture<Tabs>(html`
+        <sp-tabs selected="first">
+          <sp-tab value="first">Tab 1</sp-tab>
+          <sp-tab value="second">Tab 2</sp-tab>
+          <sp-tab-panel value="first">First tab content</sp-tab-panel>
+          <sp-tab-panel value="second">Second tab content</sp-tab-panel>
+        </sp-tabs>
+      `);
+      await elementUpdated(el);
+
+      const panels = [...el.querySelectorAll('sp-tab-panel')] as TabPanel[];
+      el.querySelectorAll('sp-tab').forEach((tab) => tab.remove());
+      const first = createTab('first');
+      const second = createTab('second');
+      el.prepend(first, second);
+      await elementUpdated(el);
+
+      expect(first.id).to.not.equal('');
+      expect(second.id).to.not.equal('');
+      expect(first.getAttribute('aria-controls')).to.equal(panels[0].id);
+      expect(second.getAttribute('aria-controls')).to.equal(panels[1].id);
+      expect(panels[0].getAttribute('aria-labelledby')).to.equal(first.id);
+      expect(panels[1].getAttribute('aria-labelledby')).to.equal(second.id);
+      expect(panels[0].selected).to.be.true;
+      expect(panels[1].selected).to.be.false;
+
+      second.click();
+      await elementUpdated(el);
+
+      expect(panels[0].selected).to.be.false;
+      expect(panels[1].selected).to.be.true;
+    });
+
+    it('clears stale panel labels when a tab is removed or replaced with a different value', async () => {
+      const el = await fixture<Tabs>(html`
+        <sp-tabs selected="first">
+          <sp-tab value="first">Tab 1</sp-tab>
+          <sp-tab-panel value="first">First tab content</sp-tab-panel>
+        </sp-tabs>
+      `);
+      await elementUpdated(el);
+
+      const panel = el.querySelector('sp-tab-panel') as TabPanel;
+      const originalTab = el.querySelector('sp-tab') as Tab;
+      expect(panel.getAttribute('aria-labelledby')).to.equal(originalTab.id);
+
+      originalTab.remove();
+      await elementUpdated(el);
+      expect(panel.hasAttribute('aria-labelledby')).to.be.false;
+
+      const unrelatedTab = createTab('second');
+      el.prepend(unrelatedTab);
+      await elementUpdated(el);
+      expect(panel.hasAttribute('aria-labelledby')).to.be.false;
+
+      const replacement = createTab('first');
+      el.prepend(replacement);
+      await elementUpdated(el);
+      expect(panel.getAttribute('aria-labelledby')).to.equal(replacement.id);
+      expect(replacement.getAttribute('aria-controls')).to.equal(panel.id);
+    });
+
+    it('preserves a consumer-provided label when no tab matches the panel', async () => {
+      const el = await fixture<Tabs>(html`
+        <sp-tabs>
+          <sp-tab-panel value="missing" aria-labelledby="external-heading">
+            <h2 id="external-heading">Panel heading</h2>
+          </sp-tab-panel>
+        </sp-tabs>
+      `);
+      await elementUpdated(el);
+
+      const panel = el.querySelector('sp-tab-panel') as TabPanel;
+      expect(panel.getAttribute('aria-labelledby')).to.equal(
+        'external-heading'
+      );
+    });
+
+    it('links replacement tab panels to the existing tabs', async () => {
+      const el = await fixture<Tabs>(html`
+        <sp-tabs selected="first">
+          <sp-tab value="first">Tab 1</sp-tab>
+          <sp-tab value="second">Tab 2</sp-tab>
+          <sp-tab-panel value="first">First tab content</sp-tab-panel>
+        </sp-tabs>
+      `);
+      await elementUpdated(el);
+
+      const [first, second] = [...el.querySelectorAll('sp-tab')] as Tab[];
+      el.querySelector('sp-tab-panel')?.remove();
+      const firstPanel = createPanel('first');
+      const secondPanel = createPanel('second');
+      el.append(firstPanel, secondPanel);
+      await elementUpdated(el);
+      await elementUpdated(firstPanel);
+
+      expect(first.getAttribute('aria-controls')).to.equal(firstPanel.id);
+      expect(second.getAttribute('aria-controls')).to.equal(secondPanel.id);
+      expect(firstPanel.getAttribute('aria-labelledby')).to.equal(first.id);
+      expect(secondPanel.getAttribute('aria-labelledby')).to.equal(second.id);
+      expect(firstPanel.selected).to.be.true;
+      expect(secondPanel.selected).to.be.false;
+    });
+
+    it('keeps a single tab stop when replacement tabs have no selection', async () => {
+      const el = await fixture<Tabs>(html`
+        <sp-tabs>
+          <sp-tab value="first">Tab 1</sp-tab>
+        </sp-tabs>
+      `);
+      await elementUpdated(el);
+
+      const first = createTab('first');
+      const second = createTab('second');
+      el.replaceChildren(first, second);
+      await elementUpdated(el);
+      await nextFrame();
+
+      expect(el.selected).to.equal('');
+      expect(first.tabIndex).to.equal(0);
+      expect(second.tabIndex).to.equal(-1);
+    });
+
+    it('keeps keyboard navigation across replacement tabs', async () => {
+      const el = await fixture<Tabs>(html`
+        <sp-tabs selected="first">
+          <sp-tab value="first">Tab 1</sp-tab>
+        </sp-tabs>
+      `);
+      await elementUpdated(el);
+
+      const first = createTab('first');
+      const second = createTab('second');
+      el.replaceChildren(first, second);
+      await elementUpdated(el);
+      await nextFrame();
+
+      expect(first.tabIndex).to.equal(0);
+      expect(second.tabIndex).to.equal(-1);
+
+      el.focus();
+      await elementUpdated(el);
+      expect(document.activeElement === first, 'Focus first tab').to.be.true;
+
+      await sendKeys({ press: 'ArrowRight' });
+      await elementUpdated(el);
+      expect(document.activeElement === second, 'Focus second tab').to.be.true;
+
+      await sendKeys({ press: 'Enter' });
+      await elementUpdated(el);
+      expect(el.selected).to.equal('second');
+      expect(second.selected).to.be.true;
+    });
+
+    it('moves the selection indicator to a replacement tab', async () => {
+      const el = await fixture<Tabs>(html`
+        <sp-tabs selected="first">
+          <sp-tab value="first">Tab 1</sp-tab>
+        </sp-tabs>
+      `);
+      await elementUpdated(el);
+
+      const first = createTab('first', 'Tab 1');
+      const second = createTab('second', 'A much longer tab label');
+      el.replaceChildren(first, second);
+      await elementUpdated(el);
+      await nextFrame();
+
+      second.click();
+      await elementUpdated(el);
+      await nextFrame();
+
+      const { width } = second.getBoundingClientRect();
+      expect(el.selectionIndicatorStyle).to.equal(
+        `transform: translateX(${second.offsetLeft}px) scaleX(${width / 100});`
+      );
+    });
+
+    it('links a plain role="tab" element to its panel by the value attribute', async () => {
+      const el = await fixture<Tabs>(html`
+        <sp-tabs>
+          <div role="tab" id="plain-tab" value="plain">Plain tab</div>
+          <sp-tab-panel value="plain">Plain tab content</sp-tab-panel>
+        </sp-tabs>
+      `);
+      await elementUpdated(el);
+
+      const tab = el.querySelector('#plain-tab') as HTMLElement;
+      const panel = el.querySelector('sp-tab-panel') as TabPanel;
+      expect(tab.getAttribute('aria-controls')).to.equal(panel.id);
+      expect(panel.getAttribute('aria-labelledby')).to.equal('plain-tab');
+    });
+
+    it('clears tab aria-controls when its panel is removed', async () => {
+      const el = await fixture<Tabs>(html`
+        <sp-tabs selected="first">
+          <sp-tab value="first">Tab 1</sp-tab>
+          <sp-tab value="second">Tab 2</sp-tab>
+          <sp-tab-panel value="first">First tab content</sp-tab-panel>
+          <sp-tab-panel value="second">Second tab content</sp-tab-panel>
+        </sp-tabs>
+      `);
+      await elementUpdated(el);
+
+      const [first, second] = [...el.querySelectorAll('sp-tab')] as Tab[];
+      const [firstPanel, secondPanel] = [
+        ...el.querySelectorAll('sp-tab-panel'),
+      ] as TabPanel[];
+      expect(second.getAttribute('aria-controls')).to.equal(secondPanel.id);
+
+      secondPanel.remove();
+      await elementUpdated(el);
+
+      expect(second.hasAttribute('aria-controls')).to.be.false;
+      expect(first.getAttribute('aria-controls')).to.equal(firstPanel.id);
+
+      const replacement = createPanel('second');
+      el.append(replacement);
+      await elementUpdated(el);
+      await elementUpdated(replacement);
+
+      expect(second.getAttribute('aria-controls')).to.equal(replacement.id);
+    });
+
+    it('preserves a consumer-provided aria-controls when no panel matches the tab', async () => {
+      const el = await fixture<Tabs>(html`
+        <sp-tabs selected="first">
+          <sp-tab value="first">Tab 1</sp-tab>
+          <sp-tab value="second" aria-controls="external-region">Tab 2</sp-tab>
+          <sp-tab-panel value="first">First tab content</sp-tab-panel>
+        </sp-tabs>
+      `);
+      await elementUpdated(el);
+
+      const second = el.querySelector('[value="second"]') as Tab;
+      expect(second.getAttribute('aria-controls')).to.equal('external-region');
+    });
+
+    it('keeps consumer-provided ARIA references that already match', async () => {
+      const el = await fixture<Tabs>(html`
+        <sp-tabs selected="first">
+          <sp-tab
+            id="consumer-tab"
+            value="first"
+            aria-controls="consumer-panel"
+          >
+            Tab 1
+          </sp-tab>
+          <sp-tab-panel
+            id="consumer-panel"
+            value="first"
+            aria-labelledby="consumer-tab"
+          >
+            First tab content
+          </sp-tab-panel>
+        </sp-tabs>
+      `);
+      await elementUpdated(el);
+
+      const tab = el.querySelector('sp-tab') as Tab;
+      const panel = el.querySelector('sp-tab-panel') as TabPanel;
+      const outside = el.parentElement as HTMLElement;
+
+      outside.append(panel);
+      await elementUpdated(el);
+      expect(tab.getAttribute('aria-controls')).to.equal('consumer-panel');
+
+      el.append(panel);
+      await elementUpdated(el);
+      outside.append(tab);
+      await elementUpdated(el);
+      expect(panel.getAttribute('aria-labelledby')).to.equal('consumer-tab');
+    });
+
+    it('keeps a consumer ARIA reference set after a managed link', async () => {
+      const el = await fixture<Tabs>(html`
+        <sp-tabs selected="first">
+          <sp-tab value="first">Tab 1</sp-tab>
+          <sp-tab-panel value="first">First tab content</sp-tab-panel>
+        </sp-tabs>
+      `);
+      await elementUpdated(el);
+
+      const tab = el.querySelector('sp-tab') as Tab;
+      const panel = el.querySelector('sp-tab-panel') as TabPanel;
+      expect(tab.getAttribute('aria-controls')).to.equal(panel.id);
+
+      panel.id = 'consumer-panel';
+      tab.setAttribute('aria-controls', 'consumer-panel');
+      el.append(document.createElement('span'));
+      await elementUpdated(el);
+
+      (el.parentElement as HTMLElement).append(panel);
+      await elementUpdated(el);
+      expect(tab.getAttribute('aria-controls')).to.equal('consumer-panel');
+    });
+
+    it('keeps the app aria-controls when tabs and panels are replaced together', async () => {
+      const el = await fixture<Tabs>(html`
+        <sp-tabs selected="first">
+          <sp-tab value="first">Tab 1</sp-tab>
+          <sp-tab-panel value="first">First tab content</sp-tab-panel>
+        </sp-tabs>
+      `);
+      await elementUpdated(el);
+
+      const tab = createTab('first');
+      tab.setAttribute('aria-controls', 'app-panel');
+      const panel = createPanel('first');
+      panel.id = 'app-panel';
+      el.replaceChildren(tab, panel);
+      await elementUpdated(el);
+      await elementUpdated(panel);
+      await nextFrame();
+
+      expect(tab.getAttribute('aria-controls')).to.equal('app-panel');
+
+      panel.remove();
+      await elementUpdated(el);
+      expect(tab.getAttribute('aria-controls')).to.equal('app-panel');
+    });
+
+    it('keeps ARIA references that the app changed after the tabs render', async () => {
+      const el = await fixture<Tabs>(html`
+        <sp-tabs selected="first">
+          <h2 id="external-heading">External heading</h2>
+          <sp-tab value="first">Tab 1</sp-tab>
+          <sp-tab-panel value="first">First tab content</sp-tab-panel>
+        </sp-tabs>
+      `);
+      await elementUpdated(el);
+
+      const tab = el.querySelector('sp-tab') as Tab;
+      const panel = el.querySelector('sp-tab-panel') as TabPanel;
+      expect(panel.getAttribute('aria-labelledby')).to.equal(tab.id);
+
+      panel.setAttribute('aria-labelledby', 'external-heading');
+      tab.setAttribute('aria-controls', 'external-region');
+      el.append(document.createElement('span'));
+      await elementUpdated(el);
+
+      expect(panel.getAttribute('aria-labelledby')).to.equal(
+        'external-heading'
+      );
+      expect(tab.getAttribute('aria-controls')).to.equal('external-region');
+    });
+
+    it('keeps app-changed ARIA references when the link is removed', async () => {
+      const el = await fixture<Tabs>(html`
+        <sp-tabs selected="first">
+          <sp-tab value="first">Tab 1</sp-tab>
+          <sp-tab-panel value="first">First tab content</sp-tab-panel>
+        </sp-tabs>
+      `);
+      await elementUpdated(el);
+
+      const tab = el.querySelector('sp-tab') as Tab;
+      const panel = el.querySelector('sp-tab-panel') as TabPanel;
+      expect(tab.getAttribute('aria-controls')).to.equal(panel.id);
+
+      panel.setAttribute('aria-labelledby', 'external-heading');
+      tab.setAttribute('aria-controls', 'external-region');
+      panel.remove();
+      await elementUpdated(el);
+      expect(tab.getAttribute('aria-controls')).to.equal('external-region');
+
+      el.append(panel);
+      await elementUpdated(el);
+      tab.remove();
+      await elementUpdated(el);
+      expect(panel.getAttribute('aria-labelledby')).to.equal(
+        'external-heading'
+      );
+    });
+
+    it('relinks a tab or panel moved to another sp-tabs', async () => {
+      const container = await fixture<HTMLDivElement>(html`
+        <div>
+          <sp-tabs id="group-a" selected="first">
+            <sp-tab id="tab-a" value="first">Tab A</sp-tab>
+            <sp-tab-panel id="panel-a" value="first">Panel A</sp-tab-panel>
+          </sp-tabs>
+          <sp-tabs id="group-b" selected="first">
+            <sp-tab id="tab-b" value="first">Tab B</sp-tab>
+            <sp-tab-panel id="panel-b" value="first">Panel B</sp-tab-panel>
+          </sp-tabs>
+        </div>
+      `);
+      const groupA = container.querySelector('#group-a') as Tabs;
+      const groupB = container.querySelector('#group-b') as Tabs;
+      const tabA = container.querySelector('#tab-a') as Tab;
+      const tabB = container.querySelector('#tab-b') as Tab;
+      const panelA = container.querySelector('#panel-a') as TabPanel;
+      const panelB = container.querySelector('#panel-b') as TabPanel;
+      await elementUpdated(groupA);
+      await elementUpdated(groupB);
+
+      panelB.remove();
+      groupB.append(panelA);
+      await elementUpdated(groupA);
+      await elementUpdated(groupB);
+      expect(panelA.getAttribute('aria-labelledby')).to.equal('tab-b');
+      expect(tabB.getAttribute('aria-controls')).to.equal('panel-a');
+
+      groupA.append(panelB);
+      await elementUpdated(groupA);
+      tabA.remove();
+      tabB.remove();
+      groupA.prepend(tabB);
+      await elementUpdated(groupA);
+      await elementUpdated(groupB);
+      expect(tabB.getAttribute('aria-controls')).to.equal('panel-b');
+      expect(panelB.getAttribute('aria-labelledby')).to.equal('tab-b');
+    });
+
+    it('does not match a cleared tab value through the stale attribute', async () => {
+      const el = await fixture<Tabs>(html`
+        <sp-tabs selected="first">
+          <sp-tab value="first">Tab 1</sp-tab>
+          <sp-tab-panel value="first">First tab content</sp-tab-panel>
+        </sp-tabs>
+      `);
+      await elementUpdated(el);
+
+      const tab = el.querySelector('sp-tab') as Tab;
+      const panel = el.querySelector('sp-tab-panel') as TabPanel;
+      expect(panel.getAttribute('aria-labelledby')).to.equal(tab.id);
+
+      panel.remove();
+      el.append(panel);
+      tab.value = '';
+      await elementUpdated(el);
+      await elementUpdated(tab);
+
+      expect(tab.getAttribute('value')).to.equal('');
+      expect(panel.hasAttribute('aria-labelledby')).to.be.false;
+    });
   });
   it('updates selection indicator in response to tab updates', async () => {
     const el = await fixture<Tabs>(html`
