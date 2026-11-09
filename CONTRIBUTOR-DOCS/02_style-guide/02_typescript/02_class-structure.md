@@ -202,6 +202,8 @@ API ADDITIONS         → New properties only in this generation (optional)
 RENDERING & STYLING   → Styles and the render method
 ```
 
+The static `tagName` comes first, above the first section separator, followed by `dependencies` if the component has any. See [Element registration](01_file-organization.md#element-registration).
+
 ### Section: API OVERRIDES
 
 This section sets the values that the base class declared in `API TO OVERRIDE`. It uses the `override` keyword.
@@ -214,6 +216,8 @@ This section sets the values that the base class declared in `API TO OVERRIDE`. 
 **Example from Badge.ts:**
 
 ```ts
+public static override readonly tagName = 'swc-badge';
+
 // ────────────────────
 //     API OVERRIDES
 // ────────────────────

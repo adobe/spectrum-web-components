@@ -219,13 +219,15 @@ Custom element tags use the `swc-` prefix with lowercase kebab-case.
 | Progress Circle | `swc-progress-circle` |
 | Alert Banner | `swc-alert-banner` |
 
+The concrete class declares its tag as a static `tagName` field. See [Element registration](01_file-organization.md#element-registration).
+
 ```ts
 // ✅ Good
-defineElement('swc-badge', Badge);
+public static override readonly tagName = 'swc-badge';
 
-// ❌ Bad — no prefix
-defineElement('badge', Badge);
+// ❌ Bad: no prefix
+public static override readonly tagName = 'badge';
 
-// ❌ Bad — camelCase
-defineElement('swcBadge', Badge);
+// ❌ Bad: camelCase
+public static override readonly tagName = 'swcBadge';
 ```

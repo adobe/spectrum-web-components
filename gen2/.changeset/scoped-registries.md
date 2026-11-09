@@ -10,6 +10,7 @@
 - **Per-instance registries:** Components render their templates with the registry they were created in, including in existing shadow roots and light-DOM render roots. Components created in the global registry render as before.
 - **Class imports no longer register globally (breaking):** Importing a class, for example `CloseButton` from `@adobe/spectrum-wc/close-button`, no longer defines the elements it renders, such as `<swc-ui-icon>`, in the global registry. If you define a class yourself with `customElements.define()`, call `CloseButton.define()` or import its `swc-*.js` registration file instead.
 - **Registration files define required children:** Importing `swc-tabs.js` also defines `<swc-tab>` and `<swc-tab-panel>`, and importing `swc-accordion.js` also defines `<swc-accordion-item>`. Importing their own registration files as well still works.
+- **Text Field invalid icon:** Text Field renders its invalid icon inside `<swc-icon>`, so `swc-text-field.js` now defines `<swc-icon>` instead of `<swc-icon-alert-triangle>`.
 - **`defineElement(name, constructor, registry)`:** Takes an optional registry and does nothing when the same constructor is already defined under that name.
 
 See the "Scoped registries" guide for usage and browser support.

@@ -51,7 +51,7 @@ The base class does **not**:
 
 - Import or define styles (no CSS)
 - Call `render()` (no template)
-- Register the custom element (no `defineElement`)
+- Declare `tagName` or `dependencies`, or register the custom element
 - Import Lit directives like `classMap` or `when`
 
 **Example — Badge.base.ts responsibilities:**
@@ -73,6 +73,7 @@ The concrete class lives in `swc/components/<name>/Component.ts`. It handles:
 
 | Responsibility | Example |
 |----------------|---------|
+| **Element registration** | Declaring `tagName`, and `dependencies` such as `UiIcon` in Close Button |
 | **Overriding statics** | Setting `VARIANTS_COLOR` to the S2 value set |
 | **Overriding property types** | Narrowing `variant` to `BadgeVariant` |
 | **Generation-specific properties** | `subtle`, `outline` (S2-only) |
@@ -84,6 +85,7 @@ The concrete class lives in `swc/components/<name>/Component.ts`. It handles:
 
 ```ts
 export class Badge extends BadgeBase {
+  public static override readonly tagName = 'swc-badge';
   // API OVERRIDES: VARIANTS_COLOR, VARIANTS, VALID_SIZES, variant
   // API ADDITIONS: subtle, outline
   // RENDERING & STYLING: get styles(), render()
@@ -106,6 +108,7 @@ When you are not sure where to put code, use this table:
 | Does it attach a controller? | **Core** (base) |
 | Does it use a mixin? | **Core** (base), in the `extends` clause |
 | Is it a static array of valid values? | **Core** (base), in `API TO OVERRIDE` |
+| Is it the element's tag name, or an element it renders or requires? | **SWC** (concrete), as `tagName` or in `dependencies` |
 
 **Rule of thumb:** If it has nothing to do with how the component looks, it belongs in core. If it touches styles, templates, or generation-specific values, it belongs in SWC.
 

@@ -106,7 +106,7 @@ Key rules:
 
 ## Global type augmentation
 
-The SWC `index.ts` files augment the global `HTMLElementTagNameMap` interface. This tells TypeScript what type `document.querySelector('swc-badge')` returns.
+The SWC registration files (`swc-<tag>.ts`) augment the global `HTMLElementTagNameMap` interface. This tells TypeScript what type `document.querySelector('swc-badge')` returns.
 
 ```ts
 declare global {
@@ -119,16 +119,16 @@ declare global {
 This is the only place where `interface` is used with `declare global`. It is a TypeScript declaration merging feature — multiple files can add entries to `HTMLElementTagNameMap`, and TypeScript merges them all.
 
 ```ts
-// ✅ Good — in the SWC index.ts file
+// ✅ Good: in the SWC swc-badge.ts registration file
 declare global {
   interface HTMLElementTagNameMap {
     'swc-badge': Badge;
   }
 }
-defineElement('swc-badge', Badge);
+Badge.define();
 
-// ❌ Bad — in the wrong file
-// This belongs in the SWC index.ts, not in the base class or types file
+// ❌ Bad: in the wrong file
+// This belongs in the SWC swc-<tag>.ts file, not in the base class or types file
 ```
 
 ## The Constructor type pattern
