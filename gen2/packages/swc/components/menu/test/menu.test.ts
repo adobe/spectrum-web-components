@@ -2177,18 +2177,41 @@ const backgroundAlpha = (row: MenuItem): number => {
 export const ItemTextIsNotSelectableTest: Story = {
   render: () => rowsInMenu(threeRows, 'text-selection-trigger'),
   play: async ({ canvasElement, step }) => {
-    // Asserted on the slotted label rather than the chrome element: the label
-    // is light DOM the consumer owns, and it is what the pointer is over when
-    // hovering the text, so it is the element that has to inherit both.
-    await step('the label shows no text caret', async () => {
+    const trigger = canvasElement.querySelector(
+      '#text-selection-trigger'
+    ) as HTMLElement;
+    const menu = canvasElement.querySelector('swc-menu') as HTMLElement & {
+      open: boolean;
+    };
+
+    // The rows live in a closed popover until this runs. An unrendered subtree
+    // has no used values to report, and WebKit answers `auto` for all of them.
+    await userEvent.click(trigger);
+    await waitFor(() => expect(menu.open).toBe(true));
+
+    await step('no text caret over the label', async () => {
+      // Read on the slotted label, which is the light DOM the pointer is
+      // actually over when hovering the text. `cursor` inherits across the
+      // slot in every engine.
       const [firstRow] = getRows(canvasElement);
       const label = firstRow.querySelector('[slot="label"]') as HTMLElement;
-      const styles = getComputedStyle(label);
 
-      expect(styles.cursor, 'no text caret over the label').toBe('default');
-      expect(styles.userSelect, 'the label text is not selectable').toBe(
-        'none'
-      );
+      expect(getComputedStyle(label).cursor).toBe('default');
+    });
+
+    await step('the row suppresses text selection', async () => {
+      // Read on the chrome element, not the label. `user-select: auto` on a
+      // descendant is *defined* to behave as `none` when its parent resolves
+      // to `none`, and Firefox and WebKit report that descendant as `auto`
+      // while Chromium resolves it eagerly to `none`. The declaration's own
+      // element is the only place the three engines agree, and the spec makes
+      // the subtree follow it.
+      const [firstRow] = getRows(canvasElement);
+      const chrome = firstRow.shadowRoot?.querySelector(
+        '.swc-MenuItem'
+      ) as Element;
+
+      expect(getComputedStyle(chrome).userSelect).toBe('none');
     });
   },
 };
