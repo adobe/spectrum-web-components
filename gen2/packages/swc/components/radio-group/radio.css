@@ -146,13 +146,13 @@
   color: var(--swc-radio-content-color-focus, token("neutral-content-color-key-focus"));
 }
 
-:host([disabled]) .swc-Radio-button {
+:host([aria-disabled="true"]) .swc-Radio-button {
   border-color: var(--swc-radio-border-color-disabled, token("disabled-content-color"));
   transform: none;
 }
 
-:host([disabled]) .swc-Radio-label,
-:host([disabled]) .swc-Radio-description {
+:host([aria-disabled="true"]) .swc-Radio-label,
+:host([aria-disabled="true"]) .swc-Radio-description {
   color: var(--swc-radio-content-color-disabled, token("disabled-content-color"));
 }
 
@@ -180,12 +180,12 @@
     outline-color: CanvasText;
   }
 
-  :host([disabled]) .swc-Radio-button {
+  :host([aria-disabled="true"]) .swc-Radio-button {
     border-color: GrayText;
   }
 
-  :host([disabled]) .swc-Radio-label,
-  :host([disabled]) .swc-Radio-description {
+  :host([aria-disabled="true"]) .swc-Radio-label,
+  :host([aria-disabled="true"]) .swc-Radio-description {
     color: GrayText;
   }
 }

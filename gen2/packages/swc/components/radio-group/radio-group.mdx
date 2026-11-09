@@ -9,64 +9,240 @@ import * as RadioGroupStories from './stories/radio-group.stories';
 
 ## Anatomy
 
+A radio group consists of:
+
+- **Label** (optional), provided through the `label` slot: visible text that names the group
+- **Necessity indicator** (optional): an asterisk (`icon`) or `(required)`/`(optional)` text (`label`) appended to the label, controlled by `necessity-indicator` (see [Necessity indicator](#necessity-indicator))
+- **Description** (optional), provided through the `description` slot: guidance text for the whole group
+- **Error text** (optional), provided through the `error-text` slot: shown with an alert icon in place of the description while `field-status="invalid"`
+- **Radio items**: `swc-radio` elements in the default slot, each with:
+  - **Control**: a circle that shows a center dot when the item is checked
+  - **Label**, provided through the item's `label` slot
+  - **Description** (optional), provided through the item's `description` slot
+
+`swc-radio` is only supported inside `swc-radio-group`.
+
 <Canvas of={RadioGroupStories.Anatomy} />
 
 ## Options
 
+### Labelling
+
+Three sources can provide the group's accessible name. When more than one is set, the first one in this order is announced:
+
+1. **`accessible-labelledby`**: space-separated element `id`s, resolved against the group's root node, for naming the group with content it does not own, such as a nearby heading.
+2. **`accessible-label`**: a string accessible name for a group with no visible label.
+3. **A slotted `label`**: the default for a group with a visible label.
+
+The examples show a slotted label, `accessible-label`, and `accessible-labelledby` referencing the "Favorite sport" heading.
+
+<Canvas of={RadioGroupStories.Labelling} />
+
 ### Sizes
+
+Radio groups come in four sizes: small (`s`), medium (`m`), large (`l`), and extra-large (`xl`). Medium is the default. The group applies its `size` to every item, which changes the control size, font sizes, and spacing. Items do not have their own `size`.
 
 <Canvas of={RadioGroupStories.Sizes} />
 
 ### Label position
 
+The `label-position` attribute places the label above the items (`top`, the default) or beside them (`side`). In `side` position, the label column is at most `25ch` wide by default; set `--swc-field-label-max-inline-size` to change it.
+
 <Canvas of={RadioGroupStories.LabelPosition} />
 
 ### Necessity indicator
+
+Use `necessity-indicator` to choose how the visible label marks necessity:
+
+- `icon` (default): a decorative asterisk on required groups only.
+- `label`: "(required)" or "(optional)" on every group.
+
+Requires a visible label. Text indicators contribute to the accessible name, and the requirement is conveyed to assistive technology in both modes.
 
 <Canvas of={RadioGroupStories.NecessityIndicator} />
 
 ### Orientation
 
+The `orientation` attribute stacks items in a column (`vertical`, the default) or places them in a row (`horizontal`). Horizontal items wrap onto new rows when they do not fit. All four arrow keys move between items in either orientation.
+
 <Canvas of={RadioGroupStories.Orientation} />
 
 ### Emphasized
 
+The `emphasized` attribute applies to every item and draws the checked item's control in the accent color. Unchecked items are not affected.
+
 <Canvas of={RadioGroupStories.Emphasized} />
-
-### Item description
-
-<Canvas of={RadioGroupStories.WithItemDescription} />
 
 ## States
 
 ### Selection
 
+The `selected` attribute holds the `value` of the checked item. It is empty by default, so no item is selected until the user chooses one or you set `selected`. Give every item a unique `value`. Items that share a value can't be told apart, and a dev-mode warning flags them.
+
+On first render, an item with `checked` takes precedence over `selected`. If more than one item is checked, the first one wins and a dev-mode warning is logged. After that, set `selected` on the group to change the selection in code.
+
+When the user selects an item, the group fires a cancelable `change` event. Call `preventDefault()` to keep the previous selection. Setting `selected` in code does not fire `change`.
+
 <Canvas of={RadioGroupStories.Selection} />
 
-### Disabled
+### Field status
+
+The `field-status` attribute (`fieldStatus` property) accepts one status at a time: `disabled`, `invalid`, or `readonly`. The default is `undefined`. Assign `undefined` or remove the attribute to clear the status. A radio group has no `valid` status. `required` remains independent.
+
+#### Disabled
+
+`field-status="disabled"` disables every item and prevents selection and <kbd>Tab</kbd> access. The group does not block form validation and is excluded from `FormData`. To style a disabled group from outside, select `:state(disabled)`, which also matches when a `<fieldset disabled>` ancestor disables the group.
+
+Use `field-status="readonly"` instead when users need to review the selection.
+
+To disable a single option, set `disabled` on that `swc-radio`. Arrow keys skip disabled items. A disabled group disables every item without changing the item's own `disabled`, so each item returns to its own state when the group is enabled again.
 
 <Canvas of={RadioGroupStories.Disabled} />
 
-### Invalid
+#### Invalid
+
+`field-status="invalid"` shows supplied `error-text` instead of the description. Without an `error-text` slot, the description stays visible in the error color. An alert icon shows beside the message or description, or on its own when there is neither, so the state never relies on color alone. Eligible groups fail validation and block submission, even when an item is selected.
+
+Always pair `field-status="invalid"` with `error-text`. Explain what happened, why (if known), and how to fix it.
+
+Native validation, such as `required`, does not set `field-status="invalid"` automatically. Set this status in your application as described in [showing and clearing errors](#showing-and-clearing-errors).
 
 <Canvas of={RadioGroupStories.Invalid} />
 
-### Required
+#### Read-only
 
-<Canvas of={RadioGroupStories.Required} />
-
-### Read-only
+`field-status="readonly"` blocks selection changes while keeping focus movement between items. The group stays in `FormData` and does not block validation. Prefer read-only when users need access to a non-editable selection.
 
 <Canvas of={RadioGroupStories.ReadOnly} />
 
+### Required
+
+`required` prevents a group with no selection from passing constraint validation and sets `aria-required="true"`. It does not set `field-status` or show an error. With a visible label, the default [necessity indicator](#necessity-indicator) adds a decorative asterisk, as shown in the first necessity indicator example.
+
 ## Behaviors
-
-### Text wrapping
-
-<Canvas of={RadioGroupStories.TextWrapping} />
 
 ### Form participation
 
+`swc-radio-group` works with native forms, including validation, reset, and `FormData`. The group submits one entry under its `name`, holding the selected item's `value`, and nothing when no item is selected.
+
+#### Showing and clearing errors
+
+Set `fieldStatus = 'invalid'` and provide `error-text` to show an inline error. Neither happens automatically, and error text alone does not make the group invalid. Errors show when your application sets them, on a commit such as a selection change or on submit, not as users move through the items.
+
+The plain text of `error-text` also becomes `validationMessage` and updates automatically when the content changes. Without it, the message is "Select an option." That message appears only in the browser's own validation bubble (a form without `novalidate`, or a call to `reportValidity()`) or where your code reads `validationMessage`. It is never shown inline. To change the message, change the text in `error-text`.
+
+Clear the status explicitly when the error is resolved. Changing the selection does not clear it. Native constraints still affect `checkValidity()`, but do not set `fieldStatus` or show inline errors. Await `group.updateComplete` after changes before checking validity.
+
+#### Validating a form
+
+Use `novalidate` on the form and `checkValidity()` in your submit handler for inline errors instead of browser validation bubbles. With `novalidate`, the browser does not block submission, fire `invalid` events, or move focus, so your handler does all three:
+
+1. Call `event.preventDefault()` before the first `await`. The browser does not wait for an async handler.
+2. Clear a previous `invalid` status, and only `invalid`, so `disabled` and `readonly` stay.
+3. Await `updateComplete`, then call `checkValidity()`.
+4. If it returns `false`, set `fieldStatus = 'invalid'` and move focus to the group, or to another target such as an inline alert.
+5. If it returns `true`, send the data.
+
+<details>
+<summary>Submit handler example</summary>
+
+```html
+<form novalidate>
+  <swc-radio-group name="shipping" required>
+    <span slot="label">Shipping options</span>
+    <span slot="error-text">Select a shipping option.</span>
+    <swc-radio value="standard">
+      <span slot="label">Standard Shipping (Free)</span>
+    </swc-radio>
+    <swc-radio value="expedited">
+      <span slot="label">Expedited Shipping ($9.99)</span>
+    </swc-radio>
+  </swc-radio-group>
+  <button type="submit">Submit</button>
+</form>
+```
+
+```js
+const form = document.querySelector('form');
+const group = form.querySelector('swc-radio-group');
+
+form.addEventListener('submit', async (event) => {
+  event.preventDefault(); // before any await
+
+  if (group.fieldStatus === 'invalid') {
+    group.fieldStatus = undefined; // only invalid; keep disabled and read-only
+  }
+  await group.updateComplete;
+
+  if (!group.checkValidity()) {
+    group.fieldStatus = 'invalid'; // shows the error-text above
+    group.focus();
+    return;
+  }
+
+  // The group is valid. Send new FormData(form, event.submitter).
+});
+```
+
+Do not call `form.submit()` to send the data. It skips validation and the `submit` event. Use a submit button, or `form.requestSubmit()`.
+
+</details>
+
+In this example, **Submit** clears the previous error and rechecks the selection. Accepted submissions are not sent anywhere. **Reset** restores the initial selection and clears the error.
+
 <Canvas of={RadioGroupStories.FormParticipation} />
+
+`group.focus()` moves focus to the group, so your handler can focus the group it found. Disabled and read-only groups do not block validation.
+
+#### Reset
+
+Reset restores the initial selection, which is the pre-checked item or the `selected` attribute, and clears `invalid` status. Disabled and read-only status are preserved, and a `required` group with no initial selection fails validation again.
+
+<details>
+<summary>Additional form behavior</summary>
+
+- **Validation methods**: `checkValidity()` fires `invalid` on failure without changing `fieldStatus` or showing browser validation UI. `reportValidity()` also requests that UI, even with `novalidate`. Canceling `invalid` suppresses reporting without making validation pass. An invalid status sets `validity.customError`, and a required group with no selection sets `validity.valueMissing`.
+- **Styling hooks**: style the invalid state from `field-status="invalid"`, and the disabled state from `:state(disabled)`. The group's `:invalid` match follows live validity, including before your application shows any error.
+
+Setting `selected` in code and resetting the form do not fire `change`.
+
+</details>
+
+## Accessibility
+
+### Features
+
+#### Keyboard navigation
+
+- <kbd>Tab</kbd>: moves focus into the group, onto the selected item or onto the
+  first enabled item when nothing is selected. Entering the group does not
+  change the selection.
+- Arrow keys: move focus to the next or previous enabled item and
+  select it, wrapping at either end. <kbd>Left</kbd> and <kbd>Right</kbd> follow
+  the reading direction, including right-to-left.
+- <kbd>Home</kbd> and <kbd>End</kbd>: move focus to the first or last enabled
+  item and select it.
+- <kbd>Space</kbd>: selects the focused item.
+
+With `field-status="readonly"`, these keys move focus without changing the selection.
+
+#### ARIA implementation
+
+- **Group role and state**: the group is exposed as a `radiogroup` with `aria-required`, `aria-invalid`, and `aria-readonly`.
+- **Item role and state**: each `swc-radio` is exposed as a `radio` with `aria-checked`, `aria-disabled` when disabled, and its position in the set (`aria-posinset` and `aria-setsize`).
+- **Group name**: the browser announces one name, in the order `accessible-labelledby`, `accessible-label`, then the slotted label. See [Labelling](#labelling).
+- **Group description**: the slotted `description`, or the `error-text` while invalid, is associated through `aria-describedby`. An `accessible-describedby` reference is combined with it rather than replacing it. Error text is not a live region.
+- **Item name**: an item's label and description together form its accessible name.
+- **Dev-mode warnings**: the console warns when a group has no accessible name, sets both `accessible-label` and `accessible-labelledby`, references an `id` that does not exist, or has `aria-label` or `aria-labelledby` set on the host. It also warns about duplicate item values, more than one initially checked item, `swc-radio` used outside `swc-radio-group`, and unsupported attribute values.
+
+### Best practices
+
+- Prefer a slotted `label` so the group's name is visible. Use `accessible-label` or `accessible-labelledby` only when the group has no visible label of its own, and do not set both.
+- Set `accessible-label` or `accessible-labelledby` instead of `aria-label` or `aria-labelledby` on the host. Host ARIA attributes do not name the group.
+- Keep item descriptions short. Assistive technology reads them as part of each option's name.
+- Use `accessible-describedby` for guidance that lives outside the group, such as a note shared with other fields. This example combines an external note with the slotted description.
+- Always pair `field-status="invalid"` with slotted `error-text` so the error is not conveyed by color and icon alone.
+
+<Canvas of={RadioGroupStories.Accessibility} />
 
 <DocsFooter />

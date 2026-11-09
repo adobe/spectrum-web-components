@@ -34,20 +34,28 @@ argTypes['field-status'] = {
 };
 args['field-status'] = undefined;
 
+/**
+ * Groups `swc-radio` items into a single selection that submits to forms under
+ * one name. `swc-radio` is only supported inside a radio group.
+ */
 const meta: Meta = {
   title: 'Radio group',
   component: 'swc-radio-group',
   args,
   argTypes,
   render: (args) => html`
-    ${group(args, { selected: '1' })}
+    ${group(args, { selected: 'standard' })}
   `,
   parameters: {
     actions: {
       handles: events,
     },
+    docs: {
+      subtitle: 'A set of options where only one can be selected',
+    },
+    additionalApiTables: ['swc-radio'],
   },
-  tags: ['migrated', '!autodocs'],
+  tags: ['migrated'],
 };
 
 export default meta;
@@ -56,31 +64,60 @@ export default meta;
 //    HELPERS
 // ────────────────
 
+/** Adds the item's `description` slot when `description` is set. */
 const radio = (
   value: string,
   label: string,
   attributes = '',
-  description = ''
+  description: string | null = null
 ): string => `
   <swc-radio value="${value}" ${attributes}>
     <span slot="label">${label}</span>
-    <span slot="description">${description ? `${description}` : `Description for ${label}`}</span>
+    ${description === null ? '' : `<span slot="description">${description}</span>`}
   </swc-radio>
 `;
 
+const SHIPPING_OPTIONS = [
+  ['standard', 'Standard Shipping (Free)', 'Delivers in 5–7 business days'],
+  ['expedited', 'Expedited Shipping ($9.99)', 'Delivers in 2–3 business days'],
+  ['overnight', 'Overnight Shipping ($19.99)', 'Next-day delivery'],
+] as const;
+
 const ITEMS = [
-  radio('1', 'Option 1'),
-  radio('2', 'Option 2'),
-  radio('3', 'Option 3'),
+  ...SHIPPING_OPTIONS.map(([value, label, description]) =>
+    radio(value, label, '', description)
+  ),
 ].join('');
+
+const SPORTS = [
+  ['soccer', 'Soccer'],
+  ['baseball', 'Baseball'],
+  ['basketball', 'Basketball'],
+] as const;
+
+const SPORT_ITEMS = SPORTS.map(([value, label]) => radio(value, label)).join(
+  ''
+);
 
 const SIZES = ['s', 'm', 'l', 'xl'] as const;
 
-const group = (args: Record<string, unknown>, overrides = {}) =>
+const SPORT_ITEMS_HTML = html`
+  ${SPORTS.map(
+    ([value, label]) => html`
+      <swc-radio value=${value}><span slot="label">${label}</span></swc-radio>
+    `
+  )}
+`;
+
+// Use `''` to omit a slot; `undefined` renders the text "undefined".
+const group = (
+  args: Record<string, unknown>,
+  overrides: Record<string, unknown> = {}
+) =>
   template({
     ...args,
-    'label-slot': 'Example radios',
-    'description-slot': 'This is the description for the radio group.',
+    'label-slot': 'Shipping options',
+    'description-slot': 'Choose how fast your order arrives.',
     'default-slot': ITEMS,
     ...overrides,
   });
@@ -95,11 +132,15 @@ const handleFormSubmit = async (event: SubmitEvent): Promise<void> => {
     return;
   }
 
-  // Clear the demo's previous error before checking the current constraints.
-  field.fieldStatus = undefined;
+  // Clear only `invalid` so `disabled` and `readonly` survive.
+  if (field.fieldStatus === 'invalid') {
+    field.fieldStatus = undefined;
+  }
 
   await field.updateComplete;
-  field.fieldStatus = field.checkValidity() ? undefined : 'invalid';
+  if (!field.checkValidity()) {
+    field.fieldStatus = 'invalid';
+  }
 };
 
 // ────────────────────
@@ -108,10 +149,10 @@ const handleFormSubmit = async (event: SubmitEvent): Promise<void> => {
 
 export const Playground: Story = {
   args: {
-    selected: '1',
-    'label-slot': 'Example radios',
-    'description-slot': 'This is the description for the radio group.',
-    'error-text-slot': 'This option is not available.',
+    selected: 'standard',
+    'label-slot': 'Shipping options',
+    'description-slot': 'Choose how fast your order arrives.',
+    'error-text-slot': 'Overnight shipping is not available for this address.',
     'default-slot': ITEMS,
   },
   render: (args) => template(args),
@@ -136,10 +177,15 @@ export const Overview: Story = {
 export const Anatomy: Story = {
   render: (args) => html`
     ${group(args, {
-      selected: '1',
+      selected: 'standard',
       'default-slot': [
-        radio('1', 'Option 1', ''),
-        radio('2', 'Option 2', ''),
+        radio(
+          'standard',
+          'Standard Shipping (Free)',
+          '',
+          'Delivers in 5–7 business days'
+        ),
+        radio('expedited', 'Expedited Shipping ($9.99)'),
       ].join(''),
     })}
   `,
@@ -150,25 +196,52 @@ export const Anatomy: Story = {
 //    OPTIONS STORIES
 // ──────────────────────────
 
+export const Labelling: Story = {
+  render: () => html`
+    <swc-radio-group selected="soccer">
+      <span slot="label">Slotted label</span>
+      ${SPORT_ITEMS_HTML}
+    </swc-radio-group>
+    <swc-radio-group accessible-label="Favorite sport" selected="soccer">
+      ${SPORT_ITEMS_HTML}
+    </swc-radio-group>
+    <section style="display: grid; gap: var(--swc-spacing-100);">
+      <h4 id="labelling-heading" class="swc-Heading swc-Heading--sizeXS">
+        Favorite sport
+      </h4>
+      <swc-radio-group
+        accessible-labelledby="labelling-heading"
+        selected="soccer"
+      >
+        ${SPORT_ITEMS_HTML}
+      </swc-radio-group>
+    </section>
+  `,
+  parameters: {
+    flexLayout: 'row-wrap',
+    styles: { gap: 'var(--swc-spacing-500)', alignItems: 'start' },
+  },
+  tags: ['options'],
+};
+
 export const Sizes: Story = {
   render: (args) => html`
     ${SIZES.map(
       (size) => html`
         ${group(args, {
           size,
-          selected: '2',
+          selected: 'baseball',
           'label-slot': `Size ${size}`,
+          'description-slot': '',
+          'default-slot': SPORT_ITEMS,
         })}
       `
     )}
   `,
   parameters: {
-    flexLayout: 'column-stretch',
-    styles: {
-      gap: 'var(--swc-spacing-500)',
-    },
+    flexLayout: 'row-wrap',
+    styles: { gap: 'var(--swc-spacing-500)', alignItems: 'start' },
   },
-
   tags: ['options'],
 };
 
@@ -177,20 +250,25 @@ export const LabelPosition: Story = {
     ${group(args, {
       'label-position': 'top',
       'label-slot': 'Top label',
-      selected: '1',
+      selected: 'soccer',
+      'description-slot': '',
+      'default-slot': SPORT_ITEMS,
     })}
     ${group(args, {
       'label-position': 'side',
       'label-slot': 'Side label',
-      selected: '1',
+      selected: 'soccer',
+      'description-slot': '',
+      'default-slot': SPORT_ITEMS,
     })}
   `,
   parameters: {
     flexLayout: 'column-stretch',
-    styles: { gap: 'var(--swc-spacing-500)' },
+    styles: { gap: 'var(--swc-spacing-500)', minInlineSize: '25ch' },
   },
   tags: ['options'],
 };
+LabelPosition.storyName = 'Label position';
 
 export const NecessityIndicator: Story = {
   render: (args) => html`
@@ -198,35 +276,46 @@ export const NecessityIndicator: Story = {
       required: true,
       'necessity-indicator': 'icon',
       'label-slot': 'Icon',
+      'description-slot': '',
+      'default-slot': SPORT_ITEMS,
     })}
     ${group(args, {
       required: true,
       'necessity-indicator': 'label',
       'label-slot': 'Label',
+      'description-slot': '',
+      'default-slot': SPORT_ITEMS,
     })}
     ${group(args, {
       'necessity-indicator': 'label',
       'label-slot': 'Label',
+      'description-slot': '',
+      'default-slot': SPORT_ITEMS,
     })}
   `,
   parameters: {
-    flexLayout: 'column-center',
+    flexLayout: 'row-wrap',
     styles: { gap: 'var(--swc-spacing-500)' },
   },
   tags: ['options'],
 };
+NecessityIndicator.storyName = 'Necessity indicator';
 
 export const Orientation: Story = {
   render: (args) => html`
     ${group(args, {
       orientation: 'vertical',
       'label-slot': 'Vertical',
-      selected: '1',
+      selected: 'soccer',
+      'description-slot': '',
+      'default-slot': SPORT_ITEMS,
     })}
     ${group(args, {
       orientation: 'horizontal',
       'label-slot': 'Horizontal',
-      selected: '1',
+      selected: 'soccer',
+      'description-slot': '',
+      'default-slot': SPORT_ITEMS,
     })}
   `,
   parameters: {
@@ -238,24 +327,26 @@ export const Orientation: Story = {
 
 export const Emphasized: Story = {
   render: (args) => html`
-    ${group(args, { emphasized: true, selected: '1' })}
-  `,
-  tags: ['options'],
-};
-
-export const WithItemDescription: Story = {
-  render: (args) => html`
     ${group(args, {
-      selected: '1',
-      'default-slot': [
-        radio('1', 'Option 1', ''),
-        radio('2', 'Option 2', ''),
-      ].join(''),
+      'label-slot': 'Default',
+      selected: 'soccer',
+      'description-slot': '',
+      'default-slot': SPORT_ITEMS,
+    })}
+    ${group(args, {
+      'label-slot': 'Emphasized',
+      emphasized: true,
+      selected: 'soccer',
+      'description-slot': '',
+      'default-slot': SPORT_ITEMS,
     })}
   `,
+  parameters: {
+    flexLayout: 'row-wrap',
+    styles: { gap: 'var(--swc-spacing-500)' },
+  },
   tags: ['options'],
 };
-WithItemDescription.storyName = 'Item description';
 
 // ──────────────────────────
 //    STATES STORIES
@@ -263,8 +354,17 @@ WithItemDescription.storyName = 'Item description';
 
 export const Selection: Story = {
   render: (args) => html`
-    ${group(args, { 'label-slot': 'Nothing selected' })}
-    ${group(args, { 'label-slot': 'Option 2 selected', selected: '2' })}
+    ${group(args, {
+      'label-slot': 'Nothing selected',
+      'description-slot': '',
+      'default-slot': SPORT_ITEMS,
+    })}
+    ${group(args, {
+      'label-slot': 'Baseball selected',
+      selected: 'baseball',
+      'description-slot': '',
+      'default-slot': SPORT_ITEMS,
+    })}
   `,
   parameters: {
     flexLayout: 'row-wrap',
@@ -278,24 +378,25 @@ export const Disabled: Story = {
     ${group(args, {
       'field-status': 'disabled',
       'label-slot': 'Disabled group',
-      selected: '2',
+      selected: 'baseball',
+      'description-slot': '',
+      'default-slot': SPORT_ITEMS,
     })}
     ${group(args, {
       'label-slot': 'Disabled item',
-      selected: '1',
+      selected: 'soccer',
+      'description-slot': '',
       'default-slot': [
-        radio('1', 'Option 1'),
-        radio('2', 'Option 2', 'disabled'),
-        radio('3', 'Option 3'),
+        radio('soccer', 'Soccer'),
+        radio('baseball', 'Baseball', 'disabled'),
+        radio('basketball', 'Basketball'),
       ].join(''),
     })}
   `,
-  // axe reports false-positive contrast failures: WCAG 1.4.3 exempts text in
-  // an inactive component, but axe can't tell the slotted label and
-  // description spans belong to the disabled group.
+  // Skipped: axe flags disabled text contrast, which WCAG 1.4.3 exempts.
   parameters: {
     flexLayout: 'row-wrap',
-    styles: { gap: 'var(--swc-spacing-500)' },
+    styles: { gap: 'var(--swc-spacing-500)', alignItems: 'start' },
   },
   tags: ['states', '!test'],
 };
@@ -304,23 +405,23 @@ export const Invalid: Story = {
   render: (args) => html`
     ${group(args, {
       'field-status': 'invalid',
-      selected: '1',
-      'error-text-slot': 'This option is not available.',
+      selected: 'overnight',
+      'error-text-slot':
+        'Overnight shipping is not available for this address.',
     })}
-  `,
-  tags: ['states'],
-};
-
-export const Required: Story = {
-  render: (args) => html`
-    ${group(args, { required: true })}
   `,
   tags: ['states'],
 };
 
 export const ReadOnly: Story = {
   render: (args) => html`
-    ${group(args, { 'field-status': 'readonly', selected: '2' })}
+    ${group(args, {
+      'field-status': 'readonly',
+      'label-slot': 'Favorite sport',
+      'description-slot': '',
+      'default-slot': SPORT_ITEMS,
+      selected: 'baseball',
+    })}
   `,
   tags: ['states'],
 };
@@ -330,30 +431,6 @@ ReadOnly.storyName = 'Read-only';
 //    BEHAVIORS STORIES
 // ──────────────────────────────
 
-export const TextWrapping: Story = {
-  render: (args) => html`
-    ${group(args, {
-      selected: '1',
-      'label-slot': `Text wrapping`,
-      'default-slot': [
-        radio(
-          '1',
-          'A long option label that wraps onto a second line to check alignment of the control and text',
-          '',
-          'A long description that also wraps to confirm spacing between lines'
-        ),
-        radio('2', 'Short option'),
-      ].join(''),
-    })}
-  `,
-  parameters: {
-    flexLayout: 'row-wrap',
-    styles: { 'max-inline-size': '40ch' },
-  },
-  tags: ['behaviors'],
-};
-TextWrapping.storyName = 'Text wrapping';
-
 export const FormParticipation: Story = {
   render: () => html`
     <form
@@ -362,14 +439,17 @@ export const FormParticipation: Story = {
       style="display: grid; gap: var(--swc-spacing-300);"
     >
       <swc-radio-group name="shipping" required>
-        <span slot="label">Shipping method</span>
-        <span slot="description">Choose your preferred shipping method.</span>
-        <span slot="error-text">You must select a shipping method.</span>
+        <span slot="label">Shipping options</span>
+        <span slot="description">Choose how fast your order arrives.</span>
+        <span slot="error-text">Select a shipping option.</span>
         <swc-radio value="standard">
-          <span slot="label">Standard shipping</span>
+          <span slot="label">Standard Shipping (Free)</span>
         </swc-radio>
-        <swc-radio value="express">
-          <span slot="label">Express shipping</span>
+        <swc-radio value="expedited">
+          <span slot="label">Expedited Shipping ($9.99)</span>
+        </swc-radio>
+        <swc-radio value="overnight">
+          <span slot="label">Overnight Shipping ($19.99)</span>
         </swc-radio>
       </swc-radio-group>
 
@@ -385,4 +465,44 @@ export const FormParticipation: Story = {
     styles: { 'inline-size': 'min(240px, 100vw)' },
   },
   tags: ['behaviors'],
+};
+FormParticipation.storyName = 'Form participation';
+
+// ────────────────────────────────
+//    ACCESSIBILITY STORIES
+// ────────────────────────────────
+
+export const Accessibility: Story = {
+  render: () => html`
+    <div style="display: grid; gap: var(--swc-spacing-100);">
+      <p id="accessibility-delivery-note" style="margin: 0;">
+        Delivery times exclude weekends and holidays.
+      </p>
+      <swc-radio-group
+        accessible-describedby="accessibility-delivery-note"
+        selected="standard"
+      >
+        <span slot="label">Shipping options</span>
+        <span slot="description">
+          You can change this until the order ships.
+        </span>
+        <swc-radio value="standard">
+          <span slot="label">Standard Shipping</span>
+          <span slot="description">Delivers in 5–7 business days</span>
+        </swc-radio>
+        <swc-radio value="expedited">
+          <span slot="label">Expedited Shipping</span>
+          <span slot="description">Delivers in 2–3 business days</span>
+        </swc-radio>
+        <swc-radio value="overnight">
+          <span slot="label">Overnight Shipping</span>
+          <span slot="description">Next-day delivery</span>
+        </swc-radio>
+      </swc-radio-group>
+    </div>
+  `,
+  parameters: {
+    styles: { 'max-inline-size': '40ch' },
+  },
+  tags: ['a11y'],
 };

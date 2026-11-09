@@ -31,10 +31,10 @@ test.describe('Radio - ARIA snapshots', () => {
     await expect(radios.first()).toHaveAttribute('aria-posinset', '1');
     await expect(radios.first()).toHaveAttribute('aria-setsize', '3');
     await expect(radios.first()).toMatchAriaSnapshot(`
-      - radio "Option 1 Description for Option 1" [checked]
+      - radio "Standard Shipping (Free) Delivers in 5–7 business days" [checked]
     `);
     await expect(radios.nth(1)).toMatchAriaSnapshot(`
-      - radio "Option 2 Description for Option 2"
+      - radio "Expedited Shipping ($9.99) Delivers in 2–3 business days"
     `);
   });
 
