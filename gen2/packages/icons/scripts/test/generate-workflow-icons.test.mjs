@@ -37,18 +37,18 @@ function createFixture(t) {
     mkdirSync(dir, { recursive: true });
   }
   symlinkSync(
-    fileURLToPath(new URL('../../core/', import.meta.url)),
+    fileURLToPath(new URL('../../../core/', import.meta.url)),
     path.join(root, 'core'),
     'dir'
   );
   symlinkSync(
-    fileURLToPath(new URL('../../../../node_modules/', import.meta.url)),
+    fileURLToPath(new URL('../../../../../node_modules/', import.meta.url)),
     path.join(root, 'node_modules'),
     'dir'
   );
   const script = path.join(scriptDir, 'generate-workflow-icons.mjs');
   copyFileSync(
-    new URL('./generate-workflow-icons.mjs', import.meta.url),
+    new URL('../generate-workflow-icons.mjs', import.meta.url),
     script
   );
 
