@@ -14,6 +14,7 @@ import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import { ProgressCircle } from '@adobe/spectrum-wc/progress-circle';
+import { PROGRESS_CIRCLE_VALID_SIZES } from '@adobe/spectrum-wc-core/components/progress-circle';
 
 import '@adobe/spectrum-wc/components/progress-circle/swc-progress-circle.js';
 
@@ -407,6 +408,104 @@ export const ReturnToIndeterminateTest: Story = {
         ).toBe(false);
       }
     );
+  },
+};
+
+// The large scale uses larger size and thickness tokens, so check both scales.
+const RING_SCALES = [
+  { className: 'swc-theme--sizeM', name: 'Medium scale' },
+  { className: 'swc-theme--sizeL', name: 'Large scale' },
+] as const;
+
+export const RingGeometryTest: Story = {
+  render: () => html`
+    ${RING_SCALES.map(
+      ({ className, name }) => html`
+        <div class="swc-theme ${className}">
+          ${PROGRESS_CIRCLE_VALID_SIZES.map(
+            (size) => html`
+              <swc-progress-circle
+                size=${size}
+                progress="50"
+                label="${name}, size ${size}"
+              ></swc-progress-circle>
+            `
+          )}
+          <swc-progress-circle
+            progress="50"
+            label="${name}, custom thickness"
+            style="--swc-progress-circle-thickness: 8px"
+          ></swc-progress-circle>
+        </div>
+      `
+    )}
+  `,
+  play: async ({ canvasElement, step }) => {
+    const circles = await getComponents<ProgressCircle>(
+      canvasElement,
+      'swc-progress-circle'
+    );
+    const getRings = (circle: ProgressCircle) =>
+      Array.from(
+        circle.renderRoot.querySelectorAll<SVGCircleElement>(
+          '.swc-ProgressCircle-track, .swc-ProgressCircle-fill'
+        )
+      );
+    const getBoxSize = (circle: ProgressCircle) =>
+      circle.renderRoot.querySelector('svg')?.getBoundingClientRect().width ??
+      0;
+    const getRadius = (ring: SVGCircleElement) => ring.getBBox().width / 2;
+    const getStrokeWidth = (ring: SVGCircleElement) =>
+      parseFloat(getComputedStyle(ring).strokeWidth);
+
+    await step(
+      'renders the large scale larger than the medium scale',
+      async () => {
+        const perScale = circles.length / RING_SCALES.length;
+        circles.slice(0, perScale).forEach((mediumCircle, index) => {
+          const largeCircle = circles[perScale + index];
+          expect(
+            getBoxSize(largeCircle),
+            `${largeCircle.label} box size`
+          ).toBeGreaterThan(getBoxSize(mediumCircle));
+        });
+      }
+    );
+
+    await step(
+      'insets each ring by half its stroke width so it fills the box without clipping',
+      async () => {
+        circles.forEach((circle) => {
+          const rings = getRings(circle);
+          expect(rings.length, `${circle.label} ring count`).toBe(2);
+          rings.forEach((ring) => {
+            expect(
+              getRadius(ring) + getStrokeWidth(ring) / 2,
+              `${circle.label} ${ring.getAttribute('class')} outer edge`
+            ).toBeCloseTo(getBoxSize(circle) / 2, 2);
+          });
+        });
+      }
+    );
+
+    await step('derives the ring radius from a custom thickness', async () => {
+      const customCircles = circles.filter((circle) => circle.style.length);
+      expect(customCircles.length, 'custom thickness circle count').toBe(
+        RING_SCALES.length
+      );
+      customCircles.forEach((circle) => {
+        getRings(circle).forEach((ring) => {
+          expect(
+            getStrokeWidth(ring),
+            `${circle.label} ${ring.getAttribute('class')} stroke width`
+          ).toBe(8);
+          expect(
+            getRadius(ring),
+            `${circle.label} ${ring.getAttribute('class')} radius`
+          ).toBeCloseTo(getBoxSize(circle) / 2 - 4, 2);
+        });
+      });
+    });
   },
 };
 
