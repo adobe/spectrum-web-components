@@ -22,7 +22,6 @@ import { gotoStory } from '../../../utils/a11y-helpers.js';
  * .storybook/test-runner.ts). Both are included in the `test:a11y` command.
  */
 
-// TODO(SWC-2567): add container region, landmark, and focus-on-close snapshots.
 // TODO(SWC-2654, SWC-2655): add peek-stack and expanded-view snapshots.
 
 test.describe('Toast - ARIA Snapshots', () => {
@@ -31,7 +30,7 @@ test.describe('Toast - ARIA Snapshots', () => {
   }) => {
     const root = await gotoStory(
       page,
-      'components-toast--overview',
+      'components-toast-container--toast-playground',
       'swc-toast'
     );
     await expect(root).toMatchAriaSnapshot(`
@@ -41,28 +40,30 @@ test.describe('Toast - ARIA Snapshots', () => {
     `);
   });
 
+  // Playwright computes names without ElementInternals, so snapshots show a labeled-icon host unnamed.
+  // The host's real name, which assistive technology reads, is checked from Chrome's accessibility tree below.
   test('action renders a named button between the message and close', async ({
     page,
   }) => {
     const root = await gotoStory(
       page,
-      'components-toast--anatomy',
+      'components-toast-container--toast-anatomy',
       'swc-toast'
     );
     await expect(root).toMatchAriaSnapshot(`
-      - alertdialog "File archived":
-        - alert: File archived
+      - alertdialog:
+        - alert:
+          - img "Information"
+          - text: File archived
         - button "Undo"
         - button "Close"
     `);
   });
 
-  test('icon-label exposes the variant icon inside the alert', async ({
-    page,
-  }) => {
+  test('icon-label overrides the default icon label', async ({ page }) => {
     const root = await gotoStory(
       page,
-      'components-toast--overview',
+      'components-toast-container--toast-playground',
       'swc-toast'
     );
     await page.evaluate(async () => {
@@ -70,33 +71,120 @@ test.describe('Toast - ARIA Snapshots', () => {
         updateComplete: Promise<boolean>;
       };
       toast.setAttribute('variant', 'info');
-      toast.setAttribute('icon-label', 'Information');
+      toast.setAttribute('icon-label', 'Nouvelle version');
       await toast.updateComplete;
     });
     await expect(root).toMatchAriaSnapshot(`
-      - alertdialog "File saved":
+      - alertdialog:
         - alert:
-          - img "Information"
+          - img "Nouvelle version"
           - text: File saved
         - button "Close"
     `);
   });
 
-  test('ID-bearing message names the alertdialog by reference', async ({
+  test('empty icon-label hides the variant icon from the alert', async ({
     page,
   }) => {
-    // TODO(SWC-2567): once the aria-label fallback is removed, this snapshot also proves the aria-labelledby path.
     const root = await gotoStory(
       page,
-      'components-toast--accessibility',
+      'components-toast-container--toast-playground',
       'swc-toast'
     );
+    await page.evaluate(async () => {
+      const toast = document.querySelector('swc-toast') as HTMLElement & {
+        updateComplete: Promise<boolean>;
+      };
+      toast.setAttribute('variant', 'info');
+      toast.setAttribute('icon-label', '');
+      await toast.updateComplete;
+    });
     await expect(root).toMatchAriaSnapshot(`
       - alertdialog "File saved":
         - alert: File saved
         - button "Close"
-      - alertdialog "Upload complete":
-        - alert: Upload complete
+    `);
+  });
+
+  // Focusing the host reads its name, so read Chrome's accessibility tree to check the icon's label leads it.
+  const hostNames = async (page: Page): Promise<(string | undefined)[]> => {
+    const cdp = await page.context().newCDPSession(page);
+    await cdp.send('Accessibility.enable');
+    const { nodes } = await cdp.send('Accessibility.getFullAXTree');
+    return nodes
+      .filter((node) => node.role?.value === 'alertdialog')
+      .map((node) => node.name?.value);
+  };
+
+  test('the icon label leads the host name for each variant', async ({
+    page,
+  }) => {
+    await gotoStory(
+      page,
+      'components-toast-container--toast-variants',
+      'swc-toast'
+    );
+    expect(await hostNames(page)).toEqual([
+      'Draft moved to archive',
+      'Information A new version is available',
+      'Success File saved',
+      'Error File could not be saved',
+    ]);
+  });
+
+  test('icon-label changes the host name, and an empty one leaves the message alone', async ({
+    page,
+  }) => {
+    await gotoStory(
+      page,
+      'components-toast-container--toast-playground',
+      'swc-toast'
+    );
+    const setIconLabel = (value: string): Promise<void> =>
+      page.evaluate(async (label) => {
+        const toast = document.querySelector('swc-toast') as HTMLElement & {
+          updateComplete: Promise<boolean>;
+        };
+        toast.setAttribute('variant', 'negative');
+        toast.setAttribute('icon-label', label);
+        await toast.updateComplete;
+      }, value);
+
+    await setIconLabel('Nouvelle version');
+    await expect
+      .poll(() => hostNames(page))
+      .toEqual(['Nouvelle version File saved']);
+
+    await setIconLabel('');
+    await expect.poll(() => hostNames(page)).toEqual(['File saved']);
+  });
+
+  test('ID-bearing message names the alertdialog by reference', async ({
+    page,
+  }) => {
+    const root = await gotoStory(
+      page,
+      'components-toast-container--toast-variants',
+      'swc-toast'
+    );
+    await expect(root).toMatchAriaSnapshot(`
+      - alertdialog "Draft moved to archive":
+        - alert: Draft moved to archive
+        - button "Close"
+      - alertdialog:
+        - alert:
+          - img "Information"
+          - text: A new version is available
+        - button "Close"
+      - alertdialog:
+        - alert:
+          - img "Success"
+          - text: File saved
+        - button "Close"
+      - alertdialog:
+        - alert:
+          - img "Error"
+          - text: File could not be saved
         - button "Close"
     `);
   });
@@ -115,7 +203,11 @@ test.describe('Toast - Keyboard', () => {
   test('Tab reaches the host, the action, then close; Enter closes', async ({
     page,
   }) => {
-    await gotoStory(page, 'components-toast--anatomy', 'swc-toast');
+    await gotoStory(
+      page,
+      'components-toast-container--toast-anatomy',
+      'swc-toast'
+    );
     const toast = page.locator('swc-toast');
 
     await page.keyboard.press('Tab');
@@ -152,7 +244,11 @@ const hostTransitionDuration = (toast: Locator): Promise<string> =>
 test.describe('Toast - Reduced motion', () => {
   test('removes the fade but keeps the two-frame delay', async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'reduce' });
-    await gotoStory(page, 'components-toast--overview', 'swc-toast');
+    await gotoStory(
+      page,
+      'components-toast-container--toast-playground',
+      'swc-toast'
+    );
     const toast = page.locator('swc-toast');
 
     expect(await surfaceStyle(toast, 'transitionDuration')).toMatch(INSTANT);
@@ -162,7 +258,11 @@ test.describe('Toast - Reduced motion', () => {
 
   test('keeps the fade when motion is not reduced', async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'no-preference' });
-    await gotoStory(page, 'components-toast--overview', 'swc-toast');
+    await gotoStory(
+      page,
+      'components-toast-container--toast-playground',
+      'swc-toast'
+    );
     const toast = page.locator('swc-toast');
 
     expect(await surfaceStyle(toast, 'transitionDuration')).not.toMatch(

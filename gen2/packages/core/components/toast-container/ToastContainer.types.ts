@@ -9,5 +9,30 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-export * from './Toast.base.js';
-export * from './Toast.types.js';
+import type { ToastVariant } from './Toast.types.js';
+
+export const TOAST_CONTAINER_PLACEMENTS = [
+  'top',
+  'top-end',
+  'bottom',
+  'bottom-end',
+] as const;
+
+export type ToastContainerPlacement =
+  (typeof TOAST_CONTAINER_PLACEMENTS)[number];
+
+export interface ToastQueueOptions {
+  variant?: ToastVariant;
+  iconLabel?: string;
+  closeLabel?: string;
+  timeout?: number | null;
+  actionLabel?: string;
+  onAction?: () => void;
+  shouldCloseOnAction?: boolean;
+  onClose?: () => void;
+}
+
+export interface ToastQueueEntry extends ToastQueueOptions {
+  readonly key: string;
+  readonly message: string;
+}
