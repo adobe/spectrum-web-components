@@ -98,3 +98,49 @@ export const TransitionTest: Story = {
     });
   },
 };
+
+export const TransitionCancelTest: Story = {
+  play: async ({ canvasElement, step }) => {
+    const el = canvasElement.querySelector('div') as HTMLElement;
+
+    await step('settles on transitioncancel when nothing else runs', () => {
+      el.style.transition = 'opacity 50ms';
+      let ran = false;
+      runAfterTransition(el, () => {
+        ran = true;
+      });
+      el.dispatchEvent(
+        new TransitionEvent('transitioncancel', { propertyName: 'opacity' })
+      );
+      expect(ran, 'an interrupted transition settles the callback').toBe(true);
+    });
+
+    await step(
+      'waits for a replacement transition (an entrance reversed by a close)',
+      async () => {
+        // Long enough to still be running when the cancel arrives; finished on
+        // demand below so the test does not depend on timing.
+        el.style.transition = 'none';
+        el.style.opacity = '0';
+        expect(getComputedStyle(el).opacity).toBe('0');
+        el.style.transition = 'opacity 10s linear';
+        el.style.opacity = '1';
+        let runs = 0;
+        runAfterTransition(el, () => {
+          runs += 1;
+        });
+        el.dispatchEvent(
+          new TransitionEvent('transitioncancel', { propertyName: 'opacity' })
+        );
+        expect(runs, 'still waiting while a transition runs').toBe(0);
+
+        const ended = new Promise<void>((resolve) =>
+          el.addEventListener('transitionend', () => resolve(), { once: true })
+        );
+        el.getAnimations().forEach((animation) => animation.finish());
+        await ended;
+        expect(runs, 'settles once the running transition ends').toBe(1);
+      }
+    );
+  },
+};

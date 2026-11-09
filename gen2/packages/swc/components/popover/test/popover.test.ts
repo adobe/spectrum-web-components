@@ -553,6 +553,58 @@ export const PositionStylesClearedOnCloseTest: Story = {
   },
 };
 
+export const CloseDuringEntranceKeepsPositionTest: Story = {
+  render: () => html`
+    <button id="close-during-entrance-trigger">Trigger</button>
+    <swc-popover
+      for="close-during-entrance-trigger"
+      placement="bottom"
+      accessible-label="Positioned content"
+    >
+      Content
+    </swc-popover>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const popover = await getComponent<Popover>(canvasElement, 'swc-popover');
+    await popover.updateComplete;
+    const surface = popover.shadowRoot?.querySelector(
+      '.swc-Popover'
+    ) as HTMLElement;
+    const nextFrame = (): Promise<void> =>
+      new Promise((resolve) => requestAnimationFrame(() => resolve()));
+
+    await step(
+      'a surface closed mid-entrance keeps its position until it fades out',
+      async () => {
+        popover.open = true;
+        // Close once the entrance fade is visibly under way, so the close
+        // interrupts it and the exit fade replaces it.
+        for (
+          let frame = 0;
+          frame < 60 && parseFloat(getComputedStyle(surface).opacity) < 0.3;
+          frame++
+        ) {
+          await nextFrame();
+        }
+        popover.open = false;
+        for (let frame = 0; frame < 60; frame++) {
+          await nextFrame();
+          const opacity = parseFloat(getComputedStyle(surface).opacity);
+          if (opacity > 0) {
+            expect(
+              surface.style.translate,
+              `a visible surface (opacity ${opacity}) keeps its position`
+            ).not.toBe('');
+          } else if (surface.style.translate === '') {
+            break;
+          }
+        }
+        expect(surface.style.translate, 'cleared once faded out').toBe('');
+      }
+    );
+  },
+};
+
 export const ActualPlacementFlipTest: Story = {
   // The trigger is pinned to the top of the viewport (position: fixed) so a
   // placement="top" popover has no room above; the flip middleware resolves to

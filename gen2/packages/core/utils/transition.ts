@@ -54,11 +54,26 @@ export function maxTransitionDurationMs(element: Element): number {
 }
 
 /**
+ * Whether a CSS transition is still running on the element itself (not its
+ * descendants).
+ */
+function hasRunningTransition(element: Element): boolean {
+  return element
+    .getAnimations()
+    .some(
+      (animation) =>
+        animation instanceof CSSTransition && animation.playState === 'running'
+    );
+}
+
+/**
  * Run `callback` once `element`'s CSS transition settles, or synchronously when
  * no transition will run (none declared, or reduced motion) since neither
  * `transitionend` nor `transitioncancel` will fire in that case. A
  * `transitioncancel` (interrupted transition) settles the callback as promptly
- * as a normal `transitionend`.
+ * as a normal `transitionend`, unless another transition is still running on
+ * the element: a transition reversed mid-way (an entrance interrupted by a
+ * close) is cancelled and replaced, so the callback waits for the replacement.
  *
  * When `fallback` is `true` (the default) a timer (the longest declared duration
  * plus a small buffer) also settles the callback, covering browsers that skip
@@ -89,6 +104,11 @@ export function runAfterTransition(
   // content) so only the element's own transition settles the callback.
   const settle = (event?: TransitionEvent): void => {
     if (event && event.target !== element) {
+      return;
+    }
+    // A cancel caused by a replacement transition is not the end; without this
+    // a close during the entrance would settle while the surface still fades.
+    if (event?.type === 'transitioncancel' && hasRunningTransition(element)) {
       return;
     }
     cancel();
