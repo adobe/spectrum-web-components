@@ -338,6 +338,38 @@ test.describe('Menu - native dismissal', () => {
     await expect(rows.nth(1)).toBeFocused();
   });
 
+  // Spectrum resolves every down colour to its hover value, so colour cannot
+  // show a press; the transform is the whole of the down state. Needs a real
+  // button press, which a play function cannot produce.
+  test('pressing a row shows a down state', async ({ page }) => {
+    await gotoStory(page, 'components-menu--open-and-close', 'swc-button');
+    const menu = page.locator('swc-menu');
+    const trigger = page.getByRole('button', { name: 'Edit' });
+
+    await trigger.click();
+    await expect(menu).toHaveJSProperty('open', true);
+
+    const row = page.locator('swc-menu-item').first();
+    const chromeTransform = () =>
+      row.evaluate(
+        (el) =>
+          getComputedStyle(
+            el.shadowRoot?.querySelector('.swc-MenuItem') as Element
+          ).transform
+      );
+
+    const box = (await row.boundingBox())!;
+    await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+    expect(await chromeTransform(), 'flat until pressed').toBe('none');
+
+    await page.mouse.down();
+    // The transition has to land before the transform is read.
+    await expect
+      .poll(chromeTransform, { message: 'the pressed row recedes' })
+      .not.toBe('none');
+    await page.mouse.up();
+  });
+
   // `:focus-visible` is sticky once a key press has set the modality, so moving
   // focus to the hovered row would otherwise drag the keyboard ring along with
   // the pointer.

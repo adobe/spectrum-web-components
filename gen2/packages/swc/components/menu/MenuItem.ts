@@ -56,6 +56,7 @@ import styles from './menu-item.css';
  * @cssprop --swc-menu-item-description-font-size - Font size of the description. Defaults to the 75 font-size token.
  * @cssprop --swc-menu-item-description-line-height - Line height of the description. Defaults to the 75 line-height token.
  * @cssprop --swc-menu-item-visual-size - Size of the slotted visual on both axes. Defaults to the medium workflow icon token.
+ * @cssprop --swc-menu-item-down-state-transform - Transform applied to the row while it is pressed. Set to `none` to disable the press animation.
  */
 export class MenuItem extends MenuItemBase {
   public static override get styles(): CSSResultArray {

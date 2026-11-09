@@ -36,10 +36,14 @@
    * only ever read as the fallback below, never overridden from `:host()`. */
   --_swc-menu-item-background-color-default: color-mix(in srgb, token("menu-item-background-color-default") calc(token("menu-item-background-opacity") * 100%), transparent);
 
+  /* Read twice: as the row's own height, and as the perspective depth the
+   * press transform is measured against. */
+  --_swc-menu-item-min-block-size: var(--swc-menu-item-min-block-size, token("component-height-100"));
+
   display: flex;
   gap: var(--swc-menu-item-gap, token("base-gap-medium"));
   align-items: center;
-  min-block-size: var(--swc-menu-item-min-block-size, token("component-height-100"));
+  min-block-size: var(--_swc-menu-item-min-block-size);
   padding-block: var(--swc-menu-item-padding-block, token("base-padding-vertical-medium"));
   padding-inline: var(--swc-menu-item-padding-inline, token("base-padding-horizontal-medium"));
   color: var(--swc-menu-item-label-color, token("neutral-content-color-default"));
@@ -51,6 +55,9 @@
    * Both properties inherit, so slotted label and description text follows. */
   cursor: default;
   user-select: none;
+  transition-timing-function: token("animation-ease-in-out");
+  transition-duration: token("animation-duration-100");
+  transition-property: color, background-color, transform;
 }
 
 /* The label and its description stack; the visual sits beside both. */
@@ -137,17 +144,23 @@
   --swc-menu-item-description-color: token("neutral-subdued-content-color-key-focus");
 }
 
-/* This rule matches but currently paints nothing new: Spectrum resolves the
- * down background and both down content colours to the same values as hover,
- * so pressing a row looks exactly like pointing at it. 1st-gen resolves the
- * same way, where hover, down and key-focus are all `transparent-white-200`.
- * Kept, rather than deleted as dead, so a row still follows the tokens if
- * those values ever diverge. The press is not mapped to a transform either:
- * that treatment belongs to the button family, not to a menu row. */
+/* Spectrum resolves the down background and both down content colours to the
+ * same values as hover, so colour alone cannot show that a row is being
+ * pressed. The press is carried by the transform below instead; these are kept
+ * so a row still follows the tokens if those values ever diverge. */
 :host(:active:not([disabled])) {
   --swc-menu-item-background-color: token("menu-item-background-color-down");
   --swc-menu-item-label-color: token("neutral-content-color-down");
   --swc-menu-item-description-color: token("neutral-subdued-content-color-down");
+}
+
+/* The press itself, matching the button family: the row recedes along Z
+ * against a perspective of its own height, so the apparent shrink stays
+ * proportional to the row at every size. A real CSS property rather than a
+ * custom property swap, so it is applied on the chrome element. */
+:host(:active:not([disabled])) .swc-MenuItem {
+  transform: var(--swc-menu-item-down-state-transform, perspective(var(--_swc-menu-item-min-block-size)) translate3d(0, 0, token("component-size-difference-down")));
+  will-change: transform;
 }
 
 /* Both text parts go to the same disabled colour; 1st-gen tracked them
@@ -205,6 +218,12 @@
   inline-size: var(--_swc-menu-item-visual-size);
   block-size: var(--_swc-menu-item-visual-size);
   color: inherit;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .swc-MenuItem {
+    transition-duration: 0ms;
+  }
 }
 
 @media (forced-colors: active) {
