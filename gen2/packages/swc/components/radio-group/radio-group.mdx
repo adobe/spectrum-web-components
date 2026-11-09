@@ -77,9 +77,9 @@ The `emphasized` attribute applies to every item and draws the checked item's co
 
 ### Selection
 
-The `selected` attribute holds the `value` of the checked item. It is empty by default, so no item is selected until the user chooses one or you set `selected`. Give every item a unique `value`. Items that share a value can't be told apart, and a debug-mode warning flags them.
+The `selected` attribute holds the `value` of the checked item. It is empty by default, so no item is selected until the user chooses one or you set `selected`. Give every item a unique `value`. Items that share a value can't be told apart, and a dev-mode warning flags them.
 
-On first render, an item with `checked` takes precedence over `selected`. If more than one item is checked, the first one wins and a debug-mode warning is logged. After that, set `selected` on the group to change the selection in code.
+On first render, an item with `checked` takes precedence over `selected`. If more than one item is checked, the first one wins and a dev-mode warning is logged. After that, set `selected` on the group to change the selection in code.
 
 When the user selects an item, the group fires a cancelable `change` event. Call `preventDefault()` to keep the previous selection. Setting `selected` in code does not fire `change`.
 
@@ -217,7 +217,7 @@ Setting `selected` in code and resetting the form do not fire `change`.
 - <kbd>Tab</kbd>: moves focus into the group, onto the selected item or onto the
   first enabled item when nothing is selected. Entering the group does not
   change the selection.
-- <kbd>Arrow keys</kbd>: move focus to the next or previous enabled item and
+- Arrow keys: move focus to the next or previous enabled item and
   select it, wrapping at either end. <kbd>Left</kbd> and <kbd>Right</kbd> follow
   the reading direction, including right-to-left.
 - <kbd>Home</kbd> and <kbd>End</kbd>: move focus to the first or last enabled
@@ -233,7 +233,7 @@ With `field-status="readonly"`, these keys move focus without changing the selec
 - **Group name**: the browser announces one name, in the order `accessible-labelledby`, `accessible-label`, then the slotted label. See [Labelling](#labelling).
 - **Group description**: the slotted `description`, or the `error-text` while invalid, is associated through `aria-describedby`. An `accessible-describedby` reference is combined with it rather than replacing it. Error text is not a live region.
 - **Item name**: an item's label and description together form its accessible name.
-- **Debug-mode warnings**: the console warns when a group has no accessible name, sets both `accessible-label` and `accessible-labelledby`, references an `id` that does not exist, or has `aria-label` or `aria-labelledby` set on the host. It also warns about duplicate item values, more than one initially checked item, `swc-radio` used outside `swc-radio-group`, and unsupported attribute values.
+- **Dev-mode warnings**: the console warns when a group has no accessible name, sets both `accessible-label` and `accessible-labelledby`, references an `id` that does not exist, or has `aria-label` or `aria-labelledby` set on the host. It also warns about duplicate item values, more than one initially checked item, `swc-radio` used outside `swc-radio-group`, and unsupported attribute values.
 
 ### Best practices
 
