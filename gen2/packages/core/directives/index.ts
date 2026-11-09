@@ -18,3 +18,14 @@ export {
   renderPendingSpinner,
   type PendingSpinnerResult,
 } from './pending-spinner/index.js';
+export {
+  renderFieldDescription,
+  type RenderFieldDescriptionOptions,
+  type RenderFieldDescriptionResult,
+} from './render-field-description/index.js';
+export {
+  renderFieldLabel,
+  type NecessityIndicatorText,
+  type RenderFieldLabelOptions,
+  type RenderFieldLabelResult,
+} from './render-label/index.js';

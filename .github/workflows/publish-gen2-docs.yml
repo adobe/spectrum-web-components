@@ -33,7 +33,7 @@ concurrency:
 
 jobs:
   build-and-deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     name: Build and Deploy gen2 Docs
     timeout-minutes: 30
     # Publish Packages (gen2) only triggers on push or workflow_dispatch, never
@@ -47,7 +47,7 @@ jobs:
       github.event.workflow_run.conclusion == 'success')
     steps:
       - name: Check out code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           # For workflow_run triggers, pin to the commit that the upstream
           # release run actually built/published, not whatever is on main by
@@ -55,7 +55,7 @@ jobs:
           ref: ${{ github.event.workflow_run.head_sha || github.sha }}
 
       - name: Use Node version from .nvmrc
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version-file: '.nvmrc'
           cache: yarn
@@ -66,12 +66,12 @@ jobs:
       - name: Check for cached dependencies
         continue-on-error: true
         id: cache-dependencies
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: |
             .cache/yarn
             node_modules
-          key: ubuntu-latest-${{ hashFiles('.nvmrc', 'package.json', 'yarn.lock') }}
+          key: ubuntu-26.04-${{ hashFiles('.nvmrc', 'package.json', 'yarn.lock') }}
 
       - name: Install dependencies
         run: yarn install --immutable

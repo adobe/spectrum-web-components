@@ -98,7 +98,7 @@ import badgeStyles from './badge.css';
 
 ### Import extensions
 
-Use `.js` extensions for all imports. Never use `.ts` in import paths. This is enforced by the linter (`import/extensions`).
+Use `.js` extensions for relative imports, including imports of `.ts` and `.tsx` files. Never use `.ts` in import paths. The linter (`import/extensions`) enforces this for relative imports, including in gen2 Storybook config. It skips package imports, because each package's `exports` map defines its valid paths, so follow that package's documented paths (for example, `lit/decorators.js`).
 
 ```ts
 // ✅ Good

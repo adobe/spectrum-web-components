@@ -15,7 +15,7 @@ export default {
     'stylelint --fix --cache --allow-empty-input',
     'prettier --cache --no-error-on-unmatched-pattern --ignore-unknown --log-level silent --write',
   ],
-  '*.{ts,js,mjs,cjs}': [
+  '*.{ts,tsx,js,mjs,cjs}': [
     'eslint --fix --cache --no-error-on-unmatched-pattern',
     'prettier --cache --no-error-on-unmatched-pattern --ignore-unknown --log-level silent --write',
   ],
@@ -31,7 +31,7 @@ export default {
   '{1st-gen,gen2}/.changeset/*.md': [
     'node 1st-gen/scripts/escape-changelog-tags.js',
   ],
-  '!(*.css|*.ts)': [
+  '!(*.css|*.ts|*.tsx)': [
     'prettier --cache --no-error-on-unmatched-pattern --ignore-unknown --log-level silent --write',
   ],
 };

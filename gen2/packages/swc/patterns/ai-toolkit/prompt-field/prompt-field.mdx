@@ -12,8 +12,8 @@ import * as PromptFieldStories from './stories/prompt-field.stories';
 A prompt field consists of:
 
 1. **Box**: white card container with shadow, starting as a taller multiline card by default.
-2. **Input area**: visually hidden label + textarea.
-3. **Action bar**: upload trigger (left) and send/stop action (right), shown on its own row.
+2. **Input area**: AI status indicator + textarea. The indicator also supplies the textarea's accessible name.
+3. **Action bar**: upload trigger (left) and a single send/stop action button (right), shown on its own row.
 4. **Footer**: legal disclaimer rendered below the prompt surface. Required in product implementations.
 
 <Canvas of={PromptFieldStories.Anatomy} />
@@ -50,7 +50,7 @@ A pixel loader sits at the start of the input row. It rests on a settled frame w
 
 The two name sets don't overlap, so one attribute covers both.
 
-The indicator is decorative (`aria-hidden`); the generating state is conveyed to assistive technology by the stop button that replaces send.
+The indicator is decorative and hidden from assistive technology (`aria-hidden`). The generating state is conveyed by the action button, whose accessible name changes from "Submit AI prompt" to "Stop generating".
 
 The textarea grows with content up to `--swc-prompt-field-max-block-size` (default `40vh`). Override the custom property to raise or lower this ceiling, e.g. `40%` of a sized parent:
 
@@ -69,6 +69,19 @@ The textarea grows with content up to `--swc-prompt-field-max-block-size` (defau
 Every prompt field in production must include Legal-approved disclaimer copy below the composer. Slot your product's approved text into **`legal`**: wording, links, and locale are consumer-owned, not baked into the component.
 
 Slotted `legal` content inherits the footer typography automatically. When it contains links, add the `swc-Typography--links` class to the wrapping element so the links inherit that typography and render in the subdued neutral color instead of the default accent blue. `swc-prompt-field` logs a development warning when the `legal` slot is empty.
+
+```html
+<swc-prompt-field>
+  <p slot="legal" class="swc-Typography--links">
+    Responses are generated using AI, and may be inaccurate. Check before using.
+    <a
+      href="https://www.adobe.com/legal/licenses-terms/adobe-gen-ai-user-guidelines.html"
+    >
+      AI User Guidelines
+    </a>
+  </p>
+</swc-prompt-field>
+```
 
 ### Attachment
 
@@ -101,26 +114,29 @@ Attachments own dismiss behavior via **`dismissible`** and emit **`swc-upload-at
 
 ### Multi-attachment scroll
 
-When several attachments exceed the composer width, the strip scrolls horizontally at full width. Round chevron buttons flank the strip and render only when scrolling is possible in that direction. Each click advances by one viewport width and settles on a tile boundary; the browser's native scroll clamping keeps the final page from overshooting the end. Edge fades on both sides signal overflow and hide at the ends of the list.
+When the attachments don't fit, the strip scrolls horizontally. This works the same for `type="card"` and `type="media"` tiles.
 
-Trackpad, wheel, touch scrolling, and the platform's native scrollbar all work on the attachment strip. Chevron paging does not reveal the scrollbar.
+- Round chevron buttons show on each side when there is more content in that direction. `>` moves the tile that is partly hidden at the end to the start of the strip; `<` does the reverse. When no tile is left to move, a chevron scrolls to that end of the strip.
+- Edge fades show that more content is off screen, and grow in as soon as the strip scrolls. Each chevron shows once the strip has scrolled past its fade, so it's never partly transparent over a tile.
+- When a tile is added to a strip that already has tiles, the strip scrolls to show it, so a new upload is visible even when the strip overflows. Focus doesn't move, and while focus is in the strip, the strip stays where it is.
+- Users can also scroll with a trackpad, mouse wheel, or touch. The strip has no visible scrollbar and doesn't snap to tile edges.
 
 <Canvas of={PromptFieldStories.MultiAttachmentScroll} />
 
 ### Upload action menu
 
-`swc-prompt-field` fires `swc-prompt-field-upload-click` from the **`+`** button and leaves the resulting UI entirely to the consuming product; the component has no opinion on what opens. Design recommends the **`+`** button open a menu with, at minimum:
+`swc-prompt-field` fires `swc-prompt-field-upload-click` from the **`+`** button. The consuming product decides what opens. Design recommends a menu with at least:
 
 - **Add from Adobe cloud storage**
 - **Attach files**
 
-Product teams control the exact menu contents and may add more sources, but these two are the recommended baseline. Attachments added through either path should surface as staged attachments using the same **`swc-upload-attachment`** error/invalid state as a directly-dropped file, since the attachment strip does not distinguish attachments by origin.
+Products can add more sources. Show files from every source as `swc-upload-attachment` tiles, with the same error/invalid state as a dropped file.
 
 ## States
 
-- **Default**: send button shown, normal interactivity; enabled once there's prompt content (value or attachment)
-- **`generating`**: stop button shown in place of send while a response is in progress; the input remains editable
-- **`disabled`**: input, upload, and send/stop are all disabled
+- **Default**: the action button acts as send; it's `aria-disabled` until there's prompt content (value or attachment), so it stays focusable
+- **`generating`**: the same action button switches to stop while a response is in progress, keeping focus; the input remains editable
+- **`disabled`**: input, upload, and send are disabled; stop stays available while `generating` so a response can still be cancelled
 
 <Canvas of={PromptFieldStories.States} />
 
@@ -146,9 +162,9 @@ The status loader stays static by default. Set `animate-loader` to animate it wh
 
 ### Drag and drop
 
-Dragging a file anywhere over `swc-prompt-field` applies a high-intensity solid fill to the container surface and a blue focus ring around the drop target, regardless of the field's own `variant` or `generating` state: a drop target should be unmistakable even on a `subtle` field. Text and URL drags, plus fields in `disabled` mode, are rejected (the OS cursor shows "not allowed"). Dropping fires **`swc-prompt-field-drop`** with `detail: { files: File[] }`; consumers build and slot `<swc-upload-attachment>` elements from those files the same way they do for the **`+`** button's external picker flow.
+Dragging a file over `swc-prompt-field` shows a solid fill and a blue focus ring, for every `variant` and also while `generating`. Text and URL drags are rejected, and so are all drags on a `disabled` field. Dropping fires **`swc-prompt-field-drop`** with `detail: { files: File[] }`. Build and slot `<swc-upload-attachment>` elements from those files, the same as for the **`+`** button's picker flow.
 
-Once those tiles land in the `attachment` slot, `swc-prompt-field` manages focus for the drop automatically. If the textarea had focus at drop time, focus stays there. Otherwise, the new tile becomes the attachment strip's roving-tabindex entry point either way, but focus only jumps there immediately when the document is already in a keyboard-driven focus state (checked via `:focus-visible`); a plain mouse drag from the file system leaves focus untouched at drop time, and a later Tab into the strip lands on that same new tile instead of the previous entry point.
+When the new tiles land in the `attachment` slot, the first new tile becomes the strip's Tab entry point. If the textarea had focus at drop time, focus stays there. Otherwise, focus moves to the new tile only during keyboard use (`:focus-visible`); after a mouse drag, focus stays where it was.
 
 <Canvas of={PromptFieldStories.DragAndDrop} />
 
@@ -160,29 +176,39 @@ The `<swc-prompt-field>` element implements the following accessibility features
 
 #### Label association
 
-- The `<textarea>` uses `aria-labelledby`, pointing to a visually hidden label
-- `accessible-label` can override the accessible name when needed
-- All icon buttons carry descriptive accessible names via `accessible-label`
-- `attachment-scroll-prev-label` and `attachment-scroll-next-label` let consumers localize the attachment-strip chevrons
-- The send button uses `disabled` natively when the prompt has no content
+- The `<textarea>` is named by `aria-label`, set from `accessible-label` (default "AI prompt"); no visually hidden text is rendered
+- Every attribute that sets a non-visible name ends in `-accessible-label`, so each one can be localized: `accessible-label`, `send-accessible-label`, `stop-accessible-label`, `upload-accessible-label`, `attachment-scroll-prev-accessible-label`, `attachment-scroll-next-accessible-label`, and `attachment-strip-accessible-label`
+
+#### Send and stop action
+
+- Send and stop are one persistent button, so keyboard focus stays on it when `generating` toggles and screen readers announce the new name ("Submit AI prompt" or "Stop generating") on the focused control
+- With no prompt content, the button uses `aria-disabled="true"` rather than native `disabled`, so clearing the value after submit doesn't drop focus to the page
+
+#### Status announcements
+
+- `swc-prompt-field` doesn't announce generation progress itself; pair it with `swc-response-status`
+- Without steps, `swc-response-status` renders its label as a `role="status"` live region while `status="active"`, so the start of generation is announced
+- With steps, the status header is a disclosure button instead of a live region, so neither the start of generation nor step changes are announced
+- Completion and stopping aren't announced in either case, because the live region is removed when `status` leaves `active`
+- Provide your own status message wherever `swc-response-status` stays silent, at minimum for generation start, completion, and stopping (WCAG 4.1.3 Status Messages)
 
 #### Attachment strip keyboard navigation
 
-The attachment strip is a `role="region"` landmark (labeled `attachment-strip-label`, default "Uploaded assets strip") wrapping roving-tabindex thumbnails; the landmark itself is not a tab stop:
+The attachment strip is a `role="region"` landmark (labeled by `attachment-strip-accessible-label`, default "Uploaded assets strip") that contains roving-tabindex thumbnails. The landmark itself is not a tab stop.
 
-- **Tab**: moves through the previous chevron when present, then directly to the active thumbnail (the first one, until Arrow keys move that roving stop elsewhere), then that thumbnail's Close button, then the next chevron when present, then out of the strip
-- **Arrow Left/Right**: move the active thumbnail one tile at a time and scroll it into view (distinct from the `<`/`>` chevrons, which page by a full set)
-- **Shift+Tab** from Close: returns to the thumbnail; **Shift+Tab** from a thumbnail exits the strip entirely
-- Activating the `>` chevron (click, Enter, or Space) keeps focus on the chevron and scrolls the next set of tiles into view; **Shift+Tab** from it then moves into that newly displayed set (its active thumbnail's Close button when shown, otherwise the thumbnail). The `<` chevron is the mirror: activating it keeps focus there, and **Tab** moves into the newly displayed set
-- At either end of the strip, the `<`/`>` chevron becomes `aria-disabled` rather than being removed; if it had focus when scrolling reached that end, focus moves to the active thumbnail so it is never stranded on the now-hidden chevron
+- **Tab**: moves to the previous chevron (when shown), the active thumbnail (the first one until the arrow keys move it), that thumbnail's Close button, the next chevron (when shown), and then out of the strip
+- **Arrow Left/Right**: move to the previous or next thumbnail and scroll it fully into view, clear of the chevrons. A thumbnail that gets focus with **Tab** also scrolls fully into view
+- **Shift+Tab** from a Close button returns to its thumbnail; **Shift+Tab** from a thumbnail leaves the strip
+- Activating a chevron (click, Enter, or Space) scrolls the strip and keeps focus on the chevron. The first thumbnail that is now shown becomes the active thumbnail: **Shift+Tab** from `>` moves to its Close button (or to the thumbnail, if it has no Close button), and **Tab** from `<` moves to the thumbnail
+- At the end of the strip, the chevron for that direction is hidden. If it had focus, focus moves to the thumbnail at that end: the last one for `>`, the first one for `<`
 
 ### Best practices
 
-- Always provide a meaningful `label` value
-- Use `accessible-label` only when a distinct non-visual name is required
-- Use `placeholder` as a hint, not a replacement for the label
+- Localize every `*-accessible-label` attribute; the English defaults are fallbacks
+- Use `placeholder` as a hint, not a replacement for the accessible name
 - Ensure attachment content slotted into `attachment` slot includes descriptive text
-- Drag and drop is a progressive enhancement, not the only way to attach a file: native browser drag-and-drop has no keyboard equivalent, so the **`+`** button must stay available and fully functional for keyboard and screen reader users
+- Give every `swc-upload-attachment` a `title` slot (for example, the file name) or an `accessible-label`. This includes `type="media"` tiles, which don't show the title. Screen readers use it as the tile's name
+- Keep the **`+`** button available: drag and drop has no keyboard equivalent, so keyboard and screen reader users attach files with the button
 
 <Canvas of={PromptFieldStories.Accessibility} />
 

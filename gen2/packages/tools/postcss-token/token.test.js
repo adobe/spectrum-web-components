@@ -27,8 +27,11 @@ async function run(input, output) {
 }
 
 describe('postcss-token plugin', () => {
-  it('resolves a core color alias', async () => {
-    await run(`a { color: token('black'); }`, `a { color: rgb(0 0 0); }`);
+  it('resolves a renamed core color alias', async () => {
+    await run(
+      `a { color: token('transparent-static-black-1000'); }`,
+      `a { color: rgb(0 0 0); }`
+    );
   });
 
   it('resolves a composite core color alias to a var()', async () => {
@@ -41,7 +44,7 @@ describe('postcss-token plugin', () => {
   it('resolves a basic token alias', async () => {
     await run(
       `a { color: token('overlay-color'); }`,
-      `a { color: var(--${prefix}-black); }`
+      `a { color: var(--${prefix}-transparent-static-black-1000); }`
     );
   });
 

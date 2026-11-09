@@ -9,7 +9,7 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { html } from 'lit';
+import { html, render } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
@@ -1695,6 +1695,716 @@ export const IconOnlyTabAriaLabelTest: Story = {
         ).toBe('Home');
       }
     );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Regression — slotted tabs added after the initial render
+// ──────────────────────────────────────────────────────────────
+
+const createTab = (tabId: string): Tab => {
+  const tab = document.createElement('swc-tab') as Tab;
+  tab.tabId = tabId;
+  tab.textContent = `Tab ${tabId}`;
+  return tab;
+};
+
+const createPanel = (tabId: string): TabPanel => {
+  const panel = document.createElement('swc-tab-panel') as TabPanel;
+  panel.tabId = tabId;
+  panel.textContent = `Panel ${tabId}`;
+  return panel;
+};
+
+const settle = async (tabs: Tabs, elements: HTMLElement[]): Promise<void> => {
+  await tabs.updateComplete;
+  await Promise.all(
+    elements.map(
+      (el) =>
+        (el as HTMLElement & { updateComplete?: Promise<boolean> })
+          .updateComplete
+    )
+  );
+  await new Promise((r) => requestAnimationFrame(r));
+};
+
+export const ReplacedTabsSelectionTest: Story = {
+  render: () => html`
+    <swc-tabs selected="1" accessible-label="Replaced tabs test">
+      <swc-tab tab-id="1">Tab 1</swc-tab>
+    </swc-tabs>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const tabs = await getComponent<Tabs>(canvasElement, 'swc-tabs');
+    const tab1 = createTab('1');
+    const tab2 = createTab('2');
+
+    await step('replacement tabs keep the current selection', async () => {
+      tabs.replaceChildren(tab1, tab2);
+      await settle(tabs, [tab1, tab2]);
+
+      expect(tabs.selected, 'selection is kept').toBe('1');
+      expect(tab1.selected, 'replacement tab 1 is selected').toBe(true);
+      expect(tab1.getAttribute('role'), 'tab 1 role').toBe('tab');
+      expect(tab2.getAttribute('role'), 'tab 2 role').toBe('tab');
+      expect(tab1.getAttribute('aria-selected'), 'tab 1 aria-selected').toBe(
+        'true'
+      );
+      expect(tab2.getAttribute('aria-selected'), 'tab 2 aria-selected').toBe(
+        'false'
+      );
+      expect(tab1.tabIndex, 'tab 1 is the tab stop').toBe(0);
+      expect(tab2.tabIndex, 'tab 2 is not the tab stop').toBe(-1);
+    });
+
+    await step('replacement tabs can be selected by click', async () => {
+      tab2.click();
+      await settle(tabs, [tab1, tab2]);
+
+      expect(tabs.selected, 'selection moved to tab 2').toBe('2');
+      expect(tab2.selected, 'tab 2 is selected').toBe(true);
+      expect(tab2.getAttribute('aria-selected'), 'tab 2 aria-selected').toBe(
+        'true'
+      );
+      expect(tab1.selected, 'tab 1 is deselected').toBe(false);
+    });
+
+    await step('selection indicator follows the replacement tab', async () => {
+      const tablist = tabs.shadowRoot?.querySelector('.tablist') as HTMLElement;
+      const tabRect = tab2.getBoundingClientRect();
+      const listRect = tablist.getBoundingClientRect();
+
+      expect(
+        tabs['selectionIndicatorStyle'],
+        'indicator matches tab 2 position and width'
+      ).toBe(
+        `transform: translateX(${tabRect.left - listRect.left}px) scaleX(${tabRect.width / 100})`
+      );
+    });
+  },
+};
+
+export const ReplacedTabsTemplateSwitchTest: Story = {
+  render: () => html`
+    <swc-tabs selected="a" accessible-label="Template switch test"></swc-tabs>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const tabs = await getComponent<Tabs>(canvasElement, 'swc-tabs');
+    const renderTabs = (ids: string[]): void => {
+      render(
+        html`
+          ${ids.map(
+            (id) => html`
+              <swc-tab tab-id=${id}>Tab ${id}</swc-tab>
+            `
+          )}
+        `,
+        tabs
+      );
+    };
+
+    await step('switching templates keeps tabs registered', async () => {
+      renderTabs(['a', 'b']);
+      await settle(tabs, [...tabs.querySelectorAll<Tab>('swc-tab')]);
+      expect(tabs.selected, 'initial selection').toBe('a');
+
+      renderTabs(['a', 'c', 'd']);
+      const tabElements = [...tabs.querySelectorAll<Tab>('swc-tab')];
+      await settle(tabs, tabElements);
+
+      expect(tabs.selected, 'selection is kept').toBe('a');
+      expect(
+        tabElements.map((tab) => tab.getAttribute('role')),
+        'every tab has the tab role'
+      ).toEqual(['tab', 'tab', 'tab']);
+
+      const last = tabs.querySelector<Tab>('swc-tab[tab-id="d"]')!;
+      last.click();
+      await settle(tabs, tabElements);
+
+      expect(tabs.selected, 'new tab can be selected').toBe('d');
+      expect(last.selected, 'new tab is selected').toBe(true);
+    });
+  },
+};
+
+export const ReplacedTabsPanelLinkTest: Story = {
+  render: () => html`
+    <swc-tabs selected="1" accessible-label="Replaced tabs panel test">
+      <swc-tab tab-id="1">Tab 1</swc-tab>
+      <swc-tab tab-id="2">Tab 2</swc-tab>
+      <swc-tab-panel tab-id="1"><p>Panel 1</p></swc-tab-panel>
+      <swc-tab-panel tab-id="2"><p>Panel 2</p></swc-tab-panel>
+    </swc-tabs>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const tabs = await getComponent<Tabs>(canvasElement, 'swc-tabs');
+    const panels = await getComponents<TabPanel>(
+      canvasElement,
+      'swc-tab-panel'
+    );
+
+    await step('replacement tabs are linked to existing panels', async () => {
+      tabs.querySelectorAll('swc-tab').forEach((tab) => tab.remove());
+      const tab1 = createTab('1');
+      const tab2 = createTab('2');
+      tabs.prepend(tab1, tab2);
+      await settle(tabs, [tab1, tab2]);
+
+      expect(tab1.id, 'tab 1 has an id').not.toBe('');
+      expect(tab2.id, 'tab 2 has an id').not.toBe('');
+      expect(tab1.getAttribute('aria-controls'), 'tab 1 aria-controls').toBe(
+        panels[0].id
+      );
+      expect(tab2.getAttribute('aria-controls'), 'tab 2 aria-controls').toBe(
+        panels[1].id
+      );
+      expect(
+        panels[0].getAttribute('aria-labelledby'),
+        'panel 1 aria-labelledby'
+      ).toBe(tab1.id);
+      expect(
+        panels[1].getAttribute('aria-labelledby'),
+        'panel 2 aria-labelledby'
+      ).toBe(tab2.id);
+      expect(panels[0].selected, 'panel 1 is visible').toBe(true);
+
+      tab2.click();
+      await settle(tabs, [tab1, tab2, ...panels]);
+
+      expect(panels[0].selected, 'panel 1 is hidden').toBe(false);
+      expect(panels[1].selected, 'panel 2 is visible').toBe(true);
+    });
+  },
+};
+
+export const RemovedTabsPanelLabelTest: Story = {
+  render: () => html`
+    <swc-tabs selected="1" accessible-label="Removed tab panel test">
+      <swc-tab tab-id="1">Tab 1</swc-tab>
+      <swc-tab-panel tab-id="1"><p>Panel 1</p></swc-tab-panel>
+    </swc-tabs>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const tabs = await getComponent<Tabs>(canvasElement, 'swc-tabs');
+    const panel = await getComponent<TabPanel>(canvasElement, 'swc-tab-panel');
+    const originalTab = await getComponent<Tab>(canvasElement, 'swc-tab');
+
+    await step('removing the tab clears the panel label', async () => {
+      expect(panel.getAttribute('aria-labelledby')).toBe(originalTab.id);
+      originalTab.remove();
+      await settle(tabs, [panel]);
+      expect(panel.hasAttribute('aria-labelledby')).toBe(false);
+    });
+
+    await step('an unrelated tab leaves the panel unlabelled', async () => {
+      const unrelatedTab = createTab('2');
+      tabs.prepend(unrelatedTab);
+      await settle(tabs, [unrelatedTab]);
+      expect(panel.hasAttribute('aria-labelledby')).toBe(false);
+    });
+
+    await step('a matching tab restores the panel label', async () => {
+      const replacement = createTab('1');
+      tabs.prepend(replacement);
+      await settle(tabs, [replacement]);
+      expect(panel.getAttribute('aria-labelledby')).toBe(replacement.id);
+      expect(replacement.getAttribute('aria-controls')).toBe(panel.id);
+    });
+  },
+};
+
+export const UnmatchedPanelLabelTest: Story = {
+  render: () => html`
+    <swc-tabs accessible-label="Unmatched panel test">
+      <swc-tab-panel tab-id="missing" aria-labelledby="external-heading">
+        <h2 id="external-heading">Panel heading</h2>
+      </swc-tab-panel>
+    </swc-tabs>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const panel = await getComponent<TabPanel>(canvasElement, 'swc-tab-panel');
+
+    await step('keeps a consumer-provided panel label', () => {
+      expect(panel.getAttribute('aria-labelledby')).toBe('external-heading');
+    });
+  },
+};
+
+export const ReplacedPanelsLinkTest: Story = {
+  render: () => html`
+    <swc-tabs selected="1" accessible-label="Replaced panels test">
+      <swc-tab tab-id="1">Tab 1</swc-tab>
+      <swc-tab tab-id="2">Tab 2</swc-tab>
+      <swc-tab-panel tab-id="1"><p>Panel 1</p></swc-tab-panel>
+    </swc-tabs>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const tabs = await getComponent<Tabs>(canvasElement, 'swc-tabs');
+    const [tab1, tab2] = await getComponents<Tab>(canvasElement, 'swc-tab');
+
+    await step('replacement panels are linked to existing tabs', async () => {
+      tabs.querySelector('swc-tab-panel')?.remove();
+      const panel1 = createPanel('1');
+      const panel2 = createPanel('2');
+      tabs.append(panel1, panel2);
+      await settle(tabs, [panel1, panel2]);
+
+      expect(tab1.getAttribute('aria-controls'), 'tab 1 aria-controls').toBe(
+        panel1.id
+      );
+      expect(tab2.getAttribute('aria-controls'), 'tab 2 aria-controls').toBe(
+        panel2.id
+      );
+      expect(
+        panel1.getAttribute('aria-labelledby'),
+        'panel 1 aria-labelledby'
+      ).toBe(tab1.id);
+      expect(
+        panel2.getAttribute('aria-labelledby'),
+        'panel 2 aria-labelledby'
+      ).toBe(tab2.id);
+      expect(panel1.selected, 'panel 1 is visible').toBe(true);
+      expect(panel2.selected, 'panel 2 is hidden').toBe(false);
+    });
+  },
+};
+
+export const ReplacedTabsNoSelectionTest: Story = {
+  render: () => html`
+    <swc-tabs accessible-label="Replaced tabs without selection test">
+      <swc-tab tab-id="1">Tab 1</swc-tab>
+    </swc-tabs>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const tabs = await getComponent<Tabs>(canvasElement, 'swc-tabs');
+
+    await step('first replacement tab is the only tab stop', async () => {
+      const tab1 = createTab('1');
+      const tab2 = createTab('2');
+      tabs.replaceChildren(tab1, tab2);
+      await settle(tabs, [tab1, tab2]);
+
+      expect(tabs.selected, 'nothing is selected').toBe('');
+      expect(tab1.tabIndex, 'tab 1 is the tab stop').toBe(0);
+      expect(tab2.tabIndex, 'tab 2 is not the tab stop').toBe(-1);
+    });
+  },
+};
+
+export const ReplacedTabsKeyboardTest: Story = {
+  render: () => html`
+    <swc-tabs
+      selected="1"
+      keyboard-activation="manual"
+      accessible-label="Replaced tabs keyboard test"
+    >
+      <swc-tab tab-id="1">Tab 1</swc-tab>
+    </swc-tabs>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const tabs = await getComponent<Tabs>(canvasElement, 'swc-tabs');
+    const tab1 = createTab('1');
+    const tab2 = createTab('2');
+    tabs.replaceChildren(tab1, tab2);
+    await settle(tabs, [tab1, tab2]);
+
+    await step('arrow keys move focus across replacement tabs', async () => {
+      tab1.focus();
+      tab1.dispatchEvent(
+        new KeyboardEvent('keydown', {
+          key: 'ArrowRight',
+          code: 'ArrowRight',
+          bubbles: true,
+        })
+      );
+      await tabs.updateComplete;
+      expect(document.activeElement, 'focus moved to tab 2').toBe(tab2);
+    });
+
+    await step('Enter selects the focused replacement tab', async () => {
+      tab2.dispatchEvent(
+        new KeyboardEvent('keydown', {
+          key: 'Enter',
+          code: 'Enter',
+          bubbles: true,
+        })
+      );
+      await settle(tabs, [tab1, tab2]);
+      expect(tabs.selected, 'tab 2 is selected').toBe('2');
+      expect(tab2.selected, 'tab 2 selected state').toBe(true);
+    });
+  },
+};
+
+const CUSTOM_TAB_TAG = 'test-custom-tab';
+
+export const ReplacedCustomTagTabsTest: Story = {
+  render: () => html`
+    <swc-tabs selected="1" accessible-label="Custom tag tabs test">
+      <swc-tab tab-id="1">Tab 1</swc-tab>
+    </swc-tabs>
+  `,
+  play: async ({ canvasElement, step }) => {
+    if (!customElements.get(CUSTOM_TAB_TAG)) {
+      customElements.define(CUSTOM_TAB_TAG, class extends Tab {});
+    }
+    const tabs = await getComponent<Tabs>(canvasElement, 'swc-tabs');
+    const createCustomTab = (tabId: string): Tab => {
+      const tab = document.createElement(CUSTOM_TAB_TAG) as Tab;
+      tab.tabId = tabId;
+      tab.textContent = `Tab ${tabId}`;
+      return tab;
+    };
+    const tab1 = createCustomTab('1');
+    const tab2 = createCustomTab('2');
+
+    await step(
+      'a tab subclass with another tag name is registered',
+      async () => {
+        tabs.replaceChildren(tab1, tab2);
+        await settle(tabs, [tab1, tab2]);
+
+        expect(tab1.getAttribute('role'), 'tab 1 role').toBe('tab');
+        expect(tabs.selected, 'selection is kept').toBe('1');
+        expect(tab1.selected, 'tab 1 is selected').toBe(true);
+        expect(tab1.tabIndex, 'tab 1 is the tab stop').toBe(0);
+
+        tab2.click();
+        await settle(tabs, [tab1, tab2]);
+
+        expect(tabs.selected, 'selection moved to tab 2').toBe('2');
+        expect(tab2.selected, 'tab 2 is selected').toBe(true);
+      }
+    );
+  },
+};
+
+export const PlainRoleTabPanelLinkTest: Story = {
+  render: () => html`
+    <swc-tabs accessible-label="Plain role tab test">
+      <div role="tab" id="plain-tab" tab-id="plain">Plain tab</div>
+      <swc-tab-panel tab-id="plain"><p>Plain panel</p></swc-tab-panel>
+    </swc-tabs>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const tabs = await getComponent<Tabs>(canvasElement, 'swc-tabs');
+    const panel = await getComponent<TabPanel>(canvasElement, 'swc-tab-panel');
+    const tab = canvasElement.querySelector('#plain-tab') as HTMLElement;
+    await settle(tabs, [panel]);
+
+    await step('links by the tab-id attribute', () => {
+      expect(tab.getAttribute('aria-controls'), 'tab aria-controls').toBe(
+        panel.id
+      );
+      expect(
+        panel.getAttribute('aria-labelledby'),
+        'panel aria-labelledby'
+      ).toBe('plain-tab');
+    });
+  },
+};
+
+export const RemovedPanelTabControlsTest: Story = {
+  render: () => html`
+    <swc-tabs selected="1" accessible-label="Removed panel test">
+      <swc-tab tab-id="1">Tab 1</swc-tab>
+      <swc-tab tab-id="2">Tab 2</swc-tab>
+      <swc-tab-panel tab-id="1"><p>Panel 1</p></swc-tab-panel>
+      <swc-tab-panel tab-id="2"><p>Panel 2</p></swc-tab-panel>
+    </swc-tabs>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const tabs = await getComponent<Tabs>(canvasElement, 'swc-tabs');
+    const [tab1, tab2] = await getComponents<Tab>(canvasElement, 'swc-tab');
+    const [panel1, panel2] = await getComponents<TabPanel>(
+      canvasElement,
+      'swc-tab-panel'
+    );
+
+    await step('removing a panel clears its tab aria-controls', async () => {
+      expect(tab2.getAttribute('aria-controls')).toBe(panel2.id);
+      panel2.remove();
+      await settle(tabs, [tab1, tab2]);
+
+      expect(tab2.hasAttribute('aria-controls'), 'tab 2 is unlinked').toBe(
+        false
+      );
+      expect(tab1.getAttribute('aria-controls'), 'tab 1 is still linked').toBe(
+        panel1.id
+      );
+    });
+
+    await step('a matching panel restores the tab aria-controls', async () => {
+      const replacement = createPanel('2');
+      tabs.append(replacement);
+      await settle(tabs, [replacement]);
+
+      expect(tab2.getAttribute('aria-controls')).toBe(replacement.id);
+    });
+  },
+};
+
+export const UnmatchedTabControlsTest: Story = {
+  render: () => html`
+    <swc-tabs selected="1" accessible-label="Unmatched tab test">
+      <swc-tab tab-id="1">Tab 1</swc-tab>
+      <swc-tab tab-id="2" aria-controls="external-region">Tab 2</swc-tab>
+      <swc-tab-panel tab-id="1"><p>Panel 1</p></swc-tab-panel>
+    </swc-tabs>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const tabs = await getComponent<Tabs>(canvasElement, 'swc-tabs');
+    const [, tab2] = await getComponents<Tab>(canvasElement, 'swc-tab');
+    await settle(tabs, [tab2]);
+
+    await step('keeps a consumer-provided tab aria-controls', () => {
+      expect(tab2.getAttribute('aria-controls')).toBe('external-region');
+    });
+  },
+};
+
+export const ConsumerMatchingAriaTest: Story = {
+  render: () => html`
+    <swc-tabs selected="1" accessible-label="Consumer ARIA test">
+      <swc-tab id="consumer-tab" tab-id="1" aria-controls="consumer-panel">
+        Tab 1
+      </swc-tab>
+      <swc-tab-panel
+        id="consumer-panel"
+        tab-id="1"
+        aria-labelledby="consumer-tab"
+      >
+        <p>Panel 1</p>
+      </swc-tab-panel>
+    </swc-tabs>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const tabs = await getComponent<Tabs>(canvasElement, 'swc-tabs');
+    const tab = await getComponent<Tab>(canvasElement, 'swc-tab');
+    const panel = await getComponent<TabPanel>(canvasElement, 'swc-tab-panel');
+    await settle(tabs, [tab, panel]);
+
+    await step('moving the panel out keeps the tab aria-controls', async () => {
+      canvasElement.append(panel);
+      await settle(tabs, [tab, panel]);
+      expect(tab.getAttribute('aria-controls')).toBe('consumer-panel');
+    });
+
+    await step('moving the tab out keeps the panel label', async () => {
+      tabs.append(panel);
+      await settle(tabs, [tab, panel]);
+      canvasElement.append(tab);
+      await settle(tabs, [tab, panel]);
+      expect(panel.getAttribute('aria-labelledby')).toBe('consumer-tab');
+    });
+  },
+};
+
+export const ClearedTabIdRelinkTest: Story = {
+  render: () => html`
+    <swc-tabs selected="1" accessible-label="Cleared tab-id test">
+      <swc-tab tab-id="1">Tab 1</swc-tab>
+      <swc-tab-panel tab-id="1"><p>Panel 1</p></swc-tab-panel>
+    </swc-tabs>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const tabs = await getComponent<Tabs>(canvasElement, 'swc-tabs');
+    const tab = await getComponent<Tab>(canvasElement, 'swc-tab');
+    const panel = await getComponent<TabPanel>(canvasElement, 'swc-tab-panel');
+
+    await step(
+      'a cleared tabId does not match through the stale attribute',
+      async () => {
+        expect(panel.getAttribute('aria-labelledby')).toBe(tab.id);
+        panel.remove();
+        tabs.append(panel);
+        tab.tabId = '';
+        await settle(tabs, [tab, panel]);
+
+        expect(tab.getAttribute('tab-id'), 'tab-id is cleared').toBe('');
+        expect(panel.hasAttribute('aria-labelledby'), 'panel unlinked').toBe(
+          false
+        );
+      }
+    );
+  },
+};
+
+export const ConsumerReplacedAriaTest: Story = {
+  render: () => html`
+    <swc-tabs selected="1" accessible-label="Consumer replaced ARIA test">
+      <swc-tab tab-id="1">Tab 1</swc-tab>
+      <swc-tab-panel tab-id="1"><p>Panel 1</p></swc-tab-panel>
+    </swc-tabs>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const tabs = await getComponent<Tabs>(canvasElement, 'swc-tabs');
+    const tab = await getComponent<Tab>(canvasElement, 'swc-tab');
+    const panel = await getComponent<TabPanel>(canvasElement, 'swc-tab-panel');
+    await settle(tabs, [tab, panel]);
+
+    await step(
+      'a consumer value set after a managed link is kept on unlink',
+      async () => {
+        expect(tab.getAttribute('aria-controls')).toBe(panel.id);
+        panel.id = 'consumer-panel';
+        tab.setAttribute('aria-controls', 'consumer-panel');
+        tabs.append(document.createElement('span'));
+        await settle(tabs, [tab, panel]);
+
+        canvasElement.append(panel);
+        await settle(tabs, [tab, panel]);
+        expect(tab.getAttribute('aria-controls')).toBe('consumer-panel');
+      }
+    );
+  },
+};
+
+export const ReplacedTabsAndPanelsConsumerAriaTest: Story = {
+  render: () => html`
+    <swc-tabs selected="1" accessible-label="Replaced tabs and panels test">
+      <swc-tab tab-id="1">Tab 1</swc-tab>
+      <swc-tab-panel tab-id="1"><p>Panel 1</p></swc-tab-panel>
+    </swc-tabs>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const tabs = await getComponent<Tabs>(canvasElement, 'swc-tabs');
+    const oldPanel = await getComponent<TabPanel>(
+      canvasElement,
+      'swc-tab-panel'
+    );
+    await settle(tabs, [oldPanel]);
+
+    await step(
+      'replacing tabs and panels together keeps the app aria-controls',
+      async () => {
+        const tab = createTab('1');
+        tab.setAttribute('aria-controls', 'app-panel');
+        const panel = createPanel('1');
+        panel.id = 'app-panel';
+        tabs.replaceChildren(tab, panel);
+        await settle(tabs, [tab, panel]);
+
+        expect(
+          tab.getAttribute('aria-controls'),
+          'tab is never linked to the removed panel'
+        ).toBe('app-panel');
+
+        panel.remove();
+        await settle(tabs, [tab]);
+        expect(
+          tab.getAttribute('aria-controls'),
+          'app aria-controls is kept after the panel is removed'
+        ).toBe('app-panel');
+      }
+    );
+  },
+};
+
+export const ConsumerChangedAriaTest: Story = {
+  render: () => html`
+    <swc-tabs selected="1" accessible-label="Consumer changed ARIA test">
+      <h2 id="external-heading">External heading</h2>
+      <swc-tab tab-id="1">Tab 1</swc-tab>
+      <swc-tab-panel tab-id="1"><p>Panel 1</p></swc-tab-panel>
+    </swc-tabs>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const tabs = await getComponent<Tabs>(canvasElement, 'swc-tabs');
+    const tab = await getComponent<Tab>(canvasElement, 'swc-tab');
+    const panel = await getComponent<TabPanel>(canvasElement, 'swc-tab-panel');
+    await settle(tabs, [tab, panel]);
+
+    await step('relinking keeps values the app changed', async () => {
+      expect(panel.getAttribute('aria-labelledby')).toBe(tab.id);
+      panel.setAttribute('aria-labelledby', 'external-heading');
+      tab.setAttribute('aria-controls', 'external-region');
+      tabs.append(document.createElement('span'));
+      await settle(tabs, [tab, panel]);
+
+      expect(
+        panel.getAttribute('aria-labelledby'),
+        'panel keeps the app label'
+      ).toBe('external-heading');
+      expect(
+        tab.getAttribute('aria-controls'),
+        'tab keeps the app aria-controls'
+      ).toBe('external-region');
+    });
+
+    await step('unlinking keeps values the app changed', async () => {
+      const otherPanel = createPanel('1');
+      const otherTab = createTab('1');
+      tabs.replaceChildren(otherTab, otherPanel);
+      await settle(tabs, [otherTab, otherPanel]);
+      expect(otherTab.getAttribute('aria-controls')).toBe(otherPanel.id);
+
+      otherPanel.setAttribute('aria-labelledby', 'external-heading');
+      otherTab.setAttribute('aria-controls', 'external-region');
+      otherPanel.remove();
+      await settle(tabs, [otherTab]);
+      expect(
+        otherTab.getAttribute('aria-controls'),
+        'tab keeps the app value when its panel is removed'
+      ).toBe('external-region');
+
+      tabs.append(otherPanel);
+      await settle(tabs, [otherPanel]);
+      otherTab.remove();
+      await settle(tabs, [otherPanel]);
+      expect(
+        otherPanel.getAttribute('aria-labelledby'),
+        'panel keeps the app value when its tab is removed'
+      ).toBe('external-heading');
+    });
+  },
+};
+
+export const MovedBetweenTabsAriaTest: Story = {
+  render: () => html`
+    <swc-tabs id="group-a" selected="1" accessible-label="Group A">
+      <swc-tab id="tab-a" tab-id="1">Tab A</swc-tab>
+      <swc-tab-panel id="panel-a" tab-id="1"><p>Panel A</p></swc-tab-panel>
+    </swc-tabs>
+    <swc-tabs id="group-b" selected="1" accessible-label="Group B">
+      <swc-tab id="tab-b" tab-id="1">Tab B</swc-tab>
+      <swc-tab-panel id="panel-b" tab-id="1"><p>Panel B</p></swc-tab-panel>
+    </swc-tabs>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const [groupA, groupB] = await getComponents<Tabs>(
+      canvasElement,
+      'swc-tabs'
+    );
+    const tabA = canvasElement.querySelector('#tab-a') as Tab;
+    const tabB = canvasElement.querySelector('#tab-b') as Tab;
+    const panelA = canvasElement.querySelector('#panel-a') as TabPanel;
+    const panelB = canvasElement.querySelector('#panel-b') as TabPanel;
+    await settle(groupA, [tabA, panelA]);
+    await settle(groupB, [tabB, panelB]);
+
+    await step('a panel moved to another group is relinked', async () => {
+      panelB.remove();
+      groupB.append(panelA);
+      await settle(groupB, [tabB, panelA]);
+      await settle(groupA, [tabA]);
+
+      expect(panelA.getAttribute('aria-labelledby')).toBe('tab-b');
+      expect(tabB.getAttribute('aria-controls')).toBe('panel-a');
+    });
+
+    await step('a tab moved to another group is relinked', async () => {
+      groupA.append(panelB);
+      await settle(groupA, [panelB]);
+      tabA.remove();
+      tabB.remove();
+      groupA.prepend(tabB);
+      await settle(groupA, [tabB, panelB]);
+
+      expect(tabB.getAttribute('aria-controls')).toBe('panel-b');
+      expect(panelB.getAttribute('aria-labelledby')).toBe('tab-b');
+    });
   },
 };
 

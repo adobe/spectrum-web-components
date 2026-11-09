@@ -3,7 +3,7 @@
   "access": "public",
   "baseBranch": "main",
   "changelog": [
-    "@changesets/changelog-github",
+    "./changelog-grouped.cjs",
     {
       "disableThanks": true,
       "repo": "adobe/spectrum-web-components"

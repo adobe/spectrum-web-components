@@ -1,5 +1,17 @@
-import { Markdown, useOf } from '@storybook/addon-docs/blocks';
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+import { Markdown, type Of, useOf } from '@storybook/addon-docs/blocks';
 import React from 'react';
+
 import { formatTitle } from '../helpers/index.js';
 
 /**
@@ -8,13 +20,16 @@ import { formatTitle } from '../helpers/index.js';
  * Pattern stories can provide `parameters.docs.packagePath` to override the
  * component package path.
  *
- * @param of - The Storybook meta or story to resolve the component from
- * @param tags - Meta tags that identify utilities, controllers, and migrated components
+ * @param props - The block's props.
+ * @param props.of - The Storybook meta or story to resolve the component from
+ * @param props.tags - Meta tags that identify utilities, controllers, and migrated components
  */
-export const GettingStarted = ({ of, tags }: { of?: any; tags?: string[] }) => {
+export const GettingStarted = ({ of, tags }: { of?: Of; tags?: string[] }) => {
   const resolvedOf = useOf(of || 'meta', ['meta']);
 
-  if (tags?.includes('utility')) return null;
+  if (tags?.includes('utility')) {
+    return null;
+  }
 
   const packagePath = resolvedOf.preparedMeta?.parameters?.docs?.packagePath;
 

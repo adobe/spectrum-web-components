@@ -1,0 +1,48 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+/** @type {import('eslint').Rule.RuleModule} */
+export default {
+  meta: {
+    type: 'problem',
+    docs: {
+      description:
+        'Disallow use of `document.activeElement`, which can be incorrect across shadow DOM boundaries. Prefer focus delegation or element refs within the component.',
+    },
+    schema: [
+      {
+        type: 'object',
+        properties: {},
+        additionalProperties: false,
+      },
+    ],
+  },
+  create(context) {
+    return {
+      MemberExpression(node) {
+        if (
+          node.object.name === 'document' &&
+          node.property.name === 'activeElement'
+        ) {
+          context.report({
+            node,
+            message:
+              '"document.activeElement" can be incorrect across shadow boundaries',
+            data: {
+              identifier: node.property.name,
+            },
+          });
+        }
+      },
+    };
+  },
+};

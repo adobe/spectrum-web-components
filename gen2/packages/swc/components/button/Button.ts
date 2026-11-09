@@ -68,7 +68,6 @@ import baseStyles from './button-base.css';
  * @cssprop --swc-button-background-color-disabled - Background color when disabled or pending.
  * @cssprop --swc-button-border-color-disabled - Border color when disabled or pending.
  * @cssprop --swc-button-content-color-disabled - Text and icon color when disabled or pending.
- * @cssprop --swc-button-down-state-transform - Transform applied to the button in the pressed (down) state. Defaults to a scale/translate effect; set to `none` to disable.
  *
  * @example
  * <swc-button>Save</swc-button>
