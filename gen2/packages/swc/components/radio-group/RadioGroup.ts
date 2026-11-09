@@ -20,6 +20,9 @@ import '../ui-icons/swc-ui-icon.js';
 import formFieldStyles from '../../stylesheets/_lit-styles/form-fields.css';
 import styles from './radio-group.css';
 
+/** The id of the rendered group label, the slotted-label name fallback. */
+const LABEL_ID = 'swc-radio-group-label';
+
 const NECESSITY_INDICATOR_TEXT = {
   required: '(required)',
   optional: '(optional)',
@@ -66,7 +69,7 @@ export class RadioGroup extends RadioGroupBase {
   protected override willUpdate(changedProperties: PropertyValues): void {
     super.willUpdate(changedProperties);
     const target = this.roleElement;
-    if (target?.getAttribute('aria-labelledby') === 'swc-radio-group-label') {
+    if (target?.getAttribute('aria-labelledby') === LABEL_ID) {
       target.removeAttribute('aria-labelledby');
     }
   }
@@ -88,7 +91,7 @@ export class RadioGroup extends RadioGroupBase {
     }
     const label = this.renderRoot.querySelector('.swc-FormFieldLabel');
     if (label) {
-      label.id = 'swc-radio-group-label';
+      label.id = LABEL_ID;
       target.setAttribute('aria-labelledby', label.id);
     } else {
       target.removeAttribute('aria-labelledby');

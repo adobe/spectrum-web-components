@@ -287,7 +287,7 @@ export abstract class RadioGroupBase extends SizedMixin(
     getItems: () => this.assignedItems(),
   });
 
-  private itemDisabledObserver: MutationObserver | null = null;
+  private itemStateObserver: MutationObserver | null = null;
 
   // Slot-presence tracking does not notify when only the message text changes,
   // and a change to the text sets no reactive property, so observe it directly.
@@ -315,14 +315,24 @@ export abstract class RadioGroupBase extends SizedMixin(
 
   public override connectedCallback(): void {
     super.connectedCallback();
-    this.itemDisabledObserver ??= new MutationObserver((records) => {
-      if (records.some(({ target }) => target instanceof RadioBase)) {
-        this.navigation.refresh();
+    // An item's `disabled` or `value` changes navigation, checked state, and
+    // whether `selected` is submittable.
+    this.itemStateObserver ??= new MutationObserver((records) => {
+      const itemRecords = records.filter(
+        ({ target }) => target instanceof RadioBase
+      );
+      if (!itemRecords.length) {
+        return;
       }
+      this.navigation.refresh();
+      if (itemRecords.some(({ attributeName }) => attributeName === 'value')) {
+        this.syncCheckedState();
+      }
+      this.syncFormState();
     });
-    this.itemDisabledObserver.observe(this, {
+    this.itemStateObserver.observe(this, {
       attributes: true,
-      attributeFilter: ['disabled'],
+      attributeFilter: ['disabled', 'value'],
       subtree: true,
     });
     this.errorTextObserver.observe(this, {
@@ -343,7 +353,7 @@ export abstract class RadioGroupBase extends SizedMixin(
       focusgroupNavigationActiveChange,
       this.handleNavigationActiveChange
     );
-    this.itemDisabledObserver?.disconnect();
+    this.itemStateObserver?.disconnect();
     this.errorTextObserver.disconnect();
     super.disconnectedCallback();
   }
@@ -447,12 +457,31 @@ export abstract class RadioGroupBase extends SizedMixin(
     if (disabledChanged || changedProperties.has('selected')) {
       this.syncCheckedState();
     }
-    this.syncValidity();
-    // Push the current selection into the form; exclude it when nothing is
-    // selected or the group is disabled, matching an unchecked native radio set.
-    this.fieldAssoc.setValue(
-      this.effectiveDisabled || !this.selected ? null : this.selected
+    this.syncFormState();
+  }
+
+  /**
+   * The value the group submits and validates against: `selected`, but only
+   * while an assigned, enabled item has that value. `selected` itself is kept
+   * as authored so an item added later can still adopt it.
+   */
+  private get submittedValue(): string | null {
+    if (this.effectiveDisabled || !this.selected) {
+      return null;
+    }
+    const match = this.assignedItems().some(
+      (item) => item.value === this.selected && !item.effectiveDisabled
     );
+    return match ? this.selected : null;
+  }
+
+  /**
+   * Pushes validity and the form value. Excludes the value when no enabled
+   * item matches `selected`, matching an unchecked or disabled native radio.
+   */
+  private syncFormState(): void {
+    this.syncValidity();
+    this.fieldAssoc.setValue(this.submittedValue);
   }
 
   private assignedItems(): RadioBase[] {
@@ -505,8 +534,9 @@ export abstract class RadioGroupBase extends SizedMixin(
 
   /**
    * Adopts `value` unless already selected, dispatching a cancelable `change`
-   * and reverting on `preventDefault()`. Shared by item activation and
-   * keyboard navigation.
+   * and reverting on `preventDefault()`. Checked state, validity, and the form
+   * value are synced before dispatch so listeners read the new state, as with
+   * a native radio. Shared by item activation and keyboard navigation.
    */
   private proposeSelection(value: string): void {
     if (value === this.selected) {
@@ -514,11 +544,15 @@ export abstract class RadioGroupBase extends SizedMixin(
     }
     const previous = this.selected;
     this.selected = value;
+    this.syncCheckedState();
+    this.syncFormState();
     const applyDefault = this.dispatchEvent(
       new Event('change', { cancelable: true, bubbles: true, composed: true })
     );
     if (!applyDefault) {
       this.selected = previous;
+      this.syncCheckedState();
+      this.syncFormState();
     }
   }
 
@@ -574,6 +608,7 @@ export abstract class RadioGroupBase extends SizedMixin(
     this.syncItemPositions();
     this.navigation.refresh();
     this.syncCheckedState();
+    this.syncFormState();
   }
 
   /** The plain text of the slotted `error-text`, or `''` when there is none. */
@@ -587,8 +622,8 @@ export abstract class RadioGroupBase extends SizedMixin(
   }
 
   /**
-   * The only writer of `setValidity()`. A required group with nothing selected
-   * is `valueMissing`; `field-status="invalid"` is `customError`. While
+   * The only writer of `setValidity()`. A required group with no submittable
+   * selection is `valueMissing`; `field-status="invalid"` is `customError`. While
    * invalid, the plain text of `error-text` is the validation message,
    * otherwise a standard fallback. `setValidity` throws on an empty message
    * when a flag is set; the inline UI is rendered elsewhere. The role element is
@@ -597,7 +632,7 @@ export abstract class RadioGroupBase extends SizedMixin(
    */
   private syncValidity(): void {
     const valueMissing =
-      !this.fieldAssoc.barred && this.required && !this.selected;
+      !this.fieldAssoc.barred && this.required && this.submittedValue === null;
     const invalid = this.fieldStatus === 'invalid';
     const anchor = this.roleElement;
     this.internals.setValidity(

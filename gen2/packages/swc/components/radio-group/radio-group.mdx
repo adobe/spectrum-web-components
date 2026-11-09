@@ -123,7 +123,7 @@ Native validation, such as `required`, does not set `field-status="invalid"` aut
 
 ### Form participation
 
-`swc-radio-group` works with native forms, including validation, reset, and `FormData`. The group submits one entry under its `name`, holding the selected item's `value`, and nothing when no item is selected.
+`swc-radio-group` works with native forms, including validation, reset, and `FormData`. The group submits one entry under its `name`, holding the selected item's `value`. Like a native radio, when no enabled item matches `selected` it submits nothing, and a `required` group fails validation.
 
 #### Showing and clearing errors
 
