@@ -241,23 +241,37 @@ export const VariantNameTest: Story = {
     const nameParts = (): readonly Element[] | null =>
       toast['internals'].ariaLabelledByElements;
     // Where the engine keeps the icon it leads the name through ElementInternals. Elsewhere the host
-    // falls back to naming itself from the message with a plain aria-labelledby attribute.
-    const expectLabeledNameParts = (label: string): void => {
+    // names itself with an aria-label made of the icon label followed by the message text.
+    const expectLabeledName = (label: string, iconLabel: string): void => {
+      expect(
+        toast.hasAttribute('aria-labelledby'),
+        `${label} aria-labelledby presence`
+      ).toBe(false);
       if (engineKeepsShadowNameParts()) {
         expect(nameParts()?.length, `${label} count`).toBe(2);
         expect(nameParts()?.[0], `${label} first`).toBe(icon());
         expect(nameParts()?.[1], `${label} second`).toBe(message());
         expect(
-          toast.hasAttribute('aria-labelledby'),
-          `${label} aria-labelledby presence`
+          toast.hasAttribute('aria-label'),
+          `${label} aria-label presence`
         ).toBe(false);
         return;
       }
       expect(nameParts(), `${label} ElementInternals parts`).toBeNull();
+      expect(toast.getAttribute('aria-label'), `${label} aria-label`).toBe(
+        `${iconLabel} ${message()?.textContent}`
+      );
+    };
+    const expectMessageOnlyName = (label: string): void => {
+      expect(nameParts(), `${label} ElementInternals parts`).toBeNull();
       expect(
         toast.getAttribute('aria-labelledby'),
         `${label} aria-labelledby`
-      ).toBe(message()?.id);
+      ).toBe('variant-name-message');
+      expect(
+        toast.hasAttribute('aria-label'),
+        `${label} aria-label presence`
+      ).toBe(false);
     };
 
     await step(
@@ -265,7 +279,7 @@ export const VariantNameTest: Story = {
       async () => {
         await toast.updateComplete;
 
-        expectLabeledNameParts('name parts');
+        expectLabeledName('name', 'Information');
         expect(
           toast.querySelector('[slot="variant-label"]'),
           'hidden variant label node'
@@ -280,7 +294,10 @@ export const VariantNameTest: Story = {
           toast.variant = variant;
           await toast.updateComplete;
 
-          expectLabeledNameParts(`name parts for ${variant}`);
+          expectLabeledName(
+            `name for ${variant}`,
+            variant === 'positive' ? 'Success' : 'Error'
+          );
           expect(icon()?.localName, `icon for ${variant}`).toBe(
             variant === 'positive'
               ? 'swc-icon-checkmark-circle'
@@ -294,7 +311,7 @@ export const VariantNameTest: Story = {
       toast.iconLabel = 'Nouvelle version';
       await toast.updateComplete;
 
-      expectLabeledNameParts('name parts');
+      expectLabeledName('name', 'Nouvelle version');
       expect(icon()?.getAttribute('accessible-label'), 'icon label').toBe(
         'Nouvelle version'
       );
@@ -306,11 +323,7 @@ export const VariantNameTest: Story = {
         toast.iconLabel = '';
         await toast.updateComplete;
 
-        expect(nameParts(), 'name parts').toBeNull();
-        expect(
-          toast.getAttribute('aria-labelledby'),
-          'host aria-labelledby'
-        ).toBe('variant-name-message');
+        expectMessageOnlyName('empty icon-label');
       }
     );
 
@@ -319,11 +332,7 @@ export const VariantNameTest: Story = {
       toast.variant = 'neutral';
       await toast.updateComplete;
 
-      expect(nameParts(), 'name parts').toBeNull();
-      expect(
-        toast.getAttribute('aria-labelledby'),
-        'host aria-labelledby'
-      ).toBe('variant-name-message');
+      expectMessageOnlyName('neutral');
     });
 
     await step(
@@ -332,9 +341,107 @@ export const VariantNameTest: Story = {
         toast.variant = 'info';
         await toast.updateComplete;
 
-        expectLabeledNameParts('name parts');
+        expectLabeledName('name', 'Information');
       }
     );
+
+    await step('the name follows the message text', async () => {
+      const text = message() as HTMLElement;
+      text.textContent = 'File archived';
+
+      if (engineKeepsShadowNameParts()) {
+        // The browser reads the message element itself, so there is no copy to keep in sync.
+        await nextFrame();
+        expect(toast.hasAttribute('aria-label'), 'aria-label presence').toBe(
+          false
+        );
+        return;
+      }
+      await waitFor(() =>
+        expect(toast.getAttribute('aria-label'), 'aria-label').toBe(
+          'Information File archived'
+        )
+      );
+    });
+
+    await step('an author-provided aria-label is never replaced', async () => {
+      toast.setAttribute('aria-label', 'Custom name');
+      toast.variant = 'positive';
+      await toast.updateComplete;
+      expect(toast.getAttribute('aria-label'), 'author aria-label').toBe(
+        'Custom name'
+      );
+
+      toast.removeAttribute('aria-label');
+      toast.variant = 'info';
+      await toast.updateComplete;
+      expect(
+        toast.getAttribute('aria-label'),
+        'aria-label after the author removes theirs'
+      ).toBe(engineKeepsShadowNameParts() ? null : 'Information File archived');
+    });
+  },
+};
+
+// Older browsers lack element reflection on ElementInternals, so this test removes it to reach that path.
+export const NoElementReflectionNameTest: Story = {
+  render: () => html`
+    <div></div>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const prototype = ElementInternals.prototype;
+    const original = Object.getOwnPropertyDescriptor(
+      prototype,
+      'ariaLabelledByElements'
+    );
+    expect(original, 'ElementInternals.ariaLabelledByElements').toBeDefined();
+    Reflect.deleteProperty(prototype, 'ariaLabelledByElements');
+
+    try {
+      const toast = document.createElement('swc-toast') as Toast;
+      toast.variant = 'positive';
+      toast.setAttribute('open', '');
+      const message = document.createElement('span');
+      message.id = 'no-reflection-message';
+      message.textContent = 'File saved';
+      toast.append(message);
+      canvasElement.append(toast);
+      await toast.updateComplete;
+
+      await step(
+        'names the host with the icon label and the message text',
+        () => {
+          expect(
+            'ariaLabelledByElements' in toast['internals'],
+            'element reflection available'
+          ).toBe(false);
+          expect(toast.getAttribute('aria-label'), 'aria-label').toBe(
+            'Success File saved'
+          );
+          expect(
+            toast.hasAttribute('aria-labelledby'),
+            'aria-labelledby presence'
+          ).toBe(false);
+        }
+      );
+
+      await step(
+        'a toast without a labeled icon names the host from the message',
+        async () => {
+          toast.variant = 'neutral';
+          await toast.updateComplete;
+
+          expect(toast.hasAttribute('aria-label'), 'aria-label presence').toBe(
+            false
+          );
+          expect(toast.getAttribute('aria-labelledby'), 'aria-labelledby').toBe(
+            'no-reflection-message'
+          );
+        }
+      );
+    } finally {
+      Object.defineProperty(prototype, 'ariaLabelledByElements', original!);
+    }
   },
 };
 
@@ -850,9 +957,12 @@ export const ReconnectTest: Story = {
           : undefined
       );
       expect(
-        toast.getAttribute('aria-labelledby'),
-        'host aria-labelledby'
-      ).toBe(engineKeepsShadowNameParts() ? null : 'toast-message');
+        toast.hasAttribute('aria-labelledby'),
+        'host aria-labelledby presence'
+      ).toBe(false);
+      expect(toast.getAttribute('aria-label'), 'host aria-label').toBe(
+        engineKeepsShadowNameParts() ? null : 'Success File saved'
+      );
     });
 
     await step(

@@ -110,6 +110,8 @@ export abstract class ToastBase extends SpectrumElement {
   private _pendingAfterTransition?: () => void;
   // True once `swc-close` has fired, so the next update must not dispatch it again.
   private _closeEventDispatched = false;
+  // The aria-label this toast set itself, so an author's own aria-label is never replaced or removed.
+  private _ownedAriaLabel?: string;
   // Names the host from elements in its own shadow tree, which `aria-labelledby` cannot reach.
   private readonly internals = this.attachInternals();
   private _contentRevealed = true;
@@ -155,8 +157,11 @@ export abstract class ToastBase extends SpectrumElement {
     super.connectedCallback();
     this.setAttribute('role', 'alertdialog');
     this.setAttribute('aria-modal', 'false');
+    // Text changes count too, because the aria-label fallback copies the message text.
     this._contentObserver.observe(this, {
       childList: true,
+      characterData: true,
+      subtree: true,
     });
     // Restarts a reveal that disconnection interrupted, so the message is still announced.
     if (!this._contentRevealed) {
@@ -301,9 +306,10 @@ export abstract class ToastBase extends SpectrumElement {
    * The icon label lives in the live region, which is read when the toast
    * appears. Focusing the host reads its name instead, so the name starts with
    * the icon's own label, followed by the message. `aria-labelledby` cannot
-   * reference the shadow icon, so `ElementInternals` does it. Where that is not
-   * supported, the engine drops the icon, or there is no labeled icon, the name
-   * is the message alone, through a plain `aria-labelledby` attribute.
+   * reference the shadow icon, so `ElementInternals` does it. Where the engine
+   * cannot (WebKit drops the icon, and older browsers lack the API), the host
+   * gets an `aria-label` made of the icon label and the message text. With no
+   * labeled icon, the name is the message alone, through `aria-labelledby`.
    */
   private updateAccessibleName(): void {
     const messageNodes = [...this.childNodes].filter((node) => {
@@ -323,7 +329,8 @@ export abstract class ToastBase extends SpectrumElement {
       messageNodes[0].id
         ? messageNodes[0]
         : undefined;
-    const icon = this.variantIconLabel ? this.variantIcon : null;
+    const iconLabel = this.variantIconLabel;
+    const icon = iconLabel ? this.variantIcon : null;
     const supportsElementNames = 'ariaLabelledByElements' in this.internals;
 
     if (
@@ -340,6 +347,7 @@ export abstract class ToastBase extends SpectrumElement {
       if (keepsShadowNameParts) {
         // A host `aria-labelledby` attribute overrides `ElementInternals`, so only one of them is set.
         this.removeAttribute('aria-labelledby');
+        this.clearOwnedAriaLabel();
         return;
       }
     }
@@ -347,6 +355,20 @@ export abstract class ToastBase extends SpectrumElement {
     if (supportsElementNames && this.internals.ariaLabelledByElements) {
       this.internals.ariaLabelledByElements = null;
     }
+
+    if (
+      message &&
+      iconLabel &&
+      (keepsShadowNameParts === false || !supportsElementNames)
+    ) {
+      const text = (message.textContent ?? '').replace(/\s+/g, ' ').trim();
+      // An aria-label overrides aria-labelledby, so only one of them is set.
+      this.removeAttribute('aria-labelledby');
+      this.setOwnedAriaLabel(`${iconLabel} ${text}`.trim());
+      return;
+    }
+
+    this.clearOwnedAriaLabel();
     if (message) {
       if (this.getAttribute('aria-labelledby') !== message.id) {
         this.setAttribute('aria-labelledby', message.id);
@@ -355,6 +377,27 @@ export abstract class ToastBase extends SpectrumElement {
     }
 
     this.removeAttribute('aria-labelledby');
+  }
+
+  private setOwnedAriaLabel(value: string): void {
+    const current = this.getAttribute('aria-label');
+    if (current !== null && current !== this._ownedAriaLabel) {
+      return;
+    }
+    if (current !== value) {
+      this.setAttribute('aria-label', value);
+    }
+    this._ownedAriaLabel = value;
+  }
+
+  private clearOwnedAriaLabel(): void {
+    if (
+      this._ownedAriaLabel !== undefined &&
+      this.getAttribute('aria-label') === this._ownedAriaLabel
+    ) {
+      this.removeAttribute('aria-label');
+    }
+    this._ownedAriaLabel = undefined;
   }
 
   /**
