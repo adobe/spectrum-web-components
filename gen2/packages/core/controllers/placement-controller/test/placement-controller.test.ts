@@ -195,12 +195,8 @@ export const StopOnDisconnect: Story = {
 };
 
 /**
- * `stop()` leaves the inline styles the controller wrote, so a surface can
- * finish its exit transition where it is. `clearStyles()` then removes them:
- * `top`, `left`, `translate`, and the `--swc-placement-available-*` custom
- * properties on the floating element, and `top`, `left`, and `translate` on
- * the tip element. It leaves other inline styles alone and does nothing while
- * a session is active.
+ * `stop()` leaves the controller's inline styles in place; `clearStyles()`
+ * removes them, and only them, once no session is active.
  */
 export const ClearStylesRemovesInlineStyles: Story = {
   render: () => html`

@@ -80,7 +80,7 @@ export class MyPicker extends LitElement {
   close(): void {
     this.placement.stop();
     this.listbox.hidden = true;
-    // No exit transition to wait for, so the inline styles can go right away.
+    // No exit transition, so clear right away.
     this.placement.clearStyles();
   }
 }

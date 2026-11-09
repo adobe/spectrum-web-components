@@ -369,9 +369,8 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
     );
   }
 
-  // Clearing `actual-placement` or the inline position mid-fade would snap
-  // the surface to its default, so this waits for the exit and bails if a
-  // reopen beat it.
+  // Clearing the position or `actual-placement` mid-fade would snap the
+  // surface, so this waits for the exit and bails if a reopen beat it.
   private _stopPositioningWhenClosed(): void {
     if (this.open) {
       return;
@@ -481,8 +480,7 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
     const restoreFocusToTrigger = this.isFocusWithin();
     this._syncOpen(false);
     // Freeze where it is for the fade: `stop()` ends `autoUpdate` but leaves
-    // the inline position and `actual-placement` until
-    // `_stopPositioningWhenClosed`.
+    // `actual-placement` until `_stopPositioningWhenClosed`.
     this.placementController.stop();
     if (this._hasCompletedFirstUpdate) {
       this._dispatchClose();

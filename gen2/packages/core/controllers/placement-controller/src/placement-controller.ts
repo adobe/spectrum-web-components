@@ -40,7 +40,7 @@ const DEFAULT_CONTAINER_PADDING = 8;
 const DEFAULT_SHOULD_FLIP = true;
 const DEFAULT_TIP_PADDING = 8;
 
-/** Inline properties `computePlacement` writes on the floating element. */
+// Inline styles `computePlacement` writes, removed by `clearStyles()`.
 const FLOATING_STYLE_PROPERTIES = [
   'top',
   'left',
@@ -48,8 +48,6 @@ const FLOATING_STYLE_PROPERTIES = [
   '--swc-placement-available-width',
   '--swc-placement-available-height',
 ] as const;
-
-/** Inline properties `computePlacement` writes on the tip element. */
 const TIP_STYLE_PROPERTIES = ['top', 'left', 'translate'] as const;
 
 /**
@@ -193,11 +191,7 @@ export class PlacementController implements ReactiveController {
    */
   private lastEmittedPlacement?: Placement;
 
-  /**
-   * Floating and tip elements of the most recent session. Kept past `stop()`
-   * so `clearStyles()` can remove the inline styles written to them after the
-   * caller's exit transition.
-   */
+  /** Last session's floating and tip elements, kept past `stop()`. */
   private styledElements: { floating: HTMLElement; tip?: HTMLElement } | null =
     null;
 
@@ -316,10 +310,8 @@ export class PlacementController implements ReactiveController {
 
   /**
    * Stop positioning: tear down `autoUpdate`, clear `actualPlacement` and
-   * `isConstrained`. The inline styles written to the floating and tip
-   * elements stay, so an exit transition can finish where the element is;
-   * remove them with `clearStyles()` once it completes. Safe to call multiple
-   * times.
+   * `isConstrained`. Inline styles stay so an exit transition can finish in
+   * place; remove them with `clearStyles()`. Safe to call multiple times.
    */
   public stop() {
     this.cleanup?.();
@@ -332,14 +324,10 @@ export class PlacementController implements ReactiveController {
   }
 
   /**
-   * Remove the inline styles written during the most recent session: `top`,
-   * `left`, `translate`, and the `--swc-placement-available-*` custom
-   * properties on the floating element, and `top`, `left`, and `translate` on
-   * the tip element. Other inline styles are left alone.
-   *
-   * Call after `stop()`, once the floating element is hidden (after any exit
-   * transition). Does nothing while a session is active, so a late call cannot
-   * displace a surface that reopened. Safe to call multiple times.
+   * Remove the inline styles the last session wrote on the floating and tip
+   * elements, leaving other inline styles alone. Call after `stop()` once any
+   * exit transition ends. No-op while positioning is active, so a late call
+   * can't move a reopened surface. Safe to call multiple times.
    */
   public clearStyles() {
     if (this.session || !this.styledElements) {

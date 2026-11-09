@@ -1155,8 +1155,7 @@ export const PlacementControllerTest: Story = {
           ).toBeFalsy(),
         { timeout: 2000 }
       );
-      // The bubble and tip styles are all cleared by dispatchAfterEvent in the
-      // same call, so no additional polling is needed here.
+      // The rest is cleared in the same call, so no more polling is needed.
       for (const property of [
         'top',
         'left',

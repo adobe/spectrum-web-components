@@ -577,8 +577,7 @@ export const CloseDuringEntranceKeepsPositionTest: Story = {
       'a surface closed mid-entrance keeps its position until it fades out',
       async () => {
         popover.open = true;
-        // Close once the entrance fade is visibly under way, so the close
-        // interrupts it and the exit fade replaces it.
+        // Close mid-entrance, once the fade-in is visibly under way.
         for (
           let frame = 0;
           frame < 60 && parseFloat(getComputedStyle(surface).opacity) < 0.3;
@@ -690,9 +689,7 @@ export const PositionedFadeGateTest: Story = {
 
     await step('re-gates on a rapid reopen during the close fade', async () => {
       // Close, then reopen before the close transition finishes. Restarting
-      // positioning clears `actual-placement`, so the fade is re-gated; otherwise
-      // the surface would fade in from the previous session's position before the
-      // new session anchors it.
+      // positioning clears `actual-placement`, so the fade is re-gated.
       popover.open = false;
       await popover.updateComplete;
       popover.open = true;

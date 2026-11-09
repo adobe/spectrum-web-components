@@ -978,8 +978,7 @@ export const CloseDuringEntranceKeepsPositionTest: Story = {
       'a surface closed mid-entrance keeps its position until it fades out',
       async () => {
         menu.open = true;
-        // Close once the entrance fade is visibly under way, so the close
-        // interrupts it and the exit fade replaces it.
+        // Close mid-entrance, once the fade-in is visibly under way.
         for (
           let frame = 0;
           frame < 60 && parseFloat(getComputedStyle(surface).opacity) < 0.3;

@@ -118,11 +118,10 @@ export const TransitionCancelTest: Story = {
     await step(
       'waits for a replacement transition (an entrance reversed by a close)',
       async () => {
-        // Long enough to still be running when the cancel arrives; finished on
-        // demand below so the test does not depend on timing.
         el.style.transition = 'none';
         el.style.opacity = '0';
         expect(getComputedStyle(el).opacity).toBe('0');
+        // Long enough to outlast the cancel; finished on demand below.
         el.style.transition = 'opacity 10s linear';
         el.style.opacity = '1';
         let runs = 0;
