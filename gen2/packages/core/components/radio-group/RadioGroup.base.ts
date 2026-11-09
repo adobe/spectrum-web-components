@@ -215,6 +215,28 @@ export abstract class RadioGroupBase extends SizedMixin(
     }
   }
 
+  /** A browser-restored selection received before the first update. */
+  private pendingRestoredSelection?: string;
+
+  /**
+   * Restores the selection the browser saved for back/forward navigation or
+   * autofill. Does not dispatch `change`, matching native radios.
+   */
+  public formStateRestoreCallback(
+    state: string | File | FormData | null
+  ): void {
+    if (typeof state !== 'string') {
+      return;
+    }
+    // Before the first update, the pre-checked item would overwrite `selected`;
+    // apply the restored value after the authored default is captured.
+    if (this.hasUpdated) {
+      this.selected = state;
+    } else {
+      this.pendingRestoredSelection = state;
+    }
+  }
+
   /** Delegates the ancestor form / fieldset disabled cascade to the controller. */
   public formDisabledCallback(disabled: boolean): void {
     this.fieldAssoc.formDisabledCallback(disabled);
@@ -382,6 +404,10 @@ export abstract class RadioGroupBase extends SizedMixin(
             : preChecked.getAttribute('value')) ?? '';
       }
       this.defaultSelected = this.selected;
+      if (this.pendingRestoredSelection !== undefined) {
+        this.selected = this.pendingRestoredSelection;
+        this.pendingRestoredSelection = undefined;
+      }
     }
   }
 

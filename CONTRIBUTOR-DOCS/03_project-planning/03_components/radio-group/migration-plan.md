@@ -326,6 +326,7 @@ The exposed set follows the custom property guidelines: size-driven spacing betw
 - **Keyboard and focus:** `FocusgroupNavigationController` (`direction: 'both'`, `wrap: true`, `skipDisabled: true`) drives movement; the group reacts only to `focusgroupNavigationActiveChange` events with `source: 'keyboard'` to select, so Tab-entry and programmatic `.focus()` never select on their own (matches the item plan's checked-state-flow "imperative sync" direction).
 - **Form participation:** one `FieldAssociationController` instance handles both `setFormValue` (from `selected`) and constraint validity (`setValidity`/`checkValidity`), per Q12's resolution. Required without a selection sets `valueMissing`; `field-status="invalid"` independently sets `customError`, including when a selection exists. Both participate in native submit blocking and clear when their corresponding conditions clear. The host's `ElementInternals` carries no role or ARIA state; `role="radiogroup"` is rendered on `.swc-RadioGroup`. The validation message is the plain text of the slotted `error-text` while the group is invalid, or "Select an option." otherwise, and a private `syncValidity()` is the only writer of `setValidity()`; the group observes `error-text` so text-only edits keep `validationMessage` current, and exposes no `setCustomValidity()` ([forms strategy §3.7](../../05_strategies/forms-strategy-rfc.md#37-field-status-and-validation-sources)).
 - **Coordinated reset:** `formResetCallback()` restores the group's tracked default-checked item, not just an empty selection, then drives every item's `checked` back in sync (the item plan's "imperative sync" direction, triggered by reset instead of user interaction).
+- **Form state restore:** `formStateRestoreCallback()` adopts the browser-saved selection on back/forward navigation or autofill without dispatching `change`. A restore that arrives before the first update is held until the default selection has been captured, so it wins over a pre-checked item while reset still returns to the authored default.
 - **Read-only:** every item stays focusable and reachable via Tab/arrows; only the "also checks it" half of `Space`, arrow movement, Home, and End is suppressed. A pressed item doesn't animate in a read-only group (the press transform is suppressed through the private `--_swc-radio-group-is-readonly` signal).
 - **Disabled cascade:** the group's own `field-status="disabled"` or its ancestor fieldset's disabled state disables every assigned item through local synchronization. Each item tracks the group's disabled state separately from its own `disabled`; `aria-disabled`, activation, navigation, and styling use the combination. The item's own `disabled` is never changed, so changes the app makes while the group is disabled apply when the group is enabled again or the item leaves the slot. Each item is not independently form-associated after Q12, so the group's `formDisabledCallback` must handle the ancestor cascade.
 
@@ -387,8 +388,8 @@ Planned rendering shape:
 
 #### Alignment checks
 
-- [ ] Verify property names and defaults against the Figma size/label-position/state matrix and [React Spectrum RadioGroup](https://react-spectrum.adobe.com/RadioGroup)
-- [ ] Confirm name wiring to the rendered role element through `LabellingMixin` and description/error wiring through `FieldDescriptionMixin` with the accessibility reviewer
+- [x] Verify property names and defaults against the Figma size/label-position/state matrix and [React Spectrum RadioGroup](https://react-spectrum.adobe.com/RadioGroup)
+- [x] Confirm name wiring to the rendered role element through `LabellingMixin` and description/error wiring through `FieldDescriptionMixin` with the accessibility reviewer
 
 ### Styling
 
@@ -423,6 +424,7 @@ Planned rendering shape:
 - [x] Arrow/Home/End movement always selects; Tab-entry and programmatic `.focus()` never do (reacting only to `source: 'keyboard'`) — `FocusgroupNavigationController` wired (`direction: 'both'`, `wrap: true`); `handleNavigationActiveChange` filters on `source === 'keyboard'`
 - [x] Disabled items are fully skipped by both Tab-entry and arrow movement — `skipDisabled: true` on the controller
 - [x] Coordinated reset restores the initial selection adopted from the first checked radio, or authored `selected` when none is checked, and synchronizes item checked state.
+- [x] Browser form state restore (back/forward navigation, autofill) adopts the saved selection without `change`, including when it arrives before the first update — `FormStateRestoreTest`, `FormStateRestoreBeforeFirstUpdateTest`
 - [x] Help/error container does not default to `aria-live="assertive"` (B12); verified by `ErrorIconTest`
 - [x] Duplicate `value`s among slotted radios trigger the dev-mode console warning (B14)
 
@@ -475,7 +477,7 @@ Retain this section for any components with visual rendering, modifying as neede
 
 - [x] `yarn lint:gen2` passes (ESLint, Stylelint, Prettier)
 - [x] Status table in workstream doc updated
-- [ ] PR created against the shared `swc-radio`/`swc-radio-group` feature branch (not directly against `main`), with a description referencing Epic SWC-2348
+- [x] PR created against the shared `swc-radio`/`swc-radio-group` feature branch (not directly against `main`), with a description referencing Epic SWC-2348
 - [ ] Peer engineer sign-off
 
 ---

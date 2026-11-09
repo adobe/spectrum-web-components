@@ -1421,6 +1421,80 @@ export const InitialCheckedRadioTest: Story = {
   },
 };
 
+export const FormStateRestoreTest: Story = {
+  render: () => html`
+    <form>
+      <swc-radio-group name="color">
+        <span slot="label">Favorite color</span>
+        <swc-radio value="1" checked><span slot="label">Red</span></swc-radio>
+        <swc-radio value="2"><span slot="label">Green</span></swc-radio>
+      </swc-radio-group>
+    </form>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const group = await getComponent<RadioGroup>(
+      canvasElement,
+      'swc-radio-group'
+    );
+    const form = canvasElement.querySelector('form') as HTMLFormElement;
+    const items = Array.from(group.querySelectorAll<Radio>('swc-radio'));
+    const changeSpy = fn();
+    group.addEventListener('change', changeSpy);
+
+    await step('restores the browser-supplied selection', async () => {
+      group.formStateRestoreCallback('2');
+      await group.updateComplete;
+      expect(group.selected).toBe('2');
+      expect(items.map((item) => item.checked)).toEqual([false, true]);
+      expect(items[1].tabIndex).toBe(0);
+      expect([...new FormData(form).entries()]).toEqual([['color', '2']]);
+      expect(changeSpy).not.toHaveBeenCalled();
+    });
+
+    await step('ignores state that is not a string', async () => {
+      group.formStateRestoreCallback(null);
+      await group.updateComplete;
+      expect(group.selected).toBe('2');
+    });
+
+    await step('reset still returns to the authored default', async () => {
+      form.reset();
+      await group.updateComplete;
+      expect(group.selected).toBe('1');
+    });
+  },
+};
+
+export const FormStateRestoreBeforeFirstUpdateTest: Story = {
+  render: () => html`
+    <form></form>
+  `,
+  play: async ({ canvasElement }) => {
+    const form = canvasElement.querySelector('form') as HTMLFormElement;
+    const group = document.createElement('swc-radio-group') as RadioGroup;
+    group.name = 'color';
+    group.innerHTML = `
+      <span slot="label">Favorite color</span>
+      <swc-radio value="1" checked><span slot="label">Red</span></swc-radio>
+      <swc-radio value="2"><span slot="label">Green</span></swc-radio>
+    `;
+    // The browser can restore state before the group's first update; the
+    // restored value must win over the pre-checked item.
+    group.formStateRestoreCallback('2');
+    form.append(group);
+    await group.updateComplete;
+
+    const items = Array.from(group.querySelectorAll<Radio>('swc-radio'));
+    expect(group.selected).toBe('2');
+    expect(items.map((item) => item.checked)).toEqual([false, true]);
+    expect([...new FormData(form).entries()]).toEqual([['color', '2']]);
+
+    form.reset();
+    await group.updateComplete;
+    expect(group.selected).toBe('1');
+  },
+};
+
 export const ReadOnlySelectionTest: Story = {
   ...ReadOnly,
   play: async ({ canvasElement }) => {

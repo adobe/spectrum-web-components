@@ -198,13 +198,17 @@ In this example, **Submit** clears the previous error and rechecks the selection
 
 Reset restores the initial selection, which is the pre-checked item or the `selected` attribute, and clears `invalid` status. Disabled and read-only status are preserved, and a `required` group with no initial selection fails validation again.
 
+#### Restore
+
+When the browser restores a form, for example after back/forward navigation or through autofill, the group restores its saved selection. A restored selection takes precedence over a pre-checked item, but reset still returns to the initial selection.
+
 <details>
 <summary>Additional form behavior</summary>
 
 - **Validation methods**: `checkValidity()` fires `invalid` on failure without changing `fieldStatus` or showing browser validation UI. `reportValidity()` also requests that UI, even with `novalidate`. Canceling `invalid` suppresses reporting without making validation pass. An invalid status sets `validity.customError`, and a required group with no selection sets `validity.valueMissing`.
 - **Styling hooks**: style the invalid state from `field-status="invalid"`, and the disabled state from `:state(disabled)`. The group's `:invalid` match follows live validity, including before your application shows any error.
 
-Setting `selected` in code and resetting the form do not fire `change`.
+Setting `selected` in code, resetting the form, and browser form restoration do not fire `change`.
 
 </details>
 

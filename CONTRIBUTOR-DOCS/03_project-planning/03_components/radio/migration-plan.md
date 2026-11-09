@@ -395,8 +395,8 @@ Planned rendering shape:
 
 #### Alignment checks
 
-- [ ] Verify property names and defaults against the Figma size/state/emphasis matrix and [React Spectrum RadioGroup](https://react-spectrum.adobe.com/RadioGroup)
-- [ ] Confirm the `description` mechanism (`SlotPresenceController`-gated plain content, no `aria-describedby`) with the a11y reviewer
+- [x] Verify property names and defaults against the Figma size/state/emphasis matrix and [React Spectrum RadioGroup](https://react-spectrum.adobe.com/RadioGroup)
+- [x] Confirm the `description` mechanism (`SlotPresenceController`-gated plain content, no `aria-describedby`) with the a11y reviewer
 
 ### Styling
 
@@ -473,7 +473,7 @@ Retain this section for any components with visual rendering, modifying as neede
 
 - [x] `yarn lint:gen2` passes (ESLint, Stylelint, Prettier)
 - [x] Status table in workstream doc updated
-- [ ] PR created against the shared `swc-radio`/`swc-radio-group` feature branch (not directly against `main`), with a description referencing Epic SWC-2348
+- [x] PR created against the shared `swc-radio`/`swc-radio-group` feature branch (not directly against `main`), with a description referencing Epic SWC-2348
 - [ ] Peer engineer sign-off
 
 ---
