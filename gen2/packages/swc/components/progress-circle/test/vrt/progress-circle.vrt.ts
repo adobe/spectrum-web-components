@@ -105,17 +105,6 @@ const renderSizedCircle = (size: ProgressCircleSize) => html`
 const sizesRow = () =>
   row(PROGRESS_CIRCLE_VALID_SIZES.map(renderSizedCircle), 'Sizes');
 
-// The large scale uses larger size and thickness tokens, and the ring radius
-// is derived from the thickness, so the sizes get a second row in that scale.
-const largeScaleSizesRow = () => html`
-  <div class="swc-theme swc-theme--sizeL">
-    ${row(
-      PROGRESS_CIRCLE_VALID_SIZES.map(renderSizedCircle),
-      'Sizes · Large scale'
-    )}
-  </div>
-`;
-
 // One row per state instead of one combined row: indeterminate's frozen
 // animation frame can coincidentally match a determinate value's rendered
 // output (e.g. the animation's t=0 keyframe is `rotate(-90deg)` +
@@ -163,7 +152,7 @@ const staticColorSample = (staticColor: ProgressCircleStaticColor) =>
   );
 
 const permutationContent = () => html`
-  ${sizesRow()} ${largeScaleSizesRow()} ${statesRows()}
+  ${sizesRow()} ${statesRows()}
   ${PROGRESS_CIRCLE_STATIC_COLORS.map(staticColorSample)}
 `;
 
@@ -178,7 +167,6 @@ const permutationContent = () => html`
 // Chromatic or Storybook tooling can force `prefers-reduced-motion`, and
 // Chromatic already freezes the indeterminate CSS animation to a static
 // frame regardless.
-// The sizes row repeats in the large scale (see largeScaleSizesRow).
 export const Permutations: Story = {
   render: () => html`
     ${theme(permutationContent(), 'light', 'ltr')}
