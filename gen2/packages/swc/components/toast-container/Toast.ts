@@ -16,7 +16,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import {
   SWC_TOAST_ACTION_EVENT,
   ToastBase,
-} from '@adobe/spectrum-wc-core/components/toast';
+} from '@adobe/spectrum-wc-core/components/toast-container/index.js';
 
 import '@adobe/spectrum-wc-icons/swc-icon-alert-triangle.js';
 import '@adobe/spectrum-wc-icons/swc-icon-checkmark-circle.js';
@@ -47,6 +47,10 @@ export class Toast extends ToastBase {
 
   protected override get internalElement(): HTMLElement | null {
     return this.shadowRoot?.querySelector('.swc-Toast') ?? null;
+  }
+
+  protected override get variantIcon(): Element | null {
+    return this.shadowRoot?.querySelector('.swc-Toast-icon') ?? null;
   }
 
   protected override render(): TemplateResult {
@@ -80,7 +84,7 @@ export class Toast extends ToastBase {
           class="swc-Toast-close"
           size="m"
           static-color="white"
-          accessible-label="Close"
+          accessible-label=${this.closeLabel || 'Close'}
           @click=${this.requestClose}
         ></swc-close-button>
       </div>
@@ -94,7 +98,7 @@ export class Toast extends ToastBase {
   };
 
   private renderIcon(): TemplateResult | typeof nothing {
-    const accessibleLabel = this.iconLabel || undefined;
+    const accessibleLabel = this.variantIconLabel || undefined;
     switch (this.variant) {
       case 'info':
         return html`
