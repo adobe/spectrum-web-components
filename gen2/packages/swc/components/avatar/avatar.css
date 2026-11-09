@@ -94,8 +94,8 @@
 
 .swc-Avatar {
   display: inline-block;
-  inline-size: var(--swc-avatar-size, token("avatar-size-500"));
-  block-size: var(--swc-avatar-size, token("avatar-size-500"));
+  inline-size: var(--swc-avatar-size, token("avatar-size-100"));
+  block-size: var(--swc-avatar-size, token("avatar-size-100"));
   border-radius: token("corner-radius-full");
   user-select: none;
 }
@@ -104,8 +104,8 @@
 
 .swc-Avatar-image {
   display: block;
-  inline-size: var(--swc-avatar-size, token("avatar-size-500"));
-  block-size: var(--swc-avatar-size, token("avatar-size-500"));
+  inline-size: var(--swc-avatar-size, token("avatar-size-100"));
+  block-size: var(--swc-avatar-size, token("avatar-size-100"));
   border-radius: token("corner-radius-full");
   object-fit: cover;
 }
