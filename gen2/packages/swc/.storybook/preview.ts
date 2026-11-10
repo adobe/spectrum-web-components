@@ -10,12 +10,14 @@
  * governing permissions and limitations under the License.
  */
 /** @type { import('@storybook/web-components').Preview } */
+import type { DocsContainerProps } from '@storybook/addon-docs/blocks';
 import { setCustomElementsManifest } from '@storybook/web-components';
 import {
   type Options,
   setStorybookHelpersConfig,
 } from '@wc-toolkit/storybook-helpers';
 import isChromatic from 'chromatic/isChromatic';
+import { createElement, lazy, type PropsWithChildren, Suspense } from 'react';
 
 import customElements from '../dist/custom-elements.json';
 import { withContext } from './decorators/contexts.js';
@@ -50,6 +52,13 @@ setStorybookHelpersConfig(storybookHelperOptions);
 
 // Set the Custom Elements Manifest for automatic controls generation
 setCustomElementsManifest(customElements);
+
+// Loaded on demand because it imports addon-docs, which Vitest doesn't load.
+const SpectrumDocsContainer = lazy(() =>
+  import('./blocks/SpectrumDocsContainer.js').then((module) => ({
+    default: module.SpectrumDocsContainer,
+  }))
+);
 
 const preview = {
   globalTypes: {
@@ -176,6 +185,12 @@ const preview = {
     },
     docs: {
       codePanel: true,
+      container: (props: PropsWithChildren<DocsContainerProps>) =>
+        createElement(
+          Suspense,
+          null,
+          createElement(SpectrumDocsContainer, props)
+        ),
       page: DocumentTemplate,
       toc: {
         contentsSelector: '.sbdocs-content',
@@ -558,7 +573,12 @@ const preview = {
     VERSION: { table: { disable: true } },
     CORE_VERSION: { table: { disable: true } },
   },
-  tags: ['!autodocs', '!dev'], // We only want the playground stories to be visible in the docs and sidenav. Since a majority of our stories are tagged with '!autodocs' and '!dev', we set those tags globally. We can opt in to visibility by adding the 'autodocs' or 'dev' tags to individual stories.
+  // We only want the playground stories to be visible in the docs and sidenav. Since a majority of our stories are tagged with '!autodocs' and '!dev', we set those tags globally. We can opt in to visibility by adding the 'autodocs' or 'dev' tags to individual stories.
+  // Since Storybook 10.4.3, MDX docs pages without 'dev' are hidden too. The
+  // Storybook patch (.yarn/patches/storybook-npm-10.6.3.patch) restores the
+  // earlier behavior so every docs page stays in the sidebar; reapply it on
+  // each Storybook upgrade.
+  tags: ['!autodocs', '!dev'],
   loaders: [FontLoader],
 };
 

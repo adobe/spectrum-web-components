@@ -206,10 +206,10 @@ slot[name="icon"]::slotted(*) {
   --swc-button-background-color-hover: token("transparent-static-white-300");
   --swc-button-background-color-down: token("transparent-static-white-300");
   --swc-button-background-color-focus: token("transparent-static-white-300");
-  --swc-button-content-color-default: token("transparent-static-white-900");
-  --swc-button-content-color-hover: token("transparent-static-white-950");
-  --swc-button-content-color-down: token("transparent-static-white-950");
-  --swc-button-content-color-focus: token("transparent-static-white-950");
+  --swc-button-content-color-default: token("transparent-static-white-1000");
+  --swc-button-content-color-hover: token("transparent-static-white-1000");
+  --swc-button-content-color-down: token("transparent-static-white-1000");
+  --swc-button-content-color-focus: token("transparent-static-white-1000");
 }
 
 :host([static-color="white"][fill-style="outline"]) {
@@ -221,10 +221,10 @@ slot[name="icon"]::slotted(*) {
   --swc-button-border-color-hover: token("transparent-static-white-950");
   --swc-button-border-color-down: token("transparent-static-white-950");
   --swc-button-border-color-focus: token("transparent-static-white-950");
-  --swc-button-content-color-default: token("transparent-static-white-900");
-  --swc-button-content-color-hover: token("transparent-static-white-950");
-  --swc-button-content-color-down: token("transparent-static-white-950");
-  --swc-button-content-color-focus: token("transparent-static-white-950");
+  --swc-button-content-color-default: token("transparent-static-white-1000");
+  --swc-button-content-color-hover: token("transparent-static-white-1000");
+  --swc-button-content-color-down: token("transparent-static-white-1000");
+  --swc-button-content-color-focus: token("transparent-static-white-1000");
   --swc-button-background-color-disabled: token("transparent-static-white-0");
   --swc-button-border-color-disabled: token("disabled-static-white-border-color");
   --swc-button-content-color-disabled: token("disabled-static-white-content-color");
@@ -263,10 +263,10 @@ slot[name="icon"]::slotted(*) {
   --swc-button-background-color-hover: token("transparent-static-black-200");
   --swc-button-background-color-down: token("transparent-static-black-200");
   --swc-button-background-color-focus: token("transparent-static-black-200");
-  --swc-button-content-color-default: token("transparent-static-black-900");
-  --swc-button-content-color-hover: token("transparent-static-black-950");
-  --swc-button-content-color-down: token("transparent-static-black-950");
-  --swc-button-content-color-focus: token("transparent-static-black-950");
+  --swc-button-content-color-default: token("transparent-static-black-1000");
+  --swc-button-content-color-hover: token("transparent-static-black-1000");
+  --swc-button-content-color-down: token("transparent-static-black-1000");
+  --swc-button-content-color-focus: token("transparent-static-black-1000");
 }
 
 :host([static-color="black"][fill-style="outline"]) {
@@ -278,10 +278,10 @@ slot[name="icon"]::slotted(*) {
   --swc-button-border-color-hover: token("transparent-static-black-950");
   --swc-button-border-color-down: token("transparent-static-black-950");
   --swc-button-border-color-focus: token("transparent-static-black-950");
-  --swc-button-content-color-default: token("transparent-static-black-900");
-  --swc-button-content-color-hover: token("transparent-static-black-950");
-  --swc-button-content-color-down: token("transparent-static-black-950");
-  --swc-button-content-color-focus: token("transparent-static-black-950");
+  --swc-button-content-color-default: token("transparent-static-black-1000");
+  --swc-button-content-color-hover: token("transparent-static-black-1000");
+  --swc-button-content-color-down: token("transparent-static-black-1000");
+  --swc-button-content-color-focus: token("transparent-static-black-1000");
   --swc-button-background-color-disabled: token("transparent-static-black-0");
   --swc-button-border-color-disabled: token("disabled-static-black-border-color");
   --swc-button-content-color-disabled: token("disabled-static-black-content-color");

@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "composite": false,
+    "declaration": false,
+    "noEmit": true
+  },
+  "exclude": [
+    "node_modules",
+    "dist",
+    "**/*.stories.ts",
+    "**/*.test.ts",
+    "**/*.spec.ts",
+    "**/stories/**",
+    "**/test/**"
+  ],
+  "extends": "./tsconfig.json",
+  "include": [
+    "components/**/*.ts",
+    "patterns/**/*.ts",
+    "../core/components/**/*.ts",
+    "../core/controllers/**/*.ts",
+    "../core/element/**/*.ts",
+    "../core/mixins/**/*.ts",
+    "../core/utils/**/*.ts"
+  ]
+}

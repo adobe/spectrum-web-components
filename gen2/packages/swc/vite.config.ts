@@ -155,13 +155,22 @@ export default defineConfig({
           id.startsWith('lit/') ||
           id.startsWith('@lit/') ||
           id.startsWith('@lit-labs/') ||
-          id.startsWith('@adobe/spectrum-wc-core/')
+          id.startsWith('@adobe/spectrum-wc-core/') ||
+          // Icons are a dependency, not part of this bundle: inlining them
+          // would register `swc-icon-*` elements a second time when a page
+          // also loads `@adobe/spectrum-wc-icons`.
+          id.startsWith('@adobe/spectrum-wc-icons/')
         );
       },
       output: {
         preserveModules: true,
         preserveModulesRoot: '.',
-        entryFileNames: '[name].js',
+        // Emit CSS modules as `<name>.css.js` so they don't collide with the
+        // same-named `.ts` module (which would yield `<name>2.js`).
+        entryFileNames: ({ facadeModuleId }) =>
+          facadeModuleId?.split('?')[0].endsWith('.css')
+            ? '[name].css.js'
+            : '[name].js',
         chunkFileNames: '[name].js',
       },
     },
