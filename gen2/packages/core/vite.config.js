@@ -58,27 +58,31 @@ function scanBarrels(dir, prefix) {
 
 // Helper to find component files. Components have no barrel: consumers import
 // each file directly (for example `components/badge/Badge.base.js`), so every
-// file is an entry and keeps all of its exports.
-function scanComponentFiles(dir) {
+// file, including files in nested folders, is an entry and keeps all of its
+// exports. `stories/` and `test/` folders are skipped.
+function scanComponentFiles(dir, prefix = 'components') {
   const entries = {};
-  for (const name of readdirSync(dir)) {
-    const componentDir = resolve(dir, name);
-    if (!statSync(componentDir).isDirectory()) {
+  for (const item of readdirSync(dir)) {
+    const itemPath = resolve(dir, item);
+    if (statSync(itemPath).isDirectory()) {
+      if (item !== 'stories' && item !== 'test') {
+        Object.assign(
+          entries,
+          scanComponentFiles(itemPath, `${prefix}/${item}`)
+        );
+      }
       continue;
     }
-    for (const item of readdirSync(componentDir)) {
-      if (
-        !item.endsWith('.ts') ||
-        /\.(d|test|stories)\.ts$/.test(item) ||
-        !statSync(resolve(componentDir, item)).isFile()
-      ) {
-        continue;
-      }
-      entries[`components/${name}/${item.replace(/\.ts$/, '')}`] = resolve(
-        componentDir,
-        item
-      );
+    // Files directly in `components/` would be barrels, which components
+    // don't have.
+    if (
+      prefix === 'components' ||
+      !item.endsWith('.ts') ||
+      /\.(d|test|stories)\.ts$/.test(item)
+    ) {
+      continue;
     }
+    entries[`${prefix}/${item.replace(/\.ts$/, '')}`] = itemPath;
   }
   return entries;
 }
