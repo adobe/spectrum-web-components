@@ -46,7 +46,7 @@
 
 `swc-menu-item` is the command row inside `swc-menu`. `swc-menu` already ships and collects its rows with `:scope > swc-menu-item`, so this component has a concrete contract to satisfy on day one: the tag name, `role="menuitem"`, and taking part in the owning menu's roving tabindex.
 
-Phase A is deliberately narrow: a row with a label, an optional leading visual, and a disabled state. Everything that made 1st-gen `sp-menu-item` large (link rows, submenus, selection, descriptions, trailing values) is out, each for a reason already decided in `swc-menu`'s own plan. This plan carries those decisions forward rather than reopening them.
+Phase A is deliberately narrow: a row with a label, an optional leading visual, optional description and trailing text, and a disabled state. Everything else that made 1st-gen `sp-menu-item` large (link rows, submenus, selection, non-text trailing content) is out, each for a reason already decided in `swc-menu`'s own plan. This plan carries those decisions forward rather than reopening them.
 
 The single most consequential carry-forward: **link rows leave this component entirely**. 1st-gen `MenuItem` extends `LikeAnchor` and can render an anchor; gen2 moves that to a separate `swc-menu-link` ([Q17](#blockers-and-open-questions)). `swc-menu-item` never carries `href`.
 
@@ -98,12 +98,12 @@ No public `change`/activation event in Phase A: activation is a plain `click` on
 | default | **Replaced** by a named `label` slot ([B22](#must-ship)) |
 | `icon` | **Renamed** to `visual` ([B23](#must-ship)) |
 | `description` | **Kept.** Pulled into Phase A in review: it is how similarly-named options are told apart, which is an a11y concern in its own right |
-| `value` | **Defer** — trailing content, Phase B |
+| `value` | **Replaced** by `secondary`, for trailing text such as a keyboard shortcut. Non-text trailing content (switch, external-link arrow, unavailable icon, highlight badge) stays deferred to Phase B |
 | `submenu` | **Defer** — Phase B |
 
 ### CSS custom properties
 
-45 `--mod-menu-item-*` properties. All **dropped**, consistent with [B5](#must-ship) on `swc-menu`. Phase A exposes no public custom properties; revisit on a concrete override request.
+45 `--mod-menu-item-*` properties. All **dropped**, consistent with [B5](#must-ship) on `swc-menu`. Phase A exposes a reviewed set of `--swc-menu-item-*` properties instead, each documented with `@cssprop` on `MenuItem`.
 
 ## React Spectrum S2 API surface
 
@@ -111,7 +111,7 @@ No public `change`/activation event in Phase A: activation is a plain `click` on
 
 Two things worth noting against this plan:
 
-- React Spectrum's **basic** example already combines icon, label, description and keyboard shortcut. Phase A is narrower by choice, not because React Spectrum treats those as advanced.
+- React Spectrum's **basic** example already combines icon, label, description and keyboard shortcut. Phase A now covers all four parts, with the shortcut as `secondary` text.
 - React Spectrum **does** support `href` on the item. gen2 diverges deliberately ([Q17](#blockers-and-open-questions)): a separate `swc-menu-link` instead of a dual-mode row.
 
 ## Dependencies
@@ -122,7 +122,7 @@ Two things worth noting against this plan:
 | `FocusgroupNavigationController` | Shipped | Owns roving tabindex; the row must not fight it |
 | `SizedMixin` | Shipped | `s`/`m`/`l`/`xl`, default `m`, matching `swc-menu` |
 | `DisabledMixin` | Shipped, **no consumers yet** | Maps `disabled` to `aria-disabled` and manages tabindex. See [Q20](#blockers-and-open-questions) |
-| `swc-thumbnail` | Not built | Needed before the `visual` slot accepts a thumbnail ([A4](#additive)) |
+| `swc-thumbnail` | Shipped | Slotted into `visual`; the row detects it and sizes it with `--swc-menu-item-thumbnail-size` ([A4](#additive)) |
 | `swc-menu-link` | Not planned | Owner of link rows ([Q17](#blockers-and-open-questions)) |
 | `swc-menuitem-checkbox`, `swc-menuitem-radio` | Not planned | Owners of selection, exposed as `aria-checked`. Selection never returns to `swc-menu-item` |
 
@@ -135,7 +135,7 @@ Two things worth noting against this plan:
 | **B20** | Disabled rows | `disabled` maps to `aria-disabled="true"`, not the native attribute. Rows stay focusable and in the roving set, per `swc-menu`'s [B7](../menu/migration-plan.md) |
 | **B21** | Link rows | `LikeAnchor` surface removed entirely. `swc-menu-item` never carries `href` or renders an anchor ([Q17](#blockers-and-open-questions)) |
 | **B22** | Label content | Named `label` slot replaces the default slot, so it stays distinct from `description` and each part has a handle for grid placement in the row layout. React Spectrum S2 names it the same way (`Text slot="label"` alongside `Text slot="description"`). Briefly reversed to the default slot mid-review on a misreading of that API, then restored |
-| **B23** | Leading visual | `icon` slot renamed `visual`, so it can hold an icon or a future `swc-thumbnail` without a second rename. Confirmed in review |
+| **B23** | Leading visual | `icon` slot renamed `visual`, so it can hold an icon or an `swc-thumbnail` without a second rename. Confirmed in review |
 | **B24** | Role | `role="menuitem"` on the host, always. No `setRole()` and no conditional branch |
 | **B25** | CSS custom properties | All 45 `--mod-menu-item-*` removed |
 
@@ -151,10 +151,10 @@ Two things worth noting against this plan:
 | --- | --- |
 | **B26** | Submenus (`hasSubmenu`, `open`, `submenu` slot) |
 | **A21** | Selection — not a later phase of this component. It belongs to `swc-menuitem-checkbox` and `swc-menuitem-radio`, which expose it as `aria-checked` |
-| **A22** | ~~`description`~~ (shipped in Phase A, see the slot table) and trailing `value` slot |
-| **A23** | `swc-thumbnail` in the `visual` slot |
+| **A22** | ~~`description`~~ and ~~trailing `value` slot~~ (both shipped in Phase A; the latter as the text-only `secondary` slot, see the slot table) |
+| **A23** | ~~`swc-thumbnail` in the `visual` slot~~ (shipped in Phase A) |
 | **A24** | Highlight badge |
-| **A25** | Printable-character navigation |
+| **A25** | ~~Printable-character navigation~~ (shipped in `swc-menu`, which owns it; disabled rows are skipped by typeahead) |
 
 ## gen2 API decisions
 
@@ -165,7 +165,7 @@ Two things worth noting against this plan:
 | `size` | `size` | `'s' \| 'm' \| 'l' \| 'xl'` | `'m'` | Confirmed. Owned by the parent: `swc-menu` propagates its own `size` onto every row via `SlotAttributePropagationController`. The attribute is written rather than the property, so it lands whether or not the row class has upgraded. Propagation runs on slot assignment and when the menu's own size changes, not on a row's own `size` being set, so a value set on a row out of band holds until the next propagation |
 | `disabled` | `disabled` | `boolean` | `false` | Confirmed; mapping via [Q20](#blockers-and-open-questions) |
 
-Slots: `label` (text), `visual` (optional leading icon or thumbnail), `description` (optional secondary text).
+Slots: `label` (text), `visual` (optional leading icon or thumbnail), `description` (optional supporting text below the label), `secondary` (optional trailing text, such as a keyboard shortcut).
 
 Role: `menuitem`, set on the host before the owning menu's first discovery pass.
 
@@ -195,8 +195,8 @@ Row chrome belongs here, not in `swc-menu`: in `spectrum-css`, `.spectrum-Menu` 
 
 - [x] Row chrome: background, border, radius, padding, and hover/focus/disabled treatments
 - [x] Description typography and colour, including the disabled and focused variants 1st-gen tracks separately from the label. S2 has a single `disabled-content-color`, so the disabled label and description share it rather than tracking separately
-- [x] Key the focus treatment off `:host(:focus)`, **not** `:focus-visible`. Raised in review from a recording: after a mouse open the row holds focus but Chrome paints no ring, so the first arrow press looks like it skipped a row. Safari paints it. 1st-gen `spectrum-menu-item.css` uses `:host(:focus)` for the same reason
-- [x] No public custom properties this pass
+- [x] Key the focus ring off `:focus-visible`, not `:focus`, and suppress it on a row the pointer focused. Opening the menu focuses the first row however it was opened, so `:focus` would paint a ring on row one after a plain mouse click and read as though it were chosen. The owning menu sets `pointer-focus` on a row the pointer focused and clears it on the next key press, because `:focus-visible` alone stays on after a key press and the ring would follow the pointer. Revised from an earlier `:host(:focus)` approach
+- [x] Expose a reviewed set of `--swc-menu-item-*` properties, each tagged `@cssprop`
 - [x] Forced-colors treatment
 - [x] Stylelint clean
 - [x] Chrome moved onto an internal `.swc-MenuItem` element; the host keeps only layout participation and the internal property definitions, per the CSS rule order
@@ -218,17 +218,14 @@ Red/green TDD. Each item below should fail before the implementation exists.
 - [x] Defaults: `size` is `m`, `disabled` is `false`, no `aria-disabled`
 - [x] `disabled` sets `aria-disabled="true"` and **not** the native disabled behaviour
 - [x] A disabled row remains reachable by arrow keys inside `swc-menu` ([B20](#must-ship)); this is the test that settles [Q20](#blockers-and-open-questions)
-- [x] `label`, `visual` and `description` slots render in the expected order
+- [x] `label`, `visual`, `description` and `secondary` slots render in the expected order
 - [x] `swc-menu` discovers rows via `:scope > swc-menu-item` with real elements, not placeholders
 - [x] <kbd>Enter</kbd> and <kbd>Space</kbd> reach a consumer `click` handler on an enabled row, and neither activates a disabled one
 - [x] A pointer click on a disabled row reaches no consumer handler and leaves the menu open
-- [x] Rows activate on `keyup`, so a held key activates once and never reopens the menu (Playwright; synthetic events cannot show it)
+- [x] Rows activate on `keydown`, matching React Spectrum, and the menu holds the trigger off until the activating key is released, so a held key activates once and never reopens the menu (Playwright; synthetic events cannot show it)
 - [x] `size` propagates from `swc-menu` onto its rows, overriding a row-authored value
 - [x] Enter on the trigger opens the menu without the same press activating the first row
 - [x] Modified presses (<kbd>Shift</kbd> + <kbd>Enter</kbd>, <kbd>Ctrl</kbd> + <kbd>Space</kbd>) do not activate a row
-- [x] A press begun on a disabled row does not activate it if the row is enabled before the matching `keyup`
-- [x] A press whose modifiers change between `keydown` and `keyup` leaves no armed state behind for a later `keyup`
-- [x] A row removed between the halves of a press comes back disarmed when it is re-slotted
 - [ ] Playwright: ARIA tree shows `menu` containing named `menuitem` rows
 - [ ] VRT: sizes, disabled, with and without a visual, with and without a description, forced colors
 
@@ -258,7 +255,7 @@ The S1 token names 1st-gen used (`menu-item-min-height`, `menu-item-corner-radiu
 | Need | S2 source |
 | --- | --- |
 | Row background, all states | `menu-item-background-color-{default,hover,keyboard-focus,down,disabled}` |
-| Label and description colour | `neutral-content-color-*`, `neutral-subdued-content-color-*`, `disabled-content-color` |
+| Label, description and secondary text colour | `neutral-content-color-*`, `neutral-subdued-content-color-*`, `disabled-content-color` |
 | Padding, gap, height, radius | `base-padding-{vertical,horizontal}-*`, `base-gap-*`, `component-height-*`, `corner-radius-medium-size-*` |
 | Label to description gap | `text-gap-*` |
 | Focus ring | `focus-indicator-thickness`, `focus-indicator-color`, `focus-ring-gap` |
@@ -272,7 +269,7 @@ Two upstream tokens look like they should apply and deliberately are not used. `
 | Link rows move to `swc-menu-link`; `swc-menu-item` is never a link | `swc-menu` plan, Q17 |
 | `role="menuitem"` on exactly one node, no competing role | `swc-menu` plan, Q19 |
 | Named `label` slot rather than the default slot | `swc-menu` plan, Phase A surface table; confirmed in PR review |
-| Row named from its `label`, described by its `description`, via ARIA element references | PR review, Q25 |
+| Row named from its `label`, described by its `description` followed by its `secondary` text, via ARIA element references | PR review, Q25; `secondary` appended in review |
 | Disabled rows stay in the roving set | `swc-menu` plan, B7 |
 | Migration order among menu siblings still undecided | `swc-menu` plan, Q15 |
 

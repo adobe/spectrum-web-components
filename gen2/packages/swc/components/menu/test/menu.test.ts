@@ -1481,11 +1481,10 @@ export const ItemDefaultsTest: Story = {
       const slots = Array.from(
         item.shadowRoot?.querySelectorAll('slot') ?? []
       ).map((slot) => slot.name);
-      expect(slots, 'visual, then the label, then its description').toEqual([
-        'visual',
-        'label',
-        'description',
-      ]);
+      expect(
+        slots,
+        'visual, then the label, its description, then the secondary text'
+      ).toEqual(['visual', 'label', 'description', 'secondary']);
     });
   },
 };
@@ -1545,11 +1544,22 @@ export const ItemAriaTextWiringTest: Story = {
       <span slot="description">Keeps the source formatting</span>
     </swc-menu-item>
     <swc-menu-item><span slot="label">Cut</span></swc-menu-item>
+    <swc-menu-item>
+      <span slot="label">Copy</span>
+      <span slot="secondary">⌘C</span>
+    </swc-menu-item>
+    <swc-menu-item>
+      <span slot="label">Paste</span>
+      <span slot="description">Pastes the clipboard</span>
+      <span slot="secondary">⌘V</span>
+    </swc-menu-item>
   `,
   play: async ({ canvasElement, step }) => {
-    const [described, plain] = getRows(canvasElement);
+    const [described, plain, shortcutOnly, both] = getRows(canvasElement);
     await described.updateComplete;
     await plain.updateComplete;
+    await shortcutOnly.updateComplete;
+    await both.updateComplete;
 
     await step('names the row from its label alone', async () => {
       expect(
@@ -1570,6 +1580,27 @@ export const ItemAriaTextWiringTest: Story = {
         ariaOf(plain).ariaDescribedByElements,
         'no description reference'
       ).toBe(null);
+    });
+
+    await step('describes a row from its secondary text alone', async () => {
+      expect(
+        ariaOf(shortcutOnly).ariaDescribedByElements,
+        'the secondary slot is the description'
+      ).toEqual([shortcutOnly.querySelector('[slot="secondary"]')]);
+      expect(
+        ariaOf(shortcutOnly).ariaLabelledByElements,
+        'secondary text never joins the name'
+      ).toEqual([shortcutOnly.querySelector('[slot="label"]')]);
+    });
+
+    await step('appends secondary text after the description', async () => {
+      expect(
+        ariaOf(both).ariaDescribedByElements,
+        'description first, then secondary'
+      ).toEqual([
+        both.querySelector('[slot="description"]'),
+        both.querySelector('[slot="secondary"]'),
+      ]);
     });
 
     // The reason the references go on internals rather than on the host:
@@ -1914,6 +1945,74 @@ export const ItemDiscoveryTest: Story = {
         'the row it reached is genuinely the disabled one'
       ).toBe('true');
     });
+  },
+};
+
+const leadingDisabledRows = html`
+  <swc-menu-item disabled><span slot="label">Cut</span></swc-menu-item>
+  <swc-menu-item disabled><span slot="label">Copy</span></swc-menu-item>
+  <swc-menu-item><span slot="label">Paste</span></swc-menu-item>
+`;
+
+const allDisabledRows = html`
+  <swc-menu-item disabled><span slot="label">Cut</span></swc-menu-item>
+  <swc-menu-item disabled><span slot="label">Copy</span></swc-menu-item>
+`;
+
+export const ItemOpenFocusSkipsDisabledTest: Story = {
+  render: () => html`
+    ${rowsInMenu(leadingDisabledRows, 'leading-disabled-trigger')}
+    ${rowsInMenu(allDisabledRows, 'all-disabled-trigger')}
+  `,
+  play: async ({ canvasElement, step }) => {
+    const menus = canvasElement.querySelectorAll<
+      HTMLElement & { open: boolean }
+    >('swc-menu');
+    const [leadingMenu, allDisabledMenu] = [...menus];
+
+    await step(
+      'opening focuses the first enabled row and gives it the tab stop',
+      async () => {
+        await userEvent.click(
+          canvasElement.querySelector(
+            '#leading-disabled-trigger'
+          ) as HTMLElement
+        );
+        const rows = [
+          ...leadingMenu.querySelectorAll<MenuItem>('swc-menu-item'),
+        ];
+        await waitFor(() =>
+          expect(
+            document.activeElement,
+            'focus skips the leading disabled rows'
+          ).toBe(rows[2])
+        );
+        expect(
+          rows[2].getAttribute('tabindex'),
+          'focus and tab stop agree'
+        ).toBe('0');
+        leadingMenu.open = false;
+        await waitFor(() => expect(leadingMenu.open).toBe(false));
+      }
+    );
+
+    await step(
+      'a menu of only disabled rows still focuses the first row',
+      async () => {
+        await userEvent.click(
+          canvasElement.querySelector('#all-disabled-trigger') as HTMLElement
+        );
+        const rows = [
+          ...allDisabledMenu.querySelectorAll<MenuItem>('swc-menu-item'),
+        ];
+        await waitFor(() =>
+          expect(
+            document.activeElement,
+            'focus falls back to the first row'
+          ).toBe(rows[0])
+        );
+      }
+    );
   },
 };
 

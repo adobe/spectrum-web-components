@@ -367,11 +367,11 @@ Link rows are **not** part of this surface: they belong to a separate, not-yet-p
 | Concern | Phase A minimal behavior |
 | --- | --- |
 | Role | `role="menuitem"` on the host, always. No conditional branch and no competing role to reconcile, since `swc-menu-item` never renders a link row ([Q17](#cross-component-follow-ups-not-blocking-swc-menu)/[Q19](#cross-component-follow-ups-not-blocking-swc-menu)). |
-| Content | `label` named slot for the text (not the default slot — 5t3ph review: avoids ambiguity once `description` content is also slotted alongside it) plus one leading `visual` slot (icon; `swc-thumbnail` once that component exists — [A4](#additive)), not both content types combined |
+| Content | `label` named slot for the text (not the default slot — 5t3ph review: avoids ambiguity once `description` content is also slotted alongside it) plus one leading `visual` slot (icon or `swc-thumbnail` — [A4](#additive)), not both content types combined, and optional `description` and `secondary` (trailing text) slots |
 | Disabled | `disabled` property/attribute → `aria-disabled="true"`; stays in `FocusgroupNavigationController`'s roving set per [B7](#must-ship) |
 | Focus participation | Collected as a direct child of `swc-menu`'s slot by `FocusgroupNavigationController` ([Behavioral semantics](#behavioral-semantics)); no roving-tabindex logic of its own to reinvent |
 
-Out of scope for this table (and for Phase A): submenus, groups, selection states, thumbnail/badge/unavailable content, printable-character navigation, link rows — all tracked under their own B/A items, Phase B/C, or (for link rows) `swc-menu-link`.
+Out of scope for this table (and for Phase A): submenus, groups, selection states, badge/unavailable content, link rows — all tracked under their own B/A items, Phase B/C, or (for link rows) `swc-menu-link`.
 
 ### User confirmation needed
 
@@ -411,7 +411,7 @@ This pass ships a simple menu: trigger, `role="menu"` list, plain items (label +
 | # | What's added | Note |
 | --- | --- | --- |
 | **A1** | `xl` size | Figma adds `xl` to 1st-gen's `s`/`m`/`l`; default confirmed `m`, matching React Spectrum S2's `Menu.size` default |
-| **A4** | `visual` slot: icon **or** `swc-thumbnail`, not both | Recommended naming (5t3ph review) over a bare "icon or image" split, so the slot can hold either an icon or a future `swc-thumbnail` without a rename later. `swc-thumbnail` has not started gen2 implementation yet (Analyze phase only) — Phase A ships the icon case; the slot accepts thumbnail content once that component exists, no `swc-menu-item` API change needed. |
+| **A4** | `visual` slot: icon **or** `swc-thumbnail`, not both | Recommended naming (5t3ph review) over a bare "icon or image" split, so the slot can hold either an icon or an `swc-thumbnail` without a rename later. `swc-thumbnail` now exists in gen2, so Phase A ships both cases with no `swc-menu-item` API change; the row detects a slotted thumbnail and sizes it itself. |
 
 ### Deferred to later phases
 
@@ -423,7 +423,7 @@ This pass ships a simple menu: trigger, `role="menu"` list, plain items (label +
 | **A3** | `Unavailable` item state |
 | **A5** | Highlight badge |
 | **A6** | External-link indicator |
-| **A7** | Printable-character navigation (cheap when picked up — controller already supports it) |
+| **A7** | ~~Printable-character navigation~~ (shipped for the top-level menu: typed characters move focus to the row whose label starts with them, buffered for 500 ms) |
 | **A8** | Mobile drilldown — dropped, no replacement planned |
 
 `swc-menu-separator` is a dedicated element, not a composed `swc-divider` ([Q14](#blockers-and-open-questions), revised); see the [menu-separator migration plan](../menu-separator/migration-plan.md).
@@ -642,7 +642,7 @@ Planned rendering shape:
 - [ ] Disabled `swc-menu-item` rows expose `aria-disabled="true"` and do not run their action on Enter/Space, while remaining in the roving set. `swc-menu` already keeps disabled rows in the roving set (`skipDisabled: false`, below) — the `aria-disabled`/no-action half is `swc-menu-item`'s own ticket, not yet scheduled, so this can't be verified end-to-end until then.
 - [x] Open/close and initial/return focus satisfy the [menu button pattern](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/) — opening moves focus to the first eligible item (`FocusgroupNavigationController.refresh()` + `getActiveItem()`, deferred with `queueMicrotask`); Escape and any other close path return focus to the resolved trigger when focus was inside the menu (a11y migration ticket). The surface is also genuinely hidden when closed now ([Q24](#blockers-and-open-questions)), so this is exercisable end-to-end, not just wired.
 - [x] In-menu navigation (arrow keys, Home, End) uses `FocusgroupNavigationController` configured `direction: 'vertical'`, `wrap: true` (decided — override the controller's `false` default), `skipDisabled: false` (controller default, matches [B7](#must-ship)); not `aria-activedescendant` — see [Behavioral semantics](#behavioral-semantics) (a11y migration ticket). Exercised in Storybook today via placeholder `<swc-menu-item role="menuitem">` tags, since `swc-menu-item` itself doesn't exist yet.
-- [ ] If shipped, printable character navigation is consistent between top-level and submenu lists ([A7](#deferred-to-later-phases)) — not shipped this phase; optional and still deferred
+- [ ] Printable character navigation is consistent between top-level and submenu lists ([A7](#deferred-to-later-phases)) — shipped for the top-level menu; the submenu list waits on submenus
 - [ ] 1st-gen defects in [Open gen1 issues](#open-gen1-issues) and the [a11y analysis's Jira table](./accessibility-migration-analysis.md#related-1st-gen-accessibility-jira) are retested or explicitly superseded — every listed defect involves links, submenus, or items, none of which exist in `swc-menu`'s Phase A surface yet, so none can be reproduced or retested until those ship
 
 ### Testing

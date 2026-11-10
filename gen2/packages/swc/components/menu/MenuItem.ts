@@ -11,8 +11,10 @@
  */
 
 import { CSSResultArray, html, TemplateResult } from 'lit';
+import { classMap } from 'lit/directives/class-map.js';
 
 import { MenuItemBase } from '@adobe/spectrum-wc-core/components/menu';
+import { SlotPresenceController } from '@adobe/spectrum-wc-core/controllers/slot-presence-controller/index.js';
 
 import styles from './menu-item.css';
 
@@ -39,8 +41,9 @@ import styles from './menu-item.css';
  * </swc-menu>
  *
  * @slot label - Required text of the row; provides its accessible name.
+ * @slot description - Optional supporting text below the label; provides the accessible description.
+ * @slot secondary - Optional trailing text, such as a keyboard shortcut; appended to the accessible description after `description`.
  * @slot visual - Optional leading icon or thumbnail.
- * @slot description - Optional secondary text; provides the accessible description.
  *
  * @cssprop --swc-menu-item-min-block-size - Minimum height of the row. Defaults to the medium component height token.
  * @cssprop --swc-menu-item-padding-block - Block padding of the row. Defaults to the medium vertical padding token.
@@ -55,7 +58,9 @@ import styles from './menu-item.css';
  * @cssprop --swc-menu-item-description-color - Color of the description. Defaults to the neutral subdued content color token.
  * @cssprop --swc-menu-item-description-font-size - Font size of the description. Defaults to the 75 font-size token.
  * @cssprop --swc-menu-item-description-line-height - Line height of the description. Defaults to the 75 line-height token.
- * @cssprop --swc-menu-item-visual-size - Size of the slotted visual on both axes. Defaults to the medium workflow icon token.
+ * @cssprop --swc-menu-item-secondary-color - Color of the secondary text. Defaults to the neutral subdued content color token.
+ * @cssprop --swc-menu-item-icon-size - Size of a slotted icon on both axes. Defaults to the medium workflow icon token.
+ * @cssprop --swc-menu-item-thumbnail-size - Size of a slotted `swc-thumbnail` on both axes. Defaults to the 500 thumbnail size token.
  * @cssprop --swc-menu-item-down-state-transform - Transform applied to the row while it is pressed. Set to `none` to disable the press animation.
  */
 export class MenuItem extends MenuItemBase {
@@ -63,14 +68,38 @@ export class MenuItem extends MenuItemBase {
     return [styles];
   }
 
+  // Matched by tag as well as slot, since a thumbnail needs different layout
+  // from an icon in the same slot.
+  private static readonly THUMBNAIL_SELECTOR = 'swc-thumbnail[slot="visual"]';
+
+  private static readonly DESCRIPTION_SELECTOR = '[slot="description"]';
+
+  private readonly slotPresence = new SlotPresenceController(this, [
+    MenuItem.THUMBNAIL_SELECTOR,
+    MenuItem.DESCRIPTION_SELECTOR,
+  ]);
+
   protected override render(): TemplateResult {
     return html`
       <div class="swc-MenuItem">
-        <slot name="visual"></slot>
-        <div class="swc-MenuItem-text">
+        <div
+          class=${classMap({
+            'swc-MenuItem-content': true,
+            'swc-MenuItem-content--hasThumbnail': this.slotPresence.getPresence(
+              MenuItem.THUMBNAIL_SELECTOR
+            ),
+            'swc-MenuItem-content--hasDescription':
+              this.slotPresence.getPresence(MenuItem.DESCRIPTION_SELECTOR),
+          })}
+        >
+          <slot name="visual"></slot>
           <slot name="label" @slotchange=${this.handleTextSlotChange}></slot>
           <slot
             name="description"
+            @slotchange=${this.handleTextSlotChange}
+          ></slot>
+          <slot
+            name="secondary"
             @slotchange=${this.handleTextSlotChange}
           ></slot>
         </div>

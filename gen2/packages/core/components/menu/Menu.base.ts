@@ -241,9 +241,9 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
     return (row as HTMLElement) ?? null;
   }
 
-  // Traps Tab on the active row and claims Enter and Space without acting on
-  // them: the row turns those into a click on keyup, and that click is what
-  // closes the menu. Escape is native.
+  // Closes the menu on Tab and claims Enter and Space without acting on them:
+  // the row turns those into a click on keydown, and that click is what closes
+  // the menu. Escape is native.
   private readonly handleKeyDown = (event: KeyboardEvent): void => {
     if (!this.open) {
       return;
@@ -623,10 +623,13 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
     // Without a trigger the surface never gets `actual-placement` and stays
     // invisible (menu.css gates opacity on it); don't focus into that.
     if (this._hasCompletedFirstUpdate && this._trigger) {
-      // Forces the first item active rather than trusting the controller's
-      // own memory-preferring refresh(); every normal open lands on row one.
+      // Forces the first enabled row active rather than trusting the
+      // controller's own memory-preferring refresh(); every normal open lands
+      // there, matching React Spectrum. A menu of only disabled rows falls back
+      // to the first, so the keyboard still has somewhere to start.
       this.focusNavigation.refresh();
-      const firstItem = this.getMenuItems()[0];
+      const rows = this.getMenuItems();
+      const firstItem = rows.find((row) => !isRowDisabled(row)) ?? rows[0];
       const active =
         (firstItem &&
           this.focusNavigation.setActiveItem(firstItem) &&

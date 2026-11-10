@@ -50,7 +50,8 @@ export const isMenuActivationKey = (event: KeyboardEvent): boolean => {
  *
  * @slot label - Required text of the row; provides its accessible name.
  * @slot visual - Optional leading icon or thumbnail.
- * @slot description - Optional secondary text; provides the accessible description.
+ * @slot description - Optional supporting text below the label; provides the accessible description.
+ * @slot secondary - Optional trailing text, such as a keyboard shortcut; appended to the accessible description after `description`.
  */
 export abstract class MenuItemBase extends SizedMixin(SpectrumElement, {
   validSizes: MENU_ITEM_VALID_SIZES,
@@ -106,6 +107,9 @@ export abstract class MenuItemBase extends SizedMixin(SpectrumElement, {
 
   @query('slot[name="description"]')
   private descriptionSlot?: HTMLSlotElement;
+
+  @query('slot[name="secondary"]')
+  private secondarySlot?: HTMLSlotElement;
 
   // ──────────────────────
   //     IMPLEMENTATION
@@ -184,8 +188,8 @@ export abstract class MenuItemBase extends SizedMixin(SpectrumElement, {
 
   /**
    * Names the row from its `label` slot and describes it from its
-   * `description` slot. Wire this to both slots' `slotchange` event in the
-   * SWC render().
+   * `description` slot, followed by its `secondary` slot. Wire this to all
+   * three slots' `slotchange` event in the SWC render().
    *
    * Element references rather than ID refs: the slotted content is
    * consumer-authored, so there is no `id` to point at.
@@ -194,8 +198,11 @@ export abstract class MenuItemBase extends SizedMixin(SpectrumElement, {
     // Flattened, so a row whose slots are forwarded through another
     // component still resolves to the elements that actually render.
     const label = this.labelSlot?.assignedElements({ flatten: true }) ?? [];
-    const description =
-      this.descriptionSlot?.assignedElements({ flatten: true }) ?? [];
+    // Secondary text, such as a shortcut, is announced after the description.
+    const description = [
+      ...(this.descriptionSlot?.assignedElements({ flatten: true }) ?? []),
+      ...(this.secondarySlot?.assignedElements({ flatten: true }) ?? []),
+    ];
     // `menuitem` names from contents, so without explicit references the
     // description is folded into the name rather than announced as one.
     this.internals.ariaLabelledByElements = label.length > 0 ? label : null;
