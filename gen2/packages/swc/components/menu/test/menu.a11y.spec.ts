@@ -452,11 +452,22 @@ test.describe('Menu - native dismissal', () => {
       });
     const transparent = /\/\s*0\s*\)|,\s*0\)/;
 
+    // The first row already holds focus from opening, so hovering it moves
+    // nothing. It still has to light up, which is the case that breaks if a row
+    // is only marked when there is focus to move.
+    await rows.first().hover();
+    await expect
+      .poll(() => fillOf(0), { message: 'hovering the focused row fills it' })
+      .not.toMatch(transparent);
+
     await rows.nth(1).hover();
     await expect(rows.nth(1)).toBeFocused();
     await expect
       .poll(() => fillOf(1), { message: 'hover fills the row' })
       .not.toMatch(transparent);
+    await expect
+      .poll(() => fillOf(0), { message: 'the row left behind lets go' })
+      .toMatch(transparent);
 
     // Keyboard takes over while the cursor stays exactly where it is.
     await page.keyboard.press('ArrowDown');

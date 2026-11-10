@@ -358,19 +358,29 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
   // the thing that means the pointer, rather than the keyboard, is in use, and
   // a still cursor produces none.
   //
-  // Fires repeatedly across a row, hence the early return once it has focus.
+  // Fires repeatedly across a row, hence the guards against repeating work.
   private readonly handleItemPointerMove = (event: PointerEvent): void => {
     if (!this.open) {
       return;
     }
     const item = this.menuItemFromEvent(event);
-    if (!item || item === getActiveElement()) {
+    if (!item) {
+      return;
+    }
+    // Marked before the focus check, not after it. Opening focuses the first
+    // row, so hovering that row has nothing to move and would otherwise leave
+    // it unmarked and unhighlighted: the pointer is on it either way. Skipped
+    // when it is already the marked row, because this runs on every movement
+    // and the attribute reflects to a reactive property.
+    if (this._pointerFocusedItem !== item) {
+      this.setPointerFocus(item);
+    }
+    if (item === getActiveElement()) {
       return;
     }
     this.focusNavigation.setActiveItem(item);
     // `preventScroll`: the surface must not scroll out from under the pointer.
     item.focus({ preventScroll: true });
-    this.setPointerFocus(item);
   };
 
   // The row whose focus ring is suppressed because the pointer, not the
