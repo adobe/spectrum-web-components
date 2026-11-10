@@ -45,23 +45,22 @@ import styles from './menu-item.css';
  * @slot secondary - Optional trailing text, such as a keyboard shortcut; appended to the accessible description after `description`.
  * @slot visual - Optional leading icon or thumbnail.
  *
- * @cssprop --swc-menu-item-min-block-size - Minimum height of the row. Defaults to the medium component height token.
- * @cssprop --swc-menu-item-padding-block - Block padding of the row. Defaults to the medium vertical padding token.
- * @cssprop --swc-menu-item-padding-inline - Inline padding of the row. Defaults to the medium horizontal padding token.
- * @cssprop --swc-menu-item-gap - Gap between the visual and the text. Defaults to the medium gap token.
- * @cssprop --swc-menu-item-corner-radius - Corner radius of the row. Defaults to the medium corner radius token.
- * @cssprop --swc-menu-item-background-color - Fill of the row. Unset, the row is flat; the hover, focus, and down states set it to the menu item background token.
- * @cssprop --swc-menu-item-label-color - Color of the label. Defaults to the neutral content color token.
- * @cssprop --swc-menu-item-label-font-size - Font size of the label. Defaults to the 100 font-size token.
- * @cssprop --swc-menu-item-label-line-height - Line height of the label. Defaults to the 100 line-height token.
- * @cssprop --swc-menu-item-text-gap - Gap between the label and the description. Defaults to the medium text-gap token.
- * @cssprop --swc-menu-item-description-color - Color of the description. Defaults to the neutral subdued content color token.
- * @cssprop --swc-menu-item-description-font-size - Font size of the description. Defaults to the 75 font-size token.
- * @cssprop --swc-menu-item-description-line-height - Line height of the description. Defaults to the 75 line-height token.
- * @cssprop --swc-menu-item-secondary-color - Color of the secondary text. Defaults to the neutral subdued content color token.
- * @cssprop --swc-menu-item-icon-size - Size of a slotted icon on both axes. Defaults to the medium workflow icon token.
- * @cssprop --swc-menu-item-thumbnail-size - Size of a slotted `swc-thumbnail` on both axes. Defaults to the 500 thumbnail size token.
- * @cssprop --swc-menu-item-down-state-transform - Transform applied to the row while it is pressed. Set to `none` to disable the press animation.
+ * @cssprop --swc-menu-item-min-block-size - Minimum height of the row.
+ * @cssprop --swc-menu-item-padding-block - Block padding of the row.
+ * @cssprop --swc-menu-item-padding-inline - Inline padding of the row.
+ * @cssprop --swc-menu-item-gap - Horizontal gap between menu item elements.
+ * @cssprop --swc-menu-item-corner-radius - Corner radius of the row.
+ * @cssprop --swc-menu-item-background-color - Background color of the row at rest. The hover, keyboard focus, and pressed states set their own.
+ * @cssprop --swc-menu-item-label-color - Color of the label.
+ * @cssprop --swc-menu-item-label-font-size - Font size of the label.
+ * @cssprop --swc-menu-item-label-line-height - Line height of the label.
+ * @cssprop --swc-menu-item-text-gap - Gap between the label and the description.
+ * @cssprop --swc-menu-item-description-color - Color of the description.
+ * @cssprop --swc-menu-item-description-font-size - Font size of the description.
+ * @cssprop --swc-menu-item-description-line-height - Line height of the description.
+ * @cssprop --swc-menu-item-secondary-color - Color of the secondary text.
+ * @cssprop --swc-menu-item-icon-size - Size of a slotted icon, inline and block.
+ * @cssprop --swc-menu-item-thumbnail-size - Size of a slotted `swc-thumbnail`, inline and block.
  */
 export class MenuItem extends MenuItemBase {
   public static override get styles(): CSSResultArray {

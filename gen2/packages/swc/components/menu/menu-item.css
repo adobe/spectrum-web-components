@@ -161,7 +161,7 @@
 /* The row recedes along Z against a perspective of its own height, matching
  * the button family. */
 :host(:active:not([disabled])) .swc-MenuItem {
-  transform: var(--swc-menu-item-down-state-transform, perspective(var(--_swc-menu-item-min-block-size)) translate3d(0, 0, token("component-size-difference-down")));
+  transform: perspective(var(--_swc-menu-item-min-block-size)) translate3d(0, 0, token("component-size-difference-down"));
   will-change: transform;
 }
 
