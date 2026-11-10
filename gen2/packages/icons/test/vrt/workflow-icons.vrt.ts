@@ -18,7 +18,7 @@ import isChromatic from 'chromatic/isChromatic';
 import {
   ICON_VALID_SIZES,
   type IconSize,
-} from '@adobe/spectrum-wc-core/components/icon.js';
+} from '@adobe/spectrum-wc-core/components/icon/Icon.types.js';
 
 // Register only the icons the size/color/forced-colors rows use. Gallery loads the full
 // set lazily via its loader, so this page doesn't define all ~413 elements.
