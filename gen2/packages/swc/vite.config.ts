@@ -161,7 +161,12 @@ export default defineConfig({
       output: {
         preserveModules: true,
         preserveModulesRoot: '.',
-        entryFileNames: '[name].js',
+        // Emit CSS modules as `<name>.css.js` so they don't collide with the
+        // same-named `.ts` module (which would yield `<name>2.js`).
+        entryFileNames: ({ facadeModuleId }) =>
+          facadeModuleId?.split('?')[0].endsWith('.css')
+            ? '[name].css.js'
+            : '[name].js',
         chunkFileNames: '[name].js',
       },
     },

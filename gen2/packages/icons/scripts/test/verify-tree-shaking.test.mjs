@@ -25,7 +25,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
-const distDir = path.resolve(scriptDir, '..', 'dist');
+const distDir = path.resolve(scriptDir, '..', '..', 'dist');
 
 // The sample an app might import, and a few icons it must NOT drag in.
 const SAMPLE = ['swc-icon-star', 'swc-icon-heart', 'swc-icon-folder'];
