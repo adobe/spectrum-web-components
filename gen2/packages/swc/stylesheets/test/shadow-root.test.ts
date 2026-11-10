@@ -37,8 +37,8 @@ const mountAppRoot = (container: HTMLElement): ShadowRoot => {
   root.adoptedStyleSheets = [appStyles];
   root.innerHTML = `
     <span id="text" style="font-size: var(--swc-font-size)">Text</span>
-    <div class="swc-theme swc-theme--sizeL">
-      <span id="large" style="font-size: var(--swc-font-size)">Text</span>
+    <div class="swc-theme swc-theme--dark">
+      <span id="dark" style="font-size: var(--swc-font-size)">Text</span>
     </div>
   `;
   return root;
@@ -98,8 +98,14 @@ export const AppRootTokensTest: Story = {
       }
     );
 
-    await step('theme classes in the app root switch the scale', () => {
-      expect(fontSize(mountAppRoot(canvasElement), 'large')).toBe('17px');
+    await step('theme classes in the app root switch the color scheme', () => {
+      withPageProperties({ 'color-scheme': 'light' }, () => {
+        const root = mountAppRoot(canvasElement);
+        const dark = root.getElementById('dark')!;
+        expect(getComputedStyle(root.host).colorScheme).toBe('light');
+        expect(getComputedStyle(dark).colorScheme).toBe('dark');
+        expect(fontSize(root, 'dark')).toBe('14px');
+      });
     });
 
     await step("the app root inherits the page's color scheme", () => {

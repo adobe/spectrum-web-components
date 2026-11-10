@@ -95,7 +95,7 @@ Spectrum Web Components use the same mechanism internally. Lit creates elements 
 
 ## Load each app's styles
 
-Load the app's own `tokens.css` and `swc.css` in its shadow root. There, they set the design tokens and the medium scale on the shadow host, so the app's components use the tokens of the app's version, even when the page loads another version:
+Load the app's own `tokens.css` and `swc.css` in its shadow root. There, they set the design tokens on the shadow host, so the app's components use the tokens of the app's version, even when the page loads another version:
 
 ```js
 // `tokensCss` and `swcCss` hold the text of the app's own copies of
@@ -107,7 +107,7 @@ root.adoptedStyleSheets = [styles];
 
 Load both files. Style sheets created from text, such as `adoptedStyleSheets` and Lit's `static styles`, ignore the `@import` in `swc.css`. A `<link rel="stylesheet">` to `swc.css` in the shadow root loads `tokens.css` itself.
 
-- **Theme classes:** To change the app's scale or color scheme, add the theme classes, for example `swc-theme swc-theme--sizeL`, to an element in the app's shadow root. Don't add them to the element that hosts the app. Page styles that match that element take precedence over the app's own, so the page's `swc.css` would set its version's tokens there.
+- **Theme classes:** To change the app's color scheme, add the theme classes, for example `swc-theme swc-theme--dark`, to an element in the app's shadow root. Don't add them to the element that hosts the app. Page styles that match that element take precedence over the app's own, so the page's `swc.css` would set its version's tokens there.
 - **Inherited styles:** The app inherits the page's color scheme and font.
 
 ## Things to know
