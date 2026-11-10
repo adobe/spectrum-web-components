@@ -94,6 +94,17 @@ export const NamedLayoutNavigation: StoryObj = {
           `swc-card-view-${layout}-${mode}`,
           layout
         );
+        expect(
+          [...view.shadowRoot!.querySelectorAll('[role="gridcell"]')].map(
+            (cell) => cell.getAttribute('aria-label')
+          )
+        ).toEqual(
+          items.map((item, index) =>
+            mode === 'advance'
+              ? `${index + 1} of ${items.length}, ${item.title}`
+              : item.title
+          )
+        );
         Object.defineProperty(view, 'positions', {
           get: () =>
             items.map((_, index) => ({

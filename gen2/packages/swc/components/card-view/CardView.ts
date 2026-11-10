@@ -328,7 +328,9 @@ export class CardView extends CardViewBase {
           data-index=${index}
           role="gridcell"
           aria-colindex=${index + 1}
-          aria-label=${item.title}
+          aria-label=${this.navigation === 'spatial-advance'
+            ? `${index + 1} of ${this.items.length}, ${item.title}`
+            : item.title}
           aria-selected=${ifDefined(
             this.selectionMode === 'none'
               ? undefined
