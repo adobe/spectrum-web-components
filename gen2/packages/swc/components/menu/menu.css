@@ -45,9 +45,14 @@
    * page, matching `swc-popover`'s own scroll containment. */
   overscroll-behavior: contain;
   opacity: 0;
+
+  /* This is the closed state, so its timing governs the exit. `ease-in` holds
+   * the surface a moment before it goes; `ease-out`, which the open state below
+   * uses for the entrance, spends two thirds of the fade in its first third and
+   * reads as the menu blinking out rather than closing. */
   transition:
-    opacity token("animation-duration-200") token("animation-ease-out"),
-    transform token("animation-duration-200") token("animation-ease-out"),
+    opacity token("animation-duration-200") token("animation-ease-in"),
+    transform token("animation-duration-200") token("animation-ease-in"),
     overlay token("animation-duration-200") allow-discrete,
     display token("animation-duration-200") allow-discrete;
 }
@@ -94,6 +99,10 @@
 :host([actual-placement]) .swc-Menu:popover-open {
   opacity: 1;
   transform: none;
+
+  /* The open state's timing governs the entrance, where arriving quickly and
+   * settling is what is wanted. The exit keeps the base rule's `ease-in`. */
+  transition-timing-function: token("animation-ease-out");
 }
 
 @starting-style {
