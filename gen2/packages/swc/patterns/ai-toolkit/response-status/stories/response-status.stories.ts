@@ -30,66 +30,12 @@ import {
 
 const { args, argTypes, template } = getStorybookHelpers('swc-response-status');
 
-delete (args as Record<string, unknown>)['summary-slot'];
-delete (argTypes as Record<string, unknown>)['summary-slot'];
-
-argTypes.status = {
-  ...argTypes.status,
-  control: { type: 'select' },
-  options: RESPONSE_STATUSES,
-  table: {
-    ...argTypes.status?.table,
-    category: 'attributes',
-    defaultValue: { summary: 'active' },
-  },
-};
-
-argTypes.open = {
-  ...argTypes.open,
-  control: { type: 'boolean' },
-  table: {
-    ...argTypes.open?.table,
-    category: 'attributes',
-    defaultValue: { summary: 'false' },
-  },
-};
-
+// Ordering only. The manifest lists the 29 icon names before the 5 presets,
+// because that is the order of the union; presets are the values you normally
+// pick, so they go first. Control, category and default come from the manifest.
 argTypes.loader = {
   ...argTypes.loader,
-  control: { type: 'select' },
   options: [...PIXEL_LOADER_PRESET_NAMES, ...PIXEL_LOADER_ICON_NAMES],
-  table: {
-    ...argTypes.loader?.table,
-    category: 'attributes',
-    defaultValue: { summary: 'mega' },
-  },
-};
-
-argTypes['accessible-label'] = {
-  ...argTypes['accessible-label'],
-  control: { type: 'text' },
-  table: {
-    ...argTypes['accessible-label']?.table,
-    category: 'attributes',
-  },
-};
-
-argTypes['label-slot'] = {
-  ...argTypes['label-slot'],
-  control: { type: 'text' },
-  table: {
-    ...argTypes['label-slot']?.table,
-    category: 'slots',
-  },
-};
-
-argTypes['default-slot'] = {
-  ...argTypes['default-slot'],
-  control: { type: 'text' },
-  table: {
-    ...argTypes['default-slot']?.table,
-    category: 'slots',
-  },
 };
 
 /**
@@ -100,9 +46,6 @@ const meta: Meta = {
   component: 'swc-response-status',
   args: {
     ...args,
-    status: 'active',
-    open: false,
-    loader: 'mega',
     'accessible-label': 'Execution steps',
   },
   argTypes,
