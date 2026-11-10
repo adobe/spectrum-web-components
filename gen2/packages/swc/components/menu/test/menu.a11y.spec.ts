@@ -377,6 +377,77 @@ test.describe('Menu - native dismissal', () => {
     await page.mouse.up();
   });
 
+  // A menu opens under wherever the cursor already is, and `pointerover` fires
+  // for a row that arrives under a still cursor just as it does for one the
+  // pointer moves onto. Without telling those apart, opening by keyboard with
+  // the mouse resting over the menu starts focus under the cursor, and Enter
+  // chooses that row instead of the first.
+  test('a keyboard open ignores a cursor already resting over a row', async ({
+    page,
+  }) => {
+    await gotoStory(page, 'components-menu--open-and-close', 'swc-button');
+    const menu = page.locator('swc-menu');
+    const trigger = page.getByRole('button', { name: 'Edit' });
+    const rows = page.locator('swc-menu-item');
+
+    // Learn where the last row lands, then close and park the cursor there.
+    await trigger.click();
+    await expect(menu).toHaveJSProperty('open', true);
+    const lastBox = (await rows.nth(2).boundingBox())!;
+    await page.keyboard.press('Escape');
+    await expect(menu).toHaveJSProperty('open', false);
+    await page.mouse.move(
+      lastBox.x + lastBox.width / 2,
+      lastBox.y + lastBox.height / 2
+    );
+
+    // Open by keyboard without moving the mouse again.
+    await trigger.focus();
+    await page.keyboard.press('Enter');
+    await expect(menu).toHaveJSProperty('open', true);
+
+    await expect(rows.first(), 'focus starts on the first row').toBeFocused();
+
+    // And the press lands on the first row, which is the symptom that matters.
+    let activated = '';
+    await page.exposeFunction('noteActivation', (label: string) => {
+      activated = label;
+    });
+    await page.evaluate(() => {
+      for (const row of Array.from(
+        document.querySelectorAll('swc-menu-item')
+      )) {
+        row.addEventListener('click', () =>
+          (
+            window as unknown as { noteActivation: (l: string) => void }
+          ).noteActivation(row.textContent?.trim() ?? '')
+        );
+      }
+    });
+    await page.keyboard.press('Enter');
+    await expect(menu).toHaveJSProperty('open', false);
+    expect(activated, 'the first row is the one chosen').toBe('Cut');
+  });
+
+  // Once the pointer actually moves, it takes over again.
+  test('a pointer move after a keyboard open restores hover focus', async ({
+    page,
+  }) => {
+    await gotoStory(page, 'components-menu--open-and-close', 'swc-button');
+    const menu = page.locator('swc-menu');
+    const trigger = page.getByRole('button', { name: 'Edit' });
+    const rows = page.locator('swc-menu-item');
+
+    await trigger.focus();
+    await page.keyboard.press('Enter');
+    await expect(menu).toHaveJSProperty('open', true);
+    await expect(rows.first()).toBeFocused();
+
+    await rows.nth(2).hover();
+
+    await expect(rows.nth(2), 'hover takes focus once moved').toBeFocused();
+  });
+
   // `:focus-visible` is sticky once a key press has set the modality, so moving
   // focus to the hovered row would otherwise drag the keyboard ring along with
   // the pointer.

@@ -284,10 +284,15 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
   // the pointer hovers another, showing two rows as active at once; arrow keys
   // would then resume from the row the user stopped looking at.
   //
-  // `pointerover` rather than `pointerenter`, which does not bubble and so
-  // never reaches the menu. It repeats as the pointer crosses a row's own
-  // children, hence the early return once the row already has focus.
-  private readonly handleItemPointerOver = (event: PointerEvent): void => {
+  // Driven by `pointermove`, not `pointerover`. `pointerover` also fires for a
+  // row that arrives under a cursor which never moved, so a menu opened by
+  // keyboard with the mouse resting over it would start focused under the
+  // cursor and Enter would choose that row instead of the first. Movement is
+  // the thing that means the pointer, rather than the keyboard, is in use, and
+  // a still cursor produces none.
+  //
+  // Fires repeatedly across a row, hence the early return once it has focus.
+  private readonly handleItemPointerMove = (event: PointerEvent): void => {
     if (!this.open) {
       return;
     }
@@ -337,7 +342,7 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
   public override connectedCallback(): void {
     super.connectedCallback();
     this.addEventListener('click', this.handleItemActivate);
-    this.addEventListener('pointerover', this.handleItemPointerOver);
+    this.addEventListener('pointermove', this.handleItemPointerMove);
   }
 
   // Clears aria-controls/expanded/haspopup from a previously-wired trigger.
@@ -674,7 +679,7 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
       capture: true,
     });
     this.removeEventListener('click', this.handleItemActivate);
-    this.removeEventListener('pointerover', this.handleItemPointerOver);
+    this.removeEventListener('pointermove', this.handleItemPointerMove);
     document.removeEventListener('keyup', this.releaseActivationKey, {
       capture: true,
     });

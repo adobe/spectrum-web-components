@@ -1705,6 +1705,53 @@ export const ItemRoleIsAlwaysMenuitemTest: Story = {
 // TEST: Menu integration
 // ──────────────────────────────────────────────────────────────
 
+// ──────────────────────────────────────────────────────────────
+// TEST: Hover follows the pointer, not the cursor's resting place
+// ──────────────────────────────────────────────────────────────
+
+const pointerEvent = (type: 'pointerover' | 'pointermove'): PointerEvent =>
+  new PointerEvent(type, { bubbles: true, composed: true });
+
+export const ItemHoverModalityTest: Story = {
+  render: () => rowsInMenu(threeRows, 'hover-modality-trigger'),
+  play: async ({ canvasElement, step }) => {
+    const trigger = canvasElement.querySelector(
+      '#hover-modality-trigger'
+    ) as HTMLElement;
+    const menu = canvasElement.querySelector('swc-menu') as HTMLElement & {
+      open: boolean;
+    };
+
+    await userEvent.click(trigger);
+    await waitFor(() => expect(menu.open).toBe(true));
+    const rows = getRows(canvasElement);
+    await waitFor(() => expect(document.activeElement).toBe(rows[0]));
+
+    // Opening the surface under a cursor that never moved makes the browser
+    // fire `pointerover` for the row now beneath it. Treating that as a hover
+    // starts focus under the cursor, so Enter chooses that row rather than the
+    // first: the whole bug, in one event.
+    await step(
+      'a row arriving under a still cursor keeps its hands off focus',
+      async () => {
+        rows[2].dispatchEvent(pointerEvent('pointerover'));
+
+        expect(document.activeElement, 'focus stays on the first row').toBe(
+          rows[0]
+        );
+      }
+    );
+
+    await step('a pointer that moves does take focus', async () => {
+      rows[2].dispatchEvent(pointerEvent('pointermove'));
+
+      expect(document.activeElement, 'focus follows the moved pointer').toBe(
+        rows[2]
+      );
+    });
+  },
+};
+
 export const ItemDiscoveryTest: Story = {
   render: () => rowsInMenu(threeRows, 'discovery-trigger'),
   play: async ({ canvasElement, step }) => {
