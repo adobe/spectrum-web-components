@@ -17,7 +17,8 @@ const CORE_ENTRY_SHAPE =
 
 /**
  * Returns whether a subpath matches one of the export map keys. A key may hold
- * one `*`, which matches any text (including `/`), as in Node.
+ * one `*`, which matches any text (including `/`), as in Node. Like Node, the
+ * text a `*` matches can't hold empty, `.`, `..`, or `node_modules` segments.
  *
  * @param {string} subpath - The subpath after the package name.
  * @param {Set<string>} keys - Export map keys without the leading `./`.
@@ -43,7 +44,12 @@ function isExported(subpath, keys) {
         prefix.length,
         subpath.length - suffix.length
       );
-      if (!match.split('/').some((part) => ['', '.', '..'].includes(part))) {
+      const invalid = match
+        .split('/')
+        .some((part) =>
+          ['', '.', '..', 'node_modules'].includes(part.toLowerCase())
+        );
+      if (!invalid) {
         return true;
       }
     }
