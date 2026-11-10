@@ -131,9 +131,13 @@
       "types": "./dist/components/icon/index.d.ts",
       "import": "./dist/components/icon/index.js"
     },
-    "./components/icon.js": {
-      "types": "./dist/components/icon/index.d.ts",
-      "import": "./dist/components/icon/index.js"
+    "./components/icon/Icon.base.js": {
+      "types": "./dist/components/icon/Icon.base.d.ts",
+      "import": "./dist/components/icon/Icon.base.js"
+    },
+    "./components/icon/Icon.types.js": {
+      "types": "./dist/components/icon/Icon.types.d.ts",
+      "import": "./dist/components/icon/Icon.types.js"
     },
     "./components/icon/index.js": {
       "types": "./dist/components/icon/index.d.ts",
@@ -516,8 +520,11 @@
       "components/icon": [
         "dist/components/icon/index.d.ts"
       ],
-      "components/icon.js": [
-        "dist/components/icon/index.d.ts"
+      "components/icon/Icon.base.js": [
+        "dist/components/icon/Icon.base.d.ts"
+      ],
+      "components/icon/Icon.types.js": [
+        "dist/components/icon/Icon.types.d.ts"
       ],
       "components/icon/index.js": [
         "dist/components/icon/index.d.ts"

@@ -13,7 +13,7 @@
 import { CSSResultArray, html, TemplateResult } from 'lit';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 
-import { IconBase } from '@adobe/spectrum-wc-core/components/icon.js';
+import { IconBase } from '@adobe/spectrum-wc-core/components/icon/Icon.base.js';
 import { defineElement } from '@adobe/spectrum-wc-core/element.js';
 
 import { Icon_Microphone } from './Microphone.js';
