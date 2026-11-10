@@ -21,7 +21,7 @@ swc/
 
 Use [Badge](./components/badge/) as the reference implementation.
 
-The package uses wildcard subpath exports for class barrels, direct class files (for subclassing), and `swc-*.js` registration modules. Every import path ends in `.js`: use `@adobe/spectrum-wc/components/badge.js` for the barrel and `@adobe/spectrum-wc/components/badge/swc-badge.js` to register the element. Barrels are sibling `<name>.ts` files, not `<name>/index.ts`. Generated chunks and CSS-as-JS modules may also resolve through these wildcards, but they are not supported import paths. The package root has no export.
+The package uses wildcard subpath exports for class barrels, direct class files (for subclassing), and `swc-*.js` registration modules. Every import path ends in `.js`: use `@adobe/spectrum-wc/components/badge.js` for the barrel and `@adobe/spectrum-wc/components/badge/swc-badge.js` to register the element. Barrels are sibling `<name>.ts` files, not `<name>/index.ts`. The export map blocks CSS modules (`*.css.js`). Internal helper modules, such as `card/card-template.js`, may still resolve through these wildcards, but they are not supported import paths. The package root has no export.
 
 ## Does NOT belong here
 

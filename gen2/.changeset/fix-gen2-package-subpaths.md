@@ -12,5 +12,5 @@
 - Class files and registration modules keep their paths, for example `@adobe/spectrum-wc/components/badge/Badge.js` and `@adobe/spectrum-wc/components/badge/swc-badge.js`.
 - Extensionless subpaths (such as `@adobe/spectrum-wc/badge` and `@adobe/spectrum-wc-core/element`) and `/index.js` subpaths no longer work. Use the `.js` forms above.
 - Core no longer exports individual files inside its folders (such as `element/define-element.js` or `utils/capitalize.js`); import them from the folder barrel. The internal warning helpers in `element/spectrum-element.js` are no longer public.
-- `@adobe/spectrum-wc` no longer exports `utils/*`, and `@adobe/spectrum-wc-icons` no longer exports `stylesheets/*`.
+- `@adobe/spectrum-wc` no longer exports `utils/*` or component CSS modules (`*.css.js`), and `@adobe/spectrum-wc-icons` no longer exports `stylesheets/*`.
 - `@adobe/spectrum-wc` and `@adobe/spectrum-wc-core` have no package root export, `main`, or `module` field. Core no longer ships `typesVersions`, so TypeScript consumers need `moduleResolution` set to `node16`, `nodenext`, or `bundler`.

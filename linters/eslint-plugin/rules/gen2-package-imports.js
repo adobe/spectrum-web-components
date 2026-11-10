@@ -79,6 +79,9 @@ export function findGen2ImportProblem(specifier, coreExports) {
   if (/(^|\/)index\.js$/.test(subpath)) {
     return { messageId: 'index' };
   }
+  if (/\.css\.js$/.test(subpath)) {
+    return { messageId: 'cssModule' };
+  }
   if (/^patterns\/[^/]+\.js$/.test(subpath)) {
     return { messageId: 'patternEntry' };
   }
@@ -135,6 +138,8 @@ export default {
         "Import a pattern by its group and name (for example '@adobe/spectrum-wc/patterns/ai-toolkit/response-status.js').",
       nestedCss:
         "Stylesheets are published at the package top level (for example '@adobe/spectrum-wc/swc.css').",
+      cssModule:
+        "Component CSS modules ('*.css.js') are not exported. Use a top-level stylesheet such as '@adobe/spectrum-wc/swc.css', or extend the class to reuse its styles.",
       iconsFlat:
         "Icons are published as flat '.js' entry points (for example '@adobe/spectrum-wc-icons/swc-icon-star.js').",
       iconsIndex:

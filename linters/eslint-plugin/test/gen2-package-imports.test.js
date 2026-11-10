@@ -86,6 +86,9 @@ test('reports each invalid specifier once', () => {
     '@adobe/spectrum-wc/Components/badge/swc-badge.js': 'componentsPrefix',
     '@adobe/spectrum-wc/stylesheets/tokens.css': 'nestedCss',
     '@adobe/spectrum-wc/components/badge/badge.css': 'nestedCss',
+    '@adobe/spectrum-wc/components/badge/badge.css.js': 'cssModule',
+    '@adobe/spectrum-wc/patterns/ai-toolkit/prompt-field/prompt-field.css.js':
+      'cssModule',
     '@adobe/spectrum-wc-icons/index.js': 'iconsIndex',
     '@adobe/spectrum-wc-icons/swc-icon-star': 'iconsFlat',
     '@adobe/spectrum-wc-icons/stylesheets/icon-base.css': 'iconsFlat',

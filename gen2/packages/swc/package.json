@@ -19,11 +19,13 @@
       "types": "./dist/*.css.d.ts",
       "default": "./dist/*.css"
     },
+    "./components/*.css.js": null,
     "./components/*.js": {
       "types": "./dist/components/*.d.ts",
       "default": "./dist/components/*.js"
     },
     "./customElements": "./dist/custom-elements.json",
+    "./patterns/*.css.js": null,
     "./patterns/*.js": {
       "types": "./dist/patterns/*.d.ts",
       "default": "./dist/patterns/*.js"
