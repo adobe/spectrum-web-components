@@ -23,7 +23,7 @@ import {
   theme,
   vrtParameters,
 } from '../../../../../.storybook/helpers/index.js';
-import type { PixelLoader } from '../../../pixel-loader/index.js';
+import type { PixelLoader } from '../../../pixel-loader.js';
 import type { ResponseStatusStepStatus } from '../../response-status-step/ResponseStatusStep.js';
 import {
   RESPONSE_STATUSES,
