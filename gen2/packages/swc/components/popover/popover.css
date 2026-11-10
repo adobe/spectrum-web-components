@@ -34,6 +34,10 @@
   /* Distance the surface slides from the trigger on open/close. */
   --_swc-popover-animation-distance: token("spacing-75");
 
+  /* TODO: replace with a token once Spectrum 2 defines motion tokens. 200ms
+   * matches React Spectrum's Popover; `animation-duration-200` is 160ms. */
+  --_swc-popover-animation-duration: 200ms;
+
   position: absolute;
   inset: auto;
   inline-size: max-content;
@@ -70,11 +74,14 @@
    * is used so the arrow casts a matching shadow; the three layers mirror the
    * `--swc-drop-shadow-elevated` token (ambient, transition, key). */
   filter: drop-shadow(0 4px 12px token("drop-shadow-ambient-color")) drop-shadow(0 2px 6px token("drop-shadow-transition-color")) drop-shadow(0 0 2px token("drop-shadow-elevated-key-color"));
+
+  /* The closed state's timing governs the exit. Easing in, as React Spectrum
+   * does, holds the surface a moment before it fades. */
   transition:
-    opacity token("animation-duration-200") token("animation-ease-out"),
-    transform token("animation-duration-200") token("animation-ease-out"),
-    overlay token("animation-duration-200") allow-discrete,
-    display token("animation-duration-200") allow-discrete;
+    opacity var(--_swc-popover-animation-duration) token("animation-ease-in"),
+    transform var(--_swc-popover-animation-duration) token("animation-ease-in"),
+    overlay var(--_swc-popover-animation-duration) allow-discrete,
+    display var(--_swc-popover-animation-duration) allow-discrete;
 }
 
 /* No arrow: use the rectangular `box-shadow` form of the elevated token, which
@@ -134,6 +141,11 @@
 :host([actual-placement]) .swc-Popover[open] {
   opacity: 1;
   transform: none;
+
+  /* The open state's timing governs the entrance. TODO: replace with a token
+   * once Spectrum 2 defines motion tokens; React Spectrum's Popover enters on
+   * the CSS default `ease`. */
+  transition-timing-function: ease;
 }
 
 /* The padded content wrapper. Padding lives here (not on `.swc-Popover`) so a
