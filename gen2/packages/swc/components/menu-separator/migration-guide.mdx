@@ -4,7 +4,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 # Menu separator migration guide
 
-Replace `<sp-menu-divider>` with `<swc-menu-separator>` and update the import; the size option is gone.
+Replace `<sp-menu-divider>` with `<swc-menu-separator>` and update the import; the size option is gone. Migrate the parent `<sp-menu>` to `<swc-menu>` at the same time, because the menu supplies the line thickness.
 
 ## Installation
 
@@ -41,7 +41,7 @@ import '@adobe/spectrum-wc/components/menu-separator/swc-menu-separator.js';
 
 | Area            | Spectrum 1                                   | Spectrum 2                                                 |
 | --------------- | -------------------------------------------- | ---------------------------------------------------------- |
-| `size`          | `size` attribute inherited from `SizedMixin` | Removed. The line is always 2px thick                      |
+| `size`          | `size` attribute inherited from `SizedMixin` | Removed. The parent `swc-menu` sets a 2px line             |
 | `--mod-*` props | `--mod-*` divider custom properties          | Removed. Spacing and thickness come from Spectrum 2 tokens |
 
 ### Changed
@@ -53,7 +53,11 @@ import '@adobe/spectrum-wc/components/menu-separator/swc-menu-separator.js';
 
 ## Migration steps
 
-### 1. Rename the element
+### 1. Migrate the parent menu
+
+`swc-menu-separator` draws no line on its own. The parent `swc-menu` supplies the thickness, so a separator inside `<sp-menu>` or any other container computes to 0px. Migrate the menu first, following the Menu migration guide.
+
+### 2. Rename the element
 
 ```html
 <!-- Before -->
@@ -63,7 +67,7 @@ import '@adobe/spectrum-wc/components/menu-separator/swc-menu-separator.js';
 <swc-menu-separator></swc-menu-separator>
 ```
 
-### 2. Remove the `size` attribute
+### 3. Remove the `size` attribute
 
 ```html
 <!-- Before -->
@@ -73,6 +77,29 @@ import '@adobe/spectrum-wc/components/menu-separator/swc-menu-separator.js';
 <swc-menu-separator></swc-menu-separator>
 ```
 
-### 3. Replace custom property overrides
+### 4. Replace custom property overrides
 
-Remove any `--mod-*` overrides targeting the divider. The separator doesn't expose public custom properties in this release.
+Remove any `--mod-*` overrides targeting the divider. The only custom property involved is `--swc-menu-separator-thickness`, which `swc-menu` sets. Don't set it yourself; it isn't a consumer styling API.
+
+### 5. Move separators out of menu groups
+
+A separator must be a direct child of `swc-menu`, never inside a menu group. Place it between groups at the menu level and use group labels to name the sections. `swc-menu-group` has not shipped yet, so the example below flattens the group.
+
+```html
+<!-- Before -->
+<sp-menu>
+  <sp-menu-group>
+    <span slot="header">Edit</span>
+    <sp-menu-item>Cut</sp-menu-item>
+    <sp-menu-divider></sp-menu-divider>
+    <sp-menu-item>Paste</sp-menu-item>
+  </sp-menu-group>
+</sp-menu>
+
+<!-- After -->
+<swc-menu>
+  <swc-menu-item>Cut</swc-menu-item>
+  <swc-menu-separator></swc-menu-separator>
+  <swc-menu-item>Paste</swc-menu-item>
+</swc-menu>
+```

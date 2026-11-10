@@ -23,27 +23,35 @@ import { gotoStory } from '../../../utils/a11y-helpers.js';
  */
 
 test.describe('Menu separator - ARIA Snapshots', () => {
-  test('should have correct accessibility tree for overview', async ({
-    page,
-  }) => {
-    const root = await gotoStory(
+  for (const story of ['overview', 'anatomy', 'accessibility']) {
+    test(`${story}: one separator sits between menu items`, async ({
+      page,
+    }) => {
+      await gotoStory(
+        page,
+        `components-menu-separator--${story}`,
+        'swc-menu-separator'
+      );
+      const menu = page.locator('swc-menu');
+
+      await expect(menu.getByRole('separator')).toHaveCount(1);
+      await expect(menu).toMatchAriaSnapshot(`
+        - menu:
+          - menuitem "Cut"
+          - menuitem "Copy"
+          - separator
+          - menuitem "Delete"
+      `);
+    });
+  }
+
+  test('the separator is a direct child of the menu', async ({ page }) => {
+    await gotoStory(
       page,
       'components-menu-separator--overview',
       'swc-menu-separator'
     );
-    await expect(root).toMatchAriaSnapshot(`
-      - separator
-    `);
-  });
 
-  test('should expose a single separator in anatomy', async ({ page }) => {
-    const root = await gotoStory(
-      page,
-      'components-menu-separator--anatomy',
-      'swc-menu-separator'
-    );
-    await expect(root).toMatchAriaSnapshot(`
-      - separator
-    `);
+    await expect(page.locator('swc-menu > swc-menu-separator')).toHaveCount(1);
   });
 });

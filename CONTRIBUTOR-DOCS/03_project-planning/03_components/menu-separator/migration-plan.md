@@ -319,7 +319,7 @@ Planned rendering shape:
 #### Naming and semantics
 
 - [x] Host `role="separator"`, no accessible name by default, no splitter value semantics (set in `connectedCallback`; no `aria-*`, `tabindex` or slot is rendered)
-- [ ] Contrast of the line versus menu background meets [1.4.11](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html)
+- [x] Contrast of the line versus menu background meets [1.4.11](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html) (`gray-500` on `background-layer-2-color`: about 3.2:1 light, 3.1:1 dark; design to confirm the token)
 
 #### State verification
 

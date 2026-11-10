@@ -18,7 +18,9 @@
   box-sizing: border-box;
 }
 
-/* Thickness is supplied by the parent `swc-menu` through the inherited
+/* The line uses `gray-500`: it is the lightest gray that reaches 3:1
+ * (WCAG 1.4.11) against the `swc-menu` surface in both light and dark.
+ * Thickness is supplied by the parent `swc-menu` through the inherited
  * `--swc-menu-separator-thickness`; the separator does not define it.
  * Block margin centers the line in the 12px section-divider container
  * (Q3: container height pending a spacing token update). */
@@ -28,7 +30,7 @@
   block-size: var(--_swc-menu-separator-thickness);
   margin-block: max(0px, calc((token("menu-item-section-divider-height") - var(--_swc-menu-separator-thickness)) / 2));
   margin-inline: token("base-padding-horizontal-medium");
-  background-color: token("gray-200");
+  background-color: token("gray-500");
   border-radius: var(--_swc-menu-separator-thickness);
 }
 
