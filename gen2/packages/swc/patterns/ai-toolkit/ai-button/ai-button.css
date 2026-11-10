@@ -266,7 +266,11 @@
    Positioned so that it paints above the decorative layers.
    ───────────────────────────────────────────────────────────────────────────── */
 
+/* Sets the icon color property, so a value set on the host or an ancestor
+   can't reach the icon. */
 .swc-AiButton-icon {
+  --swc-icon-color: var(--_swc-ai-button-icon-color);
+
   display: inline-flex;
   position: relative;
   flex-shrink: 0;
@@ -277,12 +281,14 @@
   color: var(--_swc-ai-button-icon-color);
 }
 
-/* Sets both of the loader's custom properties, so values set on the host
-   can't reach it. The AI mark glyph fills 90% of its icon box (18 of 20
-   units). */
-.swc-AiButton-icon swc-pixel-loader {
-  --swc-pixel-loader-size: calc(var(--_swc-ai-button-icon-size) * 0.9);
-  --swc-pixel-loader-color: currentcolor;
+/* The built-in icon, or an element slotted in its place, fills the icon box. */
+.swc-AiButton-icon svg,
+slot[name="icon"]::slotted(*) {
+  display: block;
+  flex-shrink: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  fill: currentcolor;
 }
 
 .swc-AiButton-label {
@@ -390,5 +396,11 @@
   .swc-AiButton-glow,
   .swc-AiButton-surface {
     display: none;
+  }
+
+  /* Forced colors don't override custom properties, so the icon takes the
+     forced text color through currentcolor. */
+  .swc-AiButton-icon {
+    --swc-icon-color: currentcolor;
   }
 }

@@ -26,10 +26,10 @@ import {
   theme,
 } from '../../../../.storybook/helpers/index.js';
 import {
-  PIXEL_LOADER_ICON_NAMES,
-  type PixelLoaderIconName,
-} from '../../pixel-loader/index.js';
-import type { AiButton } from '../AiButton.js';
+  AI_BUTTON_ICONS,
+  type AiButton,
+  type AiButtonIcon,
+} from '../AiButton.js';
 
 // ────────────────
 //    METADATA
@@ -46,17 +46,17 @@ argTypes.size = {
 argTypes.icon = {
   ...argTypes.icon,
   control: { type: 'select' },
-  options: PIXEL_LOADER_ICON_NAMES,
+  options: AI_BUTTON_ICONS,
 };
 
 args['default-slot'] = 'Ask AI';
 args.size = 'm';
-args.icon = 'aiLogo';
+args.icon = 'ai-mark';
 
 /**
  * AI buttons start an AI action, such as asking an assistant about the current
- * context. They show a pixel-art icon from the pixel loader, in its static
- * state, before a short label. The icon is the AI mark by default.
+ * context. They show an AI icon before a short label: the AI mark by default,
+ * or an icon for the action, such as AI search.
  *
  * The surface of the button is translucent glass. The content behind the
  * button shows through it, blurred and tinted.
@@ -70,7 +70,7 @@ const meta: Meta = {
   parameters: {
     docs: {
       packagePath: 'patterns/ai-toolkit/ai-button',
-      subtitle: 'Starts an AI action from a glass button with the AI mark.',
+      subtitle: 'Starts an AI action from a glass button with an AI icon.',
     },
     design: {
       type: 'figma',
@@ -91,15 +91,17 @@ const ICON_ONLY_ARGS = {
   'accessible-label': 'Ask AI',
 };
 
-/** Example labels for a few pixel loader icons. */
+/** An example label for each icon. */
 const ICON_EXAMPLES = [
-  ['aiLogo', 'Ask AI'],
-  ['wand', 'Generate'],
-  ['image', 'Create image'],
-  ['brush', 'Edit with AI'],
-  ['comment', 'Summarize'],
-  ['microphone', 'Dictate'],
-] as const satisfies ReadonlyArray<readonly [PixelLoaderIconName, string]>;
+  ['ai-mark', 'Ask AI'],
+  ['ai-chat-conversation', 'Chat'],
+  ['ai-expand', 'Expand'],
+  ['ai-fill', 'Fill'],
+  ['ai-image', 'Edit image'],
+  ['ai-image-generate', 'Generate image'],
+  ['ai-layer', 'Add layer'],
+  ['ai-search', 'Search'],
+] as const satisfies ReadonlyArray<readonly [AiButtonIcon, string]>;
 
 const STATE_LABELS = {
   default: 'Default',
