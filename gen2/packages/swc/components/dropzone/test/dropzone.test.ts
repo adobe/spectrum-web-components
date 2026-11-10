@@ -14,7 +14,7 @@ import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import { Dropzone } from '@adobe/spectrum-wc/dropzone.js';
+import { Dropzone } from '@adobe/spectrum-wc/components/dropzone.js';
 import {
   DROP_EFFECTS,
   DROPZONE_VALID_SIZES,

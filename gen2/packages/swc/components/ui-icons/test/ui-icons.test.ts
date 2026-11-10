@@ -13,7 +13,7 @@ import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import { UiIcon } from '@adobe/spectrum-wc/ui-icons.js';
+import { UiIcon } from '@adobe/spectrum-wc/components/ui-icons.js';
 
 import '@adobe/spectrum-wc/components/ui-icons/swc-ui-icon.js';
 

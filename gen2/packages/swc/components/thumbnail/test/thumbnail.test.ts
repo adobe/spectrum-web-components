@@ -14,7 +14,7 @@ import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { computeAccessibleName } from 'dom-accessibility-api';
 
-import { Thumbnail } from '@adobe/spectrum-wc/thumbnail.js';
+import { Thumbnail } from '@adobe/spectrum-wc/components/thumbnail.js';
 import {
   THUMBNAIL_DEFAULT_FIT,
   THUMBNAIL_DEFAULT_SIZE,

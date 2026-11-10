@@ -241,7 +241,7 @@ Use the decision tree under **Decision trees** below. If the answer is "split," 
 2. **SWC:** Create `gen2/packages/swc/components/<name>/` with `Component.ts`, `component.css`, `swc-<tag>.ts`, `stories/`, `test/`.
    - `gen2/packages/swc/components/<name>.ts` — the barrel, next to the folder. Class re-export only (`export * from './<name>/Component.js'`). No `defineElement`, no `HTMLElementTagNameMap`.
    - `swc-<tag>.ts` — side-effect entry point that calls `defineElement('swc-<tag>', Component)` and declares the `HTMLElementTagNameMap` augmentation. Use `gen2/packages/swc/components/badge/swc-badge.ts` as the reference.
-3. **Wire up exports:** The SWC wildcard exports already make the side-effect file importable as `@adobe/spectrum-wc/components/<name>/swc-<tag>.js` and the barrel importable as `@adobe/spectrum-wc/<name>.js`. Core exports are explicit: add a `./components/<name>.js` entry to the core `package.json` exports that points at `./dist/components/<name>.js` and `./dist/components/<name>.d.ts`.
+3. **Wire up exports:** The SWC wildcard exports already make the side-effect file importable as `@adobe/spectrum-wc/components/<name>/swc-<tag>.js` and the barrel importable as `@adobe/spectrum-wc/components/<name>.js`. Core exports are explicit: add a `./components/<name>.js` entry to the core `package.json` exports that points at `./dist/components/<name>.js` and `./dist/components/<name>.d.ts`.
 
 See [Step 2](02_factor-rendering-out-of-1st-gen-component.md) and [Step 3](03_move-base-class-to-gen2-core.md) for directory layout, code structure, and reference implementations (Badge).
 
@@ -263,7 +263,7 @@ See [Step 2](02_factor-rendering-out-of-1st-gen-component.md) and [Step 3](03_mo
 ### Quality gate
 
 - [ ] All files exist, including `swc-<tag>.ts`; `nx build` (or equivalent) for the affected packages succeeds.
-- [ ] `import '@adobe/spectrum-wc/components/<name>/swc-<tag>.js'` registers the element; `import { Class } from '@adobe/spectrum-wc/<name>.js'` does not.
+- [ ] `import '@adobe/spectrum-wc/components/<name>/swc-<tag>.js'` registers the element; `import { Class } from '@adobe/spectrum-wc/components/<name>.js'` does not.
 
 ---
 

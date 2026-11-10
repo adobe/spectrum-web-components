@@ -53,7 +53,7 @@ Then follow **[Phase 2: Setup](../../../CONTRIBUTOR-DOCS/03_project-planning/02_
 
 **Key file split (SWC package):**
 
-- `components/<name>.ts` — the barrel, a sibling file next to the `<name>/` folder (not `<name>/index.ts`). Class re-export only (`export * from './<name>/Component.js'`). No `defineElement`, no `HTMLElementTagNameMap` augmentation. Consumers import it as `@adobe/spectrum-wc/<name>.js`.
+- `components/<name>.ts` — the barrel, a sibling file next to the `<name>/` folder (not `<name>/index.ts`). Class re-export only (`export * from './<name>/Component.js'`). No `defineElement`, no `HTMLElementTagNameMap` augmentation. Consumers import it as `@adobe/spectrum-wc/components/<name>.js`.
 - `swc-<tag>.ts` — side-effect entry point. Contains `defineElement('swc-<tag>', Component)` and the `HTMLElementTagNameMap` augmentation. Use `gen2/packages/swc/components/badge/swc-badge.ts` as the reference.
 - `package.json` — the `./components/*.js` wildcard export already covers `@adobe/spectrum-wc/components/<name>/swc-<tag>.js`, which registers the element without pulling in a class re-export. Every import path ends in `.js`.
 

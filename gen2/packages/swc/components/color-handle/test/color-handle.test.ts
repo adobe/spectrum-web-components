@@ -13,7 +13,7 @@ import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import { ColorHandle } from '@adobe/spectrum-wc/color-handle.js';
+import { ColorHandle } from '@adobe/spectrum-wc/components/color-handle.js';
 import {
   COLOR_HANDLE_ALPHA_FLOOR,
   computeBorderAlpha,

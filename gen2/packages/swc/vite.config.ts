@@ -224,9 +224,9 @@ export default defineConfig({
         find: '@adobe/spectrum-wc/patterns',
         replacement: resolve(__dirname, 'patterns'),
       },
-      // Short-form imports (e.g. `@adobe/spectrum-wc/badge.js`) point at the source
-      // package layout under `./components`, mirroring the published package's
-      // `./*.js` export which resolves to `./dist/components/*.js`.
+      // Any other `@adobe/spectrum-wc/...` import resolves under `./components`.
+      // The published package has no short-form export, so the
+      // `swc/gen2-package-imports` lint rule rejects these imports in source.
       {
         find: '@adobe/spectrum-wc',
         replacement: resolve(__dirname, 'components'),

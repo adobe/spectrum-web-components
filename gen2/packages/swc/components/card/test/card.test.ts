@@ -14,7 +14,7 @@ import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import type { Card } from '@adobe/spectrum-wc/card.js';
+import type { Card } from '@adobe/spectrum-wc/components/card.js';
 import {
   CARD_DENSITIES,
   CARD_VARIANTS,

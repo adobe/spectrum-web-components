@@ -14,7 +14,7 @@ import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import { Button } from '@adobe/spectrum-wc/button.js';
+import { Button } from '@adobe/spectrum-wc/components/button.js';
 import {
   BUTTON_FILL_STYLES,
   BUTTON_STATIC_COLORS,

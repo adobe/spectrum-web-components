@@ -15,7 +15,7 @@ import { expect, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import { Popover } from '@adobe/spectrum-wc/popover.js';
+import { Popover } from '@adobe/spectrum-wc/components/popover.js';
 import {
   POPOVER_VALID_PLACEMENTS,
   POPOVER_VALID_SIZES,

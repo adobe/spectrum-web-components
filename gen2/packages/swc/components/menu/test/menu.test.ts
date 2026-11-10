@@ -14,7 +14,7 @@ import { html } from 'lit';
 import { expect, userEvent, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import { Menu } from '@adobe/spectrum-wc/menu.js';
+import { Menu } from '@adobe/spectrum-wc/components/menu.js';
 import {
   MENU_PLACEMENTS,
   MENU_VALID_SIZES,

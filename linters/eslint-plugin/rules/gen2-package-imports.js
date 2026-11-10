@@ -63,7 +63,7 @@ export function findGen2ImportProblem(specifier, coreExports) {
       messageId: 'noRoot',
       data: {
         name: '@adobe/spectrum-wc',
-        example: '@adobe/spectrum-wc/badge.js',
+        example: '@adobe/spectrum-wc/components/badge.js',
       },
     };
   }
@@ -79,13 +79,10 @@ export function findGen2ImportProblem(specifier, coreExports) {
   if (/(^|\/)index\.js$/.test(subpath)) {
     return { messageId: 'index' };
   }
-  if (/^components\/[^/]+\.js$/.test(subpath)) {
-    return { messageId: 'shortBarrel' };
-  }
   if (/^patterns\/[^/]+\.js$/.test(subpath)) {
     return { messageId: 'patternEntry' };
   }
-  if (/^(components|patterns)\//.test(subpath) || !subpath.includes('/')) {
+  if (/^(components|patterns)\//.test(subpath)) {
     return null;
   }
   return { messageId: 'componentsPrefix' };
@@ -129,13 +126,11 @@ export default {
       noRoot:
         "'{{name}}' has no root export. Import an entry point, for example '{{example}}'.",
       extension:
-        "Gen2 package imports end in '.js' (for example '@adobe/spectrum-wc/badge.js').",
+        "Gen2 package imports end in '.js' (for example '@adobe/spectrum-wc/components/badge.js').",
       index:
-        "Import the sibling barrel instead of 'index.js' (for example '@adobe/spectrum-wc/badge.js').",
-      shortBarrel:
-        "Import component barrels by their short path (for example '@adobe/spectrum-wc/badge.js').",
+        "Import the sibling barrel instead of 'index.js' (for example '@adobe/spectrum-wc/components/badge.js').",
       componentsPrefix:
-        "Import files inside a component through 'components/' (for example '@adobe/spectrum-wc/components/badge/swc-badge.js').",
+        "Import components through 'components/' (for example '@adobe/spectrum-wc/components/badge.js').",
       patternEntry:
         "Import a pattern by its group and name (for example '@adobe/spectrum-wc/patterns/ai-toolkit/response-status.js').",
       nestedCss:

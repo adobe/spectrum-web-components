@@ -48,7 +48,7 @@ const messageIds = (code, settings) =>
 
 test('allows published entry points', () => {
   const valid = [
-    '@adobe/spectrum-wc/badge.js',
+    '@adobe/spectrum-wc/components/badge.js',
     '@adobe/spectrum-wc/components/badge/swc-badge.js',
     '@adobe/spectrum-wc/components/badge/Badge.js',
     '@adobe/spectrum-wc/patterns/ai-toolkit/response-status.js',
@@ -80,7 +80,7 @@ test('reports each invalid specifier once', () => {
     '@adobe/spectrum-wc/components/badge/index.js': 'index',
     '@adobe/spectrum-wc/badge/index.js': 'index',
     '@adobe/spectrum-wc/components/index.js': 'index',
-    '@adobe/spectrum-wc/components/badge.js': 'shortBarrel',
+    '@adobe/spectrum-wc/badge.js': 'componentsPrefix',
     '@adobe/spectrum-wc/patterns/ai-toolkit.js': 'patternEntry',
     '@adobe/spectrum-wc/badge/swc-badge.js': 'componentsPrefix',
     '@adobe/spectrum-wc/Components/badge/swc-badge.js': 'componentsPrefix',

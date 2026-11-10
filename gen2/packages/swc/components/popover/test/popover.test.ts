@@ -13,7 +13,7 @@ import { html } from 'lit';
 import { expect, spyOn, userEvent, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import { Popover } from '@adobe/spectrum-wc/popover.js';
+import { Popover } from '@adobe/spectrum-wc/components/popover.js';
 import { PopoverBase } from '@adobe/spectrum-wc-core/components/popover.js';
 import {
   isTopDismissible,

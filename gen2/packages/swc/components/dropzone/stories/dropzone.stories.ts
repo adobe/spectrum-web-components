@@ -17,7 +17,7 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 import { action } from 'storybook/actions';
 
-import type { Dropzone } from '@adobe/spectrum-wc/dropzone.js';
+import type { Dropzone } from '@adobe/spectrum-wc/components/dropzone.js';
 import {
   DROPZONE_VALID_SIZES,
   type DropzoneSize,

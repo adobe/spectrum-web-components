@@ -13,7 +13,7 @@ import { html } from 'lit';
 import { expect, userEvent } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import { ActionGroup } from '@adobe/spectrum-wc/action-group.js';
+import { ActionGroup } from '@adobe/spectrum-wc/components/action-group.js';
 import {
   ACTION_GROUP_ORIENTATIONS,
   ACTION_GROUP_STATIC_COLORS,

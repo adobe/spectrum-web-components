@@ -14,7 +14,7 @@ import { html, nothing, TemplateResult } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import { Badge } from '@adobe/spectrum-wc/badge.js';
+import { Badge } from '@adobe/spectrum-wc/components/badge.js';
 import {
   BADGE_VALID_SIZES,
   BADGE_VARIANTS,

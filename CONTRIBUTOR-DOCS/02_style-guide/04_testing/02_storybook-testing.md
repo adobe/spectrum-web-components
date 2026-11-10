@@ -79,7 +79,7 @@ import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 // Component imports
-import { Badge } from '@adobe/spectrum-wc/badge.js';
+import { Badge } from '@adobe/spectrum-wc/components/badge.js';
 import '@adobe/spectrum-wc/components/badge/swc-badge.js';
 
 import { getComponent, getComponents, withWarningSpy } from '../../../utils/test-utils.js';

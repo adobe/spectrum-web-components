@@ -13,7 +13,7 @@ import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import { ButtonGroup } from '@adobe/spectrum-wc/button-group.js';
+import { ButtonGroup } from '@adobe/spectrum-wc/components/button-group.js';
 import {
   BUTTON_GROUP_ALIGNMENTS,
   BUTTON_GROUP_ORIENTATIONS,
