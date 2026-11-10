@@ -98,7 +98,7 @@ import badgeStyles from './badge.css';
 
 ### Import extensions
 
-Use `.js` extensions for relative imports, including imports of `.ts` and `.tsx` files. Never use `.ts` in import paths. The linter (`import/extensions`) enforces this for relative imports, including in gen2 Storybook config. It skips package imports, because each package's `exports` map defines its valid paths, so follow that package's documented paths (for example, `lit/decorators.js`). For `@adobe/spectrum-wc*` packages, a second rule (`no-restricted-imports`) checks that each import uses a published `.js` entry point.
+Use `.js` extensions for relative imports, including imports of `.ts` and `.tsx` files. Never use `.ts` in import paths. The linter (`import/extensions`) enforces this for relative imports, including in gen2 Storybook config. It skips package imports, because each package's `exports` map defines its valid paths, so follow that package's documented paths (for example, `lit/decorators.js`). For `@adobe/spectrum-wc*` packages, a second rule (`swc/gen2-package-imports`) checks that each import, including dynamic imports and `import()` types, uses a published `.js` entry point.
 
 Import gen2 packages through their published entry points: the sibling barrel (`@adobe/spectrum-wc/badge.js`, `@adobe/spectrum-wc-core/mixins.js`), not an `index.js` path or a file inside a core folder. For example, import `ElementSize` from `@adobe/spectrum-wc-core/mixins.js`, not from `@adobe/spectrum-wc-core/mixins/sized-mixin.js`.
 
