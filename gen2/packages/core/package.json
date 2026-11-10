@@ -43,13 +43,13 @@
       "types": "./dist/components/badge.d.ts",
       "import": "./dist/components/badge.js"
     },
-    "./components/button.js": {
-      "types": "./dist/components/button.d.ts",
-      "import": "./dist/components/button.js"
-    },
     "./components/button-group.js": {
       "types": "./dist/components/button-group.d.ts",
       "import": "./dist/components/button-group.js"
+    },
+    "./components/button.js": {
+      "types": "./dist/components/button.d.ts",
+      "import": "./dist/components/button.js"
     },
     "./components/card.js": {
       "types": "./dist/components/card.d.ts",

@@ -15,13 +15,13 @@
   },
   "type": "module",
   "exports": {
-    "./*.js": {
-      "types": "./dist/components/*.d.ts",
-      "import": "./dist/components/*.js"
-    },
     "./*.css": {
       "types": "./dist/*.css.d.ts",
       "default": "./dist/*.css"
+    },
+    "./*.js": {
+      "types": "./dist/components/*.d.ts",
+      "import": "./dist/components/*.js"
     },
     "./components/*.js": {
       "types": "./dist/components/*.d.ts",
