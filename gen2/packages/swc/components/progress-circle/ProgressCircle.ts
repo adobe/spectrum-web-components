@@ -41,7 +41,7 @@ import styles from './progress-circle.css';
  * @cssprop --swc-progress-circle-size - Inline and block size of the circle.
  * @cssprop --swc-progress-circle-track-border-color - Color of the track (background ring).
  * @cssprop --swc-progress-circle-fill-border-color - Color of the fill (progress indicator).
- * @cssprop --swc-progress-circle-thickness - Stroke width of the circle rings.
+ * @cssprop --swc-progress-circle-thickness - Stroke width of the circle rings, as a length such as 4px. The rings grow inward, so the circle keeps its size.
  */
 export class ProgressCircle extends ProgressCircleBase {
   // ────────────────────
@@ -93,10 +93,6 @@ export class ProgressCircle extends ProgressCircleBase {
   }
 
   protected override render(): TemplateResult {
-    const strokeWidth = this.size === 's' ? 2 : this.size === 'l' ? 6 : 4;
-    // SVG strokes are centered, so subtract half the stroke width from the radius to create an inner stroke.
-    const radius = `calc(50% - ${strokeWidth / 2}px)`;
-
     return html`
       <div
         class=${classMap({
@@ -107,22 +103,10 @@ export class ProgressCircle extends ProgressCircleBase {
         })}
       >
         <svg aria-hidden="true" fill="none" width="100%" height="100%">
+          <circle cx="50%" cy="50%" class="swc-ProgressCircle-track" />
           <circle
             cx="50%"
             cy="50%"
-            r=${`calc(50% - ${strokeWidth}px)`}
-            stroke-width=${strokeWidth}
-          />
-          <circle
-            cx="50%"
-            cy="50%"
-            class="swc-ProgressCircle-track"
-            r=${radius}
-          />
-          <circle
-            cx="50%"
-            cy="50%"
-            r=${radius}
             class="swc-ProgressCircle-fill"
             pathLength="100"
             stroke-dasharray="100 200"
