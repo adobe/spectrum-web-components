@@ -69,7 +69,6 @@ const meta: Meta = {
   render: (args) => template(args),
   parameters: {
     docs: {
-      packagePath: 'patterns/ai-toolkit/ai-button',
       subtitle: 'Starts an AI action from a glass button with an AI icon.',
     },
     design: {
@@ -346,7 +345,9 @@ export const DesignReference: Story = {
     </div>
   `,
   play: forceHover,
-  parameters: { layout: 'padded' },
+  // Runs `forceHover` on the first render, which Storybook otherwise skips
+  // outside Chromatic (see `autoplay` in .storybook/preview.ts).
+  parameters: { layout: 'padded', autoplay: true },
   tags: ['dev'],
 };
 DesignReference.storyName = 'Design reference';
