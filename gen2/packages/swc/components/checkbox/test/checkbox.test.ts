@@ -862,15 +862,15 @@ export const AriaStatesTest: Story = {
     });
 
     await step(
-      'a required read-only checkbox is not reported as invalid',
+      'a required read-only checkbox is neither required nor invalid',
       async () => {
         checkbox.fieldStatus = 'readonly';
         await checkbox.updateComplete;
-        // Firefox reports a native required, unchecked input as invalid even
-        // with aria-invalid="false", so required moves to aria-required.
+        // A read-only checkbox is barred from validation, so required does
+        // nothing and is not announced.
         expect(checkbox.willValidate).toBe(false);
         expect(input.required).toBe(false);
-        expect(input).toHaveAttribute('aria-required', 'true');
+        expect(input).not.toHaveAttribute('aria-required');
         expect(input).not.toHaveAttribute('aria-invalid');
         expect(input.validity.valid).toBe(true);
         checkbox.fieldStatus = undefined;
