@@ -93,6 +93,23 @@ class ImagePanel extends ScopedElementMixin(LitElement) {
 
 Spectrum Web Components use the same mechanism internally. Lit creates elements in the global registry by default. `scopedRenderOptions()` and `ScopedElementMixin` bridge that gap until Lit supports scoped registries, and will then be deprecated.
 
+## Load each app's styles
+
+Load the app's own `tokens.css` and `swc.css` in its shadow root. There, they set the design tokens and the medium scale on the shadow host, so the app's components use the tokens of the app's version, even when the page loads another version:
+
+```js
+// `tokensCss` and `swcCss` hold the text of the app's own copies of
+// `@adobe/spectrum-wc/tokens.css` and `swc.css`, for example from a raw CSS import.
+const styles = new CSSStyleSheet();
+styles.replaceSync(tokensCss + swcCss);
+root.adoptedStyleSheets = [styles];
+```
+
+Load both files. Style sheets created from text, such as `adoptedStyleSheets` and Lit's `static styles`, ignore the `@import` in `swc.css`. A `<link rel="stylesheet">` to `swc.css` in the shadow root loads `tokens.css` itself.
+
+- **Theme classes:** To change the app's scale or color scheme, add the theme classes, for example `swc-theme swc-theme--sizeL`, to an element in the app's shadow root. Don't add them to the element that hosts the app. Page styles that match that element take precedence over the app's own, so the page's `swc.css` would set its version's tokens there.
+- **Inherited styles:** The app inherits the page's color scheme and font.
+
 ## Things to know
 
 - **No fallback to global:** A scoped shadow root never uses global definitions. Define every element the app renders, including its own, in the app's registry.
@@ -100,7 +117,7 @@ Spectrum Web Components use the same mechanism internally. Lit creates elements 
 - **Lit's `templateContent` directive:** It clones template content with `document.importNode()`, which creates elements in the global registry. Render that content with a regular Lit template instead.
 - **No redefinition:** A registry can't replace a definition. To change an app's version, mount the app again in a new host element with a new registry.
 - **Shared page state:** Each version keeps its own page scroll lock and stack of dismissible overlays, so overlays from two versions don't coordinate with each other.
-- **Design tokens:** `tokens.css` targets `:root`, so all apps on the page share one set of token values.
+- **Registered properties:** `@property` rules in a shadow root don't register their properties. Prompt Field needs properties that `swc.css` registers, so it relies on the `swc.css` that the page loads, and on that version's registrations.
 - **Workflow icons:** Each `swc-icon-*.js` module from `@adobe/spectrum-wc-icons` defines its element globally when imported, so two copies on one page conflict. In a scoped app, render the icon's SVG function inside `<swc-icon>` instead, for example `` html`<swc-icon>${unsafeSVG(Icon_Star())}</swc-icon>` `` with `Icon_Star` from `@adobe/spectrum-wc-icons/Star.js`.
 - **Not a security boundary:** Scoped registries isolate element definitions, not scripts. Any script on the page can read or change `window.__swc.scopedRegistries`.
 

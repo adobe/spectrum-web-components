@@ -642,11 +642,16 @@ export async function generateCSS(prefix, debug = false) {
 
 /* stylelint-disable value-keyword-case */
 
-:root {
+/* \`:host\` sets the tokens on the shadow host when an app loads this file in its shadow root. It matches nothing in the document. */
+
+:root,
+:host {
 ${nonScaling.join('\n')}
 }
 
-:root, .swc-theme {
+:root,
+:host,
+.swc-theme {
 ${scaling.join('\n')}
 }`.trim();
 }

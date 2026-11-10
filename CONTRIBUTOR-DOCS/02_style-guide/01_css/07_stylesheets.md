@@ -54,6 +54,8 @@ When both "component replacement" and `global/` seem to fit: a component replace
 
 Foundational stylesheets loaded once at the page/app level. They establish token imports and base application styles; `preview.ts` imports them to bootstrap Storybook. These are not typically modified during component migrations.
 
+The rules that set tokens and the scale also target `:host`. An app that renders into a shadow root, for example with a scoped registry, loads these files in that shadow root to get its own version's tokens. Keep `:host` in those selectors.
+
 **Build treatment:** processed by `processStylesheets` (PostCSS) and emitted to `dist/` as standalone CSS.
 
 ### Component replacements
