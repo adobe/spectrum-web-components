@@ -16,9 +16,33 @@ const CORE_ENTRY_SHAPE =
   /^((element|mixins|utils|controllers|directives)|(controllers|directives)\/[a-z0-9-]+|components\/[a-z0-9-]+\/[A-Za-z0-9.-]+)\.js$/;
 
 /**
+ * Returns whether the text a pattern key's `*` matched is valid, as in Node:
+ * no encoded `/` or `\`, and after decoding no empty, `.`, `..`, or
+ * `node_modules` segments.
+ *
+ * @param {string} match - The text the `*` matched.
+ * @returns {boolean} Whether Node accepts the match.
+ */
+function isValidPatternMatch(match) {
+  if (/%2f|%5c/i.test(match)) {
+    return false;
+  }
+  let decoded;
+  try {
+    decoded = decodeURIComponent(match);
+  } catch {
+    return false;
+  }
+  return !decoded
+    .split(/[/\\]/)
+    .some((part) =>
+      ['', '.', '..', 'node_modules'].includes(part.toLowerCase())
+    );
+}
+
+/**
  * Returns whether a subpath matches one of the export map keys. A key may hold
- * one `*`, which matches any text (including `/`), as in Node. Like Node, the
- * text a `*` matches can't hold empty, `.`, `..`, or `node_modules` segments.
+ * one `*`, which matches any text (including `/`), as in Node.
  *
  * @param {string} subpath - The subpath after the package name.
  * @param {Set<string>} keys - Export map keys without the leading `./`.
@@ -38,20 +62,12 @@ function isExported(subpath, keys) {
     if (
       subpath.length > prefix.length + suffix.length &&
       subpath.startsWith(prefix) &&
-      subpath.endsWith(suffix)
+      subpath.endsWith(suffix) &&
+      isValidPatternMatch(
+        subpath.slice(prefix.length, subpath.length - suffix.length)
+      )
     ) {
-      const match = subpath.slice(
-        prefix.length,
-        subpath.length - suffix.length
-      );
-      const invalid = match
-        .split('/')
-        .some((part) =>
-          ['', '.', '..', 'node_modules'].includes(part.toLowerCase())
-        );
-      if (!invalid) {
-        return true;
-      }
+      return true;
     }
   }
   return false;

@@ -105,6 +105,10 @@ test('reports each invalid specifier once', () => {
     '@adobe/spectrum-wc-core/components/badge/../mixins.js': 'coreEntry',
     '@adobe/spectrum-wc-core/components//Badge.base.js': 'coreEntry',
     '@adobe/spectrum-wc-core/components/node_modules/x.js': 'coreEntry',
+    '@adobe/spectrum-wc-core/components/badge/%2e%2e/Icon.base.js': 'coreEntry',
+    '@adobe/spectrum-wc-core/components/badge/x%2fBadge.base.js': 'coreEntry',
+    '@adobe/spectrum-wc-core/components/badge/x%5cBadge.base.js': 'coreEntry',
+    '@adobe/spectrum-wc-core/components/badge/%E0%A4%A.js': 'coreEntry',
   };
   for (const [specifier, expected] of Object.entries(invalid)) {
     assert.deepEqual(
