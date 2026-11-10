@@ -1,0 +1,144 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../../.storybook/blocks';
+
+import * as Stories from './stories/thread-alert.stories';
+
+<Meta of={Stories} />
+
+<DocsHeader />
+
+## Anatomy
+
+- **Status icon**: Decorative workflow icon selected by the variant; neutral messages have no icon.
+- **Message**: Meaningful text or semantic HTML in the default slot.
+- **Optional heading**: A consumer-chosen `<h2>` through `<h6>` in the `heading` slot.
+- **Inline actions**: Named buttons or native links in the `actions` slot.
+- **Optional dismissal**: A [Close button](../?path=/docs/components-close-button--docs) in the `dismiss` slot, with a localized `accessible-label`.
+
+The composed order is icon, heading, message, actions, then dismissal. Keep consumer markup in that same order.
+
+<Canvas of={Stories.Anatomy} />
+
+## Options
+
+### Semantic variants
+
+Set the `variant` HTML attribute to `informative`, `positive`, `notice`, `negative`, or `neutral`. Omit it for the informative appearance. This is a CSS-only attribute: use markup or `setAttribute('variant', value)`, not a `variant` JavaScript property.
+
+Informative messages use an info-circle icon; positive messages use checkmark-circle; notice messages use alert-diamond; negative messages use alert-triangle. Include the status meaning in the message when it matters. Color and decorative icons do not replace meaningful text.
+
+The close button is always inline. There is no placement attribute or floating layout.
+
+<Canvas of={Stories.SemanticVariants} />
+
+### Optional controls
+
+Omit `actions` content when there is no action. Omit `dismiss` content when the message cannot be dismissed. The pattern does not generate controls or reserve empty trailing space.
+
+Import the controls you provide through their existing package paths:
+
+```ts
+import '@adobe/spectrum-wc/patterns/ai-toolkit/thread-alert/swc-thread-alert.js';
+import '@adobe/spectrum-wc/components/button/swc-button.js';
+import '@adobe/spectrum-wc/components/close-button/swc-close-button.js';
+import '@adobe/spectrum-wc/swc.css';
+```
+
+```html
+<swc-thread-alert variant="notice">
+  <span>Message text</span>
+  <swc-button slot="actions" size="s">Try again</swc-button>
+  <swc-close-button
+    slot="dismiss"
+    size="s"
+    accessible-label="Dismiss message"
+  ></swc-close-button>
+</swc-thread-alert>
+```
+
+Handle retry and dismissal on the slotted controls. The pattern dispatches no custom events, does not remove itself, and does not intercept existing `click` events. Before removing a message containing focus, the app moves focus to an appropriate remaining control.
+
+<Canvas of={Stories.OptionalControls} />
+
+## States
+
+The message has no built-in pending or disabled state. Set these states on the slotted controls when appropriate. For a busy [Button](../?path=/docs/components-button--docs), use `pending` and a localized `pending-label` rather than combining `pending` and `disabled`.
+
+<Canvas of={Stories.States} />
+
+## Behaviors
+
+### Text wrapping
+
+The pattern fills its container and grows with its content. Message text wraps, including long request identifiers, instead of truncating. Controls stay in normal flow and can wrap when space is constrained. The 451px width in these examples belongs to the demo, not the component.
+
+<Canvas of={Stories.TextWrapping} />
+
+## Accessibility
+
+### Features
+
+Static messages have no generated role, live region, or automatic focus. The heading slot preserves the consumer's heading level. Decorative icons stay out of the accessibility tree.
+
+Slotted controls keep their existing native semantics, accessible names, keyboard activation, and focus indicators. <kbd>Tab</kbd> and <kbd>Shift</kbd> + <kbd>Tab</kbd> move between controls in composed order; <kbd>Enter</kbd> and <kbd>Space</kbd> activate buttons. Links retain native link behavior. There is no toolbar, focus trap, arrow-key navigation, or Escape-to-dismiss handler.
+
+<Canvas of={Stories.Accessibility} />
+
+### Best practices
+
+Give each action visible text, or use the existing `accessible-label` API for icon-only buttons. A close button always needs a localized `accessible-label`, such as `Dismiss message`. Do not add a redundant button role or name the layout wrapper after a design layer.
+
+Choose a heading level that fits the surrounding page. Do not rely on an internal `aria-labelledby` reference to a heading across a shadow boundary.
+
+Keep controls at least 24 by 24 CSS pixels. Preserve visible, unclipped focus indicators. Verify customized text, icons, and focus indicators against their rendered backgrounds in every supported theme.
+
+Automated checks do not establish WCAG conformance. Screen-reader announcement timing, reading order in the consuming page, and appropriate focus restoration after dismissal also need manual review.
+
+<Canvas of={Stories.DarkTheme} />
+
+The layout uses logical spacing and preserves action order in right-to-left contexts.
+
+<Canvas of={Stories.RightToLeft} />
+
+### Dynamic insertion
+
+The app announces dynamically inserted content through a live region that exists before the change, or deliberately moves focus to the message. Do not add `role="alert"`, `role="status"`, or `aria-live` to the thread alert itself.
+
+For deliberate focus, supply `tabindex="-1"` and call the inherited `focus()` method after rendering. This creates no extra sequential tab stop. The host shows a focus indicator. There is no custom autofocus option.
+
+```ts
+const message = document.createElement('swc-thread-alert');
+message.setAttribute('tabindex', '-1');
+message.textContent = 'Your request is ready.';
+container.append(message);
+await message.updateComplete;
+message.focus();
+```
+
+This application example exposes the pre-existing live region as visible announcement text so its updates can be inspected. It is not part of the component's shadow DOM.
+
+<Canvas of={Stories.DynamicInsertion} />
+
+## Appendix
+
+### Design handoff decisions
+
+This is a new AI Toolkit pattern, not a replacement for a 1st-gen component. Reused buttons, icons, attributes, and tokens are available in `@adobe/spectrum-wc@2.0.0-beta.6` and `@adobe/spectrum-wc-icons@2.0.0-beta.6`.
+
+| Design finding                                                 | Resolution                                                                                                                             |
+| -------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| Low-confidence button and close-button mappings                | Reuse the existing small Button and Close button with their native semantics.                                                          |
+| Unsupported `Show label=True`                                  | Keep visible `Try again` text; do not invent a `show-label` attribute.                                                                 |
+| Missing close-button name                                      | The consumer supplies localized `accessible-label`.                                                                                    |
+| Untokenized 2% black surface and 3% black border               | Use `background-layer-1-color` and `gray-100`. These theme-aware replacements intentionally change translucency and exact colors.      |
+| Missing focus and pressed design states                        | Preserve the reused controls' runtime states and focus indicators.                                                                     |
+| Low-confidence status icon mapping                             | Use the four existing workflow icons matching the inspected variant matrix, not one notice icon for every variant.                     |
+| Export includes floating close placement                       | Support inline placement only, as scoped for this pattern.                                                                             |
+| Fixed geometry and value-only token matches                    | Use verified spacing, typography, and radius tokens; allow responsive width and content-driven height rather than forcing 451 by 32px. |
+| Suggested `Trailing` group or toolbar                          | Keep a plain layout wrapper without a layer-name label or toolbar semantics.                                                           |
+| Scaffold properties, local types, and internal dismiss control | Keep the pattern render/styles-only, with a CSS attribute and consumer-owned controls. No core changes.                                |
+| Dynamic announcements and headings                             | Keep announcements/focus in the application and heading semantics in the consumer slot.                                                |
+
+The `--swc-thread-alert-*` properties in the generated API table provide token-backed overrides for the surface, border, typography, spacing, status icon, and programmatic focus indicator. Child controls retain their own styling APIs. Consumer headings retain their own typography.
+
+<DocsFooter />

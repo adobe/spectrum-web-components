@@ -1,0 +1,120 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+:host {
+  display: block;
+  min-inline-size: 0;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.swc-ThreadAlert {
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: var(--swc-thread-alert-gap, token("base-gap-medium"));
+  align-items: center;
+  padding-block: var(--swc-thread-alert-padding-block, token("base-padding-vertical-small"));
+  padding-inline-start: var(--swc-thread-alert-padding-inline-start, token("spacing-100"));
+  padding-inline-end: var(--swc-thread-alert-padding-inline-end, token("accessory-item-padding-medium"));
+  font-family: var(--swc-thread-alert-font-family, token("sans-serif-font"));
+  font-size: var(--swc-thread-alert-font-size, token("detail-size-s"));
+  font-weight: var(--swc-thread-alert-font-weight, token("detail-sans-serif-font-weight"));
+  line-height: var(--swc-thread-alert-line-height, token("line-height-font-size-75"));
+  color: var(--swc-thread-alert-content-color, token("neutral-content-color-default"));
+  background-color: var(--swc-thread-alert-background-color, token("background-layer-1-color"));
+  border: var(--swc-thread-alert-border-width, token("border-width-100")) solid var(--swc-thread-alert-border-color, token("gray-100"));
+  border-radius: var(--swc-thread-alert-border-radius, token("corner-radius-700"));
+}
+
+.swc-ThreadAlert-icon {
+  display: none;
+  flex: 0 0 auto;
+  margin-inline-end: var(--swc-thread-alert-gap, token("base-gap-medium"));
+}
+
+.swc-ThreadAlert-icon > * {
+  --swc-icon-inline-size: var(--swc-thread-alert-icon-size, token("workflow-icon-medium"));
+  --swc-icon-block-size: var(--swc-icon-inline-size);
+}
+
+.swc-ThreadAlert-icon--informative {
+  --swc-icon-color: var(--swc-thread-alert-icon-color, token("icon-color-informative"));
+}
+
+.swc-ThreadAlert-icon--positive {
+  --swc-icon-color: var(--swc-thread-alert-icon-color, token("icon-color-positive"));
+}
+
+.swc-ThreadAlert-icon--notice {
+  --swc-icon-color: var(--swc-thread-alert-icon-color, token("icon-color-notice"));
+}
+
+.swc-ThreadAlert-icon--negative {
+  --swc-icon-color: var(--swc-thread-alert-icon-color, token("icon-color-negative"));
+}
+
+.swc-ThreadAlert-content {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+}
+
+:host(:not([variant])) .swc-ThreadAlert-icon--informative,
+:host([variant="informative"]) .swc-ThreadAlert-icon--informative,
+:host([variant="positive"]) .swc-ThreadAlert-icon--positive,
+:host([variant="notice"]) .swc-ThreadAlert-icon--notice,
+:host([variant="negative"]) .swc-ThreadAlert-icon--negative {
+  display: block;
+}
+
+:host(:focus) {
+  border-radius: var(--swc-thread-alert-border-radius, token("corner-radius-700"));
+  outline: var(--swc-thread-alert-focus-indicator-width, token("focus-indicator-thickness")) solid var(--swc-thread-alert-focus-indicator-color, token("focus-indicator-color"));
+  outline-offset: var(--swc-thread-alert-focus-indicator-offset, token("focus-ring-gap"));
+}
+
+slot {
+  display: contents;
+}
+
+.swc-ThreadAlert-content ::slotted(*) {
+  margin: 0;
+}
+
+/* Slotted controls supply spacing only when present, without an empty wrapper. */
+::slotted([slot="actions"]) {
+  margin-inline-start: var(--swc-thread-alert-gap, token("base-gap-medium"));
+}
+
+::slotted([slot="dismiss"]) {
+  margin-inline-start: var(--swc-thread-alert-trailing-gap, var(--swc-thread-alert-gap, token("base-gap-medium")));
+}
+
+@media (forced-colors: active) {
+  .swc-ThreadAlert {
+    color: CanvasText;
+    background-color: Canvas;
+    border-color: CanvasText;
+  }
+
+  .swc-ThreadAlert-icon {
+    --swc-icon-color: CanvasText;
+  }
+}
