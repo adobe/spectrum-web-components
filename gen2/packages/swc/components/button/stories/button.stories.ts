@@ -21,7 +21,7 @@ import {
   type ButtonFillStyle,
   type ButtonStaticColor,
   type ButtonVariant,
-} from '@adobe/spectrum-wc-core/components/button.js';
+} from '@adobe/spectrum-wc-core/components/button/Button.types.js';
 
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc-icons/swc-icon-add.js';

@@ -25,7 +25,7 @@ import {
   type BadgeSize,
   FIXED_VALUES,
   type FixedValues,
-} from '@adobe/spectrum-wc-core/components/badge.js';
+} from '@adobe/spectrum-wc-core/components/badge/Badge.types.js';
 
 import '@adobe/spectrum-wc/components/badge/swc-badge.js';
 import '@adobe/spectrum-wc-icons/swc-icon-alert-triangle.js';

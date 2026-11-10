@@ -35,13 +35,17 @@ import globals from 'globals';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 import { swcPlugin } from '@spectrum-web-components/eslint-plugin';
 
-// Published `@adobe/spectrum-wc-core` subpaths (for example `mixins.js`), read
-// from its export map so `swc/gen2-package-imports` allows exactly these.
-const coreExportSubpaths = Object.keys(
+// Published `@adobe/spectrum-wc-core` subpaths (for example `mixins.js` or the
+// `components/*.js` wildcard), read from its export map so
+// `swc/gen2-package-imports` allows exactly these. Keys that map to `null` are
+// blocked, so they are skipped.
+const coreExportSubpaths = Object.entries(
   JSON.parse(
     readFileSync(resolve(__dirname, 'gen2/packages/core/package.json'), 'utf8')
   ).exports
-).map((key) => key.replace(/^\.\//, ''));
+)
+  .filter(([, target]) => target !== null)
+  .map(([key]) => key.replace(/^\.\//, ''));
 
 // ────────────────────────────────────────────────────────────────────────────────
 // Package.json key ordering for jsonc/sort-keys

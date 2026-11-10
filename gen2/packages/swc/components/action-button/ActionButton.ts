@@ -20,8 +20,8 @@ import {
   ACTION_BUTTON_VALID_SIZES,
   type ActionButtonSize,
   type ActionButtonStaticColor,
-} from '@adobe/spectrum-wc-core/components/action-button.js';
-import { ButtonBase } from '@adobe/spectrum-wc-core/components/button.js';
+} from '@adobe/spectrum-wc-core/components/action-button/ActionButton.types.js';
+import { ButtonBase } from '@adobe/spectrum-wc-core/components/button/Button.base.js';
 import { PendingMixin } from '@adobe/spectrum-wc-core/mixins.js';
 import { validateEnum } from '@adobe/spectrum-wc-core/utils.js';
 

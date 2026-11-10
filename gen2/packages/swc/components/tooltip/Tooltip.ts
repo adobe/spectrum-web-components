@@ -11,7 +11,7 @@
  */
 import { CSSResultArray, html, TemplateResult } from 'lit';
 
-import { TooltipBase } from '@adobe/spectrum-wc-core/components/tooltip.js';
+import { TooltipBase } from '@adobe/spectrum-wc-core/components/tooltip/Tooltip.base.js';
 
 import styles from './tooltip.css';
 

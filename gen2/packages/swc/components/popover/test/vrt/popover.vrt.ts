@@ -19,7 +19,7 @@ import { Popover } from '@adobe/spectrum-wc/components/popover.js';
 import {
   POPOVER_VALID_PLACEMENTS,
   POPOVER_VALID_SIZES,
-} from '@adobe/spectrum-wc-core/components/popover.js';
+} from '@adobe/spectrum-wc-core/components/popover/Popover.types.js';
 
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc/components/popover/swc-popover.js';

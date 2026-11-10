@@ -18,7 +18,7 @@ import {
   THUMBNAIL_VALID_SIZES,
   type ThumbnailFit,
   type ThumbnailSize,
-} from '@adobe/spectrum-wc-core/components/thumbnail.js';
+} from '@adobe/spectrum-wc-core/components/thumbnail/Thumbnail.types.js';
 
 import '@adobe/spectrum-wc/components/thumbnail/swc-thumbnail.js';
 

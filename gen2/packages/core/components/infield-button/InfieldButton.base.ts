@@ -12,7 +12,7 @@
 
 import { property } from 'lit/decorators.js';
 
-import { ButtonBase } from '@adobe/spectrum-wc-core/components/button.js';
+import { ButtonBase } from '@adobe/spectrum-wc-core/components/button/Button.base.js';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element.js';
 
 import {

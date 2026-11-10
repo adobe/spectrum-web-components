@@ -19,7 +19,7 @@ import { swcPlugin } from '../index.js';
 
 const ruleId = 'swc/gen2-package-imports';
 const coreExports = [
-  'components/badge.js',
+  'components/*.js',
   'controllers.js',
   'controllers/hover-controller.js',
   'controllers/language-resolution.js',
@@ -56,7 +56,9 @@ test('allows published entry points', () => {
     '@adobe/spectrum-wc/swc.css',
     '@adobe/spectrum-wc/customElements',
     '@adobe/spectrum-wc-core/mixins.js',
-    '@adobe/spectrum-wc-core/components/badge.js',
+    '@adobe/spectrum-wc-core/components/badge/Badge.base.js',
+    '@adobe/spectrum-wc-core/components/badge/Badge.types.js',
+    '@adobe/spectrum-wc-core/components/color-handle/color-contrast.js',
     '@adobe/spectrum-wc-core/controllers/language-resolution.js',
     '@adobe/spectrum-wc-core/directives/pending-spinner.js',
     '@adobe/spectrum-wc-icons',
@@ -97,6 +99,10 @@ test('reports each invalid specifier once', () => {
     '@adobe/spectrum-wc-core/mixins/sized-mixin.js': 'coreEntry',
     '@adobe/spectrum-wc-core/Mixins.js': 'coreEntry',
     '@adobe/spectrum-wc-core/controllers/not-exported.js': 'coreEntry',
+    '@adobe/spectrum-wc-core/components/badge': 'coreEntry',
+    '@adobe/spectrum-wc-core/components/badge.js': 'coreComponentFile',
+    '@adobe/spectrum-wc-core/components/badge/index.js': 'coreEntry',
+    '@adobe/spectrum-wc-core/components/badge/../mixins.js': 'coreEntry',
   };
   for (const [specifier, expected] of Object.entries(invalid)) {
     assert.deepEqual(
@@ -151,10 +157,17 @@ test('falls back to the entry-point shape without coreExports', () => {
   const settings = { options: {} };
   assert.deepEqual(
     messageIds(
-      `import '@adobe/spectrum-wc-core/components/anything.js';`,
+      `import '@adobe/spectrum-wc-core/components/anything/Anything.base.js';`,
       settings
     ),
     []
+  );
+  assert.deepEqual(
+    messageIds(
+      `import '@adobe/spectrum-wc-core/components/anything.js';`,
+      settings
+    ),
+    ['coreComponentFile']
   );
   assert.deepEqual(
     messageIds(

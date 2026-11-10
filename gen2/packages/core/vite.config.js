@@ -56,6 +56,33 @@ function scanBarrels(dir, prefix) {
   return entries;
 }
 
+// Helper to find component files. Components have no barrel: consumers import
+// each file directly (for example `components/badge/Badge.base.js`), so every
+// file is an entry and keeps all of its exports.
+function scanComponentFiles(dir) {
+  const entries = {};
+  for (const name of readdirSync(dir)) {
+    const componentDir = resolve(dir, name);
+    if (!statSync(componentDir).isDirectory()) {
+      continue;
+    }
+    for (const item of readdirSync(componentDir)) {
+      if (
+        !item.endsWith('.ts') ||
+        /\.(d|test|stories)\.ts$/.test(item) ||
+        !statSync(resolve(componentDir, item)).isFile()
+      ) {
+        continue;
+      }
+      entries[`components/${name}/${item.replace(/\.ts$/, '')}`] = resolve(
+        componentDir,
+        item
+      );
+    }
+  }
+  return entries;
+}
+
 // Automatically discover entry points
 function getEntries() {
   const entries = {};
@@ -63,11 +90,8 @@ function getEntries() {
   // Find the top-level barrels (element.ts, mixins.ts, controllers.ts, ...)
   Object.assign(entries, scanBarrels(__dirname, ''));
 
-  // Find all components/*.ts barrels
-  Object.assign(
-    entries,
-    scanBarrels(resolve(__dirname, 'components'), 'components')
-  );
+  // Find all components/<name>/*.ts files
+  Object.assign(entries, scanComponentFiles(resolve(__dirname, 'components')));
 
   // Find all element/*.ts files
   Object.assign(entries, scanTsFiles(resolve(__dirname, 'element'), 'element'));

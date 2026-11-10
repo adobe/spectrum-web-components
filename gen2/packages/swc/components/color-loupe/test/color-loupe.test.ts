@@ -14,8 +14,8 @@ import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import { ColorLoupe } from '@adobe/spectrum-wc/components/color-loupe.js';
-import { computeBorderAlpha } from '@adobe/spectrum-wc-core/components/color-handle.js';
-import { COLOR_LOUPE_ALPHA_FLOOR } from '@adobe/spectrum-wc-core/components/color-loupe.js';
+import { computeBorderAlpha } from '@adobe/spectrum-wc-core/components/color-handle/color-contrast.js';
+import { COLOR_LOUPE_ALPHA_FLOOR } from '@adobe/spectrum-wc-core/components/color-loupe/ColorLoupe.base.js';
 
 import '@adobe/spectrum-wc/components/color-loupe.js';
 

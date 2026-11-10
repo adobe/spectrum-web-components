@@ -23,7 +23,7 @@
 - [File set per component](#file-set-per-component)
 - [Where types files live](#where-types-files-live)
 - [Export patterns](#export-patterns)
-    - [Core barrel](#core-barrel)
+    - [Core component files](#core-component-files)
     - [SWC barrel](#swc-barrel)
     - [SWC registration module](#swc-registration-module)
 
@@ -100,7 +100,7 @@ import badgeStyles from './badge.css';
 
 Use `.js` extensions for relative imports, including imports of `.ts` and `.tsx` files. Never use `.ts` in import paths. The linter (`import/extensions`) enforces this for relative imports, including in gen2 Storybook config. It skips package imports, because each package's `exports` map defines its valid paths, so follow that package's documented paths (for example, `lit/decorators.js`). For `@adobe/spectrum-wc*` packages, a second rule (`swc/gen2-package-imports`) checks that each import, including dynamic imports and `import()` types, uses a published `.js` entry point.
 
-Import gen2 packages through their published entry points: the sibling barrel (`@adobe/spectrum-wc/components/badge.js`, `@adobe/spectrum-wc-core/mixins.js`), not an `index.js` path or a file inside a core folder. For example, import `ElementSize` from `@adobe/spectrum-wc-core/mixins.js`, not from `@adobe/spectrum-wc-core/mixins/sized-mixin.js`.
+Import gen2 packages through their published entry points: the sibling barrel (`@adobe/spectrum-wc/components/badge.js`, `@adobe/spectrum-wc-core/mixins.js`), not an `index.js` path or a file inside a core folder. For example, import `ElementSize` from `@adobe/spectrum-wc-core/mixins.js`, not from `@adobe/spectrum-wc-core/mixins/sized-mixin.js`. Core components are the exception: they have no barrel, so import each component file directly (`@adobe/spectrum-wc-core/components/badge/Badge.base.js`).
 
 ```ts
 // ✅ Good
@@ -144,13 +144,13 @@ import { classMap } from 'lit/directives/class-map.js';
 import { when } from 'lit/directives/when.js';
 
 // Group 2: Internal packages
+import { BadgeBase } from '@adobe/spectrum-wc-core/components/badge/Badge.base.js';
 import {
   BADGE_VALID_SIZES,
   BADGE_VARIANTS,
   BADGE_VARIANTS_COLOR,
-  BadgeBase,
   type BadgeVariant,
-} from '@adobe/spectrum-wc-core/components/badge.js';
+} from '@adobe/spectrum-wc-core/components/badge/Badge.types.js';
 
 // Group 5: Style imports
 import styles from './badge.css';
@@ -183,13 +183,12 @@ Each component has files in two packages: **core** and **swc**.
 |---------|------|---------|
 | core | `Component.base.ts` | Abstract base class with behavior and API |
 | core | `Component.types.ts` | Constant arrays and TypeScript types |
-| core | `<name>.ts` (barrel) | Re-exports base class and types |
 | swc | `Component.ts` | Concrete class with styles and rendering |
 | swc | `component.css` | Component stylesheet |
 | swc | `swc-<name>.ts` | Registers the custom element |
 | swc | `<name>.ts` (barrel) | Re-exports the concrete class |
 
-The component files live in `gen2/packages/core/components/<name>/` and `gen2/packages/swc/components/<name>/`. Each barrel is a sibling `<name>.ts` file next to that folder, not an `index.ts` inside it, so every public import path ends in `.js`.
+The component files live in `gen2/packages/core/components/<name>/` and `gen2/packages/swc/components/<name>/`. The swc barrel is a sibling `<name>.ts` file next to its folder, not an `index.ts` inside it, so every public import path ends in `.js`. Core components have no barrel; the swc class imports the core files directly.
 
 **Example for Badge:**
 
@@ -197,7 +196,6 @@ The component files live in `gen2/packages/core/components/<name>/` and `gen2/pa
 |------|----------|
 | `Badge.base.ts` | `core/components/badge/Badge.base.ts` |
 | `Badge.types.ts` | `core/components/badge/Badge.types.ts` |
-| `badge.ts` | `core/components/badge.ts` |
 | `Badge.ts` | `swc/components/badge/Badge.ts` |
 | `badge.css` | `swc/components/badge/badge.css` |
 | `swc-badge.ts` | `swc/components/badge/swc-badge.ts` |
@@ -215,20 +213,18 @@ gen2/packages/swc/components/badge/Badge.types.ts      ❌ Wrong location
 The concrete class in swc imports types from core through the package path:
 
 ```ts
-import {
-  type BadgeVariant,
-} from '@adobe/spectrum-wc-core/components/badge.js';
+import type { BadgeVariant } from '@adobe/spectrum-wc-core/components/badge/Badge.types.js';
 ```
 
 ## Export patterns
 
-### Core barrel
+### Core component files
 
-The core barrel, `core/components/badge.ts`, re-exports everything from the base class and the types file. It uses wildcard exports. Consumers import it as `@adobe/spectrum-wc-core/components/badge.js`.
+Core components have no barrel. The `./components/*.js` wildcard export publishes every file in a component folder, so the swc class imports the base class and the types file directly:
 
 ```ts
-export * from './badge/Badge.base.js';
-export * from './badge/Badge.types.js';
+import { BadgeBase } from '@adobe/spectrum-wc-core/components/badge/Badge.base.js';
+import { BADGE_VARIANTS } from '@adobe/spectrum-wc-core/components/badge/Badge.types.js';
 ```
 
 ### SWC barrel

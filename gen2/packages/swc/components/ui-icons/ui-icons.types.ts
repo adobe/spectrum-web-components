@@ -11,7 +11,7 @@
  */
 import { TemplateResult } from 'lit';
 
-import { IconSize } from '@adobe/spectrum-wc-core/components/icon.js';
+import { IconSize } from '@adobe/spectrum-wc-core/components/icon/Icon.types.js';
 
 /**
  * The numeral optical steps a UI icon can ship, from smallest to largest. These are

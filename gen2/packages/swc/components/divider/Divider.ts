@@ -13,7 +13,7 @@
 import { CSSResultArray, html, TemplateResult } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
 
-import { DividerBase } from '@adobe/spectrum-wc-core/components/divider.js';
+import { DividerBase } from '@adobe/spectrum-wc-core/components/divider/Divider.base.js';
 import { capitalize } from '@adobe/spectrum-wc-core/utils.js';
 
 import styles from './divider.css';

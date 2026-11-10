@@ -19,7 +19,7 @@ import {
   PROGRESS_CIRCLE_STATIC_COLORS,
   PROGRESS_CIRCLE_VALID_SIZES,
   type ProgressCircleSize,
-} from '@adobe/spectrum-wc-core/components/progress-circle.js';
+} from '@adobe/spectrum-wc-core/components/progress-circle/ProgressCircle.types.js';
 
 import '@adobe/spectrum-wc/components/progress-circle/swc-progress-circle.js';
 

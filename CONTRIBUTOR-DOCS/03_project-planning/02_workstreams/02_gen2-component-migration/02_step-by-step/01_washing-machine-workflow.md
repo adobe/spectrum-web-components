@@ -185,7 +185,7 @@ Before you start, know the split:
 <details>
 <summary>File layout</summary>
 
-- Core: `Component.base.ts`, `Component.types.ts`, plus the sibling barrel `components/<name>.ts`
+- Core: `Component.base.ts` and `Component.types.ts`, with no barrel
 - SWC: `Component.ts`, `component.css`, `swc-<tag>.ts`, `stories/`, `test/`, plus the sibling barrel `components/<name>.ts`
 
 </details>
@@ -237,11 +237,11 @@ Use the decision tree under **Decision trees** below. If the answer is "split," 
 
 ### What to do
 
-1. **Core:** Create `gen2/packages/core/components/<name>/` with `Component.base.ts` and `Component.types.ts`, and add the barrel `gen2/packages/core/components/<name>.ts` next to that folder.
+1. **Core:** Create `gen2/packages/core/components/<name>/` with `Component.base.ts` and `Component.types.ts`. Core components have no barrel: the SWC class imports each file directly, for example `@adobe/spectrum-wc-core/components/<name>/Component.base.js`.
 2. **SWC:** Create `gen2/packages/swc/components/<name>/` with `Component.ts`, `component.css`, `swc-<tag>.ts`, `stories/`, `test/`.
    - `gen2/packages/swc/components/<name>.ts` — the barrel, next to the folder. Class re-export only (`export * from './<name>/Component.js'`). No `defineElement`, no `HTMLElementTagNameMap`.
    - `swc-<tag>.ts` — side-effect entry point that calls `defineElement('swc-<tag>', Component)` and declares the `HTMLElementTagNameMap` augmentation. Use `gen2/packages/swc/components/badge/swc-badge.ts` as the reference.
-3. **Wire up exports:** The SWC wildcard exports already make the side-effect file importable as `@adobe/spectrum-wc/components/<name>/swc-<tag>.js` and the barrel importable as `@adobe/spectrum-wc/components/<name>.js`. Core exports are explicit: add a `./components/<name>.js` entry to the core `package.json` exports that points at `./dist/components/<name>.js` and `./dist/components/<name>.d.ts`.
+3. **Wire up exports:** The SWC wildcard exports already make the side-effect file importable as `@adobe/spectrum-wc/components/<name>/swc-<tag>.js` and the barrel importable as `@adobe/spectrum-wc/components/<name>.js`. The core `./components/*.js` wildcard export already covers every core component file, so neither `package.json` needs a change.
 
 See [Step 2](02_factor-rendering-out-of-1st-gen-component.md) and [Step 3](03_move-base-class-to-gen2-core.md) for directory layout, code structure, and reference implementations (Badge).
 

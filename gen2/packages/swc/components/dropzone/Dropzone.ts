@@ -13,7 +13,7 @@
 import { CSSResultArray, html, PropertyValues, TemplateResult } from 'lit';
 import { property } from 'lit/decorators.js';
 
-import { DropzoneBase } from '@adobe/spectrum-wc-core/components/dropzone.js';
+import { DropzoneBase } from '@adobe/spectrum-wc-core/components/dropzone/Dropzone.base.js';
 import { isDebug, warnIf } from '@adobe/spectrum-wc-core/utils.js';
 
 import visuallyHiddenStyles from '../../stylesheets/_lit-styles/visually-hidden.css';

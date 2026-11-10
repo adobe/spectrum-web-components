@@ -10,17 +10,53 @@
  * governing permissions and limitations under the License.
  */
 
-// Core entry points when no `coreExports` option is given: folder barrels and
-// one level of `components/`, `controllers/`, or `directives/` barrels.
+// Core entry points when no `coreExports` option is given: folder barrels, one
+// level of `controllers/` or `directives/` barrels, and component files.
 const CORE_ENTRY_SHAPE =
-  /^((element|mixins|utils|controllers|directives)|(components|controllers|directives)\/[a-z0-9-]+)\.js$/;
+  /^((element|mixins|utils|controllers|directives)|(controllers|directives)\/[a-z0-9-]+|components\/[a-z0-9-]+\/[A-Za-z0-9.-]+)\.js$/;
+
+/**
+ * Returns whether a subpath matches one of the export map keys. A key may hold
+ * one `*`, which matches any text (including `/`), as in Node.
+ *
+ * @param {string} subpath - The subpath after the package name.
+ * @param {Set<string>} keys - Export map keys without the leading `./`.
+ * @returns {boolean} Whether the export map publishes the subpath.
+ */
+function isExported(subpath, keys) {
+  if (keys.has(subpath)) {
+    return true;
+  }
+  for (const key of keys) {
+    const star = key.indexOf('*');
+    if (star === -1) {
+      continue;
+    }
+    const prefix = key.slice(0, star);
+    const suffix = key.slice(star + 1);
+    if (
+      subpath.length > prefix.length + suffix.length &&
+      subpath.startsWith(prefix) &&
+      subpath.endsWith(suffix)
+    ) {
+      const match = subpath.slice(
+        prefix.length,
+        subpath.length - suffix.length
+      );
+      if (!match.split('/').some((part) => ['', '.', '..'].includes(part))) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
 
 /**
  * Returns the problem with a gen2 package specifier, or `null` when it uses a
  * published entry point. Each specifier gets at most one problem.
  *
  * @param {string} specifier - The module specifier.
- * @param {Set<string> | null} coreExports - Published core subpaths, such as `mixins.js`.
+ * @param {Set<string> | null} coreExports - Published core subpaths, such as `mixins.js` or `components/*.js`.
  * @returns {{ messageId: string, data?: Record<string, string> } | null} The problem, if any.
  */
 export function findGen2ImportProblem(specifier, coreExports) {
@@ -42,8 +78,14 @@ export function findGen2ImportProblem(specifier, coreExports) {
         },
       };
     }
+    if (/^components\/[^/]+\.js$/.test(subpath)) {
+      return { messageId: 'coreComponentFile' };
+    }
+    if (/(^|\/)index\.js$/.test(subpath)) {
+      return { messageId: 'coreEntry' };
+    }
     const published = coreExports
-      ? coreExports.has(subpath)
+      ? isExported(subpath, coreExports)
       : CORE_ENTRY_SHAPE.test(subpath);
     return published ? null : { messageId: 'coreEntry' };
   }
@@ -145,7 +187,9 @@ export default {
       iconsIndex:
         "Import the package root '@adobe/spectrum-wc-icons' instead of 'index.js'.",
       coreEntry:
-        "Import core from a published entry point: a folder barrel such as '@adobe/spectrum-wc-core/mixins.js', or 'components/<name>.js', 'controllers/<name>.js', or 'directives/<name>.js'.",
+        "Import core from a published entry point: a folder barrel such as '@adobe/spectrum-wc-core/mixins.js', 'controllers/<name>.js', or 'directives/<name>.js', or a component file such as 'components/badge/Badge.base.js'.",
+      coreComponentFile:
+        "Core components have no barrel. Import the component file instead (for example '@adobe/spectrum-wc-core/components/badge/Badge.base.js' or 'components/badge/Badge.types.js').",
     },
   },
   create(context) {

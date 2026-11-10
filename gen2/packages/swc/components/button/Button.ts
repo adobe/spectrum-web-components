@@ -15,14 +15,14 @@ import { property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
+import { ButtonBase } from '@adobe/spectrum-wc-core/components/button/Button.base.js';
 import {
   BUTTON_FILL_STYLES,
   BUTTON_VARIANTS,
-  ButtonBase,
   type ButtonFillStyle,
   type ButtonStaticColor,
   type ButtonVariant,
-} from '@adobe/spectrum-wc-core/components/button.js';
+} from '@adobe/spectrum-wc-core/components/button/Button.types.js';
 import { PendingMixin } from '@adobe/spectrum-wc-core/mixins.js';
 import { validateEnum, warnIf } from '@adobe/spectrum-wc-core/utils.js';
 

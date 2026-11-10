@@ -15,7 +15,7 @@ import { expect, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import { Menu } from '@adobe/spectrum-wc/components/menu.js';
-import { MENU_PLACEMENTS } from '@adobe/spectrum-wc-core/components/menu.js';
+import { MENU_PLACEMENTS } from '@adobe/spectrum-wc-core/components/menu/Menu.types.js';
 
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc/components/menu/swc-menu.js';

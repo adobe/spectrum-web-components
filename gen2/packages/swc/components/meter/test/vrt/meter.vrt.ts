@@ -16,7 +16,7 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import {
   METER_VARIANTS,
   type MeterVariant,
-} from '@adobe/spectrum-wc-core/components/meter.js';
+} from '@adobe/spectrum-wc-core/components/meter/Meter.types.js';
 import {
   LINEAR_PROGRESS_LABEL_POSITIONS,
   LINEAR_PROGRESS_STATIC_COLORS,

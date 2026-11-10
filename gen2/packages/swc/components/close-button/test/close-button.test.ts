@@ -15,11 +15,11 @@ import { expect, userEvent } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import { CloseButton } from '@adobe/spectrum-wc/components/close-button.js';
+import { ButtonBase } from '@adobe/spectrum-wc-core/components/button/Button.base.js';
 import {
   BUTTON_STATIC_COLORS,
   BUTTON_VALID_SIZES,
-  ButtonBase,
-} from '@adobe/spectrum-wc-core/components/button.js';
+} from '@adobe/spectrum-wc-core/components/button/Button.types.js';
 
 import '@adobe/spectrum-wc/components/close-button/swc-close-button.js';
 

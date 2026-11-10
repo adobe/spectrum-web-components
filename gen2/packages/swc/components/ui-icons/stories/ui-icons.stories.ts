@@ -17,7 +17,7 @@ import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 import {
   ICON_VALID_SIZES,
   type IconSize,
-} from '@adobe/spectrum-wc-core/components/icon.js';
+} from '@adobe/spectrum-wc-core/components/icon/Icon.types.js';
 
 import '@adobe/spectrum-wc/components/ui-icons/swc-ui-icon.js';
 

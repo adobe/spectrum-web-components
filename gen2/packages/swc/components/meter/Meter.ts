@@ -14,11 +14,11 @@ import { CSSResultArray, html, nothing, TemplateResult } from 'lit';
 import { property } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
+import { MeterBase } from '@adobe/spectrum-wc-core/components/meter/Meter.base.js';
 import {
   METER_VARIANTS,
-  MeterBase,
   type MeterVariant,
-} from '@adobe/spectrum-wc-core/components/meter.js';
+} from '@adobe/spectrum-wc-core/components/meter/Meter.types.js';
 
 import sharedStyles from '../../stylesheets/_lit-styles/linear-progress-base.css';
 import styles from './meter.css';

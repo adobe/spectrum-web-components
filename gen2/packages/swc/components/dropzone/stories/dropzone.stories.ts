@@ -21,7 +21,7 @@ import type { Dropzone } from '@adobe/spectrum-wc/components/dropzone.js';
 import {
   DROPZONE_VALID_SIZES,
   type DropzoneSize,
-} from '@adobe/spectrum-wc-core/components/dropzone.js';
+} from '@adobe/spectrum-wc-core/components/dropzone/Dropzone.types.js';
 
 import '@adobe/spectrum-wc/components/badge/swc-badge.js';
 import '@adobe/spectrum-wc/components/button/swc-button.js';

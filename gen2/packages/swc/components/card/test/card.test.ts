@@ -19,7 +19,7 @@ import {
   CARD_DENSITIES,
   CARD_VARIANTS,
   SWC_CARD_CLICK_EVENT,
-} from '@adobe/spectrum-wc-core/components/card.js';
+} from '@adobe/spectrum-wc-core/components/card/Card.types.js';
 
 import '@adobe/spectrum-wc/components/card/swc-card.js';
 import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';

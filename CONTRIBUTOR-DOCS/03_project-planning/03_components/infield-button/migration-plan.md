@@ -153,7 +153,7 @@ This full modifier surface will not be carried forward to gen2.
 
 | Package | Role |
 | ------- | ---- |
-| `@adobe/spectrum-wc-core/components/button.js` | Provides gen2 `ButtonBase`, `BUTTON_VALID_SIZES`, `ObserveSlotPresence`, `ObserveSlotText` |
+| `@adobe/spectrum-wc-core/components/button/Button.base.js` and `Button.types.js` | Provide gen2 `ButtonBase`, `BUTTON_VALID_SIZES`, `ObserveSlotPresence`, `ObserveSlotText` |
 | `@adobe/spectrum-wc-core/element.js` | Provides `SpectrumElement` |
 | `@adobe/spectrum-wc-core/mixins.js` | Provides `SizedMixin` |
 | `spectrum-css` (`spectrum-two` branch) `components/infieldbutton/index.css` | S2 CSS baseline (**confirmed — Q2 resolved; see [Styling](#styling)**) |

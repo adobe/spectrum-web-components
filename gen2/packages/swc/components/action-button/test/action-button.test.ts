@@ -18,7 +18,7 @@ import { ActionButton } from '@adobe/spectrum-wc/components/action-button.js';
 import {
   ACTION_BUTTON_STATIC_COLORS,
   ACTION_BUTTON_VALID_SIZES,
-} from '@adobe/spectrum-wc-core/components/action-button.js';
+} from '@adobe/spectrum-wc-core/components/action-button/ActionButton.types.js';
 
 import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
 

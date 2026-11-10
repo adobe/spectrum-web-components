@@ -19,7 +19,7 @@ import {
   computeBorderAlpha,
   contrastRatio,
   findMinAlpha,
-} from '@adobe/spectrum-wc-core/components/color-handle.js';
+} from '@adobe/spectrum-wc-core/components/color-handle/color-contrast.js';
 
 import { getComponent } from '../../../utils/test-utils.js';
 import meta from '../stories/color-handle.stories.js';

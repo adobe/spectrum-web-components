@@ -22,7 +22,7 @@ import {
   type TextFieldNecessityIndicator,
   type TextFieldSize,
   type TextFieldStatus,
-} from '@adobe/spectrum-wc-core/components/text-field.js';
+} from '@adobe/spectrum-wc-core/components/text-field/TextField.types.js';
 
 import '@adobe/spectrum-wc/components/avatar/swc-avatar.js';
 import '@adobe/spectrum-wc/components/text-field/swc-text-field.js';

@@ -14,7 +14,7 @@ import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import { Tab, TabPanel, Tabs } from '@adobe/spectrum-wc/components/tabs.js';
-import { TABS_DIRECTIONS } from '@adobe/spectrum-wc-core/components/tabs.js';
+import { TABS_DIRECTIONS } from '@adobe/spectrum-wc-core/components/tabs/Tabs.types.js';
 
 import '@adobe/spectrum-wc/components/tabs/swc-tabs.js';
 import '@adobe/spectrum-wc/components/tabs/swc-tab.js';

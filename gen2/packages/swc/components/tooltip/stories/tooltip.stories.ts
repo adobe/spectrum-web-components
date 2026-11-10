@@ -20,7 +20,7 @@ import {
   TOOLTIP_VARIANTS,
   type TooltipPlacement,
   type TooltipVariant,
-} from '@adobe/spectrum-wc-core/components/tooltip.js';
+} from '@adobe/spectrum-wc-core/components/tooltip/Tooltip.types.js';
 
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc/components/popover/swc-popover.js';

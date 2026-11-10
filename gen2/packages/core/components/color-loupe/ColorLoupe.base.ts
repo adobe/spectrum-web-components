@@ -12,7 +12,7 @@
 
 import { property } from 'lit/decorators.js';
 
-import { computeBorderAlpha } from '@adobe/spectrum-wc-core/components/color-handle.js';
+import { computeBorderAlpha } from '@adobe/spectrum-wc-core/components/color-handle/color-contrast.js';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element.js';
 
 /**

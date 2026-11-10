@@ -18,7 +18,7 @@ import { Menu } from '@adobe/spectrum-wc/components/menu.js';
 import {
   MENU_PLACEMENTS,
   MENU_VALID_SIZES,
-} from '@adobe/spectrum-wc-core/components/menu.js';
+} from '@adobe/spectrum-wc-core/components/menu/Menu.types.js';
 import { isTopDismissible } from '@adobe/spectrum-wc-core/utils.js';
 
 import '@adobe/spectrum-wc/components/button/swc-button.js';

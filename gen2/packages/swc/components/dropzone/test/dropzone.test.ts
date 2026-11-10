@@ -22,7 +22,7 @@ import {
   SWC_DROPZONE_DRAGOVER_EVENT,
   SWC_DROPZONE_DROP_EVENT,
   SWC_DROPZONE_SHOULD_ACCEPT_EVENT,
-} from '@adobe/spectrum-wc-core/components/dropzone.js';
+} from '@adobe/spectrum-wc-core/components/dropzone/Dropzone.types.js';
 
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc/components/dropzone/swc-dropzone.js';

@@ -17,7 +17,7 @@ import { Asset } from '@adobe/spectrum-wc/components/asset.js';
 import {
   ASSET_BACKGROUND_VALUES,
   ASSET_FIT_VALUES,
-} from '@adobe/spectrum-wc-core/components/asset.js';
+} from '@adobe/spectrum-wc-core/components/asset/Asset.types.js';
 
 import '@adobe/spectrum-wc/components/asset/swc-asset.js';
 

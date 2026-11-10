@@ -13,7 +13,7 @@
 import { PropertyValues } from 'lit';
 import { property, queryAssignedElements } from 'lit/decorators.js';
 
-import type { ButtonBase } from '@adobe/spectrum-wc-core/components/button.js';
+import type { ButtonBase } from '@adobe/spectrum-wc-core/components/button/Button.base.js';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element.js';
 import { SizedMixin } from '@adobe/spectrum-wc-core/mixins.js';
 import { validateEnum } from '@adobe/spectrum-wc-core/utils.js';

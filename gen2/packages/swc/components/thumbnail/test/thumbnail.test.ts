@@ -19,7 +19,7 @@ import {
   THUMBNAIL_DEFAULT_FIT,
   THUMBNAIL_DEFAULT_SIZE,
   THUMBNAIL_VALID_FITS,
-} from '@adobe/spectrum-wc-core/components/thumbnail.js';
+} from '@adobe/spectrum-wc-core/components/thumbnail/Thumbnail.types.js';
 
 import '@adobe/spectrum-wc/components/thumbnail/swc-thumbnail.js';
 

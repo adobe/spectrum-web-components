@@ -12,14 +12,15 @@ core/
 ├── controllers/   # LanguageResolutionController, PlacementController, SlotPresenceController, SlotTextController, …
 ├── utils/         # capitalize, getLabelFromSlot
 ├── tools/         # build-time helpers, not built or published (icons/: shared icon generator helpers)
-└── components/    # One folder per component
-    ├── badge.ts     # Barrel: re-exports the base class and types
+└── components/    # One folder per component, no barrel
     └── badge/
         ├── Badge.base.ts    # Abstract base class — logic only, no render()
         └── Badge.types.ts   # Const arrays, enums, TypeScript types
 ```
 
-Barrels are sibling `<name>.ts` files, not `<name>/index.ts`, so every public import path ends in `.js` (for example `@adobe/spectrum-wc-core/components/badge.js`). The `package.json` exports list each barrel explicitly; when you add a barrel, add a matching `./<path>.js` entry.
+Folder barrels are sibling `<name>.ts` files, not `<name>/index.ts`, so every public import path ends in `.js` (for example `@adobe/spectrum-wc-core/mixins.js`). The `package.json` exports list each barrel explicitly; when you add a barrel, add a matching `./<path>.js` entry.
+
+Components have no barrel. Import each component file directly, for example `@adobe/spectrum-wc-core/components/badge/Badge.base.js` for the base class and `@adobe/spectrum-wc-core/components/badge/Badge.types.js` for its types. The `./components/*.js` wildcard export covers every component file, and each file is a build entry, so a new component needs no `package.json` change.
 
 Use [Badge](./components/badge/) as the reference implementation.
 

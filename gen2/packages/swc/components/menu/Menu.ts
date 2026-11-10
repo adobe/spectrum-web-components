@@ -12,7 +12,7 @@
 
 import { CSSResultArray, html, TemplateResult } from 'lit';
 
-import { MenuBase } from '@adobe/spectrum-wc-core/components/menu.js';
+import { MenuBase } from '@adobe/spectrum-wc-core/components/menu/Menu.base.js';
 
 import styles from './menu.css';
 

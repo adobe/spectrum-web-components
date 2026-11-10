@@ -14,10 +14,8 @@ import { CSSResultArray, html, nothing, TemplateResult } from 'lit';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { live } from 'lit/directives/live.js';
 
-import {
-  TextFieldBase,
-  type TextFieldSize,
-} from '@adobe/spectrum-wc-core/components/text-field.js';
+import { TextFieldBase } from '@adobe/spectrum-wc-core/components/text-field/TextField.base.js';
+import type { TextFieldSize } from '@adobe/spectrum-wc-core/components/text-field/TextField.types.js';
 import { SlotAttributePropagationController } from '@adobe/spectrum-wc-core/controllers.js';
 
 import '@adobe/spectrum-wc-icons/swc-icon-alert-triangle.js';

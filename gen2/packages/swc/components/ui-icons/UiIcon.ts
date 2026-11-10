@@ -12,7 +12,7 @@
 import { CSSResultArray, html, PropertyValues, TemplateResult } from 'lit';
 import { property } from 'lit/decorators.js';
 
-import { IconBase } from '@adobe/spectrum-wc-core/components/icon.js';
+import { IconBase } from '@adobe/spectrum-wc-core/components/icon/Icon.base.js';
 
 import { UI_ICONS, UiIconName } from './icon-set.js';
 import { resolveUiIconArt } from './ui-icons.types.js';
