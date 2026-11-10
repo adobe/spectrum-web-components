@@ -66,6 +66,26 @@ const isRowDisabled = (row: HTMLElement): boolean =>
   row.getAttribute('aria-disabled') === 'true';
 
 /**
+ * How long typed characters keep accumulating into one typeahead search. Long
+ * enough to type a word at speed, short enough that a pause starts over.
+ */
+const TYPEAHEAD_TIMEOUT_MS = 500;
+
+/**
+ * Whether a press is a printable character, which APG routes to typeahead
+ * rather than to navigation. `event.key` holds the character itself for
+ * printable keys and a name like `ArrowDown` for the rest, so a single code
+ * unit is the test. A modified press belongs to the app, and Space activates
+ * the row rather than searching.
+ */
+const isTypeaheadKey = (event: KeyboardEvent): boolean =>
+  event.key.length === 1 &&
+  event.key !== ' ' &&
+  !event.altKey &&
+  !event.ctrlKey &&
+  !event.metaKey;
+
+/**
  * Base class for the menu host. Implements the
  * {@link https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/ | menu button}
  * pattern: an externally-referenced trigger (`for`/`triggerElement`) opens a
@@ -237,7 +257,14 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
       return;
     }
     if (event.key === 'Tab') {
-      event.preventDefault();
+      // APG: Tab moves focus out of the menu and closes it, rather than moving
+      // between rows. Closed through `_hide()` rather than by assigning `open`,
+      // because that update is asynchronous and the browser would move focus
+      // out of the row before the menu got out of the way. `_hide()` reconciles
+      // synchronously through `_onBeforeToggle`, which restores focus to the
+      // trigger, so the default action this deliberately does not prevent
+      // carries on from there.
+      this._hide();
       return;
     }
     if (isMenuActivationKey(event)) {
@@ -255,8 +282,48 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
       document.addEventListener('keyup', this.releaseActivationKey, {
         capture: true,
       });
+      return;
+    }
+    if (isTypeaheadKey(event)) {
+      this.typeahead(event.key);
     }
   };
+
+  // APG's optional printable-character support: typing moves focus to the row
+  // whose label starts with what was typed. Buffered, so quick typing matches a
+  // prefix rather than restarting at every letter, and the buffer expires so the
+  // next search starts clean.
+  private _typeaheadPrefix = '';
+
+  private _typeaheadTimer?: ReturnType<typeof setTimeout>;
+
+  private typeahead(character: string): void {
+    this._typeaheadPrefix += character;
+    clearTimeout(this._typeaheadTimer);
+    this._typeaheadTimer = setTimeout(() => {
+      this._typeaheadPrefix = '';
+    }, TYPEAHEAD_TIMEOUT_MS);
+    // The controller owns which label a row answers to, reading `aria-label`
+    // and `aria-labelledby` before text, and applies the roving tabindex. It
+    // deliberately leaves the focus call to its host. No match means focus
+    // stays where it is, which is what APG asks for.
+    //
+    // A disabled row cannot be reached this way: the controller treats any
+    // element with a truthy `disabled` property as natively unfocusable and
+    // moves the tab stop to the first enabled row, and a row carries that
+    // property for its `aria-disabled` semantics. Arrow keys reach disabled
+    // rows because they do not go through this path.
+    if (
+      this.focusNavigation.focusFirstItemByTextPrefix(this._typeaheadPrefix)
+    ) {
+      this.focusNavigation.getActiveItem()?.focus({ preventScroll: true });
+    }
+  }
+
+  private clearTypeahead(): void {
+    clearTimeout(this._typeaheadTimer);
+    this._typeaheadPrefix = '';
+  }
 
   // True from the keydown that chose a row until that key comes back up. See
   // `handleKeyDown` for why the trigger has to ignore the rest of that press.
@@ -615,6 +682,7 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
     // Rows outlive the menu being closed, so a flag left on one would suppress
     // the ring on the next open.
     this.clearPointerFocus();
+    this.clearTypeahead();
     if (restoreFocusToTrigger) {
       this._interactiveElement?.focus({ preventScroll: true });
     }
@@ -685,5 +753,6 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
     });
     clearTimeout(this._releaseTimer);
     this._activationKeyHeld = false;
+    this.clearTypeahead();
   }
 }

@@ -708,30 +708,43 @@ export const TabTrapAndEnterClosesTest: Story = {
       );
     });
 
-    await step('Tab does not move focus out of the menu', async () => {
-      const active = document.activeElement;
-      // The trap is `preventDefault()` on the row's keydown, so assert that
-      // directly; `userEvent.tab()` moves focus itself and would pass here
-      // even if the menu stopped trapping.
-      expect(
-        pressFromActiveRow('Tab').defaultPrevented,
-        'Tab is trapped on the row'
-      ).toBe(true);
-      await userEvent.tab();
-      expect(document.activeElement, 'focus stays on the active row').toBe(
-        active
-      );
+    await step('Tab closes the menu and leaves it', async () => {
+      // APG: Tab moves focus out of the menu and closes it, rather than moving
+      // between rows. The default is deliberately not prevented, so the press
+      // carries focus on from the trigger the close restores it to.
+      const press = pressFromActiveRow('Tab');
+
+      expect(press.defaultPrevented, 'Tab is not swallowed').toBe(false);
+      await waitFor(() => expect(isMenuOpen(menu)).toBe(false));
+      expect(menu.open, 'the menu closes').toBe(false);
     });
 
-    await step('Shift+Tab does not move focus out of the menu', async () => {
-      const active = document.activeElement;
-      await userEvent.tab({ shift: true });
-      expect(document.activeElement, 'focus stays on the active row').toBe(
-        active
+    await step('Shift+Tab closes the menu too', async () => {
+      await userEvent.click(trigger);
+      await waitFor(() => expect(menu.open).toBe(true));
+
+      const active = document.activeElement as HTMLElement;
+      active.dispatchEvent(
+        new KeyboardEvent('keydown', {
+          key: 'Tab',
+          shiftKey: true,
+          bubbles: true,
+          composed: true,
+          cancelable: true,
+        })
       );
+
+      await waitFor(() => expect(menu.open, 'the menu closes').toBe(false));
     });
 
     await step('Enter on the focused row closes the menu', async () => {
+      // Reopened: the Tab steps above now leave the menu closed.
+      await userEvent.click(trigger);
+      await waitFor(() => expect(menu.open).toBe(true));
+      await waitFor(() =>
+        expect(document.activeElement).toBe(getItems(canvasElement)[0])
+      );
+
       let closeCount = 0;
       menu.addEventListener('swc-close', () => closeCount++);
       pressFromActiveRow('Enter');
@@ -1704,6 +1717,80 @@ export const ItemRoleIsAlwaysMenuitemTest: Story = {
 // ──────────────────────────────────────────────────────────────
 // TEST: Menu integration
 // ──────────────────────────────────────────────────────────────
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Typeahead
+// ──────────────────────────────────────────────────────────────
+
+export const ItemTypeaheadTest: Story = {
+  render: () => rowsInMenu(threeRows, 'typeahead-trigger'),
+  play: async ({ canvasElement, step }) => {
+    const trigger = canvasElement.querySelector(
+      '#typeahead-trigger'
+    ) as HTMLElement;
+    const menu = canvasElement.querySelector('swc-menu') as HTMLElement & {
+      open: boolean;
+    };
+
+    await userEvent.click(trigger);
+    await waitFor(() => expect(menu.open).toBe(true));
+    const rows = getRows(canvasElement);
+    await waitFor(() => expect(document.activeElement).toBe(rows[0]));
+
+    await step('a letter moves focus to the row it starts', async () => {
+      // Rows are Cut, Copy, Paste; focus starts on Cut.
+      rows[0].dispatchEvent(keyEvent('keydown', 'p'));
+
+      expect(document.activeElement, 'focus lands on Paste').toBe(rows[2]);
+      expect(menu.open, 'searching does not close the menu').toBe(true);
+    });
+
+    // The buffer is deliberately shared across presses, so each step that
+    // means to start a fresh search has to outwait it. Anything shorter and
+    // the previous step's letters are still part of the prefix.
+    const letItExpire = (): Promise<void> =>
+      new Promise((resolve) => setTimeout(resolve, 600));
+
+    await step('letters accumulate into one prefix', async () => {
+      await letItExpire();
+
+      // 'c' matches Cut. 'cu' has to still match it rather than restarting the
+      // search at 'u', which would find nothing and leave focus behind.
+      rows[2].dispatchEvent(keyEvent('keydown', 'c'));
+      expect(document.activeElement, 'c matches Cut').toBe(rows[0]);
+
+      rows[0].dispatchEvent(keyEvent('keydown', 'u'));
+      expect(document.activeElement, 'cu still matches Cut').toBe(rows[0]);
+
+      // Reaching the second row needs a prefix only it answers to. `Copy` is
+      // the disabled row here, and the focusgroup controller redirects the
+      // roving tab stop away from anything carrying a truthy `disabled`
+      // property, so typeahead cannot land there. See the note in the menu's
+      // `typeahead`.
+      await letItExpire();
+      rows[0].dispatchEvent(keyEvent('keydown', 'p'));
+      expect(document.activeElement, 'p reaches Paste').toBe(rows[2]);
+    });
+
+    await step('an unmatched letter leaves focus alone', async () => {
+      await letItExpire();
+
+      const before = document.activeElement;
+      rows[1].dispatchEvent(keyEvent('keydown', 'z'));
+
+      expect(document.activeElement, 'focus does not move').toBe(before);
+    });
+
+    await step('the buffer expires between searches', async () => {
+      await letItExpire();
+
+      // A bare 'p' only reaches Paste if 'z' is no longer part of the prefix.
+      rows[1].dispatchEvent(keyEvent('keydown', 'p'));
+
+      expect(document.activeElement, 'the search starts clean').toBe(rows[2]);
+    });
+  },
+};
 
 // ──────────────────────────────────────────────────────────────
 // TEST: Hover follows the pointer, not the cursor's resting place

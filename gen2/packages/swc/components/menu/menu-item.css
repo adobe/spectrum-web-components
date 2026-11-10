@@ -126,7 +126,12 @@
  *    STATES
  * ────────────── */
 
-:host(:hover:not([disabled])) {
+/* Gated on `pointer-focus`, which the owning menu sets on the row the pointer
+ * put focus on and clears on the next key press. The pointer does not leave the
+ * row when the keyboard takes over, so `:hover` alone keeps painting it while
+ * the keyboard moves focus elsewhere, leaving two rows looking active. One row
+ * is highlighted at a time, and it belongs to whichever input is in use. */
+:host(:hover[pointer-focus]:not([disabled])) {
   --swc-menu-item-background-color: token("menu-item-background-color-hover");
   --swc-menu-item-label-color: token("neutral-content-color-hover");
   --swc-menu-item-description-color: token("neutral-subdued-content-color-hover");

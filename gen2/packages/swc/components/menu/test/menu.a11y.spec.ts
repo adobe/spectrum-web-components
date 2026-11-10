@@ -429,6 +429,47 @@ test.describe('Menu - native dismissal', () => {
     expect(activated, 'the first row is the one chosen').toBe('Cut');
   });
 
+  // The pointer does not leave the row when the keyboard takes over, so the
+  // hover fill has to be suppressed deliberately or two rows look active: the
+  // one still under the cursor and the one the keyboard moved to.
+  test('the keyboard taking over clears the hover highlight', async ({
+    page,
+  }) => {
+    await gotoStory(page, 'components-menu--open-and-close', 'swc-button');
+    const menu = page.locator('swc-menu');
+    const trigger = page.getByRole('button', { name: 'Edit' });
+    const rows = page.locator('swc-menu-item');
+
+    await trigger.click();
+    await expect(menu).toHaveJSProperty('open', true);
+
+    const fillOf = (index: number) =>
+      rows.nth(index).evaluate((row) => {
+        const chrome = row.shadowRoot?.querySelector(
+          '.swc-MenuItem'
+        ) as Element;
+        return getComputedStyle(chrome).backgroundColor;
+      });
+    const transparent = /\/\s*0\s*\)|,\s*0\)/;
+
+    await rows.nth(1).hover();
+    await expect(rows.nth(1)).toBeFocused();
+    await expect
+      .poll(() => fillOf(1), { message: 'hover fills the row' })
+      .not.toMatch(transparent);
+
+    // Keyboard takes over while the cursor stays exactly where it is.
+    await page.keyboard.press('ArrowDown');
+    await expect(rows.nth(2)).toBeFocused();
+
+    await expect
+      .poll(() => fillOf(1), { message: 'the hovered row lets go' })
+      .toMatch(transparent);
+    await expect
+      .poll(() => fillOf(2), { message: 'the keyboard row is filled' })
+      .not.toMatch(transparent);
+  });
+
   // Once the pointer actually moves, it takes over again.
   test('a pointer move after a keyboard open restores hover focus', async ({
     page,
