@@ -25,15 +25,12 @@ const { args, argTypes, template } = getStorybookHelpers(
   'swc-message-feedback'
 );
 
-delete (args as Record<string, unknown>).selection;
-delete (argTypes as Record<string, unknown>).selection;
-
+// `status` is intentionally unset by default: the component is controlled, so
+// "no selection yet" is a real state the manifest cannot express as a default.
 argTypes.status = {
   ...argTypes.status,
-  control: { type: 'select' },
-  options: ['positive', 'negative'],
   table: {
-    category: 'attributes',
+    ...argTypes.status?.table,
     defaultValue: { summary: '(unset)' },
   },
 };
