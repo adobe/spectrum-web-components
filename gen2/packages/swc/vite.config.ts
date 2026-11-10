@@ -204,32 +204,25 @@ export default defineConfig({
       },
       // Workflow icon imports (e.g. `@adobe/spectrum-wc-icons/swc-icon-checkmark.js`)
       // resolve to the icons package source, mirroring its published `./*.js`
-      // export (`./dist/*.js`) without requiring a prior build. Kept above the
-      // `@adobe/spectrum-wc` short-form alias; the alias matcher requires a `/`
-      // boundary, so `-icons` never collides with `@adobe/spectrum-wc`.
+      // export (`./dist/*.js`) without requiring a prior build.
       {
         find: '@adobe/spectrum-wc-icons',
         replacement: resolve(__dirname, '../icons/src'),
       },
-      // Long-form imports (e.g. `@adobe/spectrum-wc/components/badge/swc-badge.js`)
-      // resolve directly to the source under `./components`. This must come before
-      // the short-form alias below so the more specific prefix wins.
+      // Component imports (e.g. `@adobe/spectrum-wc/components/badge/swc-badge.js`)
+      // resolve to the source under `./components`, mirroring the published
+      // `./components/*.js` export.
       {
         find: '@adobe/spectrum-wc/components',
         replacement: resolve(__dirname, 'components'),
       },
       // Pattern imports (e.g. `@adobe/spectrum-wc/patterns/ai-toolkit/response-status.js`)
       // resolve to `./patterns`, mirroring the published `./patterns/*.js` export.
+      // Other `@adobe/spectrum-wc/...` paths have no alias, so they resolve
+      // through the package exports, as they do for consumers.
       {
         find: '@adobe/spectrum-wc/patterns',
         replacement: resolve(__dirname, 'patterns'),
-      },
-      // Any other `@adobe/spectrum-wc/...` import resolves under `./components`.
-      // The published package has no short-form export, so the
-      // `swc/gen2-package-imports` lint rule rejects these imports in source.
-      {
-        find: '@adobe/spectrum-wc',
-        replacement: resolve(__dirname, 'components'),
       },
       {
         find: '@adobe/postcss-token',
