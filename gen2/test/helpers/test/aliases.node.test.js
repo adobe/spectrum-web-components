@@ -21,8 +21,11 @@ import ts from 'typescript';
 const supportDirectory = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const gen2Directory = resolve(supportDirectory, '../..');
 const aliases = {
-  '@test-helpers/dom': resolve(supportDirectory, 'dom/index.ts'),
-  '@test-helpers/playwright': resolve(supportDirectory, 'playwright/index.ts'),
+  '@swc-test-helpers/dom': resolve(supportDirectory, 'dom/index.ts'),
+  '@swc-test-helpers/playwright': resolve(
+    supportDirectory,
+    'playwright/index.ts'
+  ),
 };
 
 test('DOM helpers retain their exports through individual modules', () => {

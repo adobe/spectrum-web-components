@@ -11,7 +11,7 @@
  */
 
 import { expect, test } from '@playwright/test';
-import { gotoStory } from '@test-helpers/playwright';
+import { gotoStory } from '@swc-test-helpers/playwright';
 
 test.describe('UploadAttachment - ARIA Snapshots', () => {
   test('should match ARIA snapshot for dismissible card content', async ({

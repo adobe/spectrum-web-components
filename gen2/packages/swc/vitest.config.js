@@ -139,11 +139,11 @@ export default mergeConfig(
           ],
           resolve: {
             alias: {
-              '@test-helpers/playwright': path.resolve(
+              '@swc-test-helpers/playwright': path.resolve(
                 dirname,
                 '../../test/helpers/playwright/index.ts'
               ),
-              '@test-helpers/dom': path.resolve(
+              '@swc-test-helpers/dom': path.resolve(
                 dirname,
                 '../../test/helpers/dom/index.ts'
               ),

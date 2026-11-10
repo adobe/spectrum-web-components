@@ -17,7 +17,7 @@ import {
   getComponent,
   getComponents,
   withWarningSpy,
-} from '@test-helpers/dom';
+} from '@swc-test-helpers/dom';
 
 import { Tab, TabPanel, Tabs } from '@adobe/spectrum-wc/tabs';
 import { TABS_DIRECTIONS } from '@adobe/spectrum-wc-core/components/tabs/index.js';

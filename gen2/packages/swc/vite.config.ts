@@ -175,11 +175,11 @@ export default defineConfig({
     // Needed for Storybook to work
     alias: [
       {
-        find: /^@test-helpers\/dom$/,
+        find: /^@swc-test-helpers\/dom$/,
         replacement: resolve(__dirname, '../../test/helpers/dom/index.ts'),
       },
       {
-        find: /^@test-helpers\/playwright$/,
+        find: /^@swc-test-helpers\/playwright$/,
         replacement: resolve(
           __dirname,
           '../../test/helpers/playwright/index.ts'

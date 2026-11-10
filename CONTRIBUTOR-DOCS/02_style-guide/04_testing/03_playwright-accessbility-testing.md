@@ -52,7 +52,7 @@ Accessibility test files use the pattern `<component>.a11y.spec.ts` and live in 
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 
-import { gotoStory } from '@test-helpers/playwright';
+import { gotoStory } from '@swc-test-helpers/playwright';
 
 test.describe('Badge - ARIA Snapshots', () => {
   test('should have correct accessibility tree for default badge', async ({

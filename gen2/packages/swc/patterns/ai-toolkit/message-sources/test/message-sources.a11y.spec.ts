@@ -11,7 +11,7 @@
  */
 
 import { expect, test } from '@playwright/test';
-import { gotoStory } from '@test-helpers/playwright';
+import { gotoStory } from '@swc-test-helpers/playwright';
 
 test.describe('MessageSources - ARIA Snapshots', () => {
   test('should have correct accessibility tree when expanded', async ({

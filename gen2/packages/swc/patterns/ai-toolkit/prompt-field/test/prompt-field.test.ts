@@ -13,7 +13,7 @@
 import { html, nothing, render } from 'lit';
 import { expect, userEvent, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
-import { getComponent, withWarningSpy } from '@test-helpers/dom';
+import { getComponent, withWarningSpy } from '@swc-test-helpers/dom';
 
 import { getActiveElement } from '@adobe/spectrum-wc-core/utils/index.js';
 

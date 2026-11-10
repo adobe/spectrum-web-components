@@ -18,8 +18,8 @@
       "@adobe/vite-global-elements-css": [
         "./packages/tools/vite-global-elements-css"
       ],
-      "@test-helpers/dom": ["./test/helpers/dom/index.ts"],
-      "@test-helpers/playwright": ["./test/helpers/playwright/index.ts"]
+      "@swc-test-helpers/dom": ["./test/helpers/dom/index.ts"],
+      "@swc-test-helpers/playwright": ["./test/helpers/playwright/index.ts"]
     },
     "rootDir": "./"
   },

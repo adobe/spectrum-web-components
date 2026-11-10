@@ -13,7 +13,11 @@
 import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
-import { getComponent, getComponents, withWarningSpy } from '@test-helpers/dom';
+import {
+  getComponent,
+  getComponents,
+  withWarningSpy,
+} from '@swc-test-helpers/dom';
 
 import { Button } from '@adobe/spectrum-wc/button';
 import {

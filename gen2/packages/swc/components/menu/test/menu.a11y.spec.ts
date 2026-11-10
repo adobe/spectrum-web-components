@@ -11,7 +11,7 @@
  */
 
 import { expect, test } from '@playwright/test';
-import { gotoStory } from '@test-helpers/playwright';
+import { gotoStory } from '@swc-test-helpers/playwright';
 
 /**
  * Playwright tests for Menu (2nd Generation): ARIA-tree snapshots of the closed

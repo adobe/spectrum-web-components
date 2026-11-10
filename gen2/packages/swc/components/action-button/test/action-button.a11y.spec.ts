@@ -11,7 +11,7 @@
  */
 
 import { expect, test } from '@playwright/test';
-import { gotoStory } from '@test-helpers/playwright';
+import { gotoStory } from '@swc-test-helpers/playwright';
 
 /** Element augmented with a test-only click counter set inside the browser context. */
 type ClickCounter = HTMLElement & { __clickCount: number };

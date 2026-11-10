@@ -11,7 +11,7 @@
  */
 
 import { expect, test } from '@playwright/test';
-import { gotoStory } from '@test-helpers/playwright';
+import { gotoStory } from '@swc-test-helpers/playwright';
 
 test.describe('SuggestionItem - ARIA Snapshots', () => {
   test('should expose a button named from the suggestion label', async ({

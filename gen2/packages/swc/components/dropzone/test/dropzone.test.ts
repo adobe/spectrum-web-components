@@ -18,7 +18,7 @@ import {
   getComponent,
   getComponents,
   withWarningSpy,
-} from '@test-helpers/dom';
+} from '@swc-test-helpers/dom';
 
 import { Dropzone } from '@adobe/spectrum-wc/dropzone';
 import {

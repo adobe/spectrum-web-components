@@ -17,7 +17,7 @@ import {
   getComponent,
   getComponents,
   withWarningSpy,
-} from '@test-helpers/dom';
+} from '@swc-test-helpers/dom';
 
 import { TextField } from '@adobe/spectrum-wc/text-field';
 

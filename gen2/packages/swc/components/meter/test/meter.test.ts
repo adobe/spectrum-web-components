@@ -17,7 +17,7 @@ import {
   getComponent,
   getComponents,
   withWarningSpy,
-} from '@test-helpers/dom';
+} from '@swc-test-helpers/dom';
 
 import { Meter } from '@adobe/spectrum-wc/meter';
 

@@ -11,7 +11,7 @@
  */
 
 import { expect, test } from '@playwright/test';
-import { gotoStory } from '@test-helpers/playwright';
+import { gotoStory } from '@swc-test-helpers/playwright';
 
 test.describe('PixelLoader - ARIA Snapshots', () => {
   test('exposes an indeterminate progressbar with an accessible label', async ({

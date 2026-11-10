@@ -13,7 +13,11 @@
 import { html } from 'lit';
 import { expect, userEvent, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
-import { getComponent, waitForEvent, withWarningSpy } from '@test-helpers/dom';
+import {
+  getComponent,
+  waitForEvent,
+  withWarningSpy,
+} from '@swc-test-helpers/dom';
 
 import { Menu } from '@adobe/spectrum-wc/menu';
 import {

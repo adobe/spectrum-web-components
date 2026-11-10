@@ -16,7 +16,7 @@ import type {
   StoryContext,
   StoryObj as Story,
 } from '@storybook/web-components';
-import { getComponent, withWarningSpy } from '@test-helpers/dom';
+import { getComponent, withWarningSpy } from '@swc-test-helpers/dom';
 
 import { StatusLight } from '@adobe/spectrum-wc/status-light';
 import {

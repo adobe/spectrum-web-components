@@ -11,7 +11,7 @@
  */
 
 import { expect, test } from '@playwright/test';
-import { gotoStory, waitForCustomElement } from '@test-helpers/playwright';
+import { gotoStory, waitForCustomElement } from '@swc-test-helpers/playwright';
 
 /**
  * ARIA snapshot tests for response status.

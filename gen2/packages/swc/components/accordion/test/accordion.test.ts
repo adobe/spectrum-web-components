@@ -13,7 +13,7 @@
 import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
-import { getComponent, getComponents } from '@test-helpers/dom';
+import { getComponent, getComponents } from '@swc-test-helpers/dom';
 
 import { Accordion, AccordionItem } from '@adobe/spectrum-wc/accordion';
 
