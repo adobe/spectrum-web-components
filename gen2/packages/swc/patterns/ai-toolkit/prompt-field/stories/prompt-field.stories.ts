@@ -28,14 +28,6 @@ import '../swc-prompt-field.js';
 
 const { args, argTypes } = getStorybookHelpers('swc-prompt-field');
 
-argTypes.size = {
-  ...argTypes.size,
-  control: { type: 'select' },
-  options: ['s', 'm'],
-};
-
-args.size = 'm';
-
 const defaultPlaceholder =
   'Ready to get started? Ask a question, share an idea, or add a task.';
 const defaultLegalDisclaimer = html`
