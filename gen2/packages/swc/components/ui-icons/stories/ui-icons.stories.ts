@@ -49,6 +49,7 @@ const meta: Meta = {
     docs: {
       subtitle: `The Spectrum UI icon set, rendered by the swc-ui-icon element.`,
     },
+    missingDesignDocs: true,
   },
   tags: ['migrated'],
 };

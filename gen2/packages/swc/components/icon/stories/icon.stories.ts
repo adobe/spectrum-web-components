@@ -43,6 +43,7 @@ const meta: Meta = {
     docs: {
       subtitle: `Frame for a custom SVG: size box, color, and accessibility.`,
     },
+    missingDesignDocs: true,
   },
   tags: ['migrated'],
 };
