@@ -1,5 +1,60 @@
 # @adobe/spectrum-wc
 
+## 2.0.0-beta.7
+
+### Minor Changes
+
+- **card**:
+  - [#6767](https://github.com/adobe/spectrum-web-components/pull/6767) [`258169d`](https://github.com/adobe/spectrum-web-components/commit/258169d6267ef4ba804986ee757b43a383b7afe5) Thanks [@aramos-adobe](https://github.com/aramos-adobe)! - **feat(card):** `<swc-card>` now exposes `--swc-card-base-grid-template-rows` to override the row track sizes of its media, content, and footer grid areas. Defaults to `auto 1fr auto`.
+
+- **upload-attachment**:
+  - [#6767](https://github.com/adobe/spectrum-web-components/pull/6767) [`258169d`](https://github.com/adobe/spectrum-web-components/commit/258169d6267ef4ba804986ee757b43a383b7afe5) Thanks [@aramos-adobe](https://github.com/aramos-adobe)! - **feat(upload-attachment):** `type="media"` now composes [`swc-card`](../gen2/packages/swc/components/card) (`variant="quiet"`) internally instead of hand-rolled surface markup, reusing its `preview`/`media` slot and grid machinery. The public slot API (`thumbnail`, `badge`, `title`, `subtitle`, `actions`) is unchanged.
+
+    Added:
+    - `progress` (0-100): shows a `swc-progress-circle` overlay on the `type="media"` preview while an upload is in flight. Hidden when unset or at 100 (complete); the `thumbnail` slot is hidden while loading so the overlay reads against a plain background instead of stacking on the image. The overlay itself is delayed by 1 second after `progress` is first set, so a fast upload doesn't flash the loading state.
+    - `size` (`m`/`l`, default `m`): 64px vs. 96px tile for `type="media"`. Has no effect on `type="card"`.
+
+    Removed/renamed custom properties (`type="media"` sizing is now driven by `size` instead):
+    - `--swc-upload-attachment-preview-size` removed; use `size="m"`/`size="l"`.
+    - `--swc-upload-attachment-card-thumbnail-inline-size` and `--swc-upload-attachment-card-thumbnail-block-size` merged into `--swc-upload-attachment-card-thumbnail-size`.
+    - `--swc-upload-attachment-dismiss-icon-inline-size` and `--swc-upload-attachment-dismiss-icon-block-size` merged into `--swc-upload-attachment-dismiss-icon-size`.
+
+    Also composes [`swc-asset`](../gen2/packages/swc/components/asset) into the `thumbnail` slot in docs/examples for image loading, fit, and background handling, and documents that `badge` should only be used at `size="l"` and above (it crowds the default 64px `size="m"` tile).
+
+    Added VRT coverage (`test/vrt/upload-attachment.vrt.ts`, `test/vrt/upload-attachment-custom-properties.vrt.ts`) for both types, both sizes, the badge and progress overlays, title truncation/subtitle overflow, forced `:focus-visible`, forced colors, and CJK text.
+
+### Patch Changes
+
+- **avatar**:
+  - [#6905](https://github.com/adobe/spectrum-web-components/pull/6905) [`6d781e9`](https://github.com/adobe/spectrum-web-components/commit/6d781e92f452f6dc48d90297de444366db037cc1) Thanks [@cdransf](https://github.com/cdransf)! - **fix(avatar):** Changed the default `size` of `<swc-avatar>` from `500` (40 px) to `100` (24 px), the same size value as 1st-gen's default (`20px` there) and the React Spectrum S2 default. Use `size="75"` for `20px`. Invalid `size` values now fall back to `100`. To keep the previous default, set `size="500"`.
+
+- **button, close-button**:
+  - [#6846](https://github.com/adobe/spectrum-web-components/pull/6846) [`5126fec`](https://github.com/adobe/spectrum-web-components/commit/5126fecfe42dc90fec0f3438a2f5f3873fc6c67f) Thanks [@rise-erpelding](https://github.com/rise-erpelding)! - **fix(button, close-button):** Fixed static-white and static-black secondary and outline `swc-button` labels and `swc-close-button` icons to use opaque white or black in default, hover, pressed, and focus-visible states, improving contrast and keeping their colors consistent. Border, background, focus-indicator, and disabled-state colors are unchanged.
+
+- **prompt-field**:
+  - [#6769](https://github.com/adobe/spectrum-web-components/pull/6769) [`9aed44d`](https://github.com/adobe/spectrum-web-components/commit/9aed44dfd07eb0349e3f178a3a1c7a41a3f65898) Thanks [@rubencarvalho](https://github.com/rubencarvalho)! - **fix(prompt-field):** Attachment-strip fixes for `<swc-prompt-field>`.
+    - Scroll chevrons now point in opposite directions, use a thinner chevron icon with a translucent (not opaque) background, and are vertically centered on the tile row.
+    - Clicking empty space in the attachment strip no longer focuses the textarea, and the strip no longer shows a text cursor.
+    - Single and multiple attachment layouts align horizontally.
+    - Legal-slot links use the correct typography class.
+    - The attachment strip no longer snaps to tile edges while scrolling, and no longer shows a scrollbar.
+    - Where scroll-driven animations are supported, edge fades and chevrons follow the scroll position, as in React Spectrum, instead of updating after the scroll settles. The fades grow in as soon as the strip moves. Each chevron shows once the strip has scrolled past its fade, and is never shown partly transparent or as disabled.
+    - Chevron paging no longer skips a tile: `>` moves the tile that is partly hidden at the trailing edge to the start, and `<` does the same in reverse. It also reaches both ends of the strip when a tile is wider than the space between the chevrons. After paging, Tab moves to the first tile that is shown, not to a tile in the middle of the strip. A tile whose edge only reaches into the lighter half of an edge fade counts as shown.
+    - A tile that gets focus from the arrow keys or Tab scrolls fully into view, clear of the chevrons. Neither this scroll nor paging stops inside an edge fade, where a tile would be cut off with no chevron.
+    - When a tile is added to a strip that already has tiles, the strip scrolls to show it, so a new upload is visible even when the strip overflows. Focus doesn't move, and the strip doesn't scroll while focus is in it.
+    - The last tile's dismiss button focus ring is no longer clipped at the end of the strip.
+
+    Also routes the `size="s"` variant's property overrides through private custom properties instead of re-declaring the properties in the variant selector (no visual change).
+
+- **tabs**:
+  - [#6811](https://github.com/adobe/spectrum-web-components/pull/6811) [`0e9d1e4`](https://github.com/adobe/spectrum-web-components/commit/0e9d1e45a95209f135e82cc33397ae1f86a9f108) Thanks [@rubencarvalho](https://github.com/rubencarvalho)! - **fix(tabs):** `<swc-tabs>` now links tabs that are added after the initial render to their panels.
+
+    The tab panels were only linked when the `tab-panel` slot changed, and `<swc-tab>` only got its `id` after its first render. When the slotted tabs were swapped out and the panels stayed, the new tabs had no `aria-controls` and the panels kept an `aria-labelledby` that pointed to the removed tabs. `<swc-tab>` now sets its `role` and `id` when it connects, and `<swc-tabs>` relinks the panels when the tabs change. It clears a stale `aria-labelledby` when no matching tab remains and a stale `aria-controls` when no matching panel remains, but keeps values that you set yourself.
+
+- [#6643](https://github.com/adobe/spectrum-web-components/pull/6643) [`5b6abf5`](https://github.com/adobe/spectrum-web-components/commit/5b6abf5212e9d834f35351361a1263ea1b0bbc83) Thanks [@rubencarvalho](https://github.com/rubencarvalho)! - **docs(\*):** The published Custom Elements Manifest now expands referenced type aliases into their literal values via `@wc-toolkit/type-parser`. Properties typed as a union alias (e.g. `variant`, `fill-style`, `static-color`) now list their allowed values in the Storybook API table and generate a `select` control automatically, without inlining the union in source or hand-wiring `argTypes.options` per story. Aliases reaching a component through a mixin, and default values of accessor-backed properties, are resolved as well. Structural expansions are no longer written to the manifest, because they embedded compiler-internal symbol ids that made the published artifact non-reproducible.
+
+- [#6880](https://github.com/adobe/spectrum-web-components/pull/6880) [`e9fd2c0`](https://github.com/adobe/spectrum-web-components/commit/e9fd2c0929f928adce0d65a8588ed355b7d251f4) Thanks [@miwha-adobe](https://github.com/miwha-adobe)! - Remove duplicate CSS custom property entries from the published Custom Elements Manifest for Button, Illustrated message, Tab, and Tabs so API reference tables show each property once. Component runtime behavior does not change.
+
 ## 2.0.0-beta.6
 
 ### Minor Changes

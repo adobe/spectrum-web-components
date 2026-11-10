@@ -118,6 +118,21 @@ const testLibGlobals = {
   Mocha: 'readonly',
 };
 
+/**
+ * Relative imports end in `.js`, the extension of the built output, even
+ * when the source file is `.ts` or `.tsx`. Package imports are skipped
+ * because their specifiers depend on each package's `exports` map.
+ */
+const importExtensionsRule = [
+  'error',
+  'ignorePackages',
+  {
+    js: 'always',
+    ts: 'never',
+    tsx: 'never',
+  },
+];
+
 // ────────────────────────────────────────────────────────────────────────────────
 // ESLint Flat Config
 // ────────────────────────────────────────────────────────────────────────────────
@@ -183,7 +198,7 @@ export default defineConfig([
   // TypeScript and JavaScript files (shared rules only; TS rules in next block)
   // ────────────────────────────────────────────────────────────────────────────
   {
-    files: ['**/*.ts', '**/*.js', '**/*.mjs', '**/*.cjs'],
+    files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.mjs', '**/*.cjs'],
     plugins: {
       '@typescript-eslint': tseslint,
       lit: lit,
@@ -241,6 +256,7 @@ export default defineConfig([
         { disallowed: ['e', 'ev', 'evt', 'err'] },
       ],
       'swc/document-active-element': 'error',
+      'swc/no-duplicate-cssprop': 'warn',
 
       // Import rules
       'import/prefer-default-export': 'off',
@@ -342,14 +358,7 @@ export default defineConfig([
       ],
 
       // Import extensions
-      'import/extensions': [
-        'error',
-        'ignorePackages',
-        {
-          js: 'always',
-          ts: 'never',
-        },
-      ],
+      'import/extensions': importExtensionsRule,
     },
   },
 
@@ -481,7 +490,7 @@ export default defineConfig([
   // no-undef off: TypeScript compiler handles undefined checks and DOM/built-in types.
   // ────────────────────────────────────────────────────────────────────────────
   {
-    files: ['**/*.ts'],
+    files: ['**/*.ts', '**/*.tsx'],
     rules: {
       'no-undef': 'off',
       'no-redeclare': 'off',
@@ -563,7 +572,10 @@ export default defineConfig([
   // Storybook config files: Node globals and tooling imports
   // ────────────────────────────────────────────────────────────────────────────
   {
-    files: ['gen2/packages/swc/.storybook/**/*.ts'],
+    files: [
+      'gen2/packages/swc/.storybook/**/*.ts',
+      'gen2/packages/swc/.storybook/**/*.tsx',
+    ],
     languageOptions: {
       globals: globals.node,
     },
@@ -603,6 +615,20 @@ export default defineConfig([
       'lit-a11y/tabindex-no-positive': 'off',
       // Chai assertions use expressions like expect(x).to.be.true
       '@typescript-eslint/no-unused-expressions': 'off',
+    },
+  },
+
+  // ────────────────────────────────────────────────────────────────────────────
+  // gen2 Storybook config: require `.js` on relative imports, like component
+  // source. The block above turns `import/extensions` off for `.storybook`.
+  // ────────────────────────────────────────────────────────────────────────────
+  {
+    files: [
+      'gen2/packages/swc/.storybook/**/*.ts',
+      'gen2/packages/swc/.storybook/**/*.tsx',
+    ],
+    rules: {
+      'import/extensions': importExtensionsRule,
     },
   },
 

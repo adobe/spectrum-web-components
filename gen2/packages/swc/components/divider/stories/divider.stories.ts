@@ -25,30 +25,10 @@ import '@adobe/spectrum-wc/components/divider/swc-divider.js';
 
 const { events, args, argTypes, template } = getStorybookHelpers('swc-divider');
 
-argTypes.size = {
-  ...argTypes.size,
-  control: { type: 'select' },
-  options: Divider.VALID_SIZES,
-  table: {
-    category: 'attributes',
-    defaultValue: {
-      summary: 'm',
-    },
-  },
-};
-
 argTypes['static-color'] = {
   ...argTypes['static-color'],
   control: { type: 'select' },
   options: [undefined, ...Divider.STATIC_COLORS],
-};
-
-argTypes.vertical = {
-  ...argTypes.vertical,
-  table: {
-    ...argTypes.vertical?.table,
-    defaultValue: { summary: 'false' },
-  },
 };
 
 /**

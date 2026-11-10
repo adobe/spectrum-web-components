@@ -1,5 +1,21 @@
 # Change Log
 
+## 1.12.6
+
+### Patch Changes
+
+- [#6811](https://github.com/adobe/spectrum-web-components/pull/6811) [`0e9d1e4`](https://github.com/adobe/spectrum-web-components/commit/0e9d1e45a95209f135e82cc33397ae1f86a9f108) Thanks [@rubencarvalho](https://github.com/rubencarvalho)! - **fix(tabs):** Fixed `sp-tabs` ignoring `sp-tab` elements that are added after the initial render, for example when the slotted tabs are swapped out. `sp-tab` now sets `role="tab"` and its `id` when it connects instead of after its first render, so `sp-tabs` finds the new tabs when the slot changes. Before this fix, the current `selected` value was cleared and the new tabs could not be selected unless `role="tab"` was set on them manually.
+
+  `sp-tabs` also relinks its tab panels when the tabs change, so replacement tabs get `aria-controls` and the panels get an `aria-labelledby` that points to the new tabs. If a panel no longer has a matching tab, its stale `aria-labelledby` is removed, and if a tab no longer has a matching panel, its stale `aria-controls` is removed. Values that you set yourself are kept.
+
+- Updated dependencies []:
+  - @spectrum-web-components/action-button@1.12.6
+  - @spectrum-web-components/icon@1.12.6
+  - @spectrum-web-components/icons-ui@1.12.6
+  - @spectrum-web-components/base@1.12.6
+  - @spectrum-web-components/reactive-controllers@1.12.6
+  - @spectrum-web-components/shared@1.12.6
+
 ## 1.12.5
 
 ### Patch Changes

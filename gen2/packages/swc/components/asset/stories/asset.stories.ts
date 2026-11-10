@@ -33,18 +33,6 @@ const {
   template: templateWithLoadState,
 } = getStorybookHelpers('swc-asset');
 
-argTypes.fit = {
-  ...argTypes.fit,
-  control: { type: 'select' },
-  options: ASSET_FIT_VALUES,
-};
-
-argTypes.background = {
-  ...argTypes.background,
-  control: { type: 'select' },
-  options: ASSET_BACKGROUND_VALUES,
-};
-
 // Set internally from the slotted <img>'s load/error events; not a consumer input. Hidden
 // from the Controls table, and stripped below before every template() call so it never
 // appears in generated code snippets, which would misleadingly suggest a consumer sets it.

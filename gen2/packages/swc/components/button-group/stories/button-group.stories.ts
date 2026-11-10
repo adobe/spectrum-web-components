@@ -29,44 +29,6 @@ import '@adobe/spectrum-wc/components/button/swc-button.js';
 
 const { args, argTypes } = getStorybookHelpers('swc-button-group');
 
-argTypes.size = {
-  ...argTypes.size,
-  control: { type: 'select' },
-  options: [...BUTTON_GROUP_SIZES],
-  table: {
-    category: 'attributes',
-    defaultValue: { summary: 'm' },
-  },
-};
-
-argTypes.orientation = {
-  ...argTypes.orientation,
-  control: { type: 'select' },
-  options: [...BUTTON_GROUP_ORIENTATIONS],
-  table: {
-    category: 'attributes',
-    defaultValue: { summary: 'horizontal' },
-  },
-};
-
-argTypes.align = {
-  ...argTypes.align,
-  control: { type: 'select' },
-  options: [...BUTTON_GROUP_ALIGNMENTS],
-  table: {
-    category: 'attributes',
-    defaultValue: { summary: 'start' },
-  },
-};
-
-argTypes.disabled = {
-  ...argTypes.disabled,
-  table: {
-    category: 'attributes',
-    defaultValue: { summary: 'false' },
-  },
-};
-
 /**
  * A button group clusters related actions together, providing consistent spacing,
  * sizing, and orientation. It propagates `size` and `disabled` state to its slotted

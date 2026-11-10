@@ -64,9 +64,9 @@ export abstract class AvatarBase extends SpectrumElement {
   // ───────────────────
 
   /**
-   * The size of the avatar. Invalid values fall back to the default (500).
+   * The size of the avatar. Invalid values fall back to the default.
    *
-   * @default 500
+   * @default 100
    */
   @property({ type: Number, reflect: true })
   public get size(): AvatarSize {
