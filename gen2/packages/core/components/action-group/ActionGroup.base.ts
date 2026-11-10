@@ -15,6 +15,10 @@ import { property, queryAssignedElements } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import { SizedMixin } from '@adobe/spectrum-wc-core/mixins/index.js';
+import {
+  resolveEnum,
+  validateEnum,
+} from '@adobe/spectrum-wc-core/utils/index.js';
 
 import {
   ACTION_GROUP_ORIENTATIONS,
@@ -85,8 +89,30 @@ export abstract class ActionGroupBase extends SizedMixin(SpectrumElement, {
    *
    * @default horizontal
    */
-  @property({ type: String, reflect: true })
+  @property({
+    type: String,
+    reflect: true,
+    // A removed attribute resets to the default rather than `null`.
+    converter: {
+      fromAttribute: (value: string | null) => value ?? 'horizontal',
+    },
+  })
   public orientation: ActionGroupOrientation = 'horizontal';
+
+  /**
+   * @internal
+   *
+   * The orientation used for keyboard navigation. Invalid values are kept on
+   * `orientation` as set and resolve to the default here.
+   */
+  protected get resolvedOrientation(): ActionGroupOrientation {
+    return resolveEnum(
+      this.orientation,
+      (this.constructor as typeof ActionGroupBase)
+        .ORIENTATIONS as readonly ActionGroupOrientation[],
+      'horizontal'
+    );
+  }
 
   /**
    * Accessible label for the group. Reflected to `aria-label` on the host.
@@ -157,6 +183,16 @@ export abstract class ActionGroupBase extends SizedMixin(SpectrumElement, {
     this.setAttribute('role', 'group');
   }
 
+  protected override update(changed: PropertyValues<this>): void {
+    validateEnum(this, {
+      prop: 'orientation',
+      value: this.orientation,
+      valid: (this.constructor as typeof ActionGroupBase).ORIENTATIONS,
+      url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-action-group--docs',
+    });
+    super.update(changed);
+  }
+
   protected override updated(changed: PropertyValues<this>): void {
     super.updated(changed);
 
@@ -175,18 +211,6 @@ export abstract class ActionGroupBase extends SizedMixin(SpectrumElement, {
         this.removeAttribute('aria-disabled');
       }
       this.propagateDisabledToChildren();
-    }
-
-    if (window.__swc?.DEBUG) {
-      const constructor = this.constructor as typeof ActionGroupBase;
-      if (!constructor.ORIENTATIONS.includes(this.orientation)) {
-        window.__swc.warn(
-          this,
-          `<${this.localName}> element expects the "orientation" attribute to be one of the following: ${constructor.ORIENTATIONS.join(', ')}.`,
-          'https://spectrum-web-components.adobe.com/components/action-group/',
-          { issues: [...constructor.ORIENTATIONS] }
-        );
-      }
     }
   }
 

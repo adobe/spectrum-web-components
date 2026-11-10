@@ -761,6 +761,52 @@ export const InvalidFillStyleWarningTest: Story = {
   },
 };
 
+export const InvalidStaticColorWarningTest: Story = {
+  render: () => html`
+    <swc-button>Label</swc-button>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const button = await getComponent<Button>(canvasElement, 'swc-button');
+    const inner = button.shadowRoot!.querySelector('button')!;
+    const defaultBackground = getComputedStyle(inner).backgroundColor;
+
+    await step(
+      'warns, keeps the value, and renders the default for an invalid static-color',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          button.staticColor = 'purple' as Button['staticColor'];
+          await button.updateComplete;
+
+          expect(
+            String(warnCalls[0]?.[1] || ''),
+            'warning names the property and received value'
+          ).toMatch(/"static-color".*"purple"/);
+          expect(
+            button.getAttribute('static-color'),
+            'attribute keeps the value set'
+          ).toBe('purple');
+          expect(
+            getComputedStyle(inner).backgroundColor,
+            'renders the default background'
+          ).toBe(defaultBackground);
+        })
+    );
+
+    await step('does not warn for valid static-color values', () =>
+      withWarningSpy(async (warnCalls) => {
+        for (const staticColor of BUTTON_STATIC_COLORS) {
+          button.staticColor = staticColor;
+          await button.updateComplete;
+        }
+        button.staticColor = undefined;
+        await button.updateComplete;
+
+        expect(warnCalls.length, 'no warnings for valid static-colors').toBe(0);
+      })
+    );
+  },
+};
+
 export const OutlineUnsupportedVariantWarningTest: Story = {
   render: () => html`
     <swc-button fill-style="outline">Label</swc-button>

@@ -28,31 +28,6 @@ const DOCS_URL =
   'https://spectrum-web-components.adobe.com/?path=/docs/components-thumbnail--docs';
 
 /**
- * Resolves an incoming `size` or `fit` value to one of its valid options,
- * warning in DEBUG mode and returning `fallback` when the value is invalid.
- * A removed attribute arrives as `null`, so an unset value falls back
- * without a warning.
- */
-function resolveOption<T extends string | number>(
-  element: HTMLElement,
-  prop: string,
-  value: unknown,
-  valid: readonly T[],
-  fallback: T
-): T {
-  if (value === null || value === undefined) {
-    return fallback;
-  }
-  validateEnum(element, {
-    prop,
-    value: String(value),
-    valid: valid.map(String),
-    url: DOCS_URL,
-  });
-  return valid.find((option) => String(option) === String(value)) ?? fallback;
-}
-
-/**
  * Base class for the thumbnail component.
  *
  * Provides the `size`, `fit`, and `decorative` API and keeps the slotted
@@ -78,30 +53,21 @@ export abstract class ThumbnailBase extends SpectrumElement {
   // ───────────────────
 
   /**
-   * The size of the thumbnail. Invalid values fall back to the default (500).
+   * The size of the thumbnail. Invalid values are kept as set, warn in dev
+   * mode, and render at the default size (500).
    *
    * @default 500
    */
-  @property({ type: Number, reflect: true })
-  public get size(): ThumbnailSize {
-    return this._size;
-  }
-
-  public set size(value: ThumbnailSize) {
-    const oldSize = this._size;
-    this._size = resolveOption(
-      this,
-      'size',
-      value,
-      THUMBNAIL_VALID_SIZES,
-      THUMBNAIL_DEFAULT_SIZE
-    );
-    if (this._size !== oldSize) {
-      this.requestUpdate('size', oldSize);
-    }
-  }
-
-  private _size: ThumbnailSize = THUMBNAIL_DEFAULT_SIZE;
+  @property({
+    type: Number,
+    reflect: true,
+    // A removed attribute resets to the default rather than `null`.
+    converter: {
+      fromAttribute: (value: string | null) =>
+        value === null ? THUMBNAIL_DEFAULT_SIZE : Number(value),
+    },
+  })
+  public size: ThumbnailSize = THUMBNAIL_DEFAULT_SIZE;
 
   // ───────────────────
   //     FIT API
@@ -109,30 +75,20 @@ export abstract class ThumbnailBase extends SpectrumElement {
 
   /**
    * How the slotted image fits within the thumbnail's bounds. Invalid
-   * values fall back to the default (`'contain'`).
+   * values are kept as set, warn in dev mode, and render the default
+   * (`'contain'`).
    *
    * @default 'contain'
    */
-  @property({ type: String, reflect: true })
-  public get fit(): ThumbnailFit {
-    return this._fit;
-  }
-
-  public set fit(value: ThumbnailFit) {
-    const oldFit = this._fit;
-    this._fit = resolveOption(
-      this,
-      'fit',
-      value,
-      THUMBNAIL_VALID_FITS,
-      THUMBNAIL_DEFAULT_FIT
-    );
-    if (this._fit !== oldFit) {
-      this.requestUpdate('fit', oldFit);
-    }
-  }
-
-  private _fit: ThumbnailFit = THUMBNAIL_DEFAULT_FIT;
+  @property({
+    type: String,
+    reflect: true,
+    // A removed attribute resets to the default rather than `null`.
+    converter: {
+      fromAttribute: (value: string | null) => value ?? THUMBNAIL_DEFAULT_FIT,
+    },
+  })
+  public fit: ThumbnailFit = THUMBNAIL_DEFAULT_FIT;
 
   // ───────────────────────────
   //     ACCESSIBILITY API
@@ -167,6 +123,24 @@ export abstract class ThumbnailBase extends SpectrumElement {
   // The image this instance added `alt=""` to, so the fallback can be removed
   // when `decorative` is unset without touching a consumer's own `alt`.
   private _appliedAltImg: HTMLImageElement | null = null;
+
+  protected override update(changes: PropertyValues): void {
+    // Invalid values are kept as set; they match no size or fit selector in
+    // the stylesheet, so the thumbnail renders the defaults.
+    validateEnum(this, {
+      prop: 'size',
+      value: this.size,
+      valid: THUMBNAIL_VALID_SIZES,
+      url: DOCS_URL,
+    });
+    validateEnum(this, {
+      prop: 'fit',
+      value: this.fit,
+      valid: THUMBNAIL_VALID_FITS,
+      url: DOCS_URL,
+    });
+    super.update(changes);
+  }
 
   protected override updated(changes: PropertyValues): void {
     super.updated(changes);

@@ -17,6 +17,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 
 import {
   BUTTON_FILL_STYLES,
+  BUTTON_STATIC_COLORS,
   BUTTON_VARIANTS,
   ButtonBase,
   type ButtonFillStyle,
@@ -169,6 +170,14 @@ export class Button extends PendingMixin(ButtonBase) {
       valid: BUTTON_FILL_STYLES,
       url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-button--docs',
     });
+    if (this.staticColor) {
+      validateEnum(this, {
+        prop: 'static-color',
+        value: this.staticColor,
+        valid: BUTTON_STATIC_COLORS,
+        url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-button--docs',
+      });
+    }
     warnIf(
       this,
       this.fillStyle === 'outline' &&

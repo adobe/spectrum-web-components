@@ -27,7 +27,11 @@ import {
   SWC_ACCORDION_ITEM_OPEN_EVENT,
   SWC_ACCORDION_ITEM_TOGGLE_EVENT,
 } from '../../../../core/components/accordion/Accordion.types.js';
-import { getComponent, getComponents } from '../../../utils/test-utils.js';
+import {
+  getComponent,
+  getComponents,
+  withWarningSpy,
+} from '../../../utils/test-utils.js';
 import meta, {
   AllowMultiple,
   Anatomy,
@@ -1337,7 +1341,7 @@ export const HeadingLevelPropagationTest: Story = {
   },
 };
 
-export const HeadingLevelClampingTest: Story = {
+export const InvalidHeadingLevelTest: Story = {
   render: () => html`
     <swc-accordion density="regular">
       <swc-accordion-item>
@@ -1356,24 +1360,127 @@ export const HeadingLevelClampingTest: Story = {
       'swc-accordion-item'
     );
 
-    await step('level below 2 is clamped to 2', async () => {
-      accordion.level = 1 as Accordion['level'];
-      await accordion.updateComplete;
+    for (const level of [1, 7]) {
+      await step(
+        `warns on level ${level}, keeps the value, and renders the default h3`,
+        () =>
+          withWarningSpy(async (warnCalls) => {
+            accordion.level = level as Accordion['level'];
+            await accordion.updateComplete;
+            await item.updateComplete;
+
+            expect(accordion.level, 'property keeps the value set').toBe(level);
+            expect(
+              accordion.getAttribute('level'),
+              'attribute keeps the value set'
+            ).toBe(String(level));
+            expect(
+              getHeadingElement(item).tagName.toLowerCase(),
+              'heading renders the default level'
+            ).toBe('h3');
+            expect(
+              String(warnCalls[0]?.[1] ?? ''),
+              'warning names the property and received value'
+            ).toMatch(new RegExp(`"level".*"${level}"`));
+          })
+      );
+    }
+
+    await step(
+      'warns on a non-numeric level, keeps the attribute, and renders h3',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          accordion.setAttribute('level', 'banana');
+          await accordion.updateComplete;
+          await item.updateComplete;
+
+          expect(
+            accordion.getAttribute('level'),
+            'attribute keeps the value set'
+          ).toBe('banana');
+          expect(
+            getHeadingElement(item).tagName.toLowerCase(),
+            'heading renders the default level'
+          ).toBe('h3');
+          expect(
+            String(warnCalls[0]?.[1] ?? ''),
+            'warning names the received value'
+          ).toContain('"banana"');
+        })
+    );
+
+    await step(
+      'resets to the default h3 without a warning when the attribute is removed',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          accordion.removeAttribute('level');
+          await accordion.updateComplete;
+          await item.updateComplete;
+
+          expect(accordion.level, 'level after removal').toBe(3);
+          expect(getHeadingElement(item).tagName.toLowerCase()).toBe('h3');
+          expect(warnCalls.length, 'no warning when level is unset').toBe(0);
+        })
+    );
+
+    await step('does not warn on a valid level', () =>
+      withWarningSpy(async (warnCalls) => {
+        accordion.level = 5;
+        await accordion.updateComplete;
+        await item.updateComplete;
+
+        expect(getHeadingElement(item).tagName.toLowerCase()).toBe('h5');
+        expect(warnCalls.length, 'no warning for a valid level').toBe(0);
+      })
+    );
+  },
+};
+
+export const InvalidItemSizeTest: Story = {
+  render: () => html`
+    <swc-accordion-item>
+      <span slot="label">Standalone item</span>
+      <p>Panel content</p>
+    </swc-accordion-item>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const item = await getComponent<AccordionItem>(
+      canvasElement,
+      'swc-accordion-item'
+    );
+    const icon = item.shadowRoot!.querySelector('swc-ui-icon')!;
+
+    await step(
+      'warns on an invalid size, keeps the value, and keeps it off the icon',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          item.size = 'xxl' as AccordionItem['size'];
+          await item.updateComplete;
+
+          expect(item.size, 'property keeps the value set').toBe('xxl');
+          expect(
+            item.getAttribute('size'),
+            'attribute keeps the value set'
+          ).toBe('xxl');
+          expect(
+            icon.getAttribute('size'),
+            'chevron icon renders its default size'
+          ).toBe('m');
+          expect(
+            String(warnCalls[0]?.[1] ?? ''),
+            'warning names the property and received value'
+          ).toMatch(/"size".*"xxl"/);
+          expect(
+            warnCalls.every((call) => call[0] === item),
+            'only the item warns; the icon never receives the value'
+          ).toBe(true);
+        })
+    );
+
+    await step('passes a valid size through to the icon', async () => {
+      item.size = 'l';
       await item.updateComplete;
-
-      const heading = getHeadingElement(item);
-      expect(heading.tagName.toLowerCase(), 'heading clamped to h2').toBe('h2');
-      expect(accordion.level, 'accordion.level property clamped to 2').toBe(2);
-    });
-
-    await step('level above 6 is clamped to 6', async () => {
-      accordion.level = 7 as Accordion['level'];
-      await accordion.updateComplete;
-      await item.updateComplete;
-
-      const heading = getHeadingElement(item);
-      expect(heading.tagName.toLowerCase(), 'heading clamped to h6').toBe('h6');
-      expect(accordion.level, 'accordion.level property clamped to 6').toBe(6);
+      expect(icon.getAttribute('size'), 'icon size').toBe('l');
     });
   },
 };

@@ -13,7 +13,10 @@ import { CSSResultArray, PropertyValues, TemplateResult } from 'lit';
 import { property } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
-import { validateEnum } from '@adobe/spectrum-wc-core/utils/index.js';
+import {
+  resolveEnum,
+  validateEnum,
+} from '@adobe/spectrum-wc-core/utils/index.js';
 
 import {
   ALERT_BANNER_VALID_VARIANTS,
@@ -51,38 +54,19 @@ export abstract class AlertBannerBase extends SpectrumElement {
   public dismissible = false;
 
   /**
-   * The variant applies specific styling when set to `negative` or `info`;
-   * `variant` attribute is removed when it's passed an invalid variant.
+   * The variant applies specific styling when set to `negative` or `info`.
+   * Invalid values are kept as set, warn in dev mode, and render as neutral.
    */
-  @property({ type: String })
-  public set variant(variant: AlertBannerVariant) {
-    if (variant === this.variant) {
-      return;
-    }
-    const oldValue = this.variant;
-
-    if (this.isValidVariant(variant)) {
-      this.setAttribute('variant', variant);
-      this._variant = variant;
-    } else {
-      this.removeAttribute('variant');
-      this._variant = '';
-
-      validateEnum(this, {
-        prop: 'variant',
-        value: variant,
-        valid: ALERT_BANNER_VALID_VARIANTS,
-        url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-alert-banner--docs',
-      });
-    }
-    this.requestUpdate('variant', oldValue);
-  }
-
-  public get variant(): AlertBannerVariant {
-    return this._variant;
-  }
-
-  private _variant: AlertBannerVariant = '';
+  @property({
+    type: String,
+    reflect: true,
+    // An empty variant means "unset", so it leaves no attribute behind.
+    converter: {
+      fromAttribute: (value: string | null) => value ?? '',
+      toAttribute: (value: string) => value || null,
+    },
+  })
+  public variant: AlertBannerVariant = '';
 
   // ──────────────────────
   //     IMPLEMENTATION
@@ -90,6 +74,16 @@ export abstract class AlertBannerBase extends SpectrumElement {
 
   protected isValidVariant(variant: string): boolean {
     return (ALERT_BANNER_VALID_VARIANTS as readonly string[]).includes(variant);
+  }
+
+  /**
+   * @internal
+   *
+   * The variant used for rendering. Invalid values are kept on `variant` as
+   * set and resolve to the default (`''`) here.
+   */
+  protected get resolvedVariant(): AlertBannerVariant {
+    return resolveEnum(this.variant, ALERT_BANNER_VALID_VARIANTS, '');
   }
 
   protected abstract renderIcon(variant: string): TemplateResult;
@@ -115,6 +109,19 @@ export abstract class AlertBannerBase extends SpectrumElement {
     if (event.code === 'Escape' && this.dismissible) {
       this.shouldClose();
     }
+  }
+
+  protected override update(changes: PropertyValues): void {
+    // An empty variant is the unset default, not an invalid value.
+    if (this.variant) {
+      validateEnum(this, {
+        prop: 'variant',
+        value: this.variant,
+        valid: ALERT_BANNER_VALID_VARIANTS,
+        url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-alert-banner--docs',
+      });
+    }
+    super.update(changes);
   }
 
   protected override updated(changes: PropertyValues): void {

@@ -62,7 +62,14 @@ export class Meter extends MeterBase {
 
   // Re-declare so the `reflect: true` setting from the base is honored on
   // the concrete element class (ES2022 class-field semantics).
-  @property({ type: String, reflect: true })
+  @property({
+    type: String,
+    reflect: true,
+    // A removed attribute resets to the default rather than `null`.
+    converter: {
+      fromAttribute: (value: string | null) => value ?? 'informative',
+    },
+  })
   public override variant: MeterVariant = 'informative';
 
   // ──────────────────────────────

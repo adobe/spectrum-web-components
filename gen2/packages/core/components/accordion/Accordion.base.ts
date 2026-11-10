@@ -16,10 +16,15 @@ import { property } from 'lit/decorators.js';
 import { LiveSelectionController } from '@adobe/spectrum-wc-core/controllers/index.js';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import { SizedMixin } from '@adobe/spectrum-wc-core/mixins/index.js';
-import { validateEnum } from '@adobe/spectrum-wc-core/utils/index.js';
+import {
+  resolveEnum,
+  validateEnum,
+} from '@adobe/spectrum-wc-core/utils/index.js';
 
 import {
+  ACCORDION_DEFAULT_HEADING_LEVEL,
   ACCORDION_DENSITIES,
+  ACCORDION_HEADING_LEVELS,
   ACCORDION_VALID_SIZES,
   type AccordionDensity,
   type AccordionHeadingLevel,
@@ -35,7 +40,7 @@ import { AccordionItemBase } from './AccordionItem.base.js';
  * @attribute {boolean} allowMultiple - Reflected as `allow-multiple`. When set,
  *   multiple items may be open at the same time.
  * @attribute {number} level - Heading level (2–6) applied to every item header.
- *   Values outside that range are clamped.
+ *   Other values are kept as set, warn in dev mode, and render the default (3).
  * @attribute {AccordionSize} size - Size applied to all items.
  * @attribute {AccordionDensity} density - Vertical spacing between items.
  * @attribute {boolean} quiet - Renders the accordion in its quiet visual variant.
@@ -60,10 +65,18 @@ export abstract class AccordionBase extends SizedMixin(SpectrumElement, {
 
   /**
    * Heading level applied to every item header (2–6). Defaults to 3.
-   * Values outside that range are clamped.
+   * Other values are kept as set, warn in dev mode, and render the default.
    */
-  @property({ type: Number, reflect: true })
-  public level: AccordionHeadingLevel = 3;
+  @property({
+    type: Number,
+    reflect: true,
+    // A removed attribute resets to the default rather than `null`.
+    converter: {
+      fromAttribute: (value: string | null) =>
+        value === null ? ACCORDION_DEFAULT_HEADING_LEVEL : Number(value),
+    },
+  })
+  public level: AccordionHeadingLevel = ACCORDION_DEFAULT_HEADING_LEVEL;
 
   /**
    * Size applied to all items. Defaults to `m`.
@@ -125,15 +138,35 @@ export abstract class AccordionBase extends SizedMixin(SpectrumElement, {
     this.selectionController.refresh();
   }
 
+  /**
+   * @internal
+   *
+   * The heading level rendered by every item. Invalid values are kept on
+   * `level` as set and resolve to the default here.
+   */
+  protected get resolvedLevel(): AccordionHeadingLevel {
+    return resolveEnum(
+      this.level,
+      ACCORDION_HEADING_LEVELS,
+      ACCORDION_DEFAULT_HEADING_LEVEL
+    );
+  }
+
   protected syncAccordionItems(): void {
     for (const item of this.assignedItems()) {
-      item.setManagedHeading(this.level);
+      item.setManagedHeading(this.resolvedLevel);
       item.size = this.size;
       item.setManagedParentDisabled(this.disabled);
     }
   }
 
   protected override update(changedProperties: PropertyValues): void {
+    validateEnum(this, {
+      prop: 'level',
+      value: this.level,
+      valid: ACCORDION_HEADING_LEVELS,
+      url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-accordion--docs',
+    });
     if (changedProperties.has('density')) {
       validateEnum(this, {
         prop: 'density',
@@ -141,15 +174,6 @@ export abstract class AccordionBase extends SizedMixin(SpectrumElement, {
         valid: ACCORDION_DENSITIES,
         url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-accordion--docs',
       });
-    }
-    if (changedProperties.has('level')) {
-      const clamped = Math.min(
-        6,
-        Math.max(2, this.level)
-      ) as AccordionHeadingLevel;
-      if (this.level !== clamped) {
-        this.level = clamped;
-      }
     }
     if (
       changedProperties.has('level') ||

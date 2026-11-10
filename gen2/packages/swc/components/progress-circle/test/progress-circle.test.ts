@@ -335,27 +335,48 @@ export const ProgressClampTest: Story = {
       'swc-progress-circle'
     );
 
-    await step('clamps progress above 100 to 100', async () => {
+    await step('renders progress above 100 as 100', async () => {
+      expect(circles[0].progress, 'progress property keeps the value set').toBe(
+        150
+      );
       expect(
-        circles[0].progress,
-        'progress property is clamped to 100 when set to 150'
-      ).toBe(100);
+        circles[0].getAttribute('progress'),
+        'progress attribute keeps the value set'
+      ).toBe('150');
       expect(
         circles[0].getAttribute('aria-valuenow'),
-        'aria-valuenow reflects clamped value of 100'
+        'aria-valuenow uses the clamped value of 100'
       ).toBe('100');
     });
 
-    await step('clamps progress below 0 to 0', async () => {
-      expect(
-        circles[1].progress,
-        'progress property is clamped to 0 when set to -20'
-      ).toBe(0);
+    await step('renders progress below 0 as 0', async () => {
+      expect(circles[1].progress, 'progress property keeps the value set').toBe(
+        -20
+      );
       expect(
         circles[1].getAttribute('aria-valuenow'),
-        'aria-valuenow reflects clamped value of 0'
+        'aria-valuenow uses the clamped value of 0'
       ).toBe('0');
     });
+
+    await step('warns when progress is set outside 0–100', () =>
+      withWarningSpy(async (warnCalls) => {
+        circles[0].progress = 250;
+        await circles[0].updateComplete;
+        expect(
+          String(warnCalls[0]?.[1] ?? ''),
+          'warning names the property and received value'
+        ).toMatch(/"progress".*"250"/);
+      })
+    );
+
+    await step('does not warn for progress within 0–100', () =>
+      withWarningSpy(async (warnCalls) => {
+        circles[0].progress = 40;
+        await circles[0].updateComplete;
+        expect(warnCalls.length, 'no warning for a valid progress').toBe(0);
+      })
+    );
   },
 };
 

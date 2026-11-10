@@ -274,6 +274,35 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
       return formatter.format(this.clampedValue);
     }
 
+    protected override update(changes: PropertyValues): void {
+      // Range checks compare properties only, so they run before render.
+      // Both the range and the value are kept as set; rendering and ARIA use
+      // the sanitized range and clamped value instead.
+      if (isDebug()) {
+        this.warnInvalidRange();
+        this.warnValueOutOfRange();
+      }
+
+      validateEnum(this, {
+        prop: 'label-position',
+        value: this.labelPosition,
+        valid: LINEAR_PROGRESS_LABEL_POSITIONS,
+        url: this.docsHref,
+      });
+
+      // `static-color` is optional; unset means the default colors.
+      if (this.staticColor !== undefined) {
+        validateEnum(this, {
+          prop: 'static-color',
+          value: this.staticColor,
+          valid: LINEAR_PROGRESS_STATIC_COLORS,
+          url: this.docsHref,
+        });
+      }
+
+      super.update(changes);
+    }
+
     protected override updated(changes: PropertyValues): void {
       super.updated(changes);
 
@@ -292,36 +321,30 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
       if (isDebug()) {
         this.warnMissingAccessibleName();
       }
+    }
 
-      // Surface a dev warning when `value` falls outside the resolved
-      // range. The value is still clamped for rendering and ARIA, but the
-      // clamp is otherwise silent, so flag it as a likely authoring error.
-      if (
-        isDebug() &&
-        (changes.has('value') ||
-          changes.has('minValue') ||
-          changes.has('maxValue'))
-      ) {
-        this.warnValueOutOfRange();
+    private warnInvalidRange(): void {
+      const { minValue, maxValue } = this;
+      const isFiniteRange =
+        Number.isFinite(minValue) && Number.isFinite(maxValue);
+      // Early return when the range is valid so the message is not built on
+      // every render.
+      if (isFiniteRange && minValue <= maxValue) {
+        return;
       }
-
-      if (changes.has('labelPosition')) {
-        validateEnum(this, {
-          prop: 'label-position',
-          value: this.labelPosition,
-          valid: LINEAR_PROGRESS_LABEL_POSITIONS,
-          url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-meter--docs',
-        });
-      }
-
-      if (changes.has('staticColor') && this.staticColor !== undefined) {
-        validateEnum(this, {
-          prop: 'static-color',
-          value: this.staticColor,
-          valid: LINEAR_PROGRESS_STATIC_COLORS,
-          url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-meter--docs',
-        });
-      }
+      // An unparseable attribute parses to `NaN`; report the attribute text.
+      const text = (attribute: string, value: number): string =>
+        Number.isNaN(value)
+          ? (this.getAttribute(attribute) ?? String(value))
+          : String(value);
+      const received = `min-value="${text('min-value', minValue)}", max-value="${text('max-value', maxValue)}"`;
+      warnIf(
+        this,
+        true,
+        `<${this.localName}> expects "min-value" and "max-value" to be finite numbers with "min-value" no greater than "max-value". Received ${received}; rendering the range [${this.sanitizedMin}, ${this.sanitizedMax}].`,
+        this.docsHref,
+        { issues: [received] }
+      );
     }
 
     private warnValueOutOfRange(): void {

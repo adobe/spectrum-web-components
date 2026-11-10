@@ -111,6 +111,23 @@ protected override update(changedProperties: PropertyValues): void {
 }
 ```
 
+`validateEnum` also accepts numeric enums, such as a numeric `size` or a heading `level`. A numeric property parses an unreadable attribute such as `size="banana"` to `NaN`; for a `NaN` value, the warning reports the attribute text the consumer wrote.
+
+#### Rendering the default for an invalid value
+
+A warning is the only thing an invalid value triggers. Keep the value the consumer set on the property and the attribute, and render the default instead:
+
+- **In CSS:** let the value match no `:host([attr="…"])` selector so the stylesheet's default applies.
+- **In TypeScript:** resolve the value at the point of use with `resolveEnum`, exported from the same utils module.
+
+```ts
+protected get resolvedDirection(): TabsDirection {
+  return resolveEnum(this.direction, TABS_DIRECTIONS, TABS_DEFAULT_DIRECTION);
+}
+```
+
+Don't reassign the property, call `setAttribute` or `removeAttribute` on it, or return a different value from its getter.
+
 ### warnIf(): Required, conditionally required, mutually exclusive, and one-off checks
 
 `warnIf(element, condition, message, url, options?)` is the general-purpose primitive: it warns when `condition` is `true`. It covers every validation shape that isn't an enum or a slot check.

@@ -114,17 +114,44 @@ export const VariantValidationTest: Story = {
       })
     );
 
-    await step('invalid variant warns and falls back to informative', () =>
-      withWarningSpy(async (warnCalls) => {
-        meter.variant = 'invalid' as Meter['variant'];
-        await meter.updateComplete;
-        expect(warnCalls.length).toBeGreaterThan(0);
-        expect(String(warnCalls[0]?.[1] ?? '')).toContain('variant');
-        // Unknown variant is sanitized to the default and reflected.
-        await meter.updateComplete;
-        expect(meter.variant).toBe('informative');
-        expect(meter.getAttribute('variant')).toBe('informative');
-      })
+    await step(
+      'warns on an invalid variant, keeps the value, and renders the default fill',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          const fill = meter.shadowRoot!.querySelector(
+            '.swc-LinearProgress-fill'
+          )!;
+          meter.variant = 'informative';
+          await meter.updateComplete;
+          const defaultFill = getComputedStyle(fill).backgroundColor;
+
+          meter.variant = 'invalid' as Meter['variant'];
+          await meter.updateComplete;
+          expect(warnCalls.length).toBeGreaterThan(0);
+          expect(String(warnCalls[0]?.[1] ?? '')).toMatch(
+            /"variant".*"invalid"/
+          );
+          expect(meter.variant, 'property keeps the value set').toBe('invalid');
+          expect(
+            meter.getAttribute('variant'),
+            'attribute keeps the value set'
+          ).toBe('invalid');
+          expect(
+            getComputedStyle(fill).backgroundColor,
+            'renders the default (informative) fill'
+          ).toBe(defaultFill);
+        })
+    );
+
+    await step(
+      'resets to informative without a warning when the attribute is removed',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          meter.removeAttribute('variant');
+          await meter.updateComplete;
+          expect(meter.variant, 'variant after removal').toBe('informative');
+          expect(warnCalls.length, 'no warning when variant is unset').toBe(0);
+        })
     );
   },
 };
@@ -391,6 +418,56 @@ export const ValueOutOfRangeWarningTest: Story = {
         await meter.updateComplete;
         const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
         expect(messages.some((m) => m.includes('range'))).toBe(false);
+        meter.parentElement?.remove();
+      })
+    );
+
+    await step(
+      'warns on a reversed range, keeps it, and renders the sanitized range',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          const meter = await fixture<Meter>(html`
+            <swc-meter
+              value="50"
+              min-value="80"
+              max-value="20"
+              accessible-label="Storage used"
+            ></swc-meter>
+          `);
+          await meter.updateComplete;
+
+          expect(
+            warnCalls.map((call) => String(call[1])).join('\n'),
+            'warning names both attributes and received values'
+          ).toMatch(/min-value="80", max-value="20"/);
+          expect(meter.minValue, 'min-value kept as set').toBe(80);
+          expect(meter.maxValue, 'max-value kept as set').toBe(20);
+          expect(
+            getRoleEl(meter).getAttribute('aria-valuemin'),
+            'renders the sanitized minimum'
+          ).toBe('20');
+          expect(
+            getRoleEl(meter).getAttribute('aria-valuemax'),
+            'renders the sanitized maximum'
+          ).toBe('80');
+          meter.parentElement?.remove();
+        })
+    );
+
+    await step('warns on an unreadable range bound', () =>
+      withWarningSpy(async (warnCalls) => {
+        const meter = await fixture<Meter>(html`
+          <swc-meter
+            value="50"
+            max-value="banana"
+            accessible-label="Storage used"
+          ></swc-meter>
+        `);
+        await meter.updateComplete;
+        expect(
+          warnCalls.map((call) => String(call[1])).join('\n'),
+          'warning reports the attribute text'
+        ).toContain('max-value="banana"');
         meter.parentElement?.remove();
       })
     );

@@ -13,7 +13,7 @@ import { PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
-import { warnIf } from '@adobe/spectrum-wc-core/utils/index.js';
+import { validateEnum, warnIf } from '@adobe/spectrum-wc-core/utils/index.js';
 
 import {
   AVATAR_DEFAULT_SIZE,
@@ -64,41 +64,21 @@ export abstract class AvatarBase extends SpectrumElement {
   // ───────────────────
 
   /**
-   * The size of the avatar. Invalid values fall back to the default.
+   * The size of the avatar. Invalid values are kept as set, warn in dev
+   * mode, and render at the default size.
    *
    * @default 100
    */
-  @property({ type: Number, reflect: true })
-  public get size(): AvatarSize {
-    return this._size;
-  }
-
-  public set size(value: AvatarSize) {
-    const isValid = (AVATAR_VALID_SIZES as readonly number[]).includes(
-      Number(value)
-    );
-    const validSize = isValid
-      ? (Number(value) as AvatarSize)
-      : AVATAR_DEFAULT_SIZE;
-
-    warnIf(
-      this,
-      !isValid,
-      `<${this.localName}> expects "size" to be one of: ${AVATAR_VALID_SIZES.join(', ')}. Received "${value}".`,
-      'https://spectrum-web-components.adobe.com/?path=/docs/components-avatar--docs',
-      { issues: [`size="${value}"`] }
-    );
-
-    if (this._size === validSize) {
-      return;
-    }
-
-    const oldSize = this._size;
-    this._size = validSize;
-    this.requestUpdate('size', oldSize);
-  }
-
-  private _size: AvatarSize = AVATAR_DEFAULT_SIZE;
+  @property({
+    type: Number,
+    reflect: true,
+    // A removed attribute resets to the default rather than `null`.
+    converter: {
+      fromAttribute: (value: string | null) =>
+        value === null ? AVATAR_DEFAULT_SIZE : Number(value),
+    },
+  })
+  public size: AvatarSize = AVATAR_DEFAULT_SIZE;
 
   // ───────────────────────
   //     VISUAL API
@@ -129,6 +109,18 @@ export abstract class AvatarBase extends SpectrumElement {
   // ──────────────────────
   //     IMPLEMENTATION
   // ──────────────────────
+
+  protected override update(changes: PropertyValues): void {
+    // An invalid size is kept as set; it matches no size selector in the
+    // stylesheet, so the avatar renders at the default size.
+    validateEnum(this, {
+      prop: 'size',
+      value: this.size,
+      valid: AVATAR_VALID_SIZES,
+      url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-avatar--docs',
+    });
+    super.update(changes);
+  }
 
   protected override firstUpdated(changes: PropertyValues): void {
     super.firstUpdated(changes);

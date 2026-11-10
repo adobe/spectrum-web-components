@@ -59,29 +59,29 @@ export abstract class MeterBase extends LinearProgressMixin(
   /**
    * The variant of the meter. Drives the bar fill color.
    */
-  @property({ type: String, reflect: true })
+  @property({
+    type: String,
+    reflect: true,
+    // A removed attribute resets to the default rather than `null`.
+    converter: {
+      fromAttribute: (value: string | null) => value ?? 'informative',
+    },
+  })
   public variant: MeterVariant = 'informative';
 
   // ──────────────────────
   //     IMPLEMENTATION
   // ──────────────────────
 
-  protected override willUpdate(changes: PropertyValues): void {
-    const constructor = this.constructor as typeof MeterBase;
-    if (!constructor.VARIANTS.includes(this.variant)) {
-      validateEnum(this, {
-        prop: 'variant',
-        value: this.variant,
-        valid: constructor.VARIANTS,
-        url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-meter--docs',
-      });
-      // Unknown variant: fall back to the default so the reflected
-      // attribute and fill color always resolve to a valid variant.
-      // Normalizing in `willUpdate` (Lit's input-normalization hook) folds
-      // the change into the current cycle instead of scheduling a second
-      // reactive update.
-      this.variant = 'informative';
-    }
-    super.willUpdate(changes);
+  protected override update(changes: PropertyValues): void {
+    // An unknown variant is kept as set; it matches no variant selector in
+    // the stylesheet, so the fill renders the default (informative) color.
+    validateEnum(this, {
+      prop: 'variant',
+      value: this.variant,
+      valid: (this.constructor as typeof MeterBase).VARIANTS,
+      url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-meter--docs',
+    });
+    super.update(changes);
   }
 }
