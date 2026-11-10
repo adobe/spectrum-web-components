@@ -104,7 +104,6 @@ const meta: Meta = {
   render: (storyArgs) => renderPromptField(storyArgs),
   parameters: {
     docs: {
-      packagePath: 'patterns/ai-toolkit/prompt-field',
       subtitle:
         'Prompt entry surface for AI flows. Populate attachments by slotting one or more swc-upload-attachment nodes into attachment',
     },
