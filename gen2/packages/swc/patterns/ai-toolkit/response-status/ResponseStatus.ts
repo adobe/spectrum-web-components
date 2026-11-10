@@ -547,9 +547,10 @@ export class ResponseStatus extends SpectrumElement {
     if (!this._rollActive) {
       // Settled (no transition in flight): the roll geometry below assumes a
       // fixed single-line height, so only constrain to one line while actually
-      // rolling. At rest, let the label wrap across multiple lines instead of
-      // truncating, since a narrow container (or a longer translation) can
-      // easily exceed one line's width.
+      // rolling. At rest, the CSS defaults to clamping the label to one line
+      // (with an ellipsis) when there's a disclosure to expand into, or
+      // wrapping it in full otherwise; either way, `--swc-response-status-
+      // label-max-lines` lets a consumer override the line count.
       return html`
         <span
           class="swc-ResponseStatus-headerTrailViewport swc-ResponseStatus-headerTrailViewport--settled"

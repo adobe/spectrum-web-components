@@ -93,11 +93,7 @@ export const Overview: Story = {
       </swc-conversation-turn>
       <swc-conversation-turn type="system">
         <swc-system-message>
-          <swc-response-status
-            slot="status"
-            status="complete"
-            style="--swc-response-status-label-max-lines: 1;"
-          >
+          <swc-response-status slot="status" status="complete">
             <span slot="label">
               I prioritized campaign outcomes, segmented messaging pillars, and
               next-step actions to keep the summary presentation-ready.

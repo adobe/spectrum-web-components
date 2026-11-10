@@ -17,6 +17,7 @@ import '../../swc-conversation-thread.js';
 import '../../../conversation-turn/swc-conversation-turn.js';
 import '../../../message-feedback/swc-message-feedback.js';
 import '../../../response-status/swc-response-status.js';
+import '../../../response-status/response-status-step/swc-response-status-step.js';
 import '../../../system-message/swc-system-message.js';
 import '../../../user-message/swc-user-message.js';
 
@@ -72,15 +73,14 @@ const systemTurn = (text: string, withChrome = false) => html`
     <swc-system-message>
       ${withChrome
         ? html`
-            <swc-response-status
-              slot="status"
-              status="complete"
-              style="--swc-response-status-label-max-lines: 1;"
-            >
+            <swc-response-status slot="status" status="complete">
               <span slot="label">
                 Response complete: reviewed the source material, verified the
                 findings, and prepared the final response
               </span>
+              <swc-response-status-step status="complete">
+                <span slot="label">Reviewed the source material</span>
+              </swc-response-status-step>
             </swc-response-status>
           `
         : nothing}

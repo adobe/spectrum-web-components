@@ -251,6 +251,7 @@
   font-size: var(--swc-monospace-font-size, token("code-size-xs"));
   line-height: var(--swc-monospace-line-height, token("line-height-font-size-100"));
   white-space: pre;
+  direction: ltr;
 }
 
 /* Per-step disclosure (mirrors the header row + panel mechanics in
@@ -326,16 +327,11 @@
 
 /* Description caps at a max height (and, for a wide slotted `<pre>`, width);
    shorter content stays auto-sized via `fit-content`. Override the custom
-   property to tune the height cap. `content-box` so the space reserved for
-   the scrollbar is added to the fit-content size instead of eating into the
-   content. The `100%` half of `max-inline-size: min(340px, 100%)` matters in
-   a narrow host: without it, unwrapped code can render wider than this
-   element's own clip ancestor and get clipped before the end of its scroll
-   range. */
+   property to tune the height cap. */
 .swc-ResponseStatusStep-detailScroll {
-  box-sizing: content-box;
+  box-sizing: border-box;
   inline-size: fit-content;
-  max-inline-size: min(340px, 100%);
+  max-inline-size: min(calc(340px + token("spacing-500")), 100%);
   max-block-size: var(--swc-response-status-step-detail-max-block-size, 120px);
   padding-inline-end: token("spacing-500");
   overflow: auto;
@@ -350,7 +346,9 @@
    fully to the end. Dropped here so the code reaches the panel's edge.
    Toggled from script; see ResponseStatusStep.ts for why. */
 .swc-ResponseStatusStep-detailScroll--code {
+  max-inline-size: min(340px, 100%);
   padding-inline-end: 0;
+  direction: ltr;
 }
 
 /* Chromium/Safari: `scrollbar-color`/`-width` above cover Firefox; these
@@ -392,8 +390,8 @@
    scrollbar (always painted above an element's content by the UA)
    untouched. Negative margins reclaim the layout space they'd otherwise add
    to the scrollable content. */
-.swc-ResponseStatusStep-detailScroll::before,
-.swc-ResponseStatusStep-detailScroll::after {
+.swc-ResponseStatusStep-detailScroll--overflows::before,
+.swc-ResponseStatusStep-detailScroll--overflows::after {
   display: block;
   position: sticky;
 
@@ -408,16 +406,16 @@
   opacity: 0;
 }
 
-.swc-ResponseStatusStep-detailScroll::before {
+.swc-ResponseStatusStep-detailScroll--overflows::before {
   inset-block-start: 0;
   margin-block-end: -24px;
-  background: linear-gradient(to bottom, var(--swc-background-layer-1-color), transparent);
+  background: linear-gradient(to bottom, token("background-layer-1-color"), transparent);
 }
 
-.swc-ResponseStatusStep-detailScroll::after {
+.swc-ResponseStatusStep-detailScroll--overflows::after {
   inset-block-end: 0;
   margin-block-start: -24px;
-  background: linear-gradient(to top, var(--swc-background-layer-1-color), transparent);
+  background: linear-gradient(to top, token("background-layer-1-color"), transparent);
 }
 
 /* Scroll-driven: with no overflow the scroll timeline is inactive, so the
@@ -430,15 +428,15 @@
 
   /* `nearest`, not `self`: a pseudo-element's own box is never itself a
      scroll container, so `self` can't resolve a timeline source here. */
-  .swc-ResponseStatusStep-detailScroll::before,
-  .swc-ResponseStatusStep-detailScroll::after {
+  .swc-ResponseStatusStep-detailScroll--overflows::before,
+  .swc-ResponseStatusStep-detailScroll--overflows::after {
     animation-timeline: scroll(nearest block);
     animation-name: swc-response-status-detail-fade-top;
     animation-timing-function: linear;
     animation-fill-mode: both;
   }
 
-  .swc-ResponseStatusStep-detailScroll::after {
+  .swc-ResponseStatusStep-detailScroll--overflows::after {
     animation-name: swc-response-status-detail-fade-bottom;
   }
 
@@ -490,8 +488,8 @@
   }
 
   /* Keep every line fully legible in forced colors; rely on the scrollbar. */
-  .swc-ResponseStatusStep-detailScroll::before,
-  .swc-ResponseStatusStep-detailScroll::after {
+  .swc-ResponseStatusStep-detailScroll--overflows::before,
+  .swc-ResponseStatusStep-detailScroll--overflows::after {
     display: none;
   }
 

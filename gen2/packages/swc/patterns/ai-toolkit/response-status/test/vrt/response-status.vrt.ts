@@ -444,7 +444,7 @@ const permutationContent = () => html`
           'Reviewing quarterly filings, press releases, and internal notes across every linked repository to compile a complete answer',
       }),
     ],
-    'Wrapping (2-line cap)'
+    'Wrapping (no steps, full label)'
   )}
   ${row(
     [

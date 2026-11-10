@@ -785,6 +785,13 @@ export const DetailOverflowVisibilityTest: Story = {
           },
           { timeout: 2000 }
         );
+
+        expect(overflowingRegion()?.classList).toContain(
+          'swc-ResponseStatusStep-detailScroll--overflows'
+        );
+        expect(getComputedStyle(overflowingRegion()!, '::before').content).toBe(
+          '""'
+        );
       }
     );
 
@@ -870,7 +877,119 @@ export const DetailOverflowVisibilityTest: Story = {
         );
         expect(shortRegion?.hasAttribute('tabindex')).toBe(false);
 
+        expect(shortRegion?.classList).not.toContain(
+          'swc-ResponseStatusStep-detailScroll--overflows'
+        );
+        expect(getComputedStyle(shortRegion!, '::before').content).toBe('none');
+
         shortStep.remove();
+      }
+    );
+
+    await step(
+      'a short but wide code sample overflows horizontally and still gets a tabindex',
+      async () => {
+        const wideStep = document.createElement(
+          'swc-response-status-step'
+        ) as ResponseStatusStep;
+        wideStep.setAttribute('status', 'complete');
+        wideStep.innerHTML = `
+          <span slot="label">Wide step</span>
+          <pre>const veryLongVariableNameThatKeepsGoingAndGoingAndGoing = 'a value long enough to overflow the detail panel horizontally';</pre>
+        `;
+        canvasElement.appendChild(wideStep);
+        await wideStep.updateComplete;
+
+        wideStep.open = true;
+        await wideStep.updateComplete;
+
+        const wideRegion = (): HTMLElement | null | undefined =>
+          wideStep.shadowRoot?.querySelector<HTMLElement>(
+            '.swc-ResponseStatusStep-detailScroll'
+          );
+
+        await waitFor(
+          () => {
+            expect(wideRegion()?.hasAttribute('tabindex')).toBe(true);
+          },
+          { timeout: 2000 }
+        );
+
+        wideStep.remove();
+      }
+    );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: A slotted `<pre>` toggles the step's code styling on and off
+// ──────────────────────────────────────────────────────────────
+
+export const StepCodeToggleTest: Story = {
+  render: () => html`
+    <swc-response-status-step status="complete">
+      <span slot="label">Reviewed the source material</span>
+      <span slot="description">A plain-text description.</span>
+    </swc-response-status-step>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const el = await getComponent<ResponseStatusStep>(
+      canvasElement,
+      'swc-response-status-step'
+    );
+    const scroll = (): HTMLElement | null | undefined =>
+      el.shadowRoot?.querySelector<HTMLElement>(
+        '.swc-ResponseStatusStep-detailScroll'
+      );
+
+    await step(
+      'does not get the code class with a plain-text description',
+      async () => {
+        await waitFor(() => {
+          expect(
+            scroll()?.classList.contains(
+              'swc-ResponseStatusStep-detailScroll--code'
+            )
+          ).toBe(false);
+        });
+      }
+    );
+
+    await step('adds the code class once a `<pre>` is slotted in', async () => {
+      const description = el.querySelector('[slot="description"]');
+      description?.remove();
+
+      const pre = document.createElement('pre');
+      pre.textContent = 'const value = 1;';
+      el.appendChild(pre);
+      await el.updateComplete;
+
+      await waitFor(() => {
+        expect(
+          scroll()?.classList.contains(
+            'swc-ResponseStatusStep-detailScroll--code'
+          )
+        ).toBe(true);
+      });
+    });
+
+    await step(
+      'removes the code class once the `<pre>` is removed again',
+      async () => {
+        el.querySelector('pre')?.remove();
+        const description = document.createElement('span');
+        description.setAttribute('slot', 'description');
+        description.textContent = 'Back to a plain-text description.';
+        el.appendChild(description);
+        await el.updateComplete;
+
+        await waitFor(() => {
+          expect(
+            scroll()?.classList.contains(
+              'swc-ResponseStatusStep-detailScroll--code'
+            )
+          ).toBe(false);
+        });
       }
     );
   },
@@ -1005,10 +1124,7 @@ export const AgenticWidthTest: Story = {
       class="width-test-container"
       style="display: flex; inline-size: 320px;"
     >
-      <swc-response-status
-        status="active"
-        style="inline-size: 100%;"
-      ></swc-response-status>
+      <swc-response-status status="active"></swc-response-status>
     </div>
   `,
   play: async ({ canvasElement, step }) => {
@@ -1036,7 +1152,6 @@ export const AgenticWidthTest: Story = {
         expect(el.getBoundingClientRect().width).toBe(288);
         expect(content!.getBoundingClientRect().width).toBe(288);
 
-        el.style.inlineSize = '100%';
         container!.style.inlineSize = '1280px';
         expect(el.getBoundingClientRect().width).toBeCloseTo(832, 0);
         expect(content!.getBoundingClientRect().width).toBeCloseTo(832, 0);

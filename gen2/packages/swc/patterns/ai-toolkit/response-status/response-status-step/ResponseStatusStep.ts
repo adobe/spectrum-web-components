@@ -268,7 +268,9 @@ export class ResponseStatusStep extends SpectrumElement {
       return;
     }
 
-    const overflows = content.scrollHeight - region.clientHeight > 1;
+    const overflowsVertically = content.scrollHeight - region.clientHeight > 1;
+    const overflowsHorizontally = content.scrollWidth - region.clientWidth > 1;
+    const overflows = overflowsVertically || overflowsHorizontally;
     if (overflows !== this._overflows) {
       this._overflows = overflows;
     }
@@ -354,6 +356,7 @@ export class ResponseStatusStep extends SpectrumElement {
             class=${classMap({
               'swc-ResponseStatusStep-detailScroll': true,
               'swc-ResponseStatusStep-detailScroll--code': this._hasCode,
+              'swc-ResponseStatusStep-detailScroll--overflows': this._overflows,
             })}
             role="group"
             aria-labelledby=${this._toggleId}
