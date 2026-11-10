@@ -19,7 +19,7 @@
  *
  * Input:  components/ui-icons/icon-source/S2_Icon_UI<Name>_Size<step>_N.svg
  * Output: components/ui-icons/icon-set/<Name>.ts  (numeral step -> Lit `html` template)
- *         components/ui-icons/icon-set/index.ts   (the UI_ICONS registry + UiIconName type)
+ *         components/ui-icons/icon-set.ts         (the UI_ICONS registry + UiIconName type)
  *
  * Run with `yarn generate:ui-icons` (from swc or the repo root). Regenerate whenever the
  * source SVGs change. See ../icon-source/README.md.
@@ -111,17 +111,17 @@ ${entries}
 
 // Emit the registry index.
 const imports = names
-  .map((name) => `import { ${name} } from './${name}.js';`)
+  .map((name) => `import { ${name} } from './icon-set/${name}.js';`)
   .join('\n');
 const registry = names
   .map((name) => `    '${toKebab(name)}': ${name},`)
   .join('\n');
 const index = `${LICENSE}
 ${GENERATED_BANNER}
-export * from '../ui-icons.types.js';
+export * from './ui-icons.types.js';
 
-import { UiIconArt } from '../ui-icons.types.js';
 ${imports}
+import { UiIconArt } from './ui-icons.types.js';
 
 /** Every internal UI icon, keyed by its \`icon\` attribute value. */
 export const UI_ICONS = {
@@ -130,7 +130,7 @@ ${registry}
 
 export type UiIconName = keyof typeof UI_ICONS;
 `;
-writeFileSync(path.join(outDir, 'index.ts'), index);
+writeFileSync(`${outDir}.ts`, index);
 
 console.log(
   `Generated ${names.length} UI icon bundle(s) from ${files.length} source SVG(s): ${names.join(', ')}`

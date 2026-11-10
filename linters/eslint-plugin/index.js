@@ -11,6 +11,7 @@
  */
 
 import documentActiveElement from './rules/document-active-element.js';
+import gen2PackageImports from './rules/gen2-package-imports.js';
 import noDuplicateCssprop from './rules/no-duplicate-cssprop.js';
 import noticeAfterShebang from './rules/notice-after-shebang.js';
 import preventArgumentNames from './rules/prevent-argument-names.js';
@@ -23,6 +24,7 @@ const swcPlugin = {
   },
   rules: {
     'document-active-element': documentActiveElement,
+    'gen2-package-imports': gen2PackageImports,
     'no-duplicate-cssprop': noDuplicateCssprop,
     'notice-after-shebang': noticeAfterShebang,
     'prevent-argument-names': preventArgumentNames,

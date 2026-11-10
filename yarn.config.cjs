@@ -130,9 +130,16 @@ module.exports = defineConfig({
 
       // gen2 packages use different entry points
       if (isGen2) {
-        // gen2 uses dist folder for builds
-        workspace.set('main', './dist/index.js');
-        workspace.set('module', './dist/index.js');
+        // gen2 uses dist folder for builds. Packages without a root export
+        // (core and swc only publish subpaths) must not point main/module at
+        // a dist/index.js that is never built.
+        if (workspace.manifest.exports?.['.']) {
+          workspace.set('main', './dist/index.js');
+          workspace.set('module', './dist/index.js');
+        } else {
+          workspace.unset('main');
+          workspace.unset('module');
+        }
       } else {
         // 1st-gen packages use src folder
         // A subset of components have a different entry point than the default

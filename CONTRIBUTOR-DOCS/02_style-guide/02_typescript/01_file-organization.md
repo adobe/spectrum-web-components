@@ -23,8 +23,9 @@
 - [File set per component](#file-set-per-component)
 - [Where types files live](#where-types-files-live)
 - [Export patterns](#export-patterns)
-    - [Core index.ts](#core-indexts)
-    - [SWC index.ts](#swc-indexts)
+    - [Core component files](#core-component-files)
+    - [SWC barrel](#swc-barrel)
+    - [SWC registration module](#swc-registration-module)
 
 </details>
 
@@ -56,10 +57,9 @@ import { when } from 'lit/directives/when.js';
 Imports from `@adobe/spectrum-wc` or `@spectrum-web-components`.
 
 ```ts
-import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
-import { SizedMixin } from '@adobe/spectrum-wc-core/mixins/index.js';
-import { ObserveSlotPresence } from '@adobe/spectrum-wc-core/mixins/observe-slot-presence.js';
-import { ObserveSlotText } from '@adobe/spectrum-wc-core/mixins/observe-slot-text.js';
+import { SlotPresenceController } from '@adobe/spectrum-wc-core/controllers/slot-presence-controller.js';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element.js';
+import { SizedMixin } from '@adobe/spectrum-wc-core/mixins.js';
 ```
 
 ### Group 3: Side-effect imports
@@ -98,7 +98,9 @@ import badgeStyles from './badge.css';
 
 ### Import extensions
 
-Use `.js` extensions for relative imports, including imports of `.ts` and `.tsx` files. Never use `.ts` in import paths. The linter (`import/extensions`) enforces this for relative imports, including in gen2 Storybook config. It skips package imports, because each package's `exports` map defines its valid paths, so follow that package's documented paths (for example, `lit/decorators.js`).
+Use `.js` extensions for relative imports, including imports of `.ts` and `.tsx` files. Never use `.ts` in import paths. The linter (`import/extensions`) enforces this for relative imports, including in gen2 Storybook config. It skips package imports, because each package's `exports` map defines its valid paths, so follow that package's documented paths (for example, `lit/decorators.js`). For `@adobe/spectrum-wc*` packages, a second rule (`swc/gen2-package-imports`) checks that each import, including dynamic imports and `import()` types, uses a published `.js` entry point.
+
+Import gen2 packages through their published entry points: the sibling barrel (`@adobe/spectrum-wc/components/badge.js`, `@adobe/spectrum-wc-core/mixins.js`), not an `index.js` path or a file inside a core folder. For example, import `ElementSize` from `@adobe/spectrum-wc-core/mixins.js`, not from `@adobe/spectrum-wc-core/mixins/sized-mixin.js`. Core components are the exception: they have no barrel, so import each component file directly (`@adobe/spectrum-wc-core/components/badge/Badge.base.js`).
 
 ```ts
 // ✅ Good
@@ -117,10 +119,11 @@ import { PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
 // Group 2: Internal packages
-import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
-import { SizedMixin } from '@adobe/spectrum-wc-core/mixins/index.js';
-import { ObserveSlotPresence } from '@adobe/spectrum-wc-core/mixins/observe-slot-presence.js';
-import { ObserveSlotText } from '@adobe/spectrum-wc-core/mixins/observe-slot-text.js';
+import { SlotPresenceController } from '@adobe/spectrum-wc-core/controllers/slot-presence-controller.js';
+import { SlotTextController } from '@adobe/spectrum-wc-core/controllers/slot-text-controller.js';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element.js';
+import { SizedMixin } from '@adobe/spectrum-wc-core/mixins.js';
+import { validateEnum, warnIf } from '@adobe/spectrum-wc-core/utils.js';
 
 // Group 4: Relative imports
 import {
@@ -141,13 +144,13 @@ import { classMap } from 'lit/directives/class-map.js';
 import { when } from 'lit/directives/when.js';
 
 // Group 2: Internal packages
+import { BadgeBase } from '@adobe/spectrum-wc-core/components/badge/Badge.base.js';
 import {
   BADGE_VALID_SIZES,
   BADGE_VARIANTS,
   BADGE_VARIANTS_COLOR,
-  BadgeBase,
   type BadgeVariant,
-} from '@adobe/spectrum-wc-core/components/badge';
+} from '@adobe/spectrum-wc-core/components/badge/Badge.types.js';
 
 // Group 5: Style imports
 import styles from './badge.css';
@@ -159,12 +162,12 @@ The core package provides utility functions that concrete classes may import for
 
 | Utility | Import path | Purpose |
 |---------|------------|---------|
-| `capitalize` | `@adobe/spectrum-wc-core/utils/index.js` | Capitalize a string for CSS class generation |
+| `capitalize` | `@adobe/spectrum-wc-core/utils.js` | Capitalize a string for CSS class generation |
 
 **Example from Divider.ts:**
 
 ```ts
-import { capitalize } from '@adobe/spectrum-wc-core/utils/index.js';
+import { capitalize } from '@adobe/spectrum-wc-core/utils.js';
 
 // Used in render
 [`swc-Divider--static${capitalize(this.staticColor)}`]: this.staticColor != null,
@@ -180,12 +183,12 @@ Each component has files in two packages: **core** and **swc**.
 |---------|------|---------|
 | core | `Component.base.ts` | Abstract base class with behavior and API |
 | core | `Component.types.ts` | Constant arrays and TypeScript types |
-| core | `index.ts` | Re-exports base class and types |
 | swc | `Component.ts` | Concrete class with styles and rendering |
 | swc | `component.css` | Component stylesheet |
-| swc | `index.ts` | Registers the custom element and re-exports |
+| swc | `swc-<name>.ts` | Registers the custom element |
+| swc | `<name>.ts` (barrel) | Re-exports the concrete class |
 
-The core package also lives at `gen2/packages/core/components/<name>/` and the swc package at `gen2/packages/swc/components/<name>/`.
+The component files live in `gen2/packages/core/components/<name>/` and `gen2/packages/swc/components/<name>/`. The swc barrel is a sibling `<name>.ts` file next to its folder, not an `index.ts` inside it, so every public import path ends in `.js`. Core components have no barrel; the swc class imports the core files directly.
 
 **Example for Badge:**
 
@@ -193,10 +196,10 @@ The core package also lives at `gen2/packages/core/components/<name>/` and the s
 |------|----------|
 | `Badge.base.ts` | `core/components/badge/Badge.base.ts` |
 | `Badge.types.ts` | `core/components/badge/Badge.types.ts` |
-| `index.ts` | `core/components/badge/index.ts` |
 | `Badge.ts` | `swc/components/badge/Badge.ts` |
 | `badge.css` | `swc/components/badge/badge.css` |
-| `index.ts` | `swc/components/badge/index.ts` |
+| `swc-badge.ts` | `swc/components/badge/swc-badge.ts` |
+| `badge.ts` | `swc/components/badge.ts` |
 
 ## Where types files live
 
@@ -210,41 +213,46 @@ gen2/packages/swc/components/badge/Badge.types.ts      ❌ Wrong location
 The concrete class in swc imports types from core through the package path:
 
 ```ts
-import {
-  type BadgeVariant,
-} from '@adobe/spectrum-wc-core/components/badge';
+import type { BadgeVariant } from '@adobe/spectrum-wc-core/components/badge/Badge.types.js';
 ```
 
 ## Export patterns
 
-### Core index.ts
+### Core component files
 
-The core `index.ts` re-exports everything from the base class and the types file. It uses wildcard exports.
+Core components have no barrel. The `./components/*.js` wildcard export publishes every file in a component folder, so the swc class imports the base class and the types file directly:
 
 ```ts
-export * from './Badge.base.js';
-export * from './Badge.types.js';
+import { BadgeBase } from '@adobe/spectrum-wc-core/components/badge/Badge.base.js';
+import { BADGE_VARIANTS } from '@adobe/spectrum-wc-core/components/badge/Badge.types.js';
 ```
 
-### SWC index.ts
+### SWC barrel
 
-The SWC `index.ts` does three things:
-
-1. Registers the custom element using `defineElement`.
-2. Re-exports the concrete class.
-3. Declares the element in the global `HTMLElementTagNameMap`.
+The SWC barrel, `swc/components/badge.ts`, re-exports the concrete class. It does not register the element. Consumers import it as `@adobe/spectrum-wc/components/badge.js`.
 
 ```ts
-import { defineElement } from '@adobe/spectrum-wc-core/element/index.js';
+export * from './badge/Badge.js';
+```
+
+### SWC registration module
+
+The SWC registration module, `swc/components/badge/swc-badge.ts`, does two things:
+
+1. Declares the element in the global `HTMLElementTagNameMap`.
+2. Registers the custom element using `defineElement`.
+
+```ts
+import { defineElement } from '@adobe/spectrum-wc-core/element.js';
 
 import { Badge } from './Badge.js';
 
-export * from './Badge.js';
 declare global {
   interface HTMLElementTagNameMap {
     'swc-badge': Badge;
   }
 }
+
 defineElement('swc-badge', Badge);
 ```
 

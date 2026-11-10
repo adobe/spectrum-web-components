@@ -13,11 +13,9 @@
 import { CSSResultArray, html, PropertyValues, TemplateResult } from 'lit';
 import { property } from 'lit/decorators.js';
 
-import {
-  ActionGroupBase,
-  type ActionGroupStaticColor,
-} from '@adobe/spectrum-wc-core/components/action-group';
-import { FocusgroupNavigationController } from '@adobe/spectrum-wc-core/controllers/index.js';
+import { ActionGroupBase } from '@adobe/spectrum-wc-core/components/action-group/ActionGroup.base.js';
+import type { ActionGroupStaticColor } from '@adobe/spectrum-wc-core/components/action-group/ActionGroup.types.js';
+import { FocusgroupNavigationController } from '@adobe/spectrum-wc-core/controllers.js';
 
 import styles from './action-group.css';
 

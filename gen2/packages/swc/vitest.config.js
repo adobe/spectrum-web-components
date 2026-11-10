@@ -142,7 +142,14 @@ export default mergeConfig(
               // Without these, imports can resolve to built output and/or be excluded from coverage.
               '@adobe/spectrum-wc-core': path.resolve(dirname, '../core'),
               '@adobe/spectrum-wc-icons': path.resolve(dirname, '../icons/src'),
-              '@adobe/spectrum-wc': path.resolve(dirname, './components'),
+              '@adobe/spectrum-wc/components': path.resolve(
+                dirname,
+                './components'
+              ),
+              '@adobe/spectrum-wc/patterns': path.resolve(
+                dirname,
+                './patterns'
+              ),
               '@adobe/postcss-token': path.resolve(
                 dirname,
                 '../tools/postcss-token'

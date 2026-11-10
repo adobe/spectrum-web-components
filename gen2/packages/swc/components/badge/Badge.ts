@@ -15,13 +15,13 @@ import { property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { when } from 'lit/directives/when.js';
 
+import { BadgeBase } from '@adobe/spectrum-wc-core/components/badge/Badge.base.js';
 import {
   BADGE_VALID_SIZES,
   BADGE_VARIANTS,
   BADGE_VARIANTS_COLOR,
-  BadgeBase,
   type BadgeVariant,
-} from '@adobe/spectrum-wc-core/components/badge';
+} from '@adobe/spectrum-wc-core/components/badge/Badge.types.js';
 
 import styles from './badge.css';
 

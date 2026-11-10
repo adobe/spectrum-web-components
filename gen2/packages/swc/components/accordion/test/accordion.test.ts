@@ -14,7 +14,10 @@ import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import { Accordion, AccordionItem } from '@adobe/spectrum-wc/accordion';
+import {
+  Accordion,
+  AccordionItem,
+} from '@adobe/spectrum-wc/components/accordion.js';
 
 import '@adobe/spectrum-wc/components/accordion/swc-accordion.js';
 import '@adobe/spectrum-wc/components/accordion/swc-accordion-item.js';

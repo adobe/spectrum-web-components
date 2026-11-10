@@ -20,7 +20,7 @@ import {
   validateEnum,
   validateRequiredSlot,
   warnIf,
-} from '../index.js';
+} from '../../utils.js';
 
 const URL = 'https://spectrum-web-components.adobe.com/components/test/';
 

@@ -17,7 +17,7 @@ import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { MutationController } from '@lit-labs/observers/mutation-controller.js';
 
-import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element.js';
 
 import '@adobe/spectrum-wc/components/icon/swc-icon.js';
 
@@ -26,7 +26,7 @@ import {
   StepDotIcon,
   StepDotOutlineIcon,
   StepStoppedIcon,
-} from '../../utils/icons/index.js';
+} from '../../utils/icons.js';
 
 import styles from './response-status-step.css';
 

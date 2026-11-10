@@ -10,6 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
+import { readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, resolve } from 'path';
 
@@ -33,6 +34,18 @@ import globals from 'globals';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 import { swcPlugin } from '@spectrum-web-components/eslint-plugin';
+
+// Published `@adobe/spectrum-wc-core` subpaths (for example `mixins.js` or the
+// `components/*.js` wildcard), read from its export map so
+// `swc/gen2-package-imports` allows exactly these. Keys that map to `null` are
+// blocked, so they are skipped.
+const coreExportSubpaths = Object.entries(
+  JSON.parse(
+    readFileSync(resolve(__dirname, 'gen2/packages/core/package.json'), 'utf8')
+  ).exports
+)
+  .filter(([, target]) => target !== null)
+  .map(([key]) => key.replace(/^\.\//, ''));
 
 // ────────────────────────────────────────────────────────────────────────────────
 // Package.json key ordering for jsonc/sort-keys
@@ -350,6 +363,23 @@ export default defineConfig([
 
       // Import extensions
       'import/extensions': importExtensionsRule,
+    },
+  },
+
+  // ────────────────────────────────────────────────────────────────────────────
+  // Gen2 package import paths. `import/extensions` ignores packages, and the
+  // tsconfig `paths` resolve core files that are not exported, so this rule
+  // keeps every `@adobe/spectrum-wc*` import on a published `.js` entry point.
+  // It covers static, re-export, dynamic, and `import()` type imports, and stays
+  // on for stories and tests, which are copied as examples.
+  // ────────────────────────────────────────────────────────────────────────────
+  {
+    files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.mjs', '**/*.cjs'],
+    rules: {
+      'swc/gen2-package-imports': [
+        'error',
+        { coreExports: coreExportSubpaths },
+      ],
     },
   },
 

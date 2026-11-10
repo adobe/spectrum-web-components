@@ -27,10 +27,10 @@ All new folders and files in `/core` should be kebab-case.
 
 Prefer the new top-level paths for new code:
 
-- `@adobe/spectrum-wc-core/element`
-- `@adobe/spectrum-wc-core/mixins`
-- `@adobe/spectrum-wc-core/controllers`
-- `@adobe/spectrum-wc-core/utils`
+- `@adobe/spectrum-wc-core/element.js`
+- `@adobe/spectrum-wc-core/mixins.js`
+- `@adobe/spectrum-wc-core/controllers.js`
+- `@adobe/spectrum-wc-core/utils.js`
 
 New code should use the top-level paths above.
 

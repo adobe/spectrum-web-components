@@ -13,12 +13,12 @@
 import { CSSResultArray, html, PropertyValues, TemplateResult } from 'lit';
 import { property, queryAll } from 'lit/decorators.js';
 
-import { FocusgroupNavigationController } from '@adobe/spectrum-wc-core/controllers/index.js';
-import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
+import { FocusgroupNavigationController } from '@adobe/spectrum-wc-core/controllers.js';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element.js';
 
 import '@adobe/spectrum-wc/components/icon/swc-icon.js';
 
-import { ThumbDownIcon, ThumbUpIcon } from '../utils/icons/index.js';
+import { ThumbDownIcon, ThumbUpIcon } from '../utils/icons.js';
 
 import styles from './message-feedback.css';
 

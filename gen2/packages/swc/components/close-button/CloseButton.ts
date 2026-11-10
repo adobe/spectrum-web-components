@@ -14,12 +14,12 @@ import { CSSResultArray, html, PropertyValues, TemplateResult } from 'lit';
 import { property } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
+import { ButtonBase } from '@adobe/spectrum-wc-core/components/button/Button.base.js';
 import {
   BUTTON_STATIC_COLORS,
-  ButtonBase,
   type ButtonStaticColor,
-} from '@adobe/spectrum-wc-core/components/button';
-import { validateEnum } from '@adobe/spectrum-wc-core/utils';
+} from '@adobe/spectrum-wc-core/components/button/Button.types.js';
+import { validateEnum } from '@adobe/spectrum-wc-core/utils.js';
 
 import '../ui-icons/swc-ui-icon.js';
 

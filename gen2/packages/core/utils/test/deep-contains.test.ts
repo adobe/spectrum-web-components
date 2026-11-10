@@ -14,7 +14,7 @@ import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import { deepContains } from '../index.js';
+import { deepContains } from '../../utils.js';
 
 export default {
   title: 'Utils/Deep contains/Tests',

@@ -20,7 +20,7 @@ import {
   STATUS_LIGHT_VARIANTS_SEMANTIC,
   StatusLightColorVariant,
   StatusLightSemanticVariant,
-} from '@adobe/spectrum-wc-core/components/status-light';
+} from '@adobe/spectrum-wc-core/components/status-light/StatusLight.types.js';
 
 import '@adobe/spectrum-wc/components/status-light/swc-status-light.js';
 

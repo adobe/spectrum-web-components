@@ -27,7 +27,7 @@ import {
   theme,
   vrtParameters,
 } from '../../../../../.storybook/helpers/index.js';
-import type { PixelLoader } from '../../../pixel-loader/index.js';
+import type { PixelLoader } from '../../../pixel-loader.js';
 import type { PromptField } from '../../PromptField.js';
 
 // Metadata

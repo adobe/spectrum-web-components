@@ -14,11 +14,11 @@ import { CSSResultArray, html, TemplateResult } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
+import { InfieldButtonBase } from '@adobe/spectrum-wc-core/components/infield-button/InfieldButton.base.js';
 import {
   INFIELD_BUTTON_VALID_SIZES,
-  InfieldButtonBase,
   type InfieldButtonSize,
-} from '@adobe/spectrum-wc-core/components/infield-button';
+} from '@adobe/spectrum-wc-core/components/infield-button/InfieldButton.types.js';
 
 import styles from './infield-button.css';
 

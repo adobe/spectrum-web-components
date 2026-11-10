@@ -31,7 +31,7 @@ import { uniqueId } from '../../../utils/id.js';
 import {
   PIXEL_LOADER_ICON_NAMES,
   PIXEL_LOADER_PRESET_NAMES,
-} from '../pixel-loader/index.js';
+} from '../pixel-loader.js';
 
 // ────────────────
 //    METADATA

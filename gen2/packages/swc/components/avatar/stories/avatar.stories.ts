@@ -14,7 +14,7 @@ import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import { AVATAR_VALID_SIZES } from '@adobe/spectrum-wc-core/components/avatar/index.js';
+import { AVATAR_VALID_SIZES } from '@adobe/spectrum-wc-core/components/avatar/Avatar.types.js';
 
 import '@adobe/spectrum-wc/components/avatar/swc-avatar.js';
 import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';

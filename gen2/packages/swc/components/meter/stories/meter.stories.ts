@@ -17,14 +17,14 @@ import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 import {
   METER_VARIANTS,
   type MeterVariant,
-} from '@adobe/spectrum-wc-core/components/meter';
+} from '@adobe/spectrum-wc-core/components/meter/Meter.types.js';
 import {
   LINEAR_PROGRESS_LABEL_POSITIONS,
   LINEAR_PROGRESS_STATIC_COLORS,
   LINEAR_PROGRESS_VALID_SIZES,
   type LinearProgressLabelPosition,
   type LinearProgressStaticColor,
-} from '@adobe/spectrum-wc-core/mixins/index.js';
+} from '@adobe/spectrum-wc-core/mixins.js';
 
 import '@adobe/spectrum-wc/components/meter/swc-meter.js';
 

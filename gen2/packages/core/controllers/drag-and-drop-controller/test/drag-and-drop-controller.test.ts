@@ -15,7 +15,7 @@ import { expect, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import { getComponent } from '../../../../swc/utils/test-utils.js';
-import { DragAndDropController } from '../index.js';
+import { DragAndDropController } from '../../drag-and-drop-controller.js';
 
 class DragAndDropTestHost extends LitElement {
   public dragged = false;

@@ -11,10 +11,10 @@ import * as Stories from './stories/field-description-mixin.stories';
 
 `FieldDescriptionMixin` adds description/error-text rendering and accessible description wiring to a host so components do not hand-roll it. It is one of two decoupled primitives for form-field labelling:
 
-- **`FieldDescriptionMixin`** (`@adobe/spectrum-wc-core/mixins`): the `accessible-describedby` property, `description` / `error-text` slot presence tracking, and `renderFieldDescription()`.
-- **`renderFieldDescription`** (`@adobe/spectrum-wc-core/directives/render-field-description`): the underlying render-only directive. The mixin owns and exposes it; use it directly only for stateless rendering without the mixin.
+- **`FieldDescriptionMixin`** (`@adobe/spectrum-wc-core/mixins.js`): the `accessible-describedby` property, `description` / `error-text` slot presence tracking, and `renderFieldDescription()`.
+- **`renderFieldDescription`** (`@adobe/spectrum-wc-core/directives/render-field-description.js`): the underlying render-only directive. The mixin owns and exposes it; use it directly only for stateless rendering without the mixin.
 
-`LabellingMixin` (`@adobe/spectrum-wc-core/mixins`) is the companion mixin for accessible-name association; `swc-text-field` composes both.
+`LabellingMixin` (`@adobe/spectrum-wc-core/mixins.js`) is the companion mixin for accessible-name association; `swc-text-field` composes both.
 
 ### What it does
 
@@ -32,7 +32,7 @@ For a host whose invalid state comes from another API, pass it explicitly, for e
 
 ```typescript
 import { html, LitElement } from 'lit';
-import { FieldDescriptionMixin } from '@adobe/spectrum-wc-core/mixins';
+import { FieldDescriptionMixin } from '@adobe/spectrum-wc-core/mixins.js';
 
 class MyField extends FieldDescriptionMixin(LitElement) {
   invalid = false;
@@ -94,9 +94,9 @@ While invalid, supplied `error-text` replaces the description. Without an `error
 
 ### Related primitives
 
-| Export                   | Module                                                        | Purpose                                                                                  |
-| ------------------------ | ------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `renderFieldDescription` | `@adobe/spectrum-wc-core/directives/render-field-description` | Underlying field-description render; exposed via the mixin's `renderFieldDescription()`. |
-| `LabellingMixin`         | `@adobe/spectrum-wc-core/mixins`                              | Companion mixin for accessible-name association.                                         |
+| Export                   | Module                                                           | Purpose                                                                                  |
+| ------------------------ | ---------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `renderFieldDescription` | `@adobe/spectrum-wc-core/directives/render-field-description.js` | Underlying field-description render; exposed via the mixin's `renderFieldDescription()`. |
+| `LabellingMixin`         | `@adobe/spectrum-wc-core/mixins.js`                              | Companion mixin for accessible-name association.                                         |
 
 <DocsFooter />

@@ -15,7 +15,10 @@ import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
-import { PendingController, type PendingControllerHost } from '../index.js';
+import {
+  PendingController,
+  type PendingControllerHost,
+} from '../../pending-controller.js';
 
 declare global {
   interface HTMLElementTagNameMap {

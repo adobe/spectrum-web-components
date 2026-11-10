@@ -15,7 +15,7 @@ import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import { TriggerPressController } from '../index.js';
+import { TriggerPressController } from '../../trigger-press-controller.js';
 
 export default {
   title: 'Controllers/Trigger press controller/Tests',

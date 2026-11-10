@@ -14,8 +14,8 @@ import { CSSResultArray, html, PropertyValues, TemplateResult } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { styleMap } from 'lit/directives/style-map.js';
 
-import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
-import { validateEnum } from '@adobe/spectrum-wc-core/utils';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element.js';
+import { validateEnum } from '@adobe/spectrum-wc-core/utils.js';
 
 import {
   buildCompleteMsFor,

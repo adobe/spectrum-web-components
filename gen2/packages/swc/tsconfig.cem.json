@@ -17,6 +17,10 @@
   "include": [
     "components/**/*.ts",
     "patterns/**/*.ts",
+    "../core/controllers.ts",
+    "../core/element.ts",
+    "../core/mixins.ts",
+    "../core/utils.ts",
     "../core/components/**/*.ts",
     "../core/controllers/**/*.ts",
     "../core/element/**/*.ts",

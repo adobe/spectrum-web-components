@@ -23,6 +23,7 @@ import { swcPlugin } from '../index.js';
 
 const ruleNames = [
   'document-active-element',
+  'gen2-package-imports',
   'no-duplicate-cssprop',
   'notice-after-shebang',
   'prevent-argument-names',

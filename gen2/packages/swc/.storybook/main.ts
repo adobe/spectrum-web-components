@@ -285,14 +285,14 @@ const config: StorybookConfig = {
             replacement: resolve(__dirname, '../../core'),
           },
           // Workflow icons resolve to source so the gallery renders without a prior
-          // build of the icons package. Must precede the `@adobe/spectrum-wc` alias.
+          // build of the icons package.
           {
             find: '@adobe/spectrum-wc-icons',
             replacement: resolve(__dirname, '../../icons/src'),
           },
-          // Long-form imports (e.g. `@adobe/spectrum-wc/components/badge/swc-badge.js`)
-          // resolve directly to the source under `./components`. This must come
-          // before the short-form alias below so the more specific prefix wins.
+          // Component and pattern imports (e.g.
+          // `@adobe/spectrum-wc/components/badge/swc-badge.js`) resolve to source,
+          // mirroring the published `./components/*.js` and `./patterns/*.js` exports.
           {
             find: '@adobe/spectrum-wc/components',
             replacement: resolve(__dirname, '../components'),
@@ -300,10 +300,6 @@ const config: StorybookConfig = {
           {
             find: '@adobe/spectrum-wc/patterns',
             replacement: resolve(__dirname, '../patterns'),
-          },
-          {
-            find: '@adobe/spectrum-wc',
-            replacement: resolve(__dirname, '../components'),
           },
           {
             find: '@adobe/postcss-token',

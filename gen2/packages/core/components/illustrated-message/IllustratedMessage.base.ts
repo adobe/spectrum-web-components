@@ -13,15 +13,15 @@
 import { PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
-import { SlotTextController } from '@adobe/spectrum-wc-core/controllers/slot-text-controller/index.js';
-import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
+import { SlotTextController } from '@adobe/spectrum-wc-core/controllers/slot-text-controller.js';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element.js';
 import {
   validateAllowedChildren,
   validateEnum,
   warnIf,
-} from '@adobe/spectrum-wc-core/utils/index.js';
+} from '@adobe/spectrum-wc-core/utils.js';
 
-import { SlotAttributePropagationController } from '../../controllers/slot-attribute-propagation-controller/index.js';
+import { SlotAttributePropagationController } from '../../controllers/slot-attribute-propagation-controller.js';
 import {
   ILLUSTRATED_MESSAGE_VALID_ORIENTATIONS,
   ILLUSTRATED_MESSAGE_VALID_SIZES,

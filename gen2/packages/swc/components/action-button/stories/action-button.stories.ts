@@ -14,7 +14,7 @@ import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import { ACTION_BUTTON_VALID_SIZES } from '@adobe/spectrum-wc-core/components/action-button';
+import { ACTION_BUTTON_VALID_SIZES } from '@adobe/spectrum-wc-core/components/action-button/ActionButton.types.js';
 
 import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
 import '@adobe/spectrum-wc-icons/swc-icon-edit.js';

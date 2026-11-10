@@ -16,7 +16,7 @@ import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 import {
   THUMBNAIL_VALID_FITS,
   THUMBNAIL_VALID_SIZES,
-} from '@adobe/spectrum-wc-core/components/thumbnail/index.js';
+} from '@adobe/spectrum-wc-core/components/thumbnail/Thumbnail.types.js';
 
 import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
 import '@adobe/spectrum-wc/components/thumbnail/swc-thumbnail.js';

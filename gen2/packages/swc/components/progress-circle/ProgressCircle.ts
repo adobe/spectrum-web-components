@@ -15,12 +15,12 @@ import { property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
+import { ProgressCircleBase } from '@adobe/spectrum-wc-core/components/progress-circle/ProgressCircle.base.js';
 import {
   PROGRESS_CIRCLE_STATIC_COLORS,
-  ProgressCircleBase,
   type ProgressCircleStaticColor,
-} from '@adobe/spectrum-wc-core/components/progress-circle';
-import { capitalize } from '@adobe/spectrum-wc-core/utils/index.js';
+} from '@adobe/spectrum-wc-core/components/progress-circle/ProgressCircle.types.js';
+import { capitalize } from '@adobe/spectrum-wc-core/utils.js';
 
 import styles from './progress-circle.css';
 

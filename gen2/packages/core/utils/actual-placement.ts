@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { type Placement } from '../controllers/placement-controller/index.js';
+import { type Placement } from '../controllers/placement-controller.js';
 
 /**
  * The physical side (`'top'` / `'bottom'` / `'left'` / `'right'`) of a placement,

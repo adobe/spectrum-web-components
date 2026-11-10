@@ -14,13 +14,13 @@ import { CSSResultArray, html, TemplateResult } from 'lit';
 import { property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 
+import { StatusLightBase } from '@adobe/spectrum-wc-core/components/status-light/StatusLight.base.js';
 import {
   STATUS_LIGHT_VARIANTS,
   STATUS_LIGHT_VARIANTS_COLOR,
   STATUS_LIGHT_VARIANTS_SEMANTIC,
-  StatusLightBase,
   type StatusLightVariant,
-} from '@adobe/spectrum-wc-core/components/status-light';
+} from '@adobe/spectrum-wc-core/components/status-light/StatusLight.types.js';
 
 import styles from './status-light.css';
 
