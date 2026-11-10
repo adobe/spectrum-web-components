@@ -41,8 +41,12 @@ export interface UploadAttachmentData {
   readonly badgeLabel?: string;
 }
 
+/** Options for `filesToAttachments()`. */
 export interface FilesToAttachmentsOptions {
-  /** Locale(s) for the size label. Defaults to the runtime locale. */
+  /**
+   * BCP 47 locale(s) for the size label. Defaults to the runtime locale. An
+   * invalid locale throws a `RangeError`.
+   */
   locale?: string | string[];
 }
 
@@ -128,6 +132,12 @@ function formatFileSize(bytes: number, locale?: string | string[]): string {
  * Call `revokeAttachment()` for each attachment when it's dismissed,
  * submitted, or no longer rendered, so the browser can free the file data.
  *
+ * @param files - Files to convert: an array, a `FileList`, or any iterable.
+ * @param options - Optional settings, such as the size label locale.
+ * @returns One attachment per file, in the same order. Empty input returns `[]`.
+ * @throws {RangeError} When `options.locale` is invalid. No object URLs are
+ * created in that case.
+ *
  * @example
  * ```ts
  * field.addEventListener('swc-prompt-field-drop', (event) => {
@@ -175,6 +185,9 @@ export function filesToAttachments(
  * once, and on attachments without a thumbnail. After this call, the
  * `thumbnailUrl` no longer loads, so remove the attachment from the rendered
  * output too.
+ *
+ * @param attachment - An attachment returned by `filesToAttachments()`, or a
+ * copy of one.
  */
 export function revokeAttachment(attachment: UploadAttachmentData): void {
   const url = attachment.thumbnailUrl;
@@ -183,7 +196,11 @@ export function revokeAttachment(attachment: UploadAttachmentData): void {
   }
 }
 
-/** Calls `revokeAttachment()` for each attachment. */
+/**
+ * Calls `revokeAttachment()` for each attachment.
+ *
+ * @param attachments - Attachments to release: an array or any iterable.
+ */
 export function revokeAttachments(
   attachments: Iterable<UploadAttachmentData>
 ): void {

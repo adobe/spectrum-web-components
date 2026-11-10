@@ -216,7 +216,7 @@ html`
 `;
 ```
 
-Use the same helper for files from the **`+`** button's file picker (`Array.from(input.files)`). The helper is also exported from `@adobe/spectrum-wc/patterns/ai-toolkit/upload-attachment`; the `files-to-attachments.js` path above doesn't load any element code, so it's safe to import during server-side rendering.
+Use the same helper for files from the **`+`** button's file picker (`Array.from(input.files)`). The helper is also exported from `@adobe/spectrum-wc/patterns/ai-toolkit/upload-attachment`; the `files-to-attachments.js` path above doesn't load any element code, so it's safe to import during server-side rendering. See [Upload attachment → Building tiles from files](../?path=/docs/patterns-ai-toolkit-upload-attachment--docs#building-tiles-from-files) for the full helper reference.
 
 Once those tiles land in the `attachment` slot, `swc-prompt-field` manages focus for the drop automatically. If the textarea had focus at drop time, focus stays there. Otherwise, the new tile becomes the attachment strip's roving-tabindex entry point either way, but focus only jumps there immediately when the document is already in a keyboard-driven focus state (checked via `:focus-visible`); a plain mouse drag from the file system leaves focus untouched at drop time, and a later Tab into the strip lands on that same new tile instead of the previous entry point.
 
