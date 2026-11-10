@@ -237,6 +237,15 @@ export abstract class TabsBase extends SpectrumElement {
    */
   private _tabs: TabLike[] = [];
 
+  // Shared by every instance, so a link written by one tabs container is
+  // still treated as component-owned when the element moves to another one.
+  private static readonly managedPanelLabels = new WeakMap<
+    TabPanelLike,
+    string
+  >();
+
+  private static readonly managedTabControls = new WeakMap<TabLike, string>();
+
   /**
    * @internal
    *
@@ -290,8 +299,9 @@ export abstract class TabsBase extends SpectrumElement {
 
   /**
    * Whether an assigned node is treated as a tab. `role="tab"` is set in
-   * each tab's `firstUpdated`, so `slotchange` may run before that — accept
-   * known tab host tag names so the tab list and selection indicator sync.
+   * each tab's `connectedCallback`, but a `swc-tab` that is not yet defined
+   * when `slotchange` runs has no role — accept the tag name so it is still
+   * registered.
    */
   private static isTabSlotNode(el: Element): el is TabLike {
     if (!(el instanceof HTMLElement)) {
@@ -317,6 +327,8 @@ export abstract class TabsBase extends SpectrumElement {
     this._navigation.refresh();
     this.updateCheckedState();
     this.updateSelectionIndicator();
+    // Tabs can change without the panel slot changing, so relink the panels.
+    this.syncPanels();
   }
 
   /**
@@ -324,10 +336,8 @@ export abstract class TabsBase extends SpectrumElement {
    * changes. Wires up `aria-controls` / `aria-labelledby` between
    * each tab and its panel.
    */
-  protected handlePanelSlotChange(event: Event): void {
-    const slot = event.target as HTMLSlotElement;
-    const panels = slot.assignedElements() as TabPanelLike[];
-    this.managePanels(panels);
+  protected handlePanelSlotChange(_event: Event): void {
+    this.syncPanels();
   }
 
   /**
@@ -430,20 +440,106 @@ export abstract class TabsBase extends SpectrumElement {
    * Wires up cross-element ARIA relationships between tabs and
    * panels. Each tab gets `aria-controls` pointing at its panel's
    * `id`, and each panel gets `aria-labelledby` pointing at its
-   * tab's `id`.
+   * tab's `id`. Values set here are removed when the link goes away;
+   * consumer-provided values are kept.
+   *
+   * Both lists are read from the slots on every call, so a tab is never
+   * linked to a panel (or a panel to a tab) that was already removed.
    */
-  private managePanels(panels: TabPanelLike[]): void {
+  private syncPanels(): void {
+    const tabs = this.assignedTo('slot:not([name]), slot[name=""]').filter(
+      TabsBase.isTabSlotNode
+    ) as TabLike[];
+    const panels = this.assignedTo('slot[name="tab-panel"]') as TabPanelLike[];
+    const linkedTabs = new Set<TabLike>();
+
     for (const panel of panels) {
       const { tabId, id } = panel;
-      const tab = this.querySelector(`[role="tab"][tab-id="${tabId}"]`);
+      // Plain `role="tab"` elements have no `tabId` property, so fall back
+      // to the attribute.
+      const tab = tabId
+        ? tabs.find((el) => (el.tabId ?? el.getAttribute('tab-id')) === tabId)
+        : undefined;
 
       if (tab) {
-        tab.setAttribute('aria-controls', id);
-        panel.setAttribute('aria-labelledby', tab.id);
+        TabsBase.setManagedAttribute(
+          tab,
+          'aria-controls',
+          id,
+          TabsBase.managedTabControls
+        );
+        linkedTabs.add(tab);
+        TabsBase.setManagedAttribute(
+          panel,
+          'aria-labelledby',
+          tab.id,
+          TabsBase.managedPanelLabels
+        );
+      } else {
+        TabsBase.clearManagedAttribute(
+          panel,
+          'aria-labelledby',
+          TabsBase.managedPanelLabels
+        );
       }
 
       panel.selected = tabId === this.selected;
     }
+
+    for (const tab of tabs) {
+      if (!linkedTabs.has(tab)) {
+        TabsBase.clearManagedAttribute(
+          tab,
+          'aria-controls',
+          TabsBase.managedTabControls
+        );
+      }
+    }
+  }
+
+  private assignedTo(selector: string): Element[] {
+    return (
+      this.renderRoot
+        ?.querySelector<HTMLSlotElement>(selector)
+        ?.assignedElements() ?? []
+    );
+  }
+
+  /**
+   * Sets an ARIA reference. This component owns the attribute only while it
+   * is absent or still holds the last value written here. If the consumer
+   * set or changed it, their value is kept and no longer tracked.
+   */
+  private static setManagedAttribute<T extends Element>(
+    el: T,
+    name: string,
+    value: string,
+    managed: WeakMap<T, string>
+  ): void {
+    const current = el.getAttribute(name);
+    if (current !== null && current !== managed.get(el)) {
+      managed.delete(el);
+      return;
+    }
+    if (current !== value) {
+      el.setAttribute(name, value);
+    }
+    managed.set(el, value);
+  }
+
+  /**
+   * Removes an ARIA reference only if this component set it and it was not
+   * changed since.
+   */
+  private static clearManagedAttribute<T extends Element>(
+    el: T,
+    name: string,
+    managed: WeakMap<T, string>
+  ): void {
+    if (managed.has(el) && el.getAttribute(name) === managed.get(el)) {
+      el.removeAttribute(name);
+    }
+    managed.delete(el);
   }
 
   // ───────────────────────────────────

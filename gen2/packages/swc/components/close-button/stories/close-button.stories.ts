@@ -27,18 +27,6 @@ import '@adobe/spectrum-wc/components/close-button/swc-close-button.js';
 
 const { args, argTypes, template } = getStorybookHelpers('swc-close-button');
 
-argTypes.size = {
-  ...argTypes.size,
-  control: { type: 'select' },
-  options: BUTTON_VALID_SIZES,
-  table: {
-    category: 'attributes',
-    defaultValue: {
-      summary: 'm',
-    },
-  },
-};
-
 argTypes['static-color'] = {
   ...argTypes['static-color'],
   control: 'select',
