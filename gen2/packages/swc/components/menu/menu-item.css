@@ -197,10 +197,12 @@
 /* stylelint-disable-next-line no-descending-specificity */
 ::slotted([slot="label"]) {
   grid-area: label;
+  min-inline-size: 0; /* Enables overflow text wrapping */
 }
 
 ::slotted([slot="description"]) {
   grid-area: description;
+  min-inline-size: 0; /* Enables overflow text wrapping */
   font-size: var(--swc-menu-item-description-font-size, token("font-size-75"));
   line-height: var(--swc-menu-item-description-line-height, token("line-height-font-size-75"));
   color: var(--swc-menu-item-description-color, token("neutral-subdued-content-color-default"));
@@ -208,6 +210,7 @@
 
 ::slotted([slot="secondary"]) {
   grid-area: secondary;
+  min-inline-size: 0; /* Enables overflow text wrapping */
   margin-inline-start: var(--_swc-menu-item-gap);
   color: var(--swc-menu-item-secondary-color, token("neutral-subdued-content-color-default"));
 }
@@ -228,6 +231,7 @@
 
 .swc-MenuItem-content--hasThumbnail ::slotted([slot="visual"]) {
   --_swc-menu-item-visual-size: var(--_swc-menu-item-thumbnail-size);
+  --swc-thumbnail-size: var(--_swc-menu-item-thumbnail-size);
 
   margin-block-start: 0;
 }

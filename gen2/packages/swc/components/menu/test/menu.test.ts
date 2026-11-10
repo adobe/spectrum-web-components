@@ -1490,6 +1490,80 @@ export const ItemDefaultsTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
+// TEST: Layout classes follow slot content
+// ──────────────────────────────────────────────────────────────
+
+const contentClasses = (row: MenuItem): string[] =>
+  Array.from(
+    row.shadowRoot?.querySelector('.swc-MenuItem-content')?.classList ?? []
+  ).filter((name) => name !== 'swc-MenuItem-content');
+
+// The row's layout is driven by classes that follow what is slotted, so the
+// layout has to update when content arrives, leaves or is re-slotted after
+// the first render. Asserted here rather than in a visual snapshot: the state
+// is a class on the content element, which is deterministic to read.
+export const ItemLayoutClassesTest: Story = {
+  render: () => html`
+    <swc-menu-item><span slot="label">Cut</span></swc-menu-item>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const [row] = getRows(canvasElement);
+    await row.updateComplete;
+
+    await step('starts with no layout classes', async () => {
+      expect(contentClasses(row), 'plain label row').toEqual([]);
+    });
+
+    await step('a description added later adds its class', async () => {
+      const description = document.createElement('span');
+      description.slot = 'description';
+      description.textContent = 'Cuts the selection';
+      row.append(description);
+      await waitFor(() =>
+        expect(contentClasses(row)).toEqual([
+          'swc-MenuItem-content--hasDescription',
+        ])
+      );
+    });
+
+    await step('a slotted thumbnail adds its class', async () => {
+      const thumbnail = document.createElement('swc-thumbnail');
+      thumbnail.slot = 'visual';
+      row.prepend(thumbnail);
+      await waitFor(() =>
+        expect(contentClasses(row).sort()).toEqual([
+          'swc-MenuItem-content--hasDescription',
+          'swc-MenuItem-content--hasThumbnail',
+        ])
+      );
+    });
+
+    await step(
+      'swapping the thumbnail for an icon drops its class',
+      async () => {
+        row.querySelector('swc-thumbnail')?.remove();
+        const icon = document.createElement('span');
+        icon.slot = 'visual';
+        row.prepend(icon);
+        await waitFor(() =>
+          expect(contentClasses(row)).toEqual([
+            'swc-MenuItem-content--hasDescription',
+          ])
+        );
+      }
+    );
+
+    await step(
+      'moving the description out of its slot drops its class',
+      async () => {
+        row.querySelector('[slot="description"]')?.removeAttribute('slot');
+        await waitFor(() => expect(contentClasses(row)).toEqual([]));
+      }
+    );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
 // TEST: Properties / Attributes
 // ──────────────────────────────────────────────────────────────
 
