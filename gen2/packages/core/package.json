@@ -131,6 +131,10 @@
       "types": "./dist/components/icon/index.d.ts",
       "import": "./dist/components/icon/index.js"
     },
+    "./components/icon.js": {
+      "types": "./dist/components/icon/index.d.ts",
+      "import": "./dist/components/icon/index.js"
+    },
     "./components/icon/index.js": {
       "types": "./dist/components/icon/index.d.ts",
       "import": "./dist/components/icon/index.js"
@@ -355,6 +359,10 @@
       "types": "./dist/element/index.d.ts",
       "import": "./dist/element/index.js"
     },
+    "./element.js": {
+      "types": "./dist/element/index.d.ts",
+      "import": "./dist/element/index.js"
+    },
     "./element/define-element.js": {
       "types": "./dist/element/define-element.d.ts",
       "import": "./dist/element/define-element.js"
@@ -506,6 +514,9 @@
         "dist/components/dropzone/index.d.ts"
       ],
       "components/icon": [
+        "dist/components/icon/index.d.ts"
+      ],
+      "components/icon.js": [
         "dist/components/icon/index.d.ts"
       ],
       "components/icon/index.js": [
@@ -674,6 +685,9 @@
         "dist/directives/render-label/index.d.ts"
       ],
       "element": [
+        "dist/element/index.d.ts"
+      ],
+      "element.js": [
         "dist/element/index.d.ts"
       ],
       "element/define-element.js": [
