@@ -85,12 +85,12 @@
   --_swc-ai-button-overlay-hue-end: light-dark(token("magenta-500"), token("fuchsia-400"));
   --_swc-ai-button-overlay: linear-gradient(to bottom, color-mix(in srgb, var(--_swc-ai-button-overlay-hue-start) 10%, transparent), color-mix(in srgb, var(--_swc-ai-button-overlay-hue-end) 10%, transparent) 80%), linear-gradient(var(--_swc-ai-button-overlay-fill) 0 0), linear-gradient(to bottom, var(--_swc-ai-button-overlay-start), var(--_swc-ai-button-overlay-end));
 
-  /* The design's top light is a 10% color-dodge layer with a 4% white inner
+  /* The design's top light is a 10% color-dodge layer with a 3% white inner
      shadow. On light glass, it adds a 10% white wash and the full shadow. On
-     dark glass, its shadow adds about half as much, and the dodge brightens
-     the glow (see .swc-AiButton-surface::before). */
+     dark glass, its shadow adds about half as much, rounded up to the 2%
+     token, and the dodge brightens the glow (see .swc-AiButton-surface::before). */
   --_swc-ai-button-top-light: light-dark(rgb(255 255 255 / 10%), transparent);
-  --_swc-ai-button-top-light-shadow: light-dark(token("transparent-static-white-100"), token("transparent-static-white-50"));
+  --_swc-ai-button-top-light-shadow: light-dark(token("transparent-static-white-75"), token("transparent-static-white-50"));
   --_swc-ai-button-top-light-dodge: light-dark(transparent, rgb(134 112 112 / 10%));
   --_swc-ai-button-highlight-start: light-dark(rgb(255 255 255 / 66%), token("transparent-static-white-150"));
   --_swc-ai-button-highlight-end: light-dark(token("transparent-static-white-0"), token("transparent-static-black-75"));
@@ -220,7 +220,6 @@
   inset-block-end: 0;
   inset-inline: var(--_swc-ai-button-glow-hover-inset-inline);
   block-size: var(--_swc-ai-button-glow-hover-block-size);
-  box-shadow: inset 0 1.5px 12px rgb(255 255 255 / 60%);
   opacity: var(--_swc-ai-button-glow-hover-opacity);
   transition: opacity token("animation-duration-100") token("animation-ease-in-out");
 }
