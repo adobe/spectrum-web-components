@@ -28,8 +28,12 @@ const meta: Meta = {
   render: () => html`
     <swc-thread-alert>
       <span>Your response could not be completed.</span>
-      <button slot="actions">Try again</button>
-      <button slot="dismiss">Dismiss message</button>
+      <swc-button slot="actions" size="s">Try again</swc-button>
+      <swc-close-button
+        slot="dismiss"
+        size="s"
+        accessible-label="Dismiss message"
+      ></swc-close-button>
     </swc-thread-alert>
   `,
   parameters: {
@@ -105,13 +109,16 @@ export const Rendering: Story = {
         expect(el.hasAttribute('role')).toBe(false);
         expect(el.hasAttribute('aria-live')).toBe(false);
         expect(el.hasAttribute('tabindex')).toBe(false);
+        expect(el.tabIndex).toBe(-1);
+        el.focus();
+        expect(document.activeElement).not.toBe(el);
         expect(
           el.shadowRoot?.querySelector('[role], [aria-live], h1, h2, h3')
         ).toBeNull();
         expect('variant' in el).toBe(false);
         expect('closeButtonPlacement' in el).toBe(false);
 
-        const dismiss = el.querySelector<HTMLButtonElement>('[slot="dismiss"]');
+        const dismiss = el.querySelector<HTMLElement>('[slot="dismiss"]');
         if (!dismiss) {
           throw new Error('Expected the consumer dismiss control');
         }
@@ -154,7 +161,14 @@ VariantControl.storyName = 'Variant control';
 
 export const VariantIcons: Story = {
   render: () => html`
-    <swc-thread-alert>Request status</swc-thread-alert>
+    <swc-thread-alert>
+      <span>Request status</span>
+      <swc-close-button
+        slot="dismiss"
+        size="s"
+        accessible-label="Dismiss message"
+      ></swc-close-button>
+    </swc-thread-alert>
   `,
   play: async ({ canvasElement, step }) => {
     const el = await getComponent(canvasElement, 'swc-thread-alert');
@@ -201,7 +215,14 @@ VariantIcons.storyName = 'Variant icons';
 
 export const OptionalContent: Story = {
   render: () => html`
-    <swc-thread-alert><span>Message text</span></swc-thread-alert>
+    <swc-thread-alert>
+      <span>Message text</span>
+      <swc-close-button
+        slot="dismiss"
+        size="s"
+        accessible-label="Dismiss message"
+      ></swc-close-button>
+    </swc-thread-alert>
   `,
   play: async ({ canvasElement }) => {
     const el = await getComponent(canvasElement, 'swc-thread-alert');
@@ -210,14 +231,19 @@ export const OptionalContent: Story = {
       throw new Error('Expected a rendered thread alert');
     }
     expect(shadow.querySelector('slot[name="heading"]')).toBeNull();
-    for (const name of ['actions', 'dismiss']) {
-      const slot = shadow.querySelector<HTMLSlotElement>(
-        `slot[name="${name}"]`
-      );
-      expect(slot?.assignedElements()).toHaveLength(0);
-      expect(slot && getComputedStyle(slot).display).toBe('contents');
-    }
-    expect(el.querySelector('button, swc-close-button')).toBeNull();
+    const actions = shadow.querySelector<HTMLSlotElement>(
+      'slot[name="actions"]'
+    );
+    expect(actions?.assignedElements()).toHaveLength(0);
+    expect(actions && getComputedStyle(actions).display).toBe('contents');
+    expect(
+      shadow
+        .querySelector<HTMLSlotElement>('slot[name="dismiss"]')
+        ?.assignedElements()
+    ).toHaveLength(1);
+    expect(
+      el.querySelectorAll('swc-close-button[slot="dismiss"]')
+    ).toHaveLength(1);
     expect(
       shadow.querySelector('swc-close-button, [tabindex], [role], [aria-live]')
     ).toBeNull();
@@ -229,11 +255,18 @@ export const OptionalContent: Story = {
     expect(text?.[0].textContent).toBe('Message text');
   },
 };
-OptionalContent.storyName = 'Optional content';
+OptionalContent.storyName = 'Optional action';
 
 export const MinimumHeight: Story = {
   render: () => html`
-    <swc-thread-alert><span>Message text</span></swc-thread-alert>
+    <swc-thread-alert>
+      <span>Message text</span>
+      <swc-close-button
+        slot="dismiss"
+        size="s"
+        accessible-label="Dismiss message"
+      ></swc-close-button>
+    </swc-thread-alert>
   `,
   play: async ({ canvasElement }) => {
     const el = await getComponent(canvasElement, 'swc-thread-alert');
@@ -243,7 +276,7 @@ export const MinimumHeight: Story = {
       throw new Error('Expected the thread alert surface and message text');
     }
     expect(getComputedStyle(root).minBlockSize).toBe('32px');
-    expect(root.getBoundingClientRect().height).toBe(32);
+    expect(root.getBoundingClientRect().height).toBeGreaterThanOrEqual(32);
 
     el.style.setProperty('--swc-thread-alert-min-block-size', '48px');
     expect(getComputedStyle(root).minBlockSize).toBe('48px');
@@ -258,7 +291,14 @@ MinimumHeight.storyName = 'Minimum height';
 
 export const Styling: Story = {
   render: () => html`
-    <swc-thread-alert>Message text</swc-thread-alert>
+    <swc-thread-alert>
+      <span>Message text</span>
+      <swc-close-button
+        slot="dismiss"
+        size="s"
+        accessible-label="Dismiss message"
+      ></swc-close-button>
+    </swc-thread-alert>
   `,
   play: async ({ canvasElement }) => {
     const el = await getComponent(canvasElement, 'swc-thread-alert');
@@ -292,7 +332,14 @@ export const Styling: Story = {
 
 export const TranslucentSurface: Story = {
   render: () => html`
-    <swc-thread-alert>Your response was saved.</swc-thread-alert>
+    <swc-thread-alert>
+      <span>Your response was saved.</span>
+      <swc-close-button
+        slot="dismiss"
+        size="s"
+        accessible-label="Dismiss message"
+      ></swc-close-button>
+    </swc-thread-alert>
   `,
   play: async ({ canvasElement }) => {
     const el = await getComponent(canvasElement, 'swc-thread-alert');
@@ -335,16 +382,19 @@ export const ControlSpacing: Story = {
     ).toBeCloseTo(18, 3);
 
     action.remove();
-    dismiss.remove();
     const style = getComputedStyle(root);
-    expect(content.getBoundingClientRect().right).toBeCloseTo(
+    expect(
+      dismiss.getBoundingClientRect().left -
+        content.getBoundingClientRect().right
+    ).toBeCloseTo(18, 3);
+    expect(dismiss.getBoundingClientRect().right).toBeCloseTo(
       root.getBoundingClientRect().right -
         parseFloat(style.paddingInlineEnd) -
         parseFloat(style.borderInlineEndWidth),
       3
     );
 
-    el.append(action, dismiss);
+    el.insertBefore(action, dismiss);
     el.setAttribute('dir', 'rtl');
     expect(
       content.getBoundingClientRect().left -

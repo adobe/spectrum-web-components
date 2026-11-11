@@ -10,8 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { html, nothing } from 'lit';
-import { expect } from '@storybook/test';
+import { html, nothing, TemplateResult } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import '../../swc-thread-alert.js';
@@ -22,7 +21,6 @@ import {
   captioned,
   createPermutations,
   forcedColorsVrtParameters,
-  forcePseudoStates,
   groupPermutationsBy,
   row,
   theme,
@@ -52,27 +50,21 @@ const VARIANTS = [
 type AlertCase = {
   variant?: (typeof VARIANTS)[number];
   actions?: boolean;
-  dismiss?: boolean;
-  message?: string;
+  message?: string | TemplateResult;
   inlineSize?: string;
   lang?: string;
-  focus?: boolean;
 };
 
 const renderAlert = ({
   variant,
   actions = false,
-  dismiss = false,
   message = 'Your request is ready.',
   inlineSize = '300px',
   lang,
-  focus = false,
 }: AlertCase = {}) => html`
   <swc-thread-alert
     variant=${variant ?? nothing}
     lang=${lang ?? nothing}
-    tabindex=${focus ? '-1' : nothing}
-    data-force-state=${focus ? 'focus' : nothing}
     style="inline-size: ${inlineSize}; max-inline-size: 100%;"
   >
     <span>${message}</span>
@@ -81,15 +73,11 @@ const renderAlert = ({
           <swc-button slot="actions" size="s">Try again</swc-button>
         `
       : nothing}
-    ${dismiss
-      ? html`
-          <swc-close-button
-            slot="dismiss"
-            size="s"
-            accessible-label="Dismiss message"
-          ></swc-close-button>
-        `
-      : nothing}
+    <swc-close-button
+      slot="dismiss"
+      size="s"
+      accessible-label="Dismiss message"
+    ></swc-close-button>
   </swc-thread-alert>
 `;
 
@@ -97,33 +85,11 @@ const ALERT_PERMUTATIONS = createPermutations([
   {
     variant: VARIANTS,
     actions: [false, true],
-    dismiss: [false, true],
   },
 ]);
 
-const anatomyLabel = ({ actions, dismiss }: AlertCase) =>
-  actions
-    ? dismiss
-      ? 'Action and dismissal'
-      : 'Action only'
-    : dismiss
-      ? 'Dismissal only'
-      : 'Text only';
-
-const forceFocus = forcePseudoStates(
-  'swc-thread-alert[data-force-state="focus"]'
-);
-
-const verifyFocus = async (context: { canvasElement: HTMLElement }) => {
-  await forceFocus(context);
-  const hosts = context.canvasElement.querySelectorAll(
-    'swc-thread-alert[data-force-state="focus"]'
-  );
-  await expect(hosts.length).toBeGreaterThan(0);
-  for (const host of hosts) {
-    await expect(getComputedStyle(host).outlineStyle).toBe('solid');
-  }
-};
+const anatomyLabel = ({ actions }: AlertCase) =>
+  actions ? 'Action and dismissal' : 'Dismissal only';
 
 const permutationContent = () => html`
   ${row([renderAlert()], 'Default variant and minimum height')}
@@ -142,7 +108,6 @@ const permutationContent = () => html`
         renderAlert({
           variant: 'negative',
           actions: true,
-          dismiss: true,
           inlineSize: '220px',
           message:
             'Your response could not be completed. Check your connection, then try again.',
@@ -161,75 +126,23 @@ const permutationContent = () => html`
     'Wrapping'
   )}
   ${row(
-    [
-      html`
-        <swc-thread-alert
-          variant="negative"
-          style="inline-size: 420px; max-inline-size: 100%;"
-        >
-          <span>Your response could not be completed.</span>
-          <swc-button slot="actions" size="s">Try again</swc-button>
-          <swc-button slot="actions" size="s">Edit request</swc-button>
-          <swc-close-button
-            slot="dismiss"
-            size="s"
-            accessible-label="Dismiss message"
-          ></swc-close-button>
-        </swc-thread-alert>
-      `,
-    ],
-    'Multiple actions'
-  )}
-  ${row(
-    [
-      html`
-        <swc-thread-alert
-          variant="informative"
-          style="inline-size: 300px; max-inline-size: 100%;"
-        >
-          <span>Your response was saved.</span>
-          <a class="swc-Link" slot="actions" href="#saved-response">
-            View response
-          </a>
-        </swc-thread-alert>
-      `,
-    ],
-    'Link action'
-  )}
-  ${row(
-    [
-      html`
-        <div
-          style="padding: 16px; background-color: var(--swc-background-layer-1-color);"
-        >
-          ${renderAlert({ variant: 'notice', dismiss: true })}
-        </div>
-      `,
-      html`
-        <div style="padding: 16px; background-color: var(--swc-gray-100);">
-          ${renderAlert({ variant: 'neutral', dismiss: true })}
-        </div>
-      `,
-    ],
-    'Translucency on layer 1 and gray 100'
-  )}
-  ${row(
-    [
-      html`
-        <div class="swc-theme swc-theme--sizeL">
-          ${captioned(renderAlert(), 'Text only: 40px minimum')}
-        </div>
-      `,
-      html`
-        <div class="swc-theme swc-theme--sizeL">
-          ${captioned(
-            renderAlert({ variant: 'notice', actions: true, dismiss: true }),
-            'With controls'
-          )}
-        </div>
-      `,
-    ],
-    'Large scale'
+    [false, true].map((separateLine) =>
+      captioned(
+        renderAlert({
+          message: html`
+            Your response was
+            saved.${separateLine
+              ? html`
+                  <br />
+                `
+              : ' '}
+            <a class="swc-Link" href="#saved-response">View response</a>
+          `,
+        }),
+        separateLine ? 'Separate line' : 'Inline'
+      )
+    ),
+    'Content links'
   )}
   ${row(
     [
@@ -261,7 +174,6 @@ const permutationContent = () => html`
     ],
     'CJK wrapping'
   )}
-  ${row([renderAlert({ focus: true })], 'Programmatic focus')}
 `;
 
 // VRT stories
@@ -272,11 +184,9 @@ export const Permutations: Story = {
     ${theme(permutationContent(), 'dark', 'rtl')}
   `,
   parameters: vrtParameters,
-  play: verifyFocus,
 };
 
 export const ForcedColors: Story = {
   render: () => theme(permutationContent(), 'light', 'ltr'),
   parameters: forcedColorsVrtParameters,
-  play: verifyFocus,
 };

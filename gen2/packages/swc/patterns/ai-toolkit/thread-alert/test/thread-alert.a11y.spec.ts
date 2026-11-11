@@ -96,6 +96,26 @@ test.describe('Thread alert', () => {
     await expect(root.locator('swc-thread-alert')).not.toHaveAttribute('role');
   });
 
+  test('keeps one close button with or without the optional action', async ({
+    page,
+  }) => {
+    const root = await gotoStory(
+      page,
+      'patterns-ai-toolkit-thread-alert--optional-controls',
+      'swc-thread-alert'
+    );
+    for (const message of await root.locator('swc-thread-alert').all()) {
+      await expect(message.locator('[slot="dismiss"]')).toHaveCount(1);
+      await expect(
+        message.getByRole('button', { name: 'Dismiss message' })
+      ).toHaveCount(1);
+      expect(
+        await message.locator('[slot="actions"]').count()
+      ).toBeLessThanOrEqual(1);
+    }
+    await expect(root.locator('swc-button[slot="actions"]')).toHaveCount(1);
+  });
+
   for (const [theme, backdrop] of [
     ['light', 'page'],
     ['light', 'layer'],
@@ -303,7 +323,7 @@ test.describe('Thread alert', () => {
     ).toBeFocused();
   });
 
-  test('leaves dynamic announcements and deliberate focus with the application', async ({
+  test('announces inserted messages without making the host a focus target', async ({
     page,
   }) => {
     const root = await gotoStory(
@@ -313,17 +333,26 @@ test.describe('Thread alert', () => {
     );
     await expect(root.locator('swc-thread-alert')).toHaveCount(0);
     await expect(root.getByRole('status')).toBeEmpty();
-    await root.getByRole('button', { name: 'Announce message' }).click();
+    const trigger = root.getByRole('button', { name: 'Announce message' });
+    await trigger.click();
+    await expect(trigger).toBeFocused();
     await expect(root.getByRole('status')).toHaveText('Your request is ready.');
-    await expect(root.locator('swc-thread-alert')).not.toHaveAttribute(
-      'aria-live'
-    );
-    await root.getByRole('button', { name: 'Focus message' }).click();
-    await expect(root.locator('swc-thread-alert')).toBeFocused();
-    const outline = await root
-      .locator('swc-thread-alert')
-      .evaluate((el) => getComputedStyle(el).outlineStyle);
-    expect(outline).not.toBe('none');
+    const message = root.locator('swc-thread-alert');
+    await expect(
+      message.getByRole('button', { name: 'Dismiss message' })
+    ).toHaveCount(1);
+    await expect(message).not.toHaveAttribute('aria-live');
+    await expect(message).not.toHaveAttribute('tabindex');
+    await message.evaluate((el: HTMLElement) => el.focus());
+    await expect(trigger).toBeFocused();
+    await expect(
+      root.getByRole('button', { name: 'Focus message' })
+    ).toHaveCount(0);
+    await message.getByRole('button', { name: 'Dismiss message' }).focus();
+    await page.keyboard.press('Space');
+    await expect(message).toHaveCount(0);
+    await expect(trigger).toBeFocused();
+    await expect(root.getByRole('status')).toBeEmpty();
   });
 
   test('keeps content and focus indicators visible in forced colors', async ({

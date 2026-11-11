@@ -10,11 +10,11 @@ import * as Stories from './stories/thread-alert.stories';
 ## Anatomy
 
 - **Status icon**: Decorative workflow icon selected by the variant; neutral messages have no icon.
-- **Message**: One text span in the default slot.
-- **Inline actions**: Named buttons or native links in the `actions` slot.
-- **Optional dismissal**: A [Close button](../?path=/docs/components-close-button--docs) in the `dismiss` slot, with a localized `accessible-label`.
+- **Message**: One text span in the default slot, which can include links.
+- **Optional action**: One named button in the `actions` slot.
+- **Required dismissal**: Exactly one [Close button](../?path=/docs/components-close-button--docs) in the `dismiss` slot, with a localized `accessible-label`.
 
-The composed order is icon, message, actions, then dismissal. Keep consumer markup in that same order. There is no separate heading slot.
+The composed order is icon, message, optional action, then dismissal. Keep consumer markup in that same order. There is no separate heading slot.
 
 <Canvas of={Stories.Anatomy} />
 
@@ -32,19 +32,15 @@ The close button is always inline. There is no placement attribute or floating l
 
 <Canvas of={Stories.SemanticVariants} />
 
-### Optional controls
+### Optional action
 
-Provide controls through `actions` and `dismiss`, or leave either slot empty. Applications handle their `click` events; the pattern does not generate controls or dismiss itself.
+Always provide one `swc-close-button` through `dismiss`. The `actions` slot accepts zero or one action button, in addition to the close button. Applications handle their `click` events; the pattern does not generate controls, dismiss itself, or validate slot cardinality at runtime.
 
 <Canvas of={Stories.OptionalControls} />
 
-The `--swc-thread-alert-*` properties in the generated API table provide token-backed overrides for the surface, border, typography, spacing, status icon, and programmatic focus indicator. Child controls retain their own styling APIs.
+Links belong in the message content's default slot, not in `actions`. Place them inline with the text, or use `<br>` to start a separate line within the same message span.
 
-## States
-
-The message has no built-in pending or disabled state. Set these states on the slotted controls when appropriate. For a busy [Button](../?path=/docs/components-button--docs), use `pending` and a localized `pending-label` rather than combining `pending` and `disabled`.
-
-<Canvas of={Stories.States} />
+The `--swc-thread-alert-*` properties in the generated API table provide token-backed overrides for the surface, border, typography, spacing, and status icon. Child controls retain their own styling APIs.
 
 ## Behaviors
 
@@ -61,6 +57,8 @@ The minimum height uses `component-height-100`: 32px at the default scale and 40
 ### Features
 
 Static messages have no generated role, live region, heading, or automatic focus. Decorative icons stay out of the accessibility tree.
+
+The message host is non-interactive and is not a focus target. Only the child buttons and links within the message content participate in keyboard navigation.
 
 Slotted controls keep their existing native semantics, accessible names, keyboard activation, and focus indicators. <kbd>Tab</kbd> and <kbd>Shift</kbd> + <kbd>Tab</kbd> move between controls in composed order; <kbd>Enter</kbd> and <kbd>Space</kbd> activate buttons. Links retain native link behavior. There is no toolbar, focus trap, arrow-key navigation, or Escape-to-dismiss handler.
 
@@ -88,18 +86,7 @@ The layout uses logical spacing and preserves action order in right-to-left cont
 
 ### Dynamic insertion
 
-The app announces dynamically inserted content through a live region that exists before the change, or deliberately moves focus to the message. Do not add `role="alert"`, `role="status"`, or `aria-live` to the thread alert itself.
-
-For deliberate focus, supply `tabindex="-1"` and call the inherited `focus()` method after rendering. This creates no extra sequential tab stop. The host shows a focus indicator. There is no custom autofocus option.
-
-```ts
-const message = document.createElement('swc-thread-alert');
-message.setAttribute('tabindex', '-1');
-message.textContent = 'Your request is ready.';
-container.append(message);
-await message.updateComplete;
-message.focus();
-```
+The app announces dynamically inserted content through a live region that exists before the change, without moving focus to the message. Do not add `role="alert"`, `role="status"`, or `aria-live` to the thread alert itself, or make its host focusable.
 
 This application example exposes the pre-existing live region as visible announcement text so its updates can be inspected. It is not part of the component's shadow DOM.
 

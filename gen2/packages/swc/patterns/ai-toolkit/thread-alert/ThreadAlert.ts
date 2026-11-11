@@ -22,21 +22,21 @@ import '@adobe/spectrum-wc-icons/swc-icon-info-circle.js';
 import styles from './thread-alert.css';
 
 /**
- * A rendering-only message with a status icon and optional inline actions.
+ * A rendering-only message with a status icon, required close button, and optional action.
  *
- * Static messages have no role or live region. Applications own announcements,
- * deliberate focus, retry, dismissal, and the accessible names of slotted controls.
+ * The message host is non-interactive and has no role or live region.
+ * Applications own announcements, retry, dismissal, and named slotted controls.
  * The CSS-only `variant` attribute has no corresponding JavaScript property.
  *
  * @element swc-thread-alert
  * @attr {'informative' | 'positive' | 'notice' | 'negative' | 'neutral'} variant - Visual status. Defaults to informative when omitted.
- * @slot - Meaningful message text or inline HTML.
- * @slot actions - Optional named buttons or native links.
- * @slot dismiss - Optional swc-close-button with a localized accessible-label.
+ * @slot - Meaningful message text or inline HTML, including content links.
+ * @slot actions - Optional single named action button.
+ * @slot dismiss - Required single swc-close-button with a localized accessible-label.
  * @cssprop --swc-thread-alert-background-color - Message surface color.
  * @cssprop --swc-thread-alert-border-color - Decorative border color.
  * @cssprop --swc-thread-alert-border-width - Decorative border width.
- * @cssprop --swc-thread-alert-border-radius - Surface and host focus-ring radius.
+ * @cssprop --swc-thread-alert-border-radius - Surface radius.
  * @cssprop --swc-thread-alert-content-color - Message text color.
  * @cssprop --swc-thread-alert-icon-color - Status icon color.
  * @cssprop --swc-thread-alert-icon-size - Status icon dimensions.
@@ -50,9 +50,6 @@ import styles from './thread-alert.css';
  * @cssprop --swc-thread-alert-font-size - Message font size.
  * @cssprop --swc-thread-alert-font-weight - Message font weight.
  * @cssprop --swc-thread-alert-line-height - Message line height.
- * @cssprop --swc-thread-alert-focus-indicator-color - Programmatic host focus color.
- * @cssprop --swc-thread-alert-focus-indicator-width - Programmatic host focus width.
- * @cssprop --swc-thread-alert-focus-indicator-offset - Programmatic host focus offset.
  */
 export class ThreadAlert extends SpectrumElement {
   public static override get styles(): CSSResultArray {

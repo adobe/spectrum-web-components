@@ -10,8 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { html, nothing } from 'lit';
-import { expect } from '@storybook/test';
+import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import '../../swc-thread-alert.js';
@@ -22,7 +21,6 @@ import type { CustomPropertyCase } from '../../../../../.storybook/helpers/index
 import {
   coveredCustomProperties,
   customPropertyRows,
-  forcePseudoStates,
   theme,
   verifyCustomPropertyCoverage,
   vrtParameters,
@@ -41,9 +39,7 @@ export default meta;
 
 // Helpers
 
-type AlertPropertyCase = CustomPropertyCase<`--swc-thread-alert-${string}`> & {
-  focus?: boolean;
-};
+type AlertPropertyCase = CustomPropertyCase<`--swc-thread-alert-${string}`>;
 
 const PROPERTY_CASES: readonly AlertPropertyCase[] = [
   { property: '--swc-thread-alert-background-color', value: '#ffe600' },
@@ -63,63 +59,22 @@ const PROPERTY_CASES: readonly AlertPropertyCase[] = [
   { property: '--swc-thread-alert-font-size', value: '24px' },
   { property: '--swc-thread-alert-font-weight', value: '900' },
   { property: '--swc-thread-alert-line-height', value: '48px' },
-  {
-    property: '--swc-thread-alert-focus-indicator-color',
-    value: 'magenta',
-    focus: true,
-  },
-  {
-    property: '--swc-thread-alert-focus-indicator-width',
-    value: '8px',
-    focus: true,
-  },
-  {
-    property: '--swc-thread-alert-focus-indicator-offset',
-    value: '10px',
-    focus: true,
-  },
 ];
 
-const renderPropertyCase = (
-  { focus = false }: AlertPropertyCase,
-  style?: string
-) => html`
-  <div style="padding: ${focus ? '24px' : '0px'};">
-    <swc-thread-alert
-      variant="notice"
-      tabindex=${focus ? '-1' : nothing}
-      data-force-state=${focus ? 'focus' : nothing}
-      style="inline-size: 280px; ${style ?? ''}"
-    >
-      <span>Message text</span>
-      ${focus
-        ? nothing
-        : html`
-            <swc-button slot="actions" size="s">Try again</swc-button>
-            <swc-close-button
-              slot="dismiss"
-              size="s"
-              accessible-label="Dismiss message"
-            ></swc-close-button>
-          `}
-    </swc-thread-alert>
-  </div>
+const renderPropertyCase = (_case: AlertPropertyCase, style?: string) => html`
+  <swc-thread-alert variant="notice" style="inline-size: 280px; ${style ?? ''}">
+    <span>Message text</span>
+    <swc-button slot="actions" size="s">Try again</swc-button>
+    <swc-close-button
+      slot="dismiss"
+      size="s"
+      accessible-label="Dismiss message"
+    ></swc-close-button>
+  </swc-thread-alert>
 `;
 
 const coveredProperties = coveredCustomProperties(PROPERTY_CASES);
-const forceFocus = forcePseudoStates(
-  'swc-thread-alert[data-force-state="focus"]'
-);
-
-const verifyCoverage = async (context: { canvasElement: HTMLElement }) => {
-  await forceFocus(context);
-  const hosts = context.canvasElement.querySelectorAll(
-    'swc-thread-alert[data-force-state="focus"]'
-  );
-  await expect(hosts).toHaveLength(6);
-  for (const host of hosts) {
-    await expect(getComputedStyle(host).outlineStyle).toBe('solid');
-  }
+const verifyCoverage = async () => {
   await verifyCustomPropertyCoverage({
     customElementsManifest,
     modulePath: 'patterns/ai-toolkit/thread-alert/ThreadAlert.ts',

@@ -38,13 +38,10 @@ const PSEUDO_TO_FORCED_ATTRIBUTE: Record<string, string> = {
   // forced attribute — it's the same visual "focus-visible" state, just a
   // different CSS hook.
   ':state(keyboard-focused)': '[data-forced-focus-visible]',
-  // Replace plain focus last so it cannot consume more specific pseudo-classes.
-  ':focus': '[data-forced-focus]',
 };
 
 export type ForcedPseudoState =
   | 'hover'
-  | 'focus'
   | 'focus-visible'
   | 'active'
   | 'focus-within';

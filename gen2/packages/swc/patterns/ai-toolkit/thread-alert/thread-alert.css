@@ -29,7 +29,7 @@
   row-gap: var(--swc-thread-alert-gap, token("base-gap-medium"));
   align-items: center;
   min-block-size: var(--swc-thread-alert-min-block-size, token("component-height-100"));
-  padding-block: var(--swc-thread-alert-padding-block, token("base-padding-vertical-small"));
+  padding-block: var(--swc-thread-alert-padding-block, token("base-padding-vertical-medium"));
   padding-inline-start: var(--swc-thread-alert-padding-inline-start, token("spacing-100"));
   padding-inline-end: var(--swc-thread-alert-padding-inline-end, token("accessory-item-padding-medium"));
   font-family: var(--swc-thread-alert-font-family, token("sans-serif-font"));
@@ -81,12 +81,6 @@
 :host([variant="notice"]) .swc-ThreadAlert-icon--notice,
 :host([variant="negative"]) .swc-ThreadAlert-icon--negative {
   display: block;
-}
-
-:host(:focus) {
-  border-radius: var(--swc-thread-alert-border-radius, token("corner-radius-700"));
-  outline: var(--swc-thread-alert-focus-indicator-width, token("focus-indicator-thickness")) solid var(--swc-thread-alert-focus-indicator-color, token("focus-indicator-color"));
-  outline-offset: var(--swc-thread-alert-focus-indicator-offset, token("focus-ring-gap"));
 }
 
 slot {

@@ -10,8 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { html, render } from 'lit';
-import { ifDefined } from 'lit/directives/if-defined.js';
+import { html, nothing, render } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
@@ -32,10 +31,10 @@ delete args['heading-slot'];
 delete argTypes['heading-slot'];
 
 /**
- * A thread alert places a status message and optional inline controls in a conversation.
+ * A thread alert places a status message, required close button, and optional action in a conversation.
  * Compose actions with [Button](../?path=/docs/components-button--docs) and
  * [Close button](../?path=/docs/components-close-button--docs).
- * Applications own announcements, focus, retry, and dismissal.
+ * Applications own announcements, retry, dismissal, and focus restoration.
  */
 const meta: Meta = {
   title: 'AI Toolkit/Thread alert',
@@ -58,7 +57,7 @@ const meta: Meta = {
   parameters: {
     docs: {
       packagePath: 'patterns/ai-toolkit/thread-alert',
-      subtitle: 'A compact message with optional inline actions.',
+      subtitle: 'A compact message with a close button and optional action.',
     },
     design: {
       type: 'figma',
@@ -99,12 +98,21 @@ const insertMessage = async (event: Event): Promise<void> => {
       'Expected the application message container and live region'
     );
   }
-  const focus = trigger.hasAttribute('data-focus');
   announcer.textContent = '';
   render(
     html`
-      <swc-thread-alert tabindex=${ifDefined(focus ? '-1' : undefined)}>
-        Your request is ready.
+      <swc-thread-alert>
+        <span>Your request is ready.</span>
+        <swc-close-button
+          slot="dismiss"
+          size="s"
+          accessible-label="Dismiss message"
+          @click=${() => {
+            trigger.focus();
+            render(nothing, container);
+            announcer.textContent = '';
+          }}
+        ></swc-close-button>
       </swc-thread-alert>
     `,
     container
@@ -114,11 +122,7 @@ const insertMessage = async (event: Event): Promise<void> => {
     throw new Error('Expected the inserted thread alert');
   }
   await alert.updateComplete;
-  if (focus) {
-    alert.focus();
-  } else {
-    announcer.textContent = 'Your request is ready.';
-  }
+  announcer.textContent = 'Your request is ready.';
 };
 
 // ────────────────────
@@ -194,14 +198,6 @@ export const OptionalControls: Story = {
       ...args,
       'default-slot': '<span>Your response could not be completed.</span>',
       variant: 'negative',
-      'dismiss-slot': '',
-    })}
-    ${template({
-      ...args,
-      'default-slot': '<span>This conversation is archived.</span>',
-      variant: 'neutral',
-      'actions-slot': '',
-      'dismiss-slot': '',
     })}
   `,
   parameters: {
@@ -210,20 +206,7 @@ export const OptionalControls: Story = {
   },
   tags: ['options'],
 };
-OptionalControls.storyName = 'Optional controls';
-
-// ──────────────────────────
-//    STATES STORIES
-// ──────────────────────────
-
-export const States: Story = {
-  args: {
-    'default-slot': '<span>Your request is being retried.</span>',
-    'actions-slot':
-      '<swc-button size="s" pending pending-label="Retrying">Try again</swc-button>',
-  },
-  tags: ['states'],
-};
+OptionalControls.storyName = 'Optional action';
 
 // ──────────────────────────────
 //    BEHAVIORS STORIES
@@ -266,9 +249,6 @@ export const DynamicInsertion: Story = {
   render: () => html`
     <div data-announcements>
       <swc-button size="s" @click=${insertMessage}>Announce message</swc-button>
-      <swc-button size="s" data-focus @click=${insertMessage}>
-        Focus message
-      </swc-button>
       <p role="status"></p>
       <div data-message></div>
     </div>

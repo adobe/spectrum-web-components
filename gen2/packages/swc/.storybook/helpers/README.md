@@ -30,20 +30,6 @@ formatTitle('Components/Action button');
 
 The slug matches Spectrum design page names. Do not use it for folder, tag, or import names; use `sourceLocation` instead.
 
-## Forced pseudo-states
-
-Use `forcePseudoStates(selector)` in a VRT story's `play` function to apply the state named by each matching element's `data-force-state` attribute. The helper mirrors the component's own CSS rules; it does not introduce a new visual state.
-
-Use `focus` for components that style `:focus`, including programmatically focused messages. Use `focus-visible` when the component styles `:focus-visible`. Both use attributes rather than classes, so consumer-class opt-out selectors still behave normally.
-
-```typescript
-const forceMessageFocus = forcePseudoStates(
-  'swc-thread-alert[data-force-state="focus"]'
-);
-```
-
-Only force pseudo-states that the component actually styles. See the [VRT guide](../../../../../CONTRIBUTOR-DOCS/02_style-guide/04_testing/04_visual-regresssion-testing.md) for grouping, custom-property coverage, and slotted-content examples.
-
 ## Adding new helpers
 
 When adding new helpers to this directory:
