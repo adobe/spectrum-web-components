@@ -173,7 +173,9 @@
   --swc-menu-item-secondary-color: token("disabled-content-color");
 
   ::slotted(swc-thumbnail) {
-    opacity: 0.7;
+    /* In Figma, this is applied to an overlay instead of the thumbnail,
+    so we need to inverse the value for the correct effect. */
+    opacity: calc(1 - token("opacity-disabled"));
   }
 }
 
