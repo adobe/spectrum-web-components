@@ -114,17 +114,44 @@ export const VariantValidationTest: Story = {
       })
     );
 
-    await step('invalid variant warns and falls back to informative', () =>
-      withWarningSpy(async (warnCalls) => {
-        meter.variant = 'invalid' as Meter['variant'];
-        await meter.updateComplete;
-        expect(warnCalls.length).toBeGreaterThan(0);
-        expect(String(warnCalls[0]?.[1] ?? '')).toContain('variant');
-        // Unknown variant is sanitized to the default and reflected.
-        await meter.updateComplete;
-        expect(meter.variant).toBe('informative');
-        expect(meter.getAttribute('variant')).toBe('informative');
-      })
+    await step(
+      'warns on an invalid variant, keeps the value, and renders the default fill',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          const fill = meter.shadowRoot!.querySelector(
+            '.swc-LinearProgress-fill'
+          )!;
+          meter.variant = 'informative';
+          await meter.updateComplete;
+          const defaultFill = getComputedStyle(fill).backgroundColor;
+
+          meter.variant = 'invalid' as Meter['variant'];
+          await meter.updateComplete;
+          expect(warnCalls.length).toBeGreaterThan(0);
+          expect(String(warnCalls[0]?.[1] ?? '')).toMatch(
+            /"variant".*"invalid"/
+          );
+          expect(meter.variant, 'property keeps the value set').toBe('invalid');
+          expect(
+            meter.getAttribute('variant'),
+            'attribute keeps the value set'
+          ).toBe('invalid');
+          expect(
+            getComputedStyle(fill).backgroundColor,
+            'renders the default (informative) fill'
+          ).toBe(defaultFill);
+        })
+    );
+
+    await step(
+      'resets to informative without a warning when the attribute is removed',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          meter.removeAttribute('variant');
+          await meter.updateComplete;
+          expect(meter.variant, 'variant after removal').toBe('informative');
+          expect(warnCalls.length, 'no warning when variant is unset').toBe(0);
+        })
     );
   },
 };
@@ -383,6 +410,54 @@ export const ValueOutOfRangeWarningTest: Story = {
       })
     );
 
+    await step(
+      'warns on a non-numeric value, keeps it, and renders the minimum',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          const meter = await fixture<Meter>(html`
+            <swc-meter
+              value="banana"
+              accessible-label="Storage used"
+            ></swc-meter>
+          `);
+
+          expect(
+            warnCalls.map((call) => String(call[1])).join('\n'),
+            'warning names the property and received value'
+          ).toMatch(/"value".*"banana"/);
+          expect(meter.getAttribute('value'), 'attribute is kept').toBe(
+            'banana'
+          );
+          expect(getRoleEl(meter).getAttribute('aria-valuenow')).toBe('0');
+          meter.parentElement?.remove();
+        })
+    );
+
+    await step(
+      'renders numeric string values, as frameworks set them, without a warning',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          const meter = await fixture<Meter>(html`
+            <swc-meter accessible-label="Storage used"></swc-meter>
+          `);
+          meter.minValue = '10' as unknown as number;
+          meter.maxValue = '20' as unknown as number;
+          meter.value = '15' as unknown as number;
+          await meter.updateComplete;
+
+          const roleEl = getRoleEl(meter);
+          expect(roleEl.getAttribute('aria-valuemin')).toBe('10');
+          expect(roleEl.getAttribute('aria-valuemax')).toBe('20');
+          expect(roleEl.getAttribute('aria-valuenow')).toBe('15');
+          const messages = warnCalls.map((call) => String(call[1] ?? ''));
+          expect(
+            messages.some((m) => m.includes('range')),
+            'no range warning for numeric text'
+          ).toBe(false);
+          meter.parentElement?.remove();
+        })
+    );
+
     await step('does not warn when value is within the range', () =>
       withWarningSpy(async (warnCalls) => {
         const meter = await fixture<Meter>(html`
@@ -391,6 +466,64 @@ export const ValueOutOfRangeWarningTest: Story = {
         await meter.updateComplete;
         const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
         expect(messages.some((m) => m.includes('range'))).toBe(false);
+        meter.parentElement?.remove();
+      })
+    );
+
+    await step(
+      'warns on a reversed range, keeps it, and renders the sanitized range',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          const meter = await fixture<Meter>(html`
+            <swc-meter
+              value="50"
+              min-value="80"
+              max-value="20"
+              accessible-label="Storage used"
+            ></swc-meter>
+          `);
+          await meter.updateComplete;
+
+          expect(
+            warnCalls.map((call) => String(call[1])).join('\n'),
+            'warning names both attributes and received values'
+          ).toMatch(/min-value="80", max-value="20"/);
+          expect(meter.minValue, 'min-value kept as set').toBe(80);
+          expect(meter.maxValue, 'max-value kept as set').toBe(20);
+          expect(
+            getRoleEl(meter).getAttribute('aria-valuemin'),
+            'renders the sanitized minimum'
+          ).toBe('20');
+          expect(
+            getRoleEl(meter).getAttribute('aria-valuemax'),
+            'renders the sanitized maximum'
+          ).toBe('80');
+          meter.parentElement?.remove();
+        })
+    );
+
+    await step('warns on an unreadable range bound', () =>
+      withWarningSpy(async (warnCalls) => {
+        const meter = await fixture<Meter>(html`
+          <swc-meter
+            value="50"
+            max-value="banana"
+            accessible-label="Storage used"
+          ></swc-meter>
+        `);
+        await meter.updateComplete;
+        expect(
+          warnCalls.map((call) => String(call[1])).join('\n'),
+          'warning reports the attribute text'
+        ).toContain('max-value="banana"');
+        expect(
+          meter.getAttribute('max-value'),
+          'attribute is not rewritten'
+        ).toBe('banana');
+        expect(
+          getRoleEl(meter).getAttribute('aria-valuemax'),
+          'renders the default maximum'
+        ).toBe('100');
         meter.parentElement?.remove();
       })
     );
@@ -433,6 +566,46 @@ export const LocaleFormattingTest: Story = {
       });
     } finally {
       document.documentElement.lang = originalLang;
+    }
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Properties / Attributes
+// ──────────────────────────────────────────────────────────────
+
+export const AttributeRemovalResetsTest: Story = {
+  render: () => html`
+    <swc-meter value="50" accessible-label="Storage used"></swc-meter>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const el = await getComponent<Meter>(canvasElement, 'swc-meter');
+    const cases: [string, string, string, unknown][] = [
+      ['min-value', '10', 'minValue', 0],
+      ['max-value', '90', 'maxValue', 100],
+      ['value', '40', 'value', 0],
+      ['label-position', 'side', 'labelPosition', 'top'],
+      ['static-color', 'white', 'staticColor', null],
+      ['variant', 'positive', 'variant', 'informative'],
+    ];
+
+    for (const [attribute, value, property, defaultValue] of cases) {
+      await step(
+        `resets ${attribute} to its default without a warning when removed`,
+        () =>
+          withWarningSpy(async (warnCalls) => {
+            el.setAttribute(attribute, value);
+            await el.updateComplete;
+            el.removeAttribute(attribute);
+            await el.updateComplete;
+
+            expect(
+              (el as unknown as Record<string, unknown>)[property],
+              `${property} after removal`
+            ).toBe(defaultValue);
+            expect(warnCalls.length, 'no warning when unset').toBe(0);
+          })
+      );
     }
   },
 };

@@ -77,8 +77,7 @@
   transition: none;
 }
 
-:host([direction="horizontal"]) .selection-indicator,
-:host(:not([direction])) .selection-indicator {
+:host(:not([direction="vertical"])) .selection-indicator {
   inset-block-end: 0;
   inset-inline-start: 0;
   inline-size: 100px;
@@ -110,8 +109,7 @@
 
 /* ── RTL ───────────────────────────────────────────────── */
 
-:host([direction="horizontal"]:dir(rtl)) .selection-indicator,
-:host(:not([direction]):dir(rtl)) .selection-indicator {
+:host(:not([direction="vertical"]):dir(rtl)) .selection-indicator {
   transform-origin: right center;
 }
 

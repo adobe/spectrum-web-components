@@ -1532,7 +1532,8 @@ export class DemoPlacementArrow extends LitElement {
 
   @query('.tip') tipEl!: HTMLDivElement;
 
-  private controller = new PlacementController(this);
+  /** Exposed so tests can call `stop()` and `clearStyles()` directly. */
+  controller = new PlacementController(this);
 
   protected override firstUpdated(): void {
     this.controller.start(this.triggerEl, this.floatingEl, {
