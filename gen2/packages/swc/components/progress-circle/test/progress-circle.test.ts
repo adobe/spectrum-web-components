@@ -14,6 +14,7 @@ import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import { ProgressCircle } from '@adobe/spectrum-wc/progress-circle';
+import { PROGRESS_CIRCLE_VALID_SIZES } from '@adobe/spectrum-wc-core/components/progress-circle';
 
 import '@adobe/spectrum-wc/components/progress-circle/swc-progress-circle.js';
 
@@ -428,6 +429,76 @@ export const ReturnToIndeterminateTest: Story = {
         ).toBe(false);
       }
     );
+  },
+};
+
+export const RingGeometryTest: Story = {
+  render: () => html`
+    ${PROGRESS_CIRCLE_VALID_SIZES.map(
+      (size) => html`
+        <swc-progress-circle
+          size=${size}
+          progress="50"
+          label="Size ${size}"
+        ></swc-progress-circle>
+      `
+    )}
+    <swc-progress-circle
+      progress="50"
+      label="Custom thickness"
+      style="--swc-progress-circle-thickness: 8px"
+    ></swc-progress-circle>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const circles = await getComponents<ProgressCircle>(
+      canvasElement,
+      'swc-progress-circle'
+    );
+    const customCircle = await getComponent<ProgressCircle>(
+      canvasElement,
+      'swc-progress-circle[style]'
+    );
+    const getRings = (circle: ProgressCircle) =>
+      Array.from(
+        circle.renderRoot.querySelectorAll<SVGCircleElement>(
+          '.swc-ProgressCircle-track, .swc-ProgressCircle-fill'
+        )
+      );
+    const getBoxSize = (circle: ProgressCircle) =>
+      circle.renderRoot.querySelector('svg')?.getBoundingClientRect().width ??
+      0;
+    const getRadius = (ring: SVGCircleElement) => ring.getBBox().width / 2;
+    const getStrokeWidth = (ring: SVGCircleElement) =>
+      parseFloat(getComputedStyle(ring).strokeWidth);
+
+    await step(
+      'insets each ring by half its stroke width so it fills the box without clipping',
+      async () => {
+        circles.forEach((circle) => {
+          const rings = getRings(circle);
+          expect(rings.length, `${circle.label} ring count`).toBe(2);
+          rings.forEach((ring) => {
+            expect(
+              getRadius(ring) + getStrokeWidth(ring) / 2,
+              `${circle.label} ${ring.getAttribute('class')} outer edge`
+            ).toBeCloseTo(getBoxSize(circle) / 2, 2);
+          });
+        });
+      }
+    );
+
+    await step('derives the ring radius from a custom thickness', async () => {
+      getRings(customCircle).forEach((ring) => {
+        expect(
+          getStrokeWidth(ring),
+          `${customCircle.label} ${ring.getAttribute('class')} stroke width`
+        ).toBe(8);
+        expect(
+          getRadius(ring),
+          `${customCircle.label} ${ring.getAttribute('class')} radius`
+        ).toBeCloseTo(getBoxSize(customCircle) / 2 - 4, 2);
+      });
+    });
   },
 };
 

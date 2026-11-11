@@ -202,7 +202,7 @@ export abstract class DropzoneBase extends SizedMixin(SpectrumElement, {
       prop: 'drop-effect',
       value: this.dropEffect,
       valid: DROP_EFFECTS,
-      url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-dropzone--docs',
+      url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-drop-zone--docs',
     });
     super.update(changes);
   }
