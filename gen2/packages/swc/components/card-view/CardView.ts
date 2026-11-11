@@ -17,6 +17,7 @@ import {
 } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
+import { keyed } from 'lit/directives/keyed.js';
 import { repeat } from 'lit/directives/repeat.js';
 import { styleMap } from 'lit/directives/style-map.js';
 
@@ -64,10 +65,6 @@ export class CardView extends CardViewBase {
 
   private get singleRow(): boolean {
     return this.model === 'single-row' || this.model === 'vertical';
-  }
-
-  protected get columnMajorWaterfall(): boolean {
-    return this.singleRow;
   }
 
   protected get focusTargets(): HTMLElement[] {
@@ -140,9 +137,7 @@ export class CardView extends CardViewBase {
     const next = cards.map((_, index) => {
       const column =
         this.layout === 'waterfall'
-          ? this.columnMajorWaterfall
-            ? Math.floor(index / itemsPerColumn)
-            : columnHeights.indexOf(Math.min(...columnHeights))
+          ? Math.floor(index / itemsPerColumn)
           : index % columns;
       const top =
         this.layout === 'waterfall'
@@ -320,6 +315,10 @@ export class CardView extends CardViewBase {
         </div>
       `;
     }
+    const label =
+      this.navigation === 'spatial-advance'
+        ? `${index + 1} of ${this.items.length}, ${item.title}`
+        : item.title;
     if (this.singleRow) {
       return html`
         <div
@@ -327,14 +326,13 @@ export class CardView extends CardViewBase {
           data-focus
           data-index=${index}
           role="gridcell"
-          aria-colindex=${index + 1}
-          aria-label=${this.navigation === 'spatial-advance'
-            ? `${index + 1} of ${this.items.length}, ${item.title}`
-            : item.title}
+          aria-label=${label}
           aria-selected=${ifDefined(
             this.selectionMode === 'none'
               ? undefined
-              : String(this.selected.includes(item.id))
+              : this.selected.includes(item.id)
+                ? 'true'
+                : 'false'
           )}
           aria-disabled=${ifDefined(item.disabled ? 'true' : undefined)}
           tabindex=${!item.disabled && index === this.activeIndex ? 0 : -1}
@@ -349,7 +347,6 @@ export class CardView extends CardViewBase {
         class="item"
         data-index=${index}
         role="row"
-        aria-rowindex=${index + 1}
         aria-selected=${ifDefined(
           this.selectionMode === 'none'
             ? undefined
@@ -360,9 +357,8 @@ export class CardView extends CardViewBase {
         <div
           data-focus
           data-index=${index}
-          role=${this.model === 'baseline' ? 'gridcell' : 'rowheader'}
-          aria-colindex="1"
-          aria-label=${item.title}
+          role="gridcell"
+          aria-label=${label}
           aria-selected=${ifDefined(
             this.selectionMode === 'none'
               ? undefined
@@ -426,11 +422,8 @@ export class CardView extends CardViewBase {
                   this.model === 'toolbar' ? 'horizontal' : undefined
                 )}
                 aria-label=${this.label}
-                aria-rowcount=${ifDefined(
-                  grid ? (this.singleRow ? 1 : this.items.length) : undefined
-                )}
-                aria-colcount=${ifDefined(
-                  grid ? (this.singleRow ? this.items.length : 1) : undefined
+                aria-describedby=${ifDefined(
+                  grid ? 'selection-status' : undefined
                 )}
                 aria-multiselectable=${ifDefined(
                   grid && this.selectionMode === 'multiple' ? 'true' : undefined
@@ -444,13 +437,18 @@ export class CardView extends CardViewBase {
               >
                 ${this.singleRow
                   ? html`
-                      <div role="row" aria-rowindex="1">${content}</div>
+                      <div role="row">${content}</div>
                     `
                   : content}
               </div>
             `}
-      <div class="status" role="status" aria-live="polite">
-        ${this.selected.length ? `${this.selected.length} selected` : ''}
+      <div
+        id="selection-status"
+        class="status"
+        role="status"
+        aria-live="assertive"
+      >
+        ${keyed(this.selectionAnnouncement, this.selectionAnnouncement.text)}
       </div>
     `;
   }
@@ -472,7 +470,7 @@ export class CardViewFeed extends CardView {
 }
 
 /**
- * Recommended card collection semantics: one row and a cell per card.
+ * Card collection semantics: one row containing a gridcell per card.
  *
  * @element swc-card-view-single-row-grid
  */
@@ -501,10 +499,6 @@ export class CardViewFieldset extends CardView {
 /** @element swc-card-view-grid-nowrap */
 export class CardViewGridNoWrap extends CardViewSingleRowGrid {
   protected override readonly navigation: CardViewNavigation = 'spatial';
-
-  protected override get columnMajorWaterfall(): boolean {
-    return false;
-  }
 }
 
 /** @element swc-card-view-grid-loop */
@@ -541,10 +535,6 @@ export class CardViewWaterfallAdvance extends CardViewGridAdvance {
 /** @element swc-card-view-waterfall-semantic */
 export class CardViewWaterfallSemantic extends CardViewGridSemantic {
   public override layout: CardViewLayout = 'waterfall';
-
-  protected override get columnMajorWaterfall(): boolean {
-    return true;
-  }
 }
 
 /** @element swc-card-view-waterfall-top-to-bottom */

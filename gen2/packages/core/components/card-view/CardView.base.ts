@@ -9,6 +9,7 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+import type { PropertyValues } from 'lit';
 import { property, state } from 'lit/decorators.js';
 
 import { SpectrumElement } from '../../element/index.js';
@@ -40,6 +41,12 @@ export abstract class CardViewBase extends SpectrumElement {
   @state()
   protected activeIndex = 0;
 
+  @state()
+  protected selectionAnnouncement = { text: '' };
+
+  private lastSelection?: Set<string>;
+  private selectionFrame?: number;
+
   protected anchorIndex = 0;
 
   protected get groupedControls(): boolean {
@@ -53,6 +60,79 @@ export abstract class CardViewBase extends SpectrumElement {
 
   protected get composite(): boolean {
     return this.model !== 'list' && this.model !== 'feed';
+  }
+
+  protected override updated(changed: PropertyValues<this>): void {
+    super.updated(changed);
+    if (!changed.has('selected')) {
+      return;
+    }
+    if (!this.lastSelection) {
+      this.lastSelection = new Set(this.selected);
+      return;
+    }
+    if (this.selectionFrame !== undefined) {
+      cancelAnimationFrame(this.selectionFrame);
+    }
+    this.selectionFrame = requestAnimationFrame(() => {
+      this.selectionFrame = undefined;
+      this.announceSelectionChange();
+    });
+  }
+
+  public override disconnectedCallback(): void {
+    if (this.selectionFrame !== undefined) {
+      cancelAnimationFrame(this.selectionFrame);
+      this.selectionFrame = undefined;
+    }
+    super.disconnectedCallback();
+  }
+
+  private announceSelectionChange(): void {
+    const selection = new Set(this.selected);
+    const previous = this.lastSelection ?? new Set<string>();
+    this.lastSelection = selection;
+    if (!this.matches(':focus-within') || this.selectionMode === 'none') {
+      return;
+    }
+    const added = [...selection].filter((id) => !previous.has(id));
+    const removed = [...previous].filter((id) => !selection.has(id));
+    if (!added.length && !removed.length) {
+      return;
+    }
+    const messages: string[] = [];
+    const getTitle = (id: string): string =>
+      this.items.find((item) => item.id === id)?.title ?? '';
+    if (this.selectionMode === 'single' && selection.size === 1) {
+      const title = getTitle([...selection][0]);
+      if (title) {
+        messages.push(`${title} selected.`);
+      }
+    } else if (added.length === 1 && !removed.length) {
+      const title = getTitle(added[0]);
+      if (title) {
+        messages.push(`${title} selected.`);
+      }
+    } else if (removed.length === 1 && !added.length) {
+      const title = getTitle(removed[0]);
+      if (title) {
+        messages.push(`${title} not selected.`);
+      }
+    }
+    if (
+      this.selectionMode === 'multiple' &&
+      (!messages.length || selection.size > 1 || previous.size > 1)
+    ) {
+      const count = new Intl.NumberFormat('en-US').format(selection.size);
+      messages.push(
+        selection.size === 0
+          ? 'No items selected.'
+          : `${count} ${selection.size === 1 ? 'item' : 'items'} selected.`
+      );
+    }
+    if (messages.length) {
+      this.selectionAnnouncement = { text: messages.join(' ') };
+    }
   }
 
   protected select(index: number, checked: boolean): void {
@@ -361,9 +441,12 @@ export abstract class CardViewBase extends SpectrumElement {
       }
       return;
     }
+    const gridArrow =
+      this.composite &&
+      ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key);
     if (
       (!this.composite && this.model !== 'list') ||
-      !target.hasAttribute('data-focus')
+      (!target.hasAttribute('data-focus') && !gridArrow)
     ) {
       return;
     }
