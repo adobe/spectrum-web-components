@@ -198,6 +198,29 @@ export const Styling: Story = {
   },
 };
 
+export const TranslucentSurface: Story = {
+  render: () => html`
+    <swc-thread-alert>Your response was saved.</swc-thread-alert>
+  `,
+  play: async ({ canvasElement }) => {
+    const el = await getComponent(canvasElement, 'swc-thread-alert');
+    const root = el.shadowRoot?.querySelector('.swc-ThreadAlert');
+    if (!root) {
+      throw new Error('Expected the thread alert surface');
+    }
+    for (const [scheme, color] of [
+      ['light', '0, 0, 0'],
+      ['dark', '255, 255, 255'],
+    ]) {
+      el.style.colorScheme = scheme;
+      const style = getComputedStyle(root);
+      expect(style.backgroundColor).toBe(`rgba(${color}, 0.02)`);
+      expect(style.borderTopColor).toBe(`rgba(${color}, 0.03)`);
+    }
+  },
+};
+TranslucentSurface.storyName = 'Translucent surface';
+
 export const ControlSpacing: Story = {
   play: async ({ canvasElement }) => {
     const el = await getComponent(canvasElement, 'swc-thread-alert');

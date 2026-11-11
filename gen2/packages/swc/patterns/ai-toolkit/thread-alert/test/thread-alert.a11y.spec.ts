@@ -16,26 +16,66 @@ import { expect, test } from '@playwright/test';
 import { gotoStory } from '../../../../utils/a11y-helpers.js';
 
 const contrastRatio = (foreground: string, background: string): number => {
-  const luminance = (color: string): number => {
+  const read = (color: string): [number, number, number, number] => {
     const channels = color.match(/[\d.]+/g)?.map(Number);
-    if (!channels || channels.length !== 3) {
+    if (!channels || (channels.length !== 3 && channels.length !== 4)) {
       throw new Error(
-        `Expected an opaque computed RGB color, received ${color}`
+        `Expected a computed RGB or RGBA color, received ${color}`
       );
     }
-    const [red, green, blue] = channels.map((channel) => {
+    const [red, green, blue, alpha = 1] = channels;
+    if (alpha < 0 || alpha > 1) {
+      throw new Error(
+        `Expected a computed RGB or RGBA color, received ${color}`
+      );
+    }
+    return [red, green, blue, alpha];
+  };
+  // getComputedStyle() serializes translucent colors as rgba(). Blend those
+  // over the opaque background so the ratio matches the painted result.
+  const flatten = (
+    [red, green, blue, alpha]: [number, number, number, number],
+    under?: [number, number, number]
+  ): [number, number, number] => {
+    if (alpha === 1) {
+      return [red, green, blue];
+    }
+    if (!under) {
+      throw new Error('Expected an opaque background color');
+    }
+    return [
+      red * alpha + under[0] * (1 - alpha),
+      green * alpha + under[1] * (1 - alpha),
+      blue * alpha + under[2] * (1 - alpha),
+    ];
+  };
+  const luminance = (red: number, green: number, blue: number): number => {
+    const [r, g, b] = [red, green, blue].map((channel) => {
       const value = channel / 255;
       return value <= 0.04045
         ? value / 12.92
         : ((value + 0.055) / 1.055) ** 2.4;
     });
-    return 0.2126 * red + 0.7152 * green + 0.0722 * blue;
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b;
   };
-  const values = [luminance(foreground), luminance(background)];
+  const backgroundRgb = flatten(read(background));
+  const foregroundRgb = flatten(read(foreground), backgroundRgb);
+  const values = [luminance(...foregroundRgb), luminance(...backgroundRgb)];
   return (Math.max(...values) + 0.05) / (Math.min(...values) + 0.05);
 };
 
 test.describe('Thread alert', () => {
+  test('calculates contrast for rgba colors returned by getComputedStyle', () => {
+    const blackOnWhite = contrastRatio('rgb(0, 0, 0)', 'rgb(255, 255, 255)');
+    expect(contrastRatio('rgba(0, 0, 0, 1)', 'rgb(255, 255, 255)')).toBeCloseTo(
+      blackOnWhite,
+      5
+    );
+    const blended = contrastRatio('rgba(0, 0, 0, 0.5)', 'rgb(255, 255, 255)');
+    expect(blended).toBeGreaterThan(1);
+    expect(blended).toBeLessThan(blackOnWhite);
+  });
+
   test('preserves the consumer heading and named inline controls without a live role', async ({
     page,
   }) => {
@@ -56,8 +96,13 @@ test.describe('Thread alert', () => {
     await expect(root.locator('swc-thread-alert')).not.toHaveAttribute('role');
   });
 
-  for (const theme of ['light', 'dark']) {
-    test(`has accessible names, contrast, and unclipped focus in the ${theme} theme`, async ({
+  for (const [theme, backdrop] of [
+    ['light', 'page'],
+    ['light', 'layer'],
+    ['dark', 'page'],
+    ['dark', 'layer'],
+  ]) {
+    test(`has accessible names, contrast, and unclipped focus in the ${theme} theme over the ${backdrop} background`, async ({
       page,
     }) => {
       await gotoStory(
@@ -66,6 +111,11 @@ test.describe('Thread alert', () => {
         'swc-thread-alert'
       );
       await expect(page.locator('swc-thread-alert')).toHaveCount(5);
+      if (backdrop === 'layer') {
+        await page.locator('#storybook-root').evaluate((el) => {
+          el.style.backgroundColor = 'var(--swc-background-layer-1-color)';
+        });
+      }
       const result = await new AxeBuilder({ page })
         .include('#storybook-root')
         .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
@@ -81,8 +131,44 @@ test.describe('Thread alert', () => {
           if (!surface) {
             throw new Error('Expected the rendered message surface');
           }
+          const backgrounds: string[] = [];
+          let ancestor: Element | null = surface;
+          while (ancestor) {
+            const style = getComputedStyle(ancestor);
+            if (style.backgroundImage !== 'none') {
+              throw new Error(
+                'Expected flat backgrounds in the contrast fixture'
+              );
+            }
+            backgrounds.push(style.backgroundColor);
+            const tree = ancestor.getRootNode();
+            ancestor =
+              ancestor.parentElement ??
+              (tree instanceof ShadowRoot ? tree.host : null);
+          }
+          const canvas = document.createElement('canvas');
+          canvas.width = canvas.height = 1;
+          const context = canvas.getContext('2d');
+          if (!context) {
+            throw new Error('Expected a canvas context for alpha compositing');
+          }
+          for (const background of backgrounds.reverse()) {
+            context.fillStyle = background;
+            context.fillRect(0, 0, 1, 1);
+          }
+          const [red, green, blue, alpha] = context.getImageData(
+            0,
+            0,
+            1,
+            1
+          ).data;
+          if (alpha !== 255) {
+            throw new Error(
+              'Expected an opaque page beneath the translucent surface'
+            );
+          }
           return {
-            background: getComputedStyle(surface).backgroundColor,
+            background: `rgb(${red}, ${green}, ${blue})`,
             icon: icon?.firstElementChild
               ? getComputedStyle(icon.firstElementChild).color
               : undefined,

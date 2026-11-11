@@ -36,8 +36,8 @@
   font-weight: var(--swc-thread-alert-font-weight, token("detail-sans-serif-font-weight"));
   line-height: var(--swc-thread-alert-line-height, token("line-height-font-size-75"));
   color: var(--swc-thread-alert-content-color, token("neutral-content-color-default"));
-  background-color: var(--swc-thread-alert-background-color, token("background-layer-1-color"));
-  border: var(--swc-thread-alert-border-width, token("border-width-100")) solid var(--swc-thread-alert-border-color, token("gray-100"));
+  background-color: var(--swc-thread-alert-background-color, token("transparent-neutral-50"));
+  border: var(--swc-thread-alert-border-width, token("border-width-100")) solid var(--swc-thread-alert-border-color, token("transparent-neutral-75"));
   border-radius: var(--swc-thread-alert-border-radius, token("corner-radius-700"));
 }
 

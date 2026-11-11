@@ -90,7 +90,9 @@ Give each action visible text, or use the existing `accessible-label` API for ic
 
 Choose a heading level that fits the surrounding page. Do not rely on an internal `aria-labelledby` reference to a heading across a shadow boundary.
 
-Keep controls at least 24 by 24 CSS pixels. Preserve visible, unclipped focus indicators. Verify customized text, icons, and focus indicators against their rendered backgrounds in every supported theme.
+Keep controls at least 24 by 24 CSS pixels. Preserve visible, unclipped focus indicators. The surface and border are translucent: they use 2% and 3% black in light mode, and white at the same opacities in dark mode. Verify text, icons, and focus indicators against the resulting composite color on the application's actual background in every supported theme.
+
+The default control focus indicator falls below 3:1 contrast when the pattern sits on a dark `gray-100` background. Use a suitable application surface, or adjust the child controls' focus-indicator styling and verify contrast again. Transparency does not guarantee contrast on arbitrary backgrounds.
 
 Automated checks do not establish WCAG conformance. Screen-reader announcement timing, reading order in the consuming page, and appropriate focus restoration after dismissal also need manual review.
 
@@ -125,19 +127,19 @@ This application example exposes the pre-existing live region as visible announc
 
 This is a new AI Toolkit pattern, not a replacement for a 1st-gen component. Reused buttons, icons, attributes, and tokens are available in `@adobe/spectrum-wc@2.0.0-beta.6` and `@adobe/spectrum-wc-icons@2.0.0-beta.6`.
 
-| Design finding                                                 | Resolution                                                                                                                             |
-| -------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| Low-confidence button and close-button mappings                | Reuse the existing small Button and Close button with their native semantics.                                                          |
-| Unsupported `Show label=True`                                  | Keep visible `Try again` text; do not invent a `show-label` attribute.                                                                 |
-| Missing close-button name                                      | The consumer supplies localized `accessible-label`.                                                                                    |
-| Untokenized 2% black surface and 3% black border               | Use `background-layer-1-color` and `gray-100`. These theme-aware replacements intentionally change translucency and exact colors.      |
-| Missing focus and pressed design states                        | Preserve the reused controls' runtime states and focus indicators.                                                                     |
-| Low-confidence status icon mapping                             | Use the four existing workflow icons matching the inspected variant matrix, not one notice icon for every variant.                     |
-| Export includes floating close placement                       | Support inline placement only, as scoped for this pattern.                                                                             |
-| Fixed geometry and value-only token matches                    | Use verified spacing, typography, and radius tokens; allow responsive width and content-driven height rather than forcing 451 by 32px. |
-| Suggested `Trailing` group or toolbar                          | Keep a plain layout wrapper without a layer-name label or toolbar semantics.                                                           |
-| Scaffold properties, local types, and internal dismiss control | Keep the pattern render/styles-only, with a CSS attribute and consumer-owned controls. No core changes.                                |
-| Dynamic announcements and headings                             | Keep announcements/focus in the application and heading semantics in the consumer slot.                                                |
+| Design finding                                                 | Resolution                                                                                                                                            |
+| -------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Low-confidence button and close-button mappings                | Reuse the existing small Button and Close button with their native semantics.                                                                         |
+| Unsupported `Show label=True`                                  | Keep visible `Try again` text; do not invent a `show-label` attribute.                                                                                |
+| Missing close-button name                                      | The consumer supplies localized `accessible-label`.                                                                                                   |
+| Export did not map the 2% black surface and 3% black border    | Use the existing `transparent-neutral-50` and `transparent-neutral-75` tokens. These preserve the light-theme values and adapt to white in dark mode. |
+| Missing focus and pressed design states                        | Preserve the reused controls' runtime states and focus indicators.                                                                                    |
+| Low-confidence status icon mapping                             | Use the four existing workflow icons matching the inspected variant matrix, not one notice icon for every variant.                                    |
+| Export includes floating close placement                       | Support inline placement only, as scoped for this pattern.                                                                                            |
+| Fixed geometry and value-only token matches                    | Use verified spacing, typography, and radius tokens; allow responsive width and content-driven height rather than forcing 451 by 32px.                |
+| Suggested `Trailing` group or toolbar                          | Keep a plain layout wrapper without a layer-name label or toolbar semantics.                                                                          |
+| Scaffold properties, local types, and internal dismiss control | Keep the pattern render/styles-only, with a CSS attribute and consumer-owned controls. No core changes.                                               |
+| Dynamic announcements and headings                             | Keep announcements/focus in the application and heading semantics in the consumer slot.                                                               |
 
 The `--swc-thread-alert-*` properties in the generated API table provide token-backed overrides for the surface, border, typography, spacing, status icon, and programmatic focus indicator. Child controls retain their own styling APIs. Consumer headings retain their own typography.
 
