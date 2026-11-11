@@ -1,3 +1,9 @@
+---
+description: Accumulated CSS lessons for component styling in this repository, covering selector syntax, custom property consumption, shorthands and fallback chains, variant states, and linter rewrites.
+paths:
+  - '**/*.css'
+---
+
 # CSS Styling Lessons
 
 ## Component patterns
@@ -13,8 +19,6 @@
 **Fix proposals must account for all variant states:** A fix that adds a property to size override blocks may break the icon state if that same property is already being set to a different value by a `:has()` rule. Think through the full set of states (no icon, with icon, icon-only) before proposing a change.
 
 ## CI / build
-
-**commitlint in this project enforces lowercase subjects:** The `subject-case` rule forbids sentence-case, start-case, pascal-case, and upper-case. Commit subjects must start with a lowercase letter — `fix(badge): correct fallbacks...` not `fix(badge): Correct fallbacks...`.
 
 **Stylelint/prettier rewrites files substantially after commits:** The linter hook may revert manual splits back to shorthands, change default scale tokens, or remove entire CSS patterns. Always re-read the file after a commit before writing memory or validation docs — the on-disk state may differ significantly from what was written.
 

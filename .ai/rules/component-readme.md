@@ -1,14 +1,12 @@
 ---
 description: Guidelines for component README documentation structure and accessibility compliance
-globs: 1st-gen/packages/*/README.md
 paths:
   - '1st-gen/packages/*/README.md'
-alwaysApply: false
 ---
 
 # Component README documentation guidelines
 
-Applies automatically when Claude reads a file matching `1st-gen/packages/*/README.md` (Cursor: via `globs`; Claude Code: via `paths`). Use it explicitly too when asked to work on component README documentation outside that trigger.
+Loads automatically when you work on a file matching `1st-gen/packages/*/README.md`. Use it explicitly too when asked to work on component README documentation outside that trigger.
 
 ## When to apply
 

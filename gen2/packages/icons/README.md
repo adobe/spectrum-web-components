@@ -7,7 +7,7 @@ Spectrum 2 **workflow icons** for [Spectrum Web Components](https://spectrum-web
 
 Neither couples a consumer to Lit. The package depends only on `@adobe/spectrum-wc-core` (for the shared `IconBase`).
 
-> The art is generated from the Adobe-internal A4U **S2 Icon Global Set (Open Source)** by the workflow generator in the `@adobe/spectrum-wc` package. See the [icon strategy RFC](../../../CONTRIBUTOR-DOCS/03_project-planning/05_strategies/icon-rfc.md).
+> The art is generated from the Adobe-internal A4U **S2 Icon Global Set (Open Source)** by this package's workflow generator. See [Regenerating](#regenerating) and the [icon strategy RFC](../../../CONTRIBUTOR-DOCS/03_project-planning/05_strategies/icon-rfc.md).
 
 ## Install
 
@@ -77,10 +77,14 @@ For an A4U logical name `<Name>` (PascalCase, e.g. `Star`, `AddCircle`, `3DAsset
 
 ## Regenerating
 
-Icon art is generated, not hand-authored. To refresh (Adobe-internal, VPN required): download the S2 Icon Global Set (Open Source) SVGs into `gen2/packages/swc/icon-source/workflow/`, then from the `swc` package run:
+Icon art and styles are generated, not hand-authored. Run these from the repo root or `gen2/packages/icons`.
 
-```bash
-yarn generate:workflow-icons
-```
+| Command                        | What it does                                                                                        |
+| ------------------------------ | --------------------------------------------------------------------------------------------------- |
+| `yarn generate:workflow-icons` | Regenerates `src/*.ts` from the raw SVGs in `icon-source/`, then runs `generate:icon-styles`        |
+| `yarn generate:icon-styles`    | Copies `gen2/packages/swc/stylesheets/_lit-styles/icon-base.css` to `src/stylesheets/icon-base.css` |
+| `yarn check:icon-styles`       | Fails if the stylesheet copy is out of date (runs first in `yarn build`)                            |
 
-The source SVGs are git-ignored; only the generated art in `src/` is committed. See the [icon source README](../swc/icon-source/README.md).
+To refresh the art (Adobe-internal, VPN required), download the S2 Icon Global Set (Open Source) SVGs into `icon-source/`, then run `yarn generate:workflow-icons`. The source SVGs are git-ignored; only the generated art in `src/` is committed. See the [icon source README](./icon-source/README.md) for the full steps.
+
+`src/stylesheets/icon-base.css` is a generated copy: edit the swc source, then run `yarn generate:icon-styles`. See [Icon stylesheet](./icon-source/README.md#icon-stylesheet).

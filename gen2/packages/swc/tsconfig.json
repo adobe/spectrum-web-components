@@ -6,9 +6,9 @@
     "outDir": "./dist",
     "paths": {
       "@adobe/spectrum-wc-core/*": ["../core/*"],
+      "@adobe/spectrum-wc-icons/*": ["../icons/src/*"],
       "@adobe/spectrum-wc/*": ["./components/*"],
-      "@adobe/vite-global-elements-css": ["../tools/vite-global-elements-css"],
-      "@adobe/spectrum-wc-icons/*": ["../icons/src/*"]
+      "@adobe/vite-global-elements-css": ["../tools/vite-global-elements-css"]
     },
     "rootDir": "./",
     "types": ["@vitest/browser-playwright"]
@@ -29,6 +29,7 @@
     ".storybook/storybook-env.d.ts",
     ".storybook/helpers/**/*.ts",
     ".storybook/decorators/**/*.ts",
+    ".storybook/utils/color-scheme.ts",
     ".storybook/intl/**/*.json",
     "dist/custom-elements.json"
   ],

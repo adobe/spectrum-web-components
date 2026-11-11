@@ -4,13 +4,13 @@
       "owner": "tsc",
       "pattern": [
         {
-          "regexp": "^(.+?)\\((\\d+),(\\d+)\\): (error|warning) (TS\\d+): (.+)$",
+          "code": 5,
+          "column": 3,
           "file": 1,
           "line": 2,
-          "column": 3,
-          "severity": 4,
-          "code": 5,
-          "message": 6
+          "message": 6,
+          "regexp": "^(.+?)\\((\\d+),(\\d+)\\): (error|warning) (TS\\d+): (.+)$",
+          "severity": 4
         }
       ]
     },
@@ -18,10 +18,10 @@
       "owner": "tsc-build",
       "pattern": [
         {
-          "regexp": "^(error|warning) (TS\\d+): (.+)$",
-          "severity": 1,
           "code": 2,
-          "message": 3
+          "message": 3,
+          "regexp": "^(error|warning) (TS\\d+): (.+)$",
+          "severity": 1
         }
       ]
     }

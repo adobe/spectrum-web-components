@@ -172,40 +172,40 @@
 
 .swc-ActionButton--staticWhite {
   --swc-action-button-focus-indicator-color: token("static-white-focus-indicator-color");
-  --swc-action-button-background-color-default: token("transparent-white-100");
-  --swc-action-button-background-color-hover: token("transparent-white-200");
-  --swc-action-button-background-color-down: token("transparent-white-200");
-  --swc-action-button-background-color-focus: token("transparent-white-200");
+  --swc-action-button-background-color-default: token("transparent-static-white-200");
+  --swc-action-button-background-color-hover: token("transparent-static-white-300");
+  --swc-action-button-background-color-down: token("transparent-static-white-300");
+  --swc-action-button-background-color-focus: token("transparent-static-white-300");
   --swc-action-button-background-color-disabled: token("disabled-static-white-background-color");
-  --swc-action-button-content-color-default: token("transparent-white-800");
-  --swc-action-button-content-color-hover: token("transparent-white-900");
-  --swc-action-button-content-color-down: token("transparent-white-900");
-  --swc-action-button-content-color-focus: token("transparent-white-900");
+  --swc-action-button-content-color-default: token("transparent-static-white-900");
+  --swc-action-button-content-color-hover: token("transparent-static-white-950");
+  --swc-action-button-content-color-down: token("transparent-static-white-950");
+  --swc-action-button-content-color-focus: token("transparent-static-white-950");
   --swc-action-button-content-color-disabled: token("disabled-static-white-content-color");
 }
 
 .swc-ActionButton--staticWhite.swc-ActionButton--quiet {
   --swc-action-button-background-color-default: transparent;
-  --swc-action-button-background-color-disabled: token("transparent-white-25");
+  --swc-action-button-background-color-disabled: token("transparent-static-white-0");
 }
 
 .swc-ActionButton--staticBlack {
   --swc-action-button-focus-indicator-color: token("static-black-focus-indicator-color");
-  --swc-action-button-background-color-default: token("transparent-black-100");
-  --swc-action-button-background-color-hover: token("transparent-black-200");
-  --swc-action-button-background-color-down: token("transparent-black-200");
-  --swc-action-button-background-color-focus: token("transparent-black-200");
+  --swc-action-button-background-color-default: token("transparent-static-black-150");
+  --swc-action-button-background-color-hover: token("transparent-static-black-200");
+  --swc-action-button-background-color-down: token("transparent-static-black-200");
+  --swc-action-button-background-color-focus: token("transparent-static-black-200");
   --swc-action-button-background-color-disabled: token("disabled-static-black-background-color");
-  --swc-action-button-content-color-default: token("transparent-black-800");
-  --swc-action-button-content-color-hover: token("transparent-black-900");
-  --swc-action-button-content-color-down: token("transparent-black-900");
-  --swc-action-button-content-color-focus: token("transparent-black-900");
+  --swc-action-button-content-color-default: token("transparent-static-black-900");
+  --swc-action-button-content-color-hover: token("transparent-static-black-950");
+  --swc-action-button-content-color-down: token("transparent-static-black-950");
+  --swc-action-button-content-color-focus: token("transparent-static-black-950");
   --swc-action-button-content-color-disabled: token("disabled-static-black-content-color");
 }
 
 .swc-ActionButton--staticBlack.swc-ActionButton--quiet {
   --swc-action-button-background-color-default: transparent;
-  --swc-action-button-background-color-disabled: token("transparent-black-25");
+  --swc-action-button-background-color-disabled: token("transparent-static-black-0");
 }
 
 .swc-ActionButton--iconOnly {

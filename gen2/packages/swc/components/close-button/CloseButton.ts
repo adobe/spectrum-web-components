@@ -46,7 +46,6 @@ import styles from './close-button.css';
  * ```
  *
  * @cssprop --swc-close-button-size - Inline and block size of the close button. Defaults to the medium component height token.
- * @cssprop --swc-close-button-icon-size - Size of the cross icon. Defaults to the medium cross icon token.
  * @cssprop --swc-close-button-icon-color-default - Cross icon color in the default state.
  * @cssprop --swc-close-button-icon-color-hover - Cross icon color when hovered.
  * @cssprop --swc-close-button-icon-color-down - Cross icon color when pressed.
@@ -88,11 +87,10 @@ export class CloseButton extends ButtonBase {
   }
 
   protected override render(): TemplateResult {
-    // The wrapping .swc-CloseButton-icon span already sets the rendered box via
-    // --swc-close-button-icon-size; "size" on swc-ui-icon only selects which
-    // optically-tuned glyph step it renders, per the RFC's fixed size-to-step
-    // map (CONTRIBUTOR-DOCS/03_project-planning/05_strategies/icon-rfc.md, section 7).
-    // Passing the button's own size is the documented pattern for that mapping.
+    // swc-ui-icon's "size" selects both the optically-tuned glyph step and its
+    // rendered box, per the RFC's fixed size-to-step map
+    // (CONTRIBUTOR-DOCS/03_project-planning/05_strategies/icon-rfc.md, section 7).
+    // The close button forwards its own size.
     return html`
       <button
         class="swc-CloseButton"

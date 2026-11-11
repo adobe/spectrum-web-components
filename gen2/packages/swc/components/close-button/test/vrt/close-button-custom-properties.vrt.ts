@@ -59,7 +59,6 @@ type ModPropertyCase = CustomPropertyCase<`--swc-close-button-${string}`> & {
 
 const MOD_PROPERTY_CASES: readonly ModPropertyCase[] = [
   { property: '--swc-close-button-size', value: '64px' },
-  { property: '--swc-close-button-icon-size', value: '40px' },
   { property: '--swc-close-button-icon-color-default', value: 'magenta' },
   {
     property: '--swc-close-button-icon-color-hover',

@@ -121,6 +121,26 @@ test.describe('Popover - native dismissal', () => {
     expect(await readCloseSource(page)).toBe('outside');
   });
 
+  // Regression test for the reopen guard (TriggerPressController):
+  // pressing the trigger again while open light-dismisses the popover before
+  // the trailing click fires, so a naive `open = !open` handler would read
+  // `open` as already false and flip it back to true instead of leaving it
+  // closed. Needs a real, trusted click; synthetic play-function clicks
+  // don't trigger native light-dismiss at all.
+  test('default mode: clicking the trigger again while open closes it instead of reopening it', async ({
+    page,
+  }) => {
+    await gotoStory(page, 'components-popover--anatomy', 'swc-button');
+    const popover = page.locator('swc-popover');
+    const trigger = page.locator('#anatomy-trigger');
+
+    await trigger.click();
+    await expect(popover).toHaveJSProperty('open', true);
+
+    await trigger.click();
+    await expect(popover).toHaveJSProperty('open', false);
+  });
+
   test('modal mode: Escape closes and labels the source "escape"', async ({
     page,
   }) => {

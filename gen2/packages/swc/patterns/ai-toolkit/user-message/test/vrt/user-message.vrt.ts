@@ -151,16 +151,18 @@ const typeRows = () =>
   );
 
 const extraRows = () => [
-  // Narrow column forces wrap before the 536px cap; unconstrained long copy
-  // hits that cap. Captions distinguish the two widths, which otherwise read
-  // as similar wrapping bubbles.
+  // Narrow vs. capped column; the 75% cap normally lives on the parent turn,
+  // so maxInlineSize reproduces it here in isolation.
   row(
     [
       captioned(
         renderMessage({ copy: LONG_COPY, maxInlineSize: '220px' }),
         'Narrow column (220px)'
       ),
-      captioned(renderMessage({ copy: LONG_COPY }), 'Max inline size (536px)'),
+      captioned(
+        renderMessage({ copy: LONG_COPY, maxInlineSize: '75%' }),
+        'Max inline size (75%)'
+      ),
     ],
     'Wrapping'
   ),

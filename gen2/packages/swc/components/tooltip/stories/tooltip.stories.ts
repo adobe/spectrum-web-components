@@ -17,7 +17,6 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import {
-  TOOLTIP_PLACEMENTS,
   TOOLTIP_VARIANTS,
   type TooltipPlacement,
   type TooltipVariant,
@@ -26,24 +25,13 @@ import {
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc/components/popover/swc-popover.js';
 import '@adobe/spectrum-wc/components/tooltip/swc-tooltip.js';
+import '@adobe/spectrum-wc-icons/swc-icon-add.js';
 
 // ────────────────
 //    METADATA
 // ────────────────
 
 const { args, argTypes, template } = getStorybookHelpers('swc-tooltip');
-
-argTypes.variant = {
-  ...argTypes.variant,
-  control: { type: 'select' },
-  options: TOOLTIP_VARIANTS,
-};
-
-argTypes.placement = {
-  ...argTypes.placement,
-  control: { type: 'select' },
-  options: TOOLTIP_PLACEMENTS,
-};
 
 // `actual-placement` is internal CSS-only state that `Tooltip` manages directly
 // via setAttribute (declared side before showPopover, then the flip-resolved
@@ -110,21 +98,19 @@ const triggered = (
         id=${id}
         accessible-label=${String(tooltipArgs['default-slot'] ?? '')}
       >
-        <svg
-          slot="icon"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 36 36"
-          aria-hidden="true"
-          focusable="false"
-        >
-          <path
-            d="M31.5 17H19V4.5a1 1 0 0 0-2 0V17H4.5a1 1 0 0 0 0 2H17v12.5a1 1 0 0 0 2 0V19h12.5a1 1 0 0 0 0-2z"
-          />
-        </svg>
+        <swc-icon-add slot="icon"></swc-icon-add>
       </swc-button>
       ${template({ ...tooltipArgs, for: id })}
     `;
   }
+};
+
+// Finishes the fade-in before checking opacity so play functions don't depend
+// on transition timing, which CI browsers (notably WebKit) can throttle.
+const expectTooltipShown = (tooltip: HTMLElement): void => {
+  expect(tooltip.matches(':popover-open')).toBe(true);
+  tooltip.getAnimations().forEach((animation) => animation.finish());
+  expect(getComputedStyle(tooltip).opacity).toBe('1');
 };
 
 /**
@@ -197,10 +183,7 @@ export const Playground: Story = {
       open: boolean;
     };
     tooltip.open = true;
-    await waitFor(() => {
-      expect(tooltip.matches(':popover-open')).toBe(true);
-      expect(getComputedStyle(tooltip).opacity).toBe('1');
-    });
+    await waitFor(() => expectTooltipShown(tooltip));
   },
   tags: ['dev'],
 };
@@ -225,10 +208,7 @@ export const Overview: Story = {
       open: boolean;
     };
     tooltip.open = true;
-    await waitFor(() => {
-      expect(tooltip.matches(':popover-open')).toBe(true);
-      expect(getComputedStyle(tooltip).opacity).toBe('1');
-    });
+    await waitFor(() => expectTooltipShown(tooltip));
   },
   tags: ['overview'],
 };
@@ -261,10 +241,7 @@ export const Anatomy: Story = {
       open: boolean;
     };
     tooltip.open = true;
-    await waitFor(() => {
-      expect(tooltip.matches(':popover-open')).toBe(true);
-      expect(getComputedStyle(tooltip).opacity).toBe('1');
-    });
+    await waitFor(() => expectTooltipShown(tooltip));
   },
   tags: ['anatomy'],
   parameters: { flexLayout: 'row-wrap' },
@@ -288,10 +265,7 @@ export const Variants: Story = {
     const tooltips = canvasElement.querySelectorAll('swc-tooltip');
     const tooltip = tooltips[1] as HTMLElement & { open: boolean }; // informative
     tooltip.open = true;
-    await waitFor(() => {
-      expect(tooltip.matches(':popover-open')).toBe(true);
-      expect(getComputedStyle(tooltip).opacity).toBe('1');
-    });
+    await waitFor(() => expectTooltipShown(tooltip));
   },
   tags: ['options'],
   parameters: { flexLayout: 'row-wrap' },
@@ -345,10 +319,7 @@ export const Placements: Story = {
     const tooltips = canvasElement.querySelectorAll('swc-tooltip');
     const tooltip = tooltips[3] as HTMLElement & { open: boolean }; // bottom
     tooltip.open = true;
-    await waitFor(() => {
-      expect(tooltip.matches(':popover-open')).toBe(true);
-      expect(getComputedStyle(tooltip).opacity).toBe('1');
-    });
+    await waitFor(() => expectTooltipShown(tooltip));
   },
   tags: ['options'],
   parameters: {
@@ -381,10 +352,7 @@ export const Open: Story = {
       open: boolean;
     };
     tooltip.open = true;
-    await waitFor(() => {
-      expect(tooltip.matches(':popover-open')).toBe(true);
-      expect(getComputedStyle(tooltip).opacity).toBe('1');
-    });
+    await waitFor(() => expectTooltipShown(tooltip));
   },
   tags: ['states'],
 };
@@ -433,10 +401,7 @@ export const Manual: Story = {
     const buttons = canvasElement.querySelectorAll('swc-button');
     const tooltip = canvasElement.querySelector('swc-tooltip') as HTMLElement;
     await userEvent.click(buttons[1] as HTMLElement);
-    await waitFor(() => {
-      expect(tooltip.matches(':popover-open')).toBe(true);
-      expect(getComputedStyle(tooltip).opacity).toBe('1');
-    });
+    await waitFor(() => expectTooltipShown(tooltip));
   },
   tags: ['states'],
   parameters: { flexLayout: 'row-wrap' },
@@ -462,10 +427,7 @@ export const Events: Story = {
       open: boolean;
     };
     tooltip.open = true;
-    await waitFor(() => {
-      expect(tooltip.matches(':popover-open')).toBe(true);
-      expect(getComputedStyle(tooltip).opacity).toBe('1');
-    });
+    await waitFor(() => expectTooltipShown(tooltip));
   },
   tags: ['behaviors'],
 };
@@ -507,10 +469,7 @@ export const TriggerElement: Story = {
       open: boolean;
     };
     tooltip.open = true;
-    await waitFor(() => {
-      expect(tooltip.matches(':popover-open')).toBe(true);
-      expect(getComputedStyle(tooltip).opacity).toBe('1');
-    });
+    await waitFor(() => expectTooltipShown(tooltip));
   },
   tags: ['behaviors'],
 };
@@ -540,10 +499,7 @@ export const Labeling: Story = {
       open: boolean;
     };
     tooltip.open = true;
-    await waitFor(() => {
-      expect(tooltip.matches(':popover-open')).toBe(true);
-      expect(getComputedStyle(tooltip).opacity).toBe('1');
-    });
+    await waitFor(() => expectTooltipShown(tooltip));
   },
   tags: ['behaviors'],
 };
@@ -568,10 +524,7 @@ export const Accessibility: Story = {
       open: boolean;
     };
     tooltip.open = true;
-    await waitFor(() => {
-      expect(tooltip.matches(':popover-open')).toBe(true);
-      expect(getComputedStyle(tooltip).opacity).toBe('1');
-    });
+    await waitFor(() => expectTooltipShown(tooltip));
   },
   tags: ['a11y'],
 };

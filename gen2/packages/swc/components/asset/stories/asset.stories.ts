@@ -33,18 +33,6 @@ const {
   template: templateWithLoadState,
 } = getStorybookHelpers('swc-asset');
 
-argTypes.fit = {
-  ...argTypes.fit,
-  control: { type: 'select' },
-  options: ASSET_FIT_VALUES,
-};
-
-argTypes.background = {
-  ...argTypes.background,
-  control: { type: 'select' },
-  options: ASSET_BACKGROUND_VALUES,
-};
-
 // Set internally from the slotted <img>'s load/error events; not a consumer input. Hidden
 // from the Controls table, and stripped below before every template() call so it never
 // appears in generated code snippets, which would misleadingly suggest a consumer sets it.
@@ -64,6 +52,9 @@ const events = ['swc-asset-load', 'swc-asset-error'];
 /**
  * A general image/media primitive that displays a single slotted `<img>` or
  * `<svg>` element, sized and fit to the space provided.
+ *
+ * For consistently sized image-only previews, such as for layer panels, see
+ * [Thumbnail](../?path=/docs/components-thumbnail--docs).
  */
 const meta: Meta = {
   title: 'Asset',
@@ -76,6 +67,7 @@ const meta: Meta = {
       subtitle: `Visually represent an image or media asset in your application`,
     },
     flexLayout: 'row-nowrap',
+    missingDesignDocs: true,
   },
   render: (args) => template(args),
   tags: ['migrated'],

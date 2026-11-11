@@ -19,7 +19,7 @@ import {
 } from '@open-wc/testing';
 import { emulateMedia, resetMouse, sendKeys } from '@web/test-runner-commands';
 
-import { html } from '@spectrum-web-components/base';
+import { html, TemplateResult } from '@spectrum-web-components/base';
 import { Card } from '@spectrum-web-components/card';
 import { Grid } from '@spectrum-web-components/grid';
 import { isWebKit } from '@spectrum-web-components/shared';
@@ -36,6 +36,10 @@ import {
   testForLitDevWarnings,
 } from '../../../test/testing-helpers.js';
 import { Default } from '../stories/grid.stories.js';
+
+const renderPlainItem = (item: { id: number }): TemplateResult => html`
+  <div class="item">Item ${item.id}</div>
+`;
 
 describe('Grid', () => {
   testForLitDevWarnings(
@@ -293,6 +297,76 @@ describe('Grid', () => {
     await elementUpdated(focused);
     expect(focused === document.activeElement).to.be.true;
     expect(focused.focused).to.be.true;
+  });
+  it('moves focus to the first and last items with Home and End', async () => {
+    // Four items in a 2x2 grid, so every item renders and none are virtualized away.
+    const test = await fixture<HTMLDivElement>(html`
+      <div>
+        <sp-grid
+          style="inline-size: 400px; block-size: 400px"
+          .items=${[{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }]}
+          .focusableSelector=${'.item'}
+          .renderItem=${renderPlainItem}
+        ></sp-grid>
+      </div>
+    `);
+    const el = test.querySelector('sp-grid') as Grid;
+
+    await elementUpdated(el);
+    await nextFrame();
+    el.focus();
+    await nextFrame();
+    await nextFrame();
+
+    const items = [
+      ...el.querySelectorAll(el.focusableSelector),
+    ] as HTMLElement[];
+    expect(items.length, 'every item renders').to.equal(4);
+    const first = items[0];
+    const last = items[items.length - 1];
+    expect(first === document.activeElement, 'initial focus').to.be.true;
+
+    await sendKeys({ press: 'End' });
+    expect(last === document.activeElement, 'End moves to the last item').to.be
+      .true;
+
+    await sendKeys({ press: 'Home' });
+    expect(first === document.activeElement, 'Home moves to the first item').to
+      .be.true;
+  });
+  it('keeps roving tabindex in DOM order in RTL, since items are positioned physically', async () => {
+    const test = await fixture<HTMLDivElement>(html`
+      <div dir="rtl">${Default()}</div>
+    `);
+    const el = test.querySelector('sp-grid') as Grid;
+
+    await elementUpdated(el);
+    el.focus();
+    await nextFrame();
+    await nextFrame();
+
+    const first = el.querySelector(el.focusableSelector) as Card;
+    const second = el.querySelector(
+      `${el.focusableSelector}:nth-child(2)`
+    ) as Card;
+
+    // The virtualizer positions children with a physical transform, so the
+    // visual order does not flip with the writing mode. This needs at least
+    // two columns, which the default story renders at the test viewport size.
+    expect(
+      second.getBoundingClientRect().left,
+      'the second card renders to the right of the first'
+    ).to.be.greaterThan(first.getBoundingClientRect().left);
+
+    expect(first === document.activeElement).to.be.true;
+
+    await sendKeys({ press: 'ArrowRight' });
+    await elementUpdated(second);
+    expect(second === document.activeElement).to.be.true;
+
+    await sendKeys({ press: 'ArrowLeft' });
+    await elementUpdated(first);
+    expect(first === document.activeElement).to.be.true;
   });
   it('manages selection', async () => {
     const test = await fixture<HTMLDivElement>(html`

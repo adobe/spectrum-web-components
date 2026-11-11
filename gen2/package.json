@@ -21,7 +21,7 @@
     "dev:analyze": "yarn workspace @adobe/spectrum-wc analyze:watch",
     "dev:core": "yarn workspace @adobe/spectrum-wc-core dev",
     "lint": "cd .. && eslint gen2 --ext .ts,.js,.json",
-    "start": "run-p dev:core dev:analyze storybook",
+    "start": "run-p dev:core storybook",
     "storybook": "yarn workspace @adobe/spectrum-wc storybook",
     "storybook:build": "yarn workspace @adobe/spectrum-wc storybook:build",
     "test": "yarn workspace @adobe/spectrum-wc test",
@@ -41,7 +41,7 @@
   "devDependencies": {
     "@changesets/changelog-github": "0.5.1",
     "@changesets/cli": "2.29.7",
-    "@storybook/addon-vitest": "10.3.5",
+    "@storybook/addon-vitest": "10.6.3",
     "eslint": "9.39.2",
     "eslint-plugin-simple-import-sort": "12.1.1",
     "npm-run-all2": "8.0.4"

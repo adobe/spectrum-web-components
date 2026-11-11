@@ -1,0 +1,68 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
+
+import * as ThumbnailStories from './stories/thumbnail.stories';
+
+<Meta of={ThumbnailStories} />
+
+<DocsHeader />
+
+## Anatomy
+
+A thumbnail consists of:
+
+- **Frame**: a bordered, rounded square with an opacity checkerboard that shows through transparent or letterboxed areas of the image
+- **Image**, provided via the default slot as an `<img>` element
+
+<Canvas of={ThumbnailStories.Anatomy} />
+
+## Options
+
+### Sizes
+
+Thumbnails come in 12 sizes, from `50` (16 px) to `1000` (64 px). The default size is `500` (40 px).
+
+<Canvas of={ThumbnailStories.Sizes} />
+
+### Fit
+
+`fit` controls how the slotted image fills the thumbnail's bounds:
+
+- **`contain`** (default): scales the image to fit entirely within the bounds
+- **`cover`**: scales and crops the image to fill the bounds completely
+
+<Canvas of={ThumbnailStories.Fit} />
+
+## States
+
+### Consumer-styled states
+
+A thumbnail has no built-in `disabled` or `selected` state. The interactive parent that wraps it owns that state and applies its own visual treatment directly to the `<swc-thumbnail>` element. In the example below, an [Action button](../?path=/docs/components-action-button--docs) holds a thumbnail in its `icon` slot and dims it with `--swc-thumbnail-opacity-disabled` when disabled, and a radio group outlines the thumbnail of its checked option. Each thumbnail is `decorative`, because its control's text already names it.
+
+<Canvas of={ThumbnailStories.ConsumerStyledStates} />
+
+## Accessibility
+
+### Features
+
+The `<swc-thumbnail>` element implements several accessibility features:
+
+#### Alt text
+
+- Provide a meaningful `alt` value on the slotted `<img>` describing the previewed content
+- Set `decorative` when the image content is already described by surrounding context; the component then hides the entire thumbnail with `aria-hidden="true"` id not set and sets `alt=""` on the slotted image if it has none
+
+#### Non-interactive element
+
+- Thumbnails have no interactive behavior and are never part of the tab order
+- No `role` is set on the host; the slotted `<img>`'s implicit `img` role and `alt` value carry the accessible name
+- To make a thumbnail part of an interactive control (for example a button or selectable card), wrap it in that control; the wrapping element owns focus and any disabled or selected state
+
+### Best practices
+
+- Set `alt` on every slotted image, or mark the thumbnail `decorative`; a missing accessible name triggers a DEBUG-mode warning
+- Inside a button or other control with its own text label, mark the thumbnail `decorative` so its `alt` doesn't join the control's name
+
+<Canvas of={ThumbnailStories.Accessibility} />
+
+<DocsFooter />

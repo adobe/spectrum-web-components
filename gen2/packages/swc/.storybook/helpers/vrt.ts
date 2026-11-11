@@ -103,6 +103,19 @@ export const row = (children: unknown, label?: string) =>
       `;
 
 /**
+ * Stacks content above a small caption, for permutations a snapshot can't
+ * identify on its own (e.g. one per numeric size).
+ */
+export const captioned = (content: unknown, label: string) => html`
+  <div
+    style="display: flex; flex-direction: column; align-items: center; gap: var(--swc-spacing-100);"
+  >
+    ${content}
+    <span class="swc-Detail swc-Detail--sizeM">${label}</span>
+  </div>
+`;
+
+/**
  * Partitions permutations by the value of `key` (e.g. 'variant') so each
  * group can render as its own labeled `row()`, making a dense matrix easier
  * to scan by variant. Permutations without the key fall into a 'default'

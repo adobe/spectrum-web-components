@@ -1,5 +1,180 @@
 # @adobe/spectrum-wc
 
+## 2.0.0-beta.7
+
+### Minor Changes
+
+- **card**:
+  - [#6767](https://github.com/adobe/spectrum-web-components/pull/6767) [`258169d`](https://github.com/adobe/spectrum-web-components/commit/258169d6267ef4ba804986ee757b43a383b7afe5) Thanks [@aramos-adobe](https://github.com/aramos-adobe)! - **feat(card):** `<swc-card>` now exposes `--swc-card-base-grid-template-rows` to override the row track sizes of its media, content, and footer grid areas. Defaults to `auto 1fr auto`.
+
+- **upload-attachment**:
+  - [#6767](https://github.com/adobe/spectrum-web-components/pull/6767) [`258169d`](https://github.com/adobe/spectrum-web-components/commit/258169d6267ef4ba804986ee757b43a383b7afe5) Thanks [@aramos-adobe](https://github.com/aramos-adobe)! - **feat(upload-attachment):** `type="media"` now composes [`swc-card`](../gen2/packages/swc/components/card) (`variant="quiet"`) internally instead of hand-rolled surface markup, reusing its `preview`/`media` slot and grid machinery. The public slot API (`thumbnail`, `badge`, `title`, `subtitle`, `actions`) is unchanged.
+
+    Added:
+    - `progress` (0-100): shows a `swc-progress-circle` overlay on the `type="media"` preview while an upload is in flight. Hidden when unset or at 100 (complete); the `thumbnail` slot is hidden while loading so the overlay reads against a plain background instead of stacking on the image. The overlay itself is delayed by 1 second after `progress` is first set, so a fast upload doesn't flash the loading state.
+    - `size` (`m`/`l`, default `m`): 64px vs. 96px tile for `type="media"`. Has no effect on `type="card"`.
+
+    Removed/renamed custom properties (`type="media"` sizing is now driven by `size` instead):
+    - `--swc-upload-attachment-preview-size` removed; use `size="m"`/`size="l"`.
+    - `--swc-upload-attachment-card-thumbnail-inline-size` and `--swc-upload-attachment-card-thumbnail-block-size` merged into `--swc-upload-attachment-card-thumbnail-size`.
+    - `--swc-upload-attachment-dismiss-icon-inline-size` and `--swc-upload-attachment-dismiss-icon-block-size` merged into `--swc-upload-attachment-dismiss-icon-size`.
+
+    Also composes [`swc-asset`](../gen2/packages/swc/components/asset) into the `thumbnail` slot in docs/examples for image loading, fit, and background handling, and documents that `badge` should only be used at `size="l"` and above (it crowds the default 64px `size="m"` tile).
+
+    Added VRT coverage (`test/vrt/upload-attachment.vrt.ts`, `test/vrt/upload-attachment-custom-properties.vrt.ts`) for both types, both sizes, the badge and progress overlays, title truncation/subtitle overflow, forced `:focus-visible`, forced colors, and CJK text.
+
+### Patch Changes
+
+- **avatar**:
+  - [#6905](https://github.com/adobe/spectrum-web-components/pull/6905) [`6d781e9`](https://github.com/adobe/spectrum-web-components/commit/6d781e92f452f6dc48d90297de444366db037cc1) Thanks [@cdransf](https://github.com/cdransf)! - **fix(avatar):** Changed the default `size` of `<swc-avatar>` from `500` (40 px) to `100` (24 px), the same size value as 1st-gen's default (`20px` there) and the React Spectrum S2 default. Use `size="75"` for `20px`. Invalid `size` values now fall back to `100`. To keep the previous default, set `size="500"`.
+
+- **button, close-button**:
+  - [#6846](https://github.com/adobe/spectrum-web-components/pull/6846) [`5126fec`](https://github.com/adobe/spectrum-web-components/commit/5126fecfe42dc90fec0f3438a2f5f3873fc6c67f) Thanks [@rise-erpelding](https://github.com/rise-erpelding)! - **fix(button, close-button):** Fixed static-white and static-black secondary and outline `swc-button` labels and `swc-close-button` icons to use opaque white or black in default, hover, pressed, and focus-visible states, improving contrast and keeping their colors consistent. Border, background, focus-indicator, and disabled-state colors are unchanged.
+
+- **prompt-field**:
+  - [#6769](https://github.com/adobe/spectrum-web-components/pull/6769) [`9aed44d`](https://github.com/adobe/spectrum-web-components/commit/9aed44dfd07eb0349e3f178a3a1c7a41a3f65898) Thanks [@rubencarvalho](https://github.com/rubencarvalho)! - **fix(prompt-field):** Attachment-strip fixes for `<swc-prompt-field>`.
+    - Scroll chevrons now point in opposite directions, use a thinner chevron icon with a translucent (not opaque) background, and are vertically centered on the tile row.
+    - Clicking empty space in the attachment strip no longer focuses the textarea, and the strip no longer shows a text cursor.
+    - Single and multiple attachment layouts align horizontally.
+    - Legal-slot links use the correct typography class.
+    - The attachment strip no longer snaps to tile edges while scrolling, and no longer shows a scrollbar.
+    - Where scroll-driven animations are supported, edge fades and chevrons follow the scroll position, as in React Spectrum, instead of updating after the scroll settles. The fades grow in as soon as the strip moves. Each chevron shows once the strip has scrolled past its fade, and is never shown partly transparent or as disabled.
+    - Chevron paging no longer skips a tile: `>` moves the tile that is partly hidden at the trailing edge to the start, and `<` does the same in reverse. It also reaches both ends of the strip when a tile is wider than the space between the chevrons. After paging, Tab moves to the first tile that is shown, not to a tile in the middle of the strip. A tile whose edge only reaches into the lighter half of an edge fade counts as shown.
+    - A tile that gets focus from the arrow keys or Tab scrolls fully into view, clear of the chevrons. Neither this scroll nor paging stops inside an edge fade, where a tile would be cut off with no chevron.
+    - When a tile is added to a strip that already has tiles, the strip scrolls to show it, so a new upload is visible even when the strip overflows. Focus doesn't move, and the strip doesn't scroll while focus is in it.
+    - The last tile's dismiss button focus ring is no longer clipped at the end of the strip.
+
+    Also routes the `size="s"` variant's property overrides through private custom properties instead of re-declaring the properties in the variant selector (no visual change).
+
+- **tabs**:
+  - [#6811](https://github.com/adobe/spectrum-web-components/pull/6811) [`0e9d1e4`](https://github.com/adobe/spectrum-web-components/commit/0e9d1e45a95209f135e82cc33397ae1f86a9f108) Thanks [@rubencarvalho](https://github.com/rubencarvalho)! - **fix(tabs):** `<swc-tabs>` now links tabs that are added after the initial render to their panels.
+
+    The tab panels were only linked when the `tab-panel` slot changed, and `<swc-tab>` only got its `id` after its first render. When the slotted tabs were swapped out and the panels stayed, the new tabs had no `aria-controls` and the panels kept an `aria-labelledby` that pointed to the removed tabs. `<swc-tab>` now sets its `role` and `id` when it connects, and `<swc-tabs>` relinks the panels when the tabs change. It clears a stale `aria-labelledby` when no matching tab remains and a stale `aria-controls` when no matching panel remains, but keeps values that you set yourself.
+
+- [#6643](https://github.com/adobe/spectrum-web-components/pull/6643) [`5b6abf5`](https://github.com/adobe/spectrum-web-components/commit/5b6abf5212e9d834f35351361a1263ea1b0bbc83) Thanks [@rubencarvalho](https://github.com/rubencarvalho)! - **docs(\*):** The published Custom Elements Manifest now expands referenced type aliases into their literal values via `@wc-toolkit/type-parser`. Properties typed as a union alias (e.g. `variant`, `fill-style`, `static-color`) now list their allowed values in the Storybook API table and generate a `select` control automatically, without inlining the union in source or hand-wiring `argTypes.options` per story. Aliases reaching a component through a mixin, and default values of accessor-backed properties, are resolved as well. Structural expansions are no longer written to the manifest, because they embedded compiler-internal symbol ids that made the published artifact non-reproducible.
+
+- [#6880](https://github.com/adobe/spectrum-web-components/pull/6880) [`e9fd2c0`](https://github.com/adobe/spectrum-web-components/commit/e9fd2c0929f928adce0d65a8588ed355b7d251f4) Thanks [@miwha-adobe](https://github.com/miwha-adobe)! - Remove duplicate CSS custom property entries from the published Custom Elements Manifest for Button, Illustrated message, Tab, and Tabs so API reference tables show each property once. Component runtime behavior does not change.
+
+## 2.0.0-beta.6
+
+### Minor Changes
+
+- **prompt-field**:
+  - [#6842](https://github.com/adobe/spectrum-web-components/pull/6842) [`bb61c01`](https://github.com/adobe/spectrum-web-components/commit/bb61c012cd09e49daaa9ba647eaa5e0c1609af20) Thanks [@caseyisonit](https://github.com/caseyisonit)! - **feat(prompt-field):** Make `<swc-prompt-field>` name its textarea without visually hidden text, and keep focus on the send/stop button when `generating` changes.
+
+    **Breaking changes** to the beta API. Every attribute that sets a non-visible name now ends in `-accessible-label`:
+    - Removed `label`. The textarea is now named by `accessible-label` (default "AI prompt"), applied directly as its `aria-label`.
+    - Renamed `send-label` to `send-accessible-label`. The default changed from "Send" to "Submit AI prompt".
+    - Renamed `stop-label` to `stop-accessible-label`. The default stays "Stop generating".
+    - Renamed `upload-label` to `upload-accessible-label`.
+    - Renamed `attachment-scroll-prev-label` and `attachment-scroll-next-label` to `attachment-scroll-prev-accessible-label` and `attachment-scroll-next-accessible-label`.
+    - Renamed `attachment-strip-label` to `attachment-strip-accessible-label`.
+
+    **Accessibility fixes:**
+    - Send and stop are now one persistent button, so focus stays on it when `generating` toggles and screen readers announce the new name on the focused control. Before, the button was replaced and focus dropped to the page.
+    - With no prompt content, the button uses `aria-disabled="true"` instead of native `disabled`, so it stays focusable after the value is cleared.
+    - Removed the visually hidden label element and its `aria-labelledby` reference, which overrode the textarea's `aria-label` so `accessible-label` never took effect.
+    - Logs a dev-mode accessibility warning when `accessible-label` is empty, because the textarea then has no accessible name.
+
+- [#6848](https://github.com/adobe/spectrum-web-components/pull/6848) [`5fc65af`](https://github.com/adobe/spectrum-web-components/commit/5fc65afb073485102ac33bf9b9e95aa8eb781511) Thanks [@5t3ph](https://github.com/5t3ph)! - **Updated**: Increase horizontal padding for large and extra-large Button and Action Button, and button-containing components, which increases their rendered width. `base-padding-horizontal-large` changes from `14px` to `16px`, and `base-padding-horizontal-extra-large` changes from `16px` to `18px`.
+
+- [#6724](https://github.com/adobe/spectrum-web-components/pull/6724) [`3f8f64e`](https://github.com/adobe/spectrum-web-components/commit/3f8f64e6cab1d3a4379459bf63eb8d81cb7e82a3) Thanks [@miwha-adobe](https://github.com/miwha-adobe)! - Add Spectrum 2 `<swc-text-field>` with accessible labelling, validation, and native form participation.
+  - **Appearance and interaction**: Support sizes `s`, `m`, `l`, and `xl`, `label-position="top|side"`, a non-interactive `prefix` slot, and customizable control widths. The field has one tab stop, supports click-to-focus, and exposes native text selection through `select()` and `setSelectionRange()`.
+  - **Accessible labels and descriptions**: Provide a clickable slotted label, an `accessible-label`, or external labels through `accessible-labelledby`. Combine a slotted `description` with external `accessible-describedby` references.
+  - **Field states**: Use `field-status` for disabled, read-only, invalid, or valid status. Keep `required` independent, and use `necessity-indicator="icon|label"` to show an icon or required/optional text.
+  - **Descriptions and errors**: While invalid, supplied `error-text` replaces the description. Without an `error-text` slot, keep the description visible in the error color. Associate the visible message with the input for assistive technology.
+  - **Validation**: Invalid status makes eligible fields fail validation, using the plain text of `error-text` as the message. Missing or empty text uses "Enter a valid value." for validation without adding fallback inline text. Clearing invalid status clears the application error; native constraints still apply.
+  - **Forms and reset**: Support `FormData`, ancestor fieldset disabling, and Enter-key submission. Form reset restores the initial value and clears valid or invalid status without changing disabled or read-only status.
+
+## 2.0.0-beta.5
+
+### Minor Changes
+
+- [#6733](https://github.com/adobe/spectrum-web-components/pull/6733) [`a452024`](https://github.com/adobe/spectrum-web-components/commit/a452024db3b745563105463b91384f1fad2fe1c8) Thanks [@caseyisonit](https://github.com/caseyisonit)! - Publish consumer documentation for the Spectrum 2 icon families and make UI icons deliverable.
+  - **UI icons are now deliverable.** `<swc-ui-icon>` (chevrons, checkmarks, arrows, and other control internals) ships from `@adobe/spectrum-wc` with its own consumer docs page next to workflow icons, rather than being internal-only.
+  - **Custom SVG contract documented.** The `<swc-icon>` frame now has a public docs page describing the contract for a slotted SVG: a single `<svg>` with a `viewBox`, no `width`/`height`, and `fill="currentColor"` so it follows text color and `--swc-icon-color`.
+  - **Per-family usage docs** for UI icons and the `<swc-icon>` frame, plus the 1st-gen icon migration guide, are now part of the published Storybook build (previously excluded as internal-only pages).
+  - **Removed the `elements/*` shared-template catalog.** `@adobe/spectrum-wc/icon` no longer re-exports the `elements/*` `TemplateResult` helpers. Slot a workflow icon (as its custom element) or your own SVG into `<swc-icon>` instead.
+  - **Removed `--swc-close-button-icon-size` (breaking).** This documented `@cssprop` is gone from `<swc-close-button>`. The cross icon now sizes from the button's `size` attribute (forwarded to `<swc-ui-icon>`), keeping the box and the optical step in sync. Remove any `--swc-close-button-icon-size` override; use `size` to change the icon, and `--swc-close-button-size` to size the button box.
+  - **Icon hosts now render `display: block` (breaking).** `<swc-icon>`, `<swc-ui-icon>`, and every workflow icon element previously rendered `inline-flex`. If you relied on an icon flowing inline with text, place it inside an inline or flex container.
+  - **New workflow icons.** `AIMark` (`<swc-icon-ai-mark>`, `Icon_AIMark`) and `MoreVertical` (`<swc-icon-more-vertical>`, `Icon_MoreVertical`) ship from `@adobe/spectrum-wc-icons`, pulled from S2 Icon Global Set Open Source 7.2.0. The `Tag` icon artwork updates to match that set.
+
+  The `@adobe/spectrum-wc-icons` change also moves the ambient `*.css` module declaration into `src/` so the package's generated type declarations resolve icon stylesheet imports cleanly.
+
+- [#6823](https://github.com/adobe/spectrum-web-components/pull/6823) [`47d8337`](https://github.com/adobe/spectrum-web-components/commit/47d8337520627732d7a758abd9c0d04275227444) Thanks [@Rajdeepc](https://github.com/Rajdeepc)! - Add the gen2 `<swc-menu>`, the Spectrum 2 successor to `<sp-menu>`.
+  - **API**: `for` / `triggerElement` reference an externally-authored trigger (the menu renders none of its own), plus `placement` (12 values, default `bottom-start`), `should-flip` (default `true`), the reflected `open`, and `size` (`s`–`xl`, default `m`). Visibility changes dispatch `swc-open` / `swc-after-open` / `swc-close` / `swc-after-close`, the after-events deferred until the transition settles.
+  - **Accessibility**: implements the menu-button pattern. `role="menu"` lives on the shadow-internal surface rather than the host, and `aria-haspopup="menu"` / `aria-expanded` are wired onto the resolved trigger's interactive element across shadow boundaries. The surface is a native `popover="auto"`, so Escape and outside clicks light-dismiss through the platform. Arrow keys, Home, and End move a roving tabindex with wrap-around, Tab stays trapped on the active row, Enter activates a row and closes, opening moves focus to the first row, and closing restores it to the trigger.
+  - **Styling**: Spectrum 2 surface chrome with an entry and exit transition gated on the resolved placement, so the surface never fades in at its unpositioned origin. No public CSS custom properties are exposed this release.
+  - **Core**: adds `MenuBase` and `Menu.types.ts` (`MENU_PLACEMENTS`, `MENU_VALID_SIZES`, `MENU_ALLOWED_CHILDREN`), composing the shared `PlacementController`, `FocusgroupNavigationController`, and `TriggerPressController`.
+  - **Docs and tests**: Storybook docs page, consumer migration guide, unit coverage, and Playwright accessibility tests covering the ARIA tree and native light-dismiss.
+
+  `<swc-menu-item>` has not shipped yet, so the default slot currently accepts it by name only. Menu groups, dividers as separators, submenus, selection, link rows, and the mobile drilldown tray are not part of this release.
+
+- [#6836](https://github.com/adobe/spectrum-web-components/pull/6836) [`9d8151f`](https://github.com/adobe/spectrum-web-components/commit/9d8151f41f7cd363613aa4f3f1ae17739e69dd65) Thanks [@rubencarvalho](https://github.com/rubencarvalho)! - **feat(prompt-field):** Increase the container contrast of `<swc-prompt-field>` against the background in the subtle idle state and in the focused state of every variant.
+  - Adds a `0 8px 32px` transparent-static-black-75 drop shadow (`opacity-75`, 3%) to the container. This is a visual adjustment.
+  - Raises the container border from 5% to transparent-neutral-125 (`opacity-125`, 6%). This is a design change. The border is black in light mode and white in dark mode.
+
+- [#6726](https://github.com/adobe/spectrum-web-components/pull/6726) [`c310499`](https://github.com/adobe/spectrum-web-components/commit/c3104990927a7927a5579a16380cd80eb3e96b6c) Thanks [@cdransf](https://github.com/cdransf)! - Add the gen2 `<swc-thumbnail>`, migrated from the Spectrum 1 `<sp-thumbnail>`.
+  - **API**: numeric `size` (`50`–`1000`, default `500`) and `fit` (`contain` or `cover`, default `contain`). Replaces the boolean `cover` with `fit="cover"`; drops `background`, `layer`, and the CSS-only `disabled`, `focused`, and `selected` attributes. Slotted elements other than `<img>` stay hidden, as in Spectrum 1.
+  - **Accessibility**: new `decorative` attribute hides the thumbnail with `aria-hidden="true"` and gives the slotted `<img>` `alt=""` when it has none; unsetting it removes only what the component added. A dev-mode warning fires when a non-decorative image has no `alt`, `aria-label`, or `aria-labelledby`.
+  - **Styling**: Spectrum 2 tokens with an opacity checkerboard frame, a forced-colors border, and one public custom property, `--swc-thumbnail-size`, set per `size`. Spectrum 1 `--mod-thumbnail-*` properties are not supported.
+  - **Docs and tests**: includes Storybook docs, a consumer migration guide, unit and accessibility tests, and VRT coverage.
+
+### Patch Changes
+
+- [#6782](https://github.com/adobe/spectrum-web-components/pull/6782) [`85081e7`](https://github.com/adobe/spectrum-web-components/commit/85081e7788d063ed8ff09af43db6fc2058a388bd) Thanks [@aramos-adobe](https://github.com/aramos-adobe)! - **fix(pixel-loader):** `<swc-pixel-loader>`'s `prefers-reduced-motion: reduce` state now fades the whole grid in and out together instead of revealing it row by row, so the reduced-motion cadence reads as a single fade rather than a staggered build.
+
+- [#6770](https://github.com/adobe/spectrum-web-components/pull/6770) [`efc2738`](https://github.com/adobe/spectrum-web-components/commit/efc27387caf47f884db6c36f53afa68468e81188) Thanks [@rubencarvalho](https://github.com/rubencarvalho)! - **fix(ai-toolkit):** Accessibility and layout fixes across the response-status and conversation patterns.
+  - `<swc-response-status>` keeps its row and pixel loader mounted when the first step arrives. Without steps, active labels are status text rather than inert buttons; with steps, a native disclosure button spans the row's hit area. Completed labels wrap in full unless a line cap is set. The row spans the column, and toggle padding and focus rings are corrected.
+  - `<swc-conversation-turn>` aligns turns and gives user messages a responsive reading-width cap: 75% of the column, at least 25ch where space permits, and at most 536px. The thread gap uses spacing-400.
+  - `<swc-message-sources>` spaces the first source inside the list without leaving an empty gap when closed. `<swc-user-message>` spacing is also corrected.
+  - Response-status steps have tighter icon spacing and an updated label shimmer animation.
+
+## 2.0.0-beta.4
+
+### Minor Changes
+
+- [#6739](https://github.com/adobe/spectrum-web-components/pull/6739) [`d505036`](https://github.com/adobe/spectrum-web-components/commit/d505036c47c9e60fdebe5b8ce8b4501aa328e240) - **feat(asset):** Expanded `<swc-asset>` from a minimal file/folder-icon-or-slot component into a general image/media primitive, and promoted it from the internal genre to public.
+
+  Adds sizing (`aspect-ratio`/`width`/`height`), `fit`, `background`, `decorative`, a generalized `accessible-label` fallback, and a `load-state` property with `swc-asset-load`/`swc-asset-error` events. The `variant` (`file`/`folder`) icon API is removed. See the Asset migration guide for full upgrade steps from `sp-asset`.
+
+- [#6778](https://github.com/adobe/spectrum-web-components/pull/6778) [`c85d555`](https://github.com/adobe/spectrum-web-components/commit/c85d5559e5eb67b5efd8681f1c7b995706a292bd) - **feat(card):** `<swc-card>`'s `preview` and `collection` slots now support `<swc-asset>` alongside a plain `<img>`.
+
+### Patch Changes
+
+- [#6717](https://github.com/adobe/spectrum-web-components/pull/6717) [`6cddf81`](https://github.com/adobe/spectrum-web-components/commit/6cddf8193f818ab6de8f40368db47be3c0fa971e) - **fix(ai-toolkit):** Documented `@cssprop` JSDoc for every exposed custom property across the AI Toolkit patterns (`swc-pixel-loader`, `swc-user-message`, `swc-upload-attachment`, `swc-prompt-field`, `swc-response-status`, `swc-response-status-step`, `swc-message-sources`), and removed custom properties that existed for consumer convenience alone rather than to support the component's own variant, state, or size needs, per the [Custom properties style guide](../gen2/packages/swc/.storybook/contributor-docs/02_style-guide/01_css/02_custom-properties.mdx).
+
+  Removed (now static values, no longer overridable): `--swc-suggestion-item-min-block-size`, `--swc-suggestion-item-icon-margin-inline-start`, `--swc-suggestion-item-icon-margin-inline-end`, `--swc-suggestion-item-label-padding-block`, `--swc-suggestion-item-label-padding-inline-end`, `--swc-message-feedback-gap`, `--swc-message-feedback-button-inline-size`, `--swc-message-feedback-button-block-size`, `--swc-message-feedback-button-border-radius`, `--swc-conversation-thread-gap`, `--swc-conversation-turn-group-gap`, `--swc-system-message-gap`, `--swc-system-message-body-gap`, `--swc-system-message-output-gap`, `--swc-system-message-content-gap`, `--swc-message-sources-gap`, `--swc-message-sources-icon-inline-size`, `--swc-message-sources-icon-block-size`, `--swc-message-sources-list-gap`, `--swc-sources-toggle-gap`, `--swc-sources-toggle-padding`, `--swc-user-message-padding-block`, `--swc-user-message-padding-inline`, `--swc-user-message-card-padding`, `--swc-user-message-media-padding`, `--swc-user-message-attachment-card-gap`, `--swc-user-message-attachment-media-gap`, `--swc-user-message-meta-gap`.
+
+  Made private (internal implementation detail, not a consumer override surface): `--swc-prompt-field-textarea-min-rows` → `--_swc-prompt-field-textarea-min-rows` and `--swc-prompt-field-textarea-max-rows` → `--_swc-prompt-field-textarea-max-rows` (pure JS-to-CSS plumbing for the `min-rows`/`max-rows` attributes), `--swc-response-status-step-shimmer-spread` → `--_swc-response-status-step-shimmer-spread` (reused twice within one rule, so it stays a variable, but has no real product need for external override).
+
+  Also replaced hardcoded pixel values with the matching design token wherever one exists at that exact value: `border: 1px solid transparent` → `token("border-width-100")`, assorted `2px`/`3px`/`6px`/`16px` gaps, margins, padding, and insets → their `spacing-*`/`base-padding-vertical-*` token, and several element dimensions that exactly match a platform-scale token → `component-height-*` / `thumbnail-size-*` / `workflow-icon-*` (message-feedback's button, upload-attachment's card thumbnail and file-type badge, response-status's loader and leading icon). These sizing tokens resolve through the same `--swc-theme--sizeM` variable every other shipped component already uses, so this isn't new behavior. Bespoke Figma-spec dimensions with no matching token (attachment tile sizes, badge geometry, box-shadow offsets, etc.) are left as literal values.
+
+  No visual change; all removed/renamed/retokenized properties previously resolved to their existing fallback (or, for the token swaps, the exact same pixel value) in every shipped usage.
+
+- [#6668](https://github.com/adobe/spectrum-web-components/pull/6668) [`196dfc4`](https://github.com/adobe/spectrum-web-components/commit/196dfc4387940fea19f1a90f0f3ace7bb04d3115) - Fix the global stylesheet generator collapsing reflected ARIA host attributes (`aria-disabled="true"`, `aria-hidden="true"`, etc.) into a shared, meaningless `--true`/`--false` BEM modifier class — `:host([aria-disabled="true"])` and `:host([aria-hidden="true"])` both produced `.swc-Foo--true`, so styling one affected the other. Reflected ARIA attributes are now emitted as native `[attr="value"]` attribute selectors on the block class instead (e.g. `.swc-ActionButton[aria-disabled="true"]`), matching the attributes the generated global element actually carries at runtime. A related collapse that missed attribute-selector suffixes (`.block[open]`) is also fixed so it folds onto the host selector instead of producing an unreachable descendant selector.
+
+- [#6567](https://github.com/adobe/spectrum-web-components/pull/6567) [`acc0197`](https://github.com/adobe/spectrum-web-components/commit/acc0197d23b8bb7b0c4a167219b510b5f528af54) - Repoint `CloseButton`, `MessageSources`, `ResponseStatus`, and `PromptField` off the pre-RFC `icon/elements/` module onto the internal `<swc-ui-icon>` element, matching the Accordion POC. No public API changes.
+  - Visual change: `swc-close-button`'s cross icon now uses `<swc-ui-icon icon="cross">` and aligns to the latest design update
+  - Visual change: `MessageSources`, `ResponseStatus`, and `PromptField` chevrons now use `<swc-ui-icon icon="chevron" size="s">` instead of a custom `10px` inline size. The rendered size is unchanged at the default theme scale, but now follows the `ui-icon-small` token, so it scales under `--swc-theme--sizeL` instead of staying fixed at `10px`.
+
+- [#6688](https://github.com/adobe/spectrum-web-components/pull/6688) [`6d3d018`](https://github.com/adobe/spectrum-web-components/commit/6d3d018a791127108a825c3deda2f56b5f54c139) - Fix several `swc-response-status` visual/behavior mismatches against the Figma spec:
+  - The header label no longer stays in its lighter, unfocused color while the step timeline is expanded — it now darkens to match the hover treatment.
+  - The completed-status default label reads "Response complete" instead of "Response generated".
+  - The header toggle button no longer relies on the browser's native `<button>` text color, which some mobile browsers rendered as accent blue for the completed checkmark icon.
+  - The `Status only` Storybook story no longer leaks into the sidebar/docs/prod build; it was incorrectly tagged `dev`, a tag reserved for the Playground story.
+  - The header toggle's clickable area now spans the full row, while the visible label and chevron stay grouped together instead of stretching apart.
+  - The chevron's open/close rotation is smooth again; a hover/expanded color rule was overwriting its rotation transition.
+
+- [#6690](https://github.com/adobe/spectrum-web-components/pull/6690) [`9af7ed0`](https://github.com/adobe/spectrum-web-components/commit/9af7ed0b823d1da6087c77c9fd863c2be559a428) - **Migrate the `swc-suggestion-item` button to compose `<swc-button variant="secondary">` instead of a bespoke native `<button>`.**
+  - The button now inherits `swc-button` secondary button's state colors, focus ring, and press animation
+  - Public API is unchanged
+  - Adds VRT coverage for `swc-suggestion-group` (heading composition, hidden-title case, multi-button wrapping, RTL).
+
+- [#6754](https://github.com/adobe/spectrum-web-components/pull/6754) [`bea0b54`](https://github.com/adobe/spectrum-web-components/commit/bea0b540db6c2771faab7bc72ea8430da0d9c64d) - Suppress the "Since X" version badge on all Storybook component docs pages, by defaulting it off in `DocsHeader`/`StatusBadge`. The badge was hand-typed via `@since` and could drift from the actual release version; it will be re-enabled once release-stamping automation keeps it accurate.
+
+  No component runtime changes; Storybook docs-page rendering only.
+
 ## 2.0.0-beta.3
 
 ### Minor Changes
@@ -94,9 +269,6 @@
 
 - [#6595](https://github.com/adobe/spectrum-web-components/pull/6595) [`1f85e54`](https://github.com/adobe/spectrum-web-components/commit/1f85e545d6cf3cff80888995f3184fbaea7fd154) Tooltip now uses `popover="manual"` instead of `popover="auto"`. Opening a tooltip on hover no longer light-dismisses an open `<swc-popover>` (or menu, picker, or select); a hover tooltip and an open popover coexist in both directions. Escape and close-on-leave are handled internally, so no dismissal behavior is lost. Tooltip also joins the shared dismissible stack, so when a tooltip is open on top of a popover, Escape closes only the tooltip first and leaves the popover open; a second Escape closes the popover.
 
-- Updated dependencies [[`2b26e0b`](https://github.com/adobe/spectrum-web-components/commit/2b26e0b3b6e25d4852e9984472737bd3caa2dfae), [`346746c`](https://github.com/adobe/spectrum-web-components/commit/346746cacd405fa1cd58b7fae3f164457968dec7), [`3110850`](https://github.com/adobe/spectrum-web-components/commit/31108509505dcaf485e4d2582074ea5fa8189922), [`d429a49`](https://github.com/adobe/spectrum-web-components/commit/d429a4991a51339b5325f726bd39d0d3c4ef447e), [`afe0beb`](https://github.com/adobe/spectrum-web-components/commit/afe0beb9e487d3f2838bb1ec7e98f131f53606af), [`4a30997`](https://github.com/adobe/spectrum-web-components/commit/4a309978f86b9d050cb54ed03db7418e40cb464a), [`74a0c56`](https://github.com/adobe/spectrum-web-components/commit/74a0c56e25be120309a40c540ad750b7f1081f4b), [`9b9695a`](https://github.com/adobe/spectrum-web-components/commit/9b9695a1e157ac300234d56882a4923d81dbf724), [`735a6df`](https://github.com/adobe/spectrum-web-components/commit/735a6dfbd16767af716c5b3fe9a89b09714874a4), [`86f40a1`](https://github.com/adobe/spectrum-web-components/commit/86f40a1e0bc46d74c796e712f47d3428e0e4c7e5), [`bd6c017`](https://github.com/adobe/spectrum-web-components/commit/bd6c017708de0b362c0504ad8b28a7f37a3b17da), [`1f85e54`](https://github.com/adobe/spectrum-web-components/commit/1f85e545d6cf3cff80888995f3184fbaea7fd154)]:
-  - @adobe/spectrum-wc-core@2.0.0-beta.3
-
 ## 2.0.0-beta.2
 
 ### Minor Changes
@@ -173,38 +345,20 @@
   - **Added**: `<swc-response-status-step>` as a dedicated step element with its own styles and exports.
   - **Updated**: AI stories, docs, and regression/a11y coverage for the new API and behaviors.
 
-- Updated dependencies [[`36052f3`](https://github.com/adobe/spectrum-web-components/commit/36052f305622ad8f46b44bf5d71e2b02ebd8229c), [`b0c6e37`](https://github.com/adobe/spectrum-web-components/commit/b0c6e375760ccc1ec6c1773ed1aa4015aa3b0f03), [`f27f690`](https://github.com/adobe/spectrum-web-components/commit/f27f6906f142f824dcc28f588e205271a36ec04a), [`41e0483`](https://github.com/adobe/spectrum-web-components/commit/41e0483f59d3956ce973bbe50b2d54a1d8c73e9f), [`9e7995a`](https://github.com/adobe/spectrum-web-components/commit/9e7995ad8189970d6788a7872007d611af247663), [`1e053fe`](https://github.com/adobe/spectrum-web-components/commit/1e053fe761c20b1df70c842cb3f9dcee94e02d8d), [`7f0c3e9`](https://github.com/adobe/spectrum-web-components/commit/7f0c3e937e697e3e1d5d3973ce4f709542f1bbef), [`5da5474`](https://github.com/adobe/spectrum-web-components/commit/5da54741eadcf61d60fd37d700ff457419a4d2ca), [`6049706`](https://github.com/adobe/spectrum-web-components/commit/6049706e5d08bb92cd6531cbf7661c282b3ab409)]:
-  - @adobe/spectrum-wc-core@2.0.0-beta.2
-
 ## 2.0.0-beta.1
 
 ### Minor Changes
 
-- [#6268](https://github.com/adobe/spectrum-web-components/pull/6268) [`abe7cbd`](https://github.com/adobe/spectrum-web-components/commit/abe7cbdf7af837633e223ba033e08560111c95ce) Thanks [@rise-erpelding](https://github.com/rise-erpelding)! - **feat(accordion):** Add gen2 `<swc-accordion>` and `<swc-accordion-item>` with Spectrum 2-oriented behavior. Key changes from 1st-gen `<sp-accordion>` / `<sp-accordion-item>`:
-  - Core `AccordionBase` / `AccordionItemBase` with public API: `allow-multiple`, `level`, `size`, `density`, `quiet`, host `disabled`, item `open` / `disabled`, slotted heading (`slot="label"`), optional `slot="actions"`, and cancellable `swc-accordion-item-toggle`
-  - APG-aligned accessibility: `<h*>` wrapping a native header `<button>`, `aria-expanded` / `aria-controls`, `role="region"` + `aria-labelledby`, closed panels use `aria-hidden="true"` plus CSS collapse (not HTML `hidden`; supports `calc-size()` height animation), disabled items use `aria-disabled` on the header and `inert` on the panel (no roving `tabindex` or arrow-key header navigation)
-  - Space on the header calls `preventDefault()` and toggles without scrolling overflow containers (SWC-1487)
-  - Controlled `open` is frozen while the host or item is disabled (imperative assignment cannot expand or collapse)
-
-  **chore(accordion):** Add Spectrum 2 deprecation warnings in dev mode on 1st-gen accordion for `label`, item `level`, and host `focus()`, with matching tests.
-
-- [#6340](https://github.com/adobe/spectrum-web-components/pull/6340) [`57a77bc`](https://github.com/adobe/spectrum-web-components/commit/57a77bcee7eeb8f5a7b1084f3ad91543c2f92034) Thanks [@cdransf](https://github.com/cdransf)! - Added `<swc-action-button>` with full Spectrum 2 visual fidelity, migrated from the Spectrum 1 `<sp-action-button>`. See the [component docs](https://spectrum-web-components.adobe.com/?path=/docs/components-action-button--docs) and [migration guide](https://spectrum-web-components.adobe.com/?path=/docs/components-action-button-migration-guide--docs).
+- [#6340](https://github.com/adobe/spectrum-web-components/pull/6340) [`57a77bc`](https://github.com/adobe/spectrum-web-components/commit/57a77bcee7eeb8f5a7b1084f3ad91543c2f92034) - Added `<swc-action-button>` with full Spectrum 2 visual fidelity, migrated from the Spectrum 1 `<sp-action-button>`. See the [component docs](https://spectrum-web-components.adobe.com/?path=/docs/components-action-button--docs) and [migration guide](https://spectrum-web-components.adobe.com/?path=/docs/components-action-button-migration-guide--docs).
   - **API**: `accessible-label` replaces `label`; `size` includes `xs` (not on `swc-button`); `quiet` and `static-color` retained as primary visual differentiators; `pending` / `pending-label` added (matching `swc-button`); `aria-haspopup` / `aria-expanded` forwarded to the inner `<button>` for menu-trigger patterns.
   - **Breaking changes**: `toggles`, `selected`, `emphasized`, and `aria-pressed` removed (toggle UX moves to `swc-toggle-button` / `swc-toggle-button-group`); `href` and the link API removed (use native `<a>`); `hold-affordance` / `longpress` deferred; `label` renamed to `accessible-label`.
   - **Accessibility**: semantics and focus land on the internal native `<button>` (`delegatesFocus: true`); host carries no `role="button"`; `aria-disabled="true"` on the inner `<button>` during pending state; dev-mode warning when icon-only usage is missing `accessible-label`.
   - **Styling**: exposes `--swc-action-button-*` custom properties (replaces `--mod-actionbutton-*` / `--spectrum-actionbutton-*`); full Spectrum 2 token coverage across all size × quiet × static-color combinations; Windows High Contrast support.
   - **Docs and tests**: per-component Storybook docs page, consumer migration guide, and full unit + accessibility test coverage.
 
-- [#6395](https://github.com/adobe/spectrum-web-components/pull/6395) [`b4740eb`](https://github.com/adobe/spectrum-web-components/commit/b4740eb58f8a9410dbfae2969ca7a21c07bc63bd) Thanks [@Rajdeepc](https://github.com/Rajdeepc)! - - [#6395](https://github.com/adobe/spectrum-web-components/pull/6395) [`acd555a`](https://github.com/adobe/spectrum-web-components/commit/acd555a975508f9249a1394ac808a62b2d7cbfe3) - `ButtonGroup` — Added `<swc-button-group>` with full Spectrum 2 visual fidelity. See the [component docs](https://spectrum-web-components.adobe.com/?path=/docs/button-group--docs) and [migration guide](https://spectrum-web-components.adobe.com/?path=/docs/button-group-migration-guide--docs).
+- [#6454](https://github.com/adobe/spectrum-web-components/pull/6454) [`591fa65`](https://github.com/adobe/spectrum-web-components/commit/591fa65574f7f8175373683e7495059b8ca27fa4) - Added an `actions` slot to `<swc-illustrated-message>` for placing a `<swc-button>` or `<swc-button-group>` below the description. The component automatically propagates its `size` to every slotted element. Also adds `SlotAttributePropagationController`, an internal Lit `ReactiveController` that propagates any host attribute to slotted children; used by `IllustratedMessage` and `ButtonGroup`.
 
-- [#6454](https://github.com/adobe/spectrum-web-components/pull/6454) [`591fa65`](https://github.com/adobe/spectrum-web-components/commit/591fa65574f7f8175373683e7495059b8ca27fa4) Thanks [@cdransf](https://github.com/cdransf)! - Added an `actions` slot to `<swc-illustrated-message>` for placing a `<swc-button>` or `<swc-button-group>` below the description. The component automatically propagates its `size` to every slotted element. Also adds `SlotAttributePropagationController`, an internal Lit `ReactiveController` that propagates any host attribute to slotted children; used by `IllustratedMessage` and `ButtonGroup`.
-
-- [#6382](https://github.com/adobe/spectrum-web-components/pull/6382) [`a314298`](https://github.com/adobe/spectrum-web-components/commit/a3142985a20668ddbc8e9f0fe41c92739f8c4114) Thanks [@aramos-adobe](https://github.com/aramos-adobe)! - `Link` — Added gen2 link styles for native `<a href>` elements (no `swc-link` custom element). Default prose and link-list appearance ships with Typography; explicit modifiers live in `link.css`, with optional `global-link.css` for application-wide bare-anchor baseline. See the [component docs](https://spectrum-web-components.adobe.com/?path=/docs/components-link--docs) and [migration guide](https://spectrum-web-components.adobe.com/?path=/docs/components-link-migration-guide--docs). Consumer action: replace `<sp-link>` with native `<a href>` and the classes or Typography wrappers documented in the migration guide.
-
-### Patch Changes
-
-- Updated dependencies [[`57a77bc`](https://github.com/adobe/spectrum-web-components/commit/57a77bcee7eeb8f5a7b1084f3ad91543c2f92034), [`b4740eb`](https://github.com/adobe/spectrum-web-components/commit/b4740eb58f8a9410dbfae2969ca7a21c07bc63bd), [`591fa65`](https://github.com/adobe/spectrum-web-components/commit/591fa65574f7f8175373683e7495059b8ca27fa4)]:
-  - @spectrum-web-components/core@2.0.0-beta.1
+- [#6382](https://github.com/adobe/spectrum-web-components/pull/6382) [`a314298`](https://github.com/adobe/spectrum-web-components/commit/a3142985a20668ddbc8e9f0fe41c92739f8c4114) - `Link` — Added gen2 link styles for native `<a href>` elements (no `swc-link` custom element). Default prose and link-list appearance ships with Typography; explicit modifiers live in `link.css`, with optional `global-link.css` for application-wide bare-anchor baseline. See the [component docs](https://spectrum-web-components.adobe.com/?path=/docs/components-link--docs) and [migration guide](https://spectrum-web-components.adobe.com/?path=/docs/components-link-migration-guide--docs). Consumer action: replace `<sp-link>` with native `<a href>` and the classes or Typography wrappers documented in the migration guide.
 
 ## 2.0.0-beta.0
 
@@ -214,7 +368,7 @@
 
 ### Minor Changes
 
-- [#6268](https://github.com/adobe/spectrum-web-components/pull/6268) [`abe7cbd`](https://github.com/adobe/spectrum-web-components/commit/abe7cbdf7af837633e223ba033e08560111c95ce) Thanks [@rise-erpelding](https://github.com/rise-erpelding)! - **feat(accordion):** Add gen2 `<swc-accordion>` and `<swc-accordion-item>` with Spectrum 2-oriented behavior. Key changes from 1st-gen `<sp-accordion>` / `<sp-accordion-item>`:
+- [#6268](https://github.com/adobe/spectrum-web-components/pull/6268) [`abe7cbd`](https://github.com/adobe/spectrum-web-components/commit/abe7cbdf7af837633e223ba033e08560111c95ce) - **feat(accordion):** Add gen2 `<swc-accordion>` and `<swc-accordion-item>` with Spectrum 2-oriented behavior. Key changes from 1st-gen `<sp-accordion>` / `<sp-accordion-item>`:
   - Core `AccordionBase` / `AccordionItemBase` with public API: `allow-multiple`, `level`, `size`, `density`, `quiet`, host `disabled`, item `open` / `disabled`, slotted heading (`slot="label"`), optional `slot="actions"`, and cancellable `swc-accordion-item-toggle`
   - APG-aligned accessibility: `<h*>` wrapping a native header `<button>`, `aria-expanded` / `aria-controls`, `role="region"` + `aria-labelledby`, closed panels use `aria-hidden="true"` plus CSS collapse (not HTML `hidden`; supports `calc-size()` height animation), disabled items use `aria-disabled` on the header and `inert` on the panel (no roving `tabindex` or arrow-key header navigation)
   - Space on the header calls `preventDefault()` and toggles without scrolling overflow containers
@@ -224,25 +378,18 @@
 
 - [#6395](https://github.com/adobe/spectrum-web-components/pull/6395) [`b4740eb`](https://github.com/adobe/spectrum-web-components/commit/b4740eb58f8a9410dbfae2969ca7a21c07bc63bd) - `Button Group` — Added `<swc-button-group>` with full Spectrum 2 visual fidelity. See the [component docs](https://spectrum-web-components.adobe.com/?path=/docs/components-button-group--docs) and [migration guide](https://spectrum-web-components.adobe.com/?path=/docs/components-button-group-migration-guide--docs).
 
-- [#6382](https://github.com/adobe/spectrum-web-components/pull/6382) [`a314298`](https://github.com/adobe/spectrum-web-components/commit/a3142985a20668ddbc8e9f0fe41c92739f8c4114) Thanks [@aramos-adobe](https://github.com/aramos-adobe)! - `Link` — Added gen2 link styles for native `<a href>` elements (no `swc-link` custom element). Default prose and link-list appearance ships with Typography; explicit modifiers live in `link.css`, with optional `global-link.css` for application-wide bare-anchor baseline. See the [component docs](https://spectrum-web-components.adobe.com/?path=/docs/components-link--docs) and [migration guide](https://spectrum-web-components.adobe.com/?path=/docs/components-link-migration-guide--docs). Consumer action: replace `<sp-link>` with native `<a href>` and the classes or Typography wrappers documented in the migration guide.
-
-- [#6370](https://github.com/adobe/spectrum-web-components/pull/6370) [`7c1d0c5`](https://github.com/adobe/spectrum-web-components/commit/7c1d0c574c918474196fa0f6007b9f905455f772) Thanks [@blunteshwar](https://github.com/blunteshwar)! - Add the gen2 `<swc-meter>`, migrated from the Spectrum 1 `<sp-meter>`.
+- [#6370](https://github.com/adobe/spectrum-web-components/pull/6370) [`7c1d0c5`](https://github.com/adobe/spectrum-web-components/commit/7c1d0c574c918474196fa0f6007b9f905455f772) - Add the gen2 `<swc-meter>`, migrated from the Spectrum 1 `<sp-meter>`.
   - **API**: `value` (replaces `progress`) with `min-value` / `max-value` for arbitrary ranges; `variant` (`informative` default, `positive`, `notice`, `negative`) with unknown values normalized to `informative`; `label-position` (`top` / `side`, replaces the `side-label` boolean); `value-label` and `formatOptions` for locale-aware value text; `label` and `description` named slots; `accessible-label` for the no-visible-label case.
   - **Accessibility**: the WAI-ARIA `meter` role and all `aria-value*`, `aria-labelledby`, and `aria-describedby` attributes live on the internal bar element, not the host; non-focusable, read-only; honors `prefers-reduced-motion: reduce` (WCAG 2.3.3) on the shared linear-progress base by dropping the fill transition.
   - **Styling**: exposes the `--swc-linear-progress-*` custom-property surface (replaces `--mod-progressbar-*` / `--mod-meter-*`); adds `static-color="black"` alongside `white`.
   - **Docs and tests**: per-component Storybook docs page, consumer migration guide, and full unit + accessibility test coverage.
 
-- [#6387](https://github.com/adobe/spectrum-web-components/pull/6387) [`64a3d50`](https://github.com/adobe/spectrum-web-components/commit/64a3d50a6f4284cc32b8e13f2c8e05489012cef6) Thanks [@5t3ph](https://github.com/5t3ph)! - Add the gen2 `<swc-tooltip>`, migrated from the Spectrum 1 `<sp-tooltip>`.
+- [#6387](https://github.com/adobe/spectrum-web-components/pull/6387) [`64a3d50`](https://github.com/adobe/spectrum-web-components/commit/64a3d50a6f4284cc32b8e13f2c8e05489012cef6) - Add the gen2 `<swc-tooltip>`, migrated from the Spectrum 1 `<sp-tooltip>`.
   - **API**: `for` attribute wires the tooltip to a trigger by ID; `trigger-element` property for programmatic or cross-shadow-root wiring; `manual` opts out of automatic wiring; `delay` (default 1500ms) for hover warm-up; `offset`, `cross-offset`, `container-padding`, and `should-flip` for viewport-aware positioning; `labeling` switches ARIA wiring to `ariaLabelledByElements` for icon-only triggers; `variant` accepts `neutral` (default), `informative`, and `negative`.
   - **Breaking changes from `<sp-tooltip>`**: `slot="icon"` removed; `variant="positive"` removed; `variant="info"` renamed to `variant="informative"`; `self-managed` attribute removed (automatic wiring is now the default; use `manual` to opt out); events renamed from `sp-opened`/`sp-closed` to `swc-open`/`swc-after-open`/`swc-close`/`swc-after-close`; authoring pattern changed — `<swc-tooltip>` is authored as a sibling of the trigger, not nested inside it.
   - **Accessibility**: `role="tooltip"` set on the host; `Element.ariaDescribedByElements` wired on the trigger's inner interactive element on open; `Escape` closes without moving focus via native `popover="auto"`; WCAG 1.4.13 pointer bridge keeps the tooltip open when the pointer moves from the trigger into the bubble; high-contrast border in forced-colors mode.
   - **Controllers**: `HoverController` manages hover and keyboard-focus wiring with warm-up/cooldown timing; `PlacementController` handles viewport-aware pixel positioning via Floating UI with automatic flip on viewport collision.
   - **Docs and tests**: per-component Storybook docs page, consumer migration guide, and full unit + accessibility test coverage.
-
-### Patch Changes
-
-- Updated dependencies [[`b4740eb`](https://github.com/adobe/spectrum-web-components/commit/b4740eb58f8a9410dbfae2969ca7a21c07bc63bd), [`fe85234`](https://github.com/adobe/spectrum-web-components/commit/fe8523478348419aaeb7dc3f925ef00c4b8b40aa), [`7c1d0c5`](https://github.com/adobe/spectrum-web-components/commit/7c1d0c574c918474196fa0f6007b9f905455f772), [`e334d4f`](https://github.com/adobe/spectrum-web-components/commit/e334d4f4d622325984912b9689aae05e5ac179ce), [`64a3d50`](https://github.com/adobe/spectrum-web-components/commit/64a3d50a6f4284cc32b8e13f2c8e05489012cef6)]:
-  - @spectrum-web-components/core@2.0.0-beta.0
 
 ## 0.2.0
 
@@ -271,24 +418,16 @@
 
 - [#6183](https://github.com/adobe/spectrum-web-components/pull/6183) [`8aa488e`](https://github.com/adobe/spectrum-web-components/commit/8aa488e3867725b1ed93b2b5c31cba686f116688) - `Tabs` — Added `<swc-tabs>`, `<swc-tab>`, and `<swc-tab-panel>` with Spectrum 2 styling, selection indicator, and keyboard navigation. See the [component docs](https://spectrum-web-components.adobe.com/?path=/docs/components-tabs--docs) and [migration guide](https://spectrum-web-components.adobe.com/?path=/docs/components-tabs-migration-guide--docs).
 
-### Patch Changes
-
-- Updated dependencies [[`ba14a2b`](https://github.com/adobe/spectrum-web-components/commit/ba14a2b6361a0089a9a8c72232f245cde0716d89), [`f37dec6`](https://github.com/adobe/spectrum-web-components/commit/f37dec6ae39fd89a4c12e084b4a0f4d9092d79b0), [`7b153b5`](https://github.com/adobe/spectrum-web-components/commit/7b153b5433a8f6d47850f8939b058f7bc431c48c), [`8aa488e`](https://github.com/adobe/spectrum-web-components/commit/8aa488e3867725b1ed93b2b5c31cba686f116688)]:
-  - @spectrum-web-components/core@0.1.0
-
 ## 0.0.4
 
 First public beta of `@adobe/spectrum-wc`.
 
 ### Minor Changes
 
-- [#6254](https://github.com/adobe/spectrum-web-components/pull/6254) - `Button` — Added `<swc-button>` with full Spectrum 2 visual fidelity. See the [component docs](https://spectrum-web-components.adobe.com/?path=/docs/components-button--docs) and [migration guide](https://spectrum-web-components.adobe.com/?path=/docs/components-button-migration-guide--docs).
 - [#6113](https://github.com/adobe/spectrum-web-components/pull/6113) - `Avatar` — Added `<swc-avatar>` with Spectrum 2 tokens and updated size API. See the [component docs](https://spectrum-web-components.adobe.com/?path=/docs/components-avatar--docs) and [migration guide](https://spectrum-web-components.adobe.com/?path=/docs/components-avatar-migration-guide--docs).
 - [#5718](https://github.com/adobe/spectrum-web-components/pull/5718) - `Badge` — Added `<swc-badge>` with Spectrum 2 tokens and icon support. See the [component docs](https://spectrum-web-components.adobe.com/?path=/docs/components-badge--docs) and [migration guide](https://spectrum-web-components.adobe.com/?path=/docs/components-badge-migration-guide--docs).
 - [#5798](https://github.com/adobe/spectrum-web-components/pull/5798) - `Divider` — Added `<swc-divider>` with Spectrum 2 tokens and static color support. See the [component docs](https://spectrum-web-components.adobe.com/?path=/docs/components-divider--docs) and [migration guide](https://spectrum-web-components.adobe.com/?path=/docs/components-divider-migration-guide--docs).
 - [#6207](https://github.com/adobe/spectrum-web-components/pull/6207) - `Illustrated Message` — Added `<swc-illustrated-message>` with slot-based heading API and size/orientation attributes. See the [component docs](https://spectrum-web-components.adobe.com/?path=/docs/components-illustrated-message--docs) and [migration guide](https://spectrum-web-components.adobe.com/?path=/docs/components-illustrated-message-migration-guide--docs).
 - [#5743](https://github.com/adobe/spectrum-web-components/pull/5743) - `Progress Circle` — Added `<swc-progress-circle>` with ARIA attributes and Spectrum 2 tokens. See the [component docs](https://spectrum-web-components.adobe.com/?path=/docs/components-progress-circle--docs) and [migration guide](https://spectrum-web-components.adobe.com/?path=/docs/components-progress-circle-migration-guide--docs).
 - [#5800](https://github.com/adobe/spectrum-web-components/pull/5800) - `Status Light` — Added `<swc-status-light>` with Spectrum 2 tokens and extended color variants. See the [component docs](https://spectrum-web-components.adobe.com/?path=/docs/components-status-light--docs) and [migration guide](https://spectrum-web-components.adobe.com/?path=/docs/components-status-light-migration-guide--docs).
-- [#6183](https://github.com/adobe/spectrum-web-components/pull/6183) - `Tabs` — Added `<swc-tabs>`, `<swc-tab>`, and `<swc-tab-panel>` with keyboard navigation and overflow handling. See the [component docs](https://spectrum-web-components.adobe.com/?path=/docs/components-tabs--docs) and [migration guide](https://spectrum-web-components.adobe.com/?path=/docs/components-tabs-migration-guide--docs).
 - [#6031](https://github.com/adobe/spectrum-web-components/pull/6031) - `Typography` — Added typography utility classes for Spectrum 2 type scales. See the [component docs](https://spectrum-web-components.adobe.com/?path=/docs/components-typography--docs).
-- [#6170](https://github.com/adobe/spectrum-web-components/pull/6170) - `AI Toolkit` — Added composable AI Toolkit chat pattern with message, action bar, and scroll components. See the [pattern docs](https://spectrum-web-components.adobe.com/?path=/docs/patterns-ai-toolkit-pattern-overview--docs).

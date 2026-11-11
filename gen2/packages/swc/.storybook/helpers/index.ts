@@ -17,7 +17,10 @@ export { forcePseudoState } from './pseudo-state.js';
 export type { ForcedPseudoState } from './pseudo-state.js';
 export { SIZE_LABELS } from './size-labels.js';
 export type { SizeLabelKey } from './size-labels.js';
+export { sourceLocation } from './source-location.js';
+export type { SourceLocation } from './source-location.js';
 export {
+  captioned,
   coveredCustomProperties,
   customPropertyRows,
   forcedColorsVrtParameters,

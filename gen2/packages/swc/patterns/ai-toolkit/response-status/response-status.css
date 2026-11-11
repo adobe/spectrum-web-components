@@ -29,23 +29,29 @@
    Status row (icon + label [+ checkmark])
    ───────────────────────────────────── */
 
+/* The row stays mounted when steps turn it into a disclosure. */
 .swc-ResponseStatus-row {
   display: flex;
+  position: relative;
   gap: token("spacing-100");
   align-items: center;
-  min-block-size: var(--_swc-response-status-row-block-size, 32px);
-}
-
-/* When the row is a button (reasoning toggle). Full inline-size so the
-   entire row is clickable. */
-.swc-ResponseStatus-row--button {
   inline-size: 100%;
-  padding: var(--_swc-response-status-toggle-padding-block, 3px) token("spacing-100");
+  min-block-size: var(--_swc-response-status-row-block-size, 32px);
+  padding: 0;
   color: inherit;
   text-align: start;
   background: transparent;
   border: none;
+}
+
+/* Active disclosure toggle (has steps). */
+.swc-ResponseStatus-row--button {
   border-radius: token("corner-radius-medium-default");
+}
+
+.swc-ResponseStatus-row--button:has(> .swc-ResponseStatus-headerTrail--button:focus-visible) {
+  outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
+  outline-offset: token("focus-ring-gap");
 }
 
 .swc-ResponseStatus-label {
@@ -61,6 +67,28 @@
   gap: token("spacing-100");
   align-items: center;
   min-inline-size: 0;
+}
+
+.swc-ResponseStatus-headerTrail--button {
+  flex: 1;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  text-align: start;
+  background: transparent;
+  border: none;
+}
+
+.swc-ResponseStatus-headerTrail--button:focus-visible {
+  outline: none;
+}
+
+/* The loader is a sibling, but its full row remains part of the hit target. */
+.swc-ResponseStatus-headerTrail--button::before {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  content: "";
 }
 
 .swc-ResponseStatus-headerTrailViewport {
@@ -121,9 +149,7 @@
   white-space: normal;
 }
 
-/* Capped rather than unbounded: the row sizes to this content (see
-   `.swc-ResponseStatus-row`'s `min-block-size`), so an unbounded label could
-   grow the row arbitrarily tall. Past the cap, the last visible line ellipses. */
+/* Active and stopped labels default to two lines. */
 .swc-ResponseStatus-headerTrailLine--settled .swc-ResponseStatus-label {
   -webkit-box-orient: vertical;
   display: -webkit-box;
@@ -131,6 +157,13 @@
   overflow: hidden;
   -webkit-line-clamp: var(--swc-response-status-label-max-lines, 2);
   line-clamp: var(--swc-response-status-label-max-lines, 2);
+}
+
+/* A completed label has no disclosure if there are no steps, so keep its
+   full text visible unless the consumer explicitly sets a line cap. */
+.swc-ResponseStatus-row--complete .swc-ResponseStatus-headerTrailLine--settled .swc-ResponseStatus-label {
+  -webkit-line-clamp: var(--swc-response-status-label-max-lines, unset);
+  line-clamp: var(--swc-response-status-label-max-lines, unset);
 }
 
 /* Outgoing/incoming labels start at their pre-transition opacity; the
@@ -183,32 +216,21 @@
   rotate: 90deg;
 }
 
-.swc-ResponseStatus-row--button:hover .swc-ResponseStatus-label,
-.swc-ResponseStatus-row--button:focus-visible .swc-ResponseStatus-label,
-.swc-ResponseStatus-row--button[aria-expanded="true"] .swc-ResponseStatus-label {
+.swc-ResponseStatus-row--button:has(> .swc-ResponseStatus-headerTrail--button:is(:hover, :focus-visible, [aria-expanded="true"])) .swc-ResponseStatus-label {
   --swc-body-font-color: token("gray-800");
 
   transition: all token("animation-duration-100") token("animation-ease-in-out");
 }
 
-.swc-ResponseStatus-row--button:hover .swc-ResponseStatus-chevron,
-.swc-ResponseStatus-row--button:focus-visible .swc-ResponseStatus-chevron,
-.swc-ResponseStatus-row--button[aria-expanded="true"] .swc-ResponseStatus-chevron {
+.swc-ResponseStatus-row--button:has(> .swc-ResponseStatus-headerTrail--button:is(:hover, :focus-visible, [aria-expanded="true"])) .swc-ResponseStatus-chevron {
   color: token("gray-800");
   transition:
     rotate token("animation-duration-100") token("animation-ease-in-out"),
     color token("animation-duration-100") token("animation-ease-in-out");
 }
 
-.swc-ResponseStatus-row--button:hover .swc-ResponseStatus-loader,
-.swc-ResponseStatus-row--button:focus-visible .swc-ResponseStatus-loader,
-.swc-ResponseStatus-row--button[aria-expanded="true"] .swc-ResponseStatus-loader {
+.swc-ResponseStatus-row--button:has(> .swc-ResponseStatus-headerTrail--button:is(:hover, :focus-visible, [aria-expanded="true"])) .swc-ResponseStatus-loader {
   --swc-pixel-loader-color: token("gray-800");
-}
-
-.swc-ResponseStatus-row--button:focus-visible {
-  outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
-  outline-offset: token("focus-ring-gap");
 }
 
 /* ─────────────────────────────────────
@@ -217,7 +239,6 @@
 
 .swc-ResponseStatus--agentic {
   inline-size: 100%;
-  max-inline-size: 540px;
 }
 
 .swc-ResponseStatus-row--processing {
@@ -331,7 +352,7 @@
     color: CanvasText;
   }
 
-  .swc-ResponseStatus-row--button:focus-visible {
+  .swc-ResponseStatus-row--button:has(> .swc-ResponseStatus-headerTrail--button:focus-visible) {
     outline-color: CanvasText;
   }
 }

@@ -128,15 +128,23 @@
   --swc-disabled-border-color: var(--swc-gray-300);
   --swc-disabled-content-color: var(--swc-gray-400);
   --swc-disabled-static-black-background-color: var(
-    --swc-transparent-black-100
+    --swc-transparent-static-black-150
   );
-  --swc-disabled-static-black-border-color: var(--swc-transparent-black-300);
-  --swc-disabled-static-black-content-color: var(--swc-transparent-black-400);
+  --swc-disabled-static-black-border-color: var(
+    --swc-transparent-static-black-300
+  );
+  --swc-disabled-static-black-content-color: var(
+    --swc-transparent-static-black-400
+  );
   --swc-disabled-static-white-background-color: var(
-    --swc-transparent-white-100
+    --swc-transparent-static-white-200
   );
-  --swc-disabled-static-white-border-color: var(--swc-transparent-white-300);
-  --swc-disabled-static-white-content-color: var(--swc-transparent-white-400);
+  --swc-disabled-static-white-border-color: var(
+    --swc-transparent-static-white-300
+  );
+  --swc-disabled-static-white-content-color: var(
+    --swc-transparent-static-white-350
+  );
   --swc-drop-shadow-ambient-color: light-dark(
     rgb(0 0 0 / 8%),
     rgb(0 0 0 / 24%)
@@ -383,7 +391,7 @@
     var(--swc-orange-700),
     var(--swc-orange-900)
   );
-  --swc-overlay-color: var(--swc-black);
+  --swc-overlay-color: var(--swc-transparent-static-black-1000);
   --swc-overlay-opacity-light: 0.4;
   --swc-overlay-opacity-dark: 0.6;
   --swc-pink-background-color-default: light-dark(
@@ -463,14 +471,22 @@
   --swc-stack-item-selected-background-color-highlight: var(
     --swc-accent-background-color-default
   );
-  --swc-static-black-focus-indicator-color: var(--swc-black);
-  --swc-static-black-text-color: var(--swc-black);
-  --swc-static-black-track-color: var(--swc-transparent-black-300);
-  --swc-static-black-track-indicator-color: var(--swc-transparent-black-900);
-  --swc-static-white-focus-indicator-color: var(--swc-white);
-  --swc-static-white-text-color: var(--swc-white);
-  --swc-static-white-track-color: var(--swc-transparent-white-300);
-  --swc-static-white-track-indicator-color: var(--swc-transparent-white-900);
+  --swc-static-black-focus-indicator-color: var(
+    --swc-transparent-static-black-1000
+  );
+  --swc-static-black-text-color: var(--swc-transparent-static-black-1000);
+  --swc-static-black-track-color: var(--swc-transparent-static-black-300);
+  --swc-static-black-track-indicator-color: var(
+    --swc-transparent-static-black-950
+  );
+  --swc-static-white-focus-indicator-color: var(
+    --swc-transparent-static-white-1000
+  );
+  --swc-static-white-text-color: var(--swc-transparent-static-white-1000);
+  --swc-static-white-track-color: var(--swc-transparent-static-white-300);
+  --swc-static-white-track-indicator-color: var(
+    --swc-transparent-static-white-950
+  );
   --swc-title-color: var(--swc-gray-900);
   --swc-track-color: var(--swc-gray-300);
   --swc-turquoise-background-color-default: light-dark(
@@ -497,7 +513,6 @@
     var(--swc-yellow-600),
     var(--swc-yellow-1100)
   );
-  --swc-black: rgb(0 0 0);
   --swc-blue-100: light-dark(rgb(245 249 255), rgb(14 23 63));
   --swc-blue-1000: light-dark(rgb(39 77 234), rgb(105 149 254));
   --swc-blue-1100: light-dark(rgb(29 62 207), rgb(124 169 252));
@@ -807,32 +822,183 @@
   --swc-static-turquoise-400: rgb(111 221 228);
   --swc-static-turquoise-600: rgb(15 177 192);
   --swc-static-turquoise-800: rgb(10 141 153);
-  --swc-transparent-black-100: rgb(0 0 0 / 9%);
-  --swc-transparent-black-1000: rgb(0 0 0);
-  --swc-transparent-black-200: rgb(0 0 0 / 12%);
-  --swc-transparent-black-25: rgb(0 0 0 / 0%);
-  --swc-transparent-black-300: rgb(0 0 0 / 15%);
-  --swc-transparent-black-400: rgb(0 0 0 / 22%);
-  --swc-transparent-black-50: rgb(0 0 0 / 3%);
-  --swc-transparent-black-500: rgb(0 0 0 / 44%);
-  --swc-transparent-black-600: rgb(0 0 0 / 56%);
-  --swc-transparent-black-700: rgb(0 0 0 / 69%);
-  --swc-transparent-black-75: rgb(0 0 0 / 5%);
-  --swc-transparent-black-800: rgb(0 0 0 / 84%);
-  --swc-transparent-black-900: rgb(0 0 0 / 93%);
-  --swc-transparent-white-100: rgb(255 255 255 / 11%);
-  --swc-transparent-white-1000: rgb(255 255 255);
-  --swc-transparent-white-200: rgb(255 255 255 / 14%);
-  --swc-transparent-white-25: rgb(255 255 255 / 0%);
-  --swc-transparent-white-300: rgb(255 255 255 / 17%);
-  --swc-transparent-white-400: rgb(255 255 255 / 21%);
-  --swc-transparent-white-50: rgb(255 255 255 / 4%);
-  --swc-transparent-white-500: rgb(255 255 255 / 39%);
-  --swc-transparent-white-600: rgb(255 255 255 / 51%);
-  --swc-transparent-white-700: rgb(255 255 255 / 66%);
-  --swc-transparent-white-75: rgb(255 255 255 / 7%);
-  --swc-transparent-white-800: rgb(255 255 255 / 85%);
-  --swc-transparent-white-900: rgb(255 255 255 / 94%);
+  --swc-transparent-neutral-0: light-dark(
+    rgb(0 0 0 / 0%),
+    rgb(255 255 255 / 0%)
+  );
+  --swc-transparent-neutral-100: light-dark(
+    rgb(0 0 0 / 4%),
+    rgb(255 255 255 / 4%)
+  );
+  --swc-transparent-neutral-1000: light-dark(rgb(0 0 0), rgb(255 255 255));
+  --swc-transparent-neutral-125: light-dark(
+    rgb(0 0 0 / 6%),
+    rgb(255 255 255 / 6%)
+  );
+  --swc-transparent-neutral-150: light-dark(
+    rgb(0 0 0 / 8%),
+    rgb(255 255 255 / 8%)
+  );
+  --swc-transparent-neutral-200: light-dark(
+    rgb(0 0 0 / 12%),
+    rgb(255 255 255 / 12%)
+  );
+  --swc-transparent-neutral-300: light-dark(
+    rgb(0 0 0 / 16%),
+    rgb(255 255 255 / 16%)
+  );
+  --swc-transparent-neutral-350: light-dark(
+    rgb(0 0 0 / 20%),
+    rgb(255 255 255 / 20%)
+  );
+  --swc-transparent-neutral-400: light-dark(
+    rgb(0 0 0 / 24%),
+    rgb(255 255 255 / 24%)
+  );
+  --swc-transparent-neutral-50: light-dark(
+    rgb(0 0 0 / 2%),
+    rgb(255 255 255 / 2%)
+  );
+  --swc-transparent-neutral-500: light-dark(
+    rgb(0 0 0 / 32%),
+    rgb(255 255 255 / 32%)
+  );
+  --swc-transparent-neutral-600: light-dark(
+    rgb(0 0 0 / 40%),
+    rgb(255 255 255 / 40%)
+  );
+  --swc-transparent-neutral-700: light-dark(
+    rgb(0 0 0 / 48%),
+    rgb(255 255 255 / 48%)
+  );
+  --swc-transparent-neutral-75: light-dark(
+    rgb(0 0 0 / 3%),
+    rgb(255 255 255 / 3%)
+  );
+  --swc-transparent-neutral-750: light-dark(
+    rgb(0 0 0 / 56%),
+    rgb(255 255 255 / 56%)
+  );
+  --swc-transparent-neutral-800: light-dark(
+    rgb(0 0 0 / 64%),
+    rgb(255 255 255 / 64%)
+  );
+  --swc-transparent-neutral-900: light-dark(
+    rgb(0 0 0 / 80%),
+    rgb(255 255 255 / 80%)
+  );
+  --swc-transparent-neutral-950: light-dark(
+    rgb(0 0 0 / 96%),
+    rgb(255 255 255 / 96%)
+  );
+  --swc-transparent-neutral-inverse-0: light-dark(
+    rgb(255 255 255 / 0%),
+    rgb(0 0 0 / 0%)
+  );
+  --swc-transparent-neutral-inverse-100: light-dark(
+    rgb(255 255 255 / 4%),
+    rgb(0 0 0 / 4%)
+  );
+  --swc-transparent-neutral-inverse-1000: light-dark(
+    rgb(255 255 255),
+    rgb(0 0 0)
+  );
+  --swc-transparent-neutral-inverse-125: light-dark(
+    rgb(255 255 255 / 6%),
+    rgb(0 0 0 / 6%)
+  );
+  --swc-transparent-neutral-inverse-150: light-dark(
+    rgb(255 255 255 / 8%),
+    rgb(0 0 0 / 8%)
+  );
+  --swc-transparent-neutral-inverse-200: light-dark(
+    rgb(255 255 255 / 12%),
+    rgb(0 0 0 / 12%)
+  );
+  --swc-transparent-neutral-inverse-300: light-dark(
+    rgb(255 255 255 / 16%),
+    rgb(0 0 0 / 16%)
+  );
+  --swc-transparent-neutral-inverse-350: light-dark(
+    rgb(255 255 255 / 20%),
+    rgb(0 0 0 / 20%)
+  );
+  --swc-transparent-neutral-inverse-400: light-dark(
+    rgb(255 255 255 / 24%),
+    rgb(0 0 0 / 24%)
+  );
+  --swc-transparent-neutral-inverse-50: light-dark(
+    rgb(255 255 255 / 2%),
+    rgb(0 0 0 / 2%)
+  );
+  --swc-transparent-neutral-inverse-500: light-dark(
+    rgb(255 255 255 / 32%),
+    rgb(0 0 0 / 32%)
+  );
+  --swc-transparent-neutral-inverse-600: light-dark(
+    rgb(255 255 255 / 40%),
+    rgb(0 0 0 / 40%)
+  );
+  --swc-transparent-neutral-inverse-700: light-dark(
+    rgb(255 255 255 / 48%),
+    rgb(0 0 0 / 48%)
+  );
+  --swc-transparent-neutral-inverse-75: light-dark(
+    rgb(255 255 255 / 3%),
+    rgb(0 0 0 / 3%)
+  );
+  --swc-transparent-neutral-inverse-750: light-dark(
+    rgb(255 255 255 / 56%),
+    rgb(0 0 0 / 56%)
+  );
+  --swc-transparent-neutral-inverse-800: light-dark(
+    rgb(255 255 255 / 64%),
+    rgb(0 0 0 / 64%)
+  );
+  --swc-transparent-neutral-inverse-900: light-dark(
+    rgb(255 255 255 / 80%),
+    rgb(0 0 0 / 80%)
+  );
+  --swc-transparent-neutral-inverse-950: light-dark(
+    rgb(255 255 255 / 96%),
+    rgb(0 0 0 / 96%)
+  );
+  --swc-transparent-static-black-0: rgb(0 0 0 / 0%);
+  --swc-transparent-static-black-100: rgb(0 0 0 / 4%);
+  --swc-transparent-static-black-1000: rgb(0 0 0);
+  --swc-transparent-static-black-125: rgb(0 0 0 / 6%);
+  --swc-transparent-static-black-150: rgb(0 0 0 / 8%);
+  --swc-transparent-static-black-200: rgb(0 0 0 / 12%);
+  --swc-transparent-static-black-300: rgb(0 0 0 / 16%);
+  --swc-transparent-static-black-350: rgb(0 0 0 / 20%);
+  --swc-transparent-static-black-400: rgb(0 0 0 / 24%);
+  --swc-transparent-static-black-50: rgb(0 0 0 / 2%);
+  --swc-transparent-static-black-500: rgb(0 0 0 / 32%);
+  --swc-transparent-static-black-600: rgb(0 0 0 / 40%);
+  --swc-transparent-static-black-700: rgb(0 0 0 / 48%);
+  --swc-transparent-static-black-75: rgb(0 0 0 / 3%);
+  --swc-transparent-static-black-750: rgb(0 0 0 / 56%);
+  --swc-transparent-static-black-800: rgb(0 0 0 / 64%);
+  --swc-transparent-static-black-900: rgb(0 0 0 / 80%);
+  --swc-transparent-static-black-950: rgb(0 0 0 / 96%);
+  --swc-transparent-static-white-0: rgb(255 255 255 / 0%);
+  --swc-transparent-static-white-100: rgb(255 255 255 / 4%);
+  --swc-transparent-static-white-1000: rgb(255 255 255);
+  --swc-transparent-static-white-125: rgb(255 255 255 / 6%);
+  --swc-transparent-static-white-150: rgb(255 255 255 / 8%);
+  --swc-transparent-static-white-200: rgb(255 255 255 / 12%);
+  --swc-transparent-static-white-300: rgb(255 255 255 / 16%);
+  --swc-transparent-static-white-350: rgb(255 255 255 / 20%);
+  --swc-transparent-static-white-400: rgb(255 255 255 / 24%);
+  --swc-transparent-static-white-50: rgb(255 255 255 / 2%);
+  --swc-transparent-static-white-500: rgb(255 255 255 / 32%);
+  --swc-transparent-static-white-600: rgb(255 255 255 / 40%);
+  --swc-transparent-static-white-700: rgb(255 255 255 / 48%);
+  --swc-transparent-static-white-75: rgb(255 255 255 / 3%);
+  --swc-transparent-static-white-750: rgb(255 255 255 / 56%);
+  --swc-transparent-static-white-800: rgb(255 255 255 / 64%);
+  --swc-transparent-static-white-900: rgb(255 255 255 / 80%);
+  --swc-transparent-static-white-950: rgb(255 255 255 / 96%);
   --swc-turquoise-100: light-dark(rgb(238 251 251), rgb(0 30 33));
   --swc-turquoise-1000: light-dark(rgb(5 107 116), rgb(13 168 182));
   --swc-turquoise-1100: light-dark(rgb(3 90 98), rgb(16 186 202));
@@ -849,7 +1015,6 @@
   --swc-turquoise-700: light-dark(rgb(12 158 171), rgb(7 120 131));
   --swc-turquoise-800: light-dark(rgb(10 141 153), rgb(9 131 142));
   --swc-turquoise-900: light-dark(rgb(8 126 137), rgb(11 151 164));
-  --swc-white: rgb(255 255 255);
   --swc-yellow-100: light-dark(rgb(255 248 204), rgb(37 23 0));
   --swc-yellow-1000: light-dark(rgb(134 85 0), rgb(203 141 0));
   --swc-yellow-1100: light-dark(rgb(114 72 0), rgb(218 159 0));
@@ -1131,7 +1296,11 @@
   --swc-accessory-item-padding-medium: 5px;
   --swc-accessory-item-padding-small: 3px;
   --swc-android-elevation: 2dp;
+  --swc-banner-gap-horizontal: 24px;
+  --swc-banner-gap-vertical: 8px;
+  --swc-banner-padding-horizontal: 16px;
   --swc-banner-padding-horizontal-compact: 8px;
+  --swc-banner-padding-vertical: 12px;
   --swc-base-gap-2x-large: 8px;
   --swc-base-gap-3x-large: 8px;
   --swc-base-gap-4x-large: 10px;
@@ -1230,9 +1399,6 @@
   --swc-drop-target-dash-length: 8px;
   --swc-focus-indicator-thickness: 2px;
   --swc-focus-ring-gap: 2px;
-  --swc-gap-horizontal: 24px;
-  --swc-gap-regular: 4px;
-  --swc-gap-vertical: 8px;
   --swc-gradient-stop-1-genai: 0%;
   --swc-gradient-stop-1-premium: 0%;
   --swc-gradient-stop-2-genai: 33%;
@@ -1251,6 +1417,7 @@
   --swc-group-gap-small: 6px;
   --swc-group-gap-small-spacious: 12px;
   --swc-list-gap-compact: 2px;
+  --swc-list-gap-regular: 4px;
   --swc-list-gap-spacious: 8px;
   --swc-list-indent-large: 24px;
   --swc-list-indent-medium: 16px;
@@ -1259,8 +1426,6 @@
   --swc-list-item-padding-horizontal: 6px;
   --swc-list-item-padding-vertical-regular: 4px;
   --swc-list-item-padding-vertical-spacious: 8px;
-  --swc-padding-horizontal: 16px;
-  --swc-padding-vertical: 12px;
   --swc-side-focus-indicator: 4px;
   --swc-spacing-100: 8px;
   --swc-spacing-1000: 96px;
@@ -1520,7 +1685,7 @@
   --swc-card-minimum-width-small: 150px;
   --swc-card-preview-minimum-height: 130px;
   --swc-card-selection-background-color: light-dark(
-    rgb(255 255 255 / 51%),
+    rgb(255 255 255 / 48%),
     rgb(0 0 0 / 56%)
   );
   --swc-card-selection-background-color-opacity: 0.95;
@@ -1585,19 +1750,23 @@
   --swc-color-handle-drop-shadow-blur: 0;
   --swc-color-handle-drop-shadow-x: 0;
   --swc-color-handle-drop-shadow-y: 0;
-  --swc-color-handle-inner-border-color: var(--swc-black);
+  --swc-color-handle-inner-border-color: var(
+    --swc-transparent-static-black-1000
+  );
   --swc-color-handle-inner-border-opacity: 0.42;
   --swc-color-handle-inner-border-width: 1px;
-  --swc-color-handle-outer-border-color: var(--swc-black);
+  --swc-color-handle-outer-border-color: var(
+    --swc-transparent-static-black-1000
+  );
   --swc-color-handle-outer-border-opacity: var(
     --swc-color-handle-inner-border-opacity
   );
   --swc-color-handle-outer-border-width: 1px;
   --swc-color-loupe-bottom-to-color-handle: 12px;
   --swc-color-loupe-height: 64px;
-  --swc-color-loupe-inner-border: var(--swc-transparent-black-200);
+  --swc-color-loupe-inner-border: var(--swc-transparent-static-black-200);
   --swc-color-loupe-inner-border-width: 1px;
-  --swc-color-loupe-outer-border: var(--swc-white);
+  --swc-color-loupe-outer-border: var(--swc-transparent-static-white-1000);
   --swc-color-loupe-outer-border-width: var(--swc-border-width-200);
   --swc-color-loupe-width: 48px;
   --swc-color-slider-border-color: var(--swc-gray-1000);
@@ -1685,7 +1854,7 @@
   --swc-drop-zone-width: 428px;
   --swc-floating-action-button-drop-shadow-blur: 12px;
   --swc-floating-action-button-drop-shadow-color: var(
-    --swc-transparent-black-300
+    --swc-transparent-static-black-300
   );
   --swc-floating-action-button-drop-shadow-y: 4px;
   --swc-form-item-gap-extra-large: var(--swc-base-gap-extra-large);
@@ -1838,7 +2007,9 @@
   --swc-number-field-minimum-width-multiplier: 1.25;
   --swc-opacity-checkerboard-square-dark-light: var(--swc-gray-200);
   --swc-opacity-checkerboard-square-dark-dark: var(--swc-gray-800);
-  --swc-opacity-checkerboard-square-light: var(--swc-white);
+  --swc-opacity-checkerboard-square-light: var(
+    --swc-transparent-static-white-1000
+  );
   --swc-picker-border-width: var(--swc-border-width-100);
   --swc-picker-minimum-width-multiplier: 2;
   --swc-popover-border-color: light-dark(
@@ -1875,7 +2046,7 @@
   --swc-stack-item-background-color-key-focus: var(--swc-gray-100);
   --swc-stack-item-item-to-item: 0px;
   --swc-stack-item-selected-background-color-default: var(--swc-gray-100);
-  --swc-stack-item-selected-background-color-down: var(--swc-gray-300);
+  --swc-stack-item-selected-background-color-down: var(--swc-gray-200);
   --swc-stack-item-selected-background-color-emphasized: var(
     --swc-accent-background-color-default
   );
@@ -1916,7 +2087,9 @@
   --swc-steplist-visual-size-small: 8px;
   --swc-swatch-border-color: var(--swc-gray-1000);
   --swc-swatch-border-opacity: 0.42;
-  --swc-swatch-disabled-icon-border-color: var(--swc-black);
+  --swc-swatch-disabled-icon-border-color: var(
+    --swc-transparent-static-black-1000
+  );
   --swc-swatch-disabled-icon-border-opacity: 0.42;
   --swc-swatch-rectangle-width-multiplier: 2;
   --swc-swatch-slash-thickness-extra-small: 2px;
@@ -2118,11 +2291,11 @@
     var(--swc-theme--sizeL, 12px);
   --swc-ui-icon-small: var(--swc-theme--sizeM, 10px)
     var(--swc-theme--sizeL, 12px);
-  --swc-base-padding-horizontal-2x-large: var(--swc-theme--sizeM, 18px)
+  --swc-base-padding-horizontal-2x-large: var(--swc-theme--sizeM, 20px)
     var(--swc-theme--sizeL, 14px);
-  --swc-base-padding-horizontal-extra-large: var(--swc-theme--sizeM, 16px)
+  --swc-base-padding-horizontal-extra-large: var(--swc-theme--sizeM, 18px)
     var(--swc-theme--sizeL, 12px);
-  --swc-base-padding-horizontal-large: var(--swc-theme--sizeM, 14px)
+  --swc-base-padding-horizontal-large: var(--swc-theme--sizeM, 16px)
     var(--swc-theme--sizeL, 12px);
   --swc-base-padding-horizontal-medium: var(--swc-theme--sizeM, 12px)
     var(--swc-theme--sizeL, 10px);

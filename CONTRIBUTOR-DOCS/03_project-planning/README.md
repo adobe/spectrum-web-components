@@ -37,6 +37,7 @@
     - Button Group
     - Card
     - Checkbox
+    - Checkbox Group
     - Close Button
     - Color Field
     - Color Handle
@@ -56,6 +57,7 @@
     - Menu
     - Menu Group
     - Menu Item
+    - Menu Item Radio
     - Menu Separator
     - Meter
     - Number Field

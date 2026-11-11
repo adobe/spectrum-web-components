@@ -52,11 +52,8 @@ const RESPONSE_STATUS_PROPERTY_CASES: readonly ResponseStatusPropertyCase[] = [
   { property: '--swc-response-status-label-max-lines', value: '1' },
 ];
 
-// A label long enough to wrap past 2 lines at rest, so the override to a
-// 1-line cap visibly ellipses a full line earlier than the reference.
-// `status="complete"` (a static checkmark, not the active pixel-loader
-// animation) keeps the snapshot deterministic without needing to pause
-// anything: the label wrap cap applies identically regardless of status.
+// The complete label wraps in full by default; the 1-line override makes
+// the difference visible. The static checkmark keeps the snapshot stable.
 const modResponseStatusProperty = (
   _case: ResponseStatusPropertyCase,
   style?: string

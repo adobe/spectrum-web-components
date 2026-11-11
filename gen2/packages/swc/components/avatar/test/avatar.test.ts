@@ -54,7 +54,7 @@ export const OverviewTest: Story = {
     await step('renders expected default property values', async () => {
       expect(avatar.src, 'src property').toBe(PLACEHOLDER_SRC);
       expect(avatar.alt, 'alt property').toBe('Jane Doe');
-      expect(avatar.size, 'size property').toBe(500);
+      expect(avatar.size, 'size property').toBe(100);
       expect(avatar.outline, 'outline property').toBe(false);
       expect(avatar.disabled, 'disabled property').toBe(false);
       expect(avatar.decorative, 'decorative property').toBe(false);
@@ -62,7 +62,7 @@ export const OverviewTest: Story = {
 
     await step('size attribute is present after first render', async () => {
       expect(avatar.hasAttribute('size'), 'size attribute presence').toBe(true);
-      expect(avatar.getAttribute('size'), 'size attribute value').toBe('500');
+      expect(avatar.getAttribute('size'), 'size attribute value').toBe('100');
     });
 
     await step(
@@ -93,8 +93,8 @@ export const SizeAttributeSetByFirstUpdatedTest: Story = {
         expect(avatar.hasAttribute('size'), 'size attribute present').toBe(
           true
         );
-        expect(avatar.getAttribute('size'), 'size attribute value').toBe('500');
-        expect(avatar.size, 'size property value').toBe(500);
+        expect(avatar.getAttribute('size'), 'size attribute value').toBe('100');
+        expect(avatar.size, 'size property value').toBe(100);
       }
     );
   },
@@ -138,15 +138,15 @@ export const SizeInvalidFallbackTest: Story = {
     const avatar = await getComponent<Avatar>(canvasElement, 'swc-avatar');
 
     await step(
-      'falls back to default size (500) when given an invalid value',
+      'falls back to default size (100) when given an invalid value',
       async () => {
         avatar.size = 999 as Avatar['size'];
         await avatar.updateComplete;
-        expect(avatar.size, 'size after invalid value').toBe(500);
+        expect(avatar.size, 'size after invalid value').toBe(100);
         expect(
           avatar.getAttribute('size'),
           'size attribute after invalid'
-        ).toBe('500');
+        ).toBe('100');
       }
     );
   },

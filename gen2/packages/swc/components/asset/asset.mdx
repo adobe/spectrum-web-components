@@ -103,6 +103,9 @@ When viewing the example in the Playground, select the **Actions** panel to obse
 
 <Canvas of={AssetStories.LoadingState} />
 
+See [Card's "Loading state" behavior](/docs/components-card--docs#loading-state) for this
+pattern applied inside a real consumer.
+
 Set `loading="lazy"` and `decoding="async"` on the slotted `<img>` for offscreen assets, such as
 in a scrolling grid: `loading="lazy"` defers the browser starting the fetch until the image nears
 the viewport, and `decoding="async"` lets the browser decode the image off the main thread. Neither

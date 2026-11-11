@@ -25,30 +25,10 @@ import '@adobe/spectrum-wc/components/divider/swc-divider.js';
 
 const { events, args, argTypes, template } = getStorybookHelpers('swc-divider');
 
-argTypes.size = {
-  ...argTypes.size,
-  control: { type: 'select' },
-  options: Divider.VALID_SIZES,
-  table: {
-    category: 'attributes',
-    defaultValue: {
-      summary: 'm',
-    },
-  },
-};
-
 argTypes['static-color'] = {
   ...argTypes['static-color'],
   control: { type: 'select' },
   options: [undefined, ...Divider.STATIC_COLORS],
-};
-
-argTypes.vertical = {
-  ...argTypes.vertical,
-  table: {
-    ...argTypes.vertical?.table,
-    defaultValue: { summary: 'false' },
-  },
 };
 
 /**
@@ -230,7 +210,6 @@ export const Orientation: Story = {
   },
   tags: ['options'],
 };
-Orientation.storyName = 'Orientation';
 
 /** Same prose for each horizontal thickness so snapshots emphasize divider weight only. */
 const STATIC_COLORS_HORIZONTAL_COPY = {

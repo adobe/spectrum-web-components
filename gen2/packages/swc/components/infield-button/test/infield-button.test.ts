@@ -18,6 +18,7 @@ import { InfieldButton } from '@adobe/spectrum-wc/infield-button';
 import { INFIELD_BUTTON_VALID_SIZES } from '@adobe/spectrum-wc-core/components/infield-button';
 
 import '@adobe/spectrum-wc/components/infield-button/swc-infield-button.js';
+import '@adobe/spectrum-wc/components/ui-icons/swc-ui-icon.js';
 
 import {
   getComponent,
@@ -42,8 +43,8 @@ export default {
   tags: ['!autodocs', 'dev'],
 } as Meta;
 
-// Shared inline chevron SVG used in tests that need a slotted icon.
-const chevronSvg = `<svg slot="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M5 7.376 1.281 3.656l.875-.875L5 5.625l2.844-2.844.875.875Z"/></svg>`;
+// Shared inline chevron icon used in tests that need a slotted icon.
+const chevronSvg = `<swc-ui-icon slot="icon" icon="chevron"></swc-ui-icon>`;
 
 // ──────────────────────────────────────────────────────────────
 // SECTION 1: Defaults
@@ -207,15 +208,7 @@ export const PropertyMutationTest: Story = {
 export const AccessibleLabelTest: Story = {
   render: () => html`
     <swc-infield-button>
-      <svg
-        slot="icon"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 10 10"
-        aria-hidden="true"
-        focusable="false"
-      >
-        <path d="M5 7.376 1.281 3.656l.875-.875L5 5.625l2.844-2.844.875.875Z" />
-      </svg>
+      <swc-ui-icon slot="icon" icon="chevron"></swc-ui-icon>
     </swc-infield-button>
   `,
   play: async ({ canvasElement, step }) => {
@@ -435,15 +428,7 @@ export const DisabledBehaviorTest: Story = {
 export const ClickBehaviorTest: Story = {
   render: () => html`
     <swc-infield-button accessible-label="Clear">
-      <svg
-        slot="icon"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 10 10"
-        aria-hidden="true"
-        focusable="false"
-      >
-        <path d="M5 7.376 1.281 3.656l.875-.875L5 5.625l2.844-2.844.875.875Z" />
-      </svg>
+      <swc-ui-icon slot="icon" icon="chevron"></swc-ui-icon>
     </swc-infield-button>
   `,
   play: async ({ canvasElement, step }) => {
@@ -469,15 +454,7 @@ export const ClickBehaviorTest: Story = {
 export const FocusDelegationTest: Story = {
   render: () => html`
     <swc-infield-button accessible-label="Clear">
-      <svg
-        slot="icon"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 10 10"
-        aria-hidden="true"
-        focusable="false"
-      >
-        <path d="M5 7.376 1.281 3.656l.875-.875L5 5.625l2.844-2.844.875.875Z" />
-      </svg>
+      <swc-ui-icon slot="icon" icon="chevron"></swc-ui-icon>
     </swc-infield-button>
   `,
   play: async ({ canvasElement, step }) => {
@@ -506,15 +483,7 @@ export const AccessibilityTest: Story = {
   // refactors to the docs story.
   render: () => html`
     <swc-infield-button accessible-label="Open picker">
-      <svg
-        slot="icon"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 10 10"
-        aria-hidden="true"
-        focusable="false"
-      >
-        <path d="M5 7.376 1.281 3.656l.875-.875L5 5.625l2.844-2.844.875.875Z" />
-      </svg>
+      <swc-ui-icon slot="icon" icon="chevron"></swc-ui-icon>
     </swc-infield-button>
   `,
   play: async ({ canvasElement, step }) => {
@@ -558,15 +527,7 @@ export const AccessibilityTest: Story = {
 export const IconOnlyMissingLabelWarningTest: Story = {
   render: () => html`
     <swc-infield-button>
-      <svg
-        slot="icon"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 10 10"
-        aria-hidden="true"
-        focusable="false"
-      >
-        <path d="M5 7.376 1.281 3.656l.875-.875L5 5.625l2.844-2.844.875.875Z" />
-      </svg>
+      <swc-ui-icon slot="icon" icon="chevron"></swc-ui-icon>
     </swc-infield-button>
   `,
   play: async ({ canvasElement, step }) => {
@@ -596,15 +557,7 @@ export const IconOnlyMissingLabelWarningTest: Story = {
 export const IconOnlyWithLabelNoWarningTest: Story = {
   render: () => html`
     <swc-infield-button accessible-label="Open picker">
-      <svg
-        slot="icon"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 10 10"
-        aria-hidden="true"
-        focusable="false"
-      >
-        <path d="M5 7.376 1.281 3.656l.875-.875L5 5.625l2.844-2.844.875.875Z" />
-      </svg>
+      <swc-ui-icon slot="icon" icon="chevron"></swc-ui-icon>
     </swc-infield-button>
   `,
   play: async ({ canvasElement, step }) => {

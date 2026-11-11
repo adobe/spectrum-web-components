@@ -10,6 +10,7 @@ core/
 ├── mixins/        # SizedMixin, PendingMixin, LinearProgressMixin
 ├── controllers/   # LanguageResolutionController, PlacementController, SlotPresenceController, SlotTextController, …
 ├── utils/         # capitalize, getLabelFromSlot
+├── tools/         # build-time helpers, not built or published (icons/: shared icon generator helpers)
 └── components/    # One folder per component
     └── badge/
         ├── Badge.base.ts    # Abstract base class — logic only, no render()

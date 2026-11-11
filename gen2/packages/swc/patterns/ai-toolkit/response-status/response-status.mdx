@@ -95,7 +95,7 @@ Header-label cadence is consumer-managed. The component rolls the header label w
 
 When `slot="label"` is empty and the response is `active`, the header falls back to the active step's label while the step timeline is closed. While it's open and at least one step hasn't finished, the header shows a generic "Processing…" label instead, since the specific step is already visible in the timeline below.
 
-Once settled (no roll transition in flight), the label wraps across up to 2 lines instead of truncating to one, so it stays more readable in a narrow container or with a longer translation. Text beyond that ellipses on the last visible line. Override the cap with the `--swc-response-status-label-max-lines` custom property. A label stays constrained to a single line only for the brief moment it is actively rolling to a new value.
+Once settled (no roll transition in flight), active and stopped labels wrap across up to 2 lines. Completed labels wrap in full so they remain readable when there is no panel to expand. Set `--swc-response-status-label-max-lines` to cap the number of lines when needed. A label stays constrained to a single line only while it is rolling to a new value.
 
 The `LabelCadence` story demonstrates one consumer-side queue pattern.
 
@@ -107,9 +107,9 @@ The `LabelCadence` story demonstrates one consumer-side queue pattern.
 
 The `<swc-response-status>` element implements the following accessibility features:
 
-- When no steps exist, `active` status labels are exposed with `role="status"` so updates are announced politely without moving focus
+- When no steps exist, `active` status labels are exposed with `role="status"` so updates are announced politely without moving focus. Completed and stopped labels are static text; none of these rows is exposed as a button
 - The pixel loader in the active status row is decorative (`aria-hidden`) so it does not add a nested progressbar; the status label already conveys that work is in progress
-- When steps exist, the disclosure button uses `aria-expanded` and `aria-controls` to communicate panel state
+- When steps exist, the header uses a native disclosure button with `aria-expanded` and `aria-controls` to communicate panel state. Its hit area spans the row, and Enter and Space toggle it
 - The step timeline uses `role="group"` with an accessible name from the `accessible-label` attribute (defaults to “Execution steps”)
 - The ordered step list uses `role="list"` and each rendered step uses `role="listitem"`
 - Each step with a description exposes its own disclosure button, using `aria-expanded` and `aria-controls` and taking its accessible name from the step title

@@ -11,18 +11,25 @@
  */
 
 /*
- * Shared box styling for icon elements (the swc-icon frame and swc-ui-icon). Establishes
- * a square box that the SVG fills, whether the SVG is slotted (frame) or rendered
- * directly (ui-icon), and sets the default box size from the workflow-icon token scale.
- * swc-ui-icon overrides this with the UI-icon scale via its own ui-icon-sizes.css. A
- * dedicated workflow sizing stylesheet is added when the workflow icon family lands (see
- * CONTRIBUTOR-DOCS/03_project-planning/05_strategies/icon-rfc.md, section 7).
+ * Shared box styling for icon elements: the swc-icon frame, swc-ui-icon, and every
+ * workflow icon element in @adobe/spectrum-wc-icons. Establishes a square box that the
+ * SVG fills, whether the SVG is slotted (frame) or rendered directly (ui-icon, workflow
+ * icons), and sets the default box size from the workflow-icon token scale. swc-ui-icon
+ * overrides this with the UI-icon scale via its own ui-icon-sizes.css.
+ *
+ * The source of truth is gen2/packages/swc/stylesheets/_lit-styles/icon-base.css. It is
+ * copied verbatim to gen2/packages/icons/src/stylesheets/icon-base.css because the icons
+ * package depends only on core and cannot import from swc. Edit only the swc file, then
+ * run `yarn generate:icon-styles` (from the repo root or gen2/packages/icons) and commit
+ * both files; the icons build fails while the copy is out of date. See
+ * CONTRIBUTOR-DOCS/03_project-planning/05_strategies/icon-rfc.md, section 7.
  */
 :host {
   --swc-icon-inline-size: token("workflow-icon-medium");
   --swc-icon-block-size: token("workflow-icon-medium");
 
-  display: inline-flex;
+  box-sizing: border-box;
+  display: block;
   inline-size: var(--swc-icon-inline-size);
   block-size: var(--swc-icon-block-size);
   color: var(--swc-icon-color, currentColor);
@@ -53,18 +60,11 @@
   --swc-icon-block-size: token("workflow-icon-extra-large");
 }
 
-.swc-Icon {
-  display: block;
-  inline-size: 100%;
-  block-size: 100%;
-}
-
 svg,
-.swc-Icon > svg,
 ::slotted(*) {
   box-sizing: border-box;
   display: block;
   inline-size: 100%;
   block-size: 100%;
-  fill: currentcolor;
+  fill: var(--swc-icon-color, currentColor);
 }

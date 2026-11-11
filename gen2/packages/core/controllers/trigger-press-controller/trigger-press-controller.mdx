@@ -1,0 +1,99 @@
+{/* Copyright 2026 Adobe. All rights reserved. This file is licensed to you under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. */}
+
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../../swc/.storybook/blocks';
+
+import * as Stories from './stories/trigger-press-controller.stories';
+
+<Meta of={Stories} />
+
+<DocsHeader />
+
+## Usage
+
+`TriggerPressController` wires click-to-toggle on a trigger for a surface the platform can close on its own (a native `popover="auto"` element, a non-modal `<dialog>`) without the surface reopening on the same click that was meant to close it.
+
+### The bug it prevents
+
+A naive click-to-toggle handler (`trigger.onclick = () => (open = !open)`) looks correct, but breaks the moment the surface can close itself: pressing the trigger again while the surface is open is, from the surface's own perspective, a press _outside_ it. The platform's light-dismiss closes the surface **before** the trailing `click` event fires on the trigger. By the time that `click` handler runs, `open` already reads `false` (synced down by the dismissal), so `!open` flips it back to `true` — the surface silently reopens on the very click that should have closed it.
+
+This is a JS-only fix because a custom element's shadow-internal surface cannot be associated with an external trigger via the native `popovertarget` attribute (that attribute cannot reach across shadow boundaries), so the platform has no way to know the trigger and the surface belong together.
+
+### Basic usage
+
+1. Construct the controller in the host's constructor.
+2. Call `attach()` every time the resolved trigger element changes (for example from `updated()` reacting to a `for`/`triggerElement` property).
+3. Call `noteNativeDismiss()` from the surface's own native-close reaction, guarded by whatever the host already uses to tell a genuine native dismissal apart from its own programmatic close.
+
+```typescript
+import { LitElement, type PropertyValues } from 'lit';
+import { property } from 'lit/decorators.js';
+import { TriggerPressController } from '@adobe/spectrum-wc-core/controllers/trigger-press-controller.js';
+
+class SwcToggle extends LitElement {
+  @property({ type: Boolean, reflect: true }) open = false;
+
+  private readonly pressGuard = new TriggerPressController(this);
+
+  private wireTrigger(trigger: HTMLElement | null): void {
+    this.pressGuard.attach(trigger, {
+      onToggle: () => (this.open = !this.open),
+    });
+  }
+
+  // Bound to the surface's `beforetoggle` in render().
+  private onBeforeToggle = (event: ToggleEvent): void => {
+    if (event.newState === 'open') {
+      return;
+    }
+    if (this.open) {
+      // Not already closed via our own setter, so this is a genuine native
+      // dismissal (Escape, outside click, ...).
+      this.pressGuard.noteNativeDismiss();
+    }
+    this.open = false;
+  };
+}
+```
+
+## Behaviors
+
+### Re-click closes
+
+Pressing the trigger while the surface is open light-dismisses it before the trailing click fires; the controller correlates that dismissal with the in-flight press so the trailing click is read as the close, not a reopen.
+
+<Canvas of={Stories.ReclickCloses} />
+
+### Naive reopen bug
+
+The same markup without the controller: a plain `open = !open` click handler reopens the surface on the second click instead of closing it, because it reads `open` after the light-dismiss has already synced it to `false`.
+
+<Canvas of={Stories.NaiveReopenBug} />
+
+## Accessibility
+
+### Features
+
+`TriggerPressController` only wires pointer/click listeners; it does not manage focus, ARIA, or positioning. Pair it with the host's own trigger ARIA wiring (`aria-haspopup`, `aria-expanded`) and focus-return-on-close handling.
+
+### Best practices
+
+- Call `noteNativeDismiss()` only for a genuine native dismissal, not for the host's own programmatic close. Guard it with the same signal the host already uses to distinguish the two (typically: the close reaction fires while `open` is still `true`).
+- Call `attach()` on every trigger re-resolution rather than only once; it is a no-op for the listeners when the element hasn't changed, but always keeps the toggle callback current.
+- Rely on `hostDisconnected()` for cleanup; there is no need to call `detach()` manually when a host is removed from the DOM.
+
+## API
+
+### Constructor
+
+`new TriggerPressController(host)` — registers the controller on the host.
+
+### Members
+
+| Member                     | Description                                                                                                                                  |
+| -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| `attach(trigger, options)` | Wires (or rewires) the click-to-toggle and press-tracking listeners on `trigger`. `null` only detaches. Idempotent for an unchanged element. |
+| `detach()`                 | Removes the currently-wired listeners and resets gesture state. Also called automatically on disconnect.                                     |
+| `noteNativeDismiss()`      | Call from the surface's native-close reaction when the close was not driven by the host's own `open` setter.                                 |
+
+<DocsFooter />

@@ -24,6 +24,7 @@ import {
 
 import '@adobe/spectrum-wc/components/action-group/swc-action-group.js';
 import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
+import '@adobe/spectrum-wc-icons/swc-icon-edit.js';
 
 // ────────────────
 //    METADATA
@@ -31,48 +32,17 @@ import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
 
 const { args, argTypes } = getStorybookHelpers('swc-action-group');
 
+// No default size: an unset group leaves each child at its own size. The manifest has
+// no default to show, so say so explicitly.
 argTypes.size = {
   ...argTypes.size,
-  control: { type: 'select' },
-  options: [...ACTION_GROUP_VALID_SIZES],
   table: {
-    category: 'attributes',
+    ...argTypes.size?.table,
     defaultValue: { summary: 'none' },
   },
 };
 
-argTypes.orientation = {
-  ...argTypes.orientation,
-  control: { type: 'select' },
-  options: [...ACTION_GROUP_ORIENTATIONS],
-  table: {
-    category: 'attributes',
-    defaultValue: { summary: 'horizontal' },
-  },
-};
-
-argTypes.disabled = {
-  ...argTypes.disabled,
-  table: {
-    category: 'attributes',
-    defaultValue: { summary: 'false' },
-  },
-};
-
-argTypes.compact = {
-  table: {
-    category: 'attributes',
-    defaultValue: { summary: 'false' },
-  },
-};
-
-argTypes.quiet = {
-  table: {
-    category: 'attributes',
-    defaultValue: { summary: 'false' },
-  },
-};
-
+// Extends the source description with when the attribute has a visible effect.
 argTypes.justified = {
   ...argTypes.justified,
   description:
@@ -80,10 +50,6 @@ argTypes.justified = {
     'inline width of the group. Has no visible effect unless the host has ' +
     'more available width than its content needs, e.g., an explicit ' +
     '`inline-size` set on the host, or a container that stretches it.',
-  table: {
-    category: 'attributes',
-    defaultValue: { summary: 'false' },
-  },
 };
 
 /**
@@ -186,17 +152,7 @@ export const Anatomy: Story = {
       <swc-action-button>Rotate</swc-action-button>
       <swc-action-button>Flip</swc-action-button>
       <swc-action-button accessible-label="Edit">
-        <svg
-          slot="icon"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 36 36"
-          aria-hidden="true"
-          focusable="false"
-        >
-          <path
-            d="M33.567 8.2 27.8 2.432a1.215 1.215 0 0 0-.866-.353H26.9a1.371 1.371 0 0 0-.927.406L5.084 23.372a.99.99 0 0 0-.251.422L2.055 33.1c-.114.377.459.851.783.851a.251.251 0 0 0 .062-.007c.276-.063 7.866-2.344 9.311-2.778a.972.972 0 0 0 .414-.249l20.888-20.889a1.372 1.372 0 0 0 .4-.883 1.221 1.221 0 0 0-.346-.945ZM11.4 29.316c-2.161.649-4.862 1.465-6.729 2.022l2.009-6.73Z"
-          />
-        </svg>
+        <swc-icon-edit slot="icon"></swc-icon-edit>
       </swc-action-button>
     </swc-action-group>
   `,

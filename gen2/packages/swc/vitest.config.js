@@ -13,7 +13,7 @@ import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
 import { playwright } from '@vitest/browser-playwright';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { defineConfig, mergeConfig } from 'vitest/config';
+import { configDefaults, defineConfig, mergeConfig } from 'vitest/config';
 
 import viteConfig from './vite.config.ts';
 
@@ -27,17 +27,15 @@ const browserInstances = (process.env.VITEST_BROWSER_INSTANCES ?? 'chromium')
 const resolvedBrowserInstances =
   browserInstances.length > 0 ? browserInstances : [{ browser: 'chromium' }];
 
-// WebKit browser contexts are memory-heavy. When Vitest runs several test
-// files in parallel (one browser context each), a WebKit-only CI run exhausts
-// the container's memory and gets OOM-killed mid-suite. CircleCI sharding
-// handles wall-clock time; this cap bounds *peak* memory by limiting how many
-// WebKit contexts are alive at once. Chromium and Firefox are lighter and run
-// at the default (CPU-count) parallelism.
-const isWebkitOnly =
-  resolvedBrowserInstances.length === 1 &&
-  resolvedBrowserInstances[0].browser === 'webkit';
-const browserMemoryLimits = isWebkitOnly
-  ? { maxWorkers: 2, minWorkers: 1 }
+// Cap parallel browser contexts for memory-heavy browsers. At the default
+// (CPU-count) parallelism they exceed CI's 8 GiB and get OOM-killed.
+const maxWorkersByBrowser = { webkit: 2, firefox: 4 };
+const singleBrowser =
+  resolvedBrowserInstances.length === 1
+    ? resolvedBrowserInstances[0].browser
+    : undefined;
+const browserMemoryLimits = maxWorkersByBrowser[singleBrowser]
+  ? { maxWorkers: maxWorkersByBrowser[singleBrowser], minWorkers: 1 }
   : {};
 
 export default mergeConfig(
@@ -53,8 +51,7 @@ export default mergeConfig(
       // https://vitest.dev/guide/learn/writing-tests-with-ai.html
       clearMocks: true,
       restoreMocks: true,
-      // Bound peak memory for WebKit-only runs (see browserMemoryLimits).
-      // No-op for Chromium/Firefox.
+      // See browserMemoryLimits.
       ...browserMemoryLimits,
       // JUnit reporter for CI test results
       reporters: process.env.CI
@@ -68,7 +65,7 @@ export default mergeConfig(
         include: [
           'components/**/*.{ts,js}',
           '**/packages/core/components/**/*.{ts,js}',
-          '**/packages/core/controllers/*.{ts,js}',
+          '**/packages/core/controllers/**/*.{ts,js}',
           '**/packages/core/element/*.{ts,js}',
           '**/packages/core/mixins/*.{ts,js}',
           '**/packages/core/utils/*.{ts,js}',
@@ -77,6 +74,7 @@ export default mergeConfig(
           '**/*.test.ts',
           '**/*.stories.ts',
           '**/*.vrt.ts',
+          '**/test/vrt/**',
           '**/.storybook/**',
           '**/utils/**',
           '**/node_modules/**',
@@ -90,35 +88,39 @@ export default mergeConfig(
 
           // SWC component implementations
           'components/**/*.{ts,js}': {
-            lines: 98,
-            functions: 98,
-            statements: 98,
+            lines: 99,
+            functions: 99,
+            statements: 99,
           },
+
+          // Threshold globs match paths relative to this package's root, so
+          // core files resolve as `../core/...`. A `**/packages/core/...` glob
+          // matches nothing and passes silently.
 
           // Core component logic
-          '**/packages/core/components/**/*.{ts,js}': {
-            lines: 98,
-            functions: 98,
-            statements: 98,
+          '../core/components/**/*.{ts,js}': {
+            lines: 95,
+            functions: 94,
+            statements: 95,
           },
 
-          // Shared utilities (lower bar while starting out)
-          '**/packages/core/controllers/*.{ts,js}': {
-            lines: 70,
-            functions: 70,
-            statements: 70,
+          // Shared controllers, element, mixins, and utils
+          '../core/controllers/**/*.{ts,js}': {
+            lines: 87,
+            functions: 85,
+            statements: 87,
           },
-          '**/packages/core/element/*.{ts,js}': {
-            lines: 70,
-            functions: 70,
-            statements: 70,
+          '../core/element/*.{ts,js}': {
+            lines: 94,
+            functions: 100,
+            statements: 94,
           },
-          '**/packages/core/mixins/*.{ts,js}': {
-            lines: 70,
-            functions: 70,
-            statements: 70,
+          '../core/mixins/*.{ts,js}': {
+            lines: 95,
+            functions: 97,
+            statements: 95,
           },
-          '**/packages/core/utils/*.{ts,js}': {
+          '../core/utils/*.{ts,js}': {
             lines: 70,
             functions: 70,
             statements: 70,
@@ -168,6 +170,15 @@ export default mergeConfig(
           },
           test: {
             name: 'storybook',
+            // .vrt.ts stories are authored for Chromatic snapshots, which
+            // runs their play functions itself; keep them out of Vitest.
+            // `**` doesn't match `..`, so sibling packages (icons) need
+            // their own pattern.
+            exclude: [
+              ...configDefaults.exclude,
+              '**/*.vrt.ts',
+              '../**/*.vrt.ts',
+            ],
             browser: {
               enabled: true,
               provider: playwright(),

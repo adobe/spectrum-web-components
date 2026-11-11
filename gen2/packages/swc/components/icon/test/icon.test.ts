@@ -18,8 +18,8 @@ import { Icon } from '@adobe/spectrum-wc/icon';
 import '@adobe/spectrum-wc/components/icon/swc-icon.js';
 
 import { getComponent } from '../../../utils/test-utils.js';
-import meta from '../stories/icon.internal.stories.js';
-import { Overview } from '../stories/icon.internal.stories.js';
+import meta from '../stories/icon.stories.js';
+import { Overview } from '../stories/icon.stories.js';
 
 // This file defines dev-only test stories that reuse the main story metadata.
 export default {
@@ -32,6 +32,18 @@ export default {
   tags: ['!autodocs', 'dev'],
 } as Meta;
 
+// A custom, non-Spectrum SVG slotted into the frame as the test fixture — the
+// frame's intended use. Follows the slotted-SVG contract: a single `<svg>` with a
+// `viewBox`, no `width`/`height`, `fill="currentColor"`, and no ARIA.
+const iconSvg = html`
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path
+      d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+      fill="currentColor"
+    />
+  </svg>
+`;
+
 // ──────────────────────────────────────────────────────────────
 // TEST: Defaults
 // ──────────────────────────────────────────────────────────────
@@ -42,9 +54,10 @@ export const OverviewTest: Story = {
     const icon = await getComponent<Icon>(canvasElement, 'swc-icon');
 
     await step('renders with expected default properties', async () => {
-      expect(icon.accessibleLabel, 'accessibleLabel property is "Search"').toBe(
-        'Search'
-      );
+      expect(
+        icon.accessibleLabel,
+        'accessibleLabel property is "Favorite"'
+      ).toBe('Favorite');
       expect(icon.shadowRoot, 'shadow root is attached').toBeTruthy();
     });
   },
@@ -56,13 +69,7 @@ export const OverviewTest: Story = {
 
 export const SizeAttributeTest: Story = {
   render: () => html`
-    <swc-icon size="xl" accessible-label="Search">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
-        <path
-          d="M14.5 13.09 11.41 10a6 6 0 1 0-1.41 1.41l3.09 3.09a1 1 0 0 0 1.41-1.41zM3 7a4 4 0 1 1 8 0 4 4 0 0 1-8 0z"
-        />
-      </svg>
-    </swc-icon>
+    <swc-icon size="xl" accessible-label="Search">${iconSvg}</swc-icon>
   `,
   play: async ({ canvasElement, step }) => {
     const icon = await getComponent<Icon>(canvasElement, 'swc-icon');
@@ -79,13 +86,7 @@ export const SizeAttributeTest: Story = {
 
 export const LabeledHostAccessibilityTest: Story = {
   render: () => html`
-    <swc-icon accessible-label="Search">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
-        <path
-          d="M14.5 13.09 11.41 10a6 6 0 1 0-1.41 1.41l3.09 3.09a1 1 0 0 0 1.41-1.41zM3 7a4 4 0 1 1 8 0 4 4 0 0 1-8 0z"
-        />
-      </svg>
-    </swc-icon>
+    <swc-icon accessible-label="Search">${iconSvg}</swc-icon>
   `,
   play: async ({ canvasElement, step }) => {
     const icon = await getComponent<Icon>(canvasElement, 'swc-icon');
@@ -106,13 +107,7 @@ export const LabeledHostAccessibilityTest: Story = {
 
 export const NoLabelAriaHiddenTest: Story = {
   render: () => html`
-    <swc-icon>
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
-        <path
-          d="M14.5 13.09 11.41 10a6 6 0 1 0-1.41 1.41l3.09 3.09a1 1 0 0 0 1.41-1.41zM3 7a4 4 0 1 1 8 0 4 4 0 0 1-8 0z"
-        />
-      </svg>
-    </swc-icon>
+    <swc-icon>${iconSvg}</swc-icon>
   `,
   play: async ({ canvasElement, step }) => {
     const icon = await getComponent<Icon>(canvasElement, 'swc-icon');
@@ -135,13 +130,7 @@ export const NoLabelAriaHiddenTest: Story = {
 
 export const LabelTogglingTest: Story = {
   render: () => html`
-    <swc-icon accessible-label="x">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
-        <path
-          d="M14.5 13.09 11.41 10a6 6 0 1 0-1.41 1.41l3.09 3.09a1 1 0 0 0 1.41-1.41zM3 7a4 4 0 1 1 8 0 4 4 0 0 1-8 0z"
-        />
-      </svg>
-    </swc-icon>
+    <swc-icon accessible-label="x">${iconSvg}</swc-icon>
   `,
   play: async ({ canvasElement, step }) => {
     const icon = await getComponent<Icon>(canvasElement, 'swc-icon');

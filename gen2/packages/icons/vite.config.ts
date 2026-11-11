@@ -18,7 +18,8 @@ import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
 import litCss from 'vite-plugin-lit-css';
 
-// Match swc's stylesheet pipeline so `token()` in the shared icon-base.css resolves.
+// Match swc's stylesheet pipeline so `token()` in src/stylesheets/icon-base.css (a copy of
+// swc's _lit-styles/icon-base.css; see scripts/copy-icon-base-styles.mjs) resolves.
 // vite-plugin-lit-css wraps Vite's css-post transform, so these run on the lit-css
 // import too.
 const postcssPlugins = [

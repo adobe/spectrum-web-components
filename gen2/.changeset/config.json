@@ -3,7 +3,7 @@
   "access": "public",
   "baseBranch": "main",
   "changelog": [
-    "@changesets/changelog-github",
+    "./changelog-grouped.cjs",
     {
       "disableThanks": true,
       "repo": "adobe/spectrum-web-components"
@@ -19,7 +19,7 @@
   ],
   "snapshot": {
     "prereleaseTemplate": "{tag}.{datetime}",
-    "useCalculatedVersion": true
+    "useCalculatedVersion": false
   },
   "updateInternalDependencies": "patch"
 }

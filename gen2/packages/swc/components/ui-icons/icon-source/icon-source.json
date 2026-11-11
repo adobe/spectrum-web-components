@@ -1,0 +1,6 @@
+{
+  "_comment": "Records the Adobe A4U UI icon-set version pulled for generation. Update on each manual re-download. A4U is a private registry and is never a dependency of this repo; the raw SVGs are git-ignored, so only the generated art and this metadata live in the tree. See README.md in this folder.",
+  "pulledAt": "22/07/2026",
+  "set": "S2 UI Icon Global Set",
+  "version": "2.0.1"
+}

@@ -23,7 +23,6 @@
 .swc-MessageSources {
   display: flex;
   flex-direction: column;
-  gap: token("spacing-100");
 }
 
 /* ─────────────────────────────────────
@@ -96,6 +95,10 @@
   color: token("neutral-content-color-default");
   list-style: none;
   counter-increment: sources;
+}
+
+.swc-MessageSources-item:first-child {
+  margin-block-start: token("spacing-100");
 }
 
 .swc-MessageSources-item::before {

@@ -158,8 +158,8 @@ const STORIES_BY_MODE: Record<StorybookMode, StorybookConfig['stories']> = {
   // dependencies production doesn't need), and .test.ts fixtures.
   build: [
     { ...COMPONENT_STORIES, files: '**/!(*.internal).stories.ts' },
-    { ...PATTERN_STORIES, files: '**/*.stories.ts' },
-    { ...PATTERN_STORIES, files: '**/*.mdx' },
+    { ...PATTERN_STORIES, files: '**/!(*.internal).stories.ts' },
+    { ...PATTERN_STORIES, files: '**/!(*.internal).mdx' },
     { ...COMPONENT_STORIES, files: '**/!(*.internal).mdx' },
     { ...ICONS_STORIES, files: '**/!(*.internal).stories.ts' },
     { ...ICONS_STORIES, files: '**/!(*.internal).mdx' },
@@ -206,8 +206,7 @@ if (storybookMode !== 'ci-a11y') {
     '@storybook/addon-a11y',
     '@storybook/addon-designs',
     '@storybook/addon-vitest',
-    '@chromatic-com/storybook',
-    resolve(__dirname, './addons/screen-reader-addon')
+    '@chromatic-com/storybook'
   );
 }
 

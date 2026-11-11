@@ -20,6 +20,11 @@ export {
   type ColorTypes,
 } from './color-controller/index.js';
 export {
+  FieldAssociationController,
+  type FieldAssociationControllerOptions,
+  type FieldFormValue,
+} from './field-association-controller/index.js';
+export {
   DragAndDropController,
   type DragAndDropControllerOptions,
   type DragLeaveSnapshot,
@@ -70,3 +75,7 @@ export {
   SlotTextController,
   type SlotTextConfig,
 } from './slot-text-controller/index.js';
+export {
+  TriggerPressController,
+  type TriggerPressControllerOptions,
+} from './trigger-press-controller/index.js';
