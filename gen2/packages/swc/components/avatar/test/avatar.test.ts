@@ -193,6 +193,19 @@ export const InvalidSizeTest: Story = {
     );
 
     await step(
+      'accepts a numeric string size, as frameworks set it, without a warning',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          avatar.size = '200' as unknown as Avatar['size'];
+          await avatar.updateComplete;
+
+          expect(avatar.getAttribute('size')).toBe('200');
+          expect(renderedWidth(), 'renders size 200').not.toBe(defaultWidth);
+          expect(warnCalls.length, 'no warning for numeric text').toBe(0);
+        })
+    );
+
+    await step(
       'resets to the default without a warning when the attribute is removed',
       () =>
         withWarningSpy(async (warnCalls) => {

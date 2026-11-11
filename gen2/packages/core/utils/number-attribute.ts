@@ -13,6 +13,34 @@
 import type { ComplexAttributeConverter } from 'lit';
 
 /**
+ * Returns numeric text as a number and any other value unchanged.
+ *
+ * A numeric property can hold a string: frameworks such as React 19 and Vue
+ * set custom element properties directly, so `<swc-accordion level="4">` in
+ * JSX assigns `level = "4"`, and `numberAttribute` keeps non-numeric markup as
+ * text. Read the property through this helper before comparing it or doing
+ * math with it, so `"4"` behaves like `4`. It doesn't change the property.
+ *
+ * @param value - The property value.
+ * @returns `value` as a number when it is numeric text, otherwise `value`.
+ *
+ * @example
+ * ```typescript
+ * parseNumericText('4') // 4
+ * parseNumericText(4) // 4
+ * parseNumericText('banana') // 'banana'
+ * parseNumericText(null) // null
+ * ```
+ */
+export function parseNumericText<T>(value: T): T | number {
+  if (typeof value !== 'string' || value.trim() === '') {
+    return value;
+  }
+  const number = Number(value);
+  return Number.isFinite(number) ? number : value;
+}
+
+/**
  * Builds an attribute converter for a reflected numeric property that keeps
  * the consumer's text when it isn't a number.
  *
@@ -24,8 +52,8 @@ import type { ComplexAttributeConverter } from 'lit';
  *
  * - A numeric attribute becomes a number.
  * - Any other text, including an empty attribute, stays a string. Read the
- *   property with `Number.isFinite`, `validateEnum`, or `resolveEnum` so the
- *   text renders the default.
+ *   property through `parseNumericText`, then check it with `Number.isFinite`,
+ *   `validateEnum`, or `resolveEnum`, so the text renders the default.
  * - A removed attribute becomes `whenRemoved`.
  *
  * @param whenRemoved - The property value when the attribute is removed.
@@ -42,11 +70,7 @@ export function numberAttribute<T extends number | null>(
 ): ComplexAttributeConverter<number | string | T> {
   return {
     fromAttribute: (value: string | null): number | string | T => {
-      if (value === null) {
-        return whenRemoved;
-      }
-      const number = Number(value);
-      return value.trim() !== '' && Number.isFinite(number) ? number : value;
+      return value === null ? whenRemoved : parseNumericText(value);
     },
   };
 }

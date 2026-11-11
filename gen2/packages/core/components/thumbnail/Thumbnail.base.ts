@@ -15,6 +15,7 @@ import { property } from 'lit/decorators.js';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import {
   numberAttribute,
+  parseNumericText,
   validateEnum,
   warnIf,
 } from '@adobe/spectrum-wc-core/utils/index.js';
@@ -131,7 +132,7 @@ export abstract class ThumbnailBase extends SpectrumElement {
     // the stylesheet, so the thumbnail renders the defaults.
     validateEnum(this, {
       prop: 'size',
-      value: this.size,
+      value: parseNumericText(this.size),
       valid: THUMBNAIL_VALID_SIZES,
       url: DOCS_URL,
     });

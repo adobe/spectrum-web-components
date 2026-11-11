@@ -14,7 +14,7 @@ import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import { numberAttribute } from '../index.js';
+import { numberAttribute, parseNumericText } from '../index.js';
 
 export default {
   title: 'Utils/Number attribute/Tests',
@@ -43,6 +43,23 @@ export const NumberAttributeTest: Story = {
     await step('returns the given value for a removed attribute', () => {
       expect(fromAttribute?.(null)).toBe(100);
       expect(numberAttribute(null).fromAttribute?.(null)).toBeNull();
+    });
+  },
+};
+
+export const ParseNumericTextTest: Story = {
+  play: async ({ step }) => {
+    await step('returns numeric text as a number', () => {
+      expect(parseNumericText('4')).toBe(4);
+      expect(parseNumericText(' 2.5 ')).toBe(2.5);
+    });
+
+    await step('returns every other value unchanged', () => {
+      expect(parseNumericText(4)).toBe(4);
+      expect(parseNumericText('banana')).toBe('banana');
+      expect(parseNumericText('')).toBe('');
+      expect(parseNumericText(null)).toBeNull();
+      expect(parseNumericText(undefined)).toBeUndefined();
     });
   },
 };

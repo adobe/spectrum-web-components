@@ -115,6 +115,8 @@ protected override update(changedProperties: PropertyValues): void {
 
 Give a reflected numeric property the `numberAttribute(whenRemoved)` converter from the same utils module. Lit's default `Number` converter parses `size="banana"` to `NaN`, and because a property with a default value has already queued a write to its attribute, the first update then writes `size="NaN"` over the consumer's markup. `numberAttribute` keeps non-numeric text as a string, so that write puts back what the consumer wrote, and it sets `whenRemoved` when the attribute is removed. If a numeric property still ends up `NaN` (for example, set from JavaScript), `validateEnum` reports the attribute text instead.
 
+A numeric property can also hold numeric text: frameworks such as React 19 and Vue set custom element properties directly, so `level="4"` in JSX assigns the string `"4"`. Read the property through `parseNumericText` before passing it to `validateEnum`, `resolveEnum`, or any math, so `"4"` behaves like `4`.
+
 #### Rendering the default for an invalid value
 
 A warning is the only thing an invalid value triggers. Keep the value the consumer set on the property and the attribute, and render the default instead:

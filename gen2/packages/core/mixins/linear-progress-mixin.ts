@@ -18,6 +18,7 @@ import {
   componentDocsHref,
   isDebug,
   numberAttribute,
+  parseNumericText,
   validateEnum,
   warnIf,
 } from '../utils/index.js';
@@ -217,8 +218,10 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
      * stays internally consistent.
      */
     public get sanitizedMin(): number {
-      const min = Number.isFinite(this.minValue) ? this.minValue : 0;
-      const max = Number.isFinite(this.maxValue) ? this.maxValue : 100;
+      const minValue = parseNumericText(this.minValue);
+      const maxValue = parseNumericText(this.maxValue);
+      const min = Number.isFinite(minValue) ? minValue : 0;
+      const max = Number.isFinite(maxValue) ? maxValue : 100;
       return Math.min(min, max);
     }
 
@@ -228,8 +231,10 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
      * Sanitized upper bound. See `sanitizedMin`.
      */
     public get sanitizedMax(): number {
-      const min = Number.isFinite(this.minValue) ? this.minValue : 0;
-      const max = Number.isFinite(this.maxValue) ? this.maxValue : 100;
+      const minValue = parseNumericText(this.minValue);
+      const maxValue = parseNumericText(this.maxValue);
+      const min = Number.isFinite(minValue) ? minValue : 0;
+      const max = Number.isFinite(maxValue) ? maxValue : 100;
       return Math.max(min, max);
     }
 
@@ -237,7 +242,8 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
      * @internal
      */
     public get clampedValue(): number {
-      const value = Number.isFinite(this.value) ? this.value : 0;
+      const parsed = parseNumericText(this.value);
+      const value = Number.isFinite(parsed) ? parsed : 0;
       return Math.min(this.sanitizedMax, Math.max(this.sanitizedMin, value));
     }
 
@@ -336,7 +342,8 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
     }
 
     private warnInvalidRange(): void {
-      const { minValue, maxValue } = this;
+      const minValue = parseNumericText(this.minValue);
+      const maxValue = parseNumericText(this.maxValue);
       const isFiniteRange =
         Number.isFinite(minValue) && Number.isFinite(maxValue);
       // Early return when the range is valid so the message is not built on
@@ -360,7 +367,7 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
     }
 
     private warnValueOutOfRange(): void {
-      const value = this.value;
+      const value = parseNumericText(this.value);
       const min = this.sanitizedMin;
       const max = this.sanitizedMax;
       // Early return when the value is valid so the message is not built on

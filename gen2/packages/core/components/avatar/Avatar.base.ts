@@ -15,6 +15,7 @@ import { property } from 'lit/decorators.js';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import {
   numberAttribute,
+  parseNumericText,
   validateEnum,
   warnIf,
 } from '@adobe/spectrum-wc-core/utils/index.js';
@@ -117,7 +118,7 @@ export abstract class AvatarBase extends SpectrumElement {
     // stylesheet, so the avatar renders at the default size.
     validateEnum(this, {
       prop: 'size',
-      value: this.size,
+      value: parseNumericText(this.size),
       valid: AVATAR_VALID_SIZES,
       url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-avatar--docs',
     });

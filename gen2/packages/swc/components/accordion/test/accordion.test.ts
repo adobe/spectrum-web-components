@@ -1424,6 +1424,19 @@ export const InvalidHeadingLevelTest: Story = {
         })
     );
 
+    await step(
+      'renders a numeric string level, as frameworks set it, without a warning',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          accordion.level = '4' as unknown as Accordion['level'];
+          await accordion.updateComplete;
+          await item.updateComplete;
+
+          expect(getHeadingElement(item).tagName.toLowerCase()).toBe('h4');
+          expect(warnCalls.length, 'no warning for numeric text').toBe(0);
+        })
+    );
+
     await step('does not warn on a valid level', () =>
       withWarningSpy(async (warnCalls) => {
         accordion.level = 5;

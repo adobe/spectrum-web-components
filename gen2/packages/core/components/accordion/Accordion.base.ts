@@ -18,6 +18,7 @@ import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import { SizedMixin } from '@adobe/spectrum-wc-core/mixins/index.js';
 import {
   numberAttribute,
+  parseNumericText,
   resolveEnum,
   validateEnum,
 } from '@adobe/spectrum-wc-core/utils/index.js';
@@ -145,7 +146,7 @@ export abstract class AccordionBase extends SizedMixin(SpectrumElement, {
    */
   protected get resolvedLevel(): AccordionHeadingLevel {
     return resolveEnum(
-      this.level,
+      parseNumericText(this.level),
       ACCORDION_HEADING_LEVELS,
       ACCORDION_DEFAULT_HEADING_LEVEL
     );
@@ -162,7 +163,7 @@ export abstract class AccordionBase extends SizedMixin(SpectrumElement, {
   protected override update(changedProperties: PropertyValues): void {
     validateEnum(this, {
       prop: 'level',
-      value: this.level,
+      value: parseNumericText(this.level),
       valid: ACCORDION_HEADING_LEVELS,
       url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-accordion--docs',
     });

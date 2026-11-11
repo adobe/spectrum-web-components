@@ -372,6 +372,17 @@ export const ProgressClampTest: Story = {
       })
     );
 
+    await step(
+      'renders a numeric string progress, as frameworks set it, without a warning',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          circles[0].progress = '50' as unknown as number;
+          await circles[0].updateComplete;
+          expect(circles[0].getAttribute('aria-valuenow')).toBe('50');
+          expect(warnCalls.length, 'no warning for numeric text').toBe(0);
+        })
+    );
+
     await step('does not warn for progress within 0–100', () =>
       withWarningSpy(async (warnCalls) => {
         circles[0].progress = 40;

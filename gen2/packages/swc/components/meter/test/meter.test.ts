@@ -410,6 +410,31 @@ export const ValueOutOfRangeWarningTest: Story = {
       })
     );
 
+    await step(
+      'renders numeric string values, as frameworks set them, without a warning',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          const meter = await fixture<Meter>(html`
+            <swc-meter accessible-label="Storage used"></swc-meter>
+          `);
+          meter.minValue = '10' as unknown as number;
+          meter.maxValue = '20' as unknown as number;
+          meter.value = '15' as unknown as number;
+          await meter.updateComplete;
+
+          const roleEl = getRoleEl(meter);
+          expect(roleEl.getAttribute('aria-valuemin')).toBe('10');
+          expect(roleEl.getAttribute('aria-valuemax')).toBe('20');
+          expect(roleEl.getAttribute('aria-valuenow')).toBe('15');
+          const messages = warnCalls.map((call) => String(call[1] ?? ''));
+          expect(
+            messages.some((m) => m.includes('range')),
+            'no range warning for numeric text'
+          ).toBe(false);
+          meter.parentElement?.remove();
+        })
+    );
+
     await step('does not warn when value is within the range', () =>
       withWarningSpy(async (warnCalls) => {
         const meter = await fixture<Meter>(html`

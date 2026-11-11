@@ -22,6 +22,7 @@ import { SizedMixin } from '@adobe/spectrum-wc-core/mixins/index.js';
 import {
   isDebug,
   numberAttribute,
+  parseNumericText,
   validateEnum,
   warnIf,
 } from '@adobe/spectrum-wc-core/utils/index.js';
@@ -156,13 +157,14 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
    * consumer set.
    */
   protected get clampedProgress(): number | null {
-    if (this.progress === null || this.progress === undefined) {
+    const progress = parseNumericText(this.progress);
+    if (progress === null || progress === undefined) {
       return null;
     }
-    if (!Number.isFinite(this.progress)) {
+    if (!Number.isFinite(progress)) {
       return 0;
     }
-    return Math.min(100, Math.max(0, this.progress));
+    return Math.min(100, Math.max(0, progress));
   }
 
   private formatProgress(): string {
@@ -191,7 +193,7 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
         : String(this.progress);
       warnIf(
         this,
-        this.clampedProgress !== this.progress,
+        this.clampedProgress !== parseNumericText(this.progress),
         `<${this.localName}> expects "progress" to be a number from 0 to 100. Received "${received}"; rendering ${this.clampedProgress}.`,
         'https://spectrum-web-components.adobe.com/?path=/docs/components-progress-circle--docs',
         { issues: [`progress="${received}"`] }
