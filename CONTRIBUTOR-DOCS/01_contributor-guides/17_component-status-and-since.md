@@ -98,6 +98,8 @@ A deprecated component is removed only in a later major release. Its removal is 
 
 Use `internal` for components that exist to build other SWC components and that consumers shouldn't place directly. An internal component's stories and docs use the `.internal.stories.ts` and `.internal.mdx` naming, which the production Storybook build excludes (see `gen2/packages/swc/.storybook/main.ts`).
 
+The naming and the tag always match. If a component's stories or MDX file name includes `.internal.`, its class must use `@status internal`.
+
 Promoting an internal component to public means dropping the `.internal.*` naming and changing `@status` to `experimental`, in the same PR. The [Asset component plan](../03_project-planning/03_components/asset/component-plan.md) is an example.
 
 ## Changing a status
