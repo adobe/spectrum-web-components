@@ -28,19 +28,6 @@ const { args, argTypes, template } = getStorybookHelpers('swc-user-message');
 delete (args as Record<string, unknown>).content;
 delete (argTypes as Record<string, unknown>).content;
 
-argTypes.type = {
-  ...argTypes.type,
-  control: {
-    type: 'select',
-    labels: { copy: 'Copy (default)' },
-  },
-  options: ['copy', 'card', 'media'],
-  table: {
-    category: 'attributes',
-    defaultValue: { summary: 'copy' },
-  },
-};
-
 /**
  * User-authored message bubble. Use inside `<swc-conversation-turn type="user">` for thread alignment.
  *

@@ -20,6 +20,7 @@ import '../../../upload-attachment/swc-upload-attachment.js';
 import {
   createPermutations,
   forcedColorsVrtParameters,
+  forcePseudoStates,
   groupPermutationsBy,
   row,
   theme,
@@ -60,6 +61,7 @@ type MessageCase = {
   copy?: string;
   lang?: string;
   maxInlineSize?: string;
+  forceState?: 'focus-within';
 };
 
 const cardThumbnail = renderAttachmentPreview({
@@ -92,6 +94,7 @@ const renderMessage = ({
   copy = SHORT_COPY,
   lang,
   maxInlineSize,
+  forceState,
 }: MessageCase) => {
   const message =
     !type || type === 'copy'
@@ -101,7 +104,11 @@ const renderMessage = ({
           </swc-user-message>
         `
       : html`
-          <swc-user-message type=${type} lang=${lang ?? nothing}>
+          <swc-user-message
+            type=${type}
+            lang=${lang ?? nothing}
+            data-force-state=${forceState ?? nothing}
+          >
             ${Array.from({ length: count }, () =>
               type === 'card'
                 ? html`
@@ -244,11 +251,41 @@ const galleryOverflowRow = (type: 'media' | 'card' = 'media') =>
     type === 'card' ? 'Document gallery overflow' : 'Gallery overflow'
   );
 
-const verifyGalleryOverflow = async ({
+const focusedGalleryRow = () =>
+  row(
+    (['media', 'card'] as const).map((type) =>
+      captioned(
+        renderMessage({
+          type,
+          count: type === 'media' ? 24 : 6,
+          maxInlineSize: '220px',
+          forceState: 'focus-within',
+        }),
+        type === 'media' ? 'Media gallery' : 'Card gallery'
+      )
+    ),
+    'Focus within'
+  );
+
+const verifyGalleries = async ({
   canvasElement,
 }: {
   canvasElement: HTMLElement;
 }) => {
+  await forcePseudoStates('swc-user-message[data-force-state]')({
+    canvasElement,
+  });
+  const focusedGalleries = canvasElement.querySelectorAll<UserMessage>(
+    'swc-user-message[data-force-state="focus-within"]'
+  );
+  expect(
+    [...new Set([...focusedGalleries].map((gallery) => gallery.type))].sort()
+  ).toEqual(['card', 'media']);
+  for (const gallery of focusedGalleries) {
+    await gallery.updateComplete;
+    expect(gallery).toHaveAttribute('data-forced-focus-within');
+    expect(getComputedStyle(gallery).outlineStyle).toBe('solid');
+  }
   for (const wrapper of canvasElement.querySelectorAll<HTMLElement>(
     '[data-gallery-overflow]'
   )) {
@@ -338,6 +375,7 @@ const permutationContent = () => [
   ...extraRows(),
   galleryOverflowRow(),
   galleryOverflowRow('card'),
+  focusedGalleryRow(),
 ];
 
 // Renders content in light/ltr and dark/rtl (that pair covers both axes) in one
@@ -350,18 +388,17 @@ const bothThemes = (content: unknown) => html`
 
 // Copy / card / media types (including title-only card anatomy), wrapping
 // at a narrow column and at the 536px cap, ellipsis truncation, and CJK
-// line-height. User message has no :hover/:focus/:active rules of its own
-// (focus rings live on swc-conversation-turn), so there is no forced
-// pseudo-state row.
+// line-height. Focused card and media galleries cover the component's own
+// :focus-within outline outside the scroll-area mask.
 export const Permutations: Story = {
   render: () => bothThemes(permutationContent()),
-  play: verifyGalleryOverflow,
+  play: verifyGalleries,
   parameters: vrtParameters,
 };
 
 // Forced-colors remaps the gray-50 bubble fill, gray-800/900 text, and the
-// transparent border. Those tokens do not vary across wrapping, truncation, or
-// CJK, so the three types are enough.
+// transparent border. Focused galleries also cover the CanvasText outline
+// override with the scroll-area mask disabled.
 export const ForcedColors: Story = {
   render: () =>
     theme(
@@ -371,10 +408,11 @@ export const ForcedColors: Story = {
         mixedCardRow(),
         galleryOverflowRow(),
         galleryOverflowRow('card'),
+        focusedGalleryRow(),
       ],
       'light',
       'ltr'
     ),
-  play: verifyGalleryOverflow,
+  play: verifyGalleries,
   parameters: forcedColorsVrtParameters,
 };
