@@ -44,7 +44,6 @@ const meta: Meta = {
   render: (args) => template(args),
   parameters: {
     docs: {
-      packagePath: 'patterns/ai-toolkit/user-message',
       subtitle: 'User-submitted message rendered in the thread.',
     },
     layout: 'padded',

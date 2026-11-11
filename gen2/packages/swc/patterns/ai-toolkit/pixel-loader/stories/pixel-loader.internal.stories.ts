@@ -43,7 +43,6 @@ const meta: Meta = {
   render: (args) => template(args),
   parameters: {
     docs: {
-      packagePath: 'patterns/ai-toolkit/pixel-loader',
       subtitle: 'Assembling/disassembling pixel icon loading indicator.',
     },
     layout: 'centered',
