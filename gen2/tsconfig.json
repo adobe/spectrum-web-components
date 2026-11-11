@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "allowImportingTsExtensions": true,
-    "esModuleInterop": true,
 
     // Source-only editor coverage; production packages use their own projects.
     "noEmit": true,
