@@ -41,7 +41,7 @@ The `quiet` variant removes the item divider borders and rounds the header corne
 
 ### Heading level
 
-The `level` attribute sets the heading level (`h2`–`h6`) applied to every item header. The default is `3`; other values emit a development warning and render as `h3`.
+The `level` attribute sets the heading level (`h2`–`h6`) applied to every item header. The default is `3`. Other values emit a development warning: an out-of-range number renders the nearest level (`1` renders `h2`, `7` renders `h6`), and anything else renders `h3`.
 
 > **Note**: In Spectrum 1, `level` could be set on each `sp-accordion-item`; in Spectrum 2 it is set only on `<swc-accordion>`. See the [migration guide](?path=/docs/components-accordion-migration-guide--docs).
 

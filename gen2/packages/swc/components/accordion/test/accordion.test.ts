@@ -1361,9 +1361,14 @@ export const InvalidHeadingLevelTest: Story = {
       'swc-accordion-item'
     );
 
-    for (const level of [1, 7]) {
+    for (const [level, heading] of [
+      [1, 'h2'],
+      [7, 'h6'],
+      [0, 'h2'],
+      [4.6, 'h5'],
+    ] as const) {
       await step(
-        `warns on level ${level}, keeps the value, and renders the default h3`,
+        `warns on level ${level}, keeps the value, and renders the nearest level ${heading}`,
         () =>
           withWarningSpy(async (warnCalls) => {
             accordion.level = level as Accordion['level'];
@@ -1377,8 +1382,8 @@ export const InvalidHeadingLevelTest: Story = {
             ).toBe(String(level));
             expect(
               getHeadingElement(item).tagName.toLowerCase(),
-              'heading renders the default level'
-            ).toBe('h3');
+              'heading renders the nearest valid level'
+            ).toBe(heading);
             expect(
               String(warnCalls[0]?.[1] ?? ''),
               'warning names the property and received value'

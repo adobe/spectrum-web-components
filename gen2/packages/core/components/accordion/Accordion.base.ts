@@ -19,7 +19,6 @@ import { SizedMixin } from '@adobe/spectrum-wc-core/mixins/index.js';
 import {
   numberAttribute,
   parseNumericText,
-  resolveEnum,
   validateEnum,
 } from '@adobe/spectrum-wc-core/utils/index.js';
 
@@ -42,7 +41,8 @@ import { AccordionItemBase } from './AccordionItem.base.js';
  * @attribute {boolean} allowMultiple - Reflected as `allow-multiple`. When set,
  *   multiple items may be open at the same time.
  * @attribute {number} level - Heading level (2–6) applied to every item header.
- *   Other values are kept as set, warn in dev mode, and render the default (3).
+ *   Other values are kept as set and warn in dev mode; out-of-range numbers
+ *   render the nearest level, and non-numbers render the default (3).
  * @attribute {AccordionSize} size - Size applied to all items.
  * @attribute {AccordionDensity} density - Vertical spacing between items.
  * @attribute {boolean} quiet - Renders the accordion in its quiet visual variant.
@@ -67,7 +67,9 @@ export abstract class AccordionBase extends SizedMixin(SpectrumElement, {
 
   /**
    * Heading level applied to every item header (2–6). Defaults to 3.
-   * Other values are kept as set, warn in dev mode, and render the default.
+   * Other values are kept as set and warn in dev mode. Out-of-range numbers
+   * render the nearest level (`1` renders `h2`, `7` renders `h6`) so the page
+   * outline keeps the intended depth; non-numbers render the default.
    */
   @property({
     type: Number,
@@ -142,14 +144,20 @@ export abstract class AccordionBase extends SizedMixin(SpectrumElement, {
    * @internal
    *
    * The heading level rendered by every item. Invalid values are kept on
-   * `level` as set and resolve to the default here.
+   * `level` as set; a number resolves to the nearest valid level and
+   * anything else to the default.
    */
   protected get resolvedLevel(): AccordionHeadingLevel {
-    return resolveEnum(
-      parseNumericText(this.level),
-      ACCORDION_HEADING_LEVELS,
-      ACCORDION_DEFAULT_HEADING_LEVEL
-    );
+    const level = parseNumericText(this.level);
+    if (typeof level !== 'number' || !Number.isFinite(level)) {
+      return ACCORDION_DEFAULT_HEADING_LEVEL;
+    }
+    const min = ACCORDION_HEADING_LEVELS[0];
+    const max = ACCORDION_HEADING_LEVELS[ACCORDION_HEADING_LEVELS.length - 1];
+    return Math.min(
+      max,
+      Math.max(min, Math.round(level))
+    ) as AccordionHeadingLevel;
   }
 
   protected syncAccordionItems(): void {
