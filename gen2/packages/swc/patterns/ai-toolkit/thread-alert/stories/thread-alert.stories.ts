@@ -27,6 +27,10 @@ import { threadAlertTemplate } from '../thread-alert.usage.js';
 
 const { args, argTypes, template } = getStorybookHelpers('swc-thread-alert');
 
+// Remove the obsolete slot even when Storybook caches the earlier manifest.
+delete args['heading-slot'];
+delete argTypes['heading-slot'];
+
 /**
  * A thread alert places a status message and optional inline controls in a conversation.
  * Compose actions with [Button](../?path=/docs/components-button--docs) and
@@ -43,7 +47,13 @@ const meta: Meta = {
     'dismiss-slot':
       '<swc-close-button size="s" accessible-label="Dismiss message"></swc-close-button>',
   },
-  argTypes,
+  argTypes: {
+    ...argTypes,
+    variant: {
+      control: 'select',
+      options: ['informative', 'positive', 'notice', 'negative', 'neutral'],
+    },
+  },
   render: (args) => template(args),
   parameters: {
     docs: {
@@ -116,7 +126,20 @@ const insertMessage = async (event: Event): Promise<void> => {
 // ────────────────────
 
 export const Playground: Story = {
-  args: { variant: 'notice' },
+  args: { variant: 'notice', showButton: false },
+  argTypes: {
+    showButton: {
+      name: 'Show button',
+      control: 'boolean',
+      description: 'Show the optional action button in this example.',
+      table: { category: 'Demo' },
+    },
+  },
+  render: ({ showButton, ...args }) =>
+    template({
+      ...args,
+      'actions-slot': showButton ? args['actions-slot'] : '',
+    }),
   tags: ['dev'],
 };
 
@@ -136,7 +159,6 @@ export const Overview: Story = {
 export const Anatomy: Story = {
   args: {
     variant: 'negative',
-    'heading-slot': '<h3>Request interrupted</h3>',
     'default-slot': '<span>Your response could not be completed.</span>',
   },
   tags: ['anatomy'],

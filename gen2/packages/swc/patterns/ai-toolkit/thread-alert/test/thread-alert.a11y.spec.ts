@@ -76,7 +76,7 @@ test.describe('Thread alert', () => {
     expect(blended).toBeLessThan(blackOnWhite);
   });
 
-  test('preserves the consumer heading and named inline controls without a live role', async ({
+  test('preserves the message text and named inline controls without a live role', async ({
     page,
   }) => {
     const root = await gotoStory(
@@ -85,11 +85,11 @@ test.describe('Thread alert', () => {
       'swc-thread-alert'
     );
     await expect(root).toMatchAriaSnapshot(`
-      - heading "Request interrupted" [level=3]
       - text: Your response could not be completed.
       - button "Try again"
       - button "Dismiss message"
     `);
+    await expect(root.getByRole('heading')).toHaveCount(0);
     await expect(
       root.locator('[role="alert"], [role="status"], [aria-live]')
     ).toHaveCount(0);
@@ -336,7 +336,7 @@ test.describe('Thread alert', () => {
       'swc-thread-alert'
     );
     await expect(
-      root.getByRole('heading', { name: 'Request interrupted' })
+      root.getByText('Your response could not be completed.', { exact: true })
     ).toBeVisible();
     await page.keyboard.press('Tab');
     const retry = root.getByRole('button', { name: 'Try again' });

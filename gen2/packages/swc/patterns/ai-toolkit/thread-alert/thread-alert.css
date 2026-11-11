@@ -28,6 +28,7 @@
   flex-wrap: wrap;
   row-gap: var(--swc-thread-alert-gap, token("base-gap-medium"));
   align-items: center;
+  min-block-size: var(--swc-thread-alert-min-block-size, token("component-height-100"));
   padding-block: var(--swc-thread-alert-padding-block, token("base-padding-vertical-small"));
   padding-inline-start: var(--swc-thread-alert-padding-inline-start, token("spacing-100"));
   padding-inline-end: var(--swc-thread-alert-padding-inline-end, token("accessory-item-padding-medium"));
@@ -69,9 +70,7 @@
 }
 
 .swc-ThreadAlert-content {
-  display: flex;
   flex: 1 1 0;
-  flex-direction: column;
   min-inline-size: 0;
   overflow-wrap: anywhere;
 }

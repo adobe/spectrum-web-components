@@ -30,8 +30,7 @@ import styles from './thread-alert.css';
  *
  * @element swc-thread-alert
  * @attr {'informative' | 'positive' | 'notice' | 'negative' | 'neutral'} variant - Visual status. Defaults to informative when omitted.
- * @slot - Meaningful message text or semantic HTML.
- * @slot heading - Optional consumer-chosen h2 through h6.
+ * @slot - Meaningful message text or inline HTML.
  * @slot actions - Optional named buttons or native links.
  * @slot dismiss - Optional swc-close-button with a localized accessible-label.
  * @cssprop --swc-thread-alert-background-color - Message surface color.
@@ -41,6 +40,7 @@ import styles from './thread-alert.css';
  * @cssprop --swc-thread-alert-content-color - Message text color.
  * @cssprop --swc-thread-alert-icon-color - Status icon color.
  * @cssprop --swc-thread-alert-icon-size - Status icon dimensions.
+ * @cssprop --swc-thread-alert-min-block-size - Minimum message height.
  * @cssprop --swc-thread-alert-gap - Space between the icon, content, and controls.
  * @cssprop --swc-thread-alert-padding-block - Surface block padding.
  * @cssprop --swc-thread-alert-padding-inline-start - Surface inline-start padding.
@@ -90,10 +90,9 @@ export class ThreadAlert extends SpectrumElement {
         >
           <swc-icon-alert-triangle></swc-icon-alert-triangle>
         </span>
-        <div class="swc-ThreadAlert-content">
-          <slot name="heading"></slot>
+        <span class="swc-ThreadAlert-content">
           <slot></slot>
-        </div>
+        </span>
         <slot name="actions"></slot>
         <slot name="dismiss"></slot>
       </div>
