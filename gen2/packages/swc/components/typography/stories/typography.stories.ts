@@ -37,6 +37,7 @@ const meta: Meta<TypographyTemplateProps> = {
         sourceState: 'hidden',
       },
     },
+    missingDesignDocs: true,
   },
   argTypes: {
     variant: { control: 'select', options: VARIANTS },

@@ -69,13 +69,13 @@ function reportSkippedExpansions(unresolved) {
  * ```ts
  * /**
  *  * @element swc-my-component
- *  * @status preview
+ *  * @status experimental
  *  * @since 1.0.0
  *  *\/
  * export class MyComponent extends … { … }
  * ```
  *
- * Produces CEM entries with `"status": "preview"` and `"since": "1.0.0"`.
+ * Produces CEM entries with `"status": "experimental"` and `"since": "1.0.0"`.
  */
 function statusPlugin() {
   return {
