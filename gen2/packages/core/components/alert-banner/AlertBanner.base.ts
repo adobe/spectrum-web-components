@@ -72,10 +72,6 @@ export abstract class AlertBannerBase extends SpectrumElement {
   //     IMPLEMENTATION
   // ──────────────────────
 
-  protected isValidVariant(variant: string): boolean {
-    return (ALERT_BANNER_VALID_VARIANTS as readonly string[]).includes(variant);
-  }
-
   /**
    * @internal
    *
