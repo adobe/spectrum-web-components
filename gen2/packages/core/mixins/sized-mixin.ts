@@ -12,6 +12,12 @@
 import { PropertyValues, ReactiveElement } from 'lit';
 import { property } from 'lit/decorators.js';
 
+import {
+  componentDocsHref,
+  resolveEnum,
+  validateEnum,
+} from '../utils/index.js';
+
 type Constructor<T = Record<string, unknown>> = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   new (...args: any[]): T;
@@ -31,6 +37,14 @@ export type DefaultElementSize = (typeof DEFAULT_ELEMENT_SIZES)[number];
 
 export interface SizedElementInterface {
   size: ElementSize;
+
+  /**
+   * @internal
+   *
+   * The size used for rendering and for passing to child elements: `size`
+   * when it's one of the class's valid sizes, otherwise the default.
+   */
+  readonly resolvedSize: ElementSize;
 }
 
 export interface SizedElementConstructor {
@@ -64,6 +78,15 @@ export interface SizedElementConstructor {
  * declare `static override readonly NO_DEFAULT_SIZE = true` — no mixin
  * re-wrapping, no lifecycle interception, and the correct value is read by every
  * SizedMixin layer in the chain.
+ *
+ * ## Invalid sizes
+ *
+ * A size that isn't one of the class's `VALID_SIZES`, including a different
+ * letter case such as `"M"`, is kept on the property and the attribute as set
+ * and warns in dev mode. Rendering reads `resolvedSize`, which resolves it to
+ * the default; stylesheets that select on the attribute apply their default
+ * because the value matches no `:host([size="…"])` selector. An empty
+ * attribute (`size=""`) is invalid too; only a removed attribute is unset.
  */
 export function SizedMixin<T extends Constructor<ReactiveElement>>(
   constructor: T,
@@ -94,42 +117,63 @@ export function SizedMixin<T extends Constructor<ReactiveElement>>(
      */
     static readonly NO_DEFAULT_SIZE: boolean = noDefaultSize ?? false;
 
+    /**
+     * The size of the element. An invalid value is kept as set and warns in
+     * dev mode; rendering reads `resolvedSize`.
+     */
     @property({ type: String })
     public get size(): ElementSize {
       return this._size || defaultSize;
     }
 
-    public set size(value: ElementSize) {
+    public set size(value: ElementSize | null) {
       const sizedConstructor = this
         .constructor as unknown as SizedElementConstructor;
-      const fallbackSize = sizedConstructor.NO_DEFAULT_SIZE
-        ? null
-        : defaultSize;
-      const size = (value ? value.toLocaleLowerCase() : value) as ElementSize;
-      const classValidSizes = sizedConstructor.VALID_SIZES;
-      const validSize = (
-        classValidSizes.includes(size) ? size : fallbackSize
-      ) as ElementSize;
-      if (validSize) {
-        this.setAttribute('size', validSize);
+      // A removed attribute (or `null`) is the unset case: it resets to the
+      // default, or stays unset for classes whose parent supplies the size.
+      const size =
+        value ?? (sizedConstructor.NO_DEFAULT_SIZE ? null : defaultSize);
+      // Reflect the value as set, without correcting it. When the change
+      // came from the attribute, this rewrites the same text, and Lit ignores
+      // the nested attribute callback.
+      if (size) {
+        this.setAttribute('size', size);
       }
-      if (this._size === validSize) {
+      if (this._size === size) {
         return;
       }
       const oldSize = this._size;
-      this._size = validSize;
+      this._size = size;
       this.requestUpdate('size', oldSize);
     }
 
     /** @internal */
     private _size: ElementSize | null = defaultSize;
 
+    /**
+     * @internal
+     *
+     * `size` when it's one of the class's `VALID_SIZES`, otherwise the
+     * default. Read this for rendering and for sizes passed to children.
+     */
+    public get resolvedSize(): ElementSize {
+      const sizedConstructor = this
+        .constructor as unknown as SizedElementConstructor;
+      return resolveEnum(this.size, sizedConstructor.VALID_SIZES, defaultSize);
+    }
+
     protected override update(changes: PropertyValues): void {
-      if (
-        !this.hasAttribute('size') &&
-        !(this.constructor as unknown as SizedElementConstructor)
-          .NO_DEFAULT_SIZE
-      ) {
+      const sizedConstructor = this
+        .constructor as unknown as SizedElementConstructor;
+      if (this._size !== null) {
+        validateEnum(this, {
+          prop: 'size',
+          value: this._size,
+          valid: sizedConstructor.VALID_SIZES,
+          url: componentDocsHref(this.localName),
+        });
+      }
+      if (!this.hasAttribute('size') && !sizedConstructor.NO_DEFAULT_SIZE) {
         this.setAttribute('size', this.size);
       }
       super.update(changes);

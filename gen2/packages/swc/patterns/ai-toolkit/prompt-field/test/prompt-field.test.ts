@@ -423,6 +423,67 @@ export const MixedAttachmentWarningTest: Story = {
   },
 };
 
+export const InvalidSizeWarningTest: Story = {
+  render: () => '',
+  play: async ({ canvasElement, step }) => {
+    await withWarningSpy(async (warnCalls) => {
+      render(
+        html`
+          <swc-prompt-field size="S" accessible-label="AI prompt">
+            <p slot="legal">Approved legal copy.</p>
+          </swc-prompt-field>
+        `,
+        canvasElement
+      );
+      const el = await getComponent<PromptField>(
+        canvasElement,
+        'swc-prompt-field'
+      );
+
+      await step(
+        'keeps an invalid size, warns, and gives its buttons the default',
+        async () => {
+          const buttons = Array.from(
+            el.shadowRoot!.querySelectorAll('swc-action-button')
+          );
+          expect(el.getAttribute('size')).toBe('S');
+          expect(buttons.length).toBeGreaterThan(0);
+          for (const button of buttons) {
+            expect(button.getAttribute('size'), 'button gets the default').toBe(
+              'm'
+            );
+          }
+          expect(
+            warnCalls.some(
+              ([source, message]) =>
+                source === el && /"size".*"S"/.test(String(message))
+            ),
+            'the prompt field warns about its own size'
+          ).toBe(true);
+          expect(
+            warnCalls.some(
+              ([source, message]) =>
+                source !== el && /"size"/.test(String(message))
+            ),
+            'the buttons do not warn'
+          ).toBe(false);
+        }
+      );
+
+      warnCalls.length = 0;
+      el.removeAttribute('size');
+      await el.updateComplete;
+      await step(
+        'resets to m without a warning when the attribute is removed',
+        () => {
+          expect(el.size).toBe('m');
+          expect(warnCalls.length, 'no warning when size is unset').toBe(0);
+        }
+      );
+    });
+  },
+};
+
 const attachmentScrollGradient =
   'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
 

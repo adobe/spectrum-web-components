@@ -41,7 +41,7 @@ export class Divider extends DividerBase {
       <div
         class=${classMap({
           ['swc-Divider']: true,
-          [`swc-Divider--size${this.size?.toUpperCase()}`]: this.size != null,
+          [`swc-Divider--size${this.resolvedSize.toUpperCase()}`]: true,
           [`swc-Divider--static${capitalize(this.staticColor)}`]:
             this.staticColor != null,
           ['swc-Divider--vertical']: this.vertical,
