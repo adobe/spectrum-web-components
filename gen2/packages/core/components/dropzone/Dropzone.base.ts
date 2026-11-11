@@ -195,6 +195,7 @@ export abstract class DropzoneBase extends SizedMixin(SpectrumElement, {
   protected handleDefaultSlotChange(): void {
     this._sizePropagation.propagate();
   }
+
   protected override update(changes: PropertyValues): void {
     validateEnum(this, {
       prop: 'drop-effect',

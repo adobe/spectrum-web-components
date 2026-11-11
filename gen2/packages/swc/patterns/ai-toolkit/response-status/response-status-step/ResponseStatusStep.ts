@@ -152,9 +152,6 @@ export class ResponseStatusStep extends SpectrumElement {
     this.setAttribute('role', 'listitem');
   }
 
-  // Runs on every update (including the first), so it catches `open` turning
-  // `true` from a click, initial markup, or a consumer setting the property
-  // directly — not just the click path.
   protected override update(changed: PropertyValues<this>): void {
     // An invalid status is kept as set; `_resolvedStatus` renders `active`.
     validateEnum(this, {
@@ -166,6 +163,9 @@ export class ResponseStatusStep extends SpectrumElement {
     super.update(changed);
   }
 
+  // Runs on every update (including the first), so it catches `open` turning
+  // `true` from a click, initial markup, or a consumer setting the property
+  // directly — not just the click path.
   protected override updated(changed: PropertyValues<this>): void {
     if (changed.has('open') && this.open) {
       void this.updateComplete.then(() => this._measureOverflow());
