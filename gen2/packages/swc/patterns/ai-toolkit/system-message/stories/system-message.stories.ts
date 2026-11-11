@@ -67,7 +67,6 @@ const meta: Meta = {
   render: (args) => template(args),
   parameters: {
     docs: {
-      packagePath: 'patterns/ai-toolkit/system-message',
       subtitle: 'Layout container for a single system reply.',
     },
     layout: 'padded',

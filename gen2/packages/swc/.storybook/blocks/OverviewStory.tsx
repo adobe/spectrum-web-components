@@ -13,7 +13,7 @@ import { Canvas, useOf } from '@storybook/addon-docs/blocks';
 import React from 'react';
 import type { ActionItem } from 'storybook/internal/components';
 
-import { formatTitle } from '../helpers/index.js';
+import { formatTitle, sourceLocation } from '../helpers/index.js';
 
 export const OverviewStory = () => {
   const resolvedOf = useOf('meta', ['meta']);
@@ -27,10 +27,11 @@ export const OverviewStory = () => {
   }
   primaryStory.args = null;
 
-  // Extract component name and create GitHub link
   const componentName = formatTitle(resolvedOf.preparedMeta?.title);
+  const fileName: string | undefined =
+    resolvedOf.preparedMeta?.parameters?.fileName;
   const githubBaseUrl =
-    'https://github.com/adobe/spectrum-web-components/tree/main/gen2/packages/swc/components';
+    'https://github.com/adobe/spectrum-web-components/tree/main';
 
   // Build additional actions dynamically based on available metadata
   const additionalActions: ActionItem[] = [];
@@ -60,12 +61,12 @@ export const OverviewStory = () => {
     });
   }
 
-  // GitHub - requires valid component name
-  if (componentName) {
+  // GitHub - the folder that holds the documented source
+  if (fileName) {
     additionalActions.push({
       title: 'View source on GitHub',
       onClick: () => {
-        window.open(`${githubBaseUrl}/${componentName}`);
+        window.open(`${githubBaseUrl}/${sourceLocation(fileName).repoPath}`);
       },
     });
   }
