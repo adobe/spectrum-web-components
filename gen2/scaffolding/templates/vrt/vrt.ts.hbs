@@ -54,8 +54,8 @@ const render{{pascalCase name}}Permutation = renderStorybookPermutation(
 
 const permutationContent = () => html`
   ${groupPermutationsBy({{constantCase name}}_PERMUTATIONS, 'size').map(
-    ([size, perms]) =>
-      row(perms.map(render{{pascalCase name}}Permutation), String(size))
+  ([size, perms]) =>
+    row(perms.map(render{{pascalCase name}}Permutation), String(size))
   )}
 `;
 
@@ -65,8 +65,8 @@ const permutationContent = () => html`
 // axes) in a single story so it costs one snapshot.
 export const Permutations: Story = {
   render: () => html`
-    ${theme(permutationContent(), 'light', 'ltr')}
-    ${theme(permutationContent(), 'dark', 'rtl')}
+  ${theme(permutationContent(), 'light', 'ltr')}
+  ${theme(permutationContent(), 'dark', 'rtl')}
   `,
   parameters: vrtParameters,
 };

@@ -11,21 +11,21 @@
  */
 
 :host {
-    display: inline-flex;
+  display: inline-flex;
 }
 
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 /* Size `m` is the default; set its tokens directly on the block so no
    `:host([size="m"])` selector is needed. */
 .swc-{{pascalCase name}} {
-    /* Migrate Spectrum 2 tokens from spectrum-css here in Phase 5. Expose the
-       public styling API as `--swc-{{dashCase name}}-*` custom properties with a
-       token() fallback, e.g.:
-       background: var(--swc-{{dashCase name}}-background-color, token("gray-100")); */
-    background-color: var(--swc-{{dashCase name}}-background-color, transparent);
+  /* Migrate Spectrum 2 tokens from spectrum-css here in Phase 5. Expose the
+     public styling API as `--swc-{{dashCase name}}-*` custom properties with a
+     token() fallback, e.g.:
+     background: var(--swc-{{dashCase name}}-background-color, token("gray-100")); */
+  background-color: var(--swc-{{dashCase name}}-background-color, transparent);
 }
 
 /* `size` is reflected to the host attribute by `SizedMixin`. Override size

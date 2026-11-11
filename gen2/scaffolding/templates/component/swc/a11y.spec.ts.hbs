@@ -23,17 +23,17 @@ import { gotoStory } from '../../../utils/a11y-helpers.js';
  */
 
 test.describe('{{titleName name}} - ARIA Snapshots', () => {
-    test('should have the correct accessibility tree by default', async ({
-        page,
-    }) => {
-        const root = await gotoStory(
-            page,
-            'components-{{dashCase name}}--overview',
-            'swc-{{dashCase name}}'
-        );
-        // TODO: replace with the expected accessibility tree for this component.
-        await expect(root).toMatchAriaSnapshot(`
-            - text: {{titleName name}}
-        `);
-    });
+  test('should have the correct accessibility tree by default', async ({
+    page,
+  }) => {
+    const root = await gotoStory(
+      page,
+      'components-{{dashCase name}}--overview',
+      'swc-{{dashCase name}}'
+    );
+    // TODO: replace with the expected accessibility tree for this component.
+    await expect(root).toMatchAriaSnapshot(`
+      - text: {{titleName name}}
+    `);
+  });
 });

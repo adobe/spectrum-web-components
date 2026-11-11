@@ -21,13 +21,13 @@ import meta, { Overview } from '../stories/{{dashCase name}}.stories.js';
 
 // Dev-only test stories that reuse the main story metadata.
 export default {
-    ...meta,
-    title: '{{titleName name}}/Tests',
-    parameters: {
-        ...meta.parameters,
-        docs: { disable: true, page: null },
-    },
-    tags: ['!autodocs', 'dev'],
+  ...meta,
+  title: '{{titleName name}}/Tests',
+  parameters: {
+    ...meta.parameters,
+    docs: { disable: true, page: null },
+  },
+  tags: ['!autodocs', 'dev'],
 } as Meta;
 
 // ──────────────────────────────────────────────────────────────
@@ -35,16 +35,16 @@ export default {
 // ──────────────────────────────────────────────────────────────
 
 export const OverviewTest: Story = {
-    ...Overview,
-    play: async ({ canvasElement, step }) => {
-        const el = await getComponent<{{pascalCase name}}>(
-            canvasElement,
-            'swc-{{dashCase name}}'
-        );
+  ...Overview,
+  play: async ({ canvasElement, step }) => {
+    const el = await getComponent<{{pascalCase name}}>(
+      canvasElement,
+      'swc-{{dashCase name}}'
+    );
 
-        await step('renders with the default size', async () => {
-            expect(el).toBeDefined();
-            expect(el.size).toBe('m');
-        });
-    },
+    await step('renders with the default size', async () => {
+      expect(el).toBeDefined();
+      expect(el.size).toBe('m');
+    });
+  },
 };

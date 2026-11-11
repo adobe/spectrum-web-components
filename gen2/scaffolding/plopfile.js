@@ -98,7 +98,7 @@ export default function (plop) {
 
   // The SWC package (`@adobe/spectrum-wc`) uses wildcard `exports`, so a new
   // SWC component needs no package.json edit. The core package
-  // (`@spectrum-web-components/core`) uses explicit per-component entries in
+  // (`@adobe/spectrum-wc-core`) uses explicit per-component entries in
   // BOTH `exports` and `typesVersions`, so a new core component must add both.
   // This is the deterministic, easy-to-forget wiring step humans skip; do it
   // automatically.

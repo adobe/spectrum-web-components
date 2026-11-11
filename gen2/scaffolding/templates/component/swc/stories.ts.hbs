@@ -14,12 +14,11 @@ import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import {
-    {{constantCase name}}_VALID_SIZES,
-    type {{pascalCase name}}Size,
-} from '@spectrum-web-components/core/components/{{dashCase name}}/index.js';
+import { {{constantCase name}}_VALID_SIZES } from '@adobe/spectrum-wc-core/components/{{dashCase name}}';
 
 import '@adobe/spectrum-wc/components/{{dashCase name}}/swc-{{dashCase name}}.js';
+
+import { SIZE_LABELS } from '../../../.storybook/helpers/index.js';
 
 // ────────────────
 //    METADATA
@@ -28,56 +27,45 @@ import '@adobe/spectrum-wc/components/{{dashCase name}}/swc-{{dashCase name}}.js
 const { args, argTypes, template } = getStorybookHelpers('swc-{{dashCase name}}');
 
 argTypes.size = {
-    ...argTypes.size,
-    control: { type: 'select' },
-    options: {{constantCase name}}_VALID_SIZES,
+  ...argTypes.size,
+  control: { type: 'select' },
+  options: {{constantCase name}}_VALID_SIZES,
 };
 
 /**
  * [One or two sentences describing what the {{dashCase name}} does and when to use it.
  * Link related components with relative Storybook paths, e.g.
- * [Badge](../?path=/docs/badge--docs).]
+ * [Badge](../?path=/docs/components-badge--docs).]
  */
 const meta: Meta = {
-    title: '{{titleName name}}',
-    component: 'swc-{{dashCase name}}',
-    args,
-    argTypes,
-    render: (args) => template(args),
-    parameters: {
-        docs: {
-            subtitle: `[Plain-text one-liner shown as the subtitle; no links or markdown.]`,
-        },
-        // design: { type: 'figma', url: 'https://www.figma.com/...' },
-        // stackblitz: { url: 'https://stackblitz.com/...' },
-        flexLayout: 'row-wrap',
+  title: '{{titleName name}}',
+  component: 'swc-{{dashCase name}}',
+  args,
+  argTypes,
+  render: (args) => template(args),
+  parameters: {
+    docs: {
+      subtitle: `[Plain-text one-liner shown as the subtitle; no links or markdown.]`,
     },
-    tags: ['migrated'],
+    // design: { type: 'figma', url: 'https://www.figma.com/...' },
+    // stackblitz: { url: 'https://stackblitz.com/...' },
+    flexLayout: 'row-wrap',
+  },
+  tags: ['migrated'],
 };
 
 export default meta;
-
-// ────────────────────
-//    HELPERS
-// ────────────────────
-
-const sizeLabels = {
-    s: 'Small',
-    m: 'Medium',
-    l: 'Large',
-    xl: 'Extra-large',
-} as const satisfies Record<{{pascalCase name}}Size, string>;
 
 // ────────────────────
 //    PLAYGROUND STORY
 // ────────────────────
 
 export const Playground: Story = {
-    args: {
-        size: 'm',
-        'default-slot': '{{titleName name}}',
-    },
-    tags: ['dev'],
+  args: {
+    size: 'm',
+    'default-slot': '{{titleName name}}',
+  },
+  tags: ['dev'],
 };
 
 // ──────────────────────────
@@ -85,11 +73,11 @@ export const Playground: Story = {
 // ──────────────────────────
 
 export const Overview: Story = {
-    args: {
-        size: 'm',
-        'default-slot': '{{titleName name}}',
-    },
-    tags: ['overview'],
+  args: {
+    size: 'm',
+    'default-slot': '{{titleName name}}',
+  },
+  tags: ['overview'],
 };
 
 // ──────────────────────────
@@ -97,11 +85,11 @@ export const Overview: Story = {
 // ──────────────────────────
 
 export const Anatomy: Story = {
-    render: (args) => html`
-        ${template({ ...args, 'default-slot': 'Default slot content' })}
-    `,
-    args: { size: 'm' },
-    tags: ['anatomy'],
+  render: (args) => html`
+    ${template({ ...args, 'default-slot': 'Default slot content' })}
+  `,
+  args: { size: 'm' },
+  tags: ['anatomy'],
 };
 
 // ──────────────────────────
@@ -109,12 +97,12 @@ export const Anatomy: Story = {
 // ──────────────────────────
 
 export const Sizes: Story = {
-    render: (args) => html`
-        ${ {{constantCase name}}_VALID_SIZES.map((size) =>
-            template({ ...args, size, 'default-slot': sizeLabels[size] })
-        )}
-    `,
-    tags: ['options'],
+  render: (args) => html`
+    ${ {{constantCase name}}_VALID_SIZES.map((size) =>
+      template({ ...args, size, 'default-slot': SIZE_LABELS[size] })
+    )}
+  `,
+  tags: ['options'],
 };
 
 // ──────────────────────────
@@ -122,10 +110,10 @@ export const Sizes: Story = {
 // ──────────────────────────
 
 export const States: Story = {
-    render: (args) => html`
-        ${template({ ...args, 'default-slot': 'Default' })}
-    `,
-    tags: ['states'],
+  render: (args) => html`
+    ${template({ ...args, 'default-slot': 'Default' })}
+  `,
+  tags: ['states'],
 };
 
 // ────────────────────────────────
@@ -133,9 +121,9 @@ export const States: Story = {
 // ────────────────────────────────
 
 export const Accessibility: Story = {
-    args: {
-        size: 'm',
-        'default-slot': '{{titleName name}}',
-    },
-    tags: ['a11y'],
+  args: {
+    size: 'm',
+    'default-slot': '{{titleName name}}',
+  },
+  tags: ['a11y'],
 };

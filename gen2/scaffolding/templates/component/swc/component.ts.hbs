@@ -13,38 +13,38 @@
 import { CSSResultArray, html, TemplateResult } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
 
-import { {{pascalCase name}}Base } from '@spectrum-web-components/core/components/{{dashCase name}}';
+import { {{pascalCase name}}Base } from '@adobe/spectrum-wc-core/components/{{dashCase name}}';
 
 import styles from './{{dashCase name}}.css';
 
 /**
  * @element swc-{{dashCase name}}
- * @since 2.0.0
+ * @since next
  *
  * @cssprop --swc-{{dashCase name}}-background-color - Background color of the {{dashCase name}}.
  */
 export class {{pascalCase name}} extends {{pascalCase name}}Base {
-    // ──────────────────────────────
-    //     RENDERING & STYLING
-    // ──────────────────────────────
+  // ──────────────────────────────
+  //     RENDERING & STYLING
+  // ──────────────────────────────
 
-    public static override get styles(): CSSResultArray {
-        return [styles];
-    }
+  public static override get styles(): CSSResultArray {
+    return [styles];
+  }
 
-    protected override render(): TemplateResult {
-        // `size` is reflected to the host attribute by `SizedMixin`, so size is
-        // styled via `:host([size="..."])` in CSS, not a modifier class. Add
-        // modifier classes below only for variants and states, e.g.:
-        //   [`swc-{{pascalCase name}}--${this.variant}`]: this.variant != null,
-        return html`
-            <div
-                class=${classMap({
-                    ['swc-{{pascalCase name}}']: true,
-                })}
-            >
-                <slot></slot>
-            </div>
-        `;
-    }
+  protected override render(): TemplateResult {
+    // `size` is reflected to the host attribute by `SizedMixin`, so size is
+    // styled via `:host([size="..."])` in CSS, not a modifier class. Add
+    // modifier classes below only for variants and states, e.g.:
+    //   [`swc-{{pascalCase name}}--${this.variant}`]: this.variant != null,
+    return html`
+      <div
+        class=${classMap({
+          ['swc-{{pascalCase name}}']: true,
+        })}
+      >
+        <slot></slot>
+      </div>
+    `;
+  }
 }

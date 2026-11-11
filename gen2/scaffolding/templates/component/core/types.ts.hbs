@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import type { ElementSize } from '@spectrum-web-components/core/mixins/index.js';
+import type { ElementSize } from '@adobe/spectrum-wc-core/mixins/index.js';
 
 // ──────────────────
 //     SHARED
@@ -21,10 +21,10 @@ import type { ElementSize } from '@spectrum-web-components/core/mixins/index.js'
  * component's Spectrum 2 spec, then keep the base class `validSizes` in sync.
  */
 export const {{constantCase name}}_VALID_SIZES = [
-    's',
-    'm',
-    'l',
-    'xl',
+  's',
+  'm',
+  'l',
+  'xl',
 ] as const satisfies readonly ElementSize[];
 
 // ──────────────────

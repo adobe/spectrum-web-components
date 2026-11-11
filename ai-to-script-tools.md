@@ -11,11 +11,11 @@ way.
 
 Per the brief, tooling is split by what it keeps correct:
 
-| Tool keeps **`.ai/` files** correct                                         | Tool keeps **product files** correct                                          |
-| --------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
-| Lives in `.ai/scripts/`                                                     | Lives with the code it governs                                                |
-| Examples: config schema, symlink, AGENTS.md path validators (already exist) | plop generators, codemods, eslint/stylelint rules, phase-gate scripts         |
-|                                                                             | Homes: `2nd-gen/packages/tools/*`, `2nd-gen/projects/templates/`, `linters/*` |
+| Tool keeps **`.ai/` files** correct                                         | Tool keeps **product files** correct                                  |
+| --------------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| Lives in `.ai/scripts/`                                                     | Lives with the code it governs                                        |
+| Examples: config schema, symlink, AGENTS.md path validators (already exist) | plop generators, codemods, eslint/stylelint rules, phase-gate scripts |
+|                                                                             | Homes: `gen2/packages/tools/*`, `gen2/scaffolding/`, `linters/*`      |
 
 A clarifying consequence: a validator that checks **stories files, component CSS, or README
 structure is checking product code**, so by this rule it should live in `linters/` as an
@@ -45,20 +45,20 @@ should _call_ it, not _describe_ it.
 
 - **1st-gen plop generator** at `1st-gen/projects/templates/plopfile.js` with `.hbs` templates
   in `plop-templates/`. These encode deprecated 1st-gen patterns (buggy custom `className` /
-  `displayName` helpers, old file layout) and are **not** a model for 2nd-gen work.
+  `displayName` helpers, old file layout) and are **not** a model for gen2 work.
 - **`linters/` workspace** already ships `eslint-plugin`, `stylelint-header-plugin`, and
   `stylelint-property-order.js`. New evergreen correctness rules extend these.
-- **`2nd-gen/packages/tools/*`** workspace already holds build tooling (`swc-tokens`,
+- **`gen2/packages/tools/*`** workspace already holds build tooling (`swc-tokens`,
   `postcss-token`, `vite-global-elements-css`). A generators/codemods package fits here.
-- **The 2nd-gen `component` generator now exists** at `2nd-gen/scaffolding/` (Recommendation 1,
+- **The gen2 `component` generator now exists** at `gen2/scaffolding/` (Recommendation 1,
   shipped). It uses `plop@4.0.5`, aligns with the `badge` reference rather than the 1st-gen plop,
   and is the foundation the remaining recommendations build on.
 
-## The canonical 2nd-gen component skeleton (what a generator must emit)
+## The canonical gen2 component skeleton (what a generator must emit)
 
 Verified against the `badge` reference. A component spans two packages:
 
-**Core layer** (`2nd-gen/packages/core/components/<name>/`):
+**Core layer** (`gen2/packages/core/components/<name>/`):
 
 | File               | Content                                          |
 | ------------------ | ------------------------------------------------ |
@@ -66,7 +66,7 @@ Verified against the `badge` reference. A component spans two packages:
 | `<Class>.types.ts` | enums and type unions (size, variant, etc.)      |
 | `index.ts`         | re-exports                                       |
 
-**SWC layer** (`2nd-gen/packages/swc/components/<name>/`):
+**SWC layer** (`gen2/packages/swc/components/<name>/`):
 
 | File                        | Content                                                                          |
 | --------------------------- | -------------------------------------------------------------------------------- |
@@ -89,21 +89,21 @@ component **must** add one. That is exactly the deterministic, easy-to-forget ed
 Everything above is derivable from a single `name` input. That is the definition of a clean
 generator target.
 
-## Recommendation 1 (highest leverage): a 2nd-gen plop generator — **implemented**
+## Recommendation 1 (highest leverage): a gen2 plop generator — **implemented**
 
-**Status: shipped** at `2nd-gen/scaffolding/`. `plop@4.0.5` is a root devDependency and the root
+**Status: shipped** at `gen2/scaffolding/`. `plop@4.0.5` is a root devDependency and the root
 `package.json` exposes:
 
 ```jsonc
 {
   "scripts": {
-    "plop": "plop --plopfile 2nd-gen/scaffolding/plopfile.js --dest .",
+    "plop": "plop --plopfile gen2/scaffolding/plopfile.js --dest .",
   },
 }
 ```
 
 It is **not** modeled on the 1st-gen plop (those are deprecated patterns). It aligns only with the
-2nd-gen architecture, the `badge` reference component, and the `stories-format` /
+gen2 architecture, the `badge` reference component, and the `stories-format` /
 `stories-documentation` / `code-conformance` rules. Name derivation uses plop's built-in case
 helpers (`dashCase`, `pascalCase`, `constantCase`) plus two custom helpers: `titleName`
 (space-separated proper-noun title, because the built-in `titleCase` keeps the dash and yields
@@ -126,7 +126,7 @@ skill, not Phase 2 setup.
 ### Custom plop actions
 
 - `add` from `.hbs` for each of the 11 files (the bulk).
-- `wire-core-export`: parses `2nd-gen/packages/core/package.json`, adds the `./components/<name>`
+- `wire-core-export`: parses `gen2/packages/core/package.json`, adds the `./components/<name>`
   and `./components/<name>/index.js` entries, and re-sorts the `exports` keys alphabetically. This
   is JSON manipulation, not a regex `modify` — safe because core has no wildcard exports, so key
   order is resolution-irrelevant and sorting keeps the diff minimal (validated: +8 lines, correctly
@@ -165,7 +165,7 @@ Every 1st-gen package ships a `custom-elements.json` (CEM). A small script can r
 `.ai/skills/migration-prep/assets/migration-prep-template.md`) with the properties, slots,
 events, and methods tables already populated.
 
-- **Home:** `2nd-gen/packages/tools/generators/` (a Node script, or a plop generator that reads
+- **Home:** `gen2/packages/tools/generators/` (a Node script, or a plop generator that reads
   CEM in a prompt `filter`).
 - **Invocation:** `yarn plop migration-plan <name>` or `node .../prep-from-cem.js <name>`.
 - **Token impact:** the agent reviews and critiques a populated table (its actual job, the
@@ -204,13 +204,13 @@ one command:
 | `swc:gate <name>`        | lint + unit test + a11y spec + storybook build for that component, then assert the status-table row exists                   | Phase 8 review       |
 
 These are thin `run-s`/`run-p` wrappers over tools that already exist (`yarn lint`,
-`test:2nd-gen`, `test:a11y:2nd`, storybook build). The value is that the skill names one command
+`test:gen2`, `test:a11y:gen2`, storybook build). The value is that the skill names one command
 and the human and agent get the identical gate.
 
 ## Recommendation 5: the consumer codemod package (ties the loop together)
 
 The recorded direction calls for `@adobe/spectrum-wc-codemods` at
-`2nd-gen/packages/tools/codemods/`, aggregating a per-component `migration.config.ts` (tag rename
+`gen2/packages/tools/codemods/`, aggregating a per-component `migration.config.ts` (tag rename
 
 - import rewrite as the automated baseline; semantic/a11y changes flagged, not rewritten). When it
   lands:
@@ -225,13 +225,13 @@ rewrite.
 
 ## Roadmap (leverage vs effort)
 
-| #    | Tool                                                                         | Home                                 | Effort     | Token / predictability payoff                  |
-| ---- | ---------------------------------------------------------------------------- | ------------------------------------ | ---------- | ---------------------------------------------- |
-| 1 ✅ | 2nd-gen `component` plop generator + `wire-core-export` action (**shipped**) | `2nd-gen/scaffolding/`               | medium     | very high (kills Phase 2 file authoring)       |
-| 2    | CEM-based prep prefill                                                       | `2nd-gen/packages/tools/generators/` | low–medium | high (removes Phase 1 transcription)           |
-| 4    | per-phase gate scripts                                                       | root `package.json`                  | low        | medium (consistent gates)                      |
-| 3    | evergreen lint rules (`recommended` config)                                  | `linters/eslint-plugin`              | high       | very high (zero per-run tokens, deterministic) |
-| 5    | codemods package + `migration.config.ts` stub in generator                   | `2nd-gen/packages/tools/codemods/`   | high       | high (consumer-facing automation)              |
+| #    | Tool                                                                      | Home                              | Effort     | Token / predictability payoff                  |
+| ---- | ------------------------------------------------------------------------- | --------------------------------- | ---------- | ---------------------------------------------- |
+| 1 ✅ | gen2 `component` plop generator + `wire-core-export` action (**shipped**) | `gen2/scaffolding/`               | medium     | very high (kills Phase 2 file authoring)       |
+| 2    | CEM-based prep prefill                                                    | `gen2/packages/tools/generators/` | low–medium | high (removes Phase 1 transcription)           |
+| 4    | per-phase gate scripts                                                    | root `package.json`               | low        | medium (consistent gates)                      |
+| 3    | evergreen lint rules (`recommended` config)                               | `linters/eslint-plugin`           | high       | very high (zero per-run tokens, deterministic) |
+| 5    | codemods package + `migration.config.ts` stub in generator                | `gen2/packages/tools/codemods/`   | high       | high (consumer-facing automation)              |
 
 Do 1 and 2 first: highest payoff for least effort, and together they gut the two most
 token-heavy phases (setup and prep). 4 is a quick consistency win. 3 and 5 are the larger,
@@ -239,7 +239,7 @@ evergreen investments that also serve long-term design-system correctness.
 
 ## Conventions any new tool must follow
 
-1. **Align with 2nd-gen patterns, not the 1st-gen plop.** Model generators on the `badge`
+1. **Align with gen2 patterns, not the 1st-gen plop.** Model generators on the `badge`
    reference component, the two-layer core/SWC architecture, and the `.ai/` rules — not on the
    deprecated 1st-gen plopfile. Prefer plop's built-in case helpers over custom name helpers; add a
    custom helper only where a built-in is wrong (e.g. `titleName`).

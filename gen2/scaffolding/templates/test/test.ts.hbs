@@ -21,13 +21,13 @@ import meta, { Overview } from '../stories/{{dashCase name}}.stories.js';
 
 // Dev-only test stories that reuse the main story metadata.
 export default {
-    ...meta,
-    title: '{{titleName name}}/Tests',
-    parameters: {
-        ...meta.parameters,
-        docs: { disable: true, page: null },
-    },
-    tags: ['!autodocs', 'dev'],
+  ...meta,
+  title: '{{titleName name}}/Tests',
+  parameters: {
+    ...meta.parameters,
+    docs: { disable: true, page: null },
+  },
+  tags: ['!autodocs', 'dev'],
 } as Meta;
 
 // ──────────────────────────────────────────────────────────────
@@ -35,34 +35,34 @@ export default {
 // ──────────────────────────────────────────────────────────────
 
 export const OverviewTest: Story = {
-    ...Overview,
-    play: async ({ canvasElement, step }) => {
-        const el = await getComponent<{{pascalCase name}}>(
-            canvasElement,
-            'swc-{{dashCase name}}'
-        );
+  ...Overview,
+  play: async ({ canvasElement, step }) => {
+    const el = await getComponent<{{pascalCase name}}>(
+      canvasElement,
+      'swc-{{dashCase name}}'
+    );
 
-        await step('renders', async () => {
-            expect(el).toBeDefined();
-            expect(el).toBeInstanceOf({{pascalCase name}});
-        });
+    await step('renders', async () => {
+      expect(el).toBeDefined();
+      expect(el).toBeInstanceOf({{pascalCase name}});
+    });
 
-        await step('applies the default size', async () => {
-            expect(el.size).toBe('m');
-        });
+    await step('applies the default size', async () => {
+      expect(el.size).toBe('m');
+    });
 
-        await step('reflects size to the host attribute', async () => {
-            el.size = 'l';
-            await el.updateComplete;
-            expect(el.getAttribute('size')).toBe('l');
-        });
+    await step('reflects size to the host attribute', async () => {
+      el.size = 'l';
+      await el.updateComplete;
+      expect(el.getAttribute('size')).toBe('l');
+    });
 
-        // TODO: extend coverage for this component's real API. Loop the valid
-        // sizes and variants (import {{constantCase name}}_VALID_SIZES /
-        // {{constantCase name}}_VARIANTS from
-        // '@adobe/spectrum-wc-core/components/{{dashCase name}}'), assert each
-        // state (disabled, selected, invalid, ...) toggles the expected
-        // attribute/behavior, and assert any dev-mode warnings via
-        // withWarningSpy from '../../../utils/test-utils.js'.
-    },
+    // TODO: extend coverage for this component's real API. Loop the valid
+    // sizes and variants (import {{constantCase name}}_VALID_SIZES /
+    // {{constantCase name}}_VARIANTS from
+    // '@adobe/spectrum-wc-core/components/{{dashCase name}}'), assert each
+    // state (disabled, selected, invalid, ...) toggles the expected
+    // attribute/behavior, and assert any dev-mode warnings via
+    // withWarningSpy from '../../../utils/test-utils.js'.
+  },
 };

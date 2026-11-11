@@ -10,12 +10,12 @@
  * governing permissions and limitations under the License.
  */
 
-import { SpectrumElement } from '@spectrum-web-components/core/element/index.js';
-import { SizedMixin } from '@spectrum-web-components/core/mixins/index.js';
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
+import { SizedMixin } from '@adobe/spectrum-wc-core/mixins/index.js';
 
 import {
-    {{constantCase name}}_VALID_SIZES,
-    type {{pascalCase name}}Size,
+  {{constantCase name}}_VALID_SIZES,
+  type {{pascalCase name}}Size,
 } from './{{pascalCase name}}.types.js';
 
 /**
@@ -30,24 +30,24 @@ import {
  * @slot - Default slot content.
  */
 export abstract class {{pascalCase name}}Base extends SizedMixin(SpectrumElement, {
-    validSizes: {{constantCase name}}_VALID_SIZES,
-    defaultSize: 'm',
+  validSizes: {{constantCase name}}_VALID_SIZES,
+  defaultSize: 'm',
 }) {
-    /**
-     * The size of the {{dashCase name}}.
-     *
-     * @default m
-     */
-    declare public size: {{pascalCase name}}Size;
+  /**
+   * The size of the {{dashCase name}}.
+   *
+   * @default m
+   */
+  declare public size: {{pascalCase name}}Size;
 
-    // ──────────────────
-    //     SHARED API
-    // ──────────────────
+  // ──────────────────
+  //     SHARED API
+  // ──────────────────
 
-    // Add shared, non-visual properties here. Example:
-    // /**
-    //  * Whether the {{dashCase name}} is disabled.
-    //  */
-    // @property({ type: Boolean, reflect: true })
-    // public disabled = false;
+  // Add shared, non-visual properties here. Example:
+  // /**
+  //  * Whether the {{dashCase name}} is disabled.
+  //  */
+  // @property({ type: Boolean, reflect: true })
+  // public disabled = false;
 }

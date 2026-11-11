@@ -69,7 +69,7 @@ component-specific detail.
 
 - **Core `exports` + `typesVersions`.** The SWC package (`@adobe/spectrum-wc`)
   uses wildcard `exports`, so a new component needs no package.json edit there.
-  The core package (`@spectrum-web-components/core`) uses explicit per-component
+  The core package (`@adobe/spectrum-wc-core`) uses explicit per-component
   entries, so the `component` generator adds both the `exports` and the matching
   `typesVersions` entry for the new component and re-sorts the keys (a minimal,
   deterministic diff). The `test`/`vrt` generators touch no package.json.
