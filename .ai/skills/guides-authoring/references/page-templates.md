@@ -58,7 +58,7 @@ You should see <observable result>.
 
 ## How-to
 
-A known task for a reader who already has the basics. State any branch, such as "Adobe Fonts or self-hosted", before the first step.
+A known task for a reader who already has the basics. State any branch, such as "Adobe Fonts or self-hosted", before the first step. Each task section holds numbered actions and ends with one `You should see` check.
 
 ````mdx
 {/* page-type: how-to */}
@@ -104,7 +104,7 @@ You should see <observable result>.
 
 ## Reference
 
-Facts to look up. Structure it like the thing it describes, and lead with the table the reader most often needs.
+Facts to look up. Structure it like the thing it describes, and lead with the table the reader most often needs. Omit **Next step** when there's no natural next action, such as on a changelog or a link directory.
 
 ```mdx
 {/* page-type: reference */}
@@ -127,7 +127,7 @@ Facts to look up. Structure it like the thing it describes, and lead with the ta
 | -------- | --------- | ----------- |
 | `<name>` | `<value>` | <one line>  |
 
-## Next step
+## Next step (optional)
 
 <Verb phrase> with [<how-to page>](/docs/<story-id>--docs).
 ```

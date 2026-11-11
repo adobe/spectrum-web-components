@@ -5,7 +5,7 @@ description: Authoring standard for gen2 Storybook guide pages in learn-about-sw
 
 # Guides authoring
 
-Write gen2 guide pages that a reader can scan, act on, and finish. The standard adapts the `i-have-adhd` output rules to documentation and pairs them with [Diátaxis](https://diataxis.fr/) page types and the guide patterns in GOV.UK, Polaris, and Carbon.
+Write gen2 guide pages that a reader can scan, act on, and finish. The standard puts the next action first, keeps the reader's working set small, and makes progress visible. It pairs those principles with [Diátaxis](https://diataxis.fr/) page types and the guide patterns in GOV.UK, Polaris, and Carbon.
 
 ## When to use this skill
 
@@ -31,7 +31,7 @@ Guide readers are mid-task and switching between the docs and their code. Five f
 2. **Knowing isn't doing.** Each step names one action and the result to check.
 3. **Starting is the hardest part.** The first lines say what the reader gets and what they need.
 4. **Vague estimates fail.** "Quick" and "a few hours" read the same. Use minutes and hours.
-5. **Visible progress keeps readers going.** A "You should see" check after each step confirms the win.
+5. **Visible progress keeps readers going.** A "You should see" check at the end of each section of steps confirms the win.
 
 ## The standard
 
@@ -58,11 +58,12 @@ Directly under the H1, write one sentence that names what the reader gets. Follo
 
 Don't open with "This page walks you through", "This guide covers", history, or statistics. The H1 names the outcome or the subject, not the page type.
 
-### 3. One action per step, then a check
+### 3. One action per step, one check per section
 
-In tutorials and how-tos, each step is one numbered, bounded action that starts with an imperative verb. A step never contains "and then" twice.
+This rule applies to tutorials and how-tos only. Reference and explanation pages don't have steps.
 
-End each step, or each `## Step N:` section, with a sentence that starts `You should see` and names an observable result. Use the fewest steps that still work.
+- **Steps:** each numbered step is one bounded action that starts with an imperative verb. A step never contains "and then" twice. Use the fewest steps that still work.
+- **Check:** end each section of steps (a `## Step N:` section or a task section) with one sentence that starts `You should see` and names an observable result.
 
 ### 4. Restate position in a journey
 
@@ -73,8 +74,8 @@ Never ask the reader to remember an earlier page. Link to it instead.
 
 ### 5. Keep it scannable
 
-- **Headings:** H2 and H3 only, in sentence case. Tutorial and how-to headings start with a verb ("Set the color scheme"). Reference headings name the thing ("Theme classes"). Explanation headings are noun phrases or questions.
-- **Lists:** five items or fewer per group. Group a longer list under H3s, or use a table.
+- **Headings:** one H1 for the page title (the MDX `#` heading, not `<Meta title>`), then H2 and H3 only, in sentence case. Tutorial and how-to headings start with a verb ("Set the color scheme"). Reference headings name the thing ("Theme classes"). Explanation headings are noun phrases or questions.
+- **Lists:** five items or fewer per group. Group a longer list under H3s, or use a table. Generated content, such as a changelog rendered from `CHANGELOG.md`, is exempt.
 - **Tables:** use one when you compare two or more options across two or more attributes.
 - **Prose:** three sentences or fewer per paragraph, 25 words or fewer per sentence.
 - **Code:** every block has a language tag and shows only what the step changes.
@@ -95,7 +96,10 @@ When every fix fits on one line, use a table with **Symptom**, **Cause**, and **
 
 The last section is `## Next step`: one sentence with one link. No recap, "Summary", "Learn more" list, or "Hope this helps."
 
-**Exception:** a section entry page, such as Overview, may end with `## Choose your path` instead. That's a table of five rows or fewer, and each row pairs a reader goal with one link.
+Exceptions:
+
+- **Section entry pages,** such as Overview, may end with `## Choose your path` instead. That's a table of five rows or fewer, and each row pairs a reader goal with one link.
+- **Reference pages** with no natural next action, such as Changelog or a link directory like Accessibility resources, may omit **Next step**.
 
 ## Voice
 
@@ -132,14 +136,14 @@ Score each item yes or no. A page passes when every item that applies is yes.
 
 ### Steps
 
-- [ ] Each step is one action that starts with a verb
-- [ ] Each step or `## Step N:` section ends with a `You should see` check
+- [ ] Tutorials and how-tos only: each step is one action that starts with a verb
+- [ ] Tutorials and how-tos only: each section of steps ends with one `You should see` check
 - [ ] Single-page sequences use `## Step N:` headings and state the step count in **Time**
 
 ### Scannability
 
-- [ ] Only H2 and H3 headings, in sentence case, phrased for the page type
-- [ ] No list group has more than five items
+- [ ] One H1 for the title, then only H2 and H3 headings, in sentence case, phrased for the page type
+- [ ] No authored list group has more than five items (generated content is exempt)
 - [ ] No paragraph has more than three sentences, and no sentence has more than 25 words
 - [ ] Comparisons are tables, and every code block has a language tag
 - [ ] No tangents, and no fact restated from its home page
@@ -147,7 +151,7 @@ Score each item yes or no. A page passes when every item that applies is yes.
 ### Ending and voice
 
 - [ ] Troubleshooting, if present, uses symptom, cause, and fix
-- [ ] The page ends with `## Next step` and one link, or `## Choose your path` on a section entry page
+- [ ] The page ends with `## Next step` and one link, `## Choose your path` on a section entry page, or nothing extra on a reference page with no next action
 - [ ] No recap, minimizers, idioms, or "click here" links
 - [ ] Mechanics pass `.ai/rules/text-formatting.md`, with no em dashes and no hard-wrapped prose
 

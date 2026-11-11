@@ -14,11 +14,11 @@ Every guide page follows these rules:
 
 1. **Declare the page type.** Put `{/* page-type: tutorial | how-to | reference | explanation */}` after `<Meta />`, and follow that type's template.
 2. **Lead with the outcome.** One sentence under the H1 names what the reader gets, followed by **For**, **Time** (tutorials and how-tos), and linked **Before you start** items. No preamble.
-3. **One action per step, then a check.** Numbered steps start with a verb, and each step ends with a `You should see` sentence.
+3. **One action per step, one check per section (tutorials and how-tos).** Numbered steps start with a verb, and each section of steps ends with one `You should see` sentence. Reference and explanation pages have no steps.
 4. **Restate position in a journey.** Single-page sequences use `## Step N:` headings. Multi-page journeys add `**Journey:** <name>, step N of M` to the lead.
-5. **Keep it scannable.** Use H2 and H3 only, five list items or fewer per group, tables for comparisons, three sentences or fewer per paragraph, and 25 words or fewer per sentence.
+5. **Keep it scannable.** Use one H1 for the title, then H2 and H3 only. Keep five authored list items or fewer per group, use tables for comparisons, three sentences or fewer per paragraph, and 25 words or fewer per sentence.
 6. **Cut tangents and repetition.** Move background to an explanation page, and link to a fact's home page instead of restating it.
 7. **Troubleshoot as symptom, cause, and fix.** Title each item with what the reader sees.
-8. **End with one next step.** The last section is `## Next step` with one link. Section entry pages may end with a `## Choose your path` table instead.
+8. **End with one next step.** The last section is `## Next step` with one link. Section entry pages may end with a `## Choose your path` table instead, and reference pages with no next action, such as Changelog, may omit it.
 
 Mechanics such as sentence case, no em dashes, `<kbd>`, and callouts follow `.ai/rules/text-formatting.md`. Never hard-wrap prose.

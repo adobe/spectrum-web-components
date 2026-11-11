@@ -25,7 +25,6 @@ Move your app from SWC Gen1 (`@spectrum-web-components/*`) to Gen2 (`@adobe/spec
 
 - **For:** application developers
 - **Time:** about 2 hours of setup across 7 steps, then about 30 minutes per component
-- **Before you start:** read [Gen1 vs Gen2](/docs/learn-about-swc-gen1-vs-gen2--docs) to confirm the components you use have shipped
 ```
 
 ### What changed
@@ -33,6 +32,7 @@ Move your app from SWC Gen1 (`@spectrum-web-components/*`) to Gen2 (`@adobe/spec
 - The first sentence names the outcome instead of describing the page.
 - **Time** gives a concrete estimate and the step count, so the reader can plan.
 - The em dash and the parenthetical are gone.
+- The Gen1 vs Gen2 link is gone from the lead. That page compares architecture; it doesn't list which components have shipped.
 
 ## 2. One action per step, then a check
 
@@ -63,7 +63,7 @@ Apply `swc-theme` plus one color class on a root element. Nested SWC components 
 ````mdx
 ## Step 3: Set the color scheme
 
-Add `swc-theme` and one color class to your root element. Nested SWC components inherit it, and `swc-theme--adaptive` follows the user's OS setting.
+Add `swc-theme` and one color class to your root element. Nested SWC components inherit it, and `.swc-theme--adaptive` follows the user's OS setting.
 
 ```html
 <html class="swc-theme swc-theme--adaptive"></html>
@@ -114,7 +114,6 @@ Confirm that every control in a component or an app works with a keyboard alone.
 
 - **For:** contributors testing a component, and consumers testing an app
 - **Time:** about 30 minutes per page
-- **Before you start:** on macOS, turn on keyboard navigation in step 1
 
 To learn who relies on keyboard access, see the [Accessibility overview](/docs/guides-accessibility-overview--docs).
 ```
