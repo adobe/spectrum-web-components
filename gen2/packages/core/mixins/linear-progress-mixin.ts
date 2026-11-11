@@ -101,15 +101,15 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
 
     /**
      * Current value. Sanitized via `clampedValue` for rendering and
-     * `aria-valuenow`. Like `minValue` and `maxValue`, non-numeric text is
-     * kept as set so reflection never writes `NaN` over the consumer's markup,
-     * and a removed attribute resets to the default.
+     * `aria-valuenow`. Non-numeric text is kept as set, warns in dev mode,
+     * and renders as the minimum; a removed attribute resets to `0`.
      */
     @property({ type: Number, reflect: true, converter: numberAttribute(0) })
     public value = 0;
 
     /**
-     * Bottom of the value range.
+     * Bottom of the value range. Non-numeric text is kept as set, warns in
+     * dev mode, and renders as `0`; a removed attribute resets to `0`.
      */
     @property({
       type: Number,
@@ -120,7 +120,8 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
     public minValue = 0;
 
     /**
-     * Top of the value range.
+     * Top of the value range. Non-numeric text is kept as set, warns in dev
+     * mode, and renders as `100`; a removed attribute resets to `100`.
      */
     @property({
       type: Number,
@@ -359,12 +360,7 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
       if (isFiniteRange && minValue <= maxValue) {
         return;
       }
-      // An unparseable attribute parses to `NaN`; report the attribute text.
-      const text = (attribute: string, value: number): string =>
-        Number.isNaN(value)
-          ? (this.getAttribute(attribute) ?? String(value))
-          : String(value);
-      const received = `min-value="${text('min-value', minValue)}", max-value="${text('max-value', maxValue)}"`;
+      const received = `min-value="${minValue}", max-value="${maxValue}"`;
       warnIf(
         this,
         true,
@@ -387,15 +383,10 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
       ) {
         return;
       }
-      // An unparseable value set from JavaScript is `NaN`; report the
-      // attribute text instead.
-      const received = Number.isNaN(value)
-        ? (this.getAttribute('value') ?? String(value))
-        : String(value);
       warnIf(
         this,
         true,
-        `<${this.localName}> expects "value" to be a number in the range [${min}, ${max}]. Received "${received}"; rendering ${this.clampedValue}.`,
+        `<${this.localName}> expects "value" to be a number in the range [${min}, ${max}]. Received "${value}"; rendering ${this.clampedValue}.`,
         this.docsHref,
         {
           issues: [

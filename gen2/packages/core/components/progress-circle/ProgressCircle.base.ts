@@ -102,8 +102,9 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
    * When `null` (indeterminate), the component shows a loading animation.
    * Setting a number switches to determinate mode. Removing the `progress`
    * attribute or setting this property to `null` returns to indeterminate.
-   * Values outside 0–100 or non-finite numbers are kept as set, warn in dev
-   * mode, and render clamped (non-finite renders as 0).
+   * Values outside 0–100, non-finite numbers, and non-numeric text are kept
+   * as set, warn in dev mode, and render clamped (anything that isn't a
+   * finite number renders as 0).
    *
    * Reflected to the `progress` attribute when set; the attribute is omitted when indeterminate.
    */
@@ -187,10 +188,7 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
   protected override update(changes: PropertyValues): void {
     // `null` is the indeterminate state, not an invalid value.
     if (this.progress != null) {
-      // An unparseable attribute parses to `NaN`; report the attribute text.
-      const received = Number.isNaN(this.progress)
-        ? (this.getAttribute('progress') ?? String(this.progress))
-        : String(this.progress);
+      const received = String(this.progress);
       warnIf(
         this,
         this.clampedProgress !== parseNumericText(this.progress),

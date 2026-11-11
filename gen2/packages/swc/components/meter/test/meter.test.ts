@@ -571,6 +571,46 @@ export const LocaleFormattingTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
+// TEST: Properties / Attributes
+// ──────────────────────────────────────────────────────────────
+
+export const AttributeRemovalResetsTest: Story = {
+  render: () => html`
+    <swc-meter value="50" accessible-label="Storage used"></swc-meter>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const el = await getComponent<Meter>(canvasElement, 'swc-meter');
+    const cases: [string, string, string, unknown][] = [
+      ['min-value', '10', 'minValue', 0],
+      ['max-value', '90', 'maxValue', 100],
+      ['value', '40', 'value', 0],
+      ['label-position', 'side', 'labelPosition', 'top'],
+      ['static-color', 'white', 'staticColor', null],
+      ['variant', 'positive', 'variant', 'informative'],
+    ];
+
+    for (const [attribute, value, property, defaultValue] of cases) {
+      await step(
+        `resets ${attribute} to its default without a warning when removed`,
+        () =>
+          withWarningSpy(async (warnCalls) => {
+            el.setAttribute(attribute, value);
+            await el.updateComplete;
+            el.removeAttribute(attribute);
+            await el.updateComplete;
+
+            expect(
+              (el as unknown as Record<string, unknown>)[property],
+              `${property} after removal`
+            ).toBe(defaultValue);
+            expect(warnCalls.length, 'no warning when unset').toBe(0);
+          })
+      );
+    }
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
 // TEST: Reflected attributes from shared stories
 // ──────────────────────────────────────────────────────────────
 
@@ -627,41 +667,5 @@ export const StaticColorsTest: Story = {
       const colors = meters.map((meter) => meter.getAttribute('static-color'));
       expect(colors).toEqual(['white', 'black']);
     });
-  },
-};
-
-export const AttributeRemovalResetsTest: Story = {
-  render: () => html`
-    <swc-meter value="50" accessible-label="Storage used"></swc-meter>
-  `,
-  play: async ({ canvasElement, step }) => {
-    const el = await getComponent<Meter>(canvasElement, 'swc-meter');
-    const cases: [string, string, string, unknown][] = [
-      ['min-value', '10', 'minValue', 0],
-      ['max-value', '90', 'maxValue', 100],
-      ['value', '40', 'value', 0],
-      ['label-position', 'side', 'labelPosition', 'top'],
-      ['static-color', 'white', 'staticColor', null],
-      ['variant', 'positive', 'variant', 'informative'],
-    ];
-
-    for (const [attribute, value, property, defaultValue] of cases) {
-      await step(
-        `resets ${attribute} to its default without a warning when removed`,
-        () =>
-          withWarningSpy(async (warnCalls) => {
-            el.setAttribute(attribute, value);
-            await el.updateComplete;
-            el.removeAttribute(attribute);
-            await el.updateComplete;
-
-            expect(
-              (el as unknown as Record<string, unknown>)[property],
-              `${property} after removal`
-            ).toBe(defaultValue);
-            expect(warnCalls.length, 'no warning when unset').toBe(0);
-          })
-      );
-    }
   },
 };

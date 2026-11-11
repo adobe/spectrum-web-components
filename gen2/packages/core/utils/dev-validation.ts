@@ -75,13 +75,9 @@ export function isDebug(): boolean {
  * validation (e.g. `variant`, `size`), including numeric enums such as a
  * numeric `size` or heading `level`.
  *
- * A numeric property parses an unreadable attribute (e.g. `size="banana"`) to
- * `NaN`. For a `NaN` value, the message shows the attribute named by `prop`
- * instead, so it reports what the consumer actually wrote.
- *
  * @param element - The component instance the warning is attributed to.
  * @param check - The enum check to perform.
- * @param check.prop - The attribute name, for the warning message.
+ * @param check.prop - The property name, for the warning message.
  * @param check.value - The value received.
  * @param check.valid - The allowed values.
  * @param check.url - Documentation URL for the component.
@@ -109,15 +105,11 @@ export function validateEnum<T extends string | number>(
   if ((valid as readonly (string | number)[]).includes(value)) {
     return;
   }
-  const received =
-    typeof value === 'number' && Number.isNaN(value)
-      ? (element.getAttribute(prop) ?? String(value))
-      : String(value);
   emitWarning(
     element,
-    `<${element.localName}> expects "${prop}" to be one of: ${valid.join(', ')}. Received "${received}".`,
+    `<${element.localName}> expects "${prop}" to be one of: ${valid.join(', ')}. Received "${value}".`,
     url,
-    { issues: [`${prop}="${received}"`], ...options }
+    { issues: [`${prop}="${value}"`], ...options }
   );
 }
 

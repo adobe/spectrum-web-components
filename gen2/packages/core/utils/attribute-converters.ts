@@ -50,7 +50,10 @@ export function parseNumericText<T>(value: T): T | number {
  * `size="NaN"` over the consumer's markup. Keeping the raw text instead means
  * that write puts back exactly what the consumer wrote.
  *
- * - A numeric attribute becomes a number.
+ * - A numeric attribute becomes a number. Numeric text in another format,
+ *   such as `" 100 "` or `"1e2"`, becomes the same number as with Lit's
+ *   default converter, so it reflects back as `"100"` and still matches
+ *   `:host([size="100"])` selectors.
  * - Any other text, including an empty attribute, stays a string. Read the
  *   property through `parseNumericText`, then check it with `Number.isFinite`,
  *   `validateEnum`, or `resolveEnum`, so the text renders the default.
@@ -92,8 +95,8 @@ export function numberAttribute<T extends number | null>(
  * public placement: Placement = 'top';
  * ```
  */
-export function stringAttribute<T extends string>(
-  whenRemoved: T
+export function stringAttribute(
+  whenRemoved: string
 ): ComplexAttributeConverter<string> {
   return {
     fromAttribute: (value: string | null): string => value ?? whenRemoved,

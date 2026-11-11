@@ -107,24 +107,6 @@ export const DevValidationTest: Story = {
       })
     );
 
-    await step(
-      'validateEnum reports the attribute text for an unparseable number',
-      () =>
-        withWarningSpy((warnCalls) => {
-          const el = document.createElement('div');
-          el.setAttribute('size', 'banana');
-          validateEnum(el, {
-            prop: 'size',
-            value: NaN,
-            valid: [100, 200],
-            url: URL,
-          });
-          expect(String(warnCalls[0]?.[1] || '')).toContain(
-            'Received "banana"'
-          );
-        })
-    );
-
     await step('warnIf warns only when the condition is true', () =>
       withWarningSpy((warnCalls) => {
         const el = document.createElement('div');

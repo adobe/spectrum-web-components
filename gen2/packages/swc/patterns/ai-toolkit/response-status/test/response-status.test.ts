@@ -972,6 +972,10 @@ export const LoaderReconnectTest: Story = {
   },
 };
 
+// ──────────────────────────────────────────────────────────────
+// TEST: Properties / Attributes
+// ──────────────────────────────────────────────────────────────
+
 export const AttributeRemovalResetsTest: Story = {
   render: () => html`
     <swc-response-status>

@@ -42,8 +42,9 @@ import { AccordionItemBase } from './AccordionItem.base.js';
  * @attribute {boolean} allowMultiple - Reflected as `allow-multiple`. When set,
  *   multiple items may be open at the same time.
  * @attribute {number} level - Heading level (2–6) applied to every item header.
- *   Other values are kept as set and warn in dev mode; out-of-range numbers
- *   render the nearest level, and non-numbers render the default (3).
+ *   Other values are kept as set and warn in dev mode; other numbers render
+ *   the nearest level (rounded, then clamped to 2–6), and non-numbers render
+ *   the default (3).
  * @attribute {AccordionSize} size - Size applied to all items.
  * @attribute {AccordionDensity} density - Vertical spacing between items.
  * @attribute {boolean} quiet - Renders the accordion in its quiet visual variant.
@@ -68,9 +69,10 @@ export abstract class AccordionBase extends SizedMixin(SpectrumElement, {
 
   /**
    * Heading level applied to every item header (2–6). Defaults to 3.
-   * Other values are kept as set and warn in dev mode. Out-of-range numbers
-   * render the nearest level (`1` renders `h2`, `7` renders `h6`) so the page
-   * outline keeps the intended depth; non-numbers render the default.
+   * Other values are kept as set and warn in dev mode. Other numbers render
+   * the nearest level, rounded and then clamped (`1` renders `h2`, `7` renders
+   * `h6`, `4.6` renders `h5`), so the page outline keeps the intended depth;
+   * non-numbers render the default.
    */
   @property({
     type: Number,
@@ -150,12 +152,12 @@ export abstract class AccordionBase extends SizedMixin(SpectrumElement, {
    * @internal
    *
    * The heading level rendered by every item. Invalid values are kept on
-   * `level` as set; a number resolves to the nearest valid level and
-   * anything else to the default.
+   * `level` as set; a number, including `Infinity`, resolves to the nearest
+   * valid level, and `NaN` or anything else to the default.
    */
   protected get resolvedLevel(): AccordionHeadingLevel {
     const level = parseNumericText(this.level);
-    if (typeof level !== 'number' || !Number.isFinite(level)) {
+    if (typeof level !== 'number' || Number.isNaN(level)) {
       return ACCORDION_DEFAULT_HEADING_LEVEL;
     }
     const min = ACCORDION_HEADING_LEVELS[0];

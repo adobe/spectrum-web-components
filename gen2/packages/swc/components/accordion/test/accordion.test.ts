@@ -255,6 +255,43 @@ export const ItemPropertyReflectionTest: Story = {
   },
 };
 
+export const AttributeRemovalResetsTest: Story = {
+  render: () => html`
+    <swc-accordion>
+      <swc-accordion-item>
+        <span slot="label">Item</span>
+        <p>Panel</p>
+      </swc-accordion-item>
+    </swc-accordion>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const el = await getComponent<Accordion>(canvasElement, 'swc-accordion');
+    const cases: [string, string, string, unknown][] = [
+      ['density', 'compact', 'density', 'regular'],
+      ['level', '5', 'level', 3],
+    ];
+
+    for (const [attribute, value, property, defaultValue] of cases) {
+      await step(
+        `resets ${attribute} to its default without a warning when removed`,
+        () =>
+          withWarningSpy(async (warnCalls) => {
+            el.setAttribute(attribute, value);
+            await el.updateComplete;
+            el.removeAttribute(attribute);
+            await el.updateComplete;
+
+            expect(
+              (el as unknown as Record<string, unknown>)[property],
+              `${property} after removal`
+            ).toBe(defaultValue);
+            expect(warnCalls.length, 'no warning when unset').toBe(0);
+          })
+      );
+    }
+  },
+};
+
 // ──────────────────────────────────────────────────────────────
 // TEST: Anatomy / Slots
 // ──────────────────────────────────────────────────────────────
@@ -1366,6 +1403,8 @@ export const InvalidHeadingLevelTest: Story = {
       [7, 'h6'],
       [0, 'h2'],
       [4.6, 'h5'],
+      [Infinity, 'h6'],
+      [-Infinity, 'h2'],
     ] as const) {
       await step(
         `warns on level ${level}, keeps the value, and renders the nearest level ${heading}`,
@@ -1785,42 +1824,5 @@ export const NestedAccordionIsolationTest: Story = {
         ).toBe(true);
       }
     );
-  },
-};
-
-export const AttributeRemovalResetsTest: Story = {
-  render: () => html`
-    <swc-accordion>
-      <swc-accordion-item>
-        <span slot="label">Item</span>
-        <p>Panel</p>
-      </swc-accordion-item>
-    </swc-accordion>
-  `,
-  play: async ({ canvasElement, step }) => {
-    const el = await getComponent<Accordion>(canvasElement, 'swc-accordion');
-    const cases: [string, string, string, unknown][] = [
-      ['density', 'compact', 'density', 'regular'],
-      ['level', '5', 'level', 3],
-    ];
-
-    for (const [attribute, value, property, defaultValue] of cases) {
-      await step(
-        `resets ${attribute} to its default without a warning when removed`,
-        () =>
-          withWarningSpy(async (warnCalls) => {
-            el.setAttribute(attribute, value);
-            await el.updateComplete;
-            el.removeAttribute(attribute);
-            await el.updateComplete;
-
-            expect(
-              (el as unknown as Record<string, unknown>)[property],
-              `${property} after removal`
-            ).toBe(defaultValue);
-            expect(warnCalls.length, 'no warning when unset').toBe(0);
-          })
-      );
-    }
   },
 };
