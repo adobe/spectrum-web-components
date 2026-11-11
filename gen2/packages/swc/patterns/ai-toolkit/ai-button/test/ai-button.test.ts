@@ -24,9 +24,11 @@ import { Icon_AIMark } from '@adobe/spectrum-wc-icons/AIMark.js';
 import { Icon_AISearch } from '@adobe/spectrum-wc-icons/AISearch.js';
 
 import '@adobe/spectrum-wc/components/button/swc-button.js';
+import '@adobe/spectrum-wc/components/icon/swc-icon.js';
 import '../swc-ai-button.js';
 
 import {
+  captioned,
   forcePseudoState,
   theme,
 } from '../../../../.storybook/helpers/index.js';
@@ -93,6 +95,10 @@ const builtInIcon = (el: AiButton): SVGSVGElement =>
   innerButton(el).querySelector<SVGSVGElement>(
     '.swc-AiButton-icon slot[name="icon"] > svg'
   )!;
+
+/** A custom icon that no `icon` value draws: a five-point star. */
+const STAR_POINTS =
+  '10,1.41 12.13,7.97 19.04,7.97 13.45,12.03 15.58,18.59 10,14.54 4.42,18.59 6.55,12.03 0.96,7.97 7.87,7.97';
 
 /**
  * Dimensions per size, in pixels. They match the standard button's sizes, so
@@ -194,46 +200,126 @@ export const IconTest: Story = {
   },
 };
 
+// The `icon` slot is undocumented on purpose, so this test story is the only
+// story that shows it. The production Storybook leaves out test stories.
 export const IconSlotTest: Story = {
   render: () => html`
-    <swc-ai-button icon="ai-search">
-      <svg slot="icon" viewBox="0 0 20 20" data-custom-icon>
-        <rect width="20" height="20"></rect>
-      </svg>
-      Search
-    </swc-ai-button>
+    ${captioned(
+      html`
+        <swc-ai-button icon="ai-search">Search</swc-ai-button>
+      `,
+      'icon="ai-search"'
+    )}
+    ${captioned(
+      html`
+        <swc-ai-button icon="ai-search">
+          <svg slot="icon" viewBox="0 0 20 20" data-custom-icon>
+            <polygon points=${STAR_POINTS}></polygon>
+          </svg>
+          Search
+        </swc-ai-button>
+      `,
+      'icon="ai-search" and a slotted <svg>'
+    )}
+    ${captioned(
+      html`
+        <swc-ai-button icon="ai-search">
+          <swc-icon slot="icon" data-custom-icon>
+            <svg viewBox="0 0 20 20">
+              <polygon points=${STAR_POINTS}></polygon>
+            </svg>
+          </swc-icon>
+          Search
+        </swc-ai-button>
+      `,
+      'icon="ai-search" and a slotted <swc-icon>'
+    )}
   `,
+  parameters: { flexLayout: 'row-wrap' },
   play: async ({ canvasElement, step }) => {
-    const el = await getComponent<AiButton>(canvasElement, 'swc-ai-button');
-    const wrapper = innerButton(el).querySelector('.swc-AiButton-icon')!;
-    const slot = wrapper.querySelector<HTMLSlotElement>('slot[name="icon"]')!;
-    const custom = el.querySelector('[data-custom-icon]')!;
+    const [plain, ...withCustomIcon] = await getComponents<AiButton>(
+      canvasElement,
+      'swc-ai-button'
+    );
+    await getComponents(canvasElement, 'swc-icon');
+    const parts = (el: AiButton) => {
+      const wrapper = innerButton(el).querySelector('.swc-AiButton-icon')!;
+
+      return {
+        wrapper,
+        slot: wrapper.querySelector<HTMLSlotElement>('slot[name="icon"]')!,
+        custom: el.querySelector('[data-custom-icon]')!,
+      };
+    };
     const { iconSize } = DESIGN_SIZES.m;
 
-    await step(
-      'shows a slotted icon instead of the icon attribute',
-      async () => {
-        const box = custom.getBoundingClientRect();
+    await step('draws the icon attribute when no icon is slotted', async () => {
+      expect(parts(plain).slot.assignedElements()).toHaveLength(0);
+      expect(builtInIcon(plain).getBoundingClientRect().width).toBe(iconSize);
+      expect(pathData(builtInIcon(plain))).toEqual(pathData(Icon_AISearch()));
+    });
 
-        expect(slot.assignedElements()).toEqual([custom]);
-        expect(builtInIcon(el).getBoundingClientRect().width).toBe(0);
-        expect(box.width).toBe(iconSize);
-        expect(box.height).toBe(iconSize);
-        expect(getComputedStyle(custom).fill).toBe(
-          getComputedStyle(wrapper).color
-        );
+    await step(
+      'shows a slotted svg or swc-icon instead of the icon attribute',
+      async () => {
+        for (const el of withCustomIcon) {
+          const { wrapper, slot, custom } = parts(el);
+          const box = custom.getBoundingClientRect();
+          const name = custom.localName;
+
+          expect(slot.assignedElements(), name).toEqual([custom]);
+          expect(builtInIcon(el).getBoundingClientRect().width, name).toBe(0);
+          expect(box.width, `${name} width`).toBe(iconSize);
+          expect(box.height, `${name} height`).toBe(iconSize);
+          expect(
+            getComputedStyle(custom.querySelector('polygon')!).fill,
+            `${name} fill`
+          ).toBe(getComputedStyle(wrapper).color);
+        }
       }
     );
 
+    await step('sizes a slotted icon like the built-in icon', async () => {
+      for (const el of withCustomIcon) {
+        const { custom } = parts(el);
+
+        for (const size of AI_BUTTON_VALID_SIZES) {
+          el.size = size;
+          await el.updateComplete;
+          const box = custom.getBoundingClientRect();
+
+          expect(box.width, `${custom.localName} ${size} width`).toBe(
+            DESIGN_SIZES[size].iconSize
+          );
+          expect(box.height, `${custom.localName} ${size} height`).toBe(
+            DESIGN_SIZES[size].iconSize
+          );
+        }
+        el.size = 'm';
+        await el.updateComplete;
+      }
+    });
+
     await step(
-      'shows the icon attribute again when the slotted icon is removed',
+      'updates when the slotted icon is removed and added back',
       async () => {
+        const [el] = withCustomIcon;
+        const { slot, custom } = parts(el);
+        const nextFrame = () =>
+          new Promise((resolve) => requestAnimationFrame(resolve));
         custom.remove();
-        await new Promise((resolve) => requestAnimationFrame(resolve));
+        await nextFrame();
 
         expect(slot.assignedElements()).toHaveLength(0);
         expect(builtInIcon(el).getBoundingClientRect().width).toBe(iconSize);
         expect(pathData(builtInIcon(el))).toEqual(pathData(Icon_AISearch()));
+
+        // Put the icon back so the story looks the same after a play run.
+        el.prepend(custom);
+        await nextFrame();
+
+        expect(slot.assignedElements()).toEqual([custom]);
+        expect(builtInIcon(el).getBoundingClientRect().width).toBe(0);
       }
     );
   },
