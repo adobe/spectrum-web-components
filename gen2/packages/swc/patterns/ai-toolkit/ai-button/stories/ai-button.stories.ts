@@ -14,8 +14,6 @@ import { html, nothing } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import { BUTTON_VALID_SIZES } from '@adobe/spectrum-wc-core/components/button';
-
 import '../swc-ai-button.js';
 
 import {
@@ -27,6 +25,7 @@ import {
 } from '../../../../.storybook/helpers/index.js';
 import {
   AI_BUTTON_ICONS,
+  AI_BUTTON_VALID_SIZES,
   type AiButton,
   type AiButtonIcon,
 } from '../AiButton.js';
@@ -40,7 +39,7 @@ const { args, argTypes, template } = getStorybookHelpers('swc-ai-button');
 argTypes.size = {
   ...argTypes.size,
   control: { type: 'select' },
-  options: BUTTON_VALID_SIZES,
+  options: AI_BUTTON_VALID_SIZES,
 };
 
 argTypes.icon = {
@@ -213,7 +212,7 @@ export const Anatomy: Story = {
 
 export const Sizes: Story = {
   render: (args) => html`
-    ${BUTTON_VALID_SIZES.map((size) =>
+    ${AI_BUTTON_VALID_SIZES.map((size) =>
       captioned(template({ ...args, size }), SIZE_LABELS[size])
     )}
   `,
@@ -223,7 +222,7 @@ export const Sizes: Story = {
 
 export const IconOnly: Story = {
   render: (args) => html`
-    ${BUTTON_VALID_SIZES.map((size) =>
+    ${AI_BUTTON_VALID_SIZES.map((size) =>
       captioned(
         template({ ...args, ...ICON_ONLY_ARGS, size }),
         SIZE_LABELS[size]
@@ -323,7 +322,7 @@ export const DesignReference: Story = {
           <span class="swc-Detail swc-Detail--sizeS">${label}</span>
         `
       )}
-      ${BUTTON_VALID_SIZES.map((size) =>
+      ${AI_BUTTON_VALID_SIZES.map((size) =>
         [false, true].map(
           (iconOnly) => html`
             <span class="swc-Detail swc-Detail--sizeS">

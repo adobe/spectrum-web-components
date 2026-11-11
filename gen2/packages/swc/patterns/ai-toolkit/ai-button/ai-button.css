@@ -96,7 +96,7 @@
   --_swc-ai-button-highlight-end: light-dark(token("transparent-static-white-0"), token("transparent-static-black-75"));
 
   -webkit-tap-highlight-color: transparent;
-  display: flex; /* Block-level, so the host's line height can't add space around a small button */
+  display: flex; /* Block-level, so the host's line height can't add space around the button */
   position: relative;
   gap: var(--_swc-ai-button-gap);
   align-items: center;
@@ -298,25 +298,11 @@ slot[name="icon"]::slotted(*) {
 /* ─────────────────────────────────────────────────────────────────────────────
    SIZES
    Set on the internal button, not the host, to keep them private. Medium is
-   the default, set in the base rule. Every size uses the standard button's
-   height, padding, gap, font size, and icon size tokens, so small and medium
-   are shorter than the design's 32px and 36px. Their glow values keep the
-   design's glow and hover strength at those heights.
+   the default, set in the base rule. There's no small size. Every size uses
+   the standard button's height, padding, gap, font size, and icon size
+   tokens, so medium is shorter than the design's 36px. Its glow values keep
+   the design's glow and hover strength at that height.
    ───────────────────────────────────────────────────────────────────────────── */
-
-:host([size="s"]) .swc-AiButton {
-  --_swc-ai-button-min-block-size: token("component-height-75");
-  --_swc-ai-button-edge-to-text: token("base-padding-horizontal-small");
-  --_swc-ai-button-gap: token("base-gap-small");
-  --_swc-ai-button-font-size: token("font-size-75");
-  --_swc-ai-button-line-height: token("line-height-font-size-75");
-  --_swc-ai-button-icon-size: token("workflow-icon-small");
-  --_swc-ai-button-glow-offset: calc(token("spacing-75") * -1);
-  --_swc-ai-button-glow-hover-block-size: 10px;
-  --_swc-ai-button-icon-only-glow-inset-inline: 9px;
-  --_swc-ai-button-icon-only-glow-hover-block-size: 17px;
-  --_swc-ai-button-icon-only-glow-hover-inset-inline: token("spacing-75");
-}
 
 :host([size="l"]) .swc-AiButton {
   --_swc-ai-button-min-block-size: token("component-height-200");

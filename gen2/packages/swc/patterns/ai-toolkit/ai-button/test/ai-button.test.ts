@@ -14,7 +14,6 @@ import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import { BUTTON_VALID_SIZES } from '@adobe/spectrum-wc-core/components/button';
 import { Icon_AIChatConversation } from '@adobe/spectrum-wc-icons/AIChatConversation.js';
 import { Icon_AIExpand } from '@adobe/spectrum-wc-icons/AIExpand.js';
 import { Icon_AIFill } from '@adobe/spectrum-wc-icons/AIFill.js';
@@ -38,8 +37,10 @@ import {
 } from '../../../../utils/test-utils.js';
 import {
   AI_BUTTON_ICONS,
+  AI_BUTTON_VALID_SIZES,
   type AiButton,
   type AiButtonIcon,
+  type AiButtonSize,
 } from '../AiButton.js';
 import meta, {
   Accessibility,
@@ -94,11 +95,10 @@ const builtInIcon = (el: AiButton): SVGSVGElement =>
   )!;
 
 /**
- * Dimensions per size, in pixels. Small and medium match the standard
- * button's sizes; large and extra-large match the design.
+ * Dimensions per size, in pixels. They match the standard button's sizes, so
+ * medium is shorter than the design's 36px.
  */
 const DESIGN_SIZES = {
-  s: { blockSize: 24, edgeToText: 10, iconSize: 16, fontSize: 12 },
   m: { blockSize: 32, edgeToText: 12, iconSize: 18, fontSize: 14 },
   l: { blockSize: 40, edgeToText: 16, iconSize: 20, fontSize: 16 },
   xl: { blockSize: 48, edgeToText: 18, iconSize: 22, fontSize: 18 },
@@ -269,7 +269,7 @@ export const IconOnlyTest: Story = {
 
 export const SizesTest: Story = {
   render: () => html`
-    ${BUTTON_VALID_SIZES.map(
+    ${AI_BUTTON_VALID_SIZES.map(
       (size) => html`
         <swc-ai-button size=${size}>Ask AI</swc-ai-button>
       `
@@ -304,12 +304,37 @@ export const SizesTest: Story = {
   },
 };
 
+export const NoSmallSizeTest: Story = {
+  render: () => html`
+    <swc-ai-button size="s">Ask AI</swc-ai-button>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const el = await getComponent<AiButton>(canvasElement, 'swc-ai-button');
+
+    await step('renders the small size attribute as medium', async () => {
+      expect(el.size).toBe('m');
+      expect(el.getAttribute('size')).toBe('m');
+      expect(innerButton(el).offsetHeight).toBe(DESIGN_SIZES.m.blockSize);
+    });
+
+    await step('renders the small size property as medium', async () => {
+      el.size = 'l';
+      await el.updateComplete;
+      el.size = 's' as AiButtonSize;
+      await el.updateComplete;
+      expect(el.size).toBe('m');
+      expect(el.getAttribute('size')).toBe('m');
+      expect(innerButton(el).offsetHeight).toBe(DESIGN_SIZES.m.blockSize);
+    });
+  },
+};
+
 export const StandardButtonParityTest: Story = {
   render: () => html`
     ${(['sizeM', 'sizeL'] as const).map(
       (scale) => html`
         <div class="swc-theme swc-theme--${scale}" data-scale=${scale}>
-          ${BUTTON_VALID_SIZES.map(
+          ${AI_BUTTON_VALID_SIZES.map(
             (size) => html`
               <swc-button size=${size}>
                 <svg slot="icon" viewBox="0 0 20 20" aria-hidden="true"></svg>

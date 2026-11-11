@@ -16,7 +16,10 @@ import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 
-import { ButtonBase } from '@adobe/spectrum-wc-core/components/button';
+import {
+  ButtonBase,
+  type ButtonSize,
+} from '@adobe/spectrum-wc-core/components/button';
 import { validateEnum } from '@adobe/spectrum-wc-core/utils';
 import { Icon_AIChatConversation } from '@adobe/spectrum-wc-icons/AIChatConversation.js';
 import { Icon_AIExpand } from '@adobe/spectrum-wc-icons/AIExpand.js';
@@ -62,6 +65,18 @@ const ICON_SVGS: Record<AiButtonIcon, () => string> = {
 };
 
 /**
+ * The sizes that `size` accepts. Given the intended use cases of the AI
+ * button, there's no small size.
+ */
+export const AI_BUTTON_VALID_SIZES = [
+  'm',
+  'l',
+  'xl',
+] as const satisfies readonly ButtonSize[];
+
+export type AiButtonSize = (typeof AI_BUTTON_VALID_SIZES)[number];
+
+/**
  * A pill-shaped button that starts an AI action, such as "Ask AI". It shows
  * an AI icon before an optional label, on a glass surface with a gradient
  * glow that grows on hover. The icon is the AI mark unless `icon` names
@@ -77,6 +92,8 @@ const ICON_SVGS: Record<AiButtonIcon, () => string> = {
  * @status preview
  * @since 2.0.0-beta.7
  *
+ * @attribute {AiButtonSize} size - The size of the button: `m`, `l`, or `xl`. Given the intended use cases of the AI button, there's no small size, and `s` renders as `m`.
+ *
  * @slot - Visible button label. Leave empty for an icon-only button.
  *
  * @example
@@ -89,6 +106,22 @@ const ICON_SVGS: Record<AiButtonIcon, () => string> = {
  * <swc-ai-button accessible-label="Ask AI"></swc-ai-button>
  */
 export class AiButton extends ButtonBase {
+  // ────────────────────
+  //     API OVERRIDES
+  // ────────────────────
+
+  /** @internal */
+  static override readonly VALID_SIZES: readonly AiButtonSize[] =
+    AI_BUTTON_VALID_SIZES;
+
+  /**
+   * The size of the button: `m`, `l`, or `xl`. Given the intended use cases
+   * of the AI button, there's no small size, and `s` renders as `m`.
+   *
+   * @default m
+   */
+  declare public size: AiButtonSize;
+
   // ───────────────────
   //     API ADDITIONS
   // ───────────────────
