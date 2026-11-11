@@ -18,6 +18,7 @@ import '../stories/demo-hosts.js';
 import { getComponent } from '../../../../swc/utils/test-utils.js';
 import { fromFloatingPlacement, toFloatingPlacement } from '../index.js';
 import type {
+  DemoPlacementArrow,
   DemoPlacementMultiController,
   DemoPlacementTestFixture,
   DemoPlacementVirtualTrigger,
@@ -189,6 +190,85 @@ export const StopOnDisconnect: Story = {
       // documentation of intent.
       window.dispatchEvent(new Event('resize'));
       expect(host.floatingEl.style.translate).toBe(before);
+    });
+  },
+};
+
+/**
+ * `stop()` leaves the controller's inline styles in place; `clearStyles()`
+ * removes them, and only them, once no session is active.
+ */
+export const ClearStylesRemovesInlineStyles: Story = {
+  render: () => html`
+    <demo-placement-arrow></demo-placement-arrow>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const host = await getComponent<DemoPlacementArrow>(
+      canvasElement,
+      'demo-placement-arrow'
+    );
+    const floatingProperties = [
+      'top',
+      'left',
+      'translate',
+      '--swc-placement-available-width',
+      '--swc-placement-available-height',
+    ];
+    const tipProperties = ['top', 'left', 'translate'];
+    // The listed properties that are still set inline, so a failure names them.
+    const inlineValues = (
+      element: HTMLElement,
+      properties: string[]
+    ): Record<string, string> =>
+      Object.fromEntries(
+        properties
+          .map((property) => [
+            property,
+            element.style.getPropertyValue(property),
+          ])
+          .filter(([, value]) => value !== '')
+      );
+    const expectPositioned = (): void => {
+      expect(
+        Object.keys(inlineValues(host.floatingEl, floatingProperties))
+      ).toEqual(floatingProperties);
+      // `bottom-end` puts the tip on the top edge: `left` and `translate`.
+      expect(Object.keys(inlineValues(host.tipEl, tipProperties))).toEqual([
+        'left',
+        'translate',
+      ]);
+    };
+
+    await waitFor(expectPositioned);
+
+    await step('does nothing while positioning is active', () => {
+      host.controller.clearStyles();
+      expectPositioned();
+    });
+
+    await step('stop() leaves the inline styles in place', () => {
+      host.controller.stop();
+      expectPositioned();
+    });
+
+    await step('removes them from the floating and tip elements', () => {
+      host.floatingEl.style.setProperty('--consumer-property', '1px');
+      host.controller.clearStyles();
+      expect(inlineValues(host.floatingEl, floatingProperties)).toEqual({});
+      expect(inlineValues(host.tipEl, tipProperties)).toEqual({});
+      expect(
+        host.floatingEl.style.getPropertyValue('--consumer-property'),
+        'inline styles the controller did not write are kept'
+      ).toBe('1px');
+    });
+
+    await step('is safe to call again', () => {
+      host.controller.clearStyles();
+      expect(inlineValues(host.floatingEl, floatingProperties)).toEqual({});
+      expect(inlineValues(host.tipEl, tipProperties)).toEqual({});
+      expect(
+        host.floatingEl.style.getPropertyValue('--consumer-property')
+      ).toBe('1px');
     });
   },
 };
