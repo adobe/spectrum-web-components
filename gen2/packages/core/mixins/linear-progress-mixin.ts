@@ -310,7 +310,7 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
           prop: 'label-position',
           value: this.labelPosition,
           valid: LINEAR_PROGRESS_LABEL_POSITIONS,
-          url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-meter--docs',
+          url: this.docsHref,
         });
       }
 
@@ -319,7 +319,7 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
           prop: 'static-color',
           value: this.staticColor,
           valid: LINEAR_PROGRESS_STATIC_COLORS,
-          url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-meter--docs',
+          url: this.docsHref,
         });
       }
     }

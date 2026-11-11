@@ -487,12 +487,9 @@ export abstract class PopoverBase extends SpectrumElement {
       return;
     }
     const showArrow = !this.hideArrow;
-    // Clear `actual-placement` to re-gate the surface and tip for this session:
-    // `start()` calls `stop()`, which resets the inline `translate` to the 0,0
-    // origin until the async first compute re-anchors. The stylesheet reveals the
-    // surface and tip only once `actual-placement` is present, so they stay hidden
-    // through that window (and a rapid reopen during the close fade) instead of
-    // painting at 0,0. Re-set by `onPlacementChange` once the session anchors.
+    // Re-gate the surface and tip until this session's first (async) compute:
+    // the stylesheet shows them only with `actual-placement`, so they never
+    // paint at 0,0 or a stale position. `onPlacementChange` sets it again.
     this.removeAttribute('actual-placement');
     // Add the arrow height to the trigger gap so the surface clears the tip on
     // every side. Applied through the controller's direction-aware main-axis
@@ -667,6 +664,7 @@ export abstract class PopoverBase extends SpectrumElement {
       return;
     }
     this._placementController.stop();
+    this._placementController.clearStyles();
     this.removeAttribute('actual-placement');
   }
 
@@ -825,7 +823,7 @@ export abstract class PopoverBase extends SpectrumElement {
         new CustomEvent('swc-after-close', { bubbles: true, composed: true })
       );
       // Positioning autoUpdate was already frozen at close start; this clears the
-      // now-stale `actual-placement` attribute once the exit transition finishes.
+      // stale `actual-placement` and inline styles once the exit fade finishes.
       this._stopPositioningWhenClosed();
     });
     this._closeSource = null;
