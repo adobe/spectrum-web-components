@@ -37,7 +37,6 @@ const meta: Meta = {
   render: (args) => template(args),
   parameters: {
     docs: {
-      packagePath: 'patterns/ai-toolkit/suggestion-item',
       subtitle: 'Interactive chip action used in suggestion groups.',
     },
     layout: 'padded',

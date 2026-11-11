@@ -225,7 +225,7 @@ export class ActionGroup extends ActionGroupBase {
         window.__swc.warn(
           this,
           `<${this.localName}> element expects the "static-color" attribute to be one of the following: ${constructor.STATIC_COLORS.join(', ')}.`,
-          'https://spectrum-web-components.adobe.com/components/action-group/',
+          'https://spectrum-web-components.adobe.com/?path=/docs/components-action-group--docs',
           { issues: [...constructor.STATIC_COLORS] }
         );
       }
