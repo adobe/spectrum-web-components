@@ -21,6 +21,8 @@
  * - attw (Are the Types Wrong?): do TypeScript consumers resolve working types
  *   for each entry point? Run with the `esm-only` profile, since every package
  *   here is ESM.
+ * - Lightning CSS: does every shipped `.css` file parse? Vite minifies CSS with
+ *   Lightning CSS, so a file it rejects breaks consumers' production builds.
  *
  * Usage:
  *   node scripts/validate-packages.js --gen=<1st-gen|gen2> [--report-only]
@@ -38,6 +40,7 @@ import {
   readFileSync,
   rmSync,
 } from 'fs';
+import { transform } from 'lightningcss';
 import { tmpdir } from 'os';
 import { join } from 'path';
 import { publint } from 'publint';
@@ -72,8 +75,36 @@ async function pack(dir, destination) {
     ['pack', '--json', '--ignore-scripts', '--pack-destination', destination],
     { cwd: dir, maxBuffer: 64 * 1024 * 1024 }
   );
-  const [{ filename }] = JSON.parse(stdout);
-  return join(destination, filename);
+  const [{ filename, files }] = JSON.parse(stdout);
+  return { tarball: join(destination, filename), files };
+}
+
+/**
+ * Parses each shipped `.css` file the way a consumer's minifier would. The
+ * packed file list comes from `npm pack`, so this checks exactly what ships.
+ */
+function runCssCheck(dir, files) {
+  return files
+    .map(({ path }) => path)
+    .filter((path) => path.endsWith('.css'))
+    .flatMap((path) => {
+      try {
+        // Invalid rules nested in a block, such as `@property` inside
+        // `@media`, surface as warnings rather than errors.
+        const { warnings } = transform({
+          filename: path,
+          code: readFileSync(join(dir, path)),
+          minify: true,
+          errorRecovery: false,
+        });
+        return warnings.map(
+          ({ message, loc }) => `\`${path}:${loc.line}\`: ${message}`
+        );
+      } catch (error) {
+        const line = error.loc ? `:${error.loc.line}` : '';
+        return [`\`${path}${line}\`: ${error.message}`];
+      }
+    });
 }
 
 async function runPublint(tarball, pkg) {
@@ -166,12 +197,13 @@ async function runAttw(tarball, pkg) {
 
 async function validate({ dir, pkg }, destination) {
   try {
-    const tarball = await pack(dir, destination);
+    const { tarball, files } = await pack(dir, destination);
     const [publintMessages, attwProblems] = await Promise.all([
       runPublint(tarball, pkg),
       runAttw(tarball, pkg),
     ]);
-    return { name: pkg.name, publintMessages, attwProblems };
+    const cssProblems = runCssCheck(dir, files);
+    return { name: pkg.name, publintMessages, attwProblems, cssProblems };
   } catch (error) {
     return {
       name: pkg.name,
@@ -179,6 +211,7 @@ async function validate({ dir, pkg }, destination) {
         { type: 'error', text: `Validation failed: ${error.message}` },
       ],
       attwProblems: [],
+      cssProblems: [],
     };
   }
 }
@@ -187,25 +220,32 @@ function report(results) {
   const count = (result, type) =>
     result.publintMessages.filter((message) => message.type === type).length;
   const failing = results.filter(
-    (result) => count(result, 'error') > 0 || result.attwProblems.length > 0
+    (result) =>
+      count(result, 'error') > 0 ||
+      result.attwProblems.length > 0 ||
+      result.cssProblems.length > 0
   );
 
   const lines = [
     `## Package validation (${gen})`,
     '',
-    `Checked ${results.length} public packages with \`publint\` and \`attw --profile esm-only\`. ${failing.length} with errors.${reportOnly ? ' Report-only: findings do not fail this check yet.' : ''}`,
+    `Checked ${results.length} public packages with \`publint\`, \`attw --profile esm-only\`, and Lightning CSS. ${failing.length} with errors.${reportOnly ? ' Report-only: findings do not fail this check yet.' : ''}`,
     '',
-    '| Package | publint errors | publint warnings | attw problems |',
-    '| --- | --- | --- | --- |',
+    '| Package | publint errors | publint warnings | attw problems | CSS errors |',
+    '| --- | --- | --- | --- | --- |',
     ...results.map(
       (result) =>
-        `| \`${result.name}\` | ${count(result, 'error') || '✅'} | ${count(result, 'warning') || '–'} | ${result.attwProblems.length || '✅'} |`
+        `| \`${result.name}\` | ${count(result, 'error') || '✅'} | ${count(result, 'warning') || '–'} | ${result.attwProblems.length || '✅'} | ${result.cssProblems.length || '✅'} |`
     ),
     '',
   ];
 
   for (const result of results) {
-    if (!result.publintMessages.length && !result.attwProblems.length) {
+    if (
+      !result.publintMessages.length &&
+      !result.attwProblems.length &&
+      !result.cssProblems.length
+    ) {
       continue;
     }
     lines.push(`<details><summary><code>${result.name}</code></summary>`, '');
@@ -214,6 +254,9 @@ function report(results) {
     }
     for (const problem of result.attwProblems) {
       lines.push(`- attw: ${problem}`);
+    }
+    for (const problem of result.cssProblems) {
+      lines.push(`- CSS: ${problem}`);
     }
     lines.push('', '</details>', '');
   }

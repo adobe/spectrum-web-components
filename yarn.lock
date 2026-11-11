@@ -30181,6 +30181,7 @@ __metadata:
     globals: "npm:17.3.0"
     husky: "npm:9.1.7"
     jsonc-eslint-parser: "npm:2.4.2"
+    lightningcss: "npm:1.30.1"
     lint-staged: "npm:16.2.6"
     npm-run-all2: "npm:8.0.4"
     prettier: "npm:3.8.1"
