@@ -279,26 +279,55 @@ export const IconSlotTest: Story = {
       }
     );
 
-    await step('sizes a slotted icon like the built-in icon', async () => {
-      for (const el of withCustomIcon) {
-        const { custom } = parts(el);
+    await step(
+      'sizes and places a slotted icon like the built-in icon',
+      async () => {
+        const buttons = [plain, ...withCustomIcon];
+        // Boxes relative to the inner button, so buttons in different places
+        // on the page compare.
+        const layout = (el: AiButton, icon: Element) => {
+          const button = innerButton(el).getBoundingClientRect();
+          const box = icon.getBoundingClientRect();
+          const label = innerButton(el)
+            .querySelector('.swc-AiButton-label')!
+            .getBoundingClientRect();
+
+          return {
+            x: box.left - button.left,
+            y: box.top - button.top,
+            width: box.width,
+            height: box.height,
+            labelX: label.left - button.left,
+          };
+        };
 
         for (const size of AI_BUTTON_VALID_SIZES) {
-          el.size = size;
-          await el.updateComplete;
-          const box = custom.getBoundingClientRect();
+          buttons.forEach((el) => (el.size = size));
+          await Promise.all(buttons.map((el) => el.updateComplete));
+          const expected = layout(plain, builtInIcon(plain));
 
-          expect(box.width, `${custom.localName} ${size} width`).toBe(
+          expect(expected.width, `built-in ${size} width`).toBe(
             DESIGN_SIZES[size].iconSize
           );
-          expect(box.height, `${custom.localName} ${size} height`).toBe(
-            DESIGN_SIZES[size].iconSize
-          );
+          for (const el of withCustomIcon) {
+            const { custom } = parts(el);
+            const actual = layout(el, custom);
+            const name = `${custom.localName} ${size}`;
+
+            expect(actual.width, `${name} width`).toBe(expected.width);
+            expect(actual.height, `${name} height`).toBe(expected.height);
+            expect(actual.x, `${name} x`).toBeCloseTo(expected.x, 2);
+            expect(actual.y, `${name} y`).toBeCloseTo(expected.y, 2);
+            expect(actual.labelX, `${name} label x`).toBeCloseTo(
+              expected.labelX,
+              2
+            );
+          }
         }
-        el.size = 'm';
-        await el.updateComplete;
+        buttons.forEach((el) => (el.size = 'm'));
+        await Promise.all(buttons.map((el) => el.updateComplete));
       }
-    });
+    );
 
     await step(
       'updates when the slotted icon is removed and added back',
