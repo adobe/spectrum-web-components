@@ -1061,6 +1061,34 @@ export const ReconnectAfterCloseTest: Story = {
   },
 };
 
+export const HiddenHostAfterCloseTest: Story = {
+  render: () => html`
+    <swc-toast open>File saved</swc-toast>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const toast = await getComponent<Toast>(canvasElement, 'swc-toast');
+
+    await step(
+      'fires swc-after-close without waiting for the fade when the host is already hidden',
+      async () => {
+        // Turning off the host's `display` transition hides it at once, as Firefox does.
+        toast.style.transition = 'none';
+        const afterClose = waitForEvent(toast, 'swc-after-close');
+        const start = performance.now();
+
+        toast.close();
+        await afterClose;
+
+        // The fallback timer would take longer than the whole fade.
+        expect(
+          performance.now() - start,
+          'milliseconds until swc-after-close'
+        ).toBeLessThan(100);
+      }
+    );
+  },
+};
+
 // ──────────────────────────────────────────────────────────────
 // TEST: Dev mode warnings
 // ──────────────────────────────────────────────────────────────
