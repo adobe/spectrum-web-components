@@ -158,7 +158,7 @@
     "component",
     "css"
   ],
-  "customElements": "custom-elements.json",
+  "customElements": "dist/custom-elements.json",
   "publishConfig": {
     "access": "public"
   }

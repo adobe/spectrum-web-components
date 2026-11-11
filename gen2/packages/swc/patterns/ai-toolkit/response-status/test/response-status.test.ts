@@ -910,12 +910,110 @@ export const DetailOverflowVisibilityTest: Story = {
 
         await waitFor(
           () => {
-            expect(wideRegion()?.hasAttribute('tabindex')).toBe(true);
+            const region = wideRegion();
+            if (!region) {
+              throw new Error('Expected the description scroll region');
+            }
+
+            expect(
+              region.getAttribute('tabindex'),
+              'remains keyboard-focusable'
+            ).toBe('0');
+
+            expect(
+              region.clientHeight,
+              'the region is rendered'
+            ).toBeGreaterThan(0);
+
+            expect(
+              region.scrollWidth,
+              'wide code still scrolls horizontally'
+            ).toBeGreaterThan(region.clientWidth);
+
+            expect(
+              region.scrollHeight,
+              'a single code line must not acquire vertical overflow'
+            ).toBeLessThanOrEqual(region.clientHeight + 1);
+
+            expect(
+              getComputedStyle(region, '::before').content,
+              'horizontal-only overflow does not trigger the vertical fade'
+            ).toBe('none');
           },
           { timeout: 2000 }
         );
 
         wideStep.remove();
+      }
+    );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Growing a description while its step is already open updates the
+// overflow fade/focusability without requiring a close/reopen
+// ──────────────────────────────────────────────────────────────
+
+export const DescriptionOverflowUpdatesTest: Story = {
+  render: () => html`
+    <swc-response-status-step status="complete" open>
+      <span slot="label">Reviewing source documents</span>
+      <span slot="description">Review started.</span>
+    </swc-response-status-step>
+  `,
+  play: async ({ canvasElement, step }) => {
+    await step(
+      'updates overflow fades when an open description grows',
+      async () => {
+        const el = await getComponent<ResponseStatusStep>(
+          canvasElement,
+          'swc-response-status-step'
+        );
+        const region = el.shadowRoot?.querySelector<HTMLElement>(
+          '.swc-ResponseStatusStep-detailScroll'
+        );
+        const description = el.querySelector('[slot="description"]');
+
+        if (!region || !description) {
+          throw new Error('Expected the description and its scroll region');
+        }
+
+        await waitFor(() => {
+          expect(
+            region.clientHeight,
+            'the description is rendered'
+          ).toBeGreaterThan(0);
+
+          expect(
+            region.scrollHeight,
+            'the initial short description fits'
+          ).toBeLessThanOrEqual(region.clientHeight + 1);
+
+          expect(
+            getComputedStyle(region, '::after').content,
+            'short content has no fade overlay'
+          ).toBe('none');
+        });
+
+        description.textContent =
+          'Reviewing source documents and cross-checking the reported figures. '.repeat(
+            100
+          );
+        await el.updateComplete;
+
+        await waitFor(() => {
+          expect(el.open, 'the step remains open').toBe(true);
+
+          expect(
+            region.scrollHeight,
+            'the updated description overflows vertically'
+          ).toBeGreaterThan(region.clientHeight + 1);
+
+          expect(
+            getComputedStyle(region, '::after').content,
+            'the fade overlay appears without reopening the step'
+          ).toBe('""');
+        });
       }
     );
   },

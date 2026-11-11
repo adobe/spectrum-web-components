@@ -98,12 +98,21 @@ export class ResponseStatusStep extends SpectrumElement {
 
   /**
    * Whether the open detail region overflows its capped height. Only steps
-   * that overflow get a keyboard-focusable scroll region. Measured once per
-   * toggle-open rather than continuously: a resize or additional streamed
-   * text while already open will not update this until the next toggle.
+   * that overflow get a keyboard-focusable scroll region. Remeasured on
+   * every open toggle and content change while already open.
    */
   @state()
   private _overflows = false;
+
+  /**
+   * Whether the open detail region overflows vertically specifically. The
+   * top/bottom fade cues only make sense for vertical (block-axis) scroll;
+   * a code sample that only overflows horizontally (e.g. a single long
+   * line) must not get them, or a single visible line looks washed out by
+   * a fade meant to hint at hidden content above/below it.
+   */
+  @state()
+  private _overflowsVertically = false;
 
   /**
    * Last label text this step notified the parent about. Only tracked while
@@ -250,6 +259,14 @@ export class ResponseStatusStep extends SpectrumElement {
         });
       }
     }
+
+    // Content can mutate (e.g. streamed text) while the panel is already
+    // open, not just at the moment it's toggled open; remeasure so the
+    // fade/focusability stay in sync with the now-current content instead
+    // of only updating on the next open/close.
+    if (this.open) {
+      void this.updateComplete.then(() => this._measureOverflow());
+    }
   }
 
   private _measureOverflow(): void {
@@ -273,6 +290,9 @@ export class ResponseStatusStep extends SpectrumElement {
     const overflows = overflowsVertically || overflowsHorizontally;
     if (overflows !== this._overflows) {
       this._overflows = overflows;
+    }
+    if (overflowsVertically !== this._overflowsVertically) {
+      this._overflowsVertically = overflowsVertically;
     }
   }
 
@@ -356,7 +376,8 @@ export class ResponseStatusStep extends SpectrumElement {
             class=${classMap({
               'swc-ResponseStatusStep-detailScroll': true,
               'swc-ResponseStatusStep-detailScroll--code': this._hasCode,
-              'swc-ResponseStatusStep-detailScroll--overflows': this._overflows,
+              'swc-ResponseStatusStep-detailScroll--overflows':
+                this._overflowsVertically,
             })}
             role="group"
             aria-labelledby=${this._toggleId}
