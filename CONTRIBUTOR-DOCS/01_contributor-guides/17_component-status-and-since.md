@@ -13,7 +13,7 @@
 
 - [Overview](#overview)
 - [Status values](#status-values)
-    - [`preview`](#preview)
+    - [`experimental`](#experimental)
     - [`stable`](#stable)
     - [`deprecated`](#deprecated)
     - [`internal`](#internal)
@@ -33,7 +33,7 @@
 
 Every public gen2 component class carries two JSDoc tags that tell consumers how much to rely on it:
 
-- `@status` says how stable the component is: `preview`, `stable`, `deprecated`, or `internal`.
+- `@status` says how stable the component is: `experimental`, `stable`, `deprecated`, or `internal`.
 - `@since` records the first published version of `@adobe/spectrum-wc` that included the component.
 
 Both tags sit in the JSDoc block on the component class in `gen2/packages/swc/components/<component>/<Component>.ts` (or the pattern class in `gen2/packages/swc/patterns/`), next to `@element`:
@@ -43,7 +43,7 @@ Both tags sit in the JSDoc block on the component class in `gen2/packages/swc/co
  * A short description of the component.
  *
  * @element swc-my-component
- * @status preview
+ * @status experimental
  * @since 2.0.0-beta.8
  */
 export class MyComponent extends MyComponentBase { … }
@@ -59,16 +59,16 @@ This doc defines what each value means, when the tags change, and who changes th
 
 | Value | What it means for consumers | Docs badge |
 | --- | --- | --- |
-| `preview` | Usable in products, but the API, styling, or behavior can still change in a minor release. Pin versions and read the changelog before upgrading. | Preview |
+| `experimental` | Usable in products, but the API, styling, or behavior can still change in a minor release. Pin versions and read the changelog before upgrading. | Experimental |
 | `stable` | The public API is settled. Breaking changes happen only in a major release, and only after a deprecation period. | None |
 | `deprecated` | Still works, but has a named replacement or is planned for removal. Don't adopt it in new work. It's removed only in a later major release. | Deprecated |
 | `internal` | A building block for other SWC components. It isn't part of the public API and can change or disappear in any release. Don't use it directly. | Internal |
 
 A component's status is independent of the package version. Gen2 publishes as `2.0.0-beta.N` and stays in changesets' persistent pre-release mode (see [Gen2's pre-release versioning](15_changelog-strategy.md#gen2s-pre-release-versioning)), but an individual component can still be `stable` once it meets the criteria below.
 
-### `preview`
+### `experimental`
 
-New components start here. A component stays in `preview` while any of these are true:
+New components start here. A component stays in `experimental` while any of these are true:
 
 - Its public API (properties, attributes, slots, events, CSS custom properties) hasn't had a review.
 - Its docs page, accessibility section, or migration guide is missing or incomplete.
@@ -98,7 +98,7 @@ A deprecated component is removed only in a later major release. Its removal is 
 
 Use `internal` for components that exist to build other SWC components and that consumers shouldn't place directly. An internal component's stories and docs use the `.internal.stories.ts` and `.internal.mdx` naming, which the production Storybook build excludes (see `gen2/packages/swc/.storybook/main.ts`).
 
-Promoting an internal component to public means dropping the `.internal.*` naming and changing `@status` to `preview`, in the same PR. The [Asset component plan](../03_project-planning/03_components/asset/component-plan.md) is an example.
+Promoting an internal component to public means dropping the `.internal.*` naming and changing `@status` to `experimental`, in the same PR. The [Asset component plan](../03_project-planning/03_components/asset/component-plan.md) is an example.
 
 ## Changing a status
 
@@ -111,8 +111,8 @@ A status change is a consumer-facing commitment, so it needs a recorded decision
 
 | Change | Bump type | Why |
 | --- | --- | --- |
-| `internal` to `preview` | `minor` | A new public component becomes available. |
-| `preview` to `stable` | `patch` | The code doesn't change, only the commitment. |
+| `internal` to `experimental` | `minor` | A new public component becomes available. |
+| `experimental` to `stable` | `patch` | The code doesn't change, only the commitment. |
 | Any status to `deprecated` | `minor` | It adds a dev-mode warning and points consumers to a replacement. |
 | Removing a `deprecated` component | `major` | It's a breaking change. |
 
@@ -123,15 +123,15 @@ The allowed transitions are:
 ```mermaid
 stateDiagram-v2
     [*] --> internal
-    [*] --> preview
-    internal --> preview
-    preview --> stable
-    preview --> deprecated
+    [*] --> experimental
+    internal --> experimental
+    experimental --> stable
+    experimental --> deprecated
     stable --> deprecated
     deprecated --> [*]: removed in a major release
 ```
 
-A `stable` component never goes back to `preview`. If its API needs a breaking change, deprecate the affected API and ship the replacement, or plan the change for a major release.
+A `stable` component never goes back to `experimental`. If its API needs a breaking change, deprecate the affected API and ship the replacement, or plan the change for a major release.
 
 ## The since tag
 
@@ -166,7 +166,7 @@ flowchart LR
 
 1. `statusPlugin` in `gen2/packages/swc/cem.config.js` reads the last JSDoc block on each class declaration and copies the `@status` and `@since` values onto that class's entry in the Custom Elements Manifest (`gen2/packages/swc/dist/custom-elements.json`).
 2. The `StatusBadge` block in `gen2/packages/swc/.storybook/blocks/StatusBadge.tsx`, rendered by `DocsHeader`, finds the manifest entry whose `tagName` matches the story meta's `component` and renders the badges.
-3. `StatusBadge` renders a badge for `preview`, `deprecated`, and `internal` only. Any other value, including `stable`, renders no status badge.
+3. `StatusBadge` renders a badge for `experimental`, `deprecated`, and `internal` only. Any other value, including `stable`, renders no status badge.
 4. The "Since" badge is hidden by default (`showSince = false`). It turns on once the SWC-2558 automation keeps `@since` accurate, and that work also needs to keep the `next` placeholder from rendering.
 
 The manifest is rebuilt with the package (`yarn build`), so a tag change shows up in Storybook after the next build.
