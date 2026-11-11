@@ -411,6 +411,29 @@ export const ValueOutOfRangeWarningTest: Story = {
     );
 
     await step(
+      'warns on a non-numeric value, keeps it, and renders the minimum',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          const meter = await fixture<Meter>(html`
+            <swc-meter
+              value="banana"
+              accessible-label="Storage used"
+            ></swc-meter>
+          `);
+
+          expect(
+            warnCalls.map((call) => String(call[1])).join('\n'),
+            'warning names the property and received value'
+          ).toMatch(/"value".*"banana"/);
+          expect(meter.getAttribute('value'), 'attribute is kept').toBe(
+            'banana'
+          );
+          expect(getRoleEl(meter).getAttribute('aria-valuenow')).toBe('0');
+          meter.parentElement?.remove();
+        })
+    );
+
+    await step(
       'renders numeric string values, as frameworks set them, without a warning',
       () =>
         withWarningSpy(async (warnCalls) => {

@@ -378,19 +378,28 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
       const value = parseNumericText(this.value);
       const min = this.sanitizedMin;
       const max = this.sanitizedMax;
-      // Early return when the value is valid so the message is not built on
-      // every in-range render.
-      if (!Number.isFinite(value) || (value >= min && value <= max)) {
+      // Early return when the value is unset or valid so the message is not
+      // built on every in-range render.
+      if (
+        value === null ||
+        value === undefined ||
+        (Number.isFinite(value) && value >= min && value <= max)
+      ) {
         return;
       }
+      // An unparseable value set from JavaScript is `NaN`; report the
+      // attribute text instead.
+      const received = Number.isNaN(value)
+        ? (this.getAttribute('value') ?? String(value))
+        : String(value);
       warnIf(
         this,
         true,
-        `<${this.localName}> "value" (${value}) is outside the [${min}, ${max}] range and was clamped to ${this.clampedValue}.`,
+        `<${this.localName}> expects "value" to be a number in the range [${min}, ${max}]. Received "${received}"; rendering ${this.clampedValue}.`,
         this.docsHref,
         {
           issues: [
-            'set "value" within the "min-value" and "max-value" range, or',
+            'set "value" to a number within the "min-value" and "max-value" range, or',
             'adjust "min-value"/"max-value" so the range includes the value.',
           ],
         }
