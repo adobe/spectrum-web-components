@@ -100,7 +100,7 @@ export class ProgressCircle extends ProgressCircleBase {
           ['swc-ProgressCircle']: true,
           ['swc-ProgressCircle--indeterminate']: this.clampedProgress === null,
           [`swc-ProgressCircle--static${capitalize(this.staticColor)}`]:
-            typeof this.staticColor !== 'undefined',
+            this.staticColor != null,
         })}
       >
         <svg aria-hidden="true" fill="none" width="100%" height="100%">

@@ -16,6 +16,7 @@ import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import {
   numberAttribute,
   parseNumericText,
+  stringAttribute,
   validateEnum,
   warnIf,
 } from '@adobe/spectrum-wc-core/utils/index.js';
@@ -87,9 +88,7 @@ export abstract class ThumbnailBase extends SpectrumElement {
     type: String,
     reflect: true,
     // A removed attribute resets to the default rather than `null`.
-    converter: {
-      fromAttribute: (value: string | null) => value ?? THUMBNAIL_DEFAULT_FIT,
-    },
+    converter: stringAttribute(THUMBNAIL_DEFAULT_FIT),
   })
   public fit: ThumbnailFit = THUMBNAIL_DEFAULT_FIT;
 

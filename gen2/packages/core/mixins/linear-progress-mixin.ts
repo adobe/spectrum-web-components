@@ -19,6 +19,7 @@ import {
   isDebug,
   numberAttribute,
   parseNumericText,
+  stringAttribute,
   validateEnum,
   warnIf,
 } from '../utils/index.js';
@@ -101,9 +102,10 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
     /**
      * Current value. Sanitized via `clampedValue` for rendering and
      * `aria-valuenow`. Like `minValue` and `maxValue`, non-numeric text is
-     * kept as set so reflection never writes `NaN` over the consumer's markup.
+     * kept as set so reflection never writes `NaN` over the consumer's markup,
+     * and a removed attribute resets to the default.
      */
-    @property({ type: Number, reflect: true, converter: numberAttribute(null) })
+    @property({ type: Number, reflect: true, converter: numberAttribute(0) })
     public value = 0;
 
     /**
@@ -113,7 +115,7 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
       type: Number,
       reflect: true,
       attribute: 'min-value',
-      converter: numberAttribute(null),
+      converter: numberAttribute(0),
     })
     public minValue = 0;
 
@@ -124,7 +126,7 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
       type: Number,
       reflect: true,
       attribute: 'max-value',
-      converter: numberAttribute(null),
+      converter: numberAttribute(100),
     })
     public maxValue = 100;
 
@@ -154,7 +156,13 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
     /**
      * Position of the label relative to the bar.
      */
-    @property({ type: String, reflect: true, attribute: 'label-position' })
+    @property({
+      type: String,
+      reflect: true,
+      attribute: 'label-position',
+      // A removed attribute resets to the default rather than `null`.
+      converter: stringAttribute('top'),
+    })
     public labelPosition: LinearProgressLabelPosition = 'top';
 
     /**
@@ -309,7 +317,7 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
       });
 
       // `static-color` is optional; unset means the default colors.
-      if (this.staticColor !== undefined) {
+      if (this.staticColor != null) {
         validateEnum(this, {
           prop: 'static-color',
           value: this.staticColor,

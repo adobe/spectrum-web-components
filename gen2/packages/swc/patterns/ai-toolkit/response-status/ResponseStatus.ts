@@ -28,7 +28,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { MutationController } from '@lit-labs/observers/mutation-controller.js';
 
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
-import { validateEnum } from '@adobe/spectrum-wc-core/utils';
+import { stringAttribute, validateEnum } from '@adobe/spectrum-wc-core/utils';
 
 import '@adobe/spectrum-wc/components/icon/swc-icon.js';
 import '@adobe/spectrum-wc/components/ui-icons/swc-ui-icon.js';
@@ -151,7 +151,12 @@ export class ResponseStatus extends SpectrumElement {
   private _loaderStartTimer: number | null = null;
 
   /** Whole response lifecycle status. */
-  @property({ type: String, reflect: true })
+  @property({
+    type: String,
+    reflect: true,
+    // A removed attribute resets to the default rather than `null`.
+    converter: stringAttribute('active'),
+  })
   public status: ResponseStatusStatus = 'active';
 
   /** `true`: step timeline open. */
@@ -169,7 +174,12 @@ export class ResponseStatus extends SpectrumElement {
    * sequence; an icon name shows a single static icon. Invalid values are
    * kept as set, warn in dev mode, and render the `mega` preset.
    */
-  @property({ type: String, reflect: true })
+  @property({
+    type: String,
+    reflect: true,
+    // A removed attribute resets to the default rather than `null`.
+    converter: stringAttribute('mega'),
+  })
   public loader: PixelLoaderIconName | PixelLoaderPresetName = 'mega';
 
   @queryAssignedNodes({ slot: 'label', flatten: true })

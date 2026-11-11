@@ -971,3 +971,69 @@ export const LoaderReconnectTest: Story = {
     expect(loader()?.hasAttribute('paused')).toBe(false);
   },
 };
+
+export const AttributeRemovalResetsTest: Story = {
+  render: () => html`
+    <swc-response-status>
+      <span slot="label">Thinking</span>
+    </swc-response-status>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const el = await getComponent<TestResponseStatus>(
+      canvasElement,
+      'swc-response-status'
+    );
+    const cases: [string, string, string, unknown][] = [
+      ['status', 'complete', 'status', 'active'],
+      ['loader', 'cc', 'loader', 'mega'],
+    ];
+
+    for (const [attribute, value, property, defaultValue] of cases) {
+      await step(
+        `resets ${attribute} to its default without a warning when removed`,
+        () =>
+          withWarningSpy(async (warnCalls) => {
+            el.setAttribute(attribute, value);
+            await el.updateComplete;
+            el.removeAttribute(attribute);
+            await el.updateComplete;
+
+            expect(
+              (el as unknown as Record<string, unknown>)[property],
+              `${property} after removal`
+            ).toBe(defaultValue);
+            expect(warnCalls.length, 'no warning when unset').toBe(0);
+          })
+      );
+    }
+  },
+};
+
+export const StepStatusRemovalResetsTest: Story = {
+  render: () => html`
+    <swc-response-status>
+      <span slot="label">Thinking</span>
+      <swc-response-status-step status="complete">
+        <span slot="label">Step</span>
+      </swc-response-status-step>
+    </swc-response-status>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const stepEl = await getComponent<ResponseStatusStep>(
+      canvasElement,
+      'swc-response-status-step'
+    );
+
+    await step(
+      'resets the step status to active without a warning when removed',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          stepEl.removeAttribute('status');
+          await stepEl.updateComplete;
+
+          expect(stepEl.status, 'status after removal').toBe('active');
+          expect(warnCalls.length, 'no warning when unset').toBe(0);
+        })
+    );
+  },
+};

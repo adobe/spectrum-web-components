@@ -17,6 +17,7 @@ import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import { SizedMixin } from '@adobe/spectrum-wc-core/mixins/index.js';
 import {
   resolveEnum,
+  stringAttribute,
   validateEnum,
 } from '@adobe/spectrum-wc-core/utils/index.js';
 
@@ -93,9 +94,7 @@ export abstract class ActionGroupBase extends SizedMixin(SpectrumElement, {
     type: String,
     reflect: true,
     // A removed attribute resets to the default rather than `null`.
-    converter: {
-      fromAttribute: (value: string | null) => value ?? 'horizontal',
-    },
+    converter: stringAttribute('horizontal'),
   })
   public orientation: ActionGroupOrientation = 'horizontal';
 

@@ -30,7 +30,11 @@ export { getActiveElement } from './get-active-element.js';
 export { focusableSelector, tabbableSelector } from './focusable-selectors.js';
 export { getLabelFromSlot } from './get-label-from-slot.js';
 export { isFocusVisibleInTree } from './is-focus-visible-in-tree.js';
-export { numberAttribute, parseNumericText } from './number-attribute.js';
+export {
+  numberAttribute,
+  parseNumericText,
+  stringAttribute,
+} from './attribute-converters.js';
 export { resolveEnum } from './resolve-enum.js';
 export {
   resolveTrigger,

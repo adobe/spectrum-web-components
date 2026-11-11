@@ -20,6 +20,7 @@ import {
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import {
   resolveEnum,
+  stringAttribute,
   validateEnum,
   warnIf,
 } from '@adobe/spectrum-wc-core/utils/index.js';
@@ -92,10 +93,7 @@ export abstract class TabsBase extends SpectrumElement {
     reflect: true,
     attribute: 'keyboard-activation',
     // A removed attribute resets to the default rather than `null`.
-    converter: {
-      fromAttribute: (value: string | null) =>
-        value ?? KEYBOARD_ACTIVATION_DEFAULT,
-    },
+    converter: stringAttribute(KEYBOARD_ACTIVATION_DEFAULT),
   })
   public keyboardActivation: KeyboardActivation = KEYBOARD_ACTIVATION_DEFAULT;
 
@@ -105,9 +103,7 @@ export abstract class TabsBase extends SpectrumElement {
   @property({
     type: String,
     reflect: true,
-    converter: {
-      fromAttribute: (value: string | null) => value ?? TAB_DENSITY_DEFAULT,
-    },
+    converter: stringAttribute(TAB_DENSITY_DEFAULT),
   })
   public density: TabDensity = TAB_DENSITY_DEFAULT;
 
@@ -119,9 +115,7 @@ export abstract class TabsBase extends SpectrumElement {
   @property({
     type: String,
     reflect: true,
-    converter: {
-      fromAttribute: (value: string | null) => value ?? TABS_DEFAULT_DIRECTION,
-    },
+    converter: stringAttribute(TABS_DEFAULT_DIRECTION),
   })
   public direction: TabsDirection = TABS_DEFAULT_DIRECTION;
 

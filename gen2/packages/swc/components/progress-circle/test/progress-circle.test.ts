@@ -618,3 +618,38 @@ export const AccessibilityWarningTest: Story = {
     );
   },
 };
+
+export const AttributeRemovalResetsTest: Story = {
+  render: () => html`
+    <swc-progress-circle progress="50" label="Loading"></swc-progress-circle>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const el = await getComponent<ProgressCircle>(
+      canvasElement,
+      'swc-progress-circle'
+    );
+    const cases: [string, string, string, unknown][] = [
+      ['static-color', 'white', 'staticColor', null],
+      ['progress', '40', 'progress', null],
+    ];
+
+    for (const [attribute, value, property, defaultValue] of cases) {
+      await step(
+        `resets ${attribute} to its default without a warning when removed`,
+        () =>
+          withWarningSpy(async (warnCalls) => {
+            el.setAttribute(attribute, value);
+            await el.updateComplete;
+            el.removeAttribute(attribute);
+            await el.updateComplete;
+
+            expect(
+              (el as unknown as Record<string, unknown>)[property],
+              `${property} after removal`
+            ).toBe(defaultValue);
+            expect(warnCalls.length, 'no warning when unset').toBe(0);
+          })
+      );
+    }
+  },
+};

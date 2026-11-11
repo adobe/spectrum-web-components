@@ -200,7 +200,7 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
       );
     }
     // `static-color` is optional; unset means the default colors.
-    if (this.staticColor !== undefined) {
+    if (this.staticColor != null) {
       validateEnum(this, {
         prop: 'static-color',
         value: this.staticColor,

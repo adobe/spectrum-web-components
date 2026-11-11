@@ -17,6 +17,7 @@ import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import { SizedMixin } from '@adobe/spectrum-wc-core/mixins/index.js';
 import {
   resolveEnum,
+  stringAttribute,
   validateEnum,
 } from '@adobe/spectrum-wc-core/utils/index.js';
 
@@ -107,10 +108,7 @@ export abstract class DropzoneBase extends SizedMixin(SpectrumElement, {
     type: String,
     attribute: 'drop-effect',
     // A removed attribute resets to the default rather than `null`.
-    converter: {
-      fromAttribute: (value: string | null) =>
-        value ?? DROPZONE_DEFAULT_DROP_EFFECT,
-    },
+    converter: stringAttribute(DROPZONE_DEFAULT_DROP_EFFECT),
   })
   public dropEffect: DropEffect = DROPZONE_DEFAULT_DROP_EFFECT;
 

@@ -18,7 +18,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { MutationController } from '@lit-labs/observers/mutation-controller.js';
 
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
-import { validateEnum } from '@adobe/spectrum-wc-core/utils';
+import { stringAttribute, validateEnum } from '@adobe/spectrum-wc-core/utils';
 
 import '@adobe/spectrum-wc/components/icon/swc-icon.js';
 
@@ -68,7 +68,12 @@ export class ResponseStatusStep extends SpectrumElement {
   private readonly _detailId = uniqueId('swc-response-status-step-detail');
 
   /** Timeline state for connector icons. */
-  @property({ type: String, reflect: true })
+  @property({
+    type: String,
+    reflect: true,
+    // A removed attribute resets to the default rather than `null`.
+    converter: stringAttribute('active'),
+  })
   public status: ResponseStatusStepStatus = 'active';
 
   /**

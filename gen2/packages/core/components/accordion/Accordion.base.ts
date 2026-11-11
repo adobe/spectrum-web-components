@@ -19,6 +19,7 @@ import { SizedMixin } from '@adobe/spectrum-wc-core/mixins/index.js';
 import {
   numberAttribute,
   parseNumericText,
+  stringAttribute,
   validateEnum,
 } from '@adobe/spectrum-wc-core/utils/index.js';
 
@@ -90,7 +91,12 @@ export abstract class AccordionBase extends SizedMixin(SpectrumElement, {
    *
    * @default regular
    */
-  @property({ type: String, reflect: true })
+  @property({
+    type: String,
+    reflect: true,
+    // A removed attribute resets to the default rather than `null`.
+    converter: stringAttribute('regular'),
+  })
   public density: AccordionDensity = 'regular';
 
   /**

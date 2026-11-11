@@ -19,6 +19,7 @@ import {
   MeterBase,
   type MeterVariant,
 } from '@adobe/spectrum-wc-core/components/meter';
+import { stringAttribute } from '@adobe/spectrum-wc-core/utils';
 
 import sharedStyles from '../../stylesheets/_lit-styles/linear-progress-base.css';
 import styles from './meter.css';
@@ -66,9 +67,7 @@ export class Meter extends MeterBase {
     type: String,
     reflect: true,
     // A removed attribute resets to the default rather than `null`.
-    converter: {
-      fromAttribute: (value: string | null) => value ?? 'informative',
-    },
+    converter: stringAttribute('informative'),
   })
   public override variant: MeterVariant = 'informative';
 

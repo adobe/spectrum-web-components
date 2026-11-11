@@ -16,6 +16,7 @@ import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import {
   isTopDismissible,
   registerDismissible,
+  stringAttribute,
   unregisterDismissible,
   validateEnum,
   warnIf,
@@ -83,7 +84,12 @@ export abstract class TooltipBase
    *
    * @default 'neutral'
    */
-  @property({ type: String, reflect: true })
+  @property({
+    type: String,
+    reflect: true,
+    // A removed attribute resets to the default rather than `null`.
+    converter: stringAttribute('neutral'),
+  })
   public variant: TooltipVariant = 'neutral';
 
   /**
@@ -93,7 +99,12 @@ export abstract class TooltipBase
    *
    * @default 'top'
    */
-  @property({ type: String, reflect: true })
+  @property({
+    type: String,
+    reflect: true,
+    // A removed attribute resets to the default rather than `null`.
+    converter: stringAttribute('top'),
+  })
   public placement: TooltipPlacement = 'top';
 
   /**

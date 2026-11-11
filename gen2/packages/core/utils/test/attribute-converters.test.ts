@@ -14,10 +14,14 @@ import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import { numberAttribute, parseNumericText } from '../index.js';
+import {
+  numberAttribute,
+  parseNumericText,
+  stringAttribute,
+} from '../index.js';
 
 export default {
-  title: 'Utils/Number attribute/Tests',
+  title: 'Utils/Attribute converters/Tests',
   tags: ['!autodocs', 'dev'],
   render: () => html`
     <div></div>
@@ -60,6 +64,22 @@ export const ParseNumericTextTest: Story = {
       expect(parseNumericText('')).toBe('');
       expect(parseNumericText(null)).toBeNull();
       expect(parseNumericText(undefined)).toBeUndefined();
+    });
+  },
+};
+
+export const StringAttributeTest: Story = {
+  play: async ({ step }) => {
+    const { fromAttribute } = stringAttribute('top');
+
+    await step('keeps any present attribute as written', () => {
+      expect(fromAttribute?.('bottom')).toBe('bottom');
+      expect(fromAttribute?.('banana')).toBe('banana');
+      expect(fromAttribute?.('')).toBe('');
+    });
+
+    await step('returns the given value for a removed attribute', () => {
+      expect(fromAttribute?.(null)).toBe('top');
     });
   },
 };

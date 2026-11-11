@@ -19,7 +19,10 @@ import {
   LinearProgressMixin,
   SizedMixin,
 } from '@adobe/spectrum-wc-core/mixins/index.js';
-import { validateEnum } from '@adobe/spectrum-wc-core/utils/index.js';
+import {
+  stringAttribute,
+  validateEnum,
+} from '@adobe/spectrum-wc-core/utils/index.js';
 
 import { METER_VARIANTS, type MeterVariant } from './Meter.types.js';
 
@@ -63,9 +66,7 @@ export abstract class MeterBase extends LinearProgressMixin(
     type: String,
     reflect: true,
     // A removed attribute resets to the default rather than `null`.
-    converter: {
-      fromAttribute: (value: string | null) => value ?? 'informative',
-    },
+    converter: stringAttribute('informative'),
   })
   public variant: MeterVariant = 'informative';
 

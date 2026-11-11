@@ -74,3 +74,28 @@ export function numberAttribute<T extends number | null>(
     },
   };
 }
+
+/**
+ * Builds an attribute converter for a reflected string property that resets
+ * to `whenRemoved` when its attribute is removed.
+ *
+ * Lit's default converter sets the property to `null` when the attribute is
+ * removed, so validation would warn `Received "null"` for what is really the
+ * unset case. Any present attribute, valid or not, is kept as written.
+ *
+ * @param whenRemoved - The property value when the attribute is removed.
+ * @returns A converter for the `converter` option of `@property`.
+ *
+ * @example
+ * ```typescript
+ * @property({ type: String, reflect: true, converter: stringAttribute('top') })
+ * public placement: Placement = 'top';
+ * ```
+ */
+export function stringAttribute<T extends string>(
+  whenRemoved: T
+): ComplexAttributeConverter<string> {
+  return {
+    fromAttribute: (value: string | null): string => value ?? whenRemoved,
+  };
+}

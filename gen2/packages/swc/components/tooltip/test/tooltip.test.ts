@@ -1689,3 +1689,35 @@ export const SingletonClosesPreviousTooltipTest: Story = {
     });
   },
 };
+
+export const AttributeRemovalResetsTest: Story = {
+  render: () => html`
+    <swc-tooltip>Tooltip text</swc-tooltip>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const el = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
+    const cases: [string, string, string, unknown][] = [
+      ['variant', 'negative', 'variant', 'neutral'],
+      ['placement', 'bottom', 'placement', 'top'],
+    ];
+
+    for (const [attribute, value, property, defaultValue] of cases) {
+      await step(
+        `resets ${attribute} to its default without a warning when removed`,
+        () =>
+          withWarningSpy(async (warnCalls) => {
+            el.setAttribute(attribute, value);
+            await el.updateComplete;
+            el.removeAttribute(attribute);
+            await el.updateComplete;
+
+            expect(
+              (el as unknown as Record<string, unknown>)[property],
+              `${property} after removal`
+            ).toBe(defaultValue);
+            expect(warnCalls.length, 'no warning when unset').toBe(0);
+          })
+      );
+    }
+  },
+};
