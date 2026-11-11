@@ -181,14 +181,12 @@ export abstract class AccordionBase extends SizedMixin(SpectrumElement, {
       valid: ACCORDION_HEADING_LEVELS,
       url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-accordion--docs',
     });
-    if (changedProperties.has('density')) {
-      validateEnum(this, {
-        prop: 'density',
-        value: this.density,
-        valid: ACCORDION_DENSITIES,
-        url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-accordion--docs',
-      });
-    }
+    validateEnum(this, {
+      prop: 'density',
+      value: this.density,
+      valid: ACCORDION_DENSITIES,
+      url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-accordion--docs',
+    });
     if (
       changedProperties.has('level') ||
       changedProperties.has('size') ||
