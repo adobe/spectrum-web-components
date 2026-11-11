@@ -11,3 +11,4 @@
 - The detail panel's scroll region is now keyboard-focusable when a short-but-wide `<pre>` overflows horizontally, not just when it overflows vertically; the fade overlays only render while the panel overflows vertically (a horizontally-scrolling single line no longer gets a washed-out fade), and they stay in sync if the description grows while the panel is already open.
 - A slotted `<pre>` now stays left-to-right regardless of document direction, since code content is always LTR.
 - Long non-code content (e.g. a URL or path) in a narrow host no longer gets its trailing edge (and scrollbar) clipped by the detail panel's own box model.
+- `swc-conversation-turn`'s full-width stretch rule for system turns is now scoped to `swc-system-message` instead of any slotted content, so a `swc-response-status` slotted directly into a system turn keeps its own width clamp instead of being stretched to fill the column.
