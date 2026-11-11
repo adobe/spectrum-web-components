@@ -27,8 +27,10 @@
  * Usage:
  *   node scripts/validate-packages.js --gen=<1st-gen|gen2> [--report-only]
  *
- * Packages must be built first. With --report-only, findings are reported but
- * the script exits 0. Writes a Markdown report to $GITHUB_STEP_SUMMARY when set.
+ * Packages must be built first. With --report-only, publint and attw findings
+ * are reported but don't fail the script. CSS errors always fail it: there are
+ * no known existing ones, and they break consumers' production builds. Writes a
+ * Markdown report to $GITHUB_STEP_SUMMARY when set.
  */
 
 import { execFile, spawn } from 'child_process';
@@ -226,10 +228,12 @@ function report(results) {
       result.cssProblems.length > 0
   );
 
+  const cssFailing = results.filter((result) => result.cssProblems.length > 0);
+
   const lines = [
     `## Package validation (${gen})`,
     '',
-    `Checked ${results.length} public packages with \`publint\`, \`attw --profile esm-only\`, and Lightning CSS. ${failing.length} with errors.${reportOnly ? ' Report-only: findings do not fail this check yet.' : ''}`,
+    `Checked ${results.length} public packages with \`publint\`, \`attw --profile esm-only\`, and Lightning CSS. ${failing.length} with errors.${reportOnly ? ' Report-only for `publint` and `attw`: those findings do not fail this check yet. CSS errors always fail it.' : ''}`,
     '',
     '| Package | publint errors | publint warnings | attw problems | CSS errors |',
     '| --- | --- | --- | --- | --- |',
@@ -269,17 +273,24 @@ function report(results) {
   if (process.env.GITHUB_OUTPUT) {
     appendFileSync(
       process.env.GITHUB_OUTPUT,
-      `checked=${results.length}\nfailing=${failing.length}\n`
+      `checked=${results.length}\nfailing=${failing.length}\ncss_failing=${cssFailing.length}\n`
     );
   }
-  if (failing.length && process.env.GITHUB_ACTIONS) {
+  if (process.env.GITHUB_ACTIONS) {
     // An annotation shows on the run page, so findings aren't buried in logs.
-    const level = reportOnly ? 'warning' : 'error';
-    console.log(
-      `::${level} title=Package validation (${gen})::${failing.length} of ${results.length} packages have findings. See the job summary.`
-    );
+    if (cssFailing.length) {
+      console.log(
+        `::error title=Package validation (${gen})::${cssFailing.length} of ${results.length} packages ship CSS that doesn't parse. See the job summary.`
+      );
+    }
+    if (failing.length > cssFailing.length || (failing.length && !reportOnly)) {
+      const level = reportOnly ? 'warning' : 'error';
+      console.log(
+        `::${level} title=Package validation (${gen})::${failing.length} of ${results.length} packages have findings. See the job summary.`
+      );
+    }
   }
-  return failing.length;
+  return { failing: failing.length, cssFailing: cssFailing.length };
 }
 
 const packages = findPublicPackages(gen);
@@ -289,8 +300,8 @@ try {
     validate(entry, destination)
   );
   results.sort((a, b) => a.name.localeCompare(b.name));
-  const failing = report(results);
-  if (failing && !reportOnly) {
+  const { failing, cssFailing } = report(results);
+  if (cssFailing || (failing && !reportOnly)) {
     process.exitCode = 1;
   }
 } finally {

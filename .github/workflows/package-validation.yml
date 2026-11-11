@@ -6,8 +6,9 @@ name: Package validation
 # ship?) and attw (do TypeScript consumers get working types?). See
 # scripts/validate-packages.js.
 #
-# Report-only for now: findings show in the job summary but don't fail the
-# check. Drop `--report-only` once the existing findings are fixed or allowed.
+# Report-only for publint and attw: their findings show in the job summary but
+# don't fail the check. Drop `--report-only` once the existing findings are
+# fixed or allowed. CSS errors always fail the check.
 #
 # Version PRs opened by the release workflow with GITHUB_TOKEN don't trigger
 # pull_request workflows, so run this by hand on the `changeset-release/*`

@@ -137,14 +137,14 @@ jobs:
           yarn install --refresh-lockfile
           yarn build
 
-      # Dry run of the pre-release checks against the exact build being published.
-      # Report-only: findings go to the job summary and never block the snapshot.
-      - name: Validate packages (dry run)
+      # Pre-release checks against the exact build being published. CSS errors block
+      # the publish; publint and attw findings are report-only for now.
+      - name: Validate packages
         id: validate
-        continue-on-error: true
         run: node scripts/validate-packages.js --gen=1st-gen --report-only
 
       - name: Publish gen1 packages
+        id: publish
         if: steps.npm-auth.outcome == 'success'
         run: (cd 1st-gen && yarn changeset publish --no-git-tag --tag ${{ steps.extract-tag.outputs.tag }})
 
@@ -198,18 +198,22 @@ jobs:
           ACTOR: ${{ github.actor }}
           AUTH_OUTCOME: ${{ steps.npm-auth.outcome }}
           BUNDLE_VERSION: ${{ steps.versions.outputs.bundle }}
+          PUBLISH_OUTCOME: ${{ steps.publish.outcome }}
           VALIDATE_OUTCOME: ${{ steps.validate.outcome }}
           VALIDATE_CHECKED: ${{ steps.validate.outputs.checked }}
           VALIDATE_FAILING: ${{ steps.validate.outputs.failing }}
+          VALIDATE_CSS_FAILING: ${{ steps.validate.outputs.css_failing }}
         run: |
           echo "## Publish summary (snapshot)" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          if [ "$VALIDATE_OUTCOME" != "success" ]; then
-            echo "⚠️ **Package validation (dry run):** the check did not complete (\`${VALIDATE_OUTCOME:-skipped}\`). Check the job logs." >> $GITHUB_STEP_SUMMARY
+          if [ "${VALIDATE_CSS_FAILING:-0}" -gt 0 ]; then
+            echo "❌ **Package validation:** ${VALIDATE_CSS_FAILING} of ${VALIDATE_CHECKED} packages ship CSS that doesn't parse, so nothing was published. See the Package validation report above." >> $GITHUB_STEP_SUMMARY
+          elif [ "$VALIDATE_OUTCOME" != "success" ]; then
+            echo "❌ **Package validation:** the check did not complete (\`${VALIDATE_OUTCOME:-skipped}\`), so nothing was published. Check the job logs." >> $GITHUB_STEP_SUMMARY
           elif [ "${VALIDATE_FAILING:-0}" -gt 0 ]; then
-            echo "⚠️ **Package validation (dry run):** ${VALIDATE_FAILING} of ${VALIDATE_CHECKED} packages have findings. They didn't block this snapshot, but they will block releases once the check is required. See the Package validation report above." >> $GITHUB_STEP_SUMMARY
+            echo "⚠️ **Package validation:** ${VALIDATE_FAILING} of ${VALIDATE_CHECKED} packages have \`publint\` or \`attw\` findings. They didn't block this snapshot, but they will block releases once the check is required. See the Package validation report above." >> $GITHUB_STEP_SUMMARY
           else
-            echo "✅ **Package validation (dry run):** all ${VALIDATE_CHECKED} packages passed." >> $GITHUB_STEP_SUMMARY
+            echo "✅ **Package validation:** all ${VALIDATE_CHECKED} packages passed." >> $GITHUB_STEP_SUMMARY
           fi
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "| Field | Value |" >> $GITHUB_STEP_SUMMARY
@@ -226,10 +230,12 @@ jobs:
             echo "| gen1 | \`@spectrum-web-components/bundle\` | \`${BUNDLE_VERSION}\` |" >> $GITHUB_STEP_SUMMARY
           fi
 
-          if [ "$AUTH_OUTCOME" == "success" ]; then
+          if [ "$AUTH_OUTCOME" != "success" ]; then
+            echo "❌ Publish failed — NPM authentication did not succeed" >> $GITHUB_STEP_SUMMARY
+          elif [ "$PUBLISH_OUTCOME" == "success" ]; then
             echo "✅ Publish completed with tag \`${TAG}\`" >> $GITHUB_STEP_SUMMARY
           else
-            echo "❌ Publish failed — NPM authentication did not succeed" >> $GITHUB_STEP_SUMMARY
+            echo "❌ Snapshot did not publish (publish outcome: \`${PUBLISH_OUTCOME:-skipped}\`). Check the job logs." >> $GITHUB_STEP_SUMMARY
           fi
 
   # Version-then-PR. No npm-publish environment gate here - nothing is published yet,
