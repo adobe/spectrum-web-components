@@ -19,6 +19,7 @@ import { PROGRESS_CIRCLE_VALID_SIZES } from '@adobe/spectrum-wc-core/components/
 import '@adobe/spectrum-wc/components/progress-circle/swc-progress-circle.js';
 
 import {
+  fixture,
   getComponent,
   getComponents,
   withWarningSpy,
@@ -201,6 +202,41 @@ export const AriaLabelledbyAccessibleNameTest: Story = {
   },
 };
 
+export const AttributeRemovalResetsTest: Story = {
+  render: () => html`
+    <swc-progress-circle progress="50" label="Loading"></swc-progress-circle>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const el = await getComponent<ProgressCircle>(
+      canvasElement,
+      'swc-progress-circle'
+    );
+    const cases: [string, string, string, unknown][] = [
+      ['static-color', 'white', 'staticColor', null],
+      ['progress', '40', 'progress', null],
+    ];
+
+    for (const [attribute, value, property, defaultValue] of cases) {
+      await step(
+        `resets ${attribute} to its default without a warning when removed`,
+        () =>
+          withWarningSpy(async (warnCalls) => {
+            el.setAttribute(attribute, value);
+            await el.updateComplete;
+            el.removeAttribute(attribute);
+            await el.updateComplete;
+
+            expect(
+              (el as unknown as Record<string, unknown>)[property],
+              `${property} after removal`
+            ).toBe(defaultValue);
+            expect(warnCalls.length, 'no warning when unset').toBe(0);
+          })
+      );
+    }
+  },
+};
+
 // ──────────────────────────────────────────────────────────────
 // TEST: Light DOM (no default slot)
 // ──────────────────────────────────────────────────────────────
@@ -336,27 +372,94 @@ export const ProgressClampTest: Story = {
       'swc-progress-circle'
     );
 
-    await step('clamps progress above 100 to 100', async () => {
+    await step('renders progress above 100 as 100', async () => {
+      expect(circles[0].progress, 'progress property keeps the value set').toBe(
+        150
+      );
       expect(
-        circles[0].progress,
-        'progress property is clamped to 100 when set to 150'
-      ).toBe(100);
+        circles[0].getAttribute('progress'),
+        'progress attribute keeps the value set'
+      ).toBe('150');
       expect(
         circles[0].getAttribute('aria-valuenow'),
-        'aria-valuenow reflects clamped value of 100'
+        'aria-valuenow uses the clamped value of 100'
       ).toBe('100');
     });
 
-    await step('clamps progress below 0 to 0', async () => {
-      expect(
-        circles[1].progress,
-        'progress property is clamped to 0 when set to -20'
-      ).toBe(0);
+    await step('renders progress below 0 as 0', async () => {
+      expect(circles[1].progress, 'progress property keeps the value set').toBe(
+        -20
+      );
       expect(
         circles[1].getAttribute('aria-valuenow'),
-        'aria-valuenow reflects clamped value of 0'
+        'aria-valuenow uses the clamped value of 0'
       ).toBe('0');
     });
+
+    await step('warns when progress is set outside 0–100', () =>
+      withWarningSpy(async (warnCalls) => {
+        circles[0].progress = 250;
+        await circles[0].updateComplete;
+        expect(
+          String(warnCalls[0]?.[1] ?? ''),
+          'warning names the property and received value'
+        ).toMatch(/"progress".*"250"/);
+      })
+    );
+
+    await step(
+      'renders a numeric string progress, as frameworks set it, without a warning',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          circles[0].progress = '50' as unknown as number;
+          await circles[0].updateComplete;
+          expect(circles[0].getAttribute('aria-valuenow')).toBe('50');
+          expect(warnCalls.length, 'no warning for numeric text').toBe(0);
+        })
+    );
+
+    await step('does not warn for progress within 0–100', () =>
+      withWarningSpy(async (warnCalls) => {
+        circles[0].progress = 40;
+        await circles[0].updateComplete;
+        expect(warnCalls.length, 'no warning for a valid progress').toBe(0);
+      })
+    );
+  },
+};
+
+export const InvalidProgressInMarkupTest: Story = {
+  render: () => html`
+    <span></span>
+  `,
+  play: async ({ step }) => {
+    await step(
+      'keeps non-numeric progress from the initial markup and renders 0%',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          const circle = await fixture<ProgressCircle>(html`
+            <swc-progress-circle
+              progress="banana"
+              label="Loading"
+            ></swc-progress-circle>
+          `);
+
+          expect(
+            circle.getAttribute('progress'),
+            'attribute is not rewritten'
+          ).toBe('banana');
+          expect(circle.progress, 'property keeps the text').toBe('banana');
+          expect(
+            circle.getAttribute('aria-valuenow'),
+            'renders the clamped value'
+          ).toBe('0');
+          expect(
+            warnCalls.map((call) => String(call[1])).join('\n'),
+            'warning names the received value'
+          ).toContain('Received "banana"');
+          circle.parentElement?.remove();
+        })
+    );
   },
 };
 

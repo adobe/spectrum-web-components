@@ -18,6 +18,7 @@ import {
   type ActionGroupStaticColor,
 } from '@adobe/spectrum-wc-core/components/action-group';
 import { FocusgroupNavigationController } from '@adobe/spectrum-wc-core/controllers/index.js';
+import { resolveEnum, validateEnum } from '@adobe/spectrum-wc-core/utils';
 
 import styles from './action-group.css';
 
@@ -129,7 +130,7 @@ export class ActionGroup extends ActionGroupBase {
    * last item to the first and vice versa.
    */
   private readonly navigation = new FocusgroupNavigationController(this, {
-    direction: this.orientation,
+    direction: this.resolvedOrientation,
     wrap: true,
     skipDisabled: false,
     getItems: () => this.managedChildren ?? [],
@@ -197,11 +198,24 @@ export class ActionGroup extends ActionGroupBase {
     this.navigation.refresh();
   }
 
+  protected override update(changed: PropertyValues<this>): void {
+    // `static-color` is optional; unset means children render their default.
+    if (this.staticColor) {
+      validateEnum(this, {
+        prop: 'static-color',
+        value: this.staticColor,
+        valid: (this.constructor as typeof ActionGroup).STATIC_COLORS,
+        url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-action-group--docs',
+      });
+    }
+    super.update(changed);
+  }
+
   protected override updated(changed: PropertyValues<this>): void {
     super.updated(changed);
 
     if (changed.has('orientation')) {
-      this.navigation.setOptions({ direction: this.orientation });
+      this.navigation.setOptions({ direction: this.resolvedOrientation });
     }
 
     if (
@@ -215,21 +229,21 @@ export class ActionGroup extends ActionGroupBase {
     ) {
       this.propagateVisualStateToChildren();
     }
+  }
 
-    if (window.__swc?.DEBUG) {
-      const constructor = this.constructor as typeof ActionGroup;
-      if (
-        this.staticColor !== undefined &&
-        !constructor.STATIC_COLORS.includes(this.staticColor)
-      ) {
-        window.__swc.warn(
-          this,
-          `<${this.localName}> element expects the "static-color" attribute to be one of the following: ${constructor.STATIC_COLORS.join(', ')}.`,
-          'https://spectrum-web-components.adobe.com/?path=/docs/components-action-group--docs',
-          { issues: [...constructor.STATIC_COLORS] }
-        );
-      }
-    }
+  /**
+   * @internal
+   *
+   * The static color passed to children. Invalid values are kept on
+   * `staticColor` as set and resolve to `undefined` here.
+   */
+  private get resolvedStaticColor(): ActionGroupStaticColor | undefined {
+    return resolveEnum(
+      this.staticColor,
+      (this.constructor as typeof ActionGroup)
+        .STATIC_COLORS as readonly ActionGroupStaticColor[],
+      undefined
+    );
   }
 
   /**
@@ -253,8 +267,11 @@ export class ActionGroup extends ActionGroupBase {
         child.setAttribute('size', this.size);
       }
 
-      if (this.staticColor !== undefined) {
-        child.setAttribute('static-color', this.staticColor);
+      // Children get only a valid color, so an invalid group value renders
+      // them at their default without a second warning from each child.
+      const staticColor = this.resolvedStaticColor;
+      if (staticColor !== undefined) {
+        child.setAttribute('static-color', staticColor);
       } else {
         child.removeAttribute('static-color');
       }
