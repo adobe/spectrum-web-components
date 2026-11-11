@@ -19,6 +19,7 @@ import { PROGRESS_CIRCLE_VALID_SIZES } from '@adobe/spectrum-wc-core/components/
 import '@adobe/spectrum-wc/components/progress-circle/swc-progress-circle.js';
 
 import {
+  fixture,
   getComponent,
   getComponents,
   withWarningSpy,
@@ -377,6 +378,41 @@ export const ProgressClampTest: Story = {
         await circles[0].updateComplete;
         expect(warnCalls.length, 'no warning for a valid progress').toBe(0);
       })
+    );
+  },
+};
+
+export const InvalidProgressInMarkupTest: Story = {
+  render: () => html`
+    <span></span>
+  `,
+  play: async ({ step }) => {
+    await step(
+      'keeps non-numeric progress from the initial markup and renders 0%',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          const circle = await fixture<ProgressCircle>(html`
+            <swc-progress-circle
+              progress="banana"
+              label="Loading"
+            ></swc-progress-circle>
+          `);
+
+          expect(
+            circle.getAttribute('progress'),
+            'attribute is not rewritten'
+          ).toBe('banana');
+          expect(circle.progress, 'property keeps the text').toBe('banana');
+          expect(
+            circle.getAttribute('aria-valuenow'),
+            'renders the clamped value'
+          ).toBe('0');
+          expect(
+            warnCalls.map((call) => String(call[1])).join('\n'),
+            'warning names the received value'
+          ).toContain('Received "banana"');
+          circle.parentElement?.remove();
+        })
     );
   },
 };

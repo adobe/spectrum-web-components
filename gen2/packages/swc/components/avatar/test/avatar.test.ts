@@ -19,6 +19,7 @@ import { AVATAR_VALID_SIZES } from '@adobe/spectrum-wc-core/components/avatar/in
 import '@adobe/spectrum-wc/components/avatar/swc-avatar.js';
 
 import {
+  fixture,
   getComponent,
   getComponents,
   withWarningSpy,
@@ -200,6 +201,48 @@ export const InvalidSizeTest: Story = {
 
           expect(avatar.size, 'size after the attribute is removed').toBe(100);
           expect(warnCalls.length, 'no warning when size is unset').toBe(0);
+        })
+    );
+  },
+};
+
+export const InvalidSizeInMarkupTest: Story = {
+  render: () => html`
+    <span></span>
+  `,
+  play: async ({ step }) => {
+    await step(
+      'keeps an invalid size from the initial markup and renders at the default size',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          const avatar = await fixture<Avatar>(html`
+            <swc-avatar
+              src=${PLACEHOLDER_SRC}
+              alt=""
+              size="banana"
+            ></swc-avatar>
+          `);
+          const reference = await fixture<Avatar>(html`
+            <swc-avatar src=${PLACEHOLDER_SRC} alt=""></swc-avatar>
+          `);
+          const width = (el: Avatar): number =>
+            el.shadowRoot!.querySelector('.swc-Avatar')!.getBoundingClientRect()
+              .width;
+
+          expect(
+            avatar.getAttribute('size'),
+            'attribute is not rewritten'
+          ).toBe('banana');
+          expect(avatar.size, 'property keeps the text').toBe('banana');
+          expect(width(avatar), 'renders at the default size').toBe(
+            width(reference)
+          );
+          expect(
+            warnCalls.map((call) => String(call[1])).join('\n'),
+            'warning names the received value'
+          ).toContain('Received "banana"');
+          avatar.parentElement?.remove();
+          reference.parentElement?.remove();
         })
     );
   },

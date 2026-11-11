@@ -28,6 +28,7 @@ import {
   SWC_ACCORDION_ITEM_TOGGLE_EVENT,
 } from '../../../../core/components/accordion/Accordion.types.js';
 import {
+  fixture,
   getComponent,
   getComponents,
   withWarningSpy,
@@ -1432,6 +1433,44 @@ export const InvalidHeadingLevelTest: Story = {
         expect(getHeadingElement(item).tagName.toLowerCase()).toBe('h5');
         expect(warnCalls.length, 'no warning for a valid level').toBe(0);
       })
+    );
+  },
+};
+
+export const InvalidHeadingLevelInMarkupTest: Story = {
+  render: () => html`
+    <span></span>
+  `,
+  play: async ({ step }) => {
+    await step(
+      'keeps an invalid level from the initial markup and renders the default h3',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          const accordion = await fixture<Accordion>(html`
+            <swc-accordion level="banana">
+              <swc-accordion-item>
+                <span slot="label">Item 1</span>
+                <p>Panel 1</p>
+              </swc-accordion-item>
+            </swc-accordion>
+          `);
+          const item = accordion.querySelector(
+            'swc-accordion-item'
+          ) as AccordionItem;
+          await item.updateComplete;
+
+          expect(
+            accordion.getAttribute('level'),
+            'attribute is not rewritten'
+          ).toBe('banana');
+          expect(accordion.level, 'property keeps the text').toBe('banana');
+          expect(getHeadingElement(item).tagName.toLowerCase()).toBe('h3');
+          expect(
+            warnCalls.map((call) => String(call[1])).join('\n'),
+            'warning names the received value'
+          ).toContain('Received "banana"');
+          accordion.parentElement?.remove();
+        })
     );
   },
 };

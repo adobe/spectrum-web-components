@@ -155,17 +155,19 @@ export const DirectionPropertyTest: Story = {
           '.selection-indicator'
         ) as HTMLElement;
         // The indicator is placed asynchronously after fonts and child tabs
-        // settle, so wait for the state rather than a fixed frame.
+        // settle, so wait for it to have a size. The empty state
+        // (`translateX(0px) scaleX(0)`) also contains `translateX`, so the
+        // transform alone can't show that placement finished.
         await waitFor(() =>
           expect(
-            indicator.getAttribute('style') ?? '',
-            'indicator is placed horizontally'
-          ).toContain('translateX')
+            indicator.getBoundingClientRect().width,
+            'selection indicator still renders'
+          ).toBeGreaterThan(0)
         );
         expect(
-          indicator.getBoundingClientRect().width,
-          'selection indicator still renders'
-        ).toBeGreaterThan(0);
+          indicator.getAttribute('style') ?? '',
+          'indicator is placed horizontally'
+        ).toMatch(/translateX\([^)]*\) scaleX\((?!0\))/);
       }
     );
 

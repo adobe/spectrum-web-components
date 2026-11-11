@@ -21,6 +21,7 @@ import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import { SizedMixin } from '@adobe/spectrum-wc-core/mixins/index.js';
 import {
   isDebug,
+  numberAttribute,
   validateEnum,
   warnIf,
 } from '@adobe/spectrum-wc-core/utils/index.js';
@@ -105,7 +106,13 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
    *
    * Reflected to the `progress` attribute when set; the attribute is omitted when indeterminate.
    */
-  @property({ type: Number, reflect: true })
+  @property({
+    type: Number,
+    reflect: true,
+    // Non-numeric text is kept so reflection never writes `NaN` over the
+    // consumer's markup; a removed attribute returns to indeterminate.
+    converter: numberAttribute(null),
+  })
   public progress: number | null = null;
 
   private languageResolver = new LanguageResolutionController(this);

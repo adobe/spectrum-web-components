@@ -17,6 +17,7 @@ import { SlotPresenceController } from '../controllers/slot-presence-controller/
 import {
   componentDocsHref,
   isDebug,
+  numberAttribute,
   validateEnum,
   warnIf,
 } from '../utils/index.js';
@@ -98,21 +99,32 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
 
     /**
      * Current value. Sanitized via `clampedValue` for rendering and
-     * `aria-valuenow`.
+     * `aria-valuenow`. Like `minValue` and `maxValue`, non-numeric text is
+     * kept as set so reflection never writes `NaN` over the consumer's markup.
      */
-    @property({ type: Number, reflect: true })
+    @property({ type: Number, reflect: true, converter: numberAttribute(null) })
     public value = 0;
 
     /**
      * Bottom of the value range.
      */
-    @property({ type: Number, reflect: true, attribute: 'min-value' })
+    @property({
+      type: Number,
+      reflect: true,
+      attribute: 'min-value',
+      converter: numberAttribute(null),
+    })
     public minValue = 0;
 
     /**
      * Top of the value range.
      */
-    @property({ type: Number, reflect: true, attribute: 'max-value' })
+    @property({
+      type: Number,
+      reflect: true,
+      attribute: 'max-value',
+      converter: numberAttribute(null),
+    })
     public maxValue = 100;
 
     /**

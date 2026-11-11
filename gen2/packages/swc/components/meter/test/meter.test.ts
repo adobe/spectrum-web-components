@@ -468,6 +468,14 @@ export const ValueOutOfRangeWarningTest: Story = {
           warnCalls.map((call) => String(call[1])).join('\n'),
           'warning reports the attribute text'
         ).toContain('max-value="banana"');
+        expect(
+          meter.getAttribute('max-value'),
+          'attribute is not rewritten'
+        ).toBe('banana');
+        expect(
+          getRoleEl(meter).getAttribute('aria-valuemax'),
+          'renders the default maximum'
+        ).toBe('100');
         meter.parentElement?.remove();
       })
     );

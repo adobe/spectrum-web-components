@@ -17,6 +17,7 @@ import { LiveSelectionController } from '@adobe/spectrum-wc-core/controllers/ind
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import { SizedMixin } from '@adobe/spectrum-wc-core/mixins/index.js';
 import {
+  numberAttribute,
   resolveEnum,
   validateEnum,
 } from '@adobe/spectrum-wc-core/utils/index.js';
@@ -70,11 +71,9 @@ export abstract class AccordionBase extends SizedMixin(SpectrumElement, {
   @property({
     type: Number,
     reflect: true,
-    // A removed attribute resets to the default rather than `null`.
-    converter: {
-      fromAttribute: (value: string | null) =>
-        value === null ? ACCORDION_DEFAULT_HEADING_LEVEL : Number(value),
-    },
+    // A removed attribute resets to the default; non-numeric text is kept
+    // so reflection never writes `NaN` over the consumer's markup.
+    converter: numberAttribute(ACCORDION_DEFAULT_HEADING_LEVEL),
   })
   public level: AccordionHeadingLevel = ACCORDION_DEFAULT_HEADING_LEVEL;
 

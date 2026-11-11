@@ -13,7 +13,11 @@ import { PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
-import { validateEnum, warnIf } from '@adobe/spectrum-wc-core/utils/index.js';
+import {
+  numberAttribute,
+  validateEnum,
+  warnIf,
+} from '@adobe/spectrum-wc-core/utils/index.js';
 
 import {
   THUMBNAIL_DEFAULT_FIT,
@@ -61,11 +65,9 @@ export abstract class ThumbnailBase extends SpectrumElement {
   @property({
     type: Number,
     reflect: true,
-    // A removed attribute resets to the default rather than `null`.
-    converter: {
-      fromAttribute: (value: string | null) =>
-        value === null ? THUMBNAIL_DEFAULT_SIZE : Number(value),
-    },
+    // A removed attribute resets to the default; non-numeric text is kept
+    // so reflection never writes `NaN` over the consumer's markup.
+    converter: numberAttribute(THUMBNAIL_DEFAULT_SIZE),
   })
   public size: ThumbnailSize = THUMBNAIL_DEFAULT_SIZE;
 

@@ -111,7 +111,9 @@ protected override update(changedProperties: PropertyValues): void {
 }
 ```
 
-`validateEnum` also accepts numeric enums, such as a numeric `size` or a heading `level`. A numeric property parses an unreadable attribute such as `size="banana"` to `NaN`; for a `NaN` value, the warning reports the attribute text the consumer wrote.
+`validateEnum` also accepts numeric enums, such as a numeric `size` or a heading `level`.
+
+Give a reflected numeric property the `numberAttribute(whenRemoved)` converter from the same utils module. Lit's default `Number` converter parses `size="banana"` to `NaN`, and because a property with a default value has already queued a write to its attribute, the first update then writes `size="NaN"` over the consumer's markup. `numberAttribute` keeps non-numeric text as a string, so that write puts back what the consumer wrote, and it sets `whenRemoved` when the attribute is removed. If a numeric property still ends up `NaN` (for example, set from JavaScript), `validateEnum` reports the attribute text instead.
 
 #### Rendering the default for an invalid value
 

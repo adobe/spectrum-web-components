@@ -24,6 +24,7 @@ import {
 import '@adobe/spectrum-wc/components/thumbnail/swc-thumbnail.js';
 
 import {
+  fixture,
   getComponent,
   getComponents,
   withWarningSpy,
@@ -209,6 +210,47 @@ export const InvalidSizeTest: Story = {
             String(warnCalls[0]?.[1] ?? ''),
             'warning names the property and received value'
           ).toMatch(/"size".*"999"/);
+        })
+    );
+  },
+};
+
+export const InvalidSizeInMarkupTest: Story = {
+  render: () => html`
+    <span></span>
+  `,
+  play: async ({ step }) => {
+    await step(
+      'keeps an invalid size from the initial markup and renders at the default size',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          const thumbnail = await fixture<Thumbnail>(html`
+            <swc-thumbnail size="banana">
+              <img src="a.png" alt="" />
+            </swc-thumbnail>
+          `);
+          const reference = await fixture<Thumbnail>(html`
+            <swc-thumbnail><img src="a.png" alt="" /></swc-thumbnail>
+          `);
+          const width = (el: Thumbnail): number =>
+            el
+              .shadowRoot!.querySelector('.swc-Thumbnail')!
+              .getBoundingClientRect().width;
+
+          expect(
+            thumbnail.getAttribute('size'),
+            'attribute is not rewritten'
+          ).toBe('banana');
+          expect(thumbnail.size, 'property keeps the text').toBe('banana');
+          expect(width(thumbnail), 'renders at the default size').toBe(
+            width(reference)
+          );
+          expect(
+            warnCalls.map((call) => String(call[1])).join('\n'),
+            'warning names the received value'
+          ).toContain('Received "banana"');
+          thumbnail.parentElement?.remove();
+          reference.parentElement?.remove();
         })
     );
   },

@@ -13,7 +13,11 @@ import { PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
-import { validateEnum, warnIf } from '@adobe/spectrum-wc-core/utils/index.js';
+import {
+  numberAttribute,
+  validateEnum,
+  warnIf,
+} from '@adobe/spectrum-wc-core/utils/index.js';
 
 import {
   AVATAR_DEFAULT_SIZE,
@@ -72,11 +76,9 @@ export abstract class AvatarBase extends SpectrumElement {
   @property({
     type: Number,
     reflect: true,
-    // A removed attribute resets to the default rather than `null`.
-    converter: {
-      fromAttribute: (value: string | null) =>
-        value === null ? AVATAR_DEFAULT_SIZE : Number(value),
-    },
+    // A removed attribute resets to the default; non-numeric text is kept
+    // so reflection never writes `NaN` over the consumer's markup.
+    converter: numberAttribute(AVATAR_DEFAULT_SIZE),
   })
   public size: AvatarSize = AVATAR_DEFAULT_SIZE;
 
