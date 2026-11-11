@@ -206,7 +206,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@adobe/spectrum-wc-icons@workspace:*, @adobe/spectrum-wc-icons@workspace:gen2/packages/icons":
+"@adobe/spectrum-wc-icons@npm:2.0.0-beta.7, @adobe/spectrum-wc-icons@workspace:gen2/packages/icons":
   version: 0.0.0-use.local
   resolution: "@adobe/spectrum-wc-icons@workspace:gen2/packages/icons"
   dependencies:
@@ -239,7 +239,7 @@ __metadata:
   dependencies:
     "@adobe/postcss-token": "workspace:*"
     "@adobe/spectrum-wc-core": "npm:2.0.0-beta.7"
-    "@adobe/spectrum-wc-icons": "workspace:*"
+    "@adobe/spectrum-wc-icons": "npm:2.0.0-beta.7"
     "@adobe/swc-tokens": "workspace:*"
     "@adobe/vite-global-elements-css": "workspace:*"
     "@axe-core/playwright": "npm:4.13.0"

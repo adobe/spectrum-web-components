@@ -183,7 +183,7 @@ export abstract class ActionGroupBase extends SizedMixin(SpectrumElement, {
         window.__swc.warn(
           this,
           `<${this.localName}> element expects the "orientation" attribute to be one of the following: ${constructor.ORIENTATIONS.join(', ')}.`,
-          'https://spectrum-web-components.adobe.com/components/action-group/',
+          'https://spectrum-web-components.adobe.com/?path=/docs/components-action-group--docs',
           { issues: [...constructor.ORIENTATIONS] }
         );
       }

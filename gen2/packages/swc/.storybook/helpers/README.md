@@ -2,51 +2,33 @@
 
 Reusable utilities for creating consistent Storybook stories across components.
 
-## formatComponentName
+## sourceLocation
 
-Formats a Storybook story title into a component name in either kebab-case or PascalCase.
-
-### Usage
-
-Import the helper in your stories file:
+Resolves where the unit that a stories file documents lives. Docs blocks use it to build the "View source on GitHub" link and the import snippets.
 
 ```typescript
-import { formatComponentName } from '../../../.storybook/helpers/index.js';
+import { sourceLocation } from '../helpers/index.js';
+
+sourceLocation('./components/dropzone/stories/dropzone.stories.ts');
+// Returns: {
+//   repoPath: 'gen2/packages/swc/components/dropzone',
+//   packageName: 'swc',
+//   path: 'components/dropzone',
+// }
 ```
 
-### Parameters
+Pass Storybook's `parameters.fileName`, which is the stories file path relative to `gen2/packages/swc`. Use this, not the story title, for folder, tag, and import names: titles do not always match them (for example, the "Drop zone" story documents `components/dropzone`).
 
-- `title` (string): The Storybook story title (e.g., `'Components/Button'`)
-- `typeCase` ('kebab' | 'pascal'): The desired output format (defaults to `'kebab'`)
+## formatTitle
 
-### Examples
+Turns the last segment of a story title into a kebab-case slug.
 
 ```typescript
-// Get kebab-case component name (default)
-formatComponentName('Components/Action Button');
+formatTitle('Components/Action button');
 // Returns: 'action-button'
-
-// Get PascalCase component name
-formatComponentName('Components/Action Button', 'pascal');
-// Returns: 'ActionButton'
-
-// Typical usage in stories
-export default {
-  title: 'Progress Circle',
-  component: 'swc-progress-circle',
-  // ...
-} as Meta;
-
-const componentName = formatComponentName(meta.title);
-// Returns: 'progress-circle'
 ```
 
-### What it does
-
-1. Extracts the component name from the last segment of the story title path
-2. Converts it to lowercase
-3. Replaces spaces with hyphens for kebab-case
-4. Optionally converts to PascalCase by capitalizing each word and removing hyphens
+The slug matches Spectrum design page names. Do not use it for folder, tag, or import names; use `sourceLocation` instead.
 
 ## Adding new helpers
 
