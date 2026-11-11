@@ -48,6 +48,13 @@ argTypes.icon = {
   options: AI_BUTTON_ICONS,
 };
 
+// The API table lists the `icon` slot, but it has no control, so the
+// Playground steers consumers to the `icon` attribute.
+argTypes['icon-slot'] = {
+  ...argTypes['icon-slot'],
+  control: false,
+};
+
 args['default-slot'] = 'Ask AI';
 args.size = 'm';
 args.icon = 'ai-mark';

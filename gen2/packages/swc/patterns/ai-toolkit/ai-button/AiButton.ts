@@ -80,7 +80,7 @@ export type AiButtonSize = (typeof AI_BUTTON_VALID_SIZES)[number];
  * A pill-shaped button that starts an AI action, such as "Ask AI". It shows
  * an AI icon before an optional label, on a glass surface with a gradient
  * glow that grows on hover. The icon is the AI mark unless `icon` names
- * another AI icon.
+ * another AI icon. An element in the `icon` slot replaces it.
  *
  * Without a label, the button is a circle that shows only the icon. Give
  * icon-only buttons an `accessible-label`.
@@ -95,6 +95,7 @@ export type AiButtonSize = (typeof AI_BUTTON_VALID_SIZES)[number];
  * @attribute {AiButtonSize} size - The size of the button: `m`, `l`, or `xl`. Given the intended use cases of the AI button, there's no small size, and `s` renders as `m`.
  *
  * @slot - Visible button label. Leave empty for an icon-only button.
+ * @slot icon - Custom icon that overrides the `icon` attribute. Use it only when no AI icon fits.
  *
  * @example
  * <swc-ai-button>Ask AI</swc-ai-button>
@@ -162,8 +163,8 @@ export class AiButton extends ButtonBase {
   }
 
   protected override render(): TemplateResult {
-    // An element in the `icon` slot replaces the built-in icon. The slot is
-    // public but undocumented on purpose, so that consumers use `icon`.
+    // The `icon` slot holds the built-in icon as fallback content, so an
+    // element in the slot replaces it.
     return html`
       <button
         class=${classMap({

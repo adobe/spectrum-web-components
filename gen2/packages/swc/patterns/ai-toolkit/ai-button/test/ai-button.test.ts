@@ -200,8 +200,9 @@ export const IconTest: Story = {
   },
 };
 
-// The `icon` slot is undocumented on purpose, so this test story is the only
-// story that shows it. The production Storybook leaves out test stories.
+// The docs show no `icon` slot example, to steer consumers to the `icon`
+// attribute, so this test story is the only story that shows the slot. The
+// production Storybook leaves out test stories.
 export const IconSlotTest: Story = {
   render: () => html`
     ${captioned(
