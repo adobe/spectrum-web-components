@@ -1,0 +1,251 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Forms" />
+
+# Forms
+
+Learn how to use Spectrum Web Components with HTML forms to collect and submit data, validate input, and display helpful error messages.
+
+## Labels and help text
+
+A clear label tells people what to enter. Help text explains requirements before they become errors. Use the `label` and `description` slots to provide both:
+
+```html
+<swc-text-field name="password" type="password" required minlength="8">
+  <span slot="label">Password</span>
+  <span slot="description">Use at least 8 characters.</span>
+</swc-text-field>
+```
+
+Screen readers announce the label and description when the field receives focus. A placeholder does not replace a label. If a visible label is not possible, use `accessible-label` or `accessible-labelledby`.
+
+Add `required` when a value is needed. See [Text field](/docs/components-text-field--docs) for label and required-indicator options.
+
+## Submitting data
+
+Give each field a `name` to include its value in [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData). Handle the form's `submit` event to send that data without navigating away.
+
+```html
+<form id="contact-form">
+  <swc-text-field name="email" type="email" required>
+    <span slot="label">Email address</span>
+  </swc-text-field>
+  <button type="submit">Subscribe</button>
+  <output role="status"></output>
+</form>
+```
+
+```js
+const form = document.querySelector('#contact-form');
+
+form.addEventListener('submit', (event) => {
+  event.preventDefault();
+  const data = new FormData(form, event.submitter);
+  form.querySelector('output').textContent =
+    `Subscribed: ${data.get('email') ?? ''}`;
+});
+```
+
+This example displays data locally; it does not send a request. Without `novalidate`, the browser checks validity before allowing submission. To show errors beside fields instead of browser popups, use an [inline-error submit handler](#handling-invalid-submissions).
+
+Disabled fields are excluded from `FormData`; read-only fields remain included. Passing `event.submitter` also includes the clicked button's name and value, if provided.
+
+## Validation
+
+Helpful validation explains how to fix a problem without interrupting someone who is still entering a value. Prefer specific messages, such as "Use at least 8 characters," over "Invalid input."
+
+Spectrum Web Components support HTML validation rules and application-controlled error messages. You can also add custom checks, offer immediate feedback where helpful, and display errors from a server.
+
+### HTML validation rules
+
+Use supported attributes such as `required`, `type`, `minlength`, and `pattern` to describe valid input:
+
+```html
+<swc-text-field name="website" type="url" required>
+  <span slot="label">Website</span>
+  <span slot="description">Enter a full URL, including https://.</span>
+  <span slot="error-text">Enter a valid website URL.</span>
+</swc-text-field>
+```
+
+`field.checkValidity()` checks a field; `form.checkValidity()` checks the whole form. Neither displays inline errors automatically. Each component documents the rules it supports.
+
+### Error messages
+
+Provide a message through `error-text` and set `fieldStatus` to `invalid` to show it in place of the description. This function can display an application or server error on a field with an `error-text` slot:
+
+```js
+async function showError(field, message) {
+  field.querySelector('[slot="error-text"]').textContent = message;
+  field.fieldStatus = 'invalid';
+  await field.updateComplete;
+}
+```
+
+Error text alone does not make a field invalid. The invalid status does, even after its value changes. Clear only that status before checking again:
+
+```js
+async function clearError(field) {
+  if (field.fieldStatus === 'invalid') {
+    field.fieldStatus = undefined;
+  }
+  await field.updateComplete;
+}
+```
+
+Await `updateComplete` so validity reflects your changes. Other states, such as `disabled` and `readonly`, should remain intact.
+
+### Custom validation
+
+Some rules depend on your application, such as whether a username is reserved. The following function accepts a username text field with an `error-text` slot. It checks HTML rules first, then applies the custom rule:
+
+```js
+async function validateUsername(field) {
+  if (field.fieldStatus === 'invalid') {
+    field.fieldStatus = undefined;
+  }
+  await field.updateComplete;
+
+  if (!field.willValidate) {
+    return true;
+  }
+
+  let message = '';
+  if (!field.validity.valid) {
+    message = field.validationMessage;
+  } else if (['admin', 'support'].includes(field.value.toLowerCase())) {
+    message = 'This username is reserved. Choose another.';
+  }
+
+  if (message) {
+    field.querySelector('[slot="error-text"]').textContent = message;
+    field.fieldStatus = 'invalid';
+    await field.updateComplete;
+    return false;
+  }
+
+  return true;
+}
+```
+
+Run application rules before checking the form's overall validity. `form.checkValidity()` reads their results; it does not run those rules for you.
+
+### When to validate
+
+An unfinished value is not necessarily a mistake. Validate when someone finishes editing (`change`) or submits the form, rather than on every keystroke. Keep that timing after a failed submission.
+
+Immediate feedback can help with requirements such as password strength. For those cases, listen for `input` instead. Your application controls this timing and clears errors when the value is corrected.
+
+### Server errors
+
+Some checks, such as whether an account already exists, need a server response. Display the returned message through the field's `error-text` slot and set `fieldStatus` to `invalid`.
+
+Decide when to clear or recheck that error. Do not discard an unresolved server error just because the user submits again.
+
+## Handling invalid submissions
+
+Use `novalidate` to replace browser popups with inline errors. Your application must then check validity, stop invalid submissions, and move focus. Keep **Submit** enabled so people can discover what needs correction.
+
+This independent example checks an email address, shows an inline error, and displays accepted values locally:
+
+```html
+<form id="email-form" novalidate>
+  <swc-text-field name="email" type="email" required>
+    <span slot="label">Email address</span>
+    <span slot="error-text">Enter a valid email address.</span>
+  </swc-text-field>
+  <button type="submit">Submit</button>
+  <button type="submit" formnovalidate>Save draft</button>
+  <output role="status"></output>
+</form>
+```
+
+```js
+const form = document.querySelector('#email-form');
+const field = form.querySelector('swc-text-field');
+const result = form.querySelector('output');
+
+form.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  result.textContent = '';
+  const submitter = event.submitter;
+
+  if (submitter?.formNoValidate) {
+    const data = new FormData(form, submitter);
+    result.textContent = `Draft: ${data.get('email') ?? ''}`;
+    return;
+  }
+
+  if (field.fieldStatus === 'invalid') {
+    field.fieldStatus = undefined;
+  }
+  await field.updateComplete;
+
+  if (!form.checkValidity()) {
+    field.fieldStatus = 'invalid';
+    await field.updateComplete;
+    field.focus();
+    return;
+  }
+
+  const data = new FormData(form, submitter);
+  result.textContent = `Submitted: ${data.get('email') ?? ''}`;
+});
+```
+
+Call `preventDefault()` before any `await`; the browser does not wait for an asynchronous handler. This example uses only HTML validation rules. If your form has custom rules, run them and await field updates before calling `form.checkValidity()`.
+
+For several fields, use `form.elements` to find them in order, including fields outside the form linked by a `form` attribute. Show each error, then focus the first field with `willValidate` set to `true` and `validity.valid` set to `false`. Include every field type, including native controls.
+
+## Saving a draft
+
+Saving a draft lets people keep their progress without completing every field. Mark a draft submit button with `formnovalidate`:
+
+```html
+<button type="submit" formnovalidate>Save draft</button>
+```
+
+If the form uses `novalidate`, the browser already skips validation for every submit button. Your handler must check `event.submitter?.formNoValidate` before running validation, then save the draft without changing errors or moving focus. The [inline-error example](#handling-invalid-submissions) includes this branch.
+
+## Resetting a form
+
+Use a reset button or `form.reset()` to restore initial values. Reset does not necessarily mean empty: a text field returns to its initial `value` attribute.
+
+```html
+<form id="profile-form">
+  <swc-text-field name="display-name" value="Alex">
+    <span slot="label">Display name</span>
+  </swc-text-field>
+  <button type="reset">Reset</button>
+  <output role="status"></output>
+</form>
+```
+
+Reset clears validation display statuses while preserving disabled and read-only states. HTML rules still apply, so a required field with an empty initial value fails validation again.
+
+Clear application-owned state, such as submission results, separately:
+
+```js
+const form = document.querySelector('#profile-form');
+
+form.addEventListener('reset', () => {
+  form.querySelector('output').textContent = '';
+});
+```
+
+Reset and programmatic value changes do not fire `input` or `change`. Await field updates before reading reset values.
+
+## Additional form behavior
+
+<details>
+<summary>Validation and submission methods</summary>
+
+- Use `checkValidity()`, not `reportValidity()`, for inline errors. Both fire `invalid` on failure, but `reportValidity()` also requests browser popups, even with `novalidate`.
+- An invalid status sets `validity.customError`; its error text becomes `validationMessage`.
+- Disabled and read-only fields do not block validation. Use `willValidate` when finding invalid fields.
+- Do not find fields with `:invalid` alone. It can match a fieldset and misses fields outside the form.
+- Use a submit button or `form.requestSubmit()` to trigger submission. `form.submit()` skips validation and your submit handler.
+
+</details>
+
+See [Text field](/docs/components-text-field--docs) for field-specific behavior. To check your form, use the [keyboard](/docs/guides-accessibility-keyboard-testing--docs) and [screen reader](/docs/guides-accessibility-screen-reader-testing--docs) testing guides.

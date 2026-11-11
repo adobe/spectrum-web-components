@@ -442,6 +442,7 @@ const preview = {
           ],
           'Guides',
           [
+            'Forms',
             'Accessibility',
             [
               'Overview',
