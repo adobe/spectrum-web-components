@@ -266,6 +266,19 @@ function report(results) {
   if (process.env.GITHUB_STEP_SUMMARY) {
     appendFileSync(process.env.GITHUB_STEP_SUMMARY, `${markdown}\n`);
   }
+  if (process.env.GITHUB_OUTPUT) {
+    appendFileSync(
+      process.env.GITHUB_OUTPUT,
+      `checked=${results.length}\nfailing=${failing.length}\n`
+    );
+  }
+  if (failing.length && process.env.GITHUB_ACTIONS) {
+    // An annotation shows on the run page, so findings aren't buried in logs.
+    const level = reportOnly ? 'warning' : 'error';
+    console.log(
+      `::${level} title=Package validation (${gen})::${failing.length} of ${results.length} packages have findings. See the job summary.`
+    );
+  }
   return failing.length;
 }
 
