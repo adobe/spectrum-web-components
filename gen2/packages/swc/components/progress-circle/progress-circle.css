@@ -56,6 +56,8 @@
 
 .swc-ProgressCircle-fill,
 .swc-ProgressCircle-track {
+  /* SVG strokes are centered on the path, so inset the radius by half the stroke width to keep the whole ring inside the box. */
+  r: calc(50% - var(--_swc-progress-circle-thickness) / 2);
   inline-size: var(--_swc-progress-circle-size);
   block-size: var(--_swc-progress-circle-size);
 }
