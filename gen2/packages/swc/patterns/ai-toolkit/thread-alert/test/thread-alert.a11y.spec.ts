@@ -334,7 +334,9 @@ test.describe('Thread alert', () => {
     await expect(root.locator('swc-thread-alert')).toHaveCount(0);
     await expect(root.getByRole('status')).toBeEmpty();
     const trigger = root.getByRole('button', { name: 'Announce message' });
-    await trigger.click();
+    await trigger.focus();
+    await expect(trigger).toBeFocused();
+    await page.keyboard.press('Enter');
     await expect(trigger).toBeFocused();
     await expect(root.getByRole('status')).toHaveText('Your request is ready.');
     const message = root.locator('swc-thread-alert');

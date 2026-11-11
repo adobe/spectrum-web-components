@@ -98,6 +98,11 @@ const insertMessage = async (event: Event): Promise<void> => {
       'Expected the application message container and live region'
     );
   }
+  const dismissMessage = (): void => {
+    trigger.focus();
+    render(nothing, container);
+    announcer.textContent = '';
+  };
   announcer.textContent = '';
   render(
     html`
@@ -107,11 +112,7 @@ const insertMessage = async (event: Event): Promise<void> => {
           slot="dismiss"
           size="s"
           accessible-label="Dismiss message"
-          @click=${() => {
-            trigger.focus();
-            render(nothing, container);
-            announcer.textContent = '';
-          }}
+          @click=${dismissMessage}
         ></swc-close-button>
       </swc-thread-alert>
     `,
