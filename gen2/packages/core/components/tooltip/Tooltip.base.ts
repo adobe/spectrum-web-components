@@ -371,16 +371,7 @@ export abstract class TooltipBase
     // Called after the exit transition. Clearing earlier would displace the
     // tooltip to 0,0 while still visible and fading out.
     this.removeAttribute('actual-placement');
-    this.style.removeProperty('translate');
-    this.style.removeProperty('top');
-    this.style.removeProperty('left');
-    this.style.removeProperty('--swc-placement-available-width');
-    this.style.removeProperty('--swc-placement-available-height');
-    if (this.tipElement) {
-      this.tipElement.style.removeProperty('translate');
-      this.tipElement.style.removeProperty('top');
-      this.tipElement.style.removeProperty('left');
-    }
+    this.placementController.clearStyles();
   }
 
   private dispatchAfterEvent(isOpen: boolean): void {
