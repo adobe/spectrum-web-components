@@ -157,7 +157,6 @@ export class Button extends PendingMixin(ButtonBase) {
   }
 
   protected override update(changedProperties: PropertyValues): void {
-    super.update(changedProperties);
     validateEnum(this, {
       prop: 'variant',
       value: this.variant,
@@ -194,5 +193,6 @@ export class Button extends PendingMixin(ButtonBase) {
       'https://spectrum-web-components.adobe.com/?path=/docs/components-button--docs',
       { issues: ['primary', 'secondary'] }
     );
+    super.update(changedProperties);
   }
 }
