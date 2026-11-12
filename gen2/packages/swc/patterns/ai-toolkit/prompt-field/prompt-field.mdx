@@ -164,6 +164,76 @@ The status loader stays static by default. Set `animate-loader` to animate it wh
 
 Dragging a file over `swc-prompt-field` shows a solid fill and a blue focus ring, for every `variant` and also while `generating`. Text and URL drags are rejected, and so are all drags on a `disabled` field. Dropping fires **`swc-prompt-field-drop`** with `detail: { files: File[] }`. Build and slot `<swc-upload-attachment>` elements from those files, the same as for the **`+`** button's picker flow.
 
+`swc-prompt-field` doesn't create attachment tiles itself, so your app stays in control of its markup, uploads, and validation. To turn the files into tile data, use `filesToAttachments()` from the upload attachment pattern. It returns one plain object per file with an `id`, the original `file`, a `name`, a localized `sizeLabel`, a `thumbnailUrl` object URL for images, and a `badgeLabel` (for example, "PDF") for other files. `badgeLabel` is undefined when the file type is unknown, so provide your own localized fallback. Pass `{ locale }` as the second argument to format `sizeLabel` for a specific locale. Image thumbnails hold file data in memory until you call `revokeAttachment()`, so call it when a tile is dismissed, when the prompt is submitted (unless you keep showing the thumbnail, for example in the conversation thread), and when your view is torn down. Calling it twice is safe.
+
+```ts
+import {
+  filesToAttachments,
+  revokeAttachment,
+  revokeAttachments,
+} from '@adobe/spectrum-wc/patterns/ai-toolkit/upload-attachment/files-to-attachments.js';
+
+let attachments = [];
+
+field.addEventListener('swc-prompt-field-drop', (event) => {
+  attachments = [...attachments, ...filesToAttachments(event.detail.files)];
+  render();
+});
+
+field.addEventListener('swc-upload-attachment-dismiss', (event) => {
+  const id = event.detail.attachment.dataset.attachmentId;
+  const removed = attachments.find((item) => item.id === id);
+  if (removed) revokeAttachment(removed);
+  attachments = attachments.filter((item) => item.id !== id);
+  render();
+});
+
+field.addEventListener('swc-prompt-field-submit', () => {
+  revokeAttachments(attachments);
+  attachments = [];
+  render();
+});
+```
+
+Render one tile per item, for example with Lit:
+
+```ts
+html`
+  ${attachments.map(
+    (item) => html`
+      <swc-upload-attachment
+        slot="attachment"
+        type="media"
+        size="l"
+        dismissible
+        data-attachment-id=${item.id}
+        accessible-label=${`${item.name}, ${item.sizeLabel}`}
+        dismiss-label=${`Remove ${item.name}`}
+      >
+        <swc-asset slot="thumbnail">
+          ${item.thumbnailUrl
+            ? html`
+                <img src=${item.thumbnailUrl} alt=${item.name} />
+              `
+            : html`
+                <svg role="img" aria-label=${item.name}></svg>
+              `}
+        </swc-asset>
+        ${item.badgeLabel
+          ? html`
+              <swc-badge slot="badge" size="s" subtle>
+                ${item.badgeLabel}
+              </swc-badge>
+            `
+          : nothing}
+      </swc-upload-attachment>
+    `
+  )}
+`;
+```
+
+Use the same helper for files from the **`+`** button's file picker (`Array.from(input.files)`). The helper is also exported from `@adobe/spectrum-wc/patterns/ai-toolkit/upload-attachment`; the `files-to-attachments.js` path above doesn't load any element code, so it's safe to import during server-side rendering. See [Upload attachment → Building tiles from files](../?path=/docs/patterns-ai-toolkit-upload-attachment--docs#building-tiles-from-files) for the full helper reference.
+
 When the new tiles land in the `attachment` slot, the first new tile becomes the strip's Tab entry point. If the textarea had focus at drop time, focus stays there. Otherwise, focus moves to the new tile only during keyboard use (`:focus-visible`); after a mouse drag, focus stays where it was.
 
 <Canvas of={PromptFieldStories.DragAndDrop} />

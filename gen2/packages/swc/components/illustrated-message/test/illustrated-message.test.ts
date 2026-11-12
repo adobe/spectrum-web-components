@@ -12,17 +12,17 @@
 import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import {
+  getComponent,
+  getComponents,
+  withWarningSpy,
+} from '@swc-test-helpers/dom';
 
 import { IllustratedMessage } from '@adobe/spectrum-wc/illustrated-message';
 
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc/components/illustrated-message/swc-illustrated-message.js';
 
-import {
-  getComponent,
-  getComponents,
-  withWarningSpy,
-} from '../../../utils/test-utils.js';
 import meta, {
   Actions,
   IllustrationAccessibility,

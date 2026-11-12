@@ -485,6 +485,7 @@ const preview = {
               'Focus management',
               'Changelog strategy',
               'Gen2 shared resources',
+              'Component status and since',
             ],
             'Style guide',
             [

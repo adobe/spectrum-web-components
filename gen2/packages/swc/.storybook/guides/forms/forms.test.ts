@@ -12,10 +12,10 @@
 
 import { expect, userEvent, waitFor, within } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import { getComponents } from '@swc-test-helpers/dom';
 
 import type { TextField } from '@adobe/spectrum-wc/text-field';
 
-import { getComponents } from '../../../utils/test-utils.js';
 import meta, { FormBehavior } from './forms.stories.js';
 
 export default {

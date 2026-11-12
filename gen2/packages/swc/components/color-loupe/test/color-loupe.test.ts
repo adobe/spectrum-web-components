@@ -12,6 +12,7 @@
 import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import { getComponent } from '@swc-test-helpers/dom';
 
 import { ColorLoupe } from '@adobe/spectrum-wc/color-loupe';
 import { computeBorderAlpha } from '@adobe/spectrum-wc-core/components/color-handle';
@@ -19,7 +20,6 @@ import { COLOR_LOUPE_ALPHA_FLOOR } from '@adobe/spectrum-wc-core/components/colo
 
 import '@adobe/spectrum-wc/color-loupe';
 
-import { getComponent } from '../../../utils/test-utils.js';
 import meta from '../stories/color-loupe.stories.js';
 import {
   Overview,

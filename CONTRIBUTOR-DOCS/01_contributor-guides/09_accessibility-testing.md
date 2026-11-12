@@ -153,7 +153,7 @@ Same pattern, different details:
 
 import { expect, test } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
-import { gotoStory } from '../../../utils/a11y-helpers.js';
+import { gotoStory } from '@swc-test-helpers/playwright';
 
 test.describe('Badge - ARIA Snapshots', () => {
     test('should have correct accessibility tree', async ({ page }) => {
@@ -183,7 +183,7 @@ test.describe('Badge - aXe Validation', () => {
 
 - Story ID: `'components-badge--default'` (check Storybook URL at `localhost:6006`)
 - Element name: `'swc-badge'` (instead of `sp-badge`)
-- Helper import: `'../../../utils/a11y-helpers.js'` (from swc utils directory)
+- Helper import: `'@swc-test-helpers/playwright'` (from shared gen2 test helpers)
 - Storybook port: 6006 (vs 8080 for 1st gen) - automatically handled by Playwright
 
 ## Test helper reference
@@ -191,7 +191,7 @@ test.describe('Badge - aXe Validation', () => {
 Test helpers are available in each generation:
 
 - 1st gen: `1st-gen/test/a11y-helpers.ts`
-- gen2: `gen2/packages/swc/utils/a11y-helpers.ts`
+- gen2: `gen2/test/helpers/playwright/index.ts`, imported as `@swc-test-helpers/playwright`
 
 ### `gotoStory(page, storyId, elementSelector)`
 

@@ -12,17 +12,17 @@
 import { html } from 'lit';
 import { expect, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
-
-import { ProgressBar } from '@adobe/spectrum-wc/progress-bar';
-
-import '@adobe/spectrum-wc/components/progress-bar/swc-progress-bar.js';
-
 import {
   fixture,
   getComponent,
   getComponents,
   withWarningSpy,
-} from '../../../utils/test-utils.js';
+} from '@swc-test-helpers/dom';
+
+import { ProgressBar } from '@adobe/spectrum-wc/progress-bar';
+
+import '@adobe/spectrum-wc/components/progress-bar/swc-progress-bar.js';
+
 import meta from '../stories/progress-bar.stories.js';
 import { Indeterminate, Overview } from '../stories/progress-bar.stories.js';
 
