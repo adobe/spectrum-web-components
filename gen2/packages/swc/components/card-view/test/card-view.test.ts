@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 import { html } from 'lit';
-import { expect, waitFor } from '@storybook/test';
+import { expect, userEvent, waitFor } from '@storybook/test';
 import type { Meta, StoryObj } from '@storybook/web-components';
 
 import type { CardViewItem } from '@adobe/spectrum-wc-core/components/card-view/index.js';
@@ -1062,6 +1062,104 @@ export const Registration: StoryObj = {
     }
     for (const tag of tags) {
       expect(customElements.get(tag), `${tag} is registered`).toBeDefined();
+    }
+  },
+};
+
+export const CheckboxSelectionSynchronization: StoryObj = {
+  render: () => html`
+    <div></div>
+  `,
+  play: async ({ canvasElement }) => {
+    for (const tag of [
+      'swc-card-view-single-column-grid',
+      'swc-card-view-single-row-grid',
+      'swc-card-view-grid-advance',
+      'swc-card-view-masonry-advance',
+      'swc-card-view-waterfall-advance',
+    ]) {
+      for (const selectionMode of ['multiple', 'single']) {
+        const view = await mount(canvasElement, tag);
+        view.selectionMode = selectionMode;
+        await view.updateComplete;
+        const root = view.shadowRoot!;
+        const cells = [
+          ...root.querySelectorAll<HTMLElement>('[role="gridcell"]'),
+        ];
+        const checkboxes = cells.map(
+          (cell) =>
+            cell.querySelector<HTMLInputElement>('input[type="checkbox"]')!
+        );
+        const status = root.querySelector<HTMLElement>('#selection-status')!;
+        expect(status.getAttribute('aria-live')).toBe('assertive');
+        expect(status.textContent?.trim()).toBe('');
+        const expectAnnouncement = async (message: string) => {
+          await waitFor(() => {
+            expect(status.textContent?.trim()).toBe(message);
+          });
+        };
+        const expectSelection = (indices: number[]) => {
+          expect(view.selected).toEqual(
+            indices.map((index) => items[index].id)
+          );
+          cells.forEach((cell, index) => {
+            const selected = indices.includes(index);
+            expect(cell.getAttribute('aria-selected')).toBe(String(selected));
+            expect(checkboxes[index].checked).toBe(selected);
+            expect(
+              cell.querySelector('swc-card')!.getAttribute('data-selected')
+            ).toBe(String(selected));
+          });
+        };
+        const toggleCell = async (index: number) => {
+          cells[index].focus();
+          cells[index].dispatchEvent(
+            new KeyboardEvent('keydown', {
+              key: ' ',
+              bubbles: true,
+              composed: true,
+              cancelable: true,
+            })
+          );
+          await view.updateComplete;
+        };
+        const toggleCheckbox = async (index: number) => {
+          await userEvent.click(checkboxes[index]);
+          await view.updateComplete;
+        };
+
+        expectSelection([]);
+        await toggleCheckbox(0);
+        expectSelection([0]);
+        await expectAnnouncement('Photo 1 selected.');
+        await toggleCell(0);
+        expectSelection([]);
+        await expectAnnouncement('Photo 1 not selected.');
+        await toggleCell(0);
+        expectSelection([0]);
+        await expectAnnouncement('Photo 1 selected.');
+        await toggleCheckbox(0);
+        expectSelection([]);
+        await expectAnnouncement('Photo 1 not selected.');
+
+        await toggleCheckbox(1);
+        expectSelection([1]);
+        await expectAnnouncement('Photo 2 selected.');
+        await toggleCell(0);
+        expectSelection(selectionMode === 'single' ? [0] : [1, 0]);
+        await expectAnnouncement(
+          selectionMode === 'single'
+            ? 'Photo 1 selected.'
+            : 'Photo 1 selected. 2 items selected.'
+        );
+        await toggleCheckbox(0);
+        expectSelection(selectionMode === 'single' ? [] : [1]);
+        await expectAnnouncement(
+          selectionMode === 'single'
+            ? 'Photo 1 not selected.'
+            : 'Photo 1 not selected. 1 item selected.'
+        );
+      }
     }
   },
 };
