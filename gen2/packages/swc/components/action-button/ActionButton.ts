@@ -37,7 +37,7 @@ import styles from './action-button.css';
  * @slot - Visible button label.
  * @slot icon - Optional leading icon displayed before the label.
  *
- * @fires click - Dispatched when the button is activated by pointer, Enter, or Space. Bubbles and crosses shadow boundaries. Suppressed while `disabled`, `pending`, or inside a disabled `swc-action-group`.
+ * @fires click - Dispatched when the button is activated by pointer, Enter, or Space. Bubbles and crosses shadow boundaries. Suppressed while `disabled`, `pending`, or `aria-disabled="true"` (such as inside a disabled `swc-action-group`).
  *
  * @cssprop --swc-action-button-min-block-size - Minimum block size. Defaults to the medium component height token.
  * @cssprop --swc-action-button-border-radius - Corner radius applied to all four corners. Defaults to `corner-radius-medium-size-medium`.

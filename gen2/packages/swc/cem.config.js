@@ -427,11 +427,12 @@ function accessorDefaults() {
 
 /**
  * CEM plugin that removes the events the analyzer can't name. The analyzer
- * reads an event name only from a string literal or a constant, so it records:
+ * reads an event name only from a string literal and doesn't resolve
+ * identifiers, so it records:
  *
  * - An event with no name for a computed name, such as
  *   `new CustomEvent(isOpen ? 'swc-after-open' : 'swc-after-close')`.
- * - An event named after the variable for a parameter or local, such as
+ * - An event named after the identifier for a variable or constant, such as
  *   `new CustomEvent(type)`, which records an event named `type`.
  *
  * Storybook shows both as rows in the Events table. Document the real events
@@ -477,8 +478,8 @@ function dropUnnamedEvents() {
           declaration.events = declaration.events.filter((event) => {
             if (!event.name) return false;
             const owner = event.inheritedFrom?.name ?? declaration.name;
-            // A documented event keeps its row even if a variable shares its
-            // name; the analyzer resolves constants to their string value.
+            // A documented event keeps its row even if an identifier shares
+            // its name.
             return (
               Boolean(event.description) ||
               !variableNames.get(owner)?.has(event.name)
