@@ -87,6 +87,26 @@ export const DevValidationTest: Story = {
       })
     );
 
+    await step('validateEnum validates numeric enums', () =>
+      withWarningSpy((warnCalls) => {
+        const el = document.createElement('div');
+        validateEnum(el, {
+          prop: 'size',
+          value: 100,
+          valid: [100, 200],
+          url: URL,
+        });
+        expect(warnCalls.length).toBe(0);
+        validateEnum(el, {
+          prop: 'size',
+          value: 999,
+          valid: [100, 200],
+          url: URL,
+        });
+        expect(String(warnCalls[0]?.[1] || '')).toContain('Received "999"');
+      })
+    );
+
     await step('warnIf warns only when the condition is true', () =>
       withWarningSpy((warnCalls) => {
         const el = document.createElement('div');
