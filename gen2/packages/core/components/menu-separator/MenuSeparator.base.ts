@@ -18,7 +18,7 @@ import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
  *
  * It has no public properties, slots, or events. The host is fixed to
  * `role="separator"`, is not focusable, and carries no value or accessible name.
- * Thickness and spacing come from the parent menu, so there is no `size`.
+ * Thickness and spacing come from Spectrum 2 tokens, so there is no `size`.
  */
 export abstract class MenuSeparatorBase extends SpectrumElement {
   // ──────────────────────

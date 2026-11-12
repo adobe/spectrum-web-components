@@ -83,12 +83,9 @@ export const AnatomyTest: Story = {
       '.swc-MenuSeparator'
     ) as HTMLElement;
 
-    await step(
-      'receives the medium thickness from the parent menu',
-      async () => {
-        expect(getComputedStyle(line).blockSize, 'line is 2px').toBe('2px');
-      }
-    );
+    await step('renders the medium divider thickness', async () => {
+      expect(getComputedStyle(line).blockSize, 'line is 2px').toBe('2px');
+    });
 
     await step('centers the line in the 12px container', async () => {
       expect(getComputedStyle(line).marginBlockStart, 'start margin').toBe(

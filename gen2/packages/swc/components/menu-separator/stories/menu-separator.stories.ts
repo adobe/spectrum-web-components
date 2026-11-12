@@ -51,8 +51,9 @@ export default meta;
 // ────────────────────
 
 // A separator only has meaning inside a menu, so every story renders it there.
-// Only Overview opens by default: menus are `popover="auto"`, so opening several
-// on one docs page would close each other. Other stories open in `play`.
+// Menus are `popover="auto"`, so opening several on one docs page would close
+// each other. Stories that render open use `docs.story.inline: false` so each
+// gets its own iframe.
 // Placeholder rows: `swc-menu-item` has not shipped yet.
 const renderInMenu = (id: string, open = false) => html`
   <swc-button id="${id}-trigger">Edit</swc-button>
@@ -91,8 +92,13 @@ export const Playground: Story = {
 //    OVERVIEW STORY
 // ──────────────────────────
 
+const isolatedOpenDocs = {
+  docs: { story: { inline: false, height: '300px' } },
+};
+
 export const Overview: Story = {
   render: () => renderInMenu('overview', true),
+  parameters: isolatedOpenDocs,
   tags: ['overview'],
 };
 
@@ -101,8 +107,8 @@ export const Overview: Story = {
 // ──────────────────────────
 
 export const Anatomy: Story = {
-  render: () => renderInMenu('anatomy'),
-  play: openMenu,
+  render: () => renderInMenu('anatomy', true),
+  parameters: isolatedOpenDocs,
   tags: ['anatomy'],
 };
 
@@ -111,7 +117,7 @@ export const Anatomy: Story = {
 // ────────────────────────────────
 
 export const Accessibility: Story = {
-  render: () => renderInMenu('accessibility'),
-  play: openMenu,
+  render: () => renderInMenu('accessibility', true),
+  parameters: isolatedOpenDocs,
   tags: ['a11y'],
 };

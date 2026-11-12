@@ -64,7 +64,7 @@
 
 - `sp-menu-divider` becomes **`swc-menu-separator`**. It is a static, non-focusable `role="separator"` line with no slotted content, used only as a direct child of `swc-menu`, `swc-action-menu`, or `swc-menu-item` (submenu), never inside `swc-menu-group`.
 - Naming follows the accessibility analysis and ARIA terminology (`separator`). 1st-gen has only `sp-menu-divider`; there is no 1st-gen `sp-menu-separator`.
-- The 1st-gen `size` property is dropped. Size, spacing, and thickness are owned by the menu context, so the element exposes no public properties.
+- The 1st-gen `size` property is dropped. Size, spacing, and thickness come from Spectrum 2 tokens, so the element exposes no public properties.
 - Confirmed: a separate `swc-menu-separator` element is required (Q1). This reverses [Menu plan Q14](../menu/migration-plan.md#blockers-and-open-questions), and the Menu plan (Q14, Q15, Q21, Phase B) is updated to match.
 - Confirmed: the Figma Divider frame ([node 9233:4610](https://www.figma.com/design/xHBWBBIe2eo5vwoCeNrC4Q/S2---Web?node-id=9233-4610)) defines Small as 1px, Medium as 2px and Large as 4px, so the 2px menu line is the Medium thickness (Q6).
 - Menu Phase A defers dividers, so this component ships with Menu Phase B or earlier if the team pulls it forward.
@@ -233,12 +233,12 @@ None. The host must not expose a default slot (confirmed by the accessibility an
 
 No `--mod-*` properties will be exposed. New `--swc-*` component-level properties may be introduced where needed — these are additive and not breaking. See [Component Custom Property Exposure](../../../02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure) for what to expose and how.
 
-Initial expectation for menu separator is zero or one reviewed property (for example thickness). The shipped decision: `--_swc-menu-separator-thickness` stays internal, set by `swc-menu`, and is not documented with `@cssprop`.
+Initial expectation for menu separator is zero or one reviewed property (for example thickness). The shipped decision: `--_swc-menu-separator-thickness` stays internal, is declared once on `.swc-MenuSeparator` with the medium divider thickness, and is not documented with `@cssprop`.
 
 ### Behavioral semantics
 
 - Static, non-interactive, no events, not focusable, not a `menuitem`.
-- Spacing is derived from the parent menu's size via tokens, not from a `size` attribute (Q3).
+- Spacing comes from tokens, not from a `size` attribute (Q3).
 
 ### Accessibility semantics notes (gen2)
 
@@ -307,7 +307,7 @@ Planned rendering shape:
 - [x] Add `.swc-MenuSeparator` to the internal element in `render()`; keep styling off `:host`
 - [x] Copy the `.spectrum-Menu-divider` rule from `spectrum-css` `spectrum-two` `components/menu/index.css` into `menu-separator.css` as baseline
 - [x] Apply the Medium divider thickness (2px, Q6) and the container heights from Q3 (12px container via `menu-item-section-divider-height`; the 7px token update is still pending, Q3)
-- [x] Add `@cssprop` JSDoc for every exposed `--swc-*` property (none: `--_swc-menu-separator-thickness` is internal, set by `swc-menu`; no `--mod-*` per B4)
+- [x] Add `@cssprop` JSDoc for every exposed `--swc-*` property (none: `--_swc-menu-separator-thickness` is internal, declared on `.swc-MenuSeparator`; no `--mod-*` per B4)
 - [x] Pass stylelint (property order, `no-descending-specificity`, token validation)
 
 #### Visual model and regressions

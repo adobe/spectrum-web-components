@@ -4,7 +4,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 # Menu separator migration guide
 
-Replace `<sp-menu-divider>` with `<swc-menu-separator>` and update the import; the size option is gone. Migrate the parent `<sp-menu>` to `<swc-menu>` at the same time, because the menu supplies the line thickness.
+Replace `<sp-menu-divider>` with `<swc-menu-separator>` and update the import; the size option is gone. Migrate the parent `<sp-menu>` to `<swc-menu>` at the same time, because the separator must be a direct child of it.
 
 ## Installation
 
@@ -39,24 +39,19 @@ import '@adobe/spectrum-wc/components/menu-separator/swc-menu-separator.js';
 
 ### Removed in Spectrum 2
 
-| Removed                                                        | Replacement                                                                 |
-| -------------------------------------------------------------- | --------------------------------------------------------------------------- |
-| `size` attribute (`SizedMixin`)                                | None. The parent `swc-menu` sets the 2px line                               |
-| `--mod-divider-thickness`, `--mod-divider-background-color`    | None. Thickness and color come from Spectrum 2 tokens                       |
-| `--mod-menu-section-divider-margin-block`                      | None. Block spacing comes from the `menu-item-section-divider-height` token |
-| `--mod-menu-item-label-inline-edge-to-content` (inline margin) | None. Inline spacing comes from the `base-padding-horizontal-medium` token  |
-
-### Changed
-
-| Area      | Spectrum 1                        | Spectrum 2                                          |
-| --------- | --------------------------------- | --------------------------------------------------- |
-| Placement | Allowed anywhere inside `sp-menu` | Place it between groups of menu items inside a menu |
+| Removed                                                        | Replacement                                                                     |
+| -------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| `size` attribute (`SizedMixin`)                                | None. The line is 2px for every menu                                            |
+| `--mod-divider-thickness`, `--mod-divider-background-color`    | None. Thickness and color come from Spectrum 2 tokens                           |
+| `--mod-menu-section-divider-margin-block`                      | None. Block spacing comes from the `menu-item-section-divider-height` token     |
+| `--mod-menu-item-label-inline-edge-to-content` (inline margin) | None. Inline spacing comes from the `base-padding-horizontal-medium` token      |
+| Placement anywhere inside `sp-menu`, including menu groups     | None. Place it between groups of items as a direct child of `swc-menu` (step 5) |
 
 ## Update your code
 
 ### 1. Migrate the parent menu
 
-Migrate the parent `<sp-menu>` to `<swc-menu>` first, following the Menu migration guide. `swc-menu` accepts `swc-menu-separator` as a direct child and supplies the line thickness.
+Migrate the parent `<sp-menu>` to `<swc-menu>` first, following the Menu migration guide. `swc-menu` accepts `swc-menu-separator` as a direct child.
 
 ```html
 <!-- Before -->
@@ -67,7 +62,8 @@ Migrate the parent `<sp-menu>` to `<swc-menu>` first, following the Menu migrati
 </sp-menu>
 
 <!-- After -->
-<swc-menu>
+<swc-button id="edit-trigger">Edit</swc-button>
+<swc-menu for="edit-trigger">
   <swc-menu-item>Cut</swc-menu-item>
   <swc-menu-separator></swc-menu-separator>
   <swc-menu-item>Paste</swc-menu-item>
@@ -122,7 +118,8 @@ A separator must be a direct child of `swc-menu`, never inside a menu group. Pla
 </sp-menu>
 
 <!-- After -->
-<swc-menu>
+<swc-button id="edit-trigger">Edit</swc-button>
+<swc-menu for="edit-trigger">
   <swc-menu-item>Cut</swc-menu-item>
   <swc-menu-separator></swc-menu-separator>
   <swc-menu-item>Paste</swc-menu-item>
@@ -157,17 +154,17 @@ No accessibility changes are required. `<swc-menu-separator>` renders with `role
 
 <div
   style={{
-    borderLeft: '4px solid #4b75ff',
-    background: 'rgba(75, 117, 255, 0.12)',
+    borderLeft: '4px solid #e34850',
+    background: 'rgba(227, 72, 80, 0.10)',
     padding: '12px 16px',
     margin: '16px 0',
     borderRadius: '4px',
   }}
 >
-  <strong>ℹ️ Internals.</strong> The line thickness is an internal detail that{' '}
-  <code>{'<swc-menu>'}</code> manages. Don't set{' '}
-  <code>{'--_swc-menu-separator-thickness'}</code> yourself; it isn't a public
-  styling API.
+  <strong>🚫 Do not target internals.</strong> Internal classes,{' '}
+  <code>{'--_swc-menu-separator-*'}</code> private properties, and shadow DOM
+  are <strong>not public API</strong>. Styling applied to them will break
+  without warning on minor releases.
 </div>
 
 ## Checklist
