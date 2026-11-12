@@ -41,11 +41,13 @@ For an illustrated summary, read <a href="./?path=/docs/components-card-view-the
 
 Choose an accessible interaction model for Spectrum Web Components (SWC) card view. Users need to reach every card, understand their position and selection, and use card actions without confusing keyboard behavior.
 
-We recommend a single-row grid for collection-position feedback such as "x of y." One semantic row contains every card as a gridcell, with a stable one-based column index and a column count equal to the collection size. This describes a one-dimensional collection even when its visual layout has many rows or waterfall columns.
+We recommend a single-row grid as the working hypothesis for collection-position feedback such as "x of y" and incremental horizontal navigation. One semantic row contains every card as a gridcell. This describes a one-dimensional collection even when its visual layout has many rows or waterfall columns. The current prototypes omit explicit ARIA row/column indices and counts; Advance supplies "x of y" in each cell's accessible name. Do not equate that label with native positional announcements in other policies.
 
 Semantics are no longer the variable in the primary experiment. Keep the recommended single-row structure fixed. Compare four keyboard-navigation policies in the uniform grid and five in the waterfall. The waterfall adds Top to bottom: navigation down each visual column before moving right. The single-column grid, list, feed, toolbar, and fieldset remain named reference examples, not numbered semantic options awaiting a decision.
 
 The keyboard policy is not selected yet. Reported positional feedback supports the single-row recommendation, but ARIA attributes do not guarantee spoken output across screen readers and browsers. Automated checks and product precedents do not establish usability; test the recommendation and the navigation policies with users.
+
+A single-column semantic grid does not automatically resolve the interaction mismatch. When cards visually fill a row before moving to the next row, a screen reader user following that sequence may expect horizontal arrows to advance incrementally. A semantic column instead suggests vertical progression, while spatial horizontal arrows can skip collection items. Placing consecutive cards down a visual column before moving to the next column makes a single-column model more coherent, but sighted users commonly expect a uniform grid to fill rows first. These are competing expectations to test, not universal rules about screen reader users. The current grid fills visual rows; waterfall fills visual columns. Neither visual layout changes the single-row semantics of the primary experiments.
 
 ## Why the current model needs review
 
@@ -60,6 +62,12 @@ Virtualization introduces additional loading, reading-order, scrolling, and focu
 The discussion also reports that a selected-items action bar may obscure the focused card. Test this separately against [WCAG 2.4.11: Focus not obscured (minimum)](https://www.w3.org/WAI/WCAG22/Understanding/focus-not-obscured-minimum.html).
 
 These are reported observations, not independently reproduced findings. Record DOM attributes, accessibility-tree structure, and spoken output separately before assigning a cause.
+
+**Cell verbosity and focus:** React Spectrum's feedback identifies a separate problem: focusing a gridcell can announce its entire contents, including checkbox and action labels, rather than only its accessible name. [Issue #2946](https://github.com/adobe/react-spectrum/issues/2946) documents this in ListView and led to [moving focus to the row](https://github.com/adobe/react-spectrum/pull/3000). The team cites this as the rationale for its row-focused, single-column approach. A cell label alone did not suppress descendant announcements in that investigation. Acknowledge this usability benefit alongside the semantic/visual navigation tradeoff; do not assume that changing labels fixes it.
+
+VoiceOver also reads the entire semantic row in the reported prototype testing, sometimes on each arrow movement. In a single-row grid, that can mean the entire collection. Users can pause speech or use VoiceOver navigation commands, but these are available techniques, not proof that repeated full-row speech is acceptable. Apple's [interaction commands](https://support.apple.com/guide/voiceover/interaction-commands-cpvokys07/mac) specify <kbd>VO</kbd> + <kbd>Shift</kbd> + <kbd>Left Arrow</kbd> or <kbd>Right Arrow</kbd> to navigate without automatically interacting with a webpage group; with Quick Nav enabled, use <kbd>Shift</kbd> + <kbd>Right Arrow</kbd> or <kbd>Left Arrow</kbd>. These commands do not enable Quick Nav and are distinct from the component's ordinary arrow handling. Test whether they help in each browser rather than promising that they suppress row reading.
+
+Reading more than the title can also be necessary: two cards with identical titles may differ by description or other metadata. Compare concise navigation announcements with access to enough detail to distinguish those cards. Selection announcements complement this information; they do not replace it or suppress focus announcements.
 
 ## What the guidance supports
 
@@ -89,15 +97,17 @@ These sources support different approaches. Use them to form testable hypotheses
 Reported observations provide two additional references:
 
 - **Google Docs:** Uses a listbox with interactive children; an axe DevTools scan flags an error. The [APG listbox pattern](https://www.w3.org/WAI/ARIA/apg/patterns/listbox/) does not support independently interactive controls inside options.
-- **Google Drive:** Uses a single-row grid; an axe DevTools scan does not flag the pattern. This informed the single-row prototype and its reported positional feedback.
+- **Google Drive:** Uses a single semantic row; an axe DevTools scan does not flag the pattern. The reported implementation also uses `aria-hidden` on cell content beyond the title. This informed the single-row prototype and its reported positional feedback, but its content-hiding approach needs separate evaluation.
 
 These observations are not independently verified. A product precedent or passing scan does not establish accessible interaction.
+
+If needed, explore a visually hidden **More info** button that reveals supplementary card content to assistive technology by toggling `aria-hidden`. This is a proposal, not implemented behavior. Keep the title, button, and every focusable control outside any `aria-hidden="true"` subtree; never hide a focused element or its ancestor. Make the button visible on focus, expose its expanded state, support closing the details, and preserve focus. Test duplicate titles and discovery of the extra information before adopting this approach. Do not hide the entire interactive card as a shortcut for reducing speech.
 
 ## Prototype comparison
 
 The numbered variants are retired. Six descriptive semantic references remain: single-column grid, single-row grid, list, feed, toolbar, and fieldset. The recommended single-row grid supplies the semantics for all nine keyboard-navigation examples below.
 
-Each grid or waterfall navigation component has its own Storybook Docs page and one Playground containing 50 cards. All nine expose `grid > row > gridcell`, `aria-rowcount="1"`, `aria-colcount="50"`, and stable one-based `aria-colindex` values. Photos use Picsum IDs matching those semantic column numbers, making skipped or reordered items easier to identify.
+Each grid or waterfall navigation component has its own Storybook Docs page and one Playground containing 50 cards. All nine expose `grid > row > gridcell`, without explicit `aria-rowindex`, `aria-colindex`, `aria-rowcount`, or `aria-colcount`. Cells have accessible names; Advance includes the collection position and title. Photos use Picsum IDs matching one-based collection positions, making skipped or reordered items easier to identify.
 
 "Semantic" means collection order; "spatial" means measured visual position. Spatial horizontal arrows follow physical left/right, including in RTL. In the new Semantic examples, <kbd>ArrowRight</kbd>/<kbd>ArrowDown</kbd> always means next and <kbd>ArrowLeft</kbd>/<kbd>ArrowUp</kbd> always means previous, independently of geometry and directionality.
 
@@ -111,9 +121,9 @@ Each grid or waterfall navigation component has its own Storybook Docs page and 
 | Semantic | <a href="./?path=/docs/components-card-view-grid-semantic--docs" target="_top">Grid semantic</a> (`swc-card-view-grid-semantic`) | <a href="./?path=/docs/components-card-view-waterfall-semantic--docs" target="_top">Waterfall semantic</a> (`swc-card-view-waterfall-semantic`) | Move through semantic collection order on either arrow axis. Cycle at collection boundaries. |
 | Top to bottom | Not applicable | <a href="./?path=/docs/components-card-view-waterfall-top-to-bottom--docs" target="_top">Waterfall top to bottom</a> (`swc-card-view-waterfall-top-to-bottom`) | Move down each measured visual column, then right to the next. Left/Up reverses the route. Cycle at collection boundaries. |
 
-NoWrap, Loop, and Advance use perpendicular overlap to identify spatial neighbors. Waterfall cards do not form horizontal rows: an overlapping visual band is a geometric relationship, not another semantic row. These three waterfall examples and Top to bottom use shortest-column placement. Waterfall Semantic alone fills top to bottom within a column, then across columns in semantic order; in RTL, visual columns proceed from the inline start.
+NoWrap, Loop, and Advance use perpendicular overlap to identify spatial neighbors. Waterfall cards do not form horizontal rows: an overlapping visual band is a geometric relationship, not another semantic row. All waterfall examples fill top to bottom within a column, then across columns in collection order, using each card's actual height; in RTL, placement proceeds from the inline start. The uniform grid fills visual rows first.
 
-Top to bottom sorts enabled cards by their measured horizontal position, then by their vertical position. Down/Right follows that visual order; Up/Left reverses it. Columns are visited physically left to right, including in RTL. Home/End reaches the first/last enabled card in visual order. Resizing can change column membership and the navigation route. The accessibility tree and Shift-selection ranges remain in collection order, so position announcements can jump between numbers.
+Top to bottom sorts enabled cards by their measured horizontal position, then by their vertical position. Down/Right follows that visual order; Up/Left reverses it. Columns are visited physically left to right, including in RTL. Home/End reaches the first/last enabled card in visual order. With current column-first placement, its route agrees with collection order in LTR; RTL can separate those orders. Resizing can change column membership and the navigation route. The accessibility tree and Shift-selection ranges remain in collection order.
 
 Loop does not advance to another row or column and does not guarantee complete traversal with one repeated key. Advance crosses a visual boundary and uses row/band order for horizontal movement or column order for vertical movement. Semantic ignores geometry and provides a route through every enabled item with any repeated arrow. These are keyboard policies on identical single-row semantics, not semantic alternatives.
 
@@ -140,14 +150,16 @@ The arrow-navigation variants also provide <kbd>Home</kbd>/<kbd>End</kbd> for th
 
 <kbd>Shift</kbd> + <kbd>Tab</kbd> reverses the tab path. Card activation, checkbox selection, and child actions must remain separate.
 
+The prototypes now include a visually hidden ARIA live region for selection feedback. Following React Aria's [`useGridSelectionAnnouncement`](https://github.com/adobe/react-spectrum/blob/main/packages/react-aria/src/grid/useGridSelectionAnnouncement.ts), it announces a single added or removed item's title and, when appropriate, the selected count. Changes outside the focused collection stay silent. The current prototype uses `aria-live="assertive"`; evaluate interruption as well as message content. This addresses missing selection announcements, not verbose gridcell or row speech. The prototype does not implement React Aria's localized message infrastructure or its special all-items selection value.
+
 ### Main tradeoffs and reported results
 
-- **Single-row recommendation:** Reported output provides useful "x of y" feedback, unlike the "1 of 1" reports from earlier single-column prototypes. This supports the semantic recommendation, not a guarantee of speech or approval of a keyboard policy.
+- **Single-row recommendation:** Reported output provides useful "x of y" feedback and supports an incremental horizontal route through a row-first visual grid. VoiceOver's full-row speech and verbose cell contents remain counterevidence to evaluate. The current Advance label supplies position explicitly; other policies need fresh speech testing without explicit indices/counts.
 - **NoWrap:** Keeps a visible stopping boundary, but a user who knows only one semantic row may not discover another directional route through the remaining cards.
 - **Loop:** Preserves the current visual band, but users may loop within it without discovering the rest of the collection.
 - **Advance:** Continues across visual boundaries, but users must understand a traversal order that the single-row semantics do not describe. Waterfall bands make horizontal advancement especially important to test.
 - **Semantic:** Gives either arrow axis a complete sequential route. Sighted users may instead expect spatial vertical movement or a horizontal move to the neighboring waterfall column. Whole-collection cycling also requires users to recognize repeated items.
-- **Top to bottom:** Gives a complete route down visual columns without changing shortest-column placement. The route can jump between collection indices and change after resizing. Test position announcements, visual Home/End, and the expectation that Right moves down a column before moving right.
+- **Top to bottom:** Gives a complete route down visual columns. With current column-first placement, LTR order matches collection order; RTL and resizing still need testing. Test position announcements, visual Home/End, and the expectation that Right moves down a column before moving right.
 - **Reference examples:** Lists preserve ordinary content and controls but add tab stops; feeds describe reading streams; toolbars describe commands; fieldsets provide grouping without establishing collection navigation. Retain them as context, not parallel semantic decision tracks.
 
 Reported speech is specific to the tested environment. ARIA metadata and accessibility-tree snapshots do not guarantee the same announcements elsewhere.
@@ -187,7 +199,7 @@ Virtualization is a separate implementation stage. It must preserve focused elem
 
 1. Verify positional feedback for the recommended single-row grid with real screen readers. Use the single-column grid and list references only where a comparison helps explain the evidence.
 2. Hold single-row semantics, 50 cards, content, and actions constant. Compare Grid NoWrap, Loop, Advance, and Semantic with both sighted keyboard users and users relying on semantic order.
-3. Compare the five waterfall policies. Test left/right neighbor choice when cards do not align horizontally. Compare Top to bottom's visual-column route with Semantic's collection-order route. Account for Semantic's different placement instead of treating it as a shortest-column waterfall.
+3. Compare the five waterfall policies with the same column-first placement. Test left/right neighbor choice when cards do not align horizontally. Compare Top to bottom's visual-column route with Semantic's collection-order route, especially in RTL.
 4. Test disabled cards, reverse traversal, incomplete final rows, RTL, resizing, zoom, focus visibility, and entry/exit. Record collection-edge cycling separately from same-band looping.
 5. Add virtualization only after choosing a clear keyboard contract.
 
@@ -211,6 +223,9 @@ Ask users to:
 - Reach the seventh card and explain how to continue forward and backward.
 - Visit every card without missing a column or mistaking a boundary for the end.
 - Identify the current position, total, and selected state.
+- Distinguish cards with identical titles using their additional content.
+- Compare full-cell and full-row speech with concise names; record ordinary arrows, Quick Nav, group-navigation commands, and pausing speech separately rather than requiring an undocumented workaround.
+- Confirm selection and deselection messages without mistaking live-region speech for a focus announcement.
 - Select two cards and use a bulk action.
 - Activate a card and a child action independently.
 - Enter and leave the collection and its controls in both directions.
@@ -226,6 +241,9 @@ Assess the result against [WCAG 1.3.1: Info and relationships](https://www.w3.or
 
 - [RSP CardView documentation](https://react-spectrum.adobe.com/CardView), [CardView source](https://github.com/adobe/react-spectrum/blob/main/packages/@react-spectrum/s2/src/CardView.tsx), and [WaterfallLayout source](https://github.com/adobe/react-spectrum/blob/main/packages/react-stately/src/layout/WaterfallLayout.ts).
 - [Original RSP Card accessibility specification](https://github.com/adobe/react-spectrum/blob/main/specs/accessibility/Card.mdx).
+- [React Spectrum gridcell verbosity report](https://github.com/adobe/react-spectrum/issues/2946) and [row-focus refactor](https://github.com/adobe/react-spectrum/pull/3000).
+- [React Aria selection-announcement hook](https://github.com/adobe/react-spectrum/blob/main/packages/react-aria/src/grid/useGridSelectionAnnouncement.ts).
+- [Apple VoiceOver interaction commands](https://support.apple.com/guide/voiceover/interaction-commands-cpvokys07/mac).
 - [Piyush's PR #6798](https://github.com/adobe/spectrum-web-components/pull/6798).
 - [APG grid pattern](https://www.w3.org/WAI/ARIA/apg/patterns/grid/), [layout grid examples](https://www.w3.org/WAI/ARIA/apg/patterns/grid/examples/layout-grids/), and [feed pattern](https://www.w3.org/WAI/ARIA/apg/patterns/feed/).
 - [APG listbox pattern](https://www.w3.org/WAI/ARIA/apg/patterns/listbox/) and [MDN ARIA role reference](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Roles).

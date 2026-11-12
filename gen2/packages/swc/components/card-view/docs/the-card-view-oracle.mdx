@@ -14,7 +14,7 @@ export const readings = {
     label: 'Uniform grid · Four keyboard policies',
     title: 'One semantic row. Four routes to test.',
     summary:
-      'All four examples use our recommended single-row grid: 50 cards, 50 semantic columns, and stable collection positions. Only keyboard navigation changes.',
+      'All four examples use our recommended single-row grid: 50 named card cells in one semantic row. Explicit ARIA indices and counts are omitted; Advance includes position in the cell name. Only keyboard navigation changes.',
     caution:
       'Users relying on semantics encounter one sequence. Sighted keyboard users see two visual dimensions. Test whether both can predict movement and reach every card.',
     variants: [
@@ -40,7 +40,7 @@ export const readings = {
     label: 'Waterfall · Five keyboard policies',
     title: 'The cards do not share a horizontal row.',
     summary:
-      'The same single-row semantics now contain unequal-height cards. NoWrap, Loop, Advance, and Top to bottom use shortest-column placement. Semantic places cards in collection order down each column, then across columns.',
+      'The same single-row semantics now contain unequal-height cards. All five policies place consecutive cards down each visual column before moving to the next. Compare navigation, not different placement algorithms.',
     caution:
       'Several cards may overlap the active card vertically. Which one should Left or Right choose? Test the geometry instead of assuming a horizontal row exists.',
     variants: [
@@ -871,6 +871,7 @@ export const Oracle = () => {
 <strong>{"One sequence. Two dimensions."}</strong>
 {" "}
 <p>{" Users relying on semantics know one ordered sequence. Sighted keyboard users see a two-dimensional grid. A route must be understandable from both perspectives, not just whichever map its designer sees. "}</p>
+<p>A single-column semantic grid with row-first visual placement can make the axes counterintuitive: a screen reader user following the displayed sequence may expect horizontal arrows to advance one item, while the semantic column suggests vertical progression. Filling a visual column first makes that column model more coherent, but sighted users commonly expect a uniform grid to fill rows first. Test both expectations rather than assuming either audience has one universal mental model.</p>
 {" "}</div>
 {" "}</li>
 {" "}
@@ -1040,7 +1041,7 @@ export const Oracle = () => {
 {" "}
 <p>{" "}
 <strong>{" Use a single-row grid for “x of y” feedback. "}</strong>
-{" Hold those semantics fixed while users test four grid policies and five waterfall policies. The remaining decision is navigation, not another vote on semantics. "}</p>
+{" Hold those semantics fixed while users test four grid policies and five waterfall policies, but keep the reported verbosity problems visible as evidence against the recommendation. Row-focused semantics remain a meaningful reference, not a dismissed concern. "}</p>
 {" "}</div>
 {" "}
 <ol className="plan">{" "}
@@ -1167,8 +1168,8 @@ export const Oracle = () => {
     <i></i>
   </div>
   <h3 id="oracle-top-to-bottom">Top to bottom</h3>
-  <p>Keep shortest-column placement. Down/Right follows the cards from top to bottom within a visual column, then moves right to the next column. Left/Up reverses the route. Skip disabled cards and cycle at the collection boundary. Home/End reaches the first/last enabled card in this visual order. Columns are visited physically left to right, including in RTL.</p>
-  <p>Unlike Semantic, this policy uses measured visual positions, not collection indices. For example, the numbered waterfall diagram below is visited in this order: 1, 6, 9, 2, 4, 8, 3, 5, 7. Position announcements can jump between numbers. Resizing can change the route.</p>
+  <p>Keep column-first placement. Down/Right follows the cards from top to bottom within a visual column, then moves right to the next column. Left/Up reverses the route. Skip disabled cards and cycle at the collection boundary. Home/End reaches the first/last enabled card in this visual order. Columns are visited physically left to right, including in RTL.</p>
+  <p>Unlike Semantic, this policy uses measured visual positions, not collection indices. With current column-first placement, both routes agree in LTR, as in the numbered diagram below. In RTL, placement starts on the right while this navigation route still starts on the left. Resizing can change column membership.</p>
   <span className="pair">Waterfall only · Visual column order</span>
 </article>
 {" "}</div>
@@ -1181,7 +1182,7 @@ export const Oracle = () => {
   <div className="wrap">
     <p className="eyebrow">The shape of the collection</p>
     <h2 id="oracle-layouts-title">Two layouts. The same collection.</h2>
-    <p>Grid and waterfall describe visual placement, not different semantics. Both expose one semantic row with a stable column index per card. The numbers below show collection order; the shapes show where those cards appear.</p>
+    <p>Grid and waterfall describe visual placement, not different semantics. Both expose one semantic row of named gridcells, without explicit ARIA row/column indices or counts. Advance includes position in each cell name. The numbers below show collection order; the shapes show where those cards appear.</p>
     <div className="layout-diagrams">
       <figure>
         <div className="layout-diagram uniform-layout" role="img" aria-label="Uniform grid: cards 1 through 9 run left to right across three aligned rows of three equal-height cards.">
@@ -1195,11 +1196,11 @@ export const Oracle = () => {
         </figcaption>
       </figure>
       <figure>
-        <div className="layout-diagram waterfall-layout" role="img" aria-label="Waterfall: unequal-height cards fill the shortest column. The columns contain 1, 6, 9; 2, 4, 8; and 3, 5, 7. Cards do not form aligned horizontal rows.">
+        <div className="layout-diagram waterfall-layout" role="img" aria-label="Waterfall: unequal-height cards fill each column top to bottom before moving to the next. The columns contain 1, 2, 3; 4, 5, 6; and 7, 8, 9. Cards do not form aligned horizontal rows.">
           {[
-            [[1, 96], [6, 64], [9, 64]],
-            [[2, 64], [4, 88], [8, 72]],
-            [[3, 80], [5, 56], [7, 88]],
+            [[1, 96], [2, 64], [3, 64]],
+            [[4, 64], [5, 88], [6, 72]],
+            [[7, 80], [8, 56], [9, 88]],
           ].map((column, columnIndex) => (
             <div className="layout-column" key={columnIndex}>
               {column.map(([position, height]) => (
@@ -1210,8 +1211,8 @@ export const Oracle = () => {
         </div>
         <figcaption>
           <h3 id="oracle-waterfall-layout">Waterfall</h3>
-          <p>Cards have unequal heights. NoWrap, Loop, Advance, and Top to bottom place each next card in the shortest column, as shown here. Horizontal neighbors can overlap at different heights, so there is no single aligned row to follow.</p>
-          <p>The Semantic waterfall instead fills top to bottom, then across columns. Its visual placement follows the semantic sequence; its arrow keys do not choose destinations by geometry.</p>
+          <p>Cards have unequal heights. All five waterfall examples fill a visual column top to bottom before moving to the next, using each card's actual height. Horizontal neighbors can overlap at different heights, so there is no single aligned row to follow.</p>
+          <p>Semantic follows collection order without choosing destinations by geometry. Top to bottom follows measured visual column order. The routes coincide in LTR with this placement, but can differ in RTL.</p>
         </figcaption>
       </figure>
     </div>
@@ -1251,6 +1252,11 @@ export const Oracle = () => {
 <p>{" APG permits layout grids and optional wrapping. RSP and Piyush's PR informed the earlier research. Reported single-row positional feedback supports today's recommendation, not a guarantee of speech or a final keyboard policy. "}</p>
 {" "}
 <p>{" Higley and Roselli caution against choosing a grid just because it looks like one or saves tab stops. A feed suits reading; a toolbar suits commands. The role should match the task. "}</p>
+<p>React Spectrum's feedback identifies a real cost of cell focus: screen readers can string together the entire cell, including selection-checkbox and action labels, instead of reading only its accessible name. <a href="https://github.com/adobe/react-spectrum/issues/2946">The ListView verbosity report</a> led to <a href="https://github.com/adobe/react-spectrum/pull/3000">focusing the row instead</a>; the team cites this as the reason for its single-column approach. Adding a cell label alone did not solve that report.</p>
+<p>Google Drive uses a single semantic row. The reported implementation hides cell contents beyond the title with <code>aria-hidden</code>; this is a product observation, not independently verified guidance. Reading additional cell content can be necessary to distinguish cards with identical titles, so reducing speech must not remove access to that information.</p>
+<p>VoiceOver reads an entire row in the reported tests, which can mean every card here. Users can pause speech or navigate without automatically interacting with a webpage group: <kbd>VO</kbd> + <kbd>Shift</kbd> + <kbd>Left Arrow</kbd> or <kbd>Right Arrow</kbd>; with Quick Nav on, <kbd>Shift</kbd> + <kbd>Right Arrow</kbd> or <kbd>Left Arrow</kbd>. <a href="https://support.apple.com/guide/voiceover/interaction-commands-cpvokys07/mac">Apple documents these interaction commands</a>, not a guarantee that they suppress row speech. They do not turn Quick Nav on. Test them separately from ordinary component arrows; repeated full-row speech remains a usability concern.</p>
+<p>If needed, explore a visually hidden <strong>More info</strong> button that toggles <code>aria-hidden</code> on supplementary content. This is not implemented. Keep the title and all focusable controls outside hidden subtrees, show the button on focus, expose its expanded state, and support closing without losing focus. Never hide the entire interactive card or a focused element's ancestor. Test discovery and duplicate titles.</p>
+<p>The prototypes now have a visually hidden ARIA live region for selection feedback, following <a href="https://github.com/adobe/react-spectrum/blob/main/packages/react-aria/src/grid/useGridSelectionAnnouncement.ts">React Aria's selection-announcement hook</a>: announce an individually selected or deselected title and the selected count when appropriate, while keeping unfocused changes silent. The current region is assertive; test interruptions as well as message content. Selection messages address missing selection feedback, not verbose cell or row announcements.</p>
 {" "}
 <div className="source-links">{" "}
 <a href="https://www.w3.org/WAI/ARIA/apg/patterns/grid/">{" APG grid pattern "}</a>
