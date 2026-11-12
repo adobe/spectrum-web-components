@@ -82,6 +82,41 @@ async function pack(dir, destination) {
 }
 
 /**
+ * Lightning CSS doesn't parse `@property` nested in `@media` or `@supports`.
+ * It warns "Unknown at rule" whether or not the rule is valid. Extract the
+ * nested rule and parse it at the top level, where its descriptors are checked.
+ * Returns the parse error, or `null` if the rule is valid.
+ */
+function checkNestedProperty(css, { line }) {
+  const lineStart = css
+    .split('\n', line - 1)
+    .reduce((offset, text) => offset + text.length + 1, 0);
+  const start = css.indexOf('@property', lineStart);
+  const open = css.indexOf('{', start);
+  if (start === -1 || open === -1) {
+    return 'Unknown at rule: @property';
+  }
+  let depth = 0;
+  let end = open;
+  for (; end < css.length; end++) {
+    depth += css[end] === '{' ? 1 : css[end] === '}' ? -1 : 0;
+    if (depth === 0) {
+      break;
+    }
+  }
+  try {
+    const { warnings } = transform({
+      filename: 'property.css',
+      code: Buffer.from(css.slice(start, end + 1)),
+      errorRecovery: false,
+    });
+    return warnings[0]?.message ?? null;
+  } catch (error) {
+    return error.message;
+  }
+}
+
+/**
  * Parses each shipped `.css` file the way a consumer's minifier would. The
  * packed file list comes from `npm pack`, so this checks exactly what ships.
  */
@@ -91,17 +126,21 @@ function runCssCheck(dir, files) {
     .filter((path) => path.endsWith('.css'))
     .flatMap((path) => {
       try {
-        // Invalid rules nested in a block, such as `@property` inside
-        // `@media`, surface as warnings rather than errors.
+        const code = readFileSync(join(dir, path));
+        // Invalid rules nested in a block surface as warnings, not errors.
         const { warnings } = transform({
           filename: path,
-          code: readFileSync(join(dir, path)),
+          code,
           minify: true,
           errorRecovery: false,
         });
-        return warnings.map(
-          ({ message, loc }) => `\`${path}:${loc.line}\`: ${message}`
-        );
+        return warnings.flatMap(({ message, loc }) => {
+          const problem =
+            message === 'Unknown at rule: @property'
+              ? checkNestedProperty(code.toString(), loc)
+              : message;
+          return problem ? [`\`${path}:${loc.line}\`: ${problem}`] : [];
+        });
       } catch (error) {
         const line = error.loc ? `:${error.loc.line}` : '';
         return [`\`${path}${line}\`: ${error.message}`];
