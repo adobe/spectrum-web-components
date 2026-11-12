@@ -1368,6 +1368,28 @@ export const StatusWarningsTest: Story = {
 };
 StatusWarningsTest.storyName = 'Status validation warnings';
 
+export const SideLabelAlignmentTest: Story = {
+  render: () => html`
+    <swc-radio-group label-position="side">
+      <span slot="label">Shipping method</span>
+      <swc-radio value="1"><span slot="label">Standard</span></swc-radio>
+    </swc-radio-group>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const group = await getComponent<RadioGroup>(
+      canvasElement,
+      'swc-radio-group'
+    );
+    const alignment = (): string =>
+      getComputedStyle(group.shadowRoot!.querySelector('.swc-FormField')!)
+        .alignItems;
+
+    await step('side labels align to the start of the items', () => {
+      expect(alignment()).toBe('start');
+    });
+  },
+};
+
 export const ItemStylingAttributesTest: Story = {
   render: () => html`
     <swc-radio-group size="l" emphasized field-status="invalid">

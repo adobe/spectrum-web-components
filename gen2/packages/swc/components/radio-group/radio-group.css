@@ -26,7 +26,6 @@
 .swc-RadioGroup {
   --swc-form-field-row-gap: var(--swc-radio-group-row-gap, token("group-gap-medium-spacious"));
   --swc-form-field-side-label-gap: var(--swc-radio-group-side-label-gap, token("group-gap-medium-spacious"));
-  --swc-form-field-side-label-alignment: start;
 }
 
 /* ── Items wrapper ────────────────────────────────────────── */
@@ -70,6 +69,9 @@
 :host([label-position="side"]) .swc-RadioGroup {
   /* Keeping cp name consistent with the form-fields fragment */
   grid-template-columns: fit-content(var(--swc-field-label-max-inline-size, 25ch)) minmax(max(50%, 15ch), 1fr);
+
+  /* A side label aligns to the top of the items, not a text baseline. */
+  align-items: start;
 }
 
 /* ── States ───────────────────────────────────────── */
