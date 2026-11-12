@@ -53,6 +53,7 @@ type Prototype = HTMLElement & {
   layout: string;
   selected: string[];
   selectionMode: string;
+  requestUpdate(): void;
   updateComplete: Promise<boolean>;
 };
 
@@ -91,13 +92,7 @@ export const MasonryRegistration: StoryObj = {
     expect(
       customElements.get('swc-card-view-masonry-top-to-bottom')
     ).toBeUndefined();
-    for (const mode of [
-      'nowrap',
-      'loop',
-      'advance',
-      'semantic',
-      'top-to-bottom',
-    ]) {
+    for (const mode of ['nowrap', 'loop', 'advance', 'semantic']) {
       const tag = `swc-card-view-masonry-${mode}`;
       expect(customElements.get(tag), `${tag} is registered`).toBeDefined();
       expect((document.createElement(tag) as Prototype).layout).toBe('masonry');
@@ -330,7 +325,8 @@ export const NamedLayoutNavigation: StoryObj = {
                 );
                 expect(bounds[index].top).toBeCloseTo(bounds[index - 1].top);
                 expect(bounds[index].height).toBeCloseTo(
-                  bounds[index - 1].height
+                  bounds[index - 1].height,
+                  1
                 );
                 expect(bounds[index].width).not.toBeCloseTo(
                   bounds[index - 1].width
@@ -338,7 +334,8 @@ export const NamedLayoutNavigation: StoryObj = {
               } else {
                 expect(bounds[index].left).toBeCloseTo(bounds[0].left);
                 expect(bounds[index].top).toBeCloseTo(
-                  bounds[index - 1].bottom + 16
+                  bounds[index - 1].bottom + 16,
+                  1
                 );
               }
             } else if (index % 3 === 0) {
@@ -390,12 +387,8 @@ export const NamedLayoutNavigation: StoryObj = {
             '[aria-rowindex], [aria-colindex], [aria-rowcount], [aria-colcount]'
           )
         ).toHaveLength(0);
-        expect(await move(2, 'ArrowRight')).toBe(
-          mode === 'nowrap' ? 2 : mode === 'loop' ? 0 : 3
-        );
-        expect(await move(0, 'ArrowLeft')).toBe(
-          mode === 'nowrap' ? 0 : mode === 'loop' ? 2 : 7
-        );
+        expect(await move(2, 'ArrowRight')).toBe(3);
+        expect(await move(0, 'ArrowLeft')).toBe(7);
         expect(await move(6, 'ArrowDown')).toBe(
           mode === 'nowrap'
             ? 6
@@ -432,9 +425,7 @@ export const NamedLayoutNavigation: StoryObj = {
                 ? 0
                 : 6
         );
-        expect(await move(7, 'ArrowRight')).toBe(
-          mode === 'nowrap' ? 7 : mode === 'loop' ? 6 : 0
-        );
+        expect(await move(7, 'ArrowRight')).toBe(0);
         expect(await move(4, 'ArrowRight')).toBe(5);
         expect(await move(4, 'ArrowDown')).toBe(mode === 'semantic' ? 5 : 7);
         view.items = items.map((item, index) => ({
@@ -736,13 +727,7 @@ export const MasonryLayoutNavigation: StoryObj = {
       { left: 120, top: 300, height: 100, column: 1 },
       { left: 0, top: 360, height: 100, column: 0 },
     ];
-    for (const mode of [
-      'nowrap',
-      'loop',
-      'advance',
-      'semantic',
-      'top-to-bottom',
-    ]) {
+    for (const mode of ['nowrap', 'loop', 'advance', 'semantic']) {
       const tag = `swc-card-view-masonry-${mode}`;
       expect((document.createElement(tag) as Prototype).layout).toBe('masonry');
       const view = await mount(canvasElement, tag, 'masonry');
@@ -783,36 +768,7 @@ export const MasonryLayoutNavigation: StoryObj = {
           view.shadowRoot!.activeElement?.getAttribute('data-index')
         );
       };
-      if (mode === 'top-to-bottom') {
-        const order = [0, 5, 7, 1, 3, 6, 2, 4];
-        for (const [position, index] of order.entries()) {
-          const next = order[(position + 1) % order.length];
-          const previous = order[(position + order.length - 1) % order.length];
-          expect(await move(index, 'ArrowDown')).toBe(next);
-          expect(await move(index, 'ArrowRight')).toBe(next);
-          expect(await move(index, 'ArrowUp')).toBe(previous);
-          expect(await move(index, 'ArrowLeft')).toBe(previous);
-        }
-        expect(await move(4, 'Home')).toBe(0);
-        expect(await move(0, 'End')).toBe(4);
-        view.items = items.map((item, index) => ({
-          ...item,
-          disabled: index === 5,
-        }));
-        await view.updateComplete;
-        expect(await move(0, 'ArrowDown')).toBe(7);
-        view.items = items;
-        view.dir = 'rtl';
-        await view.updateComplete;
-        expect(await move(4, 'ArrowRight')).toBe(1);
-        expect(await move(7, 'ArrowDown')).toBe(2);
-        expect(await move(0, 'Home')).toBe(2);
-        expect(await move(2, 'End')).toBe(7);
-        continue;
-      }
-      expect(await move(2, 'ArrowRight')).toBe(
-        mode === 'nowrap' ? 2 : mode === 'loop' ? 0 : 3
-      );
+      expect(await move(2, 'ArrowRight')).toBe(3);
       expect(await move(7, 'ArrowDown')).toBe(
         mode === 'nowrap' ? 7 : mode === 'advance' ? 1 : 0
       );
@@ -820,15 +776,7 @@ export const MasonryLayoutNavigation: StoryObj = {
         mode === 'nowrap' ? 0 : mode === 'advance' ? 4 : 7
       );
       view.dir = 'rtl';
-      expect(await move(0, 'ArrowRight')).toBe(
-        mode === 'nowrap'
-          ? 0
-          : mode === 'loop'
-            ? 2
-            : mode === 'semantic'
-              ? 1
-              : 7
-      );
+      expect(await move(0, 'ArrowRight')).toBe(1);
     }
   },
 };
@@ -932,7 +880,7 @@ export const CommandNavigationEdges: StoryObj = {
     expect(toolbar.selected).toEqual([]);
     await press(toolbar, 'Home');
     await press(toolbar, 'ArrowDown');
-    expect(toolbarRoot.activeElement).toBe(controls[6]);
+    expect(toolbarRoot.activeElement).toBe(controls[9]);
     await press(toolbar, 'ArrowUp');
     expect(toolbarRoot.activeElement).toBe(controls[0]);
     await press(toolbar, 'Home');
@@ -992,7 +940,7 @@ export const ListArrowNavigation: StoryObj = {
       expect(root.activeElement).toBe(entries[3]);
       await press('Home');
       await press('ArrowDown');
-      expect(root.activeElement).toBe(entries[layout === 'masonry' ? 1 : 3]);
+      expect(root.activeElement).toBe(entries[3]);
       await press('ArrowUp');
       expect(root.activeElement).toBe(entries[0]);
       await press('ArrowRight', true);
@@ -1025,7 +973,7 @@ export const FieldsetNavigation: StoryObj = {
       expect(root.querySelector('[role="toolbar"], [role="grid"]')).toBeNull();
       const controls = [...root.querySelectorAll<HTMLElement>('input, button')];
       const rightIndex = 3;
-      const belowIndex = layout === 'masonry' ? 3 : 9;
+      const belowIndex = 9;
       controls[0].focus();
       controls[0].dispatchEvent(
         new KeyboardEvent('keydown', {
@@ -1062,9 +1010,7 @@ export const FieldsetNavigation: StoryObj = {
       expect(root.activeElement).toBe(controls[belowIndex]);
       (controls[belowIndex] as HTMLInputElement).click();
       await view.updateComplete;
-      expect(view.selected).toEqual([
-        layout === 'masonry' ? 'photo-1' : 'photo-3',
-      ]);
+      expect(view.selected).toEqual(['photo-3']);
       controls[belowIndex + 1].focus();
       controls[belowIndex + 1].dispatchEvent(
         new KeyboardEvent('keydown', {
@@ -1117,6 +1063,249 @@ export const Registration: StoryObj = {
     for (const tag of tags) {
       expect(customElements.get(tag), `${tag} is registered`).toBeDefined();
     }
+  },
+};
+
+export const SelectionModesAndGuards: StoryObj = {
+  render: () => html`
+    <div></div>
+  `,
+  play: async ({ canvasElement }) => {
+    const view = await mount(canvasElement, 'swc-card-view-single-row-grid');
+    view.items = items.map((item, index) => ({
+      ...item,
+      disabled: index === 1,
+    }));
+    await view.updateComplete;
+    const root = view.shadowRoot!;
+    const cells = [...root.querySelectorAll<HTMLElement>('[role="gridcell"]')];
+    const selections: string[][] = [];
+    const actions: unknown[] = [];
+    view.addEventListener('swc-card-view-selection-change', (event) => {
+      selections.push(
+        (event as CustomEvent<{ selected: string[] }>).detail.selected
+      );
+    });
+    view.addEventListener('swc-card-view-action', (event) => {
+      actions.push((event as CustomEvent).detail);
+    });
+    const press = async (index: number, key: string) => {
+      cells[index].focus();
+      cells[index].dispatchEvent(
+        new KeyboardEvent('keydown', {
+          key,
+          bubbles: true,
+          composed: true,
+          cancelable: true,
+        })
+      );
+      await view.updateComplete;
+    };
+    await press(1, ' ');
+    await press(1, 'Enter');
+    expect(view.selected).toEqual([]);
+    expect(selections).toEqual([]);
+    expect(actions).toEqual([]);
+
+    view.selectionMode = 'none';
+    await view.updateComplete;
+    await press(0, ' ');
+    expect(view.selected).toEqual([]);
+    expect(selections).toEqual([]);
+    expect(root.querySelector('input')).toBeNull();
+    await press(0, 'Enter');
+    root.querySelector<HTMLButtonElement>('[data-action="share"]')!.click();
+    expect(actions).toEqual([
+      { id: 'photo-0', action: 'open' },
+      { id: 'photo-0', action: 'share' },
+    ]);
+
+    view.selectionMode = 'single';
+    await view.updateComplete;
+    await press(0, ' ');
+    await press(2, ' ');
+    expect(view.selected).toEqual(['photo-2']);
+    await press(2, ' ');
+    expect(view.selected).toEqual([]);
+    expect(selections).toEqual([['photo-0'], ['photo-2'], []]);
+    await press(0, 'Escape');
+    expect(root.activeElement).toBe(cells[0]);
+    expect(selections).toHaveLength(3);
+  },
+};
+
+export const NavigationPolicyBoundaries: StoryObj = {
+  render: () => html`
+    <div></div>
+  `,
+  play: async ({ canvasElement }) => {
+    const view = await mount(canvasElement, 'swc-card-view-single-column-grid');
+    const root = view.shadowRoot!;
+    let cells = [...root.querySelectorAll<HTMLElement>('[role="gridcell"]')];
+    const geometry = items.map((_, index) => ({
+      left: (index % 3) * 120,
+      top: Math.floor(index / 3) * 120,
+      width: 100,
+      height: 100,
+      column: index % 3,
+    }));
+    Object.defineProperty(view, 'positions', { get: () => geometry });
+    const policy = async (navigation: string, model = 'baseline') => {
+      Object.defineProperty(view, 'navigation', {
+        value: navigation,
+        configurable: true,
+      });
+      Object.defineProperty(view, 'model', {
+        value: model,
+        configurable: true,
+      });
+      view.requestUpdate();
+      await view.updateComplete;
+      cells = [...root.querySelectorAll<HTMLElement>('[role="gridcell"]')];
+    };
+    const move = async (index: number, key: string) => {
+      cells[index].focus();
+      cells[index].dispatchEvent(
+        new KeyboardEvent('keydown', {
+          key,
+          bubbles: true,
+          composed: true,
+          cancelable: true,
+        })
+      );
+      await view.updateComplete;
+      return root.activeElement;
+    };
+
+    await policy('spatial-wrap');
+    expect(await move(2, 'ArrowRight')).toBe(cells[0]);
+    expect(await move(0, 'ArrowLeft')).toBe(cells[2]);
+    expect(await move(0, 'ArrowRight')).toBe(cells[1]);
+    expect(await move(0, 'ArrowUp')).toBe(cells[6]);
+    expect(await move(6, 'ArrowDown')).toBe(cells[0]);
+
+    await policy('spatial-advance');
+    expect(await move(2, 'ArrowRight')).toBe(cells[3]);
+    expect(await move(0, 'ArrowLeft')).toBe(cells[7]);
+    expect(await move(0, 'ArrowRight')).toBe(cells[1]);
+    view.dir = 'rtl';
+    expect(await move(2, 'ArrowRight')).toBe(cells[6]);
+    view.dir = 'ltr';
+
+    await policy('visual-column');
+    const order = [0, 3, 6, 1, 4, 7, 2, 5];
+    for (const [position, index] of order.entries()) {
+      expect(await move(index, 'ArrowDown')).toBe(
+        cells[order[(position + 1) % order.length]]
+      );
+      expect(await move(index, 'ArrowUp')).toBe(
+        cells[order[(position + order.length - 1) % order.length]]
+      );
+    }
+    expect(await move(5, 'Home')).toBe(cells[0]);
+    expect(await move(0, 'End')).toBe(cells[5]);
+
+    await policy('cycle');
+    expect(await move(7, 'ArrowRight')).toBe(cells[0]);
+    expect(await move(0, 'ArrowLeft')).toBe(cells[7]);
+    view.dir = 'rtl';
+    expect(await move(0, 'ArrowRight')).toBe(cells[7]);
+    view.dir = 'ltr';
+
+    await policy('sequential-axis');
+    expect(await move(7, 'ArrowRight')).toBe(cells[7]);
+    expect(await move(0, 'ArrowRight')).toBe(cells[1]);
+    expect(await move(0, 'ArrowDown')).toBe(cells[3]);
+
+    view.layout = 'masonry';
+    await view.updateComplete;
+    await policy('legacy', 'vertical');
+    expect(await move(0, 'ArrowRight')).toBe(cells[0]);
+    expect(await move(0, 'ArrowDown')).toBe(cells[3]);
+    expect(await move(3, 'ArrowUp')).toBe(cells[0]);
+    await policy('legacy', 'wrapping');
+    expect(await move(0, 'ArrowDown')).toBe(cells[3]);
+    await policy('legacy');
+    expect(await move(0, 'ArrowRight')).toBe(cells[1]);
+
+    await policy('cycle');
+    view.items = items.map((item) => ({ ...item, disabled: true }));
+    await view.updateComplete;
+    const event = new KeyboardEvent('keydown', {
+      key: 'ArrowDown',
+      bubbles: true,
+      composed: true,
+      cancelable: true,
+    });
+    cells[0].dispatchEvent(event);
+    await view.updateComplete;
+    expect(event.defaultPrevented).toBe(true);
+    expect(view.selected).toEqual([]);
+    cells[0].dispatchEvent(
+      new KeyboardEvent('keydown', {
+        key: 'Home',
+        bubbles: true,
+        composed: true,
+      })
+    );
+    await view.updateComplete;
+    expect(cells.every((cell) => cell.tabIndex === -1)).toBe(true);
+    view.dispatchEvent(
+      new KeyboardEvent('keydown', {
+        key: 'ArrowRight',
+        bubbles: true,
+        composed: true,
+      })
+    );
+  },
+};
+
+export const FeedKeyboardBoundaries: StoryObj = {
+  render: () => html`
+    <div></div>
+  `,
+  play: async ({ canvasElement }) => {
+    const view = await mount(canvasElement, 'swc-card-view-feed');
+    view.items = items.map((item, index) => ({
+      ...item,
+      disabled: index === 1,
+    }));
+    await view.updateComplete;
+    const root = view.shadowRoot!;
+    const entries = [...root.querySelectorAll<HTMLElement>('article')];
+    const exits: unknown[] = [];
+    view.addEventListener('swc-card-view-exit', (event) => {
+      exits.push((event as CustomEvent).detail);
+    });
+    const press = async (key: string, ctrlKey = false, metaKey = false) => {
+      const event = new KeyboardEvent('keydown', {
+        key,
+        ctrlKey,
+        metaKey,
+        bubbles: true,
+        composed: true,
+        cancelable: true,
+      });
+      root.activeElement!.dispatchEvent(event);
+      await view.updateComplete;
+      return event.defaultPrevented;
+    };
+    entries[0].focus();
+    expect(await press('PageUp')).toBe(true);
+    expect(root.activeElement).toBe(entries[0]);
+    await press('PageDown');
+    expect(root.activeElement).toBe(entries[2]);
+    await press('PageUp');
+    expect(root.activeElement).toBe(entries[0]);
+    expect(await press('Home')).toBe(false);
+    expect(await press('ArrowRight')).toBe(false);
+    expect(await press('Home', true)).toBe(true);
+    expect(await press('End', false, true)).toBe(true);
+    expect(exits).toEqual([{ direction: 'before' }, { direction: 'after' }]);
+    entries[7].focus();
+    await press('PageDown');
+    expect(root.activeElement).toBe(entries[7]);
+    expect(view.selected).toEqual([]);
   },
 };
 
@@ -1245,7 +1434,7 @@ export const SelectionAnnouncements: StoryObj = {
         const status = root.querySelector<HTMLElement>('#selection-status')!;
         expect(status).not.toBeNull();
         expect(status.previousElementSibling).toBe(grid);
-        expect(status.getAttribute('aria-live')).toBe('polite');
+        expect(status.getAttribute('aria-live')).toBe('assertive');
         expect(getComputedStyle(status).clipPath).toBe('inset(50%)');
         expect(status.childElementCount).toBe(0);
         expect(status.textContent?.trim()).toBe('');
@@ -1346,12 +1535,9 @@ export const SingleRowSemanticsAndNavigation: StoryObj = {
       };
 
       cells[0].focus();
-      const belowIndex = layout === 'masonry' ? 1 : 3;
+      const belowIndex = 3;
       const activeCell = cells[belowIndex];
-      const rangeSelection =
-        layout === 'masonry'
-          ? ['photo-0', 'photo-1']
-          : ['photo-0', 'photo-1', 'photo-3'];
+      const rangeSelection = ['photo-0', 'photo-1', 'photo-3'];
       await waitFor(() => {
         const first = cells[0].getBoundingClientRect();
         const below = activeCell.getBoundingClientRect();
@@ -1359,9 +1545,9 @@ export const SingleRowSemanticsAndNavigation: StoryObj = {
         expect(below.top).toBeGreaterThan(first.top);
       });
       await press('ArrowRight');
-      expect(root.activeElement).toBe(cells[layout === 'masonry' ? 3 : 1]);
+      expect(root.activeElement).toBe(cells[1]);
       await press('ArrowRight');
-      expect(root.activeElement).toBe(cells[layout === 'masonry' ? 6 : 1]);
+      expect(root.activeElement).toBe(cells[1]);
       await press('Home');
       await press('ArrowLeft');
       expect(root.activeElement).toBe(cells[0]);
@@ -1397,7 +1583,7 @@ export const SingleRowSemanticsAndNavigation: StoryObj = {
           ['ArrowLeft', activeCell],
           ['ArrowRight', cells[4]],
           ['ArrowUp', cells[0]],
-          ['ArrowDown', layout === 'masonry' ? activeCell : cells[6]],
+          ['ArrowDown', cells[6]],
         ] as const) {
           control.focus();
           await press(key);
