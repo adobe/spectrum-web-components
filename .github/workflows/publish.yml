@@ -256,6 +256,7 @@ jobs:
     permissions:
       contents: write # commits the Version PR branch
       pull-requests: write # opens/updates the Version PR
+      statuses: write # posts the package validation result on the Version PR
     env:
       YARN_ENABLE_IMMUTABLE_INSTALLS: false
     steps:
@@ -277,6 +278,7 @@ jobs:
           yarn install --refresh-lockfile
 
       - name: Open or update the gen1 Version PR
+        id: cpr
         uses: peter-evans/create-pull-request@v8
         with:
           # `#publish` in both message and title so the Version PR merge to main
@@ -299,6 +301,61 @@ jobs:
         run: |
           echo "## Publish summary (gen1)" >> $GITHUB_STEP_SUMMARY
           echo "📝 Version PR opened/updated at \`changeset-release/1st-gen\` - nothing published yet" >> $GITHUB_STEP_SUMMARY
+
+      # Pre-release checks on the Version PR. PRs opened with GITHUB_TOKEN don't
+      # trigger pull_request workflows, so the check runs here, against the commit
+      # the Version PR points at, and reports back as a commit status on that PR.
+      # CSS errors fail the status; publint and attw findings are report-only.
+      - name: Check out the Version PR
+        if: steps.cpr.outputs.pull-request-head-sha != ''
+        env:
+          SHA: ${{ steps.cpr.outputs.pull-request-head-sha }}
+        run: |
+          git fetch --quiet origin "$SHA"
+          git checkout --detach "$SHA"
+
+      - name: Rebuild gen1 packages
+        if: steps.cpr.outputs.pull-request-head-sha != ''
+        run: |
+          yarn install
+          yarn build
+
+      - name: Validate packages
+        id: validate
+        if: steps.cpr.outputs.pull-request-head-sha != ''
+        continue-on-error: true
+        run: node scripts/validate-packages.js --gen=1st-gen --report-only
+
+      - name: Post package validation status
+        if: always() && steps.cpr.outputs.pull-request-head-sha != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SHA: ${{ steps.cpr.outputs.pull-request-head-sha }}
+          OUTCOME: ${{ steps.validate.outcome }}
+          CHECKED: ${{ steps.validate.outputs.checked }}
+          FAILING: ${{ steps.validate.outputs.failing }}
+          CSS_FAILING: ${{ steps.validate.outputs.css_failing }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          if [ "$OUTCOME" = success ]; then
+            state=success
+            description="No CSS errors. publint/attw findings in $FAILING of $CHECKED packages (report-only)."
+            line="✅ Package validation passed: no CSS errors. publint/attw findings in $FAILING of $CHECKED packages (report-only)."
+          elif [ "${CSS_FAILING:-0}" != 0 ]; then
+            state=failure
+            description="$CSS_FAILING of $CHECKED packages ship CSS that doesn't parse."
+            line="❌ Package validation failed: $CSS_FAILING of $CHECKED packages ship CSS that doesn't parse. Don't merge the Version PR until this is fixed."
+          else
+            state=error
+            description="Package validation didn't complete. See the workflow run."
+            line="❌ Package validation didn't complete (build or validate step: \`${OUTCOME:-skipped}\`). See the run logs."
+          fi
+          gh api "repos/${{ github.repository }}/statuses/$SHA" \
+            -f state="$state" \
+            -f context="Package validation (1st-gen)" \
+            -f description="$description" \
+            -f target_url="$RUN_URL" > /dev/null
+          echo "$line" >> $GITHUB_STEP_SUMMARY
 
   # Real publish, once the Version PR above has merged (no pending changesets left).
   # Only this job sits behind the npm-publish environment's required-reviewer approval,
