@@ -30,8 +30,7 @@ import '../swc-toast.js';
 import { Toast } from '../Toast.js';
 
 // These tests cover standalone Toast only; queue and container behavior is tested in toast-container.
-// TODO(SWC-2655): add collapsed-stack tests: peek layers, Show all, front-toast countdown.
-// TODO(SWC-2654): add expanded-view tests: scrim, Escape, Collapse, Clear all, focus management.
+// TODO(SWC-2654): add expanded-view tests: Show all, scrim, Escape, Collapse, Clear all, focus management.
 
 export default {
   title: 'Toast container/Tests/Toast',
@@ -1057,6 +1056,34 @@ export const ReconnectAfterCloseTest: Story = {
         await waitFor(() =>
           expect(afterClose, 'swc-after-close events').toHaveLength(1)
         );
+      }
+    );
+  },
+};
+
+export const HiddenHostAfterCloseTest: Story = {
+  render: () => html`
+    <swc-toast open>File saved</swc-toast>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const toast = await getComponent<Toast>(canvasElement, 'swc-toast');
+
+    await step(
+      'fires swc-after-close without waiting for the fade when the host is already hidden',
+      async () => {
+        // Turning off the host's `display` transition hides it at once, as Firefox does.
+        toast.style.transition = 'none';
+        const afterClose = waitForEvent(toast, 'swc-after-close');
+        const start = performance.now();
+
+        toast.close();
+        await afterClose;
+
+        // The fallback timer would take longer than the whole fade.
+        expect(
+          performance.now() - start,
+          'milliseconds until swc-after-close'
+        ).toBeLessThan(100);
       }
     );
   },

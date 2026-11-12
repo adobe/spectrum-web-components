@@ -14,8 +14,14 @@ import { expect, fn, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getComponent, withWarningSpy } from '@swc-test-helpers/dom';
 
-import { ToastQueue } from '@adobe/spectrum-wc-core/components/toast-container/index.js';
-import { getActiveElement } from '@adobe/spectrum-wc-core/utils/index.js';
+import {
+  ToastQueue,
+  type ToastQueueItem,
+} from '@adobe/spectrum-wc-core/components/toast-container/index.js';
+import {
+  deepContains,
+  getActiveElement,
+} from '@adobe/spectrum-wc-core/utils/index.js';
 
 import '../swc-toast-container.js';
 import '@adobe/spectrum-wc/components/button/swc-button.js';
@@ -78,10 +84,40 @@ export const QueueOperationsTest: Story = {
 
       await step('clear empties the queue without calling onClose', () => {
         ToastQueue.add('Cleared notification', { onClose });
+        onClose.mockClear();
         ToastQueue.clear();
         expect(ToastQueue.entries, 'queue entries after clear').toHaveLength(0);
-        expect(onClose, 'onClose calls after clear').toHaveBeenCalledTimes(1);
+        expect(onClose, 'onClose calls after clear').not.toHaveBeenCalled();
       });
+
+      await step(
+        'addAll adds a batch in front, in the given order, and notifies once',
+        () => {
+          ToastQueue.add('Existing notification');
+          changed.mockClear();
+          const keys = ToastQueue.addAll([
+            { message: 'First', variant: 'info' },
+            { message: 'Second' },
+          ]);
+          expect(
+            ToastQueue.entries.map((entry) => entry.message),
+            'queue order'
+          ).toEqual(['First', 'Second', 'Existing notification']);
+          expect(
+            ToastQueue.entries.slice(0, 2).map((entry) => entry.key),
+            'returned keys'
+          ).toEqual(keys);
+          expect(ToastQueue.entries[0].variant, 'batch options').toBe('info');
+          expect(changed, 'change notifications').toHaveBeenCalledTimes(1);
+
+          expect(ToastQueue.addAll([]), 'keys for an empty batch').toEqual([]);
+          expect(
+            changed,
+            'change notifications for an empty batch'
+          ).toHaveBeenCalledTimes(1);
+          ToastQueue.clear();
+        }
+      );
 
       await step('unsubscribing stops change notifications', () => {
         unsubscribe();
@@ -216,6 +252,7 @@ export const RenderingAndClosureTest: Story = {
         async () => {
           ToastQueue.add('Cleared toast', { onClose });
           await getFront(container);
+          onClose.mockClear();
           ToastQueue.clear();
           await waitFor(() =>
             expect(
@@ -228,7 +265,7 @@ export const RenderingAndClosureTest: Story = {
             container.shadowRoot?.querySelector('swc-toast'),
             'rendered toast after clear'
           ).toBeNull();
-          expect(onClose, 'onClose after clear').toHaveBeenCalledTimes(1);
+          expect(onClose, 'onClose after clear').not.toHaveBeenCalled();
         }
       );
     } finally {
@@ -850,6 +887,659 @@ export const InterruptedClosureTest: Story = {
       if (!container.isConnected) {
         canvasElement.append(container);
       }
+      ToastQueue.clear();
+    }
+  },
+};
+
+const getLayers = (container: ToastContainer): HTMLElement[] => [
+  ...container.shadowRoot!.querySelectorAll<HTMLElement>(
+    '.swc-ToastContainer-layer'
+  ),
+];
+
+const getRegion = (container: ToastContainer): HTMLElement =>
+  container.shadowRoot!.querySelector<HTMLElement>('[role="region"]')!;
+
+// Some engines never apply `perspective` to layout geometry, for example headed Linux
+// WebKit under Xvfb in CI, so bounding boxes cannot show the peek there. A probe with
+// the same perspective setup tells the test whether they can.
+const projectsPerspective = (): boolean => {
+  const host = document.createElement('div');
+  host.style.cssText =
+    'position: fixed; inset: 0 auto auto 0; inline-size: 40px; block-size: 40px; perspective: 80px; perspective-origin: center -55px;';
+  const child = document.createElement('div');
+  child.style.cssText = 'position: absolute; inset: 0; translate: 0 0 -12px;';
+  host.append(child);
+  document.body.append(host);
+  const projected =
+    child.getBoundingClientRect().top !== host.getBoundingClientRect().top;
+  host.remove();
+  return projected;
+};
+
+export const StackLayersTest: Story = {
+  play: async ({ canvasElement, step }) => {
+    ToastQueue.clear();
+    const container = await getComponent<ToastContainer>(
+      canvasElement,
+      'swc-toast-container'
+    );
+
+    try {
+      await step('a single toast has no layers and no shadow', async () => {
+        ToastQueue.add('First notification');
+        const front = await getFront(container);
+        expect(getLayers(container), 'layers').toHaveLength(0);
+        expect(getComputedStyle(front).filter, 'single toast filter').toBe(
+          'none'
+        );
+      });
+
+      await step(
+        'two more toasts add two empty, non-interactive layers',
+        async () => {
+          ToastQueue.add('Second notification', { variant: 'info' });
+          ToastQueue.add('Third notification', { variant: 'negative' });
+          await getFront(container);
+          const layers = getLayers(container);
+          expect(layers, 'layers').toHaveLength(2);
+          for (const layer of layers) {
+            expect(layer.getAttribute('role'), 'layer role').toBe(
+              'presentation'
+            );
+            expect(layer.childNodes, 'layer children').toHaveLength(0);
+            expect(layer.hasAttribute('tabindex'), 'layer tabindex').toBe(
+              false
+            );
+          }
+          expect(
+            container.shadowRoot!.querySelectorAll('swc-toast'),
+            'rendered toasts'
+          ).toHaveLength(1);
+        }
+      );
+
+      await step('the region count label reflects the full queue', () => {
+        expect(getRegion(container).getAttribute('aria-label')).toBe(
+          '3 notifications.'
+        );
+      });
+
+      await step(
+        'a stack gives the layers and the front toast a shadow',
+        async () => {
+          const front = await getFront(container);
+          expect(
+            getComputedStyle(front).filter,
+            'stacked front toast filter'
+          ).toContain('drop-shadow');
+          for (const layer of getLayers(container)) {
+            expect(
+              getComputedStyle(layer).boxShadow,
+              'layer box shadow'
+            ).not.toBe('none');
+          }
+        }
+      );
+
+      await step('each layer takes the variant of its toast', () => {
+        const [first, second] = getLayers(container);
+        expect(
+          first.classList.contains('swc-ToastContainer-layer--info'),
+          'nearest layer is the info toast'
+        ).toBe(true);
+        expect(
+          [...second.classList],
+          'neutral layer has no variant modifier'
+        ).toEqual(['swc-ToastContainer-layer']);
+        expect(
+          getComputedStyle(second).backgroundColor,
+          'neutral layer differs from the info layer'
+        ).not.toBe(getComputedStyle(first).backgroundColor);
+      });
+
+      await step('layers stay in the queue order, newest nearest', () => {
+        const indexes = getLayers(container).map((layer) =>
+          layer.style.getPropertyValue('--_swc-toast-container-layer-index')
+        );
+        expect(indexes, 'layer depth indexes').toEqual(['1', '2']);
+      });
+
+      await step('nearer layers paint above farther ones', () => {
+        const [near, far] = getLayers(container).map((layer) =>
+          Number(getComputedStyle(layer).zIndex)
+        );
+        expect(near, 'nearest layer z-index').toBeGreaterThan(far);
+      });
+
+      await step(
+        'layers beyond the third position stay in the DOM at opacity 0',
+        async () => {
+          ToastQueue.add('Fourth notification');
+          ToastQueue.add('Fifth notification');
+          await getFront(container);
+          const opacities = getLayers(container).map(
+            (layer) => getComputedStyle(layer).opacity
+          );
+          expect(opacities, 'layer opacities').toEqual(['1', '1', '0', '0']);
+          expect(
+            getLayers(container).map((layer) =>
+              layer.classList.contains('swc-ToastContainer-layer--hidden')
+            ),
+            'layers marked hidden by depth'
+          ).toEqual([false, false, true, true]);
+          expect(getRegion(container).getAttribute('aria-label')).toBe(
+            '5 notifications.'
+          );
+        }
+      );
+
+      await step('closing a queued toast removes its layer', async () => {
+        const queued = ToastQueue.entries[2].key;
+        ToastQueue.close(queued);
+        await container.updateComplete;
+        expect(getLayers(container), 'layers').toHaveLength(3);
+        expect(getRegion(container).getAttribute('aria-label')).toBe(
+          '4 notifications.'
+        );
+      });
+
+      await step('layers include their border in their size', () => {
+        for (const layer of getLayers(container)) {
+          expect(getComputedStyle(layer).boxSizing, 'layer box-sizing').toBe(
+            'border-box'
+          );
+        }
+      });
+
+      await step('layers hold no focusable content', () => {
+        for (const layer of getLayers(container)) {
+          expect(layer.querySelectorAll('*'), 'layer descendants').toHaveLength(
+            0
+          );
+          expect(layer.hasAttribute('tabindex'), 'layer tabindex').toBe(false);
+        }
+        // The queue still holds older toasts, and none render real controls.
+        expect(ToastQueue.entries.length, 'queued toasts').toBeGreaterThan(1);
+        expect(
+          container.shadowRoot!.querySelectorAll('swc-toast'),
+          'rendered toasts'
+        ).toHaveLength(1);
+      });
+    } finally {
+      ToastQueue.clear();
+    }
+  },
+};
+
+// Apps that reload or navigate rebuild their toasts from saved data, so this is the documented restore recipe.
+export const RestoreToastsTest: Story = {
+  play: async ({ canvasElement, step }) => {
+    ToastQueue.clear();
+    const container = await getComponent<ToastContainer>(
+      canvasElement,
+      'swc-toast-container'
+    );
+    let renderedToasts = 0;
+    const observer = new MutationObserver((records) => {
+      for (const record of records) {
+        // The first render adds the region with its toast already inside, so count nested toasts too.
+        for (const node of record.addedNodes) {
+          if (node instanceof HTMLElement) {
+            renderedToasts +=
+              (node.localName === 'swc-toast' ? 1 : 0) +
+              node.querySelectorAll('swc-toast').length;
+          }
+        }
+      }
+    });
+    observer.observe(container.shadowRoot!, { childList: true, subtree: true });
+    const messages = (): string[] =>
+      ToastQueue.entries.map((entry) => entry.message);
+    const expectStack = (label: string): void => {
+      expect(messages(), `${label} queue order`).toEqual(['C', 'B', 'A']);
+      expect(
+        container.shadowRoot?.querySelector('swc-toast')?.textContent,
+        `${label} front toast`
+      ).toBe('C');
+      expect(getRegion(container).getAttribute('aria-label'), label).toBe(
+        '3 notifications.'
+      );
+      expect(getLayers(container), `${label} layers`).toHaveLength(2);
+    };
+    const onClose = fn();
+    let saved: ToastQueueItem[] = [];
+
+    try {
+      await step(
+        'several adds in the same tick render a single toast',
+        async () => {
+          for (const message of ['A', 'B', 'C']) {
+            ToastQueue.add(message, { variant: 'info', onClose });
+          }
+          await getFront(container);
+
+          expect(renderedToasts, 'toasts rendered for the batch').toBe(1);
+          expectStack('batch');
+        }
+      );
+
+      await step(
+        'entries list the front toast first and save without callbacks',
+        () => {
+          // entries and addAll() both list the front toast first, so no reordering is needed.
+          saved = ToastQueue.entries.map(
+            ({ key: _key, onAction: _onAction, onClose: _onClose, ...toast }) =>
+              toast
+          );
+
+          expect(
+            saved.map((toast) => toast.message),
+            'saved order, front toast first'
+          ).toEqual(['C', 'B', 'A']);
+          for (const toast of saved) {
+            expect(Object.keys(toast), 'saved properties').toEqual([
+              'variant',
+              'message',
+            ]);
+          }
+        }
+      );
+
+      await step(
+        'addAll with the saved list, before the container connects, restores the same stack',
+        async () => {
+          // A reload: the old page's queue is gone, and the container connects after the app restores.
+          container.remove();
+          ToastQueue.clear();
+          expect(ToastQueue.entries, 'queue after the reload').toHaveLength(0);
+
+          ToastQueue.addAll(saved);
+          expect(messages(), 'restored queue order').toEqual(['C', 'B', 'A']);
+          expect(
+            ToastQueue.entries.some((entry) => entry.onClose !== undefined),
+            'restored callbacks'
+          ).toBe(false);
+
+          renderedToasts = 0;
+          canvasElement.append(container);
+          await getFront(container);
+
+          expect(renderedToasts, 'toasts rendered for the restore').toBe(1);
+          expectStack('restored');
+        }
+      );
+    } finally {
+      observer.disconnect();
+      if (!container.isConnected) {
+        canvasElement.append(container);
+      }
+      ToastQueue.clear();
+    }
+  },
+};
+
+// Restoring while the container is live, for example after a sign-in that happens without a reload.
+export const AddAllWhileConnectedTest: Story = {
+  play: async ({ canvasElement, step }) => {
+    ToastQueue.clear();
+    const container = await getComponent<ToastContainer>(
+      canvasElement,
+      'swc-toast-container'
+    );
+
+    try {
+      await step('a toast is already showing', async () => {
+        ToastQueue.add('Existing notification', { variant: 'negative' });
+        const front = await getFront(container);
+        expect(front.textContent, 'front message').toBe(
+          'Existing notification'
+        );
+        expect(getLayers(container), 'layers').toHaveLength(0);
+      });
+
+      await step(
+        'addAll puts the batch in front of it and renders one toast',
+        async () => {
+          ToastQueue.addAll([
+            { message: 'First', variant: 'info' },
+            { message: 'Second', variant: 'positive' },
+          ]);
+          const front = await getFront(container);
+
+          expect(front.textContent, 'new front message').toBe('First');
+          expect(
+            container.shadowRoot!.querySelectorAll('swc-toast'),
+            'toasts in the DOM'
+          ).toHaveLength(1);
+          expect(getLayers(container), 'layers').toHaveLength(2);
+          expect(getRegion(container).getAttribute('aria-label')).toBe(
+            '3 notifications.'
+          );
+          expect(
+            getLayers(container).map((layer) =>
+              [...layer.classList].find((name) => name.includes('--'))
+            ),
+            'layers follow the queue order behind the front toast'
+          ).toEqual([
+            'swc-ToastContainer-layer--positive',
+            'swc-ToastContainer-layer--negative',
+          ]);
+        }
+      );
+    } finally {
+      ToastQueue.clear();
+    }
+  },
+};
+
+// The docs sample saves toasts as JSON, so this covers what serialization drops or keeps.
+export const RestoreFromJsonTest: Story = {
+  play: async ({ canvasElement, step }) => {
+    ToastQueue.clear();
+    const container = await getComponent<ToastContainer>(
+      canvasElement,
+      'swc-toast-container'
+    );
+    const staleOnAction = fn();
+    const staleOnClose = fn();
+    const onAction = fn();
+    const onClose = fn();
+    let json = '';
+
+    try {
+      await step('toasts save as JSON without their callbacks', () => {
+        // Seeded with add(), oldest first, so the saved order does not depend on addAll().
+        ToastQueue.add('A', { timeout: null });
+        ToastQueue.add('B', {
+          variant: 'info',
+          timeout: 6000,
+          onClose: staleOnClose,
+        });
+        ToastQueue.add('C', {
+          variant: 'positive',
+          actionLabel: 'Undo',
+          closeLabel: 'Dismiss',
+          shouldCloseOnAction: true,
+          onAction: staleOnAction,
+          onClose: staleOnClose,
+        });
+        const saved = ToastQueue.entries.map(
+          ({ key: _key, onAction: _onAction, onClose: _onClose, ...toast }) =>
+            toast
+        );
+        expect(
+          saved.map((toast) => toast.message),
+          'saved order, front toast first'
+        ).toEqual(['C', 'B', 'A']);
+        json = JSON.stringify(saved);
+
+        expect(json, 'serialized callbacks').not.toContain('onAction');
+        expect(json, 'serialized callbacks').not.toContain('onClose');
+        expect(JSON.parse(json), 'round trip').toEqual(saved);
+      });
+
+      await step(
+        'restoring with fresh callbacks keeps the data and uses the new handlers',
+        async () => {
+          container.remove();
+          ToastQueue.clear();
+          ToastQueue.addAll(
+            (JSON.parse(json) as ToastQueueItem[]).map((toast) => ({
+              ...toast,
+              onAction: toast.actionLabel ? onAction : undefined,
+              onClose,
+            }))
+          );
+          canvasElement.append(container);
+          const front = await getFront(container);
+
+          expect(front.textContent, 'restored front message').toBe('C');
+          expect(front.variant, 'restored variant').toBe('positive');
+          expect(
+            ToastQueue.entries.map((entry) => entry.message),
+            'restored order'
+          ).toEqual(['C', 'B', 'A']);
+
+          front.shadowRoot!.querySelector<HTMLElement>('swc-button')!.click();
+          expect(onAction, 'restored onAction calls').toHaveBeenCalledTimes(1);
+          expect(staleOnAction, 'old onAction calls').not.toHaveBeenCalled();
+          await waitFor(() =>
+            expect(onClose, 'onClose calls').toHaveBeenCalledTimes(1)
+          );
+          expect(staleOnClose, 'old onClose calls').not.toHaveBeenCalled();
+        }
+      );
+
+      await step(
+        'the saved timeout survives for the promoted toast',
+        async () => {
+          await waitFor(() =>
+            expect(
+              container.shadowRoot?.querySelector('swc-toast')?.textContent,
+              'promoted message'
+            ).toBe('B')
+          );
+          const promoted = await getFront(container);
+          expect(promoted.timeout, 'restored timeout').toBe(6000);
+        }
+      );
+    } finally {
+      if (!container.isConnected) {
+        canvasElement.append(container);
+      }
+      ToastQueue.clear();
+    }
+  },
+};
+
+export const StackPlacementTest: Story = {
+  play: async ({ canvasElement, step }) => {
+    ToastQueue.clear();
+    const container = await getComponent<ToastContainer>(
+      canvasElement,
+      'swc-toast-container'
+    );
+
+    try {
+      ToastQueue.add('Older notification');
+      ToastQueue.add('Newer notification');
+      await getFront(container);
+
+      for (const placement of [
+        'bottom',
+        'bottom-end',
+        'top',
+        'top-end',
+      ] as const) {
+        await step(
+          `${placement}: layers peek away from the anchored edge`,
+          async () => {
+            container.placement = placement;
+            await container.updateComplete;
+            const regionElement = getRegion(container);
+            const layerElement = getLayers(container)[0];
+            const region = regionElement.getBoundingClientRect();
+
+            // The CSS that decides the direction: the vanishing point sits beyond
+            // the edge away from the anchor, and the layer is pushed back in depth.
+            const originY = parseFloat(
+              getComputedStyle(regionElement).perspectiveOrigin.split(' ')[1]
+            );
+            const depth = parseFloat(
+              getComputedStyle(layerElement).translate.split(' ')[2]
+            );
+            expect(depth, 'layer depth').toBeLessThan(0);
+            if (placement.startsWith('bottom')) {
+              expect(
+                originY,
+                'perspective origin above the region'
+              ).toBeLessThan(0);
+            } else {
+              expect(
+                originY,
+                'perspective origin below the region'
+              ).toBeGreaterThan(region.height);
+            }
+
+            if (!projectsPerspective()) {
+              return;
+            }
+            const rect = layerElement.getBoundingClientRect();
+            if (placement.startsWith('bottom')) {
+              expect(rect.top, 'layer top edge').toBeLessThan(region.top);
+              expect(rect.bottom, 'layer bottom edge').toBeLessThanOrEqual(
+                region.bottom
+              );
+            } else {
+              expect(rect.bottom, 'layer bottom edge').toBeGreaterThan(
+                region.bottom
+              );
+              expect(rect.top, 'layer top edge').toBeGreaterThanOrEqual(
+                region.top
+              );
+            }
+          }
+        );
+      }
+    } finally {
+      ToastQueue.clear();
+    }
+  },
+};
+
+const closeButtonOf = (toast: Toast): HTMLElement =>
+  toast.shadowRoot!.querySelector<HTMLElement>('swc-close-button')!;
+
+const emulateInput = (target: HTMLElement, type: 'pointer' | 'keyboard') => {
+  target.dispatchEvent(
+    type === 'pointer'
+      ? new PointerEvent('pointerdown', { bubbles: true, composed: true })
+      : new KeyboardEvent('keydown', {
+          key: 'Enter',
+          bubbles: true,
+          composed: true,
+        })
+  );
+};
+
+export const StackFocusTest: Story = {
+  play: async ({ canvasElement, step }) => {
+    ToastQueue.clear();
+    const container = await getComponent<ToastContainer>(
+      canvasElement,
+      'swc-toast-container'
+    );
+    const trigger = canvasElement.querySelector<HTMLButtonElement>('#trigger')!;
+
+    try {
+      await step(
+        'closing the focused toast from the keyboard focuses the promoted toast',
+        async () => {
+          trigger.focus();
+          ToastQueue.add('Older notification');
+          const frontKey = ToastQueue.add('Newer notification');
+          const front = await getFront(container);
+          closeButtonOf(front).focus();
+          emulateInput(closeButtonOf(front), 'keyboard');
+          ToastQueue.close(frontKey);
+          await waitFor(() =>
+            expect(ToastQueue.entries, 'queue entries').toHaveLength(1)
+          );
+          const promoted = await getFront(container);
+          expect(promoted.textContent, 'promoted message').toContain(
+            'Older notification'
+          );
+          await waitFor(() =>
+            expect(getActiveElement(), 'focus after keyboard close').toBe(
+              promoted
+            )
+          );
+        }
+      );
+
+      ToastQueue.clear();
+      await waitFor(() => expect(ToastQueue.entries).toHaveLength(0));
+
+      await step(
+        'closing the focused toast with a pointer returns focus to where it was before the region',
+        async () => {
+          trigger.focus();
+          ToastQueue.add('Older notification');
+          const frontKey = ToastQueue.add('Newer notification');
+          const front = await getFront(container);
+          emulateInput(closeButtonOf(front), 'pointer');
+          closeButtonOf(front).focus();
+          ToastQueue.close(frontKey);
+          await waitFor(() =>
+            expect(ToastQueue.entries, 'queue entries').toHaveLength(1)
+          );
+          const promoted = await getFront(container);
+          await waitFor(() =>
+            expect(getActiveElement(), 'focus after pointer close').toBe(
+              trigger
+            )
+          );
+          expect(
+            deepContains(container, getActiveElement()),
+            'focus is outside the region'
+          ).toBe(false);
+          expect(promoted.open, 'promoted toast is open').toBe(true);
+        }
+      );
+
+      ToastQueue.clear();
+      await waitFor(() => expect(ToastQueue.entries).toHaveLength(0));
+
+      await step(
+        'adding a toast in front of the focused one moves keyboard focus to it, and emptying the queue restores focus to where it was before the region',
+        async () => {
+          trigger.focus();
+          ToastQueue.add('Older notification', { timeout: 6000 });
+          const olderFront = await getFront(container);
+          closeButtonOf(olderFront).focus();
+          emulateInput(closeButtonOf(olderFront), 'keyboard');
+          ToastQueue.add('Newer notification', { timeout: 6000 });
+          await waitFor(async () =>
+            expect(
+              (await getFront(container)).textContent,
+              'front message'
+            ).toContain('Newer notification')
+          );
+          const newer = await getFront(container);
+          await waitFor(() =>
+            expect(getActiveElement(), 'focus after add').toBe(newer)
+          );
+          ToastQueue.clear();
+          await waitFor(() =>
+            expect(getActiveElement(), 'focus after the queue empties').toBe(
+              trigger
+            )
+          );
+        }
+      );
+
+      ToastQueue.clear();
+      await waitFor(() => expect(ToastQueue.entries).toHaveLength(0));
+
+      await step(
+        'a toast without focus leaves focus alone when the front changes',
+        async () => {
+          trigger.focus();
+          const frontKey = ToastQueue.add('Older notification');
+          ToastQueue.add('Newer notification');
+          await getFront(container);
+          ToastQueue.close(ToastQueue.entries[0].key);
+          await waitFor(() =>
+            expect(ToastQueue.entries, 'queue entries').toHaveLength(1)
+          );
+          await getFront(container);
+          expect(frontKey, 'remaining key').toBe(ToastQueue.entries[0].key);
+          expect(getActiveElement(), 'focus').toBe(trigger);
+        }
+      );
+    } finally {
       ToastQueue.clear();
     }
   },

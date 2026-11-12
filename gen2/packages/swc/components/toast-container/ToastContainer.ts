@@ -17,6 +17,7 @@ import {
   TemplateResult,
 } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
+import { styleMap } from 'lit/directives/style-map.js';
 
 import {
   ToastContainerBase,
@@ -30,6 +31,9 @@ import type { Toast } from './Toast.js';
 
 import styles from './toast-container.css';
 
+// Layers deeper than this stay in the DOM at `opacity: 0`.
+const VISIBLE_LAYER_COUNT = 2;
+
 /**
  * Renders the front queued notification in a named region.
  *
@@ -37,6 +41,10 @@ import styles from './toast-container.css';
  * @since 2.0.0
  */
 export class ToastContainer extends ToastContainerBase {
+  // ──────────────────────────────
+  //     RENDERING & STYLING
+  // ──────────────────────────────
+
   private _toast?: Toast;
   private _renderedKey?: string;
   private _shownKey?: string;
@@ -104,11 +112,13 @@ export class ToastContainer extends ToastContainerBase {
       return nothing;
     }
     const count = ToastQueue.entries.length;
+    const layers = this.layerEntries;
     return html`
       <div
         class=${classMap({
           ['swc-ToastContainer']: true,
           [`swc-ToastContainer--${this.placement}`]: true,
+          ['swc-ToastContainer--stacked']: layers.length > 0,
         })}
         role="region"
         popover="manual"
@@ -116,12 +126,32 @@ export class ToastContainer extends ToastContainerBase {
         aria-label=${this.getRegionLabel(count)}
         @pointerenter=${this.handlePointerEnter}
         @pointerleave=${this.handlePointerLeave}
+        @pointerdown=${this.handlePointerDown}
+        @keydown=${this.handleKeyDown}
         @focusin=${this.handleFocusIn}
         @focusout=${this.handleFocusOut}
         @swc-close=${this.handleClose}
         @swc-after-close=${this.handleAfterClose}
         @swc-toast-action=${this.handleAction}
       >
+        ${layers.map((entry, index) => {
+          const depth = index + 1;
+          return html`
+            <div
+              class=${classMap({
+                ['swc-ToastContainer-layer']: true,
+                [`swc-ToastContainer-layer--${entry.variant}`]:
+                  entry.variant != null && entry.variant !== 'neutral',
+                ['swc-ToastContainer-layer--hidden']:
+                  depth > VISIBLE_LAYER_COUNT,
+              })}
+              role="presentation"
+              style=${styleMap({
+                '--_swc-toast-container-layer-index': depth,
+              })}
+            ></div>
+          `;
+        })}
         ${this._toast}
       </div>
     `;
