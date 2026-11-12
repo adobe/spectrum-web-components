@@ -10,8 +10,7 @@
  * governing permissions and limitations under the License.
  */
 import { expect, type Page, test } from '@playwright/test';
-
-import { gotoStory } from '../../../utils/a11y-helpers.js';
+import { gotoStory } from '@swc-test-helpers/playwright';
 
 test('the container exposes a counted region with a single named toast', async ({
   page,

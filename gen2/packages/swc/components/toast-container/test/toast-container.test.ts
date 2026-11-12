@@ -12,6 +12,7 @@
 import { html } from 'lit';
 import { expect, fn, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import { getComponent, withWarningSpy } from '@swc-test-helpers/dom';
 
 import { ToastQueue } from '@adobe/spectrum-wc-core/components/toast-container/index.js';
 import { getActiveElement } from '@adobe/spectrum-wc-core/utils/index.js';
@@ -19,7 +20,6 @@ import { getActiveElement } from '@adobe/spectrum-wc-core/utils/index.js';
 import '../swc-toast-container.js';
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 
-import { getComponent, withWarningSpy } from '../../../utils/test-utils.js';
 import { ToastQueue as RenderingToastQueue } from '../index.js';
 import type { Toast } from '../Toast.js';
 import type { ToastContainer } from '../ToastContainer.js';

@@ -13,6 +13,11 @@
 import { html } from 'lit';
 import { expect, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import {
+  getComponent,
+  waitForEvent,
+  withWarningSpy,
+} from '@swc-test-helpers/dom';
 
 import {
   SWC_TOAST_ACTION_EVENT,
@@ -22,11 +27,6 @@ import {
 
 import '../swc-toast.js';
 
-import {
-  getComponent,
-  waitForEvent,
-  withWarningSpy,
-} from '../../../utils/test-utils.js';
 import { Toast } from '../Toast.js';
 
 // These tests cover standalone Toast only; queue and container behavior is tested in toast-container.
