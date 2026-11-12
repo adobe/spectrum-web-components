@@ -13,13 +13,13 @@ import type { Meta, StoryObj } from '@storybook/web-components';
 
 import { navigationMeta } from './story-helpers.js';
 
-/** A shortest-column waterfall traversed down each visual column before moving right. */
+/** A shortest-column masonry traversed down each visual column before moving right. */
 const meta: Meta = {
   ...navigationMeta(
-    'swc-card-view-waterfall-top-to-bottom',
+    'swc-card-view-masonry-top-to-bottom',
     'Visual-order navigation down each column, then right to the next.'
   ),
-  title: 'Card view/Waterfall top to bottom',
+  title: 'Card view/Masonry top to bottom',
 };
 
 export default meta;

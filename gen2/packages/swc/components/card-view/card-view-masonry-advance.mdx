@@ -1,6 +1,6 @@
 import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks';
 import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
-import * as Stories from './stories/card-view-waterfall-advance.stories';
+import * as Stories from './stories/card-view-masonry-advance.stories';
 
 <Meta of={Stories} />
 
@@ -8,7 +8,7 @@ import * as Stories from './stories/card-view-waterfall-advance.stories';
 
 ## Anatomy
 
-`swc-card-view-waterfall-advance` places 50 unequal-height cards into the shortest available visual column. Each card contains a Picsum photo, selection checkbox, primary action, and Share action. One semantic row contains all 50 gridcells, each with its collection-order column index.
+`swc-card-view-masonry-advance` places 50 unequal-height cards into the shortest available visual column. Each card contains a Picsum photo, selection checkbox, primary action, and Share action. One semantic row contains all 50 gridcells, each with its collection-order column index.
 
 ## Behaviors
 
@@ -23,6 +23,6 @@ Arrow keys first choose the nearest enabled visual neighbor with perpendicular o
 
 We recommend a single-row grid for collection-position feedback such as "x of y," keeping semantic indices stable as cards reflow. Actual positional announcements require screen reader and browser testing.
 
-This example tests whether advancement between waterfall bands gives a predictable route for both sighted keyboard users and users who encounter only one semantic sequence. Horizontal neighbors are still ambiguous because card heights differ and no aligned horizontal rows exist. Compare the resulting order with Waterfall Semantic. <kbd>Home</kbd> and <kbd>End</kbd> reach collection boundaries; <kbd>Space</kbd> toggles selection and <kbd>Enter</kbd> opens the active card.
+This example tests whether advancement between masonry bands gives a predictable route for both sighted keyboard users and users who encounter only one semantic sequence. Horizontal neighbors are still ambiguous because card heights differ and no aligned horizontal rows exist. Compare the resulting order with Masonry Semantic. <kbd>Home</kbd> and <kbd>End</kbd> reach collection boundaries; <kbd>Space</kbd> toggles selection and <kbd>Enter</kbd> opens the active card.
 
 <DocsFooter />

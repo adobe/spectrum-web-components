@@ -48,8 +48,8 @@ export const Grid: StoryObj = {
   tags: ['options'],
 };
 
-export const Waterfall: StoryObj = {
-  args: { layout: 'waterfall' },
+export const Masonry: StoryObj = {
+  args: { layout: 'masonry' },
   tags: ['options'],
 };
 

@@ -596,19 +596,19 @@ export abstract class CardViewBase extends SpectrumElement {
                     ? this.advancedSpatial(index, event.key)
                     : this.spatial(index, event.key);
     } else if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
-      if (this.model === 'vertical' && this.layout === 'waterfall') {
+      if (this.model === 'vertical' && this.layout === 'masonry') {
         return;
       }
       const rtl = getComputedStyle(this).direction === 'rtl';
       const direction = (event.key === 'ArrowRight' ? 1 : -1) * (rtl ? -1 : 1);
       next =
         this.model === 'single-row' ||
-        (this.model === 'baseline' && this.layout === 'waterfall')
+        (this.model === 'baseline' && this.layout === 'masonry')
           ? this.spatial(index, event.key)
           : this.sequential(index, direction);
     } else if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
       next =
-        this.model === 'vertical' && this.layout === 'waterfall'
+        this.model === 'vertical' && this.layout === 'masonry'
           ? this.columnStep(index, event.key === 'ArrowDown' ? 1 : -1)
           : this.model === 'wrapping'
             ? this.columnStep(index, event.key === 'ArrowDown' ? 1 : -1)

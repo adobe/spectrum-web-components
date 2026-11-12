@@ -6,7 +6,7 @@ import * as Stories from './stories/card-view-single-row-grid.stories';
 
 <DocsHeader />
 
-We recommend this single-row grid structure for collection-position feedback such as "x of y." It is the shared semantics for the [grid](./?path=/docs/components-card-view-grid-nowrap--docs) and [waterfall](./?path=/docs/components-card-view-waterfall-nowrap--docs) keyboard experiments. Those experiments compare navigation, not alternative semantics. This reference retains spatial navigation without wrapping and column-major waterfall placement.
+We recommend this single-row grid structure for collection-position feedback such as "x of y." It is the shared semantics for the [grid](./?path=/docs/components-card-view-grid-nowrap--docs) and [masonry](./?path=/docs/components-card-view-masonry-nowrap--docs) keyboard experiments. Those experiments compare navigation, not alternative semantics. This reference retains spatial navigation without wrapping and column-major masonry placement.
 
 ## Anatomy
 
@@ -20,11 +20,11 @@ Cards align in uniform visual rows. These visual rows do not create additional s
 
 <Canvas of={Stories.Grid} />
 
-### Waterfall
+### Masonry
 
 Cards fill each visual column from top to bottom in semantic collection order, then continue in the next column to the right (to the left in RTL). Measured heights preserve varied card sizes. The semantic row remains unchanged. All arrow keys move to enabled visual neighbors with overlap on the perpendicular axis.
 
-<Canvas of={Stories.Waterfall} />
+<Canvas of={Stories.Masonry} />
 
 ## Behaviors
 
@@ -53,7 +53,7 @@ Resizing, zooming, and switching layouts update visual geometry without regroupi
 
 ### Cons
 
-- Announced columns do not match visual columns once cards wrap or form a waterfall.
+- Announced columns do not match visual columns once cards wrap or form a masonry.
 - Screen reader users expect only one row from the announced structure, so vertical navigation with <kbd>ArrowUp</kbd> and <kbd>ArrowDown</kbd> may be unexpected.
 - Spatial navigation can skip intervening collection items and does not provide a single-axis route through every card.
 - Grid semantics still introduce screen reader mode changes and need user testing; column indices do not guarantee useful position announcements.

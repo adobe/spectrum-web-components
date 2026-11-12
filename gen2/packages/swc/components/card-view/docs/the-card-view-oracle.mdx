@@ -14,7 +14,7 @@ export const readings = {
     label: 'Uniform grid · Four keyboard policies',
     title: 'One semantic row. Four routes to test.',
     summary:
-      'All four examples use our recommended single-row grid: 50 named card cells in one semantic row. Explicit ARIA indices and counts are omitted; Advance includes position in the cell name. Only keyboard navigation changes.',
+      'All four examples use our recommended single-row grid: 50 named card cells in one semantic row. Explicit ARIA indices and counts are omitted; every cell name includes its collection position. Only keyboard navigation changes.',
     caution:
       'Users relying on semantics encounter one sequence. Sighted keyboard users see two visual dimensions. Test whether both can predict movement and reach every card.',
     variants: [
@@ -36,13 +36,13 @@ export const readings = {
       ],
     ],
   },
-  waterfall: {
-    label: 'Waterfall · Five keyboard policies',
-    title: 'The cards do not share a horizontal row.',
+  masonry: {
+    label: 'Masonry · Five keyboard policies',
+    title: 'Rows align. Vertical edges can differ.',
     summary:
       'The same single-row semantics now contain adaptive visual rows: cards share a row height, with widths based on image aspect ratios. All five policies place consecutive cards across rows. Compare navigation, not different placement algorithms.',
     caution:
-      'Several cards may overlap the active card vertically. Which one should Left or Right choose? Test the geometry instead of assuming a horizontal row exists.',
+      'Several cards in another row may overlap the active card horizontally. Which one should Up or Down choose? Test adaptive rows separately from waterfall columns.',
     variants: [
       [
         'nowrap',
@@ -506,19 +506,45 @@ export const oracleStyles = `.sbdocs-wrapper:has(#card-view-oracle) { padding: 0
         background: #edf7fc;
         padding: 56px 0;
       }
+      #card-view-oracle .layout-intro {
+        max-width: 70ch;
+      }
       #card-view-oracle .layout-diagrams {
         display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: minmax(0, 1fr);
         gap: 36px;
         margin-top: 28px;
       }
       #card-view-oracle .layout-diagrams figure {
+        display: grid;
+        grid-template-columns: minmax(0, 320px) minmax(0, 1fr);
+        gap: 32px;
+        align-items: center;
         margin: 0;
         min-width: 0;
       }
+      #card-view-oracle .layout-diagrams figure + figure {
+        padding-top: 36px;
+        border-top: 1px solid #6b909e;
+      }
+      #card-view-oracle .layout-diagrams figcaption {
+        min-width: 0;
+        max-width: 65ch;
+      }
       #card-view-oracle .layout-diagrams h3 {
-        font-size: 30px;
-        margin: 18px 0 8px;
+        font-size: 28px;
+        line-height: 1.2;
+        margin: 0 0 12px;
+      }
+      #card-view-oracle .layout-diagrams p {
+        margin-bottom: 12px;
+      }
+      #card-view-oracle .layout-context {
+        max-width: 76ch;
+        margin: 24px 0 0;
+        padding-top: 20px;
+        border-top: 1px solid #6b909e;
+        font-size: 14px;
       }
       #card-view-oracle .layout-diagram {
         display: grid;
@@ -531,7 +557,7 @@ export const oracleStyles = `.sbdocs-wrapper:has(#card-view-oracle) { padding: 0
       #card-view-oracle .uniform-layout {
         grid-template-rows: repeat(3, 1fr);
       }
-      #card-view-oracle .waterfall-layout {
+      #card-view-oracle .masonry-layout {
         grid-template-columns: minmax(0, 1fr);
         grid-template-rows: repeat(3, 1fr);
       }
@@ -540,6 +566,12 @@ export const oracleStyles = `.sbdocs-wrapper:has(#card-view-oracle) { padding: 0
         gap: 10px;
         min-width: 0;
         min-height: 0;
+      }
+      #card-view-oracle .layout-visual-column {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        min-width: 0;
       }
       #card-view-oracle .layout-card {
         display: grid;
@@ -658,6 +690,10 @@ export const oracleStyles = `.sbdocs-wrapper:has(#card-view-oracle) { padding: 0
         }
       }
       @container oracle (max-width: 640px) {
+        #card-view-oracle .layout-diagrams figure {
+          grid-template-columns: minmax(0, 1fr);
+          gap: 20px;
+        }
         #card-view-oracle .wrap {
           width: calc(100% - 36px);
         }
@@ -883,7 +919,7 @@ export const Oracle = () => {
 <div>{" "}
 <strong>{"The shifting floor"}</strong>
 {" "}
-<p>{" The adaptive waterfall layout aligns cards in visual rows, with equal heights within each row and widths based on image aspect ratios. Vertical edges need not align between rows. Which card should Up or Down reach, and what happens at an edge? That is a navigation question, not another semantic choice. "}</p>
+<p>{" The adaptive masonry layout aligns cards in visual rows, with equal heights within each row and widths based on image aspect ratios. Vertical edges need not align between rows. Which card should Up or Down reach, and what happens at an edge? That is a navigation question, not another semantic choice. "}</p>
 {" "}</div>
 {" "}</li>
 {" "}</ol>
@@ -1045,7 +1081,7 @@ export const Oracle = () => {
 {" "}
 <p>{" "}
 <strong>{" Use a single-row grid for “x of y” feedback. "}</strong>
-{" Hold those semantics fixed while users test four grid policies and five waterfall policies, but keep the reported verbosity problems visible as evidence against the recommendation. Row-focused semantics remain a meaningful reference, not a dismissed concern. "}</p>
+{" Hold those semantics fixed while users test four grid policies and five masonry policies, but keep the reported verbosity problems visible as evidence against the recommendation. Row-focused semantics remain a meaningful reference, not a dismissed concern. "}</p>
 {" "}</div>
 {" "}
 <ol className="plan">{" "}
@@ -1069,9 +1105,9 @@ export const Oracle = () => {
 <div className="lore-intro">{" "}
 <p className="eyebrow">{"Know your navigation spells"}</p>
 {" "}
-<h2 id="oracle-lore-title">{"Four shared policies. One waterfall variation."}</h2>
+<h2 id="oracle-lore-title">{"Four shared policies. One masonry variation."}</h2>
 {" "}
-<p>{" NoWrap, Loop, Advance, and Semantic share the recommended single-row grid semantics. Each policy has a uniform-grid and waterfall playground. Compare their arrow-key destinations and boundary behavior without changing the meaning of the cards. "}</p>
+<p>{" NoWrap, Loop, Advance, and Semantic share the recommended single-row grid semantics. Each policy has a uniform-grid and masonry playground. Compare their arrow-key destinations and boundary behavior without changing the meaning of the cards. "}</p>
 {" "}</div>
 {" "}
 <div className="spells">{" "}
@@ -1092,9 +1128,9 @@ export const Oracle = () => {
 {" "}
 <h3 id="oracle-nowrap">{"NoWrap"}</h3>
 {" "}
-<p>{" Arrow keys move to an enabled visual neighbor in the pressed direction. Candidates must overlap on the perpendicular axis: the same visual row or column in a grid, or an overlapping band in a waterfall. If no candidate exists, focus stays put. Repeating one arrow does not necessarily visit every card. "}</p>
+<p>{" Arrow keys move to an enabled visual neighbor in the pressed direction. Candidates must overlap on the perpendicular axis: the same visual row or column in a grid, or an overlapping band in a masonry. If no candidate exists, focus stays put. Repeating one arrow does not necessarily visit every card. "}</p>
 {" "}
-<span className="pair">{"Grid + waterfall · NoWrap"}</span>
+<span className="pair">{"Grid + masonry · NoWrap"}</span>
 {" "}</article>
 {" "}
 <article className="spell">{" "}
@@ -1114,9 +1150,9 @@ export const Oracle = () => {
 {" "}
 <h3 id="oracle-loop">{"Loop"}</h3>
 {" "}
-<p>{" Move spatially like NoWrap. At an edge, loop to the opposite end of the same visual row, overlapping waterfall band, or visual column. Do not advance to another band or column. Repeating one arrow can stay in a local loop rather than visiting the whole collection. "}</p>
+<p>{" Move spatially like NoWrap. At an edge, loop to the opposite end of the same visual row, overlapping masonry band, or visual column. Do not advance to another band or column. Repeating one arrow can stay in a local loop rather than visiting the whole collection. "}</p>
 {" "}
-<span className="pair">{"Grid + waterfall · Loop"}</span>
+<span className="pair">{"Grid + masonry · Loop"}</span>
 {" "}</article>
 {" "}
 <article className="spell">{" "}
@@ -1136,9 +1172,9 @@ export const Oracle = () => {
 {" "}
 <h3 id="oracle-advance">{"Advance"}</h3>
 {" "}
-<p>{" Move spatially until an edge. Then cross into the next visual row or waterfall band for horizontal movement, or the next visual column for vertical movement; reverse arrows retreat to the previous one. Unlike Loop, movement leaves the current band or column. At the outer collection boundary, cycle to the opposite end. "}</p>
+<p>{" Move spatially until an edge. Then cross into the next visual row or masonry band for horizontal movement, or the next visual column for vertical movement; reverse arrows retreat to the previous one. Unlike Loop, movement leaves the current band or column. At the outer collection boundary, cycle to the opposite end. "}</p>
 {" "}
-<span className="pair">{"Grid + waterfall · Advance"}</span>
+<span className="pair">{"Grid + masonry · Advance"}</span>
 {" "}</article>
 {" "}
 <article className="spell">{" "}
@@ -1158,9 +1194,9 @@ export const Oracle = () => {
 {" "}
 <h3 id="oracle-semantic">{"Semantic"}</h3>
 {" "}
-<p>{" Right/Down moves to the next enabled item in semantic collection order; Left/Up moves to the previous one, including in RTL. Geometry does not decide the destination. Cycle between the last and first enabled items at the collection boundary. Repeating an arrow visits every enabled item. The adaptive waterfall version places consecutive cards across each visual row before starting the next. "}</p>
+<p>{" Right/Down moves to the next enabled item in semantic collection order; Left/Up moves to the previous one, including in RTL. Geometry does not decide the destination. Cycle between the last and first enabled items at the collection boundary. Repeating an arrow visits every enabled item. The adaptive masonry version places consecutive cards across each visual row before starting the next. "}</p>
 {" "}
-<span className="pair">{"Grid + waterfall · Semantic"}</span>
+<span className="pair">{"Grid + masonry · Semantic"}</span>
 {" "}</article>
 <article className="spell visual-order-spell">
   <div className="diagram" role="img" aria-label="Current card at the bottom of the first column; next card at the top of the second column.">
@@ -1174,19 +1210,19 @@ export const Oracle = () => {
   <h3 id="oracle-top-to-bottom">Top to bottom</h3>
   <p>Keep the same adaptive row placement. Down/Right follows the column-oriented navigation route from top to bottom, then moves to the next column group. Left/Up reverses the route. Skip disabled cards and cycle at the collection boundary. Home/End reaches the first/last enabled card in this route.</p>
   <p>This keyboard policy does not renumber or rearrange the cards. Collection order runs across rows; a column-oriented route can instead visit 1, 4, 7 before 2, 5, 8 in a three-card-per-row example. Variable widths mean vertical edges need not align, and resizing can change the route. Evaluate this policy separately from Semantic.</p>
-  <span className="pair">Waterfall only · Visual column order</span>
+  <span className="pair">Masonry only · Visual column order</span>
 </article>
 {" "}</div>
 {" "}
-<p className="note">{" Spatial alignment uses perpendicular overlap. Adaptive waterfall rows are visual, not additional semantic rows. Semantic follows collection order; Top to bottom uses a column-oriented route. All nine playgrounds contain 50 Picsum photos with collection-position image IDs. "}</p>
+<p className="note">{" Spatial alignment uses perpendicular overlap. Adaptive masonry rows are visual, not additional semantic rows. Semantic follows collection order; Top to bottom uses a column-oriented route. All nine playgrounds contain 50 Picsum photos with collection-position image IDs. "}</p>
 {" "}</section>
 {" "}
 {" "}</div>
 <section className="layout-explainer" aria-labelledby="oracle-layouts-title">
   <div className="wrap">
     <p className="eyebrow">The shape of the collection</p>
-    <h2 id="oracle-layouts-title">Two layouts. The same collection.</h2>
-    <p>Grid and waterfall describe visual placement, not different semantics. Both expose one semantic row of named gridcells, without explicit ARIA row/column indices or counts. Each gridcell's accessible name starts with its collection position, then its title. The numbers below show collection order; the shapes show where those cards appear.</p>
+    <h2 id="oracle-layouts-title">Three layouts. The same collection.</h2>
+    <p className="layout-intro">Grid aligns rows and columns. Masonry adapts card widths within rows. Waterfall stacks cards in independent columns. These are visual placements, not semantic structures. The numbers identify collection items; compare the shapes to see how placement changes.</p>
     <div className="layout-diagrams">
       <figure>
         <div className="layout-diagram uniform-layout" role="img" aria-label="Uniform grid: cards 1 through 9 run left to right across three aligned rows of three equal-height cards.">
@@ -1195,12 +1231,13 @@ export const Oracle = () => {
           ))}
         </div>
         <figcaption>
-          <h3 id="oracle-uniform-layout">Uniform grid</h3>
-          <p>Cards have equal heights and align in visual rows and columns. Left/Right has an obvious row to follow; Up/Down has an aligned column. Visual row boundaries do not create extra semantic rows.</p>
+          <h3 id="oracle-uniform-layout">Grid</h3>
+          <p>Equal-width, equal-height cards form aligned rows and columns. Consecutive items fill each row before starting the next.</p>
+          <p><strong>Navigation question:</strong> Should arrows follow aligned visual neighbors or collection order?</p>
         </figcaption>
       </figure>
       <figure>
-        <div className="layout-diagram waterfall-layout" role="img" aria-label="Adaptive waterfall: cards have equal heights within each visual row and variable widths. Collection order runs left to right: 1, 2, 3 in the first row; 4, 5, 6 in the second; and 7, 8, 9 in the third. Vertical edges differ between rows.">
+        <div className="layout-diagram masonry-layout" role="img" aria-label="Adaptive masonry: cards have equal heights within each visual row and variable widths. Collection order runs left to right: 1, 2, 3 in the first row; 4, 5, 6 in the second; and 7, 8, 9 in the third. Vertical edges differ between rows.">
           {[
             [[1, 3], [2, 2], [3, 4]],
             [[4, 2], [5, 4], [6, 3]],
@@ -1214,16 +1251,37 @@ export const Oracle = () => {
           ))}
         </div>
         <figcaption>
-          <h3 id="oracle-waterfall-layout">Waterfall: adaptive rows</h3>
-          <p>Cards share a height within each visual row, while image aspect ratios determine their widths. Full rows fill the available width; an incomplete final row need not stretch. Cards 1, 2, 3 run across the first row, followed by 4, 5, 6 and then 7, 8, 9. Rows align horizontally, but their vertical card edges can differ. This is a row-based adaptive layout, not independent masonry columns.</p>
-          <p>Semantic follows these collection numbers in order. Top to bottom is a separate column-oriented keyboard policy; it does not change visual placement or collection numbering.</p>
+          <h3 id="oracle-masonry-layout">Masonry</h3>
+          <p>Equal-height cards form adaptive rows, with widths based on image aspect ratios. Full rows fill the width; an incomplete final row need not stretch. Vertical edges can differ between rows.</p>
+          <p><strong>Navigation question:</strong> Which card should Up or Down reach when several cards overlap horizontally?</p>
+        </figcaption>
+      </figure>
+      <figure>
+        <div className="layout-diagram waterfall-layout" role="img" aria-label="Waterfall comparison: three equal-width columns contain variable-height cards with staggered horizontal edges. The first column contains cards 1, 4, 7; the second 2, 5, 8; and the third 3, 6, 9. These are independent columns, not aligned visual rows.">
+          {[
+            [[1, 64], [4, 92], [7, 72]],
+            [[2, 94], [5, 64], [8, 70]],
+            [[3, 78], [6, 72], [9, 78]],
+          ].map((column, columnIndex) => (
+            <div className="layout-visual-column" key={columnIndex}>
+              {column.map(([position, height]) => (
+                <span className="layout-card" key={position} style={{ height }}>{position}</span>
+              ))}
+            </div>
+          ))}
+        </div>
+        <figcaption>
+          <h3 id="oracle-waterfall-layout">Waterfall</h3>
+          <p>Equal-width, variable-height cards stack in independent columns. A card can start before its neighbors finish. This illustration distributes consecutive items across columns, without prescribing a keyboard route.</p>
+          <p><strong>Navigation question:</strong> Which card should Left or Right reach when several cards overlap vertically?</p>
         </figcaption>
       </figure>
     </div>
+    <p className="layout-context"><strong>Same semantics, separate policies.</strong> The current grid and masonry examples expose one semantic row, without explicit ARIA row/column indices or counts. Cell names use "x of y, title." Semantic follows collection order; Top to bottom is a separate column-oriented route through the same masonry placement. Waterfall is shown for comparison only, not as an implemented component family.</p>
   </div>
 </section>
 <div className="deck-section wrap">
-{['grid', 'waterfall'].map((family) => {
+{['grid', 'masonry'].map((family) => {
   const reading = readings[family];
   return (
     <section className="reading" key={family} aria-labelledby={`oracle-reading-title-${family}`}>
@@ -1259,7 +1317,7 @@ export const Oracle = () => {
 <p>React Spectrum's feedback identifies a real cost of cell focus: screen readers can string together the entire cell, including selection-checkbox and action labels, instead of reading only its accessible name. <a href="https://github.com/adobe/react-spectrum/issues/2946">The ListView verbosity report</a> led to <a href="https://github.com/adobe/react-spectrum/pull/3000">focusing the row instead</a>; the team cites this as the reason for its single-column approach. Adding a cell label alone did not solve that report.</p>
 <p>Google Drive uses a single semantic row. The reported implementation hides cell contents beyond the title with <code>aria-hidden</code>; this is a product observation, not independently verified guidance. Reading additional cell content can be necessary to distinguish cards with identical titles, so reducing speech must not remove access to that information.</p>
 <p>VoiceOver reads an entire row in the reported tests, which can mean every card here. Users can pause speech or navigate without automatically interacting with a webpage group: <kbd>VO</kbd> + <kbd>Shift</kbd> + <kbd>Left Arrow</kbd> or <kbd>Right Arrow</kbd>; with Quick Nav on, <kbd>Shift</kbd> + <kbd>Right Arrow</kbd> or <kbd>Left Arrow</kbd>. <a href="https://support.apple.com/guide/voiceover/interaction-commands-cpvokys07/mac">Apple documents these interaction commands</a>, not a guarantee that they suppress row speech. They do not turn Quick Nav on. Test them separately from ordinary component arrows; repeated full-row speech remains a usability concern.</p>
-<p>We are implementing Google Drive's reported <code>aria-hidden</code> strategy for cards in all nine named grid and waterfall navigation examples. Each <code>swc-card</code> starts with <code>aria-hidden="true"</code> and <code>aria-live="polite"</code>. Its containing gridcell stays exposed and focusable, with an accessible name. The updated interaction specifies the visually hidden description "press tab for more info" on every operating system. The six semantic references, including the single-column grid, remain unchanged. This is a Google-inspired experiment, not a claim of identical behavior.</p>
+<p>We are implementing Google Drive's reported <code>aria-hidden</code> strategy for cards in all nine named grid and masonry navigation examples. Each <code>swc-card</code> starts with <code>aria-hidden="true"</code> and <code>aria-live="polite"</code>. Its containing gridcell stays exposed and focusable, with an accessible name. The updated interaction specifies the visually hidden description "press tab for more info" on every operating system. The six semantic references, including the single-column grid, remain unchanged. This is a Google-inspired experiment, not a claim of identical behavior.</p>
 <p>With focus on a gridcell, <kbd>Tab</kbd> must expose its card with <code>aria-hidden="false"</code> before moving focus to the first enabled focusable element inside it, without selecting the card or activating an action. Subsequent <kbd>Tab</kbd> presses follow the card's control order and then leave the collection; <kbd>Shift</kbd> + <kbd>Tab</kbd> reverses the path. Hidden controls remain outside the sequential tab order until revealed. This replaces the modifier-key toggle with ordinary <kbd>Tab</kbd> entry, not a More info button. The cell's accessible name preserves the title while its card is hidden. Tab-to-reveal is the implementation target; runtime validation remains pending.</p>
 <p>Focus safety is not yet complete: the regression for pointer or programmatic focus entering a hidden card control currently fails. No focused control may remain inside an <code>aria-hidden="true"</code> subtree. Test discovery of the <kbd>Tab</kbd> hint, focus on the first enabled control, forward and reverse exit, touch access, duplicate-title disambiguation, and actual VoiceOver output before approving this approach. Focusing a control should announce that control, not necessarily every detail in the card. Unhiding existing content in a polite live region does not guarantee an announcement.</p>
 <p>The prototypes now have a visually hidden ARIA live region for selection feedback, following <a href="https://github.com/adobe/react-spectrum/blob/main/packages/react-aria/src/grid/useGridSelectionAnnouncement.ts">React Aria's selection-announcement hook</a>: announce an individually selected or deselected title and the selected count when appropriate, while keeping unfocused changes silent. The current region is assertive; test interruptions as well as message content. Selection messages address missing selection feedback, not verbose cell or row announcements.</p>

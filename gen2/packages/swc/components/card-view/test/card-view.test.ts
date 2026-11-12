@@ -25,10 +25,10 @@ import '../swc-card-view-grid-nowrap.js';
 import '../swc-card-view-grid-loop.js';
 import '../swc-card-view-grid-advance.js';
 import '../swc-card-view-grid-semantic.js';
-import '../swc-card-view-waterfall-nowrap.js';
-import '../swc-card-view-waterfall-loop.js';
-import '../swc-card-view-waterfall-advance.js';
-import '../swc-card-view-waterfall-semantic.js';
+import '../swc-card-view-masonry-nowrap.js';
+import '../swc-card-view-masonry-loop.js';
+import '../swc-card-view-masonry-advance.js';
+import '../swc-card-view-masonry-semantic.js';
 
 import { photos } from '../stories/story-helpers.js';
 
@@ -82,12 +82,31 @@ export default {
   parameters: { docs: { disable: true, page: null } },
 } satisfies Meta;
 
+export const MasonryRegistration: StoryObj = {
+  render: () => html`
+    <div></div>
+  `,
+  play: async () => {
+    for (const mode of [
+      'nowrap',
+      'loop',
+      'advance',
+      'semantic',
+      'top-to-bottom',
+    ]) {
+      const tag = `swc-card-view-masonry-${mode}`;
+      expect(customElements.get(tag), `${tag} is registered`).toBeDefined();
+      expect((document.createElement(tag) as Prototype).layout).toBe('masonry');
+    }
+  },
+};
+
 export const NamedLayoutNavigation: StoryObj = {
   render: () => html`
     <div></div>
   `,
   play: async ({ canvasElement }) => {
-    for (const layout of ['grid', 'waterfall']) {
+    for (const layout of ['grid', 'masonry']) {
       for (const mode of ['nowrap', 'loop', 'advance', 'semantic']) {
         const view = await mount(
           canvasElement,
@@ -108,7 +127,7 @@ export const NamedLayoutNavigation: StoryObj = {
             ...view.shadowRoot!.querySelectorAll<HTMLElement>('swc-card'),
           ].map((card) => card.getBoundingClientRect());
           for (let index = 1; index < bounds.length; index++) {
-            if (layout === 'waterfall') {
+            if (layout === 'masonry') {
               if (index % 3 !== 0) {
                 expect(bounds[index].left).toBeGreaterThan(
                   bounds[index - 1].left
@@ -307,18 +326,64 @@ export const MoreInfoTabFocus: StoryObj = {
   },
 };
 
+export const FocusStyling: StoryObj = {
+  render: () => html`
+    <div></div>
+  `,
+  play: async ({ canvasElement }) => {
+    const view = await mount(canvasElement, 'swc-card-view-grid-advance');
+    view.selected = [items[0].id];
+    await view.updateComplete;
+    const cells = [
+      ...view.shadowRoot!.querySelectorAll<HTMLElement>('[role="gridcell"]'),
+    ];
+    const cell = cells[0];
+    const card = cell.querySelector<HTMLElement>('swc-card')!;
+    const outside = document.createElement('button');
+    canvasElement.append(outside);
+    outside.focus();
+    expect(getComputedStyle(cell).outlineStyle).toBe('none');
+    expect(getComputedStyle(card).outlineStyle).toBe('none');
+
+    cell.focus();
+    expect(getComputedStyle(cell).outlineStyle).toBe('solid');
+    cell.dispatchEvent(
+      new KeyboardEvent('keydown', {
+        key: 'Tab',
+        bubbles: true,
+        composed: true,
+        cancelable: true,
+      })
+    );
+    await view.updateComplete;
+    expect(view.shadowRoot!.activeElement).toBe(card.querySelector('input'));
+    expect(getComputedStyle(cell).outlineStyle).toBe('solid');
+    card.querySelector<HTMLElement>('.title')!.focus();
+    expect(getComputedStyle(cell).outlineStyle).toBe('solid');
+
+    cells[1].focus();
+    expect(getComputedStyle(cell).outlineStyle).toBe('none');
+    expect(getComputedStyle(card).outlineStyle).toBe('none');
+    expect(getComputedStyle(cells[1]).outlineStyle).toBe('solid');
+    outside.focus();
+    expect(getComputedStyle(cells[1]).outlineStyle).toBe('none');
+    expect(view.selected).toEqual([items[0].id]);
+    outside.remove();
+  },
+};
+
 export const MoreInfo: StoryObj = {
   render: () => html`
     <div></div>
   `,
   play: async ({ canvasElement }) => {
-    for (const layout of ['grid', 'waterfall']) {
+    for (const layout of ['grid', 'masonry']) {
       for (const mode of [
         'nowrap',
         'loop',
         'advance',
         'semantic',
-        ...(layout === 'waterfall' ? ['top-to-bottom'] : []),
+        ...(layout === 'masonry' ? ['top-to-bottom'] : []),
       ]) {
         const view = await mount(
           canvasElement,
@@ -460,7 +525,7 @@ export const PicsumImageSources: StoryObj = {
   },
 };
 
-export const WaterfallLayoutNavigation: StoryObj = {
+export const MasonryLayoutNavigation: StoryObj = {
   render: () => html`
     <div></div>
   `,
@@ -482,11 +547,9 @@ export const WaterfallLayoutNavigation: StoryObj = {
       'semantic',
       'top-to-bottom',
     ]) {
-      const tag = `swc-card-view-waterfall-${mode}`;
-      expect((document.createElement(tag) as Prototype).layout).toBe(
-        'waterfall'
-      );
-      const view = await mount(canvasElement, tag, 'waterfall');
+      const tag = `swc-card-view-masonry-${mode}`;
+      expect((document.createElement(tag) as Prototype).layout).toBe('masonry');
+      const view = await mount(canvasElement, tag, 'masonry');
       const cells = [
         ...view.shadowRoot!.querySelectorAll<HTMLElement>('[role="gridcell"]'),
       ];
@@ -579,7 +642,7 @@ export const ToolbarControls: StoryObj = {
     <div></div>
   `,
   play: async ({ canvasElement }) => {
-    for (const layout of ['grid', 'waterfall']) {
+    for (const layout of ['grid', 'masonry']) {
       const toolbar = await mount(
         canvasElement,
         'swc-card-view-toolbar',
@@ -653,7 +716,7 @@ export const CommandNavigationEdges: StoryObj = {
     const toolbar = await mount(
       canvasElement,
       'swc-card-view-toolbar',
-      'waterfall'
+      'masonry'
     );
     toolbar.items = items.map((item, index) => ({
       ...item,
@@ -698,7 +761,7 @@ export const ListArrowNavigation: StoryObj = {
     <div></div>
   `,
   play: async ({ canvasElement }) => {
-    for (const layout of ['grid', 'waterfall']) {
+    for (const layout of ['grid', 'masonry']) {
       const view = await mount(canvasElement, 'swc-card-view-list', layout);
       view.items = items.map((item, index) => ({
         ...item,
@@ -733,7 +796,7 @@ export const ListArrowNavigation: StoryObj = {
       expect(root.activeElement).toBe(entries[3]);
       await press('Home');
       await press('ArrowDown');
-      expect(root.activeElement).toBe(entries[layout === 'waterfall' ? 1 : 3]);
+      expect(root.activeElement).toBe(entries[layout === 'masonry' ? 1 : 3]);
       await press('ArrowUp');
       expect(root.activeElement).toBe(entries[0]);
       await press('ArrowRight', true);
@@ -759,14 +822,14 @@ export const FieldsetNavigation: StoryObj = {
     <div></div>
   `,
   play: async ({ canvasElement }) => {
-    for (const layout of ['grid', 'waterfall']) {
+    for (const layout of ['grid', 'masonry']) {
       const view = await mount(canvasElement, 'swc-card-view-fieldset', layout);
       const root = view.shadowRoot!;
       expect(root.querySelector('fieldset legend')?.textContent).toBe('Photos');
       expect(root.querySelector('[role="toolbar"], [role="grid"]')).toBeNull();
       const controls = [...root.querySelectorAll<HTMLElement>('input, button')];
       const rightIndex = 3;
-      const belowIndex = layout === 'waterfall' ? 3 : 9;
+      const belowIndex = layout === 'masonry' ? 3 : 9;
       controls[0].focus();
       controls[0].dispatchEvent(
         new KeyboardEvent('keydown', {
@@ -804,7 +867,7 @@ export const FieldsetNavigation: StoryObj = {
       (controls[belowIndex] as HTMLInputElement).click();
       await view.updateComplete;
       expect(view.selected).toEqual([
-        layout === 'waterfall' ? 'photo-1' : 'photo-3',
+        layout === 'masonry' ? 'photo-1' : 'photo-3',
       ]);
       controls[belowIndex + 1].focus();
       controls[belowIndex + 1].dispatchEvent(
@@ -867,7 +930,7 @@ export const SelectionAndActions: StoryObj = {
   `,
   play: async ({ canvasElement }) => {
     for (const tag of tags) {
-      for (const layout of ['grid', 'waterfall']) {
+      for (const layout of ['grid', 'masonry']) {
         const view = await mount(canvasElement, tag, layout);
         const checkbox = view.shadowRoot!.querySelector<HTMLInputElement>(
           'input[type="checkbox"]'
@@ -970,12 +1033,12 @@ export const SelectionAnnouncements: StoryObj = {
     <div></div>
   `,
   play: async ({ canvasElement }) => {
-    for (const layout of ['grid', 'waterfall']) {
+    for (const layout of ['grid', 'masonry']) {
       for (const tag of [
         'swc-card-view-single-column-grid',
         'swc-card-view-single-row-grid',
         'swc-card-view-grid-advance',
-        'swc-card-view-waterfall-advance',
+        'swc-card-view-masonry-advance',
       ]) {
         const view = await mount(canvasElement, tag, layout);
         const root = view.shadowRoot!;
@@ -1045,7 +1108,7 @@ export const SingleRowSemanticsAndNavigation: StoryObj = {
     <div></div>
   `,
   play: async ({ canvasElement }) => {
-    for (const layout of ['grid', 'waterfall']) {
+    for (const layout of ['grid', 'masonry']) {
       const view = await mount(
         canvasElement,
         'swc-card-view-single-row-grid',
@@ -1087,10 +1150,10 @@ export const SingleRowSemanticsAndNavigation: StoryObj = {
       };
 
       cells[0].focus();
-      const belowIndex = layout === 'waterfall' ? 1 : 3;
+      const belowIndex = layout === 'masonry' ? 1 : 3;
       const activeCell = cells[belowIndex];
       const rangeSelection =
-        layout === 'waterfall'
+        layout === 'masonry'
           ? ['photo-0', 'photo-1']
           : ['photo-0', 'photo-1', 'photo-3'];
       await waitFor(() => {
@@ -1100,9 +1163,9 @@ export const SingleRowSemanticsAndNavigation: StoryObj = {
         expect(below.top).toBeGreaterThan(first.top);
       });
       await press('ArrowRight');
-      expect(root.activeElement).toBe(cells[layout === 'waterfall' ? 3 : 1]);
+      expect(root.activeElement).toBe(cells[layout === 'masonry' ? 3 : 1]);
       await press('ArrowRight');
-      expect(root.activeElement).toBe(cells[layout === 'waterfall' ? 6 : 1]);
+      expect(root.activeElement).toBe(cells[layout === 'masonry' ? 6 : 1]);
       await press('Home');
       await press('ArrowLeft');
       expect(root.activeElement).toBe(cells[0]);
@@ -1138,7 +1201,7 @@ export const SingleRowSemanticsAndNavigation: StoryObj = {
           ['ArrowLeft', activeCell],
           ['ArrowRight', cells[4]],
           ['ArrowUp', cells[0]],
-          ['ArrowDown', layout === 'waterfall' ? activeCell : cells[6]],
+          ['ArrowDown', layout === 'masonry' ? activeCell : cells[6]],
         ] as const) {
           control.focus();
           await press(key);
@@ -1166,7 +1229,7 @@ export const SingleRowSemanticsAndNavigation: StoryObj = {
         { id: `photo-${belowIndex}`, action: 'share' },
         { id: `photo-${belowIndex}`, action: 'open' },
       ]);
-      view.layout = layout === 'grid' ? 'waterfall' : 'grid';
+      view.layout = layout === 'grid' ? 'masonry' : 'grid';
       view.style.width = '360px';
       await view.updateComplete;
       await waitFor(() => {
@@ -1237,7 +1300,7 @@ export const FeedExitAndReflow: StoryObj = {
       );
     }
     expect(exits).toEqual(['before', 'after']);
-    view.layout = 'waterfall';
+    view.layout = 'masonry';
     view.style.width = '340px';
     await view.updateComplete;
     await waitFor(() => {

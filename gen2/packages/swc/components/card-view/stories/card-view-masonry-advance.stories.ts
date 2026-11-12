@@ -16,10 +16,10 @@ import { navigationMeta } from './story-helpers.js';
 /** A single-row semantic grid with spatial advancement among unequal-height cards. */
 const meta: Meta = {
   ...navigationMeta(
-    'swc-card-view-waterfall-advance',
-    'Spatial navigation with advancement between waterfall bands.'
+    'swc-card-view-masonry-advance',
+    'Spatial navigation with advancement between masonry bands.'
   ),
-  title: 'Card view/Waterfall advance',
+  title: 'Card view/Masonry advance',
 };
 
 export default meta;

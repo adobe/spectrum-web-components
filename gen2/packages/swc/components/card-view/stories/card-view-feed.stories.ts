@@ -41,8 +41,8 @@ export const Grid: StoryObj = {
   args: { layout: 'grid' },
   tags: ['options'],
 };
-export const Waterfall: StoryObj = {
-  args: { layout: 'waterfall' },
+export const Masonry: StoryObj = {
+  args: { layout: 'masonry' },
   tags: ['options'],
 };
 export const Accessibility: StoryObj = {

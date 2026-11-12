@@ -11,12 +11,12 @@
  */
 import { defineElement } from '@adobe/spectrum-wc-core/element/index.js';
 
-import { CardViewWaterfallNoWrap } from './CardView.js';
+import { CardViewMasonryNoWrap } from './CardView.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'swc-card-view-waterfall-nowrap': CardViewWaterfallNoWrap;
+    'swc-card-view-masonry-nowrap': CardViewMasonryNoWrap;
   }
 }
 
-defineElement('swc-card-view-waterfall-nowrap', CardViewWaterfallNoWrap);
+defineElement('swc-card-view-masonry-nowrap', CardViewMasonryNoWrap);

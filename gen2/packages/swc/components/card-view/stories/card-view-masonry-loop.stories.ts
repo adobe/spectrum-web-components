@@ -16,10 +16,10 @@ import { navigationMeta } from './story-helpers.js';
 /** A single-row semantic grid with spatial looping among unequal-height cards. */
 const meta: Meta = {
   ...navigationMeta(
-    'swc-card-view-waterfall-loop',
-    'Spatial navigation that loops within an overlapping waterfall band.'
+    'swc-card-view-masonry-loop',
+    'Spatial navigation that loops within an overlapping masonry band.'
   ),
-  title: 'Card view/Waterfall loop',
+  title: 'Card view/Masonry loop',
 };
 
 export default meta;

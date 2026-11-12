@@ -101,7 +101,7 @@ async function disableThird(view: Locator): Promise<void> {
 }
 
 for (const prototype of prototypes) {
-  for (const layout of ['grid', 'waterfall']) {
+  for (const layout of ['grid', 'masonry']) {
     test.describe(`CardView ${prototype} ${layout}`, () => {
       test('collection leaves room for outer focus outlines', async ({
         page,
@@ -194,7 +194,7 @@ for (const prototype of prototypes) {
           expect(
             new Set(positions.map((position) => position.left)).size
           ).toBeGreaterThan(1);
-          if (layout === 'waterfall') {
+          if (layout === 'masonry') {
             for (let index = 1; index < positions.length; index++) {
               const previous = positions[index - 1];
               const current = positions[index];
@@ -280,7 +280,7 @@ for (const prototype of prototypes) {
           const entries = view.getByRole('gridcell');
           await expect(entries.first()).toBeFocused();
           await page.keyboard.press(
-            layout === 'waterfall' ? 'ArrowDown' : 'ArrowRight'
+            layout === 'masonry' ? 'ArrowDown' : 'ArrowRight'
           );
           await expect(entries.nth(1)).toBeFocused();
           await page.keyboard.press('Tab');

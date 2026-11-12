@@ -49,14 +49,10 @@ swc-card {
   inline-size: 100%;
 }
 
-[data-focus]:focus-visible {
+[data-focus]:focus-visible,
+[role="gridcell"]:focus-within {
   outline: 2px solid var(--swc-color-focus-indicator, Highlight);
   outline-offset: 3px;
-}
-
-swc-card[data-selected="true"] {
-  outline: 2px solid var(--swc-color-focus-indicator, Highlight);
-  outline-offset: 0;
 }
 
 img {
@@ -121,7 +117,8 @@ input {
 }
 
 @media (forced-colors: active) {
-  swc-card[data-selected="true"] {
+  [data-focus]:focus-visible,
+  [role="gridcell"]:focus-within {
     outline-color: Highlight;
   }
 }

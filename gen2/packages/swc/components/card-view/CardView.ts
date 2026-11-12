@@ -160,7 +160,7 @@ export class CardView extends CardViewBase {
         )
       );
       const height =
-        this.layout === 'waterfall'
+        this.layout === 'masonry'
           ? previewHeight +
             Math.max(
               0,
@@ -174,7 +174,7 @@ export class CardView extends CardViewBase {
       let left = 0;
       row.forEach((_, column) => {
         const itemWidth =
-          this.layout === 'waterfall'
+          this.layout === 'masonry'
             ? ratios[column] * previewHeight
             : cardWidth;
         contentHeights.push(contentHeight);
@@ -241,7 +241,7 @@ export class CardView extends CardViewBase {
         density=${this.density}
         style=${styleMap({
           '--swc-card-base-grid-template-rows':
-            this.layout === 'waterfall' &&
+            this.layout === 'masonry' &&
             this.contentHeights[index] !== undefined
               ? `auto minmax(${this.contentHeights[index]}px, auto) auto`
               : undefined,
@@ -260,7 +260,7 @@ export class CardView extends CardViewBase {
           alt=""
           style=${styleMap({
             aspectRatio: String(
-              this.layout === 'waterfall' ? (item.aspectRatio ?? 1) : 1.5
+              this.layout === 'masonry' ? (item.aspectRatio ?? 1) : 1.5
             ),
             objectFit: 'cover',
           })}
@@ -589,27 +589,27 @@ export class CardViewGridSemantic extends CardViewGridNoWrap {
   protected override readonly navigation: CardViewNavigation = 'semantic';
 }
 
-/** @element swc-card-view-waterfall-nowrap */
-export class CardViewWaterfallNoWrap extends CardViewGridNoWrap {
-  public override layout: CardViewLayout = 'waterfall';
+/** @element swc-card-view-masonry-nowrap */
+export class CardViewMasonryNoWrap extends CardViewGridNoWrap {
+  public override layout: CardViewLayout = 'masonry';
 }
 
-/** @element swc-card-view-waterfall-loop */
-export class CardViewWaterfallLoop extends CardViewGridLoop {
-  public override layout: CardViewLayout = 'waterfall';
+/** @element swc-card-view-masonry-loop */
+export class CardViewMasonryLoop extends CardViewGridLoop {
+  public override layout: CardViewLayout = 'masonry';
 }
 
-/** @element swc-card-view-waterfall-advance */
-export class CardViewWaterfallAdvance extends CardViewGridAdvance {
-  public override layout: CardViewLayout = 'waterfall';
+/** @element swc-card-view-masonry-advance */
+export class CardViewMasonryAdvance extends CardViewGridAdvance {
+  public override layout: CardViewLayout = 'masonry';
 }
 
-/** @element swc-card-view-waterfall-semantic */
-export class CardViewWaterfallSemantic extends CardViewGridSemantic {
-  public override layout: CardViewLayout = 'waterfall';
+/** @element swc-card-view-masonry-semantic */
+export class CardViewMasonrySemantic extends CardViewGridSemantic {
+  public override layout: CardViewLayout = 'masonry';
 }
 
-/** @element swc-card-view-waterfall-top-to-bottom */
-export class CardViewWaterfallTopToBottom extends CardViewWaterfallNoWrap {
+/** @element swc-card-view-masonry-top-to-bottom */
+export class CardViewMasonryTopToBottom extends CardViewMasonryNoWrap {
   protected override readonly navigation: CardViewNavigation = 'visual-column';
 }

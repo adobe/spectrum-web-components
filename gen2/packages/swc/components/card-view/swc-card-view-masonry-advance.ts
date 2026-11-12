@@ -11,15 +11,12 @@
  */
 import { defineElement } from '@adobe/spectrum-wc-core/element/index.js';
 
-import { CardViewWaterfallTopToBottom } from './CardView.js';
+import { CardViewMasonryAdvance } from './CardView.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'swc-card-view-waterfall-top-to-bottom': CardViewWaterfallTopToBottom;
+    'swc-card-view-masonry-advance': CardViewMasonryAdvance;
   }
 }
 
-defineElement(
-  'swc-card-view-waterfall-top-to-bottom',
-  CardViewWaterfallTopToBottom
-);
+defineElement('swc-card-view-masonry-advance', CardViewMasonryAdvance);
