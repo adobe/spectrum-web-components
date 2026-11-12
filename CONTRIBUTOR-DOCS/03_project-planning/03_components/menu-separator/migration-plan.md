@@ -192,7 +192,7 @@ Migrate `swc-menu-separator` independently of the other menu parts. It has no be
 
 | #      | What changes                           | 1st-gen behavior                                                                                | gen2 behavior                                                                                          | Consumer migration path                                                                  |
 | ------ | -------------------------------------- | ----------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------- |
-| **B4** | No `--mod-*`; S2 tokens                | Margin-block from `--mod-menu-section-divider-margin-block`; margin-inline from item label edge | Spacing from S2 tokens (`menu-item-section-divider-height`, `base-padding-horizontal-*`; `menu-item-label-inline-edge-to-content` is a Spectrum CSS variable, not a token), thickness per Q6 | Remove `--mod-menu-section-divider-margin-block` overrides; no replacement API planned. |
+| **B4** | No `--mod-*`; S2 tokens                | Thickness and color from `--mod-divider-thickness` and `--mod-divider-background-color` (`divider.css`); margin-block from `--mod-menu-section-divider-margin-block`; margin-inline from item label edge | Spacing from S2 tokens (`menu-item-section-divider-height`, `base-padding-horizontal-*`; `menu-item-label-inline-edge-to-content` is a Spectrum CSS variable, not a token), thickness per Q6 | Remove `--mod-divider-*` and `--mod-menu-section-divider-margin-block` overrides; no replacement API planned. |
 
 #### Accessibility and behavior
 
@@ -233,7 +233,7 @@ None. The host must not expose a default slot (confirmed by the accessibility an
 
 No `--mod-*` properties will be exposed. New `--swc-*` component-level properties may be introduced where needed — these are additive and not breaking. See [Component Custom Property Exposure](../../../02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure) for what to expose and how.
 
-Initial expectation for menu separator is zero or one reviewed property (for example thickness). The shipped decision: `--swc-menu-separator-thickness` stays internal, set by `swc-menu`, and is not documented with `@cssprop`.
+Initial expectation for menu separator is zero or one reviewed property (for example thickness). The shipped decision: `--_swc-menu-separator-thickness` stays internal, set by `swc-menu`, and is not documented with `@cssprop`.
 
 ### Behavioral semantics
 
@@ -307,7 +307,7 @@ Planned rendering shape:
 - [x] Add `.swc-MenuSeparator` to the internal element in `render()`; keep styling off `:host`
 - [x] Copy the `.spectrum-Menu-divider` rule from `spectrum-css` `spectrum-two` `components/menu/index.css` into `menu-separator.css` as baseline
 - [x] Apply the Medium divider thickness (2px, Q6) and the container heights from Q3 (12px container via `menu-item-section-divider-height`; the 7px token update is still pending, Q3)
-- [x] Add `@cssprop` JSDoc for every exposed `--swc-*` property (none: `--swc-menu-separator-thickness` is internal, set by `swc-menu`; no `--mod-*` per B4)
+- [x] Add `@cssprop` JSDoc for every exposed `--swc-*` property (none: `--_swc-menu-separator-thickness` is internal, set by `swc-menu`; no `--mod-*` per B4)
 - [x] Pass stylelint (property order, `no-descending-specificity`, token validation)
 
 #### Visual model and regressions

@@ -39,10 +39,12 @@ import '@adobe/spectrum-wc/components/menu-separator/swc-menu-separator.js';
 
 ### Removed in Spectrum 2
 
-| Removed                                              | Replacement                                             |
-| ---------------------------------------------------- | ------------------------------------------------------- |
-| `size` attribute (`SizedMixin`)                      | None. The parent `swc-menu` sets the 2px line           |
-| `--mod-menu-divider-*` and related custom properties | None. Spacing and thickness come from Spectrum 2 tokens |
+| Removed                                                        | Replacement                                                                 |
+| -------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| `size` attribute (`SizedMixin`)                                | None. The parent `swc-menu` sets the 2px line                               |
+| `--mod-divider-thickness`, `--mod-divider-background-color`    | None. Thickness and color come from Spectrum 2 tokens                       |
+| `--mod-menu-section-divider-margin-block`                      | None. Block spacing comes from the `menu-item-section-divider-height` token |
+| `--mod-menu-item-label-inline-edge-to-content` (inline margin) | None. Inline spacing comes from the `base-padding-horizontal-medium` token  |
 
 ### Changed
 
@@ -97,6 +99,7 @@ Migrate the parent `<sp-menu>` to `<swc-menu>` first, following the Menu migrati
 ```css
 /* Before */
 sp-menu-divider {
+  --mod-divider-thickness: 4px;
   --mod-menu-section-divider-margin-block: 4px;
 }
 
@@ -145,8 +148,9 @@ No accessibility changes are required. `<swc-menu-separator>` renders with `role
     borderRadius: '4px',
   }}
 >
-  <strong>⚠️ Breaking change.</strong> Spectrum 1 <code>{'--mod-*'}</code>{' '}
-  properties for the menu divider <strong>do not apply</strong> to{' '}
+  <strong>⚠️ Breaking change.</strong> Spectrum 1{' '}
+  <code>{'--mod-divider-*'}</code> and <code>{'--mod-menu-*'}</code> properties
+  for the menu divider <strong>do not apply</strong> to{' '}
   <code>{'<swc-menu-separator>'}</code>. Remove every override; there is no
   replacement.
 </div>
@@ -162,7 +166,7 @@ No accessibility changes are required. `<swc-menu-separator>` renders with `role
 >
   <strong>ℹ️ Internals.</strong> The line thickness is an internal detail that{' '}
   <code>{'<swc-menu>'}</code> manages. Don't set{' '}
-  <code>{'--swc-menu-separator-thickness'}</code> yourself; it isn't a public
+  <code>{'--_swc-menu-separator-thickness'}</code> yourself; it isn't a public
   styling API.
 </div>
 

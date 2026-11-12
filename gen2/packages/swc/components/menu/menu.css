@@ -104,7 +104,7 @@
 
 /* The menu owns the separator's line thickness. */
 ::slotted(swc-menu-separator) {
-  --swc-menu-separator-thickness: token("divider-thickness-medium");
+  --_swc-menu-separator-thickness: token("divider-thickness-medium");
 }
 
 /* Minimal padding so rows are visually distinct; not a real row treatment.
