@@ -11,10 +11,9 @@
  */
 
 import { expect, test } from '@playwright/test';
+import { gotoStory } from '@swc-test-helpers/playwright';
 
 import type { Checkbox } from '@adobe/spectrum-wc/checkbox';
-
-import { gotoStory } from '../../../utils/a11y-helpers.js';
 
 /**
  * Accessibility tests for the gen2 Checkbox component.

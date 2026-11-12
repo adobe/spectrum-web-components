@@ -13,17 +13,17 @@
 import { html } from 'lit';
 import { expect, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import {
+  getComponent,
+  getComponents,
+  withWarningSpy,
+} from '@swc-test-helpers/dom';
 
 import { Checkbox } from '@adobe/spectrum-wc/checkbox';
 import { CHECKBOX_VALID_SIZES } from '@adobe/spectrum-wc-core/components/checkbox';
 
 import '@adobe/spectrum-wc/components/checkbox/swc-checkbox.js';
 
-import {
-  getComponent,
-  getComponents,
-  withWarningSpy,
-} from '../../../utils/test-utils.js';
 import meta, { Playground } from '../stories/checkbox.stories.js';
 
 // This file defines dev-only test stories that reuse the main story metadata.

@@ -13,12 +13,11 @@
 import { html } from 'lit';
 import { expect, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import { getComponent, getComponents } from '@swc-test-helpers/dom';
 
 import type { Checkbox } from '@adobe/spectrum-wc/checkbox';
 
 import '@adobe/spectrum-wc/components/checkbox/swc-checkbox.js';
-
-import { getComponent, getComponents } from '../../../utils/test-utils.js';
 
 export default {
   title: 'Checkbox/Form tests',
