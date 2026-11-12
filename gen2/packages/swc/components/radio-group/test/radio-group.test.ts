@@ -1411,6 +1411,63 @@ export const ItemStylingAttributesTest: Story = {
   },
 };
 
+export const LateDefinedRadiosTest: Story = {
+  render: () => html`
+    <div></div>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const tagName = `late-radio-${Math.random().toString(36).slice(2, 8)}`;
+    const group = document.createElement('swc-radio-group') as RadioGroup;
+    group.fieldStatus = 'disabled';
+    group.selected = 'b';
+    group.setAttribute('size', 'l');
+    group.innerHTML = `
+      <span slot="label">Favorite letter</span>
+      <${tagName} value="a"><span slot="label">A</span></${tagName}>
+      <${tagName} value="b"><span slot="label">B</span></${tagName}>
+      <${tagName} value="c"><span slot="label">C</span></${tagName}>
+    `;
+    canvasElement.append(group);
+    await group.updateComplete;
+    customElements.define(tagName, class extends Radio {});
+    const items = Array.from(group.querySelectorAll<Radio>(tagName));
+
+    await step(
+      'radios defined after the group renders are synced',
+      async () => {
+        await waitFor(() =>
+          expect(items.map((item) => item.setSize)).toEqual([3, 3, 3])
+        );
+        expect(items.map((item) => item.posInSet)).toEqual([1, 2, 3]);
+        expect(items.map((item) => item.checked)).toEqual([false, true, false]);
+        expect(items.map((item) => item.effectiveDisabled)).toEqual([
+          true,
+          true,
+          true,
+        ]);
+        expect(items[0].getAttribute('size')).toBe('l');
+      }
+    );
+
+    await step('a disabled group ignores Space on a radio', () => {
+      // Simulate a radio that hasn't picked up the group's disabled state.
+      // Clicks are already suppressed on the disabled group; Space isn't.
+      items[2].groupDisabled = false;
+      items[2].dispatchEvent(
+        new KeyboardEvent('keyup', { key: ' ', bubbles: true, composed: true })
+      );
+      expect(group.selected).toBe('b');
+    });
+
+    await step('enabling the group allows selection', async () => {
+      group.fieldStatus = undefined;
+      await group.updateComplete;
+      items[2].click();
+      expect(group.selected).toBe('c');
+    });
+  },
+};
+
 export const LateAddedSelectionTest: Story = {
   render: () => html`
     <swc-radio-group selected="2">

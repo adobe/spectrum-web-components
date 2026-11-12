@@ -300,6 +300,11 @@ export abstract class RadioGroupBase extends SizedMixin(
       return;
     }
     event.stopPropagation();
+    // A radio upgraded after the group rendered may not know the group is
+    // disabled yet, so the group guards selection itself.
+    if (this.effectiveDisabled) {
+      return;
+    }
     if (this.fieldStatus === 'readonly') {
       target.checked = target.value === this.selected;
       return;
@@ -339,6 +344,7 @@ export abstract class RadioGroupBase extends SizedMixin(
     if (
       source !== 'keyboard' ||
       this.fieldStatus === 'readonly' ||
+      this.effectiveDisabled ||
       !(activeElement instanceof RadioBase)
     ) {
       return;
@@ -701,6 +707,37 @@ export abstract class RadioGroupBase extends SizedMixin(
     this.navigation.refresh();
     this.syncCheckedState();
     this.syncFormState();
+    this.resyncWhenDefined();
+  }
+
+  /** Tag names already being awaited by {@link resyncWhenDefined}. */
+  private readonly pendingDefinitions = new Set<string>();
+
+  /**
+   * Upgrading a slotted element fires no `slotchange`, so a radio defined
+   * after the group renders (a lazy chunk or separate bundle) would never be
+   * synced. Resync once each undefined slotted element's tag is defined.
+   */
+  private resyncWhenDefined(): void {
+    const slot =
+      this.renderRoot?.querySelector<HTMLSlotElement>('slot:not([name])');
+    for (const element of slot?.assignedElements({ flatten: true }) ?? []) {
+      const tagName = element.localName;
+      if (
+        !tagName.includes('-') ||
+        element.matches(':defined') ||
+        this.pendingDefinitions.has(tagName)
+      ) {
+        continue;
+      }
+      this.pendingDefinitions.add(tagName);
+      void customElements.whenDefined(tagName).then(() => {
+        this.pendingDefinitions.delete(tagName);
+        if (this.isConnected) {
+          this.syncSlottedItems();
+        }
+      });
+    }
   }
 
   /** The plain text of the slotted `error-text`, or `''` when there is none. */
