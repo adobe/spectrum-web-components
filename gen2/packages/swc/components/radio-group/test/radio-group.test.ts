@@ -254,7 +254,7 @@ export const GroupLabelLifecycleTest: Story = {
 
 export const NecessityIndicatorTest: Story = {
   ...NecessityIndicator,
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement, step }) => {
     const [requiredIcon, requiredLabel, optionalLabel] =
       canvasElement.querySelectorAll<RadioGroup>('swc-radio-group');
     await Promise.all(
@@ -289,6 +289,37 @@ export const NecessityIndicatorTest: Story = {
 
     // The label stays a non-`<label>` element wired by `aria-labelledby`.
     expect(requiredIcon.shadowRoot?.querySelector('label')).toBeNull();
+
+    await step('read-only hides the indicator in both modes', async () => {
+      const groups = [requiredIcon, requiredLabel, optionalLabel];
+      const indicators = (group: RadioGroup): Element[] =>
+        Array.from(
+          group.shadowRoot?.querySelectorAll(
+            '.swc-FormFieldLabel-requiredIndicator, .swc-FormFieldLabel-necessityLabel'
+          ) ?? []
+        );
+      for (const group of groups) {
+        group.fieldStatus = 'readonly';
+      }
+      await Promise.all(groups.map((group) => group.updateComplete));
+      for (const group of groups) {
+        expect(indicators(group)).toEqual([]);
+      }
+      expect(
+        requiredLabel.shadowRoot
+          ?.querySelector('.swc-FormFieldLabel')
+          ?.textContent?.includes('(required)'),
+        'the group name no longer includes "(required)"'
+      ).toBe(false);
+
+      for (const group of groups) {
+        group.fieldStatus = undefined;
+      }
+      await Promise.all(groups.map((group) => group.updateComplete));
+      for (const group of groups) {
+        expect(indicators(group)).toHaveLength(1);
+      }
+    });
   },
 };
 

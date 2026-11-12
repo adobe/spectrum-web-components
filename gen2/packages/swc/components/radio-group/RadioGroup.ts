@@ -105,7 +105,8 @@ export class RadioGroup extends RadioGroupBase {
     // slotted label.
     const invalid = this.fieldStatus === 'invalid';
     // Read-only groups are barred from validation, so `required` has no effect
-    // and isn't exposed to assistive technology.
+    // and isn't exposed to assistive technology or shown as a necessity
+    // indicator.
     const readOnly = this.fieldStatus === 'readonly';
     return html`
       <div
@@ -116,14 +117,19 @@ export class RadioGroup extends RadioGroupBase {
         aria-invalid=${invalid ? 'true' : 'false'}
         aria-readonly=${readOnly ? 'true' : 'false'}
       >
-        ${this.renderLabel(undefined, {
-          required: this.required,
-          necessityIndicator: this.necessityIndicator,
-          necessityIndicatorText: NECESSITY_INDICATOR_TEXT,
-          necessityIcon: html`
-            <swc-ui-icon icon="asterisk" size=${this.size}></swc-ui-icon>
-          `,
-        })}
+        ${this.renderLabel(
+          undefined,
+          readOnly
+            ? undefined
+            : {
+                required: this.required,
+                necessityIndicator: this.necessityIndicator,
+                necessityIndicatorText: NECESSITY_INDICATOR_TEXT,
+                necessityIcon: html`
+                  <swc-ui-icon icon="asterisk" size=${this.size}></swc-ui-icon>
+                `,
+              }
+        )}
         <div class="swc-RadioGroup-items">
           <slot></slot>
         </div>

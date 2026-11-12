@@ -578,6 +578,40 @@ export const NecessityIndicatorTest: Story = {
         field.parentElement?.remove();
       }
     );
+
+    await step('read-only hides the indicator in both modes', async () => {
+      const indicators = (field: TextField): Element[] =>
+        Array.from(
+          field.shadowRoot?.querySelectorAll(
+            '.swc-FormFieldLabel-requiredIndicator, .swc-FormFieldLabel-necessityLabel'
+          ) ?? []
+        );
+      for (const field of fields) {
+        field.fieldStatus = 'readonly';
+      }
+      await Promise.all(fields.map((field) => field.updateComplete));
+      for (const field of fields) {
+        expect(indicators(field)).toEqual([]);
+      }
+      expect(
+        requiredLabel.shadowRoot
+          ?.querySelector('.swc-FormFieldLabel')
+          ?.textContent?.includes('(required)'),
+        'the accessible name no longer includes "(required)"'
+      ).toBe(false);
+      expect(
+        requiredIcon.roleElement?.required,
+        'the input is not required while read-only'
+      ).toBe(false);
+
+      for (const field of fields) {
+        field.fieldStatus = undefined;
+      }
+      await Promise.all(fields.map((field) => field.updateComplete));
+      for (const field of fields) {
+        expect(indicators(field)).toHaveLength(1);
+      }
+    });
   },
 };
 
