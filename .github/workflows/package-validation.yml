@@ -10,20 +10,31 @@ name: Package validation
 # don't fail the check. Drop `--report-only` once the existing findings are
 # fixed or allowed. CSS errors always fail the check.
 #
-# This doesn't run on every pull request. The release workflows (publish.yml and
-# publish-gen2.yml) run the same check when they open or update a Version PR,
-# and post the result as a commit status on it. Use this workflow to rerun the
-# check by hand on any branch, for example a `changeset-release/*` branch.
+# Runs only on release PRs, picked by the marker in the PR title:
+#   - `#gen2-publish` validates gen2 (the gen2 Version PR).
+#   - `#publish` validates 1st gen (the gen1 Version PR).
+# Other PRs skip it. Version PRs are opened by github-actions[bot], so a
+# maintainer approves the run ("Approve and run workflows") as with the other
+# checks on those PRs. Use workflow_dispatch to run both generations by hand.
 #
 
 on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - edited
+
   workflow_dispatch:
 
 permissions:
   contents: read
 
 concurrency:
-  group: '${{ github.workflow }} @ ${{ github.ref }}'
+  group: '${{ github.workflow }} @ ${{ github.event.pull_request.number || github.ref }}'
   cancel-in-progress: true
 
 defaults:
@@ -31,17 +42,40 @@ defaults:
     shell: bash
 
 jobs:
+  select:
+    name: Select generations
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      contains(github.event.pull_request.title, '#gen2-publish') ||
+      contains(github.event.pull_request.title, '#publish')
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.select.outputs.matrix }}
+    steps:
+      - name: Select generations from the PR title
+        id: select
+        env:
+          EVENT: ${{ github.event_name }}
+          TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          gen1='{"gen":"1st-gen","build":"yarn build"}'
+          gen2='{"gen":"gen2","build":"yarn build:gen2"}'
+          include=()
+          if [ "$EVENT" = workflow_dispatch ] || [[ "$TITLE" == *"#publish"* ]]; then
+            include+=("$gen1")
+          fi
+          if [ "$EVENT" = workflow_dispatch ] || [[ "$TITLE" == *"#gen2-publish"* ]]; then
+            include+=("$gen2")
+          fi
+          echo "matrix={\"include\":[$(IFS=,; echo "${include[*]}")]}" >> "$GITHUB_OUTPUT"
+
   validate:
     name: Package validation (${{ matrix.gen }})
+    needs: select
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-      matrix:
-        include:
-          - gen: 1st-gen
-            build: yarn build
-          - gen: gen2
-            build: yarn build:gen2
+      matrix: ${{ fromJSON(needs.select.outputs.matrix) }}
     steps:
       - name: Check out code
         uses: actions/checkout@v4
