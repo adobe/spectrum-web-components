@@ -1292,7 +1292,7 @@ export const Oracle = () => {
         </figcaption>
       </figure>
       <figure>
-        <div className="layout-diagram waterfall-layout" role="img" aria-label="Waterfall comparison: three equal-width columns contain variable-height cards with staggered horizontal edges. The first column contains cards 1, 4, 7; the second 2, 5, 8; and the third 3, 6, 9. These are independent columns, not aligned visual rows.">
+        <div className="layout-diagram waterfall-layout" role="img" aria-label="Waterfall: consecutive cards are assigned left to right across three equal-width columns, then return to the first column. The first column contains cards 1, 4, 7; the second 2, 5, 8; and the third 3, 6, 9. Variable-height cards stack independently, so later card tops can stagger.">
           {[
             [[1, 64], [4, 92], [7, 72]],
             [[2, 94], [5, 64], [8, 70]],
@@ -1307,7 +1307,7 @@ export const Oracle = () => {
         </div>
         <figcaption>
           <h3 id="oracle-waterfall-layout">Waterfall</h3>
-          <p>Equal-width, variable-height cards fill columns left to right before returning to the first column: 1, 2, 3, then 4, 5, 6. Each column stacks independently, so later card tops can stagger. <a href="./?path=/docs/components-card-view-waterfall-advance--docs" target="_top">Waterfall advance</a> preserves this order rather than choosing the shortest column.</p>
+          <p>Equal-width, variable-height cards are assigned left to right: 1, 2, 3, then 4, 5, 6, then 7, 8, 9. Each column stacks independently, so later card tops can stagger rather than align in rows. <a href="./?path=/docs/components-card-view-waterfall-advance--docs" target="_top">Waterfall advance</a> follows this sequence, not shortest-column or column-first placement. RTL mirrors the placement without changing collection order.</p>
           <p><strong>Navigation question:</strong> How should Up/Down advance through staggered columns while Left/Right follows collection order?</p>
         </figcaption>
       </figure>
