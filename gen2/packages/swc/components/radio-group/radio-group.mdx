@@ -79,7 +79,7 @@ The `emphasized` attribute applies to every item and draws the checked item's co
 
 The `selected` attribute holds the `value` of the checked item. It is empty by default, so no item is selected until the user chooses one or you set `selected`. Give every item a unique `value`. Items that share a value can't be told apart, and a dev-mode warning flags them.
 
-On first render, an item with `checked` takes precedence over `selected`. If more than one item is checked, the first one wins and a dev-mode warning is logged. After that, set `selected` on the group to change the selection in code.
+On first render, an item with `checked` takes precedence over `selected`. If more than one item is checked, the first one wins and a dev-mode warning is logged. After that, set `selected` on the group to change the selection in code. The group controls each item's `checked`, so setting `checked` on an item directly, or adding a checked item with a different value, logs a dev-mode warning. The group overwrites that `checked` the next time it updates the selection.
 
 When the user selects an item, the group fires a cancelable `change` event. Call `preventDefault()` to keep the previous selection. Setting `selected` in code does not fire `change`.
 

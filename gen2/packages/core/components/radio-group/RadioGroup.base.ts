@@ -306,7 +306,7 @@ export abstract class RadioGroupBase extends SizedMixin(
       return;
     }
     if (this.fieldStatus === 'readonly') {
-      target.checked = target.value === this.selected;
+      this.setItemChecked(target, target.value === this.selected);
       return;
     }
     this.proposeSelection(target.value);
@@ -400,23 +400,34 @@ export abstract class RadioGroupBase extends SizedMixin(
   public override connectedCallback(): void {
     super.connectedCallback();
     // An item's `disabled` or `value` changes navigation, checked state, and
-    // whether `selected` is submittable.
+    // whether `selected` is submittable. A `checked` change is only checked
+    // for having come from outside the group.
     this.itemStateObserver ??= new MutationObserver((records) => {
       const itemRecords = records.filter(
         ({ target }) => target instanceof RadioBase
       );
-      if (!itemRecords.length) {
+      this.warnExternalChecked(
+        new Set(
+          itemRecords
+            .filter(({ attributeName }) => attributeName === 'checked')
+            .map(({ target }) => target as RadioBase)
+        )
+      );
+      const stateRecords = itemRecords.filter(
+        ({ attributeName }) => attributeName !== 'checked'
+      );
+      if (!stateRecords.length) {
         return;
       }
       this.navigation.refresh();
-      if (itemRecords.some(({ attributeName }) => attributeName === 'value')) {
+      if (stateRecords.some(({ attributeName }) => attributeName === 'value')) {
         this.syncCheckedState();
       }
       this.syncFormState();
     });
     this.itemStateObserver.observe(this, {
       attributes: true,
-      attributeFilter: ['disabled', 'value'],
+      attributeFilter: ['checked', 'disabled', 'value'],
       subtree: true,
     });
     this.errorTextObserver.observe(this, {
@@ -652,12 +663,17 @@ export abstract class RadioGroupBase extends SizedMixin(
   private syncCheckedState(): void {
     let checkedItem: RadioBase | undefined;
     const items = this.assignedItems();
+    this.warnExternalChecked(items);
     for (const item of items) {
-      item.checked = this.selected !== '' && item.value === this.selected;
+      this.setItemChecked(
+        item,
+        this.selected !== '' && item.value === this.selected
+      );
       if (item.checked) {
         checkedItem = item;
       }
     }
+    this.checkedSynced = true;
     const tabStop =
       checkedItem ??
       (this.matches(':focus-within')
@@ -665,6 +681,40 @@ export abstract class RadioGroupBase extends SizedMixin(
         : items.find((item) => !item.effectiveDisabled));
     if (tabStop) {
       this.navigation.setActiveItem(tabStop);
+    }
+  }
+
+  /** The `checked` value the group last wrote to each item. */
+  private readonly groupChecked = new WeakMap<RadioBase, boolean>();
+
+  /** Whether the initial checked sync, which adopts pre-checked items, has run. */
+  private checkedSynced = false;
+
+  /** The only writer of an item's `checked`, so outside changes can be told apart. */
+  private setItemChecked(item: RadioBase, checked: boolean): void {
+    this.groupChecked.set(item, checked);
+    item.checked = checked;
+  }
+
+  /**
+   * Warns when an item's `checked` was changed outside the group: set directly
+   * on a radio, or on a radio added after the initial sync with a value other
+   * than `selected`. The group owns `checked` and overwrites it on its next sync.
+   */
+  private warnExternalChecked(items: Iterable<RadioBase>): void {
+    for (const item of items) {
+      const written = this.groupChecked.get(item);
+      const external =
+        written === undefined
+          ? this.checkedSynced && item.checked && item.value !== this.selected
+          : item.checked !== written;
+      warnIf(
+        this,
+        external,
+        `<${item.localName}> "checked" was changed directly. Set "selected" on <${this.localName}> instead; the group controls which radio is checked.`,
+        DOCS_URL,
+        { type: 'api', issues: [`value="${item.value}"`] }
+      );
     }
   }
 

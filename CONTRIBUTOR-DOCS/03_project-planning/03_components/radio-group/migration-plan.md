@@ -425,6 +425,7 @@ Planned rendering shape:
 - [x] Arrow/Home/End movement always selects; Tab-entry and programmatic `.focus()` never do (reacting only to `source: 'keyboard'`) — `FocusgroupNavigationController` wired (`direction: 'both'`, `wrap: true`); `handleNavigationActiveChange` filters on `source === 'keyboard'`
 - [x] `focus()` and the validation anchor reach the selected or first enabled radio; Home/End and arrows select even when focus doesn't move; a cancelled keyboard change returns focus to the tab stop; the tab stop resets to the first enabled radio when nothing is checked — `FocusAndTabStopTest`
 - [x] Radios defined after the group renders are synced (position, checked, size, and group-disabled state), and a disabled group ignores selection from a radio that hasn't synced yet — `LateDefinedRadiosTest`
+- [x] Setting `checked` on an item directly, or appending a checked item whose value isn't `selected`, logs a dev-mode warning; the group's own writes don't — `ExternalCheckedWarningTest`
 - [x] Disabled items are fully skipped by both Tab-entry and arrow movement — `skipDisabled: true` on the controller
 - [x] Coordinated reset restores the initial selection adopted from the first checked radio, or authored `selected` when none is checked, and synchronizes item checked state.
 - [x] Browser form state restore (back/forward navigation, autofill) adopts the saved selection without `change`, including when it arrives before the first update — `FormStateRestoreTest`, `FormStateRestoreBeforeFirstUpdateTest`

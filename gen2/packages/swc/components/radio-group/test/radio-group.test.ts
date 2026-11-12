@@ -2151,3 +2151,76 @@ export const MultipleCheckedRadiosTest: Story = {
     }
   },
 };
+
+export const ExternalCheckedWarningTest: Story = {
+  play: async ({ step }) => {
+    await withWarningSpy(async (warnCalls) => {
+      const group = await fixture<RadioGroup>(html`
+        <swc-radio-group>
+          <span slot="label">Favorite color</span>
+          <swc-radio value="1" checked><span slot="label">Red</span></swc-radio>
+          <swc-radio value="2"><span slot="label">Green</span></swc-radio>
+          <swc-radio value="3"><span slot="label">Blue</span></swc-radio>
+        </swc-radio-group>
+      `);
+      const items = Array.from(group.querySelectorAll<Radio>('swc-radio'));
+      const externalWarnings = (value?: string): unknown[][] =>
+        warnCalls.filter(
+          ([, message, , options]) =>
+            typeof message === 'string' &&
+            message.includes('"checked" was changed directly') &&
+            (value === undefined ||
+              (options as { issues?: string[] } | undefined)?.issues?.includes(
+                `value="${value}"`
+              ))
+        );
+
+      try {
+        await step('selection through the group does not warn', async () => {
+          items[1].click();
+          group.selected = '3';
+          await group.updateComplete;
+          await Promise.all(items.map((item) => item.updateComplete));
+          await new Promise((resolve) => requestAnimationFrame(resolve));
+          expect(externalWarnings()).toEqual([]);
+        });
+
+        await step('setting checked on a radio directly warns', async () => {
+          items[0].checked = true;
+          await waitFor(() => expect(externalWarnings('1')).toHaveLength(1));
+        });
+
+        await step(
+          'appending a checked radio with another value warns',
+          async () => {
+            warnCalls.length = 0;
+            const late = document.createElement('swc-radio') as Radio;
+            late.value = '4';
+            late.setAttribute('checked', '');
+            group.append(late);
+            await waitFor(() => expect(externalWarnings('4')).toHaveLength(1));
+            expect(late.checked, 'the group still owns checked').toBe(false);
+          }
+        );
+
+        await step(
+          'appending the selected value checked does not warn',
+          async () => {
+            warnCalls.length = 0;
+            group.selected = '5';
+            await group.updateComplete;
+            const matching = document.createElement('swc-radio') as Radio;
+            matching.value = '5';
+            matching.setAttribute('checked', '');
+            group.append(matching);
+            await waitFor(() => expect(matching.posInSet).toBe(5));
+            await new Promise((resolve) => requestAnimationFrame(resolve));
+            expect(externalWarnings()).toEqual([]);
+          }
+        );
+      } finally {
+        group.parentElement?.remove();
+      }
+    });
+  },
+};
