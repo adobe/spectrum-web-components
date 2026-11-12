@@ -324,10 +324,7 @@ export class CardView extends CardViewBase {
         </div>
       `;
     }
-    const label =
-      this.navigation === 'spatial-advance'
-        ? `${index + 1} of ${this.items.length}, ${item.title}`
-        : item.title;
+    const label = `${index + 1} of ${this.items.length}, ${item.title}`;
     if (this.singleRow) {
       return html`
         <div
@@ -349,7 +346,13 @@ export class CardView extends CardViewBase {
         >
           ${this.moreInfoEnabled
             ? html`
-                <div id=${`more-info-${index}`} class="more-info-hint">
+                <div
+                  id=${`more-info-${index}`}
+                  class="more-info-hint"
+                  aria-hidden=${this.focusedCellId === item.id
+                    ? 'false'
+                    : 'true'}
+                >
                   tab for more info
                 </div>
               `

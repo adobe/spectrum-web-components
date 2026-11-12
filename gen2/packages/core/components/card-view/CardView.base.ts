@@ -47,6 +47,9 @@ export abstract class CardViewBase extends SpectrumElement {
   @state()
   protected expandedInfo = new Set<string>();
 
+  @state()
+  protected focusedCellId?: string;
+
   private lastSelection?: Set<string>;
   private selectionFrame?: number;
 
@@ -197,6 +200,8 @@ export abstract class CardViewBase extends SpectrumElement {
       this.activeIndex = Number(target.dataset.index);
       if (this.moreInfoEnabled) {
         const id = this.items[this.activeIndex]?.id;
+        this.focusedCellId =
+          target === this.focusTargets[this.activeIndex] ? id : undefined;
         this.expandedInfo =
           id !== undefined && target !== this.focusTargets[this.activeIndex]
             ? new Set([id])
@@ -209,6 +214,7 @@ export abstract class CardViewBase extends SpectrumElement {
     if (!this.moreInfoEnabled) {
       return;
     }
+    this.focusedCellId = undefined;
     const target = (event.composedPath() as HTMLElement[]).find(
       (element) => element.dataset?.index !== undefined
     );

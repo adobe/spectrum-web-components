@@ -99,10 +99,8 @@ export const NamedLayoutNavigation: StoryObj = {
             (cell) => cell.getAttribute('aria-label')
           )
         ).toEqual(
-          items.map((item, index) =>
-            mode === 'advance'
-              ? `${index + 1} of ${items.length}, ${item.title}`
-              : item.title
+          items.map(
+            (item, index) => `${index + 1} of ${items.length}, ${item.title}`
           )
         );
         await waitFor(() => {
@@ -240,12 +238,14 @@ export const MoreInfoTabFocus: StoryObj = {
     const root = view.shadowRoot!;
     const cell = root.querySelector<HTMLElement>('[role="gridcell"]')!;
     const card = cell.querySelector('swc-card')!;
-    expect(root.querySelector('.more-info-hint')!.textContent?.trim()).toBe(
-      'tab for more info'
-    );
+    const hint = cell.querySelector('.more-info-hint')!;
+    expect(hint.textContent?.trim()).toBe('tab for more info');
+    expect(hint.getAttribute('aria-hidden')).toBe('true');
     expect(cell.hasAttribute('aria-keyshortcuts')).toBe(false);
     expect(cell.hasAttribute('aria-describedby')).toBe(false);
     cell.focus();
+    await view.updateComplete;
+    expect(hint.getAttribute('aria-hidden')).toBe('false');
     const tab = new KeyboardEvent('keydown', {
       key: 'Tab',
       bubbles: true,
@@ -257,11 +257,14 @@ export const MoreInfoTabFocus: StoryObj = {
     expect(tab.defaultPrevented).toBe(true);
     expect(card.hasAttribute('aria-hidden')).toBe(false);
     expect(root.activeElement).toBe(card.querySelector('input'));
+    await view.updateComplete;
+    expect(hint.getAttribute('aria-hidden')).toBe('true');
     card.querySelector<HTMLElement>('.title')!.focus();
     await view.updateComplete;
     expect(card.hasAttribute('aria-hidden')).toBe(false);
     cell.focus();
     await waitFor(() => expect(card.getAttribute('aria-hidden')).toBe('true'));
+    expect(hint.getAttribute('aria-hidden')).toBe('false');
     expect(view.selected).toEqual([]);
     view.selectionMode = 'none';
     await view.updateComplete;
@@ -279,6 +282,21 @@ export const MoreInfoTabFocus: StoryObj = {
     canvasElement.append(outside);
     outside.focus();
     await waitFor(() => expect(card.getAttribute('aria-hidden')).toBe('true'));
+    expect(hint.getAttribute('aria-hidden')).toBe('true');
+    cell.focus();
+    await view.updateComplete;
+    const nextCell = root.querySelectorAll<HTMLElement>('[role="gridcell"]')[1];
+    nextCell.focus();
+    await view.updateComplete;
+    expect(hint.getAttribute('aria-hidden')).toBe('true');
+    expect(
+      nextCell.querySelector('.more-info-hint')!.getAttribute('aria-hidden')
+    ).toBe('false');
+    outside.focus();
+    await view.updateComplete;
+    expect(
+      nextCell.querySelector('.more-info-hint')!.getAttribute('aria-hidden')
+    ).toBe('true');
     outside.remove();
   },
 };
@@ -313,6 +331,7 @@ export const MoreInfo: StoryObj = {
           const hint = cell.querySelector<HTMLElement>('.more-info-hint')!;
           expect(hint.parentElement).toBe(cell);
           expect(hint.textContent?.trim()).toBe('tab for more info');
+          expect(hint.getAttribute('aria-hidden')).toBe('true');
           expect(cell.hasAttribute('aria-keyshortcuts')).toBe(false);
           expect(getComputedStyle(hint).clipPath).toBe('inset(50%)');
           expect(
@@ -908,7 +927,11 @@ export const SemanticsAndNavigation: StoryObj = {
           [...root.querySelectorAll('[role="gridcell"]')].map((cell) =>
             cell.getAttribute('aria-label')
           )
-        ).toEqual(items.map((item) => item.title));
+        ).toEqual(
+          items.map(
+            (item, index) => `${index + 1} of ${items.length}, ${item.title}`
+          )
+        );
         expect(root.querySelectorAll('[role="rowheader"]')).toHaveLength(0);
         const first = root.querySelector<HTMLElement>('[data-focus]')!;
         first.focus();
