@@ -2202,8 +2202,9 @@ export const ExternalCheckedWarningTest: Story = {
           items[1].click();
           group.selected = '3';
           await group.updateComplete;
+          // Each radio reflects `checked` during its update, and the group's
+          // observer runs before these awaits resume.
           await Promise.all(items.map((item) => item.updateComplete));
-          await new Promise((resolve) => requestAnimationFrame(resolve));
           expect(externalWarnings()).toEqual([]);
         });
 
@@ -2235,8 +2236,10 @@ export const ExternalCheckedWarningTest: Story = {
             matching.value = '5';
             matching.setAttribute('checked', '');
             group.append(matching);
+            // The slot sync checks for outside changes before it sets
+            // positions, and the radio's own update reflects `checked`.
             await waitFor(() => expect(matching.posInSet).toBe(5));
-            await new Promise((resolve) => requestAnimationFrame(resolve));
+            await matching.updateComplete;
             expect(externalWarnings()).toEqual([]);
           }
         );

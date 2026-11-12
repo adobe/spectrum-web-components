@@ -238,7 +238,7 @@ export abstract class RadioGroupBase extends SizedMixin(
   /** The initial selection (pre-checked item or `selected`), restored on form reset. */
   private defaultSelected = '';
 
-  /** Restores the initial selection and clears custom invalid state on reset. */
+  /** @internal Restores the initial selection and clears custom invalid state on reset. */
   public formResetCallback(): void {
     this.selected = this.defaultSelected;
     if (this.fieldStatus === 'invalid') {
@@ -250,8 +250,8 @@ export abstract class RadioGroupBase extends SizedMixin(
   private pendingRestoredSelection?: string;
 
   /**
-   * Restores the selection the browser saved for back/forward navigation or
-   * autofill. Does not dispatch `change`, matching native radios.
+   * @internal Restores the selection the browser saved for back/forward
+   * navigation or autofill. Does not dispatch `change`, matching native radios.
    */
   public formStateRestoreCallback(
     state: string | File | FormData | null
@@ -268,7 +268,7 @@ export abstract class RadioGroupBase extends SizedMixin(
     }
   }
 
-  /** Delegates the ancestor form / fieldset disabled cascade to the controller. */
+  /** @internal Delegates the ancestor form / fieldset disabled cascade to the controller. */
   public formDisabledCallback(disabled: boolean): void {
     this.fieldAssoc.formDisabledCallback(disabled);
   }
