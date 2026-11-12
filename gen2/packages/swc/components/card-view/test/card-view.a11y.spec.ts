@@ -11,9 +11,8 @@
  */
 import AxeBuilder from '@axe-core/playwright';
 import { expect, type Locator, type Page, test } from '@playwright/test';
+import { gotoStory } from '@swc-test-helpers/playwright';
 import { fileURLToPath } from 'node:url';
-
-import { gotoStory } from '../../../utils/a11y-helpers.js';
 
 test.beforeEach(async ({ page }) => {
   await page.route('https://picsum.photos/**', (route) =>
@@ -82,8 +81,10 @@ async function openPrototype(
 }
 
 async function selectFirst(view: Locator): Promise<void> {
-  await view.getByRole('checkbox').first().check();
-  await expect(view.getByRole('status')).toHaveText('1 selected');
+  const checkbox = view.getByRole('checkbox').first();
+  await checkbox.check();
+  await expect(checkbox).toBeChecked();
+  await expect(view.getByRole('status')).toHaveText('Coastal light selected.');
 }
 
 async function disableThird(view: Locator): Promise<void> {
