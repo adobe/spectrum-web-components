@@ -113,13 +113,13 @@ Each grid or waterfall navigation component has its own Storybook Docs page and 
 
 ### Semantics and navigation
 
-| Policy | Uniform-grid example | Waterfall example | Edge behavior |
-| --- | --- | --- | --- |
-| NoWrap | <a href="./?path=/docs/components-card-view-grid-nowrap--docs" target="_top">Grid nowrap</a> (`swc-card-view-grid-nowrap`) | <a href="./?path=/docs/components-card-view-waterfall-nowrap--docs" target="_top">Waterfall nowrap</a> (`swc-card-view-waterfall-nowrap`) | Move spatially; stop when no aligned enabled neighbor exists. |
-| Loop | <a href="./?path=/docs/components-card-view-grid-loop--docs" target="_top">Grid loop</a> (`swc-card-view-grid-loop`) | <a href="./?path=/docs/components-card-view-waterfall-loop--docs" target="_top">Waterfall loop</a> (`swc-card-view-waterfall-loop`) | Move spatially; loop to the opposite edge within the same overlapping visual row or column. |
-| Advance | <a href="./?path=/docs/components-card-view-grid-advance--docs" target="_top">Grid advance</a> (`swc-card-view-grid-advance`) | <a href="./?path=/docs/components-card-view-waterfall-advance--docs" target="_top">Waterfall advance</a> (`swc-card-view-waterfall-advance`) | Move spatially; cross an edge into the next or previous visual row/band or column. Cycle at the outer collection boundary. |
-| Semantic | <a href="./?path=/docs/components-card-view-grid-semantic--docs" target="_top">Grid semantic</a> (`swc-card-view-grid-semantic`) | <a href="./?path=/docs/components-card-view-waterfall-semantic--docs" target="_top">Waterfall semantic</a> (`swc-card-view-waterfall-semantic`) | Move through semantic collection order on either arrow axis. Cycle at collection boundaries. |
-| Top to bottom | Not applicable | <a href="./?path=/docs/components-card-view-waterfall-top-to-bottom--docs" target="_top">Waterfall top to bottom</a> (`swc-card-view-waterfall-top-to-bottom`) | Move down each measured visual column, then right to the next. Left/Up reverses the route. Cycle at collection boundaries. |
+| Policy        | Uniform-grid example                                                                                                             | Waterfall example                                                                                                                                              | Edge behavior                                                                                                              |
+| ------------- | -------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| NoWrap        | <a href="./?path=/docs/components-card-view-grid-nowrap--docs" target="_top">Grid nowrap</a> (`swc-card-view-grid-nowrap`)       | <a href="./?path=/docs/components-card-view-waterfall-nowrap--docs" target="_top">Waterfall nowrap</a> (`swc-card-view-waterfall-nowrap`)                      | Move spatially; stop when no aligned enabled neighbor exists.                                                              |
+| Loop          | <a href="./?path=/docs/components-card-view-grid-loop--docs" target="_top">Grid loop</a> (`swc-card-view-grid-loop`)             | <a href="./?path=/docs/components-card-view-waterfall-loop--docs" target="_top">Waterfall loop</a> (`swc-card-view-waterfall-loop`)                            | Move spatially; loop to the opposite edge within the same overlapping visual row or column.                                |
+| Advance       | <a href="./?path=/docs/components-card-view-grid-advance--docs" target="_top">Grid advance</a> (`swc-card-view-grid-advance`)    | <a href="./?path=/docs/components-card-view-waterfall-advance--docs" target="_top">Waterfall advance</a> (`swc-card-view-waterfall-advance`)                   | Move spatially; cross an edge into the next or previous visual row/band or column. Cycle at the outer collection boundary. |
+| Semantic      | <a href="./?path=/docs/components-card-view-grid-semantic--docs" target="_top">Grid semantic</a> (`swc-card-view-grid-semantic`) | <a href="./?path=/docs/components-card-view-waterfall-semantic--docs" target="_top">Waterfall semantic</a> (`swc-card-view-waterfall-semantic`)                | Move through semantic collection order on either arrow axis. Cycle at collection boundaries.                               |
+| Top to bottom | Not applicable                                                                                                                   | <a href="./?path=/docs/components-card-view-waterfall-top-to-bottom--docs" target="_top">Waterfall top to bottom</a> (`swc-card-view-waterfall-top-to-bottom`) | Move down each measured visual column, then right to the next. Left/Up reverses the route. Cycle at collection boundaries. |
 
 NoWrap, Loop, and Advance use perpendicular overlap to identify spatial neighbors. Waterfall cards do not form horizontal rows: an overlapping visual band is a geometric relationship, not another semantic row. All waterfall examples fill top to bottom within a column, then across columns in collection order, using each card's actual height; in RTL, placement proceeds from the inline start. The uniform grid fills visual rows first.
 
@@ -129,24 +129,24 @@ Loop does not advance to another row or column and does not guarantee complete t
 
 The retained reference examples are:
 
-| Reference | Element | Role and purpose |
-| --- | --- | --- |
-| <a href="./?path=/docs/components-card-view-single-row-grid--docs" target="_top">Single-row grid</a> | `swc-card-view-single-row-grid` | Recommended semantic structure: one row, one gridcell and semantic column per card. Its reference navigation is spatial without wrapping. |
+| Reference                                                                                                  | Element                            | Role and purpose                                                                                                                            |
+| ---------------------------------------------------------------------------------------------------------- | ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| <a href="./?path=/docs/components-card-view-single-row-grid--docs" target="_top">Single-row grid</a>       | `swc-card-view-single-row-grid`    | Recommended semantic structure: one row, one gridcell and semantic column per card. Its reference navigation is spatial without wrapping.   |
 | <a href="./?path=/docs/components-card-view-single-column-grid--docs" target="_top">Single-column grid</a> | `swc-card-view-single-column-grid` | One semantic row per card and one column; retained as a contrast for positional-feedback testing. Spatial arrows stop at visual boundaries. |
-| <a href="./?path=/docs/components-card-view-list--docs" target="_top">List</a> | `swc-card-view-list` | Native `ul`/`li` with position metadata and ordinary child controls; a useful native-content reference. |
-| <a href="./?path=/docs/components-card-view-feed--docs" target="_top">Feed</a> | `swc-card-view-feed` | Labelled feed and articles; a reading-stream reference, not the recommendation for asset selection. |
-| <a href="./?path=/docs/components-card-view-toolbar--docs" target="_top">Toolbar</a> | `swc-card-view-toolbar` | Labelled command groups with native selection and actions; retained to illustrate the content-versus-command distinction. |
-| <a href="./?path=/docs/components-card-view-fieldset--docs" target="_top">Fieldset</a> | `swc-card-view-fieldset` | Native grouping with a visible legend; grouping alone does not establish arrow navigation or position feedback. |
+| <a href="./?path=/docs/components-card-view-list--docs" target="_top">List</a>                             | `swc-card-view-list`               | Native `ul`/`li` with position metadata and ordinary child controls; a useful native-content reference.                                     |
+| <a href="./?path=/docs/components-card-view-feed--docs" target="_top">Feed</a>                             | `swc-card-view-feed`               | Labelled feed and articles; a reading-stream reference, not the recommendation for asset selection.                                         |
+| <a href="./?path=/docs/components-card-view-toolbar--docs" target="_top">Toolbar</a>                       | `swc-card-view-toolbar`            | Labelled command groups with native selection and actions; retained to illustrate the content-versus-command distinction.                   |
+| <a href="./?path=/docs/components-card-view-fieldset--docs" target="_top">Fieldset</a>                     | `swc-card-view-fieldset`           | Native grouping with a visible legend; grouping alone does not establish arrow navigation or position feedback.                             |
 
 The arrow-navigation variants also provide <kbd>Home</kbd>/<kbd>End</kbd> for the first/last enabled target. Disabled navigation targets are skipped.
 
 ### Controls and selection
 
-| Examples | Child-control access | Selection |
-| --- | --- | --- |
+| Examples                                          | Child-control access                                                                                                   | Selection                                                                               |
+| ------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
 | All grids, including the nine navigation examples | <kbd>Tab</kbd> visits the active card's controls, then leaves the collection. Inactive-card controls are not tabbable. | Native checkboxes and grid selection states; collection-order keyboard range selection. |
-| List and feed | Every enabled checkbox and action remains in normal page tab order. Child-control arrows remain native. | Native checkboxes; no custom range selection. |
-| Toolbar and fieldset | <kbd>Tab</kbd> visits the active card's Open and Share actions, then leaves. Action-button arrows remain native. | Native checkboxes; selection and actions remain independent. |
+| List and feed                                     | Every enabled checkbox and action remains in normal page tab order. Child-control arrows remain native.                | Native checkboxes; no custom range selection.                                           |
+| Toolbar and fieldset                              | <kbd>Tab</kbd> visits the active card's Open and Share actions, then leaves. Action-button arrows remain native.       | Native checkboxes; selection and actions remain independent.                            |
 
 <kbd>Shift</kbd> + <kbd>Tab</kbd> reverses the tab path. Card activation, checkbox selection, and child actions must remain separate.
 
