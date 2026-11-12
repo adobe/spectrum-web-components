@@ -18,7 +18,12 @@ import {
   FocusgroupNavigationController,
 } from '@adobe/spectrum-wc-core/controllers/index.js';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
-import { validateEnum, warnIf } from '@adobe/spectrum-wc-core/utils/index.js';
+import {
+  resolveEnum,
+  stringAttribute,
+  validateEnum,
+  warnIf,
+} from '@adobe/spectrum-wc-core/utils/index.js';
 
 import {
   KEYBOARD_ACTIVATION_DEFAULT,
@@ -83,104 +88,36 @@ export abstract class TabsBase extends SpectrumElement {
    *
    * @see https://w3c.github.io/aria-practices/#kbd_selection_follows_focus
    */
-  @property({ type: String, reflect: true, attribute: 'keyboard-activation' })
-  public get keyboardActivation(): KeyboardActivation {
-    return this._keyboardActivation;
-  }
-
-  public set keyboardActivation(value: string) {
-    const isValid = (KEYBOARD_ACTIVATIONS as readonly string[]).includes(value);
-
-    validateEnum(this, {
-      prop: 'keyboard-activation',
-      value,
-      valid: KEYBOARD_ACTIVATIONS,
-      url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-tabs--docs',
-    });
-
-    const valid = isValid
-      ? (value as KeyboardActivation)
-      : KEYBOARD_ACTIVATION_DEFAULT;
-
-    if (this._keyboardActivation === valid) {
-      return;
-    }
-
-    const old = this._keyboardActivation;
-    this._keyboardActivation = valid;
-    this.requestUpdate('keyboardActivation', old);
-  }
-
-  /** @internal */
-  private _keyboardActivation: KeyboardActivation = KEYBOARD_ACTIVATION_DEFAULT;
+  @property({
+    type: String,
+    reflect: true,
+    attribute: 'keyboard-activation',
+    // A removed attribute resets to the default rather than `null`.
+    converter: stringAttribute(KEYBOARD_ACTIVATION_DEFAULT),
+  })
+  public keyboardActivation: KeyboardActivation = KEYBOARD_ACTIVATION_DEFAULT;
 
   /**
    * Layout density: `regular` (default) or `compact` (reduced tab spacing).
    */
-  @property({ type: String, reflect: true })
-  public get density(): TabDensity {
-    return this._density;
-  }
-
-  public set density(value: string) {
-    const isValid = (TAB_DENSITIES as readonly string[]).includes(value);
-
-    validateEnum(this, {
-      prop: 'density',
-      value,
-      valid: TAB_DENSITIES,
-      url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-tabs--docs',
-    });
-
-    const valid = isValid ? (value as TabDensity) : TAB_DENSITY_DEFAULT;
-
-    if (this._density === valid) {
-      return;
-    }
-
-    const old = this._density;
-    this._density = valid;
-    this.requestUpdate('density', old);
-  }
-
-  /** @internal */
-  private _density: TabDensity = TAB_DENSITY_DEFAULT;
+  @property({
+    type: String,
+    reflect: true,
+    converter: stringAttribute(TAB_DENSITY_DEFAULT),
+  })
+  public density: TabDensity = TAB_DENSITY_DEFAULT;
 
   /**
    * The layout direction of the tab list: `horizontal` (default) or `vertical`.
    *
    * @default 'horizontal'
    */
-  @property({ type: String, reflect: true })
-  public get direction(): TabsDirection {
-    return this._direction;
-  }
-
-  public set direction(value: TabsDirection) {
-    const isValid = (TABS_DIRECTIONS as readonly string[]).includes(value);
-
-    validateEnum(this, {
-      prop: 'direction',
-      value,
-      valid: TABS_DIRECTIONS,
-      url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-tabs--docs',
-    });
-
-    const validDirection = isValid
-      ? (value as TabsDirection)
-      : TABS_DEFAULT_DIRECTION;
-
-    if (this._direction === validDirection) {
-      return;
-    }
-
-    const oldDirection = this._direction;
-    this._direction = validDirection;
-    this.requestUpdate('direction', oldDirection);
-  }
-
-  /** @internal */
-  private _direction: TabsDirection = TABS_DEFAULT_DIRECTION;
+  @property({
+    type: String,
+    reflect: true,
+    converter: stringAttribute(TABS_DEFAULT_DIRECTION),
+  })
+  public direction: TabsDirection = TABS_DEFAULT_DIRECTION;
 
   /**
    * Whether the entire tab list is disabled. When `true`,
@@ -210,6 +147,30 @@ export abstract class TabsBase extends SpectrumElement {
 
   /** @internal */
   private static readonly INDICATOR_BASE_SIZE = 100;
+
+  /**
+   * @internal
+   *
+   * The direction used for layout and navigation. Invalid values are kept on
+   * `direction` as set and resolve to the default here.
+   */
+  protected get resolvedDirection(): TabsDirection {
+    return resolveEnum(this.direction, TABS_DIRECTIONS, TABS_DEFAULT_DIRECTION);
+  }
+
+  /**
+   * @internal
+   *
+   * The keyboard activation mode used for navigation. Invalid values are kept
+   * on `keyboardActivation` as set and resolve to the default here.
+   */
+  protected get resolvedKeyboardActivation(): KeyboardActivation {
+    return resolveEnum(
+      this.keyboardActivation,
+      KEYBOARD_ACTIVATIONS,
+      KEYBOARD_ACTIVATION_DEFAULT
+    );
+  }
 
   /**
    * @internal
@@ -250,7 +211,7 @@ export abstract class TabsBase extends SpectrumElement {
    * @internal
    *
    * Manages roving tabindex and arrow-key / Home / End focus movement within
-   * the tab list. Direction is kept in sync with `this.direction` via
+   * the tab list. Direction is kept in sync with `resolvedDirection` via
    * `setOptions` in `willUpdate`. Disabled tabs remain in the navigation
    * sequence (per APG) but are not activatable.
    *
@@ -258,7 +219,7 @@ export abstract class TabsBase extends SpectrumElement {
    * tabs lose their tab stop, matching the `aria-disabled` tablist behavior.
    */
   private readonly _navigation = new FocusgroupNavigationController(this, {
-    direction: this._direction,
+    direction: this.resolvedDirection,
     wrap: true,
     memory: true,
     getItems: () => (this.disabled ? [] : (this._tabs as HTMLElement[])),
@@ -278,7 +239,7 @@ export abstract class TabsBase extends SpectrumElement {
    * or `change` event.
    */
   private readonly _handleNavigationActiveChange = (event: Event): void => {
-    if (this._keyboardActivation !== 'automatic') {
+    if (this.resolvedKeyboardActivation !== 'automatic') {
       return;
     }
     const { activeElement, source } = (
@@ -579,7 +540,7 @@ export abstract class TabsBase extends SpectrumElement {
     const tabRect = selectedElement.getBoundingClientRect();
     const listRect = tablist.getBoundingClientRect();
 
-    if (this._direction === 'horizontal') {
+    if (this.resolvedDirection === 'horizontal') {
       const isRtl = getComputedStyle(this).direction === 'rtl';
       const offset = isRtl
         ? tabRect.right - listRect.right
@@ -674,9 +635,31 @@ export abstract class TabsBase extends SpectrumElement {
     }
 
     if (changes.has('direction')) {
-      this._navigation.setOptions({ direction: this.direction });
+      this._navigation.setOptions({ direction: this.resolvedDirection });
       this.updateSelectionIndicator();
     }
+  }
+
+  protected override update(changes: PropertyValues): void {
+    validateEnum(this, {
+      prop: 'direction',
+      value: this.direction,
+      valid: TABS_DIRECTIONS,
+      url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-tabs--docs',
+    });
+    validateEnum(this, {
+      prop: 'density',
+      value: this.density,
+      valid: TAB_DENSITIES,
+      url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-tabs--docs',
+    });
+    validateEnum(this, {
+      prop: 'keyboard-activation',
+      value: this.keyboardActivation,
+      valid: KEYBOARD_ACTIVATIONS,
+      url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-tabs--docs',
+    });
+    super.update(changes);
   }
 
   public override connectedCallback(): void {

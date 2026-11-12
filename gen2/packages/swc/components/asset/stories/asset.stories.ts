@@ -67,6 +67,7 @@ const meta: Meta = {
       subtitle: `Visually represent an image or media asset in your application`,
     },
     flexLayout: 'row-nowrap',
+    missingDesignDocs: true,
   },
   render: (args) => template(args),
   tags: ['migrated'],

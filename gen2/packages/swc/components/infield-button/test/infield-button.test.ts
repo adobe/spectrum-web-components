@@ -13,6 +13,11 @@
 import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import {
+  getComponent,
+  getComponents,
+  withWarningSpy,
+} from '@swc-test-helpers/dom';
 
 import { InfieldButton } from '@adobe/spectrum-wc/infield-button';
 import { INFIELD_BUTTON_VALID_SIZES } from '@adobe/spectrum-wc-core/components/infield-button';
@@ -20,11 +25,6 @@ import { INFIELD_BUTTON_VALID_SIZES } from '@adobe/spectrum-wc-core/components/i
 import '@adobe/spectrum-wc/components/infield-button/swc-infield-button.js';
 import '@adobe/spectrum-wc/components/ui-icons/swc-ui-icon.js';
 
-import {
-  getComponent,
-  getComponents,
-  withWarningSpy,
-} from '../../../utils/test-utils.js';
 import meta, {
   Anatomy,
   Overview,
