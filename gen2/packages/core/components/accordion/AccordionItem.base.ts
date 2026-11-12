@@ -15,8 +15,14 @@ import { property, state } from 'lit/decorators.js';
 
 import { SlotPresenceController } from '@adobe/spectrum-wc-core/controllers/slot-presence-controller/index.js';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
+import {
+  resolveEnum,
+  validateEnum,
+} from '@adobe/spectrum-wc-core/utils/index.js';
 
 import {
+  ACCORDION_DEFAULT_HEADING_LEVEL,
+  ACCORDION_VALID_SIZES,
   type AccordionHeadingLevel,
   type AccordionSize,
   SWC_ACCORDION_ITEM_AFTER_CLOSE_EVENT,
@@ -92,6 +98,7 @@ export abstract class AccordionItemBase extends SpectrumElement {
   /**
    * The size of the item. Inherited from the parent accordion; controls which
    * chevron icon is displayed. Has no effect when the item is used standalone.
+   * Invalid values are kept as set, warn in dev mode, and render the default.
    */
   @property({ type: String, reflect: true })
   public size?: AccordionSize;
@@ -108,7 +115,8 @@ export abstract class AccordionItemBase extends SpectrumElement {
    * for standalone items.
    */
   @state()
-  protected headingLevel: AccordionHeadingLevel = 3;
+  protected headingLevel: AccordionHeadingLevel =
+    ACCORDION_DEFAULT_HEADING_LEVEL;
 
   /**
    * @internal
@@ -132,6 +140,15 @@ export abstract class AccordionItemBase extends SpectrumElement {
    */
   protected get hasActions(): boolean {
     return this.slotPresence.isPresent;
+  }
+
+  /**
+   * @internal
+   * The size passed to the chevron icon. Invalid values are kept on `size` as
+   * set and resolve to `undefined` here so the icon renders its default.
+   */
+  protected get resolvedSize(): AccordionSize | undefined {
+    return resolveEnum(this.size, ACCORDION_VALID_SIZES, undefined);
   }
 
   /**
@@ -241,6 +258,19 @@ export abstract class AccordionItemBase extends SpectrumElement {
    */
   public setManagedParentDisabled(disabled: boolean): void {
     this.parentDisabled = disabled;
+  }
+
+  protected override update(changedProperties: PropertyValues): void {
+    // `size` is optional; unset means the chevron renders its default.
+    if (this.size) {
+      validateEnum(this, {
+        prop: 'size',
+        value: this.size,
+        valid: ACCORDION_VALID_SIZES,
+        url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-accordion--docs',
+      });
+    }
+    super.update(changedProperties);
   }
 
   protected override firstUpdated(changedProperties: PropertyValues): void {

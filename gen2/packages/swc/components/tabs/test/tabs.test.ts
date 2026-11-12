@@ -10,8 +10,14 @@
  * governing permissions and limitations under the License.
  */
 import { html, render } from 'lit';
-import { expect } from '@storybook/test';
+import { expect, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import {
+  fixture,
+  getComponent,
+  getComponents,
+  withWarningSpy,
+} from '@swc-test-helpers/dom';
 
 import { Tab, TabPanel, Tabs } from '@adobe/spectrum-wc/tabs';
 import { TABS_DIRECTIONS } from '@adobe/spectrum-wc-core/components/tabs/index.js';
@@ -20,12 +26,6 @@ import '@adobe/spectrum-wc/components/tabs/swc-tabs.js';
 import '@adobe/spectrum-wc/components/tabs/swc-tab.js';
 import '@adobe/spectrum-wc/components/tabs/swc-tab-panel.js';
 
-import {
-  fixture,
-  getComponent,
-  getComponents,
-  withWarningSpy,
-} from '../../../utils/test-utils.js';
 import {
   Anatomy,
   DensityVariants,
@@ -134,13 +134,51 @@ export const DirectionPropertyTest: Story = {
       ).toBe('horizontal');
     });
 
-    await step('invalid direction falls back to horizontal', async () => {
-      tabs.direction = 'invalid' as Tabs['direction'];
-      await tabs.updateComplete;
-      expect(tabs.direction, 'direction resets to horizontal').toBe(
-        'horizontal'
-      );
-    });
+    await step(
+      'keeps an invalid direction and renders horizontally',
+      async () => {
+        tabs.direction = 'invalid' as Tabs['direction'];
+        await tabs.updateComplete;
+        expect(tabs.direction, 'property keeps the value set').toBe('invalid');
+        expect(
+          tabs.getAttribute('direction'),
+          'attribute keeps the value set'
+        ).toBe('invalid');
+
+        const tablist = tabs.shadowRoot!.querySelector('[role="tablist"]')!;
+        expect(
+          tablist.hasAttribute('aria-orientation'),
+          'no vertical aria-orientation'
+        ).toBe(false);
+
+        const indicator = tabs.shadowRoot!.querySelector(
+          '.selection-indicator'
+        ) as HTMLElement;
+        // The indicator is placed asynchronously after fonts and child tabs
+        // settle, so wait for it to have a size. The empty state
+        // (`translateX(0px) scaleX(0)`) also contains `translateX`, so the
+        // transform alone can't show that placement finished.
+        await waitFor(() =>
+          expect(
+            indicator.getBoundingClientRect().width,
+            'selection indicator still renders'
+          ).toBeGreaterThan(0)
+        );
+        expect(
+          indicator.getAttribute('style') ?? '',
+          'indicator is placed horizontally'
+        ).toMatch(/translateX\([^)]*\) scaleX\((?!0\))/);
+      }
+    );
+
+    await step(
+      'resets to horizontal when the attribute is removed',
+      async () => {
+        tabs.removeAttribute('direction');
+        await tabs.updateComplete;
+        expect(tabs.direction, 'direction after removal').toBe('horizontal');
+      }
+    );
   },
 };
 
@@ -1554,6 +1592,91 @@ export const InvalidDirectionWarningTest: Story = {
           'warning mentions direction'
         ).toContain('direction');
       })
+    );
+  },
+};
+
+export const InvalidDensityAndActivationTest: Story = {
+  render: () => html`
+    <swc-tabs selected="1" accessible-label="Fallback test">
+      <swc-tab tab-id="1">Tab 1</swc-tab>
+      <swc-tab tab-id="2">Tab 2</swc-tab>
+      <swc-tab-panel tab-id="1"><p>Panel 1</p></swc-tab-panel>
+      <swc-tab-panel tab-id="2"><p>Panel 2</p></swc-tab-panel>
+    </swc-tabs>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const tabs = await getComponent<Tabs>(canvasElement, 'swc-tabs');
+    const tabElements = Array.from(
+      canvasElement.querySelectorAll('swc-tab')
+    ) as HTMLElement[];
+
+    await step(
+      'warns on an invalid density, keeps the value, and renders regular spacing',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          const tablist = tabs.shadowRoot!.querySelector('.tablist')!;
+          const firstTab = tabElements[0];
+          const spacing = () => ({
+            gap: getComputedStyle(tablist).gap,
+            height: firstTab.getBoundingClientRect().height,
+          });
+          tabs.density = 'compact';
+          await tabs.updateComplete;
+          const compactSpacing = spacing();
+          tabs.density = 'regular';
+          await tabs.updateComplete;
+          const regularSpacing = spacing();
+          expect(
+            regularSpacing,
+            'compact and regular spacing differ'
+          ).not.toEqual(compactSpacing);
+
+          tabs.density = 'cozy' as Tabs['density'];
+          await tabs.updateComplete;
+
+          expect(
+            String(warnCalls[0]?.[1] || ''),
+            'warning names the property and received value'
+          ).toMatch(/"density".*"cozy"/);
+          expect(tabs.density, 'property keeps the value set').toBe('cozy');
+          expect(
+            tabs.getAttribute('density'),
+            'attribute keeps the value set'
+          ).toBe('cozy');
+          expect(spacing(), 'renders regular spacing').toEqual(regularSpacing);
+        })
+    );
+
+    await step(
+      'warns on an invalid keyboard-activation, keeps the value, and stays automatic',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          tabs.keyboardActivation = 'sometimes' as Tabs['keyboardActivation'];
+          await tabs.updateComplete;
+
+          // `density` is still invalid from the previous step and re-warns on
+          // every update, so look for this warning among all calls.
+          expect(
+            warnCalls.map((call) => String(call[1])).join('\n'),
+            'warning names the property and received value'
+          ).toMatch(/"keyboard-activation".*"sometimes"/);
+          expect(
+            tabs.getAttribute('keyboard-activation'),
+            'attribute keeps the value set'
+          ).toBe('sometimes');
+
+          tabElements[0].focus();
+          tabElements[0].dispatchEvent(
+            new KeyboardEvent('keydown', {
+              key: 'ArrowRight',
+              code: 'ArrowRight',
+              bubbles: true,
+            })
+          );
+          await tabs.updateComplete;
+          expect(tabs.selected, 'selection follows focus').toBe('2');
+        })
     );
   },
 };

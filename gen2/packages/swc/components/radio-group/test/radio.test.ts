@@ -13,13 +13,13 @@
 import { html } from 'lit';
 import { expect, userEvent } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import { getComponent } from '@swc-test-helpers/dom';
 
 import { Radio, RadioGroup } from '@adobe/spectrum-wc/radio-group';
 
 import '@adobe/spectrum-wc/components/radio-group/swc-radio-group.js';
 import '@adobe/spectrum-wc/components/radio-group/swc-radio.js';
 
-import { getComponent } from '../../../utils/test-utils.js';
 import meta from '../stories/radio-group.stories.js';
 
 export default {

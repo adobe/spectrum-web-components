@@ -349,7 +349,7 @@ The event flow in gen2 should preserve 1st-gen semantics with two corrections (S
 
 #### `dropEffect` validation
 
-The 1st-gen validates `dropEffect` values silently (ignores invalid values). The gen2 should preserve this behavior: invalid values are ignored, the previous valid value is retained. No thrown error.
+The 1st-gen validates `dropEffect` values silently (ignores invalid values). The gen2 keeps an invalid value on `dropEffect` as set, warns in dev mode, and hands the browser the default `'copy'`. No thrown error.
 
 #### Debounce and cleanup
 
@@ -522,9 +522,9 @@ No `DropzoneEventDetail` alias is exported. gen2 is a clean break from 1st-gen (
 
 #### Behavior
 
-- [x] `dropEffect` defaults to `'copy'`; invalid values are silently ignored
+- [x] `dropEffect` defaults to `'copy'`; invalid values are kept as set, warn in dev mode, and hand the browser `'copy'`
 - [x] `dropEffect` reacts to the `drop-effect` attribute at initial parse and at runtime; invalid
-  attribute values are rejected with a dev warning, same as the JS-property path (B5 regression guard)
+  attribute values are kept with a dev warning, same as the JS-property path (B5 regression guard)
 - [x] Removing the `drop-effect` attribute resets `dropEffect` to the default `'copy'` with no dev
   warning, distinct from setting an invalid value (Lit passes `null` for a removed attribute, which
   is not itself an invalid value)

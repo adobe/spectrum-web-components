@@ -12,17 +12,13 @@
 import { html } from 'lit';
 import { expect, fn, userEvent, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import { fixture, getComponent, withWarningSpy } from '@swc-test-helpers/dom';
 
 import { Radio, RadioGroup } from '@adobe/spectrum-wc/radio-group';
 
 import '@adobe/spectrum-wc/components/radio-group/swc-radio-group.js';
 import '@adobe/spectrum-wc/components/radio-group/swc-radio.js';
 
-import {
-  fixture,
-  getComponent,
-  withWarningSpy,
-} from '../../../utils/test-utils.js';
 import meta, {
   FormParticipation,
   Invalid,
