@@ -56,14 +56,14 @@
 
 > **Epic [SWC-2668](https://jira.corp.adobe.com/browse/SWC-2668)** · Planning output. Must be reviewed before implementation begins. **Provisional:** the 1st-gen Jira issue list was pulled from Jira (`component = "Menu"`, SWC project only). The Figma `S2 / Web` Menu and Divider frames and the Spectrum CSS `spectrum-two` menu source have been reviewed.
 >
-> This plan migrates `sp-menu-divider` to a standalone **`swc-menu-separator`**, following the [menu separator accessibility migration analysis](./accessibility-migration-analysis.md), which takes precedence. The [Menu plan](../menu/migration-plan.md) (Q14, Q15, Q21, Phase B) has been updated to match, so the two plans no longer conflict.
+> This plan migrates `sp-menu-divider` to a standalone **`swc-menu-separator`**, following the [menu separator component accessibility specification](./component-accessibility-specification.md), which takes precedence. The [Menu plan](../menu/migration-plan.md) (Q14, Q15, Q21, Phase B) has been updated to match, so the two plans no longer conflict.
 
 ---
 
 ## TL;DR
 
 - `sp-menu-divider` becomes **`swc-menu-separator`**. It is a static, non-focusable `role="separator"` line with no slotted content, used only as a direct child of `swc-menu`, `swc-action-menu`, or `swc-menu-item` (submenu), never inside `swc-menu-group`.
-- Naming follows the accessibility analysis and ARIA terminology (`separator`). 1st-gen has only `sp-menu-divider`; there is no 1st-gen `sp-menu-separator`.
+- Naming follows the component accessibility specification and ARIA terminology (`separator`). 1st-gen has only `sp-menu-divider`; there is no 1st-gen `sp-menu-separator`.
 - The 1st-gen `size` property is dropped. Size, spacing, and thickness are owned by the menu context, so the element exposes no public properties.
 - Confirmed: a separate `swc-menu-separator` element is required (Q1). This reverses [Menu plan Q14](../menu/migration-plan.md#blockers-and-open-questions), and the Menu plan (Q14, Q15, Q21, Phase B) is updated to match.
 - Confirmed: the Figma Divider frame ([node 9233:4610](https://www.figma.com/design/xHBWBBIe2eo5vwoCeNrC4Q/S2---Web?node-id=9233-4610)) defines Small as 1px, Medium as 2px and Large as 4px, so the 2px menu line is the Medium thickness (Q6).
@@ -184,7 +184,7 @@ Migrate `swc-menu-separator` independently of the other menu parts. It has no be
 
 | #      | What changes                                       | 1st-gen behavior                            | gen2 behavior                                                      | Consumer migration path                                                                                  |
 | ------ | -------------------------------------------------- | ------------------------------------------- | ------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------- |
-| **B1** | Rename `sp-menu-divider` to `swc-menu-separator`   | `<sp-menu-divider>`                         | `<swc-menu-separator>`. Source: [a11y analysis](./accessibility-migration-analysis.md), ARIA `separator`. | Replace the tag. No attribute changes beyond B2.                                                         |
+| **B1** | Rename `sp-menu-divider` to `swc-menu-separator`   | `<sp-menu-divider>`                         | `<swc-menu-separator>`. Source: [component accessibility specification](./component-accessibility-specification.md), ARIA `separator`. | Replace the tag. No attribute changes beyond B2.                                                         |
 | **B2** | Remove `size`                                      | `size` `s`/`m`/`l`, reflected               | No public properties. Thickness and spacing come from the menu.    | Delete any `size` attribute on `sp-menu-divider`. Not a no-op: in 1st-gen `size="s"` and `size="l"` render the small and large divider thickness (`l` also uses a darker gray, `spectrum-gray-800`), so consumers using either will see a different line after migrating. |
 | **B3** | Placement is restricted                            | Allowed anywhere, including inside groups   | Direct child of `swc-menu`, `swc-action-menu`, or `swc-menu-item` only | Move separators out of `swc-menu-group`; use group labels for sectioning.                                |
 
@@ -211,7 +211,7 @@ Migrate `swc-menu-separator` independently of the other menu parts. It has no be
 
 ## gen2 API decisions
 
-Derived from the [accessibility analysis](./accessibility-migration-analysis.md) (preferred source), the 1st-gen implementation, the gen2 `swc-divider` source, the Spectrum CSS `spectrum-two` menu source, and the Figma `S2 / Web` Menu frame. The React S2 `Divider` was not reviewed. Items are **Inferred** unless noted.
+Derived from the [component accessibility specification](./component-accessibility-specification.md) (preferred source), the 1st-gen implementation, the gen2 `swc-divider` source, the Spectrum CSS `spectrum-two` menu source, and the Figma `S2 / Web` Menu frame. The React S2 `Divider` was not reviewed. Items are **Inferred** unless noted.
 
 ### Public API
 
@@ -227,7 +227,7 @@ N/A: a single horizontal line. Figma shows a 2px line in a container of 10px (sm
 
 #### Slots (gen2)
 
-None. The host must not expose a default slot (confirmed by the accessibility analysis).
+None. The host must not expose a default slot (confirmed by the component accessibility specification).
 
 #### CSS custom properties (gen2)
 
@@ -242,7 +242,7 @@ Initial expectation for menu separator is zero or one reviewed property (for exa
 
 ### Accessibility semantics notes (gen2)
 
-From the [accessibility analysis](./accessibility-migration-analysis.md):
+From the [component accessibility specification](./component-accessibility-specification.md):
 
 - `role="separator"` on the host, no `aria-valuenow` or splitter semantics, no accessible name by default.
 - Direct child of `swc-menu`, `swc-action-menu`, or `swc-menu-item`; not inside `swc-menu-group`. Light-DOM slotting is fine.
@@ -324,7 +324,7 @@ Planned rendering shape:
 #### State verification
 
 - [ ] Not focusable; roving focus skips it
-- [ ] Keyboard and screen reader testing per the [accessibility analysis](./accessibility-migration-analysis.md#testing)
+- [ ] Keyboard and screen reader testing per the [component accessibility specification](./component-accessibility-specification.md#testing)
 
 ### Testing
 
@@ -389,7 +389,7 @@ Planned rendering shape:
 
 | Ref | Decision                                                                                  | Rationale / context                                                                                                                                                                         |
 | --- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Q1  | Standalone `swc-menu-separator`; do not reuse `swc-divider`. | Direction confirmed by blunteshwar (PR author) in this PR. nikkimk made the earlier call (Menu plan Q14, reuse `swc-divider`), so her review of the revised decision is still pending. Consistent with the menu-separator accessibility analysis. Supersedes Menu plan Q14. The Menu plan (Q14, Q15, Q21, Phase B) is updated to match. |
+| Q1  | Standalone `swc-menu-separator`; do not reuse `swc-divider`. | Direction confirmed by blunteshwar (PR author) in this PR. nikkimk made the earlier call (Menu plan Q14, reuse `swc-divider`), so her review of the revised decision is still pending. Consistent with the menu-separator component accessibility specification. Supersedes Menu plan Q14. The Menu plan (Q14, Q15, Q21, Phase B) is updated to match. |
 | Q6  | Use the Medium divider thickness (2px). | Figma Divider frame (node 9233:4610): Small 1px, Medium 2px, Large 4px. The Menu frame draws 2px. 1st-gen also defaults to medium. The Spectrum CSS story passing `size: "s"` does not match Figma. |
 
 ---
@@ -398,9 +398,9 @@ Planned rendering shape:
 
 - [Washing machine workflow](../../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md)
 - [gen2 migration status table](../../02_workstreams/02_gen2-component-migration/01_status.md)
-- [Menu separator accessibility migration analysis](./accessibility-migration-analysis.md)
+- [Menu separator component accessibility specification](./component-accessibility-specification.md)
 - [Menu migration plan](../menu/migration-plan.md) (Q14, Q15, Q21)
-- [Divider accessibility migration analysis](../divider/accessibility-migration-analysis.md)
+- [Divider component accessibility specification](../divider/component-accessibility-specification.md)
 - [Divider rendering and styling migration analysis](../divider/rendering-and-styling-migration-analysis.md)
 - [Menu rendering and styling migration analysis](../menu/rendering-and-styling-migration-analysis.md)
 - Epic: [SWC-2668](https://jira.corp.adobe.com/browse/SWC-2668)

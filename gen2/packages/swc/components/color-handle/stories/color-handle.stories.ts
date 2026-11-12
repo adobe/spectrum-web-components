@@ -41,6 +41,7 @@ const meta: Meta = {
     docs: {
       subtitle: `Draggable dot marking the picked color on a color area, slider, or wheel`,
     },
+    designGuidanceSlug: 'color-handle-and-loupe',
     // TODO: add a Stackblitz link for swc-color-handle once it's published to
     // npm; @adobe/spectrum-wc@0.3.0 (and the latest 0.3.0-next snapshot) don't
     // include dist/components/color-handle yet, so no demo can resolve the

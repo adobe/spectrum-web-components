@@ -41,7 +41,6 @@
 
 > **Input documents**
 >
-> - [Rendering & Styling Migration Analysis](./rendering-and-styling-migration-analysis.md)
 > - [Washing Machine Workflow](../../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md)
 > - 1st-gen source: `1st-gen/packages/avatar/src/Avatar.ts`
 > - 1st-gen tests: `1st-gen/packages/avatar/test/`
@@ -76,7 +75,7 @@
 | --- | --- | --- | --- | --- |
 | `src` | `string` | `''` | No | Unchanged |
 | `alt` | `string \| undefined` | `undefined` | No | Replaces `label`; pass `alt=""` for decorative |
-| `size` | `AvatarSize` (50–1500) | `500` | Yes | Numeric scale extended; invalid values fall back to 500 |
+| `size` | `AvatarSize` (50–1500) | `100` | Yes | Numeric scale extended; invalid values are kept as set, warn in dev mode, and render at `100` |
 | `outline` | `boolean` | `false` | Yes | Renders outline for visual separation; defaults to `true` in Avatar Group |
 | `disabled` | `boolean` | `false` | Yes | Renders at reduced opacity; entity is inactive or unavailable |
 | `decorative` | `boolean` | `false` | Yes | Marks image as decorative; sets `aria-hidden="true"` on host. Use together with `alt=""` for full semantic correctness. Replaces `isDecorative`. |
@@ -104,7 +103,7 @@
 
 ### 4.1 Size System
 
-Numeric sizes kept (not T-shirt sizes). Scale extended from `50–700` → `50–1500`. Default changed from `100` → `500` (40 px, matching S2 spec). Invalid values fall back to `500`.
+Numeric sizes kept (not T-shirt sizes). Scale extended from `50–700` → `50–1500`. Default stays `100` (24 px in Spectrum 2, up from 20 px in 1st-gen), matching the React Spectrum S2 default of 24 px. Invalid values are kept on the attribute and property, warn in dev mode, and render at `100`.
 
 ### 4.2 `--mod-*` Properties Removed
 

@@ -12,18 +12,18 @@
 import { html, type PropertyValues } from 'lit';
 import { expect, userEvent, waitFor, within } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import {
+  fixture,
+  getComponent,
+  getComponents,
+  withWarningSpy,
+} from '@swc-test-helpers/dom';
 
 import { TextField } from '@adobe/spectrum-wc/text-field';
 
 import '@adobe/spectrum-wc/components/avatar/swc-avatar.js';
 import '@adobe/spectrum-wc/components/text-field/swc-text-field.js';
 
-import {
-  fixture,
-  getComponent,
-  getComponents,
-  withWarningSpy,
-} from '../../../utils/test-utils.js';
 import * as TextFieldStories from '../stories/text-field.stories.js';
 import meta from '../stories/text-field.stories.js';
 import {
@@ -427,7 +427,7 @@ export const InvalidStateTest: Story = {
     await step(
       'invalid input never carries aria-errormessage (decision B9, describedby only)',
       () => {
-        // Decision B9 in accessibility-migration-analysis.md: gen2 associates
+        // Decision B9 in component-accessibility-specification.md: gen2 associates
         // the error via aria-describedby only, because AT support for
         // aria-errormessage is inconsistent while aria-describedby is universal.
         expect(
@@ -769,7 +769,7 @@ export const BindingsTest: Story = {
     await step(
       'placeholder passes through natively, not as aria-placeholder',
       () => {
-        // accessibility-migration-analysis.md (placeholder section): the
+        // component-accessibility-specification.md (placeholder section): the
         // browser exposes native `placeholder` to the a11y tree, so gen2 does
         // not duplicate via `aria-placeholder`.
         expect(
