@@ -28,6 +28,7 @@
     "vite-env.d.ts",
     ".storybook/storybook-env.d.ts",
     ".storybook/helpers/**/*.ts",
+    ".storybook/guides/**/*.ts",
     ".storybook/decorators/**/*.ts",
     ".storybook/utils/color-scheme.ts",
     ".storybook/intl/**/*.json",

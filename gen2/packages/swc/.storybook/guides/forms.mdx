@@ -1,6 +1,8 @@
-import { Meta } from '@storybook/addon-docs/blocks';
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
 
-<Meta title="Forms" />
+import * as FormsStories from './forms.stories';
+
+<Meta of={FormsStories} />
 
 # Forms
 
@@ -82,7 +84,7 @@ async function showError(field, message) {
 }
 ```
 
-Error text alone does not make a field invalid. The invalid status does, even after its value changes. Clear only that status before checking again:
+The plain text of `error-text` becomes the invalid field's `validationMessage` and updates when the slot content changes. Error text alone does not make a field invalid. The invalid status does, even after its value changes. Clear only that status before checking again:
 
 ```js
 async function clearError(field) {
@@ -132,7 +134,7 @@ Run application rules before checking the form's overall validity. `form.checkVa
 
 ### When to validate
 
-An unfinished value is not necessarily a mistake. Validate when someone finishes editing (`change`) or submits the form, rather than on every keystroke. Keep that timing after a failed submission.
+An unfinished value is not necessarily a mistake. Validate when someone finishes editing (`change`) or submits the form, rather than showing errors on every keystroke. Once an error is visible, rechecking that field on `input` can help someone see when they have corrected it.
 
 Immediate feedback can help with requirements such as password strength. For those cases, listen for `input` instead. Your application controls this timing and clears errors when the value is corrected.
 
@@ -235,12 +237,24 @@ form.addEventListener('reset', () => {
 
 Reset and programmatic value changes do not fire `input` or `change`. Await field updates before reading reset values.
 
+## Form example
+
+Try submitting the form with missing or incorrect information, then correct it and submit again.
+
+- Select **Submit** to check for empty fields or an invalid email address. Errors appear below the fields, and focus moves to the first field with an error.
+- Correct an error to see validation update as you type. Other fields are checked on submission.
+- Enter a name and a valid email address, then submit to see the form data below.
+- Select **Reset** to clear the fields, errors, and result.
+- Select **Disable fields** to exclude both fields from validation and submission. Reset leaves them disabled.
+
+<Canvas of={FormsStories.FormBehavior} />
+
 ## Additional form behavior
 
 <details>
 <summary>Validation and submission methods</summary>
 
-- Use `checkValidity()`, not `reportValidity()`, for inline errors. Both fire `invalid` on failure, but `reportValidity()` also requests browser popups, even with `novalidate`.
+- Use `checkValidity()`, not `reportValidity()`, for inline errors. Both fire `invalid` on failure, but `reportValidity()` also requests browser popups, even with `novalidate`. Canceling `invalid` suppresses reporting without making validation pass.
 - An invalid status sets `validity.customError`; its error text becomes `validationMessage`.
 - Disabled and read-only fields do not block validation. Use `willValidate` when finding invalid fields.
 - Do not find fields with `:invalid` alone. It can match a fieldset and misses fields outside the form.

@@ -18,6 +18,7 @@ import { TextField } from '@adobe/spectrum-wc/text-field';
 import '@adobe/spectrum-wc/components/avatar/swc-avatar.js';
 import '@adobe/spectrum-wc/components/text-field/swc-text-field.js';
 
+import { FormBehavior } from '../../../.storybook/guides/forms.stories.js';
 import {
   fixture,
   getComponent,
@@ -28,7 +29,6 @@ import * as TextFieldStories from '../stories/text-field.stories.js';
 import meta from '../stories/text-field.stories.js';
 import {
   Accessibility,
-  FormBehavior,
   Invalid,
   Labelling,
   LabelOverflow,
@@ -1793,241 +1793,314 @@ BeforeRenderErrorTextTest.storyName = 'Error text before first render';
 export const FormBehaviorTest: Story = {
   ...FormBehavior,
   play: async ({ canvasElement, step }) => {
-    const field = await getComponent<TextField>(
+    const fields = await getComponents<TextField>(
       canvasElement,
       'swc-text-field'
     );
+    expect(
+      fields,
+      'account details includes name and email address'
+    ).toHaveLength(2);
+    const [name, email] = fields;
     const form = canvasElement.querySelector('form');
-    const input = field.shadowRoot?.querySelector('input');
+    const nameInput = name.roleElement;
+    const emailInput = email.roleElement;
     const output = form?.querySelector<HTMLOutputElement>('[data-form-data]');
-    if (!form || !input || !output) {
-      throw new Error('form, input, or submission output not found');
+    if (!form || !nameInput || !emailInput || !output) {
+      throw new Error('form, inputs, or submission output not found');
     }
+    const canvas = within(canvasElement);
+    const submit = canvas.getByRole('button', { name: 'Submit' });
+    const reset = canvas.getByRole('button', { name: 'Reset' });
+    const toggle = canvas.getByRole('button', { name: 'Disable fields' });
+    const updateFields = () =>
+      Promise.all(fields.map((field) => field.updateComplete));
 
-    await step('only basic form controls are shown', () => {
-      const canvas = within(canvasElement);
+    await step('the form has labeled fields, actions, and results', () => {
       expect(canvas.getAllByRole('button')).toHaveLength(3);
-      for (const name of ['Submit', 'Reset', 'Disable']) {
-        expect(canvas.getByRole('button', { name })).toBeVisible();
+      expect(canvas.queryByRole('button', { name: 'Save draft' })).toBeNull();
+      expect(form.querySelector('[formnovalidate]')).toBeNull();
+      for (const button of [submit, reset, toggle]) {
+        expect(button).toBeVisible();
+        expect(button.getBoundingClientRect().top).toBeCloseTo(
+          submit.getBoundingClientRect().top,
+          1
+        );
       }
       expect(form.querySelector('details')).toBeNull();
       expect(form.querySelector('[data-validity]')).toBeNull();
-    });
-
-    await step('headings distinguish the form, actions, and results', () => {
-      const canvas = within(canvasElement);
-      expect(
-        canvas.getByRole('heading', { name: 'Form participation', level: 2 })
-      ).toBeVisible();
-      for (const name of ['Form actions', 'Last submission']) {
-        const heading = canvas.getByRole('heading', { name, level: 3 });
-        expect(heading).toBeVisible();
-        expect(heading).toHaveClass('swc-Heading--sizeXS');
-      }
+      expect(canvas.queryByRole('heading')).toBeNull();
+      expect(form).toHaveAccessibleName('Account details');
+      expect(canvas.getByRole('group', { name: 'Form actions' })).toBeVisible();
+      expect(canvas.getByRole('group', { name: 'Profile' })).toHaveStyle({
+        borderWidth: '0px',
+        padding: '0px',
+      });
+      expect(output).toHaveStyle({
+        backgroundColor: 'rgba(0, 0, 0, 0)',
+        padding: '0px',
+      });
+      expect(nameInput).toHaveAccessibleName('Name');
+      expect(emailInput).toHaveAccessibleName('Email address');
+      expect(nameInput.placeholder).toBe('Enter your name');
+      expect(emailInput.placeholder).toBe('Enter your email address');
+      expect(email.querySelector('[slot="description"]')).toHaveTextContent(
+        'For account updates.'
+      );
+      expect(output).toHaveAccessibleName('Form result');
       expect(parseFloat(getComputedStyle(output).fontSize)).toBeLessThan(
         parseFloat(getComputedStyle(form).fontSize)
       );
       expect(output.value).toBe('Submit the form to see its data.');
+      expect(name.value).toBe('');
+      expect(email.value).toBe('');
+      expect(name.fieldStatus).toBeUndefined();
+      expect(email.fieldStatus).toBeUndefined();
     });
 
     await step('required participates in native validation', async () => {
-      field.value = '';
-      await field.updateComplete;
-      expect(input.required, 'native input is required').toBe(true);
-      expect(
-        input.validity.valueMissing,
-        'empty input is missing its value'
-      ).toBe(true);
-      expect(
-        field.validity.valueMissing,
-        'host validity reflects missing value'
-      ).toBe(true);
-      expect(field.checkValidity(), 'empty field fails validity check').toBe(
-        false
-      );
-      expect(
-        form.checkValidity(),
-        'form fails while required field is empty'
-      ).toBe(false);
-      field.value = 'Filled';
-      await field.updateComplete;
-      expect(
-        input.validity.valueMissing,
-        'filled input is not missing a value'
-      ).toBe(false);
-      expect(field.validity.valid, 'host validity becomes valid').toBe(true);
-      expect(field.checkValidity(), 'filled field passes validity check').toBe(
-        true
-      );
-      expect(
-        form.checkValidity(),
-        'form is valid when required field is filled'
-      ).toBe(true);
-    });
-
-    await step('reset restores the initial (empty) value', async () => {
-      field.value = 'Changed';
-      await field.updateComplete;
-      form.reset();
-      await field.updateComplete;
-      expect(field.value, 'reset restores the host value to empty').toBe('');
-      expect(
-        new FormData(form).get('username'),
-        'reset submits an empty username'
-      ).toBe('');
+      expect(nameInput.required).toBe(true);
+      expect(nameInput.type).toBe('text');
+      expect(nameInput.minLength).toBe(-1);
+      expect(nameInput.autocomplete).toBe('name');
+      expect(nameInput.validity.valueMissing).toBe(true);
+      expect(name.checkValidity()).toBe(false);
+      expect(emailInput.required).toBe(true);
+      expect(emailInput.type).toBe('email');
+      expect(emailInput.autocomplete).toBe('email');
+      expect(emailInput.validity.valueMissing).toBe(true);
+      expect(email.validity.valueMissing).toBe(true);
+      expect(email.checkValidity()).toBe(false);
+      expect(form.checkValidity()).toBe(false);
+      name.value = 'River';
+      email.value = 'river@example.com';
+      await updateFields();
+      expect(email.validity.valueMissing).toBe(false);
+      expect(email.checkValidity()).toBe(true);
+      expect(form.checkValidity()).toBe(true);
     });
 
     await step(
-      // `novalidate` on the form means submission is no longer natively
-      // blocked, so the field's own invalid presentation (icon + error text)
-      // is what signals the empty required field instead.
-      'invalid submission surfaces the field-level invalid state',
+      'reset restores both fields to their empty initial values',
       async () => {
-        field.value = '';
-        field.fieldStatus = undefined;
-        await field.updateComplete;
-        form.requestSubmit();
-        await field.updateComplete;
-        expect(
-          field.fieldStatus,
-          'empty submission marks the field invalid'
-        ).toBe('invalid');
-        await waitFor(() =>
-          expect(
-            field.shadowRoot?.querySelector('.swc-TextField-invalidIcon'),
-            'invalid submission renders the validation icon'
-          ).toBeTruthy()
-        );
-        expect(
-          output.textContent?.trim(),
-          'invalid submission does not show submitted form data'
-        ).toBe('Submission blocked: the field is invalid.');
-        expect(field.validationMessage).toBe('Enter a username.');
+        name.value = 'Changed';
+        await name.updateComplete;
+        form.reset();
+        await updateFields();
+        expect(name.value).toBe('');
+        expect(email.value).toBe('');
+        expect(new FormData(form).get('name')).toBe('');
       }
     );
 
-    await step('submit includes the field value when valid', async () => {
-      field.value = 'Submitted';
-      await field.updateComplete;
+    await step(
+      'editing an untouched field does not show an error',
+      async () => {
+        await userEvent.type(nameInput, 'River');
+        await userEvent.type(emailInput, 'not-an-email');
+        await userEvent.tab();
+        await email.updateComplete;
+        expect(email.validity.typeMismatch).toBe(true);
+        expect(email.fieldStatus).toBeUndefined();
+      }
+    );
+
+    await step(
+      'invalid submission shows an inline error and focuses the field',
+      async () => {
+        await userEvent.click(submit);
+        await waitFor(() => {
+          expect(output.value).toBe(
+            'Submission blocked. Correct the highlighted fields.'
+          );
+          expect(email).toHaveFocus();
+          expect(email.shadowRoot?.activeElement).toBe(emailInput);
+        });
+        expect(email.fieldStatus).toBe('invalid');
+        expect(email.validationMessage).toBe('Enter a valid email address.');
+        expect(
+          email.shadowRoot?.querySelector('.swc-TextField-invalidIcon')
+        ).toBeTruthy();
+        expect(emailInput).toHaveAttribute('aria-invalid', 'true');
+      }
+    );
+
+    await step(
+      'correcting a displayed error clears it during input',
+      async () => {
+        await userEvent.type(
+          emailInput,
+          `${'{Backspace}'.repeat(email.value.length)}river@example.com`
+        );
+        await waitFor(() => {
+          expect(email.fieldStatus).toBeUndefined();
+          expect(email.validity.valid).toBe(true);
+        });
+        expect(emailInput).not.toHaveAttribute('aria-invalid');
+        expect(
+          email.shadowRoot?.querySelector('.swc-FormFieldErrorText')
+        ).toBeNull();
+      }
+    );
+
+    await step('valid submission includes both field values', async () => {
       form.requestSubmit();
-      await field.updateComplete;
-      expect(
-        field.fieldStatus,
-        'valid submission clears invalid state'
-      ).toBeUndefined();
-      expect(
-        new FormData(form).get('username'),
-        'submitted username is included in FormData'
-      ).toBe('Submitted');
       await waitFor(() =>
-        expect(
-          output.textContent?.trim(),
-          'output displays the submitted username'
-        ).toBe('username: Submitted')
+        expect(output.value).toBe(
+          'Submitted:\nname: River\nemail: river@example.com'
+        )
       );
-    });
-
-    await step('Reset clears the previous submission and error', async () => {
-      const resetButton = form.querySelector<HTMLButtonElement>(
-        'button[type="reset"]'
-      );
-      if (!resetButton) {
-        throw new Error('reset button not found');
-      }
-      field.fieldStatus = 'invalid';
-      await field.updateComplete;
-      await userEvent.click(resetButton);
-      await field.updateComplete;
-      expect(field.value).toBe('');
-      expect(field.fieldStatus).toBeUndefined();
-      expect(field.validity.customError).toBe(false);
-      expect(field.roleElement).not.toHaveAttribute('aria-invalid');
-      expect(
-        field.shadowRoot?.querySelector('.swc-FormFieldErrorText')
-      ).toBeNull();
-      expect(output.textContent?.trim()).toBe(
-        'Submit the form to see its data.'
-      );
-      expect(field.validity.valueMissing).toBe(true);
+      expect(name.fieldStatus).toBeUndefined();
+      expect(email.fieldStatus).toBeUndefined();
+      expect([...new FormData(form)]).toEqual([
+        ['name', 'River'],
+        ['email', 'river@example.com'],
+      ]);
     });
 
     await step(
-      'a blocked attempt replaces the previous submission result',
+      'a blocked attempt replaces previous results and focuses the first invalid field',
       async () => {
-        field.value = 'Previous';
-        await field.updateComplete;
+        name.value = '';
+        email.value = '';
+        await updateFields();
         form.requestSubmit();
-        await waitFor(() => expect(output.value).toBe('username: Previous'));
-        field.value = '';
-        await field.updateComplete;
-        form.requestSubmit();
-        await waitFor(() =>
-          expect(output.value).toBe('Submission blocked: the field is invalid.')
-        );
-        expect(
-          canvasElement
-            .querySelector('#submitted-form-data-label')
-            ?.textContent?.trim()
-        ).toBe('Last submission');
+        await waitFor(() => {
+          expect(output.value).toBe(
+            'Submission blocked. Correct the highlighted fields.'
+          );
+          expect(name).toHaveFocus();
+          expect(name.shadowRoot?.activeElement).toBe(nameInput);
+        });
+        expect(name.fieldStatus).toBe('invalid');
+        expect(name.validationMessage).toBe('Enter your name.');
+        expect(email.fieldStatus).toBe('invalid');
+        expect(email.validationMessage).toBe('Enter an email address.');
       }
     );
 
     await step(
-      'the fieldset toggle can disable and re-enable the field',
+      'Reset clears errors and results and restores initial values',
+      async () => {
+        await userEvent.click(reset);
+        await updateFields();
+        expect(name.value).toBe('');
+        expect(email.value).toBe('');
+        for (const field of fields) {
+          expect(field.fieldStatus).toBeUndefined();
+          expect(field.validity.customError).toBe(false);
+          expect(field.roleElement).not.toHaveAttribute('aria-invalid');
+          expect(
+            field.shadowRoot?.querySelector('.swc-FormFieldErrorText')
+          ).toBeNull();
+        }
+        expect(output.value).toBe('Submit the form to see its data.');
+        expect(email.validity.valueMissing).toBe(true);
+      }
+    );
+
+    await step(
+      'disabled fields are excluded from validation and submitted data',
       async () => {
         const fieldset = form.querySelector('fieldset');
-        const toggleButton = form.querySelector<HTMLButtonElement>(
-          '[data-toggle-fieldset]'
-        );
-        expect(fieldset).toBeTruthy();
-        expect(toggleButton).toBeTruthy();
-        if (!fieldset || !toggleButton) {
-          throw new Error('fieldset or toggle button not found');
+        if (!fieldset) {
+          throw new Error('fieldset not found');
         }
-
-        expect(fieldset.contains(toggleButton)).toBe(false);
-        await userEvent.click(toggleButton);
-        await field.updateComplete;
+        name.value = 'River';
+        await name.updateComplete;
+        expect(fieldset.contains(toggle)).toBe(false);
+        await userEvent.click(toggle);
+        await updateFields();
         expect(fieldset.disabled).toBe(true);
-        expect(input.disabled).toBe(true);
-        expect(toggleButton).toHaveAttribute('aria-pressed', 'true');
-        expect(toggleButton).toBeEnabled();
-        expect(field.willValidate).toBe(false);
-        expect(new FormData(form).has('username')).toBe(false);
+        expect(toggle).toHaveAttribute('aria-pressed', 'true');
+        expect(toggle).toBeEnabled();
+        for (const field of fields) {
+          expect(field.roleElement).toBeDisabled();
+          expect(field.willValidate).toBe(false);
+        }
+        expect([...new FormData(form)]).toEqual([]);
+        await userEvent.click(submit);
+        await waitFor(() =>
+          expect(output.value).toBe('Submitted:\nNo enabled fields to include.')
+        );
 
-        await userEvent.click(toggleButton);
-        await field.updateComplete;
+        await userEvent.click(reset);
+        await updateFields();
+        expect(fieldset.disabled).toBe(true);
+        expect(toggle).toHaveAttribute('aria-pressed', 'true');
+        expect(name.value).toBe('');
+        expect(email.value).toBe('');
+        expect(output.value).toBe('Submit the form to see its data.');
+        await userEvent.click(toggle);
+        await updateFields();
         expect(fieldset.disabled).toBe(false);
-        expect(input.disabled).toBe(false);
-        expect(toggleButton).toHaveAttribute('aria-pressed', 'false');
-        expect(toggleButton).toBeEnabled();
+        expect(toggle).toHaveAttribute('aria-pressed', 'false');
+        for (const field of fields) {
+          expect(field.roleElement).not.toBeDisabled();
+        }
       }
     );
 
     await step('content changes do not resize the form', async () => {
-      form.reset();
-      await field.updateComplete;
-      const initialWidth = form.getBoundingClientRect().width;
+      const control = name.shadowRoot?.querySelector('.swc-TextField-control');
+      if (!control) {
+        throw new Error('name control not found');
+      }
+      // Match the shrink-to-fit wrapper around an MDX Canvas.
+      const container = document.createElement('div');
+      container.style.cssText = 'display: inline-block; max-inline-size: 100%;';
+      form.before(container);
+      container.append(form);
+      try {
+        form.reset();
+        await updateFields();
+        const initialWidth = form.getBoundingClientRect().width;
+        const controlWidth = control.getBoundingClientRect().width;
+        const expectStableWidth = () => {
+          expect(form.getBoundingClientRect().width).toBeCloseTo(
+            initialWidth,
+            1
+          );
+          expect(control.getBoundingClientRect().width).toBeCloseTo(
+            controlWidth,
+            1
+          );
+        };
 
-      form.requestSubmit();
-      await waitFor(() =>
-        expect(output.value).toBe('Submission blocked: the field is invalid.')
-      );
-      expect(form.getBoundingClientRect().width).toBeCloseTo(initialWidth, 1);
+        form.requestSubmit();
+        await waitFor(() =>
+          expect(output.value).toBe(
+            'Submission blocked. Correct the highlighted fields.'
+          )
+        );
+        expectStableWidth();
 
-      const longUsername = 'long-username-'.repeat(30);
-      field.value = longUsername;
-      await field.updateComplete;
-      form.requestSubmit();
-      await waitFor(() =>
-        expect(output.value).toBe(`username: ${longUsername}`)
-      );
-      expect(form.getBoundingClientRect().width).toBeCloseTo(initialWidth, 1);
+        const longName = 'Long name '.repeat(30);
+        name.value = longName;
+        email.value = 'river@example.com';
+        await updateFields();
+        form.requestSubmit();
+        await waitFor(() =>
+          expect(output.value).toBe(
+            `Submitted:\nname: ${longName}\nemail: river@example.com`
+          )
+        );
+        expectStableWidth();
 
-      form.reset();
-      await field.updateComplete;
-      expect(output.value).toBe('Submit the form to see its data.');
-      expect(form.getBoundingClientRect().width).toBeCloseTo(initialWidth, 1);
+        await userEvent.click(reset);
+        await updateFields();
+        expect(output.value).toBe('Submit the form to see its data.');
+        expectStableWidth();
+
+        container.style.display = 'block';
+        container.style.inlineSize = '240px';
+        expect(form.getBoundingClientRect().width).toBeLessThanOrEqual(
+          container.getBoundingClientRect().width
+        );
+      } finally {
+        container.before(form);
+        container.remove();
+      }
     });
   },
 };
