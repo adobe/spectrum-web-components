@@ -144,42 +144,52 @@ export const WaterfallAdvance: StoryObj = {
       return root.activeElement;
     };
     expect(await move(0, 'ArrowRight')).toBe(cells[1]);
-    expect(await move(0, 'ArrowDown')).toBe(cells[1]);
+    expect(await move(0, 'ArrowDown')).toBe(cells[3]);
     expect(await move(2, 'ArrowRight')).toBe(cells[3]);
-    const verifySemanticArrows = async () => {
-      for (const [key, direction] of [
-        ['ArrowRight', 1],
-        ['ArrowDown', 1],
-        ['ArrowLeft', -1],
-        ['ArrowUp', -1],
+    const verifyArrows = async (verticalOrder = [0, 3, 6, 1, 4, 7, 2, 5]) => {
+      const collectionOrder = items.map((_, index) => index);
+      for (const [key, direction, order] of [
+        ['ArrowRight', 1, collectionOrder],
+        ['ArrowDown', 1, verticalOrder],
+        ['ArrowLeft', -1, collectionOrder],
+        ['ArrowUp', -1, verticalOrder],
       ] as const) {
         for (let index = 0; index < items.length; index++) {
           expect(await move(index, key)).toBe(
-            cells[(index + direction + items.length) % items.length]
+            cells[order[(order.indexOf(index) + direction + order.length) % order.length]]
           );
         }
       }
       view.items = items.map((item, index) => ({
         ...item,
-        disabled: index === 1,
+        disabled: index === verticalOrder[1],
       }));
       await view.updateComplete;
-      expect(await move(0, 'ArrowDown')).toBe(cells[2]);
-      expect(await move(2, 'ArrowUp')).toBe(cells[0]);
+      expect(await move(verticalOrder[0], 'ArrowDown')).toBe(cells[verticalOrder[2]]);
+      expect(await move(verticalOrder[2], 'ArrowUp')).toBe(cells[verticalOrder[0]]);
       view.items = items.map((item, index) => ({
         ...item,
-        disabled: index === 0 || index === items.length - 1,
+        disabled: index === verticalOrder[0] || index === verticalOrder[verticalOrder.length - 1],
       }));
       await view.updateComplete;
-      expect(await move(6, 'ArrowDown')).toBe(cells[1]);
-      expect(await move(1, 'ArrowUp')).toBe(cells[6]);
+      expect(await move(verticalOrder[verticalOrder.length - 2], 'ArrowDown')).toBe(cells[verticalOrder[1]]);
+      expect(await move(verticalOrder[1], 'ArrowUp')).toBe(cells[verticalOrder[verticalOrder.length - 2]]);
+      if (verticalOrder[1] === 3) {
+        view.items = items.map((item, index) => ({
+          ...item,
+          disabled: index % 3 === 1,
+        }));
+        await view.updateComplete;
+        expect(await move(6, 'ArrowDown')).toBe(cells[2]);
+        expect(await move(2, 'ArrowUp')).toBe(cells[6]);
+      }
       view.items = items;
       await view.updateComplete;
       expect(view.selected).toEqual([]);
       cells[1].focus();
       await view.updateComplete;
     };
-    await verifySemanticArrows();
+    await verifyArrows();
     expect(await move(0, 'End')).toBe(cells[7]);
     expect(await move(7, 'Home')).toBe(cells[0]);
     cells[0].dispatchEvent(
@@ -209,7 +219,7 @@ export const WaterfallAdvance: StoryObj = {
         }
       }
     });
-    await verifySemanticArrows();
+    await verifyArrows();
     view.style.width = '400px';
     await waitFor(() => {
       const bounds = cards.map((card) => card.getBoundingClientRect());
@@ -219,6 +229,7 @@ export const WaterfallAdvance: StoryObj = {
       }
     });
     expect(root.activeElement).toBe(cells[1]);
+    await verifyArrows(items.map((_, index) => index));
   },
 };
 
