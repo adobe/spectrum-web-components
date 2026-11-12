@@ -32,6 +32,8 @@ import styles from './infield-button.css';
  *
  * @slot icon - Icon to display inside the button.
  *
+ * @fires click - Dispatched when the button is activated by pointer. Bubbles and crosses shadow boundaries. Suppressed while `disabled`. The parent field owns keyboard activation.
+ *
  * @cssprop --swc-infield-button-padding - Padding applied to all four sides of the button.
  *   Determines the visible button size together with the icon. Defaults to
  *   `accessory-item-padding-medium` (5px) for size M; overridden per size

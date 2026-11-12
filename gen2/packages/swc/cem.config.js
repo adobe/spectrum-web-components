@@ -426,6 +426,71 @@ function accessorDefaults() {
 }
 
 /**
+ * CEM plugin that removes the events the analyzer can't name. The analyzer
+ * reads an event name only from a string literal or a constant, so it records:
+ *
+ * - An event with no name for a computed name, such as
+ *   `new CustomEvent(isOpen ? 'swc-after-open' : 'swc-after-close')`.
+ * - An event named after the variable for a parameter or local, such as
+ *   `new CustomEvent(type)`, which records an event named `type`.
+ *
+ * Storybook shows both as rows in the Events table. Document the real events
+ * with `@fires` instead.
+ *
+ * @returns {object} The CEM plugin.
+ */
+function dropUnnamedEvents() {
+  /** Class name -> source text of each non-literal event name it dispatches. */
+  const variableNames = new Map();
+
+  return {
+    name: 'cem-plugin-drop-unnamed-events',
+    // `--watch` reuses plugin instances, so start each pass empty.
+    initialize() {
+      variableNames.clear();
+    },
+    analyzePhase({ ts, node }) {
+      if (!ts.isClassDeclaration(node) || !node.name) return;
+
+      const names = new Set();
+      const visit = (child) => {
+        const [eventName] =
+          (ts.isNewExpression(child) &&
+            ts.isIdentifier(child.expression) &&
+            ['Event', 'CustomEvent'].includes(child.expression.text) &&
+            child.arguments) ||
+          [];
+        if (eventName && ts.isIdentifier(eventName)) {
+          names.add(eventName.text);
+        }
+        ts.forEachChild(child, visit);
+      };
+      ts.forEachChild(node, visit);
+
+      if (names.size) variableNames.set(node.name.getText(), names);
+    },
+    packageLinkPhase({ customElementsManifest }) {
+      for (const module of customElementsManifest.modules ?? []) {
+        for (const declaration of module.declarations ?? []) {
+          if (!declaration.events) continue;
+
+          declaration.events = declaration.events.filter((event) => {
+            if (!event.name) return false;
+            const owner = event.inheritedFrom?.name ?? declaration.name;
+            // A documented event keeps its row even if a variable shares its
+            // name; the analyzer resolves constants to their string value.
+            return (
+              Boolean(event.description) ||
+              !variableNames.get(owner)?.has(event.name)
+            );
+          });
+        }
+      }
+    },
+  };
+}
+
+/**
  * CEM plugin that copies each field's `parsedType` and default to the
  * attribute it reflects, when both declare the same type. type-parser resolves
  * attributes by alias name only, so without this a `SizedMixin` `size`
@@ -506,6 +571,7 @@ export default {
     typeParserPlugin(),
     expandRemainingTypeAliases(),
     accessorDefaults(),
+    dropUnnamedEvents(),
     syncAttributesWithFields(),
   ],
 };
