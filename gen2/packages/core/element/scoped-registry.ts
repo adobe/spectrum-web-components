@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import type { LitElement, RenderOptions } from 'lit';
+import { html, LitElement, render, type RenderOptions } from 'lit';
 
 // Scoped custom element registry members that the TypeScript DOM lib doesn't
 // include yet. They're declared in this module, not in an ambient file, so they
@@ -48,32 +48,41 @@ export function supportsScopedRegistries(): boolean {
   }
 }
 
-function creationScope(
-  document: Document,
-  registry: CustomElementRegistry
-): NonNullable<RenderOptions['creationScope']> {
-  return {
-    importNode: (node, deep = false) =>
-      document.importNode(node, {
-        customElementRegistry: registry,
-        selfOnly: !deep,
-      }),
-  };
-}
+type CreationScope = NonNullable<RenderOptions['creationScope']>;
 
-/**
- * Lit render options that create elements in `registry`. Pass them to Lit's
- * `render()` when rendering into a shadow root that uses a scoped registry.
- * Lit's default creates elements in the global registry.
- *
- * This bridges a gap in Lit and will be deprecated when Lit supports scoped
- * registries.
- */
-export function scopedRenderOptions(
-  registry: CustomElementRegistry,
-  document: Document = globalThis.document
-): RenderOptions {
-  return { creationScope: creationScope(document, registry) };
+let litReadsRegistry: boolean | undefined;
+
+// Lit versions with lit/lit#5246 create template content with
+// `document.importNode(content, creationScope)`, so the scope's
+// `customElementRegistry` decides where Lit creates elements. They still call a
+// scope's `importNode()`, but warn in development that it's deprecated. Older
+// versions only call `importNode()`, so they throw for a scope without one.
+// Render one element with a scope that names a new registry, and check where
+// Lit created it. This only runs where scoped registries are supported.
+function litReadsCreationScopeRegistry(): boolean {
+  if (litReadsRegistry === undefined) {
+    const registry = new CustomElementRegistry();
+    const fragment = document.createDocumentFragment();
+    try {
+      render(
+        html`
+          <swc-creation-scope-probe></swc-creation-scope-probe>
+        `,
+        fragment,
+        {
+          creationScope: {
+            customElementRegistry: registry,
+          } as unknown as CreationScope,
+        }
+      );
+      litReadsRegistry =
+        fragment.firstElementChild?.customElementRegistry === registry;
+    } catch {
+      // Older Lit calls the missing `importNode()`.
+      litReadsRegistry = false;
+    }
+  }
+  return litReadsRegistry;
 }
 
 // Returns `registry` unless it's missing or it's the global registry. A node in
@@ -90,19 +99,52 @@ function scopedOnly(
   return registry && registry !== globalRegistry ? registry : null;
 }
 
-// Makes `host` create its template content in the registry of its render root:
-// a scoped shadow root's registry, or else the host's own registry. The
-// registry is resolved when Lit clones a template, so this can be installed
-// before the render root exists. A creation scope the host already has wins.
-function useRenderRootRegistry(host: LitElement): void {
-  host.renderOptions.creationScope ??= {
-    importNode: (node, deep = false) => {
-      const root = host.renderRoot;
-      const registry = scopedOnly(
-        (root instanceof ShadowRoot ? root.customElementRegistry : null) ??
-          host.customElementRegistry,
-        host
-      );
+// The registry of `host`'s render root: a scoped shadow root's registry, or else
+// the host's own registry when it's scoped.
+function renderRootRegistry(host: LitElement): CustomElementRegistry | null {
+  const root = host.renderRoot;
+  return scopedOnly(
+    (root instanceof ShadowRoot ? root.customElementRegistry : null) ??
+      host.customElementRegistry,
+    host
+  );
+}
+
+/**
+ * Returns a Lit creation scope that creates `host`'s template content in the
+ * registry of its render root. The registry is resolved when Lit clones a
+ * template, so the scope works before the render root exists.
+ *
+ * Pass `true` when `host` renders with a Lit version that reads
+ * `creationScope.customElementRegistry`: the scope then has no `importNode()`
+ * for Lit to warn about. Otherwise, the scope has both, so it works with any
+ * Lit version.
+ *
+ * @internal
+ */
+export function renderRootCreationScope(
+  host: LitElement,
+  litReadsRegistry: boolean
+): CreationScope {
+  const registryOf = (): CustomElementRegistry | undefined =>
+    renderRootRegistry(host) ?? undefined;
+  if (litReadsRegistry) {
+    const scope = {
+      get customElementRegistry(): CustomElementRegistry | undefined {
+        return registryOf();
+      },
+    };
+    // Lit's types before lit/lit#5246 require `importNode()`.
+    return scope as unknown as CreationScope;
+  }
+  // Lit versions before lit/lit#5246 call `importNode()`. Versions that drop
+  // `importNode()` read `customElementRegistry`.
+  const scope = {
+    get customElementRegistry(): CustomElementRegistry | undefined {
+      return registryOf();
+    },
+    importNode: (node: Node, deep = false): Node => {
+      const registry = renderRootRegistry(host);
       return registry
         ? host.ownerDocument.importNode(node, {
             customElementRegistry: registry,
@@ -111,21 +153,38 @@ function useRenderRootRegistry(host: LitElement): void {
         : host.ownerDocument.importNode(node, deep);
     },
   };
+  return scope;
+}
+
+// A creation scope the host already has wins. Only a host that renders with
+// this module's Lit gets a scope without `importNode()`, because another copy
+// of Lit can be an older version.
+function useRenderRootRegistry(host: LitElement): void {
+  host.renderOptions.creationScope ??= renderRootCreationScope(
+    host,
+    host instanceof LitElement && litReadsCreationScopeRegistry()
+  );
 }
 
 /**
- * Makes a Lit element render with the registry the element was created in: its
- * shadow root uses that registry, and its template content is created in it.
- * An explicit `customElementRegistry` in the shadow root options takes
- * precedence. Elements created in the global registry render as usual.
+ * Makes a Lit element render with the registry it was created in. Its shadow
+ * root uses that registry, unless the shadow root options name another one, and
+ * Lit creates its template content in its render root's registry, including a
+ * light-DOM render root. Elements created in the global registry render as
+ * usual.
  *
- * This bridges a gap in Lit and will be deprecated when Lit supports scoped
- * registries.
+ * Without the mixin, a shadow root uses the document's registry, and Lit
+ * versions before lit/lit#5260 create template content in the global registry.
+ * With Lit versions that read `creationScope.customElementRegistry`, the mixin
+ * uses it instead of the deprecated `creationScope.importNode()`. An element
+ * that uses another copy of Lit than this package gets both, so it works with
+ * any Lit version, and newer Lit versions warn about `importNode()` in
+ * development.
  */
-export function ScopedElementMixin<T extends Constructor<LitElement>>(
+export function ScopedRenderMixin<T extends Constructor<LitElement>>(
   Base: T
 ): T {
-  abstract class ScopedElement extends Base {
+  abstract class ScopedRenderElement extends Base {
     /**
      * @internal
      */
@@ -160,32 +219,5 @@ export function ScopedElementMixin<T extends Constructor<LitElement>>(
       super.connectedCallback();
     }
   }
-  return ScopedElement as unknown as T;
-}
-
-/**
- * Creates the scoped registry of one loaded copy of Spectrum Web Components and
- * publishes it at `window.__swc.scopedRegistries`, keyed by version.
- *
- * @throws When the browser does not support scoped registries, or when another
- * copy of the same version already published its registry.
- */
-export function createScopedRegistry(version: string): CustomElementRegistry {
-  if (!supportsScopedRegistries()) {
-    throw new Error(
-      'Scoped custom element registries are not supported in this browser. Load a polyfill that implements the standard API, render the app in an iframe, or load one version of Spectrum Web Components per page.'
-    );
-  }
-  window.__swc ??= {} as Window['__swc'];
-  const registries = (window.__swc.scopedRegistries ??= new Map());
-  // A second copy can't share the first copy's registry: their classes differ,
-  // and components check each other with `instanceof`.
-  if (registries.has(version)) {
-    throw new Error(
-      `Another copy of Spectrum Web Components ${version} already published its scoped registry. Load one copy of each version per page, or give each app its own registry with \`new CustomElementRegistry()\` and \`Component.define(registry)\`.`
-    );
-  }
-  const registry = new CustomElementRegistry();
-  registries.set(version, registry);
-  return registry;
+  return ScopedRenderElement as unknown as T;
 }

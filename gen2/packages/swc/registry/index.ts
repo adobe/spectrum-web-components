@@ -10,32 +10,35 @@
  * governing permissions and limitations under the License.
  */
 
-import { createScopedRegistry } from '@adobe/spectrum-wc-core/element/index.js';
+import { supportsScopedRegistries } from '@adobe/spectrum-wc-core/element/index.js';
 
-import { version } from './version.js';
-
+/**
+ * Helpers for apps that render Spectrum Web Components from a scoped custom
+ * element registry. See the "Scoped registries" guide.
+ */
 export {
-  ScopedElementMixin,
-  scopedRenderOptions,
+  ScopedRenderMixin,
   supportsScopedRegistries,
 } from '@adobe/spectrum-wc-core/element/index.js';
-export { version };
 
 let registry: CustomElementRegistry | undefined;
 
 /**
  * Returns the scoped custom element registry of this copy of Spectrum Web
- * Components. The first call creates it and publishes it at
- * `window.__swc.scopedRegistries.get(version)`. Define components in it with
- * `Component.define(registry)`, then attach it to an app's shadow root.
+ * Components, and creates it on the first call. Apps that load the same copy
+ * share it. Another copy, even of the same version, has its own registry,
+ * because its classes are different.
  *
- * Importing this module has no side effects, so apps can import the helpers in
- * any browser.
- *
- * @throws When the browser does not support scoped registries, or when another
- * copy of the same version already published its registry.
+ * @throws When the browser does not support scoped registries.
  */
 export function getRegistry(): CustomElementRegistry {
-  registry ??= createScopedRegistry(version);
+  if (!registry) {
+    if (!supportsScopedRegistries()) {
+      throw new Error(
+        'Scoped custom element registries are not supported in this browser. Load a polyfill that implements the standard API, render the app in an iframe, or load one version of Spectrum Web Components per page.'
+      );
+    }
+    registry = new CustomElementRegistry();
+  }
   return registry;
 }

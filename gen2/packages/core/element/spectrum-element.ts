@@ -13,7 +13,7 @@
 import { LitElement } from 'lit';
 
 import { defineElement } from './define-element.js';
-import { ScopedElementMixin } from './scoped-registry.js';
+import { ScopedRenderMixin } from './scoped-registry.js';
 import { coreVersion, version } from './version.js';
 
 /**
@@ -23,7 +23,7 @@ export interface DefinableElement {
   define(registry?: CustomElementRegistry): void;
 }
 
-export class SpectrumElement extends ScopedElementMixin(LitElement) {
+export class SpectrumElement extends ScopedRenderMixin(LitElement) {
   /**
    * @internal
    */

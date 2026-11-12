@@ -52,10 +52,5 @@ interface Window {
     ignoreWarningLevels: Record<WarningLevel, boolean>;
     ignoreWarningLocalNames: Record<ElementLocalName, boolean>;
     verbose?: boolean;
-    /**
-     * Scoped registries of loaded Spectrum Web Components copies, by version.
-     * Only one copy of each version can publish its registry.
-     */
-    scopedRegistries?: Map<string, CustomElementRegistry>;
   };
 }

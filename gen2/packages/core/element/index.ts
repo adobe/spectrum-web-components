@@ -12,9 +12,7 @@
 
 export { defineElement } from './define-element.js';
 export {
-  createScopedRegistry,
-  ScopedElementMixin,
-  scopedRenderOptions,
+  ScopedRenderMixin,
   supportsScopedRegistries,
 } from './scoped-registry.js';
 export { type DefinableElement, SpectrumElement } from './spectrum-element.js';

@@ -10,18 +10,17 @@
  * governing permissions and limitations under the License.
  */
 
-import { html, LitElement, render } from 'lit';
+import { html, LitElement } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import {
-  createScopedRegistry,
   defineElement,
-  ScopedElementMixin,
-  scopedRenderOptions,
+  ScopedRenderMixin,
   SpectrumElement,
   supportsScopedRegistries,
 } from '../index.js';
+import { renderRootCreationScope } from '../scoped-registry.js';
 
 export default {
   title: 'Utils/Scoped registries/Tests',
@@ -170,7 +169,11 @@ export const StaticDefineTest: Story = {
       const element = document.createElement(tag) as GlobalHost;
       document.body.append(element);
       await element.updateComplete;
-      expect(element.renderOptions.creationScope).toBeUndefined();
+      // Lit versions with lit/lit#5260 set the render root as the creation
+      // scope, and older versions leave it unset. The mixin adds none.
+      expect(element.renderOptions.creationScope ?? element.shadowRoot).toBe(
+        element.shadowRoot
+      );
       element.remove();
     });
   },
@@ -216,43 +219,6 @@ export const NativeSupportTest: Story = {
     }
     await step('Chrome 146 or later reports native support', () => {
       expect(supportsScopedRegistries()).toBe(true);
-    });
-  },
-};
-
-export const UnsupportedBrowserTest: Story = {
-  play: async ({ step }) => {
-    if (scoped) {
-      return;
-    }
-    await step('the scoped registry API throws a clear error', () => {
-      expect(() => createScopedRegistry('0.0.0-unsupported')).toThrow(
-        /Scoped custom element registries are not supported/
-      );
-    });
-  },
-};
-
-export const ScopedRegistryIndexTest: Story = {
-  play: async ({ step }) => {
-    if (!scoped) {
-      return;
-    }
-    await step('publishes the first registry for a version', () => {
-      const first = createScopedRegistry('0.0.0-index-test');
-      expect(window.__swc.scopedRegistries?.get('0.0.0-index-test')).toBe(
-        first
-      );
-    });
-
-    await step('rejects a second copy of the same version', () => {
-      const first = window.__swc.scopedRegistries?.get('0.0.0-index-test');
-      expect(() => createScopedRegistry('0.0.0-index-test')).toThrow(
-        /0\.0\.0-index-test/
-      );
-      expect(window.__swc.scopedRegistries?.get('0.0.0-index-test')).toBe(
-        first
-      );
     });
   },
 };
@@ -331,8 +297,8 @@ export const ScopedConsumerHelpersTest: Story = {
     if (!scoped) {
       return;
     }
-    await step('ScopedElementMixin scopes a consumer Lit element', async () => {
-      class AppView extends ScopedElementMixin(LitElement) {
+    await step('ScopedRenderMixin scopes a consumer Lit element', async () => {
+      class AppView extends ScopedRenderMixin(LitElement) {
         protected override render(): unknown {
           return html`
             <scoped-test-child></scoped-test-child>
@@ -351,11 +317,11 @@ export const ScopedConsumerHelpersTest: Story = {
     });
 
     await step(
-      'ScopedElementMixin scopes a render that a controller runs on connection',
+      'ScopedRenderMixin scopes a render that a controller runs on connection',
       async () => {
         // Lit notifies controllers right after it creates the render root, and
         // a controller can render synchronously from `hostConnected()`.
-        class EagerView extends ScopedElementMixin(LitElement) {
+        class EagerView extends ScopedRenderMixin(LitElement) {
           constructor() {
             super();
             this.addController({ hostConnected: () => this.performUpdate() });
@@ -394,38 +360,35 @@ export const ScopedConsumerHelpersTest: Story = {
       }
     );
 
-    await step(
-      'ScopedElementMixin scopes a light-DOM render root',
-      async () => {
-        class LightView extends ScopedElementMixin(LitElement) {
-          protected override createRenderRoot(): HTMLElement {
-            return this;
-          }
-
-          protected override render(): unknown {
-            return html`
-              <scoped-test-child></scoped-test-child>
-            `;
-          }
+    await step('ScopedRenderMixin scopes a light-DOM render root', async () => {
+      class LightView extends ScopedRenderMixin(LitElement) {
+        protected override createRenderRoot(): HTMLElement {
+          return this;
         }
-        const registry = new CustomElementRegistry();
-        ScopedChildA.define(registry);
-        registry.define('scoped-test-light-view', LightView);
 
-        const view = await mount<LightView>(registry, 'scoped-test-light-view');
-        expect(view.querySelector('scoped-test-child')).toBeInstanceOf(
-          ScopedChildA
-        );
-        cleanup();
+        protected override render(): unknown {
+          return html`
+            <scoped-test-child></scoped-test-child>
+          `;
+        }
       }
-    );
+      const registry = new CustomElementRegistry();
+      ScopedChildA.define(registry);
+      registry.define('scoped-test-light-view', LightView);
+
+      const view = await mount<LightView>(registry, 'scoped-test-light-view');
+      expect(view.querySelector('scoped-test-child')).toBeInstanceOf(
+        ScopedChildA
+      );
+      cleanup();
+    });
 
     await step(
-      'ScopedElementMixin honors a registry passed to attachShadow',
+      'ScopedRenderMixin renders a global root element from the registry in its shadowRootOptions',
       async () => {
         const registry = new CustomElementRegistry();
         ScopedChildB.define(registry);
-        class PrivateRegistryView extends ScopedElementMixin(LitElement) {
+        class PrivateRegistryView extends ScopedRenderMixin(LitElement) {
           static override shadowRootOptions: ShadowRootInit = {
             mode: 'open',
             customElementRegistry: registry,
@@ -461,22 +424,70 @@ export const ScopedConsumerHelpersTest: Story = {
         cleanup();
       }
     );
+  },
+};
 
-    await step('scopedRenderOptions scopes a top-level render', () => {
-      const registry = new CustomElementRegistry();
-      ScopedChildB.define(registry);
-      const root = scopedHost(registry);
-      render(
-        html`
-          <scoped-test-child></scoped-test-child>
-        `,
-        root,
-        scopedRenderOptions(registry)
-      );
-      expect(root.querySelector('scoped-test-child')).toBeInstanceOf(
-        ScopedChildB
-      );
-      cleanup();
-    });
+// ──────────────────────────────────────────────────────────────
+// TEST: Lit creation scopes
+// ──────────────────────────────────────────────────────────────
+
+export const CreationScopeTest: Story = {
+  play: async ({ step }) => {
+    if (!scoped) {
+      return;
+    }
+    const registry = new CustomElementRegistry();
+    ScopedChildA.define(registry);
+    ScopedParent.define(registry);
+    const template = document.createElement('template');
+    template.innerHTML = '<scoped-test-child></scoped-test-child>';
+
+    await step(
+      'a registry-only scope creates content in the render root registry',
+      async () => {
+        // Lit versions with lit/lit#5246 clone templates with
+        // `document.importNode(content, creationScope)`, and warn in
+        // development when the scope has an `importNode()`.
+        const parent = await mount<ScopedParent>(
+          registry,
+          'scoped-test-parent'
+        );
+        const scope = renderRootCreationScope(parent, true);
+        const fragment = document.importNode(
+          template.content,
+          scope as unknown as ImportNodeOptions
+        );
+
+        expect('importNode' in scope).toBe(false);
+        expect(fragment.firstElementChild).toBeInstanceOf(ScopedChildA);
+        cleanup();
+      }
+    );
+
+    await step(
+      'a scope for any Lit version creates content in the render root registry',
+      async () => {
+        const parent = await mount<ScopedParent>(
+          registry,
+          'scoped-test-parent'
+        );
+        const scope = renderRootCreationScope(parent, false);
+        // Older Lit versions call `creationScope.importNode(content, true)`.
+        const fromImportNode = scope.importNode(
+          template.content,
+          true
+        ) as DocumentFragment;
+        // Lit versions that drop `importNode()` pass the scope to
+        // `document.importNode()`.
+        const fromRegistry = document.importNode(
+          template.content,
+          scope as unknown as ImportNodeOptions
+        );
+
+        expect(fromImportNode.firstElementChild).toBeInstanceOf(ScopedChildA);
+        expect(fromRegistry.firstElementChild).toBeInstanceOf(ScopedChildA);
+        cleanup();
+      }
+    );
   },
 };

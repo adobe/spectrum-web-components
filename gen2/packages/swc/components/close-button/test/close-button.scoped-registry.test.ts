@@ -16,6 +16,7 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import { CloseButton } from '@adobe/spectrum-wc/components/close-button';
 import { UiIcon } from '@adobe/spectrum-wc/components/ui-icons';
+import { getRegistry } from '@adobe/spectrum-wc/registry';
 import { supportsScopedRegistries } from '@adobe/spectrum-wc-core/element/index.js';
 
 export default {
@@ -89,32 +90,49 @@ export const ScopedRegistryTest: Story = {
 
 export const RegistryEntryTest: Story = {
   play: async ({ step }) => {
-    const entry = await import('@adobe/spectrum-wc/registry');
-
-    await step('importing the entry creates no registry', () => {
-      expect(window.__swc?.scopedRegistries?.has(entry.version) ?? false).toBe(
-        false
-      );
-    });
-
-    if (!entry.supportsScopedRegistries()) {
-      await step('getRegistry() throws a clear error', () => {
-        expect(() => entry.getRegistry()).toThrow(
+    await step('getRegistry() throws a clear error without support', () => {
+      // Some WebKit builds expose the constructor but reject construction.
+      const original = window.CustomElementRegistry;
+      Object.defineProperty(window, 'CustomElementRegistry', {
+        configurable: true,
+        writable: true,
+        value: class {
+          constructor() {
+            throw new TypeError('Illegal constructor');
+          }
+        },
+      });
+      let result: CustomElementRegistry | Error;
+      try {
+        result = getRegistry();
+      } catch (error) {
+        result = error as Error;
+      } finally {
+        Object.defineProperty(window, 'CustomElementRegistry', {
+          configurable: true,
+          writable: true,
+          value: original,
+        });
+      }
+      // `getRegistry()` keeps the registry it creates. When a replay of this
+      // story or other code already created it, it returns that registry.
+      if (result instanceof Error) {
+        expect(result.message).toMatch(
           /Scoped custom element registries are not supported/
         );
-      });
+      } else {
+        expect(result).toBeInstanceOf(original);
+      }
+    });
+
+    if (!scoped) {
       return;
     }
 
-    await step('getRegistry() creates and publishes one registry', () => {
-      const registry = entry.getRegistry();
+    await step('getRegistry() returns one registry for this copy', () => {
+      const registry = getRegistry();
       expect(registry).toBeInstanceOf(CustomElementRegistry);
-      expect(entry.getRegistry()).toBe(registry);
-      expect(window.__swc.scopedRegistries?.get(entry.version)).toBe(registry);
-    });
-
-    await step('components can be defined in the package registry', () => {
-      const registry = entry.getRegistry();
+      expect(getRegistry()).toBe(registry);
       CloseButton.define(registry);
       expect(registry.get('swc-close-button')).toBe(CloseButton);
     });
