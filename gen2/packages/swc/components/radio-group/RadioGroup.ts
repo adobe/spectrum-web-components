@@ -32,7 +32,7 @@ const NECESSITY_INDICATOR_TEXT = {
  * Coordinates a set of `swc-radio` items as a single mutually-exclusive selection.
  *
  * @element swc-radio-group
- * @since 2.0.0-beta.5
+ * @since 2.0.0-beta.8
  *
  * @slot - The `swc-radio` items to manage.
  * @slot label - Visible group label.

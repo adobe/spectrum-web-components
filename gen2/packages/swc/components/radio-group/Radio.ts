@@ -20,7 +20,7 @@ import styles from './radio.css';
  * A single option within `swc-radio-group`. Size and emphasis come from the group.
  *
  * @element swc-radio
- * @since 2.0.0-beta.5
+ * @since 2.0.0-beta.8
  *
  * @slot label - Visible label content.
  * @slot description - Optional secondary text, included in the accessible name.
