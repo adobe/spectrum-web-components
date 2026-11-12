@@ -389,6 +389,12 @@ export const ErrorIconTest: Story = {
       expect(describedBy(host)).toHaveLength(0);
     });
 
+    await step('the icon wrapper is hidden from assistive technology', () => {
+      for (const id of ['with-error-text', 'with-description', 'bare']) {
+        expect(icon(get(id))).toHaveAttribute('aria-hidden', 'true');
+      }
+    });
+
     await step('without an errorIcon, no icon wrapper renders', () => {
       expect(icon(get('no-icon'))).toBeNull();
     });

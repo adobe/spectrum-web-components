@@ -266,6 +266,7 @@ export const NecessityIndicatorTest: Story = {
     const indicator = requiredIcon.shadowRoot?.querySelector(
       '.swc-FormFieldLabel-requiredIndicator'
     );
+    expect(indicator).toHaveAttribute('aria-hidden', 'true');
     expect(
       indicator?.querySelector('swc-ui-icon')?.getAttribute('aria-hidden')
     ).toBe('true');
@@ -333,7 +334,7 @@ export const ErrorIconTest: Story = {
     const icon = group.shadowRoot?.querySelector(
       '.swc-FormFieldErrorText-icon'
     );
-    expect(icon?.hasAttribute('aria-hidden')).toBe(false);
+    expect(icon).toHaveAttribute('aria-hidden', 'true');
     expect(
       icon
         ?.querySelector('swc-icon-alert-triangle')
@@ -420,7 +421,7 @@ export const ErrorIconWithoutErrorTextTest: Story = {
       icon(withDescription),
       'icon shows beside the description'
     ).toBeTruthy();
-    expect(icon(withDescription)?.hasAttribute('aria-hidden')).toBe(false);
+    expect(icon(withDescription)).toHaveAttribute('aria-hidden', 'true');
     expect(
       icon(withDescription)
         ?.querySelector('swc-icon-alert-triangle')
@@ -444,7 +445,7 @@ export const ErrorIconWithoutErrorTextTest: Story = {
       icon(bare),
       'icon shows with no description or error text'
     ).toBeTruthy();
-    expect(icon(bare)?.hasAttribute('aria-hidden')).toBe(false);
+    expect(icon(bare)).toHaveAttribute('aria-hidden', 'true');
     expect(
       icon(bare)
         ?.querySelector('swc-icon-alert-triangle')

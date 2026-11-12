@@ -525,7 +525,7 @@ export const NecessityIndicatorTest: Story = {
           '.swc-FormFieldLabel-requiredIndicator'
         ),
         'required icon mode renders the asterisk'
-      ).toBeTruthy();
+      ).toHaveAttribute('aria-hidden', 'true');
       expect(
         requiredIcon.shadowRoot?.querySelector(
           '.swc-FormFieldLabel-requiredIndicator swc-ui-icon'
