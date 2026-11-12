@@ -358,6 +358,48 @@ export const InvalidVariantWarningTest: Story = {
   },
 };
 
+export const InvalidFixedWarningTest: Story = {
+  render: () => html`
+    <swc-badge>Label</swc-badge>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const badge = await getComponent<Badge>(canvasElement, 'swc-badge');
+    const inner = badge.shadowRoot!.querySelector('.swc-Badge')!;
+    const defaultRadius = getComputedStyle(inner).borderRadius;
+
+    await step(
+      'warns, keeps the value, and renders unfixed for an invalid fixed',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          badge.fixed = 'middle' as Badge['fixed'];
+          await badge.updateComplete;
+
+          expect(
+            String(warnCalls[0]?.[1] || ''),
+            'warning names the property and received value'
+          ).toMatch(/"fixed".*"middle"/);
+          expect(badge.getAttribute('fixed'), 'attribute keeps the value').toBe(
+            'middle'
+          );
+          expect(
+            getComputedStyle(inner).borderRadius,
+            'renders the default (unfixed) corners'
+          ).toBe(defaultRadius);
+        })
+    );
+
+    await step('does not warn for valid fixed values', () =>
+      withWarningSpy(async (warnCalls) => {
+        for (const fixed of FIXED_VALUES) {
+          badge.fixed = fixed;
+          await badge.updateComplete;
+        }
+        expect(warnCalls.length, 'no warnings for valid fixed values').toBe(0);
+      })
+    );
+  },
+};
+
 export const ValidVariantNoWarningTest: Story = {
   render: () => html`
     <swc-badge variant="positive">Approved</swc-badge>

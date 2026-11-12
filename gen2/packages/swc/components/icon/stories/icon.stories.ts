@@ -26,12 +26,6 @@ import '@adobe/spectrum-wc/components/icon/swc-icon.js';
 
 const { args, argTypes, template } = getStorybookHelpers('swc-icon');
 
-argTypes.size = {
-  ...argTypes.size,
-  control: { type: 'select' },
-  options: ICON_VALID_SIZES,
-};
-
 /**
  * The `<swc-icon>` frame renders a custom, non-Spectrum SVG that you slot in,
  * giving it the same size box, color, and accessibility handling as a Spectrum
@@ -49,6 +43,7 @@ const meta: Meta = {
     docs: {
       subtitle: `Frame for a custom SVG: size box, color, and accessibility.`,
     },
+    missingDesignDocs: true,
   },
   tags: ['migrated'],
 };
