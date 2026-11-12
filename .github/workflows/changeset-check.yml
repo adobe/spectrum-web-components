@@ -38,6 +38,8 @@ jobs:
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: |
           changed=$(git diff --name-only --diff-filter=AMDR "$BASE_SHA...$HEAD_SHA")
+          # Only newly added files count as a changeset; edits or deletions of existing ones don't.
+          added=$(git diff --name-only --diff-filter=A "$BASE_SHA...$HEAD_SHA")
 
           # Source changes that ship to consumers; tests, stories, and docs don't need a changeset.
           ignore_pattern='(/test/|/tests/|/stories/|\.(test|stories|vrt)\.[jt]sx?$|\.mdx?$)'
@@ -49,7 +51,7 @@ jobs:
               continue
             fi
 
-            changesets=$(echo "$changed" | grep -E "^${gen}/\.changeset/.+\.md$" | grep -v "/README\.md$" || true)
+            changesets=$(echo "$added" | grep -E "^${gen}/\.changeset/.+\.md$" | grep -v "/README\.md$" || true)
             if [ -n "$changesets" ]; then
               echo "✅ $gen: changeset found."
               continue
