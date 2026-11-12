@@ -199,7 +199,7 @@ Row chrome belongs here, not in `swc-menu`: in `spectrum-css`, `.spectrum-Menu` 
 - [x] Expose a reviewed set of `--swc-menu-item-*` properties, each tagged `@cssprop`
 - [x] Forced-colors treatment
 - [x] Stylelint clean
-- [x] Chrome moved onto an internal `.swc-MenuItem` element; the host keeps only layout participation and the internal property definitions, per the CSS rule order
+- [x] Chrome moved onto an internal `.swc-MenuItem` element; the host keeps only layout participation; private properties are declared on .swc-MenuItem, and size and state rules override the public --swc-menu-item-* properties from :host().
 - [ ] Chromatic baseline reviewed and approved (needs a reviewer; `Row permutations`, `Row permutations (dark)` and `Row forced colors` are the new snapshots)
 - [ ] Verify against Figma once [Q21](#blockers-and-open-questions) names the superseding file
 
