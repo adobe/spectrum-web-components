@@ -231,7 +231,7 @@ export const HorizontalSemanticNavigation: StoryObj = {
       ...['nowrap', 'loop', 'advance', 'semantic'].map(
         (mode) => ['grid', mode] as const
       ),
-      ...['nowrap', 'loop', 'advance', 'semantic', 'top-to-bottom'].map(
+      ...['nowrap', 'loop', 'advance', 'semantic'].map(
         (mode) => ['masonry', mode] as const
       ),
       ['waterfall', 'advance'],
@@ -565,13 +565,7 @@ export const MoreInfo: StoryObj = {
   `,
   play: async ({ canvasElement }) => {
     for (const layout of ['grid', 'masonry']) {
-      for (const mode of [
-        'nowrap',
-        'loop',
-        'advance',
-        'semantic',
-        ...(layout === 'masonry' ? ['top-to-bottom'] : []),
-      ]) {
+      for (const mode of ['nowrap', 'loop', 'advance', 'semantic']) {
         const view = await mount(
           canvasElement,
           `swc-card-view-${layout}-${mode}`,
@@ -1289,19 +1283,6 @@ export const NavigationPolicyBoundaries: StoryObj = {
     view.dir = 'rtl';
     expect(await move(2, 'ArrowRight')).toBe(cells[6]);
     view.dir = 'ltr';
-
-    await policy('visual-column');
-    const order = [0, 3, 6, 1, 4, 7, 2, 5];
-    for (const [position, index] of order.entries()) {
-      expect(await move(index, 'ArrowDown')).toBe(
-        cells[order[(position + 1) % order.length]]
-      );
-      expect(await move(index, 'ArrowUp')).toBe(
-        cells[order[(position + order.length - 1) % order.length]]
-      );
-    }
-    expect(await move(5, 'Home')).toBe(cells[0]);
-    expect(await move(0, 'End')).toBe(cells[5]);
 
     await policy('cycle');
     expect(await move(7, 'ArrowRight')).toBe(cells[0]);

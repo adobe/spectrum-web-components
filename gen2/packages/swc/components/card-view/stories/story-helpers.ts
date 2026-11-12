@@ -28,7 +28,6 @@ import '../swc-card-view-masonry-nowrap.js';
 import '../swc-card-view-masonry-loop.js';
 import '../swc-card-view-masonry-advance.js';
 import '../swc-card-view-masonry-semantic.js';
-import '../swc-card-view-masonry-top-to-bottom.js';
 import '../swc-card-view-waterfall-advance.js';
 
 const photoTemplates: CardViewItem[] = [

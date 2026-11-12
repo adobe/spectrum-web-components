@@ -548,25 +548,10 @@ export abstract class CardViewBase extends SpectrumElement {
       return;
     }
     let next = index;
-    const visualOrder =
-      this.navigation === 'visual-column'
-        ? this.positions
-            .map((position, itemIndex) => ({ ...position, itemIndex }))
-            .filter((position) => !this.items[position.itemIndex]?.disabled)
-            .sort(
-              (first, second) =>
-                first.left - second.left ||
-                first.top - second.top ||
-                first.itemIndex - second.itemIndex
-            )
-            .map((position) => position.itemIndex)
-        : [];
     if (event.key === 'Home') {
-      next = visualOrder[0] ?? this.items.findIndex((item) => !item.disabled);
+      next = this.items.findIndex((item) => !item.disabled);
     } else if (event.key === 'End') {
-      next =
-        visualOrder[visualOrder.length - 1] ??
-        this.items.map((item) => !item.disabled).lastIndexOf(true);
+      next = this.items.map((item) => !item.disabled).lastIndexOf(true);
     } else if (
       this.model === 'single-row' &&
       this.navigation !== 'legacy' &&
@@ -583,24 +568,17 @@ export abstract class CardViewBase extends SpectrumElement {
       const rtl = getComputedStyle(this).direction === 'rtl';
       const direction = (forward ? 1 : -1) * (horizontal && rtl ? -1 : 1);
       next =
-        this.navigation === 'visual-column' && visualOrder.length
-          ? visualOrder[
-              (visualOrder.indexOf(index) +
-                (forward ? 1 : -1) +
-                visualOrder.length) %
-                visualOrder.length
-            ]
-          : this.navigation === 'semantic'
-            ? this.cycle(index, forward ? 1 : -1)
-            : this.navigation === 'cycle'
-              ? this.cycle(index, direction)
-              : this.navigation === 'sequential-axis' && horizontal
-                ? this.sequential(index, direction)
-                : this.navigation === 'spatial-wrap'
-                  ? this.wrappedSpatial(index, event.key)
-                  : this.navigation === 'spatial-advance'
-                    ? this.advancedSpatial(index, event.key)
-                    : this.spatial(index, event.key);
+        this.navigation === 'semantic'
+          ? this.cycle(index, forward ? 1 : -1)
+          : this.navigation === 'cycle'
+            ? this.cycle(index, direction)
+            : this.navigation === 'sequential-axis' && horizontal
+              ? this.sequential(index, direction)
+              : this.navigation === 'spatial-wrap'
+                ? this.wrappedSpatial(index, event.key)
+                : this.navigation === 'spatial-advance'
+                  ? this.advancedSpatial(index, event.key)
+                  : this.spatial(index, event.key);
     } else if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
       if (this.model === 'vertical' && this.layout === 'masonry') {
         return;

@@ -630,8 +630,3 @@ export class CardViewWaterfallAdvance extends CardViewGridSemantic {
 export class CardViewMasonrySemantic extends CardViewGridSemantic {
   public override layout: CardViewLayout = 'masonry';
 }
-
-/** @element swc-card-view-masonry-top-to-bottom */
-export class CardViewMasonryTopToBottom extends CardViewMasonryNoWrap {
-  protected override readonly navigation: CardViewNavigation = 'visual-column';
-}

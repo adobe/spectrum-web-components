@@ -56,10 +56,10 @@ export const readings = {
     ],
   },
   masonry: {
-    label: 'Masonry · Five vertical policies',
+    label: 'Masonry · Four vertical policies',
     title: 'Rows align. Vertical edges can differ.',
     summary:
-      'The same single-row semantics contain adaptive visual rows: equal row heights and aspect-ratio-based widths. All five policies share placement and horizontal collection-order cycling. Compare their Up/Down routes.',
+      'The same single-row semantics contain adaptive visual rows: equal row heights and aspect-ratio-based widths. All four policies share placement and horizontal collection-order cycling. Compare their Up/Down routes.',
     caution:
       'Several cards in another row may overlap the active card horizontally. Which one should Up or Down choose? Test adaptive rows separately from waterfall columns.',
     variants: [
@@ -82,11 +82,6 @@ export const readings = {
         'semantic',
         'Semantic.',
         'Visit every enabled item in semantic order. Right/Down advances even when the next card is visually below.',
-      ],
-      [
-        'top-to-bottom',
-        'Top to bottom.',
-        'Down follows each visual column, then the next column group. Up reverses that route. Left/Right still cycles in collection order.',
       ],
     ],
   },
@@ -515,12 +510,6 @@ export const oracleStyles = `.sbdocs-wrapper:has(#card-view-oracle) { padding: 0
         margin: 20px 0 0;
         color: var(--muted);
       }
-      #card-view-oracle .spell.visual-order-spell {
-        grid-column: 1 / -1;
-        border-left: 0;
-        border-top: 1px solid var(--line);
-        padding-left: 0;
-      }
       #card-view-oracle .layout-explainer {
         background: #edf7fc;
         padding: 56px 0;
@@ -907,7 +896,7 @@ export const Oracle = () => {
 <em>{"oracle"}</em>
 {" "}</h1>
 {" "}
-<p className="lede">{" One recommended semantic row. Ten keyboard experiments. "}
+<p className="lede">{" One recommended semantic row. Nine keyboard experiments. "}
 <br />
 {" One question: can everyone find their way through the cards? "}</p>
 {" "}
@@ -1115,13 +1104,13 @@ export const Oracle = () => {
 {" "}
 <p>{" "}
 <strong>{" Use a single-row grid for “x of y” feedback. "}</strong>
-{" Hold those semantics and horizontal collection-order cycling fixed while users compare vertical policies: four in grid and five in masonry. Waterfall uses semantic collection order on both axes. Keep reported verbosity problems visible as evidence against the recommendation. Row-focused semantics remain a meaningful reference, not a dismissed concern. "}</p>
+{" Hold those semantics and horizontal collection-order cycling fixed while users compare vertical policies: four in grid and four in masonry. Waterfall uses semantic collection order on both axes. Keep reported verbosity problems visible as evidence against the recommendation. Row-focused semantics remain a meaningful reference, not a dismissed concern. "}</p>
 {" "}</div>
 {" "}
 <ol className="plan">{" "}
 <li>{" "}
 <strong>{"First, a fair reading."}</strong>
-{" Compare ten examples with identical single-row semantics, 50 cards, content, and actions. Verify positional speech. "}</li>
+{" Compare nine examples with identical single-row semantics, 50 cards, content, and actions. Verify positional speech. "}</li>
 {" "}
 <li>{" "}
 <strong>{"Make the task real."}</strong>
@@ -1139,10 +1128,10 @@ export const Oracle = () => {
 <div className="lore-intro">{" "}
 <p className="eyebrow">{"Know your navigation spells"}</p>
 {" "}
-<h2 id="oracle-lore-title">{"One horizontal route. Five vertical policies."}</h2>
+<h2 id="oracle-lore-title">{"One horizontal route. Four vertical policies."}</h2>
 {" "}
-<p>All ten named grid, masonry, and waterfall examples share one horizontal rule: <kbd>ArrowRight</kbd> moves to the next enabled collection item; <kbd>ArrowLeft</kbd> moves to the previous. Wrap from the last item to the first, or the first to the last. Right stays next and Left stays previous in RTL, regardless of visual placement. The single-column grid and other semantic reference examples keep their existing navigation.</p>
-<p>NoWrap, Loop, Advance, and Semantic distinguish Up/Down behavior in grid and masonry. Masonry also offers Top to bottom. Waterfall follows semantic collection order on both axes, despite retaining the Waterfall advance name. Compare these routes without changing the horizontal rule or the cards' semantics.</p>
+<p>All nine named grid, masonry, and waterfall examples share one horizontal rule: <kbd>ArrowRight</kbd> moves to the next enabled collection item; <kbd>ArrowLeft</kbd> moves to the previous. Wrap from the last item to the first, or the first to the last. Right stays next and Left stays previous in RTL, regardless of visual placement. The single-column grid and other semantic reference examples keep their existing navigation.</p>
+<p>NoWrap, Loop, Advance, and Semantic distinguish Up/Down behavior in grid and masonry. Waterfall follows semantic collection order on both axes, despite retaining the Waterfall advance name. Compare these routes without changing the horizontal rule or the cards' semantics.</p>
 {" "}</div>
 {" "}
 <div className="spells">{" "}
@@ -1233,23 +1222,9 @@ export const Oracle = () => {
 {" "}
 <span className="pair">{"Grid + masonry + waterfall · Semantic"}</span>
 {" "}</article>
-<article className="spell visual-order-spell">
-  <div className="diagram" role="img" aria-label="Current card at the bottom of the first column; next card at the top of the second column.">
-    <i></i>
-    <i className="exit"></i>
-    <i></i>
-    <i className="active"></i>
-    <i></i>
-    <i></i>
-  </div>
-  <h3 id="oracle-top-to-bottom">Top to bottom</h3>
-  <p>Keep the same adaptive row placement. <kbd>ArrowDown</kbd> follows the column-oriented route from top to bottom, then continues to the next column group. <kbd>ArrowUp</kbd> reverses it. Skip disabled cards and cycle at the collection boundary. <kbd>Home</kbd>/<kbd>End</kbd> reaches the first/last enabled card in this route. Left/Right still follows collection order and wraps.</p>
-  <p>This policy does not renumber or rearrange cards. In a three-card-per-row example, Down can visit 1, 4, 7 before 2, 5, 8, while Right visits 1, 2, 3. Variable widths mean vertical edges need not align, and resizing can change the vertical route. Evaluate switching axes separately from Semantic.</p>
-  <span className="pair">Masonry only · Visual column order</span>
-</article>
 {" "}</div>
 {" "}
-<p className="note">{" Spatial vertical movement uses horizontal overlap. Visual rows and bands do not create semantic rows. Left/Right cycles through collection order in every named variant; only Up/Down differs by policy. All ten playgrounds contain 50 Picsum photos with collection-position image IDs. "}</p>
+<p className="note">{" Spatial vertical movement uses horizontal overlap. Visual rows and bands do not create semantic rows. Left/Right cycles through collection order in every named variant; only Up/Down differs by policy. All nine playgrounds contain 50 Picsum photos with collection-position image IDs. "}</p>
 {" "}</section>
 {" "}
 {" "}</div>
@@ -1312,7 +1287,7 @@ export const Oracle = () => {
         </figcaption>
       </figure>
     </div>
-    <p className="layout-context"><strong>Same semantics, separate vertical policies.</strong> The grid, masonry, and waterfall examples expose one semantic row, without explicit ARIA row/column indices or counts. Cell names use "x of y, title." Left/Right cycles in collection order, including in RTL. Up/Down follows each variant's policy: Semantic and waterfall use collection order; Top to bottom uses a column-oriented route.</p>
+    <p className="layout-context"><strong>Same semantics, separate vertical policies.</strong> The grid, masonry, and waterfall examples expose one semantic row, without explicit ARIA row/column indices or counts. Cell names use "x of y, title." Left/Right cycles in collection order, including in RTL. Up/Down follows each variant's policy: Semantic and waterfall use collection order; NoWrap, Loop, and Advance use spatial navigation.</p>
   </div>
 </section>
 <div className="deck-section wrap">
