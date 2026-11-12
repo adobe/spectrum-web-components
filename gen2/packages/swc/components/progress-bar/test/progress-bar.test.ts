@@ -417,6 +417,44 @@ export const MissingAccessibleNameTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
+// TEST: Enum DEBUG warnings link to the progress bar docs
+// ──────────────────────────────────────────────────────────────
+
+export const EnumWarningDocsLinkTest: Story = {
+  render: () => html`
+    <span></span>
+  `,
+  play: async ({ step }) => {
+    await step(
+      'label-position and static-color warnings link to the progress bar docs, not the meter docs',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          const progressBar = await fixture<ProgressBar>(html`
+            <swc-progress-bar
+              value="50"
+              accessible-label="Uploading"
+            ></swc-progress-bar>
+          `);
+          progressBar.labelPosition = 'invalid' as ProgressBar['labelPosition'];
+          progressBar.staticColor = 'invalid' as ProgressBar['staticColor'];
+          await progressBar.updateComplete;
+
+          for (const prop of ['label-position', 'static-color']) {
+            const call = warnCalls.find((c) =>
+              String(c?.[1] ?? '').includes(`"${prop}"`)
+            );
+            expect(call, `a "${prop}" warning is emitted`).toBeDefined();
+            expect(String(call?.[2] ?? '')).toContain(
+              'components-progress-bar--docs'
+            );
+          }
+          progressBar.parentElement?.remove();
+        })
+    );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
 // TEST: Static-color reflection (restores coverage for the
 // `!test` StaticColors story, which axe cannot evaluate against
 // the decorator gradient).

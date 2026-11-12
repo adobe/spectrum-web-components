@@ -818,8 +818,9 @@ export const CompactTest: Story = {
 
 export const InvalidOrientationWarningTest: Story = {
   render: () => html`
-    <swc-action-group>
-      <swc-action-button>Action</swc-action-button>
+    <swc-action-group accessible-label="Actions">
+      <swc-action-button>First</swc-action-button>
+      <swc-action-button>Second</swc-action-button>
     </swc-action-group>
   `,
   play: async ({ canvasElement, step }) => {
@@ -839,9 +840,40 @@ export const InvalidOrientationWarningTest: Story = {
         ).toBeGreaterThan(0);
         expect(
           String(warnCalls[0]?.[1] || ''),
-          'warning references orientation'
-        ).toContain('orientation');
+          'warning names the property and received value'
+        ).toMatch(/"orientation".*"diagonal"/);
+        expect(group.orientation, 'property keeps the value set').toBe(
+          'diagonal'
+        );
+        expect(
+          group.getAttribute('orientation'),
+          'attribute keeps the value set'
+        ).toBe('diagonal');
       })
+    );
+
+    await step('arrow keys navigate horizontally (the default)', async () => {
+      const buttons = Array.from(
+        canvasElement.querySelectorAll('swc-action-button')
+      ) as HTMLElement[];
+      buttons[0].focus();
+      await userEvent.keyboard('{ArrowRight}');
+      expect(document.activeElement, 'ArrowRight moves focus').toBe(buttons[1]);
+    });
+
+    await step(
+      'resets to horizontal without a warning when the attribute is removed',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          group.removeAttribute('orientation');
+          await group.updateComplete;
+          expect(group.orientation, 'orientation after removal').toBe(
+            'horizontal'
+          );
+          expect(warnCalls.length, 'no warning when orientation is unset').toBe(
+            0
+          );
+        })
     );
   },
 };
@@ -894,8 +926,22 @@ export const InvalidStaticColorWarningTest: Story = {
         ).toBeGreaterThan(0);
         expect(
           String(warnCalls[0]?.[1] || ''),
-          'warning references static-color'
-        ).toContain('static-color');
+          'warning names the property and received value'
+        ).toMatch(/"static-color".*"purple"/);
+        expect(
+          group.getAttribute('static-color'),
+          'attribute keeps the value set'
+        ).toBe('purple');
+
+        const button = canvasElement.querySelector('swc-action-button')!;
+        expect(
+          button.hasAttribute('static-color'),
+          'children render their default instead of the invalid value'
+        ).toBe(false);
+        expect(
+          warnCalls.every((call) => call[0] === group),
+          'only the group warns'
+        ).toBe(true);
       })
     );
   },

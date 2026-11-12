@@ -797,6 +797,10 @@ export const IconOnlyMissingLabelWarningTest: Story = {
           String(warnCalls[0]?.[1] || ''),
           'warning message mentions accessible-label'
         ).toContain('accessible-label');
+        expect(
+          String(warnCalls[0]?.[2] || ''),
+          'warning links to the action button docs, not the button docs'
+        ).toContain('components-action-button--docs');
       })
     );
   },
@@ -827,6 +831,10 @@ export const PendingAndDisabledWarningTest: Story = {
             String(warnCalls[0]?.[1] || ''),
             'warning message mentions pending'
           ).toContain('pending');
+          expect(
+            String(warnCalls[0]?.[2] || ''),
+            'warning links to the action button docs, not the button docs'
+          ).toContain('components-action-button--docs');
         })
     );
   },

@@ -22,6 +22,13 @@ import '@adobe/spectrum-wc/components/asset/swc-asset.js';
 import '@adobe/spectrum-wc/components/badge/swc-badge.js';
 import '../swc-prompt-field.js';
 
+import {
+  filesToAttachments,
+  revokeAttachment,
+  revokeAttachments,
+  type UploadAttachmentData,
+} from '../../upload-attachment/index.js';
+
 // ────────────────
 //    METADATA
 // ────────────────
@@ -104,7 +111,6 @@ const meta: Meta = {
   render: (storyArgs) => renderPromptField(storyArgs),
   parameters: {
     docs: {
-      packagePath: 'patterns/ai-toolkit/prompt-field',
       subtitle:
         'Prompt entry surface for AI flows. Populate attachments by slotting one or more swc-upload-attachment nodes into attachment',
     },
@@ -537,34 +543,6 @@ export const States: Story = {
 //    BEHAVIORS STORIES
 // ──────────────────────────
 
-interface PromptFieldBehaviorAttachment {
-  id: string;
-  fileName: string;
-  sizeLabel: string;
-  thumbnailUrl?: string;
-  badgeLabel?: string;
-}
-
-function fileBadgeLabel(fileName: string): string | undefined {
-  const extension = fileName.match(/\.([a-z0-9]+)$/i)?.[1];
-  return extension ? extension.toUpperCase() : undefined;
-}
-
-function filesToAttachments(files: File[]): PromptFieldBehaviorAttachment[] {
-  return files.map((file, index) => {
-    const isImage =
-      file.type.startsWith('image/') ||
-      /\.(png|jpe?g|gif|webp|bmp|svg|avif)$/i.test(file.name);
-    return {
-      id: `${crypto.randomUUID()}-${index}`,
-      fileName: file.name || 'Attachment',
-      sizeLabel: `${Math.max(1, Math.round(file.size / 1024))} KB`,
-      thumbnailUrl: isImage ? URL.createObjectURL(file) : undefined,
-      badgeLabel: isImage ? undefined : fileBadgeLabel(file.name),
-    } satisfies PromptFieldBehaviorAttachment;
-  });
-}
-
 @customElement('swc-prompt-field-behavior-demo')
 class PromptFieldBehaviorDemo extends LitElement {
   @property({ attribute: false })
@@ -574,7 +552,7 @@ class PromptFieldBehaviorDemo extends LitElement {
   private value = 'Summarize the API changes in this branch.';
 
   @state()
-  private attachments: PromptFieldBehaviorAttachment[] = [];
+  private attachments: UploadAttachmentData[] = [];
 
   protected override createRenderRoot(): this {
     return this;
@@ -594,11 +572,8 @@ class PromptFieldBehaviorDemo extends LitElement {
   }
 
   public override disconnectedCallback(): void {
-    for (const attachment of this.attachments) {
-      if (attachment.thumbnailUrl) {
-        URL.revokeObjectURL(attachment.thumbnailUrl);
-      }
-    }
+    revokeAttachments(this.attachments);
+    this.attachments = [];
     super.disconnectedCallback?.();
   }
 
@@ -608,11 +583,7 @@ class PromptFieldBehaviorDemo extends LitElement {
   }
 
   private _handleSubmit(): void {
-    for (const attachment of this.attachments) {
-      if (attachment.thumbnailUrl) {
-        URL.revokeObjectURL(attachment.thumbnailUrl);
-      }
-    }
+    revokeAttachments(this.attachments);
     this.value = '';
     this.attachments = [];
   }
@@ -630,8 +601,7 @@ class PromptFieldBehaviorDemo extends LitElement {
       return;
     }
 
-    const nextAttachments = filesToAttachments(files);
-    this.attachments = [...this.attachments, ...nextAttachments];
+    this.attachments = [...this.attachments, ...filesToAttachments(files)];
     input.value = '';
   }
 
@@ -648,8 +618,8 @@ class PromptFieldBehaviorDemo extends LitElement {
     }
 
     const removed = this.attachments.find((item) => item.id === attachmentId);
-    if (removed?.thumbnailUrl) {
-      URL.revokeObjectURL(removed.thumbnailUrl);
+    if (removed) {
+      revokeAttachment(removed);
     }
 
     this.attachments = this.attachments.filter(
@@ -670,8 +640,8 @@ class PromptFieldBehaviorDemo extends LitElement {
             type="media"
             size="l"
             dismissible
-            accessible-label=${`${attachment.fileName}, ${attachment.sizeLabel}`}
-            dismiss-label=${`Remove ${attachment.fileName}`}
+            accessible-label=${`${attachment.name}, ${attachment.sizeLabel}`}
+            dismiss-label=${`Remove ${attachment.name}`}
             data-attachment-id=${attachment.id}
           >
             ${attachment.thumbnailUrl
@@ -679,7 +649,7 @@ class PromptFieldBehaviorDemo extends LitElement {
                   <swc-asset slot="thumbnail">
                     <img
                       src=${attachment.thumbnailUrl}
-                      alt=${attachment.fileName}
+                      alt=${attachment.name}
                     />
                   </swc-asset>
                 `
@@ -687,7 +657,7 @@ class PromptFieldBehaviorDemo extends LitElement {
                   <swc-asset slot="thumbnail">
                     <svg
                       role="img"
-                      aria-label=${attachment.fileName}
+                      aria-label=${attachment.name}
                       viewBox="0 0 100 100"
                     >
                       <rect width="100" height="100" fill="#f3f3f3"></rect>
