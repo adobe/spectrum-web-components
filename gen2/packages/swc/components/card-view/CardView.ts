@@ -336,9 +336,6 @@ export class CardView extends CardViewBase {
           data-index=${index}
           role="gridcell"
           aria-label=${label}
-          aria-describedby=${ifDefined(
-            this.moreInfoEnabled ? `more-info-${index}` : undefined
-          )}
           aria-selected=${ifDefined(
             this.selectionMode === 'none'
               ? undefined
