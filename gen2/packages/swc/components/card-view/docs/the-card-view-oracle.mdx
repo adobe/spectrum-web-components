@@ -40,7 +40,7 @@ export const readings = {
     label: 'Waterfall · Five keyboard policies',
     title: 'The cards do not share a horizontal row.',
     summary:
-      'The same single-row semantics now contain unequal-height cards. All five policies place consecutive cards down each visual column before moving to the next. Compare navigation, not different placement algorithms.',
+      'The same single-row semantics now contain adaptive visual rows: cards share a row height, with widths based on image aspect ratios. All five policies place consecutive cards across rows. Compare navigation, not different placement algorithms.',
     caution:
       'Several cards may overlap the active card vertically. Which one should Left or Right choose? Test the geometry instead of assuming a horizontal row exists.',
     variants: [
@@ -531,11 +531,15 @@ export const oracleStyles = `.sbdocs-wrapper:has(#card-view-oracle) { padding: 0
       #card-view-oracle .uniform-layout {
         grid-template-rows: repeat(3, 1fr);
       }
-      #card-view-oracle .layout-column {
-        display: flex;
-        flex-direction: column;
+      #card-view-oracle .waterfall-layout {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+      }
+      #card-view-oracle .layout-visual-row {
+        display: grid;
         gap: 10px;
         min-width: 0;
+        min-height: 0;
       }
       #card-view-oracle .layout-card {
         display: grid;
@@ -879,7 +883,7 @@ export const Oracle = () => {
 <div>{" "}
 <strong>{"The shifting floor"}</strong>
 {" "}
-<p>{" Waterfall cards have no aligned horizontal rows. Several neighbors may overlap vertically. Which card should Left or Right reach, and what happens at an edge? That is a navigation question, not another semantic choice. "}</p>
+<p>{" The adaptive waterfall layout aligns cards in visual rows, with equal heights within each row and widths based on image aspect ratios. Vertical edges need not align between rows. Which card should Up or Down reach, and what happens at an edge? That is a navigation question, not another semantic choice. "}</p>
 {" "}</div>
 {" "}</li>
 {" "}</ol>
@@ -1154,7 +1158,7 @@ export const Oracle = () => {
 {" "}
 <h3 id="oracle-semantic">{"Semantic"}</h3>
 {" "}
-<p>{" Right/Down moves to the next enabled item in semantic collection order; Left/Up moves to the previous one, including in RTL. Geometry does not decide the destination. Cycle between the last and first enabled items at the collection boundary. Repeating an arrow visits every enabled item. The waterfall version places cards top to bottom, then across columns, to match that sequence. "}</p>
+<p>{" Right/Down moves to the next enabled item in semantic collection order; Left/Up moves to the previous one, including in RTL. Geometry does not decide the destination. Cycle between the last and first enabled items at the collection boundary. Repeating an arrow visits every enabled item. The adaptive waterfall version places consecutive cards across each visual row before starting the next. "}</p>
 {" "}
 <span className="pair">{"Grid + waterfall · Semantic"}</span>
 {" "}</article>
@@ -1168,13 +1172,13 @@ export const Oracle = () => {
     <i></i>
   </div>
   <h3 id="oracle-top-to-bottom">Top to bottom</h3>
-  <p>Keep column-first placement. Down/Right follows the cards from top to bottom within a visual column, then moves right to the next column. Left/Up reverses the route. Skip disabled cards and cycle at the collection boundary. Home/End reaches the first/last enabled card in this visual order. Columns are visited physically left to right, including in RTL.</p>
-  <p>Unlike Semantic, this policy uses measured visual positions, not collection indices. With current column-first placement, both routes agree in LTR, as in the numbered diagram below. In RTL, placement starts on the right while this navigation route still starts on the left. Resizing can change column membership.</p>
+  <p>Keep the same adaptive row placement. Down/Right follows the column-oriented navigation route from top to bottom, then moves to the next column group. Left/Up reverses the route. Skip disabled cards and cycle at the collection boundary. Home/End reaches the first/last enabled card in this route.</p>
+  <p>This keyboard policy does not renumber or rearrange the cards. Collection order runs across rows; a column-oriented route can instead visit 1, 4, 7 before 2, 5, 8 in a three-card-per-row example. Variable widths mean vertical edges need not align, and resizing can change the route. Evaluate this policy separately from Semantic.</p>
   <span className="pair">Waterfall only · Visual column order</span>
 </article>
 {" "}</div>
 {" "}
-<p className="note">{" Spatial alignment uses perpendicular overlap. A waterfall band is not a horizontal row. Semantic follows collection order; Top to bottom follows visual column order. All nine playgrounds contain 50 Picsum photos with collection-position image IDs. "}</p>
+<p className="note">{" Spatial alignment uses perpendicular overlap. Adaptive waterfall rows are visual, not additional semantic rows. Semantic follows collection order; Top to bottom uses a column-oriented route. All nine playgrounds contain 50 Picsum photos with collection-position image IDs. "}</p>
 {" "}</section>
 {" "}
 {" "}</div>
@@ -1182,7 +1186,7 @@ export const Oracle = () => {
   <div className="wrap">
     <p className="eyebrow">The shape of the collection</p>
     <h2 id="oracle-layouts-title">Two layouts. The same collection.</h2>
-    <p>Grid and waterfall describe visual placement, not different semantics. Both expose one semantic row of named gridcells, without explicit ARIA row/column indices or counts. Advance includes position in each cell name. The numbers below show collection order; the shapes show where those cards appear.</p>
+    <p>Grid and waterfall describe visual placement, not different semantics. Both expose one semantic row of named gridcells, without explicit ARIA row/column indices or counts. Each gridcell's accessible name starts with its collection position, then its title. The numbers below show collection order; the shapes show where those cards appear.</p>
     <div className="layout-diagrams">
       <figure>
         <div className="layout-diagram uniform-layout" role="img" aria-label="Uniform grid: cards 1 through 9 run left to right across three aligned rows of three equal-height cards.">
@@ -1196,23 +1200,23 @@ export const Oracle = () => {
         </figcaption>
       </figure>
       <figure>
-        <div className="layout-diagram waterfall-layout" role="img" aria-label="Waterfall: unequal-height cards fill each column top to bottom before moving to the next. The columns contain 1, 2, 3; 4, 5, 6; and 7, 8, 9. Cards do not form aligned horizontal rows.">
+        <div className="layout-diagram waterfall-layout" role="img" aria-label="Adaptive waterfall: cards have equal heights within each visual row and variable widths. Collection order runs left to right: 1, 2, 3 in the first row; 4, 5, 6 in the second; and 7, 8, 9 in the third. Vertical edges differ between rows.">
           {[
-            [[1, 96], [2, 64], [3, 64]],
-            [[4, 64], [5, 88], [6, 72]],
-            [[7, 80], [8, 56], [9, 88]],
-          ].map((column, columnIndex) => (
-            <div className="layout-column" key={columnIndex}>
-              {column.map(([position, height]) => (
-                <span className="layout-card" key={position} style={{ height }}>{position}</span>
+            [[1, 3], [2, 2], [3, 4]],
+            [[4, 2], [5, 4], [6, 3]],
+            [[7, 4], [8, 3], [9, 2]],
+          ].map((row, rowIndex) => (
+            <div className="layout-visual-row" key={rowIndex} style={{ gridTemplateColumns: row.map(([, width]) => `minmax(0, ${width}fr)`).join(' ') }}>
+              {row.map(([position]) => (
+                <span className="layout-card" key={position}>{position}</span>
               ))}
             </div>
           ))}
         </div>
         <figcaption>
-          <h3 id="oracle-waterfall-layout">Waterfall</h3>
-          <p>Cards have unequal heights. All five waterfall examples fill a visual column top to bottom before moving to the next, using each card's actual height. Horizontal neighbors can overlap at different heights, so there is no single aligned row to follow.</p>
-          <p>Semantic follows collection order without choosing destinations by geometry. Top to bottom follows measured visual column order. The routes coincide in LTR with this placement, but can differ in RTL.</p>
+          <h3 id="oracle-waterfall-layout">Waterfall: adaptive rows</h3>
+          <p>Cards share a height within each visual row, while image aspect ratios determine their widths. Full rows fill the available width; an incomplete final row need not stretch. Cards 1, 2, 3 run across the first row, followed by 4, 5, 6 and then 7, 8, 9. Rows align horizontally, but their vertical card edges can differ. This is a row-based adaptive layout, not independent masonry columns.</p>
+          <p>Semantic follows these collection numbers in order. Top to bottom is a separate column-oriented keyboard policy; it does not change visual placement or collection numbering.</p>
         </figcaption>
       </figure>
     </div>

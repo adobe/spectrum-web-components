@@ -109,13 +109,19 @@ export const NamedLayoutNavigation: StoryObj = {
           ].map((card) => card.getBoundingClientRect());
           for (let index = 1; index < bounds.length; index++) {
             if (layout === 'waterfall') {
-              if (index % 3 === 0) {
+              if (index % 3 !== 0) {
                 expect(bounds[index].left).toBeGreaterThan(
                   bounds[index - 1].left
                 );
-                expect(bounds[index].top).toBeCloseTo(bounds[0].top);
+                expect(bounds[index].top).toBeCloseTo(bounds[index - 1].top);
+                expect(bounds[index].height).toBeCloseTo(
+                  bounds[index - 1].height
+                );
+                expect(bounds[index].width).not.toBeCloseTo(
+                  bounds[index - 1].width
+                );
               } else {
-                expect(bounds[index].left).toBeCloseTo(bounds[index - 1].left);
+                expect(bounds[index].left).toBeCloseTo(bounds[0].left);
                 expect(bounds[index].top).toBeCloseTo(
                   bounds[index - 1].bottom + 16
                 );
@@ -499,7 +505,7 @@ export const WaterfallLayoutNavigation: StoryObj = {
         new Set(
           cells.slice(0, 3).map((cell) => cell.getBoundingClientRect().left)
         ).size
-      ).toBe(1);
+      ).toBe(3);
       Object.defineProperty(view, 'positions', {
         get: () =>
           geometry.map((position) => ({

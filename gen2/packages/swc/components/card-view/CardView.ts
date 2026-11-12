@@ -50,6 +50,9 @@ export class CardView extends CardViewBase {
   private previewSizes: number[][] = [];
 
   @state()
+  private contentHeights: number[] = [];
+
+  @state()
   private collectionHeight = 0;
 
   private observer?: ResizeObserver;
@@ -130,29 +133,67 @@ export class CardView extends CardViewBase {
     if (JSON.stringify(previewSizes) !== JSON.stringify(this.previewSizes)) {
       this.previewSizes = previewSizes;
     }
-    const columnHeights = Array.from({ length: columns }, () => 0);
-    const itemsPerColumn = Math.ceil(cards.length / columns);
     const rowHeight = Math.max(0, ...heights);
     const rtl = hostStyle.direction === 'rtl';
-    const next = cards.map((_, index) => {
-      const column =
+    const next: CardViewPosition[] = [];
+    const contentHeights: number[] = [];
+    let top = 0;
+    for (let start = 0; start < cards.length; start += columns) {
+      const row = cards.slice(start, start + columns);
+      const ratios = row.map((_, offset) => {
+        const ratio = this.items[start + offset].aspectRatio ?? 1;
+        return Number.isFinite(ratio) && ratio > 0 ? ratio : 1;
+      });
+      const available = width - (row.length - 1) * gap;
+      const justifiedHeight =
+        available / ratios.reduce((sum, ratio) => sum + ratio, 0);
+      const previewHeight =
+        row.length === columns
+          ? justifiedHeight
+          : Math.min(justifiedHeight, cardWidth / 1.5);
+      const contentHeight = Math.max(
+        0,
+        ...row.map(
+          (card) =>
+            card.shadowRoot?.querySelector<HTMLElement>('.swc-CardBase-content')
+              ?.scrollHeight ?? 0
+        )
+      );
+      const height =
         this.layout === 'waterfall'
-          ? Math.floor(index / itemsPerColumn)
-          : index % columns;
-      const top =
-        this.layout === 'waterfall'
-          ? columnHeights[column]
-          : Math.floor(index / columns) * (rowHeight + gap);
-      const height = heights[index];
-      columnHeights[column] = top + height + gap;
-      return {
-        left: (rtl ? columns - column - 1 : column) * (cardWidth + gap),
-        top,
-        width: cardWidth,
-        height,
-        column,
-      };
-    });
+          ? previewHeight +
+            Math.max(
+              0,
+              ...row.map(
+                (card, offset) =>
+                  heights[start + offset] -
+                  card.querySelector('img')!.getBoundingClientRect().height
+              )
+            )
+          : rowHeight;
+      let left = 0;
+      row.forEach((_, column) => {
+        const itemWidth =
+          this.layout === 'waterfall'
+            ? ratios[column] * previewHeight
+            : cardWidth;
+        contentHeights.push(contentHeight);
+        next.push({
+          left: rtl ? width - left - itemWidth : left,
+          top,
+          width: itemWidth,
+          height,
+          column,
+        });
+        left += itemWidth + gap;
+      });
+      top += height + gap;
+    }
+    if (
+      JSON.stringify(contentHeights) !== JSON.stringify(this.contentHeights)
+    ) {
+      this.contentHeights = contentHeights;
+    }
     const height = Math.max(
       0,
       ...next.map((position) => position.top + position.height)
@@ -198,6 +239,13 @@ export class CardView extends CardViewBase {
       <swc-card
         variant=${this.variant}
         density=${this.density}
+        style=${styleMap({
+          '--swc-card-base-grid-template-rows':
+            this.layout === 'waterfall' &&
+            this.contentHeights[index] !== undefined
+              ? `auto minmax(${this.contentHeights[index]}px, auto) auto`
+              : undefined,
+        })}
         data-selected=${selected}
         aria-hidden=${ifDefined(
           this.moreInfoEnabled && !this.expandedInfo.has(item.id)
