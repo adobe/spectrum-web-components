@@ -1,0 +1,70 @@
+name: Changeset check
+#
+# Warns (never fails) when a pull request changes publishable source in
+# 1st-gen or gen2 without adding a changeset to that generation's
+# `.changeset` directory.
+#
+
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
+
+permissions:
+  contents: read
+
+concurrency:
+  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
+  cancel-in-progress: true
+
+jobs:
+  changeset_check:
+    name: Check for changesets
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check for changesets
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          changed=$(git diff --name-only --diff-filter=AMDR "$BASE_SHA...$HEAD_SHA")
+
+          # Source changes that ship to consumers; tests, stories, and docs don't need a changeset.
+          ignore_pattern='(/test/|/tests/|/stories/|\.(test|stories|vrt)\.[jt]sx?$|\.mdx?$)'
+
+          missing=0
+          for gen in 1st-gen gen2; do
+            source_changes=$(echo "$changed" | grep -E "^${gen}/(packages|tools)/" | grep -Ev "$ignore_pattern" || true)
+            if [ -z "$source_changes" ]; then
+              continue
+            fi
+
+            changesets=$(echo "$changed" | grep -E "^${gen}/\.changeset/.+\.md$" | grep -v "/README\.md$" || true)
+            if [ -n "$changesets" ]; then
+              echo "✅ $gen: changeset found."
+              continue
+            fi
+
+            missing=1
+            echo "::warning title=Missing changeset ($gen)::This PR changes $gen source but doesn't add a changeset in $gen/.changeset/. Run 'yarn changeset:$gen' if the change needs to be published."
+            {
+              echo "### ⚠️ Missing changeset for \`$gen\`"
+              echo "This PR changes \`$gen\` source but doesn't add a changeset to \`$gen/.changeset/\`."
+              echo "If the change needs to be published, add one. Otherwise, you can ignore this warning."
+              echo
+            } >> "$GITHUB_STEP_SUMMARY"
+          done
+
+          if [ "$missing" -eq 0 ]; then
+            echo "No missing changesets."
+          fi
