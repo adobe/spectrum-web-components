@@ -17,7 +17,7 @@ A menu separator consists of:
 
 ## Options
 
-`<swc-menu-separator>` has no attributes, properties, slots, or events. Its thickness, color, and spacing come from Spectrum 2 tokens and are not configurable.
+`<swc-menu-separator>` has no attributes, properties, slots, or events. Its thickness, color, and spacing come from Spectrum 2 tokens and are not configurable. It also exposes no public custom properties.
 
 ## Behaviors
 
@@ -25,7 +25,11 @@ A menu separator consists of:
 
 Place a menu separator between groups of menu items, not before the first item or after the last. The separator is not interactive and does not receive focus.
 
-Place it as a direct child of `swc-menu`, `swc-action-menu`, or a `swc-menu-item` submenu, never inside a `swc-menu-group`. The menu supplies the line thickness. `swc-menu-item` has not shipped yet, so the examples slot placeholder rows with `role="menuitem"`.
+Place it as a direct child of `swc-menu`. `swc-menu-item` has not shipped yet, so the examples slot placeholder rows with `role="menuitem"`.
+
+### Upcoming parents
+
+When `swc-action-menu`, submenus, and `swc-menu-group` ship, they will define where a separator is valid. Until then, only a direct child of `swc-menu` is supported, and a separator must not be placed inside a menu group.
 
 ## Accessibility
 

@@ -20,12 +20,13 @@
 
 /* The line uses `gray-500`: it is the lightest gray that reaches 3:1
  * (WCAG 1.4.11) against the `swc-menu` surface in both light and dark.
- * Thickness is supplied by the parent `swc-menu` through the inherited
- * `--swc-menu-separator-thickness`; the separator does not define it.
+ * The parent `swc-menu` may override the thickness through the inherited
+ * `--swc-menu-separator-thickness`; the fallback is the medium divider
+ * thickness so the line still renders in any other parent.
  * Block margin centers the line in the 12px section-divider container
  * (Q3: container height pending a spacing token update). */
 .swc-MenuSeparator {
-  --_swc-menu-separator-thickness: var(--swc-menu-separator-thickness, 0px);
+  --_swc-menu-separator-thickness: var(--swc-menu-separator-thickness, token("divider-thickness-medium"));
 
   block-size: var(--_swc-menu-separator-thickness);
   margin-block: max(0px, calc((token("menu-item-section-divider-height") - var(--_swc-menu-separator-thickness)) / 2));

@@ -11,8 +11,11 @@
  */
 
 import { html } from 'lit';
+import { expect, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
+
+import type { Menu } from '@adobe/spectrum-wc/components/menu/Menu.js';
 
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc/components/menu/swc-menu.js';
@@ -48,10 +51,12 @@ export default meta;
 // ────────────────────
 
 // A separator only has meaning inside a menu, so every story renders it there.
+// Only Overview opens by default: menus are `popover="auto"`, so opening several
+// on one docs page would close each other. Other stories open in `play`.
 // Placeholder rows: `swc-menu-item` has not shipped yet.
-const renderInMenu = (id: string) => html`
+const renderInMenu = (id: string, open = false) => html`
   <swc-button id="${id}-trigger">Edit</swc-button>
-  <swc-menu open for="${id}-trigger">
+  <swc-menu ?open=${open} for="${id}-trigger">
     <swc-menu-item role="menuitem">Cut</swc-menu-item>
     <swc-menu-item role="menuitem">Copy</swc-menu-item>
     <swc-menu-separator></swc-menu-separator>
@@ -59,12 +64,26 @@ const renderInMenu = (id: string) => html`
   </swc-menu>
 `;
 
+const openMenu: Story['play'] = async ({ canvasElement }) => {
+  const menu = canvasElement.querySelector('swc-menu') as Menu;
+  await menu.updateComplete;
+  menu.open = true;
+  await menu.updateComplete;
+  await waitFor(() =>
+    expect(
+      menu.shadowRoot?.querySelector('.swc-Menu')?.matches(':popover-open'),
+      'menu is open'
+    ).toBe(true)
+  );
+};
+
 // ────────────────────────
 //    PLAYGROUND STORY
 // ────────────────────────
 
 export const Playground: Story = {
   render: () => renderInMenu('playground'),
+  play: openMenu,
   tags: ['dev'],
 };
 
@@ -73,7 +92,7 @@ export const Playground: Story = {
 // ──────────────────────────
 
 export const Overview: Story = {
-  render: () => renderInMenu('overview'),
+  render: () => renderInMenu('overview', true),
   tags: ['overview'],
 };
 
@@ -83,6 +102,7 @@ export const Overview: Story = {
 
 export const Anatomy: Story = {
   render: () => renderInMenu('anatomy'),
+  play: openMenu,
   tags: ['anatomy'],
 };
 
@@ -92,5 +112,6 @@ export const Anatomy: Story = {
 
 export const Accessibility: Story = {
   render: () => renderInMenu('accessibility'),
+  play: openMenu,
   tags: ['a11y'],
 };

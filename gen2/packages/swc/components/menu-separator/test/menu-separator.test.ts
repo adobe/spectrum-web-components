@@ -10,14 +10,15 @@
  * governing permissions and limitations under the License.
  */
 
-import { expect } from '@storybook/test';
+import { expect, userEvent, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
+import type { Menu } from '@adobe/spectrum-wc/components/menu/Menu.js';
 import { MenuSeparator } from '@adobe/spectrum-wc/components/menu-separator/MenuSeparator.js';
 
 import '@adobe/spectrum-wc/components/menu-separator/swc-menu-separator.js';
 
-import { getComponent } from '../../../utils/test-utils.js';
+import { getComponent, withWarningSpy } from '../../../utils/test-utils.js';
 import meta, { Anatomy, Overview } from '../stories/menu-separator.stories.js';
 
 // This file defines dev-only test stories that reuse the main story metadata.
@@ -44,18 +45,24 @@ export const OverviewTest: Story = {
     );
 
     await step('exposes role="separator" on the host', async () => {
-      expect(separator.getAttribute('role')).toBe('separator');
+      expect(separator.getAttribute('role'), 'role is separator').toBe(
+        'separator'
+      );
     });
 
     await step('adds no focus or naming attributes', async () => {
-      expect(separator.hasAttribute('tabindex')).toBe(false);
-      expect(separator.hasAttribute('aria-label')).toBe(false);
-      expect(separator.hasAttribute('aria-orientation')).toBe(false);
+      expect(separator.hasAttribute('tabindex'), 'no tabindex').toBe(false);
+      expect(separator.hasAttribute('aria-label'), 'no aria-label').toBe(false);
+      expect(
+        separator.hasAttribute('aria-orientation'),
+        'no aria-orientation'
+      ).toBe(false);
     });
 
     await step('renders the internal line element', async () => {
       expect(
-        separator.shadowRoot?.querySelector('.swc-MenuSeparator')
+        separator.shadowRoot?.querySelector('.swc-MenuSeparator'),
+        'internal line element renders'
       ).toBeTruthy();
     });
   },
@@ -79,13 +86,15 @@ export const AnatomyTest: Story = {
     await step(
       'receives the medium thickness from the parent menu',
       async () => {
-        expect(getComputedStyle(line).blockSize).toBe('2px');
+        expect(getComputedStyle(line).blockSize, 'line is 2px').toBe('2px');
       }
     );
 
     await step('centers the line in the 12px container', async () => {
-      expect(getComputedStyle(line).marginBlockStart).toBe('5px');
-      expect(getComputedStyle(line).marginBlockEnd).toBe('5px');
+      expect(getComputedStyle(line).marginBlockStart, 'start margin').toBe(
+        '5px'
+      );
+      expect(getComputedStyle(line).marginBlockEnd, 'end margin').toBe('5px');
     });
   },
 };
@@ -93,15 +102,43 @@ export const AnatomyTest: Story = {
 export const FocusTest: Story = {
   ...Anatomy,
   play: async ({ canvasElement, step }) => {
+    const menu = await getComponent<Menu>(canvasElement, 'swc-menu');
     const separator = await getComponent<MenuSeparator>(
       canvasElement,
       'swc-menu-separator'
     );
+    const items = Array.from(
+      canvasElement.querySelectorAll('swc-menu-item')
+    ) as HTMLElement[];
+    const popover = menu.shadowRoot?.querySelector('.swc-Menu') as HTMLElement;
 
-    await step('is not focusable inside the menu', async () => {
-      expect(separator.hasAttribute('tabindex')).toBe(false);
-      separator.focus();
-      expect(document.activeElement).not.toBe(separator);
+    await step('keyboard navigation skips the separator', async () => {
+      menu.open = true;
+      await menu.updateComplete;
+      await waitFor(() =>
+        expect(popover.matches(':popover-open'), 'menu is open').toBe(true)
+      );
+      items[1].focus();
+      await userEvent.keyboard('{ArrowDown}');
+      expect(
+        document.activeElement,
+        'ArrowDown from Copy lands on Delete'
+      ).toBe(items[2]);
+    });
+
+    await step('clicking the separator keeps the menu open', async () => {
+      await userEvent.click(separator);
+      expect(popover.matches(':popover-open'), 'menu stays open').toBe(true);
+    });
+
+    await step('slotting the separator logs no warning', async () => {
+      await withWarningSpy(async (warnCalls) => {
+        const extra = document.createElement('swc-menu-separator');
+        menu.append(extra);
+        await menu.updateComplete;
+        extra.remove();
+        expect(warnCalls.length, 'no placement warning').toBe(0);
+      });
     });
   },
 };
