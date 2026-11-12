@@ -50,9 +50,12 @@ export const MENU_PLACEMENTS = [
 
 /**
  * Tag names `swc-menu` accepts in its default slot this phase. `swc-menu-group`
- * and `swc-divider` (as a separator) join in a later migration phase.
+ * joins in a later migration phase.
  */
-export const MENU_ALLOWED_CHILDREN = ['swc-menu-item'] as const;
+export const MENU_ALLOWED_CHILDREN = [
+  'swc-menu-item',
+  'swc-menu-separator',
+] as const;
 
 // ──────────────────
 //     TYPES

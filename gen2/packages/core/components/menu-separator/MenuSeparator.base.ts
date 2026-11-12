@@ -1,0 +1,33 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
+
+/**
+ * A menu separator is a non-interactive line that visually and semantically
+ * separates groups of items inside a menu.
+ *
+ * It has no public properties, slots, or events. The host is fixed to
+ * `role="separator"`, is not focusable, and carries no value or accessible name.
+ * Thickness and spacing come from Spectrum 2 tokens, so there is no `size`.
+ */
+export abstract class MenuSeparatorBase extends SpectrumElement {
+  // ──────────────────────
+  //     IMPLEMENTATION
+  // ──────────────────────
+
+  public override connectedCallback(): void {
+    super.connectedCallback();
+    // Set on connect so the role exists before first paint and before a parent menu inspects its children.
+    this.setAttribute('role', 'separator');
+  }
+}

@@ -1,0 +1,39 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+:host {
+  display: block;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* The line uses `gray-500`: it is the lightest gray that reaches 3:1
+ * (WCAG 1.4.11) against the `swc-menu` surface in both light and dark.
+ * Block margin centers the line in the 12px section-divider container
+ * (Q3: container height pending a spacing token update). */
+.swc-MenuSeparator {
+  --_swc-menu-separator-thickness: token("divider-thickness-medium");
+
+  block-size: var(--_swc-menu-separator-thickness);
+  margin-block: max(0px, calc((token("menu-item-section-divider-height") - var(--_swc-menu-separator-thickness)) / 2));
+  margin-inline: token("base-padding-horizontal-medium");
+  background-color: token("gray-500");
+  border-radius: var(--_swc-menu-separator-thickness);
+}
+
+@media (forced-colors: active) {
+  .swc-MenuSeparator {
+    background-color: CanvasText;
+  }
+}

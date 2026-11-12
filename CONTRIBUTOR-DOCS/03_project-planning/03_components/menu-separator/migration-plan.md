@@ -64,14 +64,14 @@
 
 - `sp-menu-divider` becomes **`swc-menu-separator`**. It is a static, non-focusable `role="separator"` line with no slotted content, used only as a direct child of `swc-menu`, `swc-action-menu`, or `swc-menu-item` (submenu), never inside `swc-menu-group`.
 - Naming follows the accessibility analysis and ARIA terminology (`separator`). 1st-gen has only `sp-menu-divider`; there is no 1st-gen `sp-menu-separator`.
-- The 1st-gen `size` property is dropped. Size, spacing, and thickness are owned by the menu context, so the element exposes no public properties.
+- The 1st-gen `size` property is dropped. Size, spacing, and thickness come from Spectrum 2 tokens, so the element exposes no public properties.
 - Confirmed: a separate `swc-menu-separator` element is required (Q1). This reverses [Menu plan Q14](../menu/migration-plan.md#blockers-and-open-questions), and the Menu plan (Q14, Q15, Q21, Phase B) is updated to match.
 - Confirmed: the Figma Divider frame ([node 9233:4610](https://www.figma.com/design/xHBWBBIe2eo5vwoCeNrC4Q/S2---Web?node-id=9233-4610)) defines Small as 1px, Medium as 2px and Large as 4px, so the 2px menu line is the Medium thickness (Q6).
 - Menu Phase A defers dividers, so this component ships with Menu Phase B or earlier if the team pulls it forward.
 
 ### Most blocking open questions
 
-- Q2 in [Architecture and behavior](#architecture-and-behavior): whether the separator extends `DividerBase` or stands alone in core.
+- None block the baseline. Q3 (container height depends on a spacing token update) is the main open item before the styling phase.
 
 ---
 
@@ -170,7 +170,7 @@ Migrate `swc-menu-separator` independently of the other menu parts. It has no be
 
 ### User confirmation needed
 
-1. Choose the core base: extend `DividerBase` or stand alone (Q2).
+1. Confirm the core base (stand-alone `SpectrumElement`, implemented) (Q2) and the `role` timing (Q8).
 
 ---
 
@@ -192,7 +192,7 @@ Migrate `swc-menu-separator` independently of the other menu parts. It has no be
 
 | #      | What changes                           | 1st-gen behavior                                                                                | gen2 behavior                                                                                          | Consumer migration path                                                                  |
 | ------ | -------------------------------------- | ----------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------- |
-| **B4** | No `--mod-*`; S2 tokens                | Margin-block from `--mod-menu-section-divider-margin-block`; margin-inline from item label edge | Spacing from S2 tokens (`menu-item-section-divider-height`, `base-padding-horizontal-*`; `menu-item-label-inline-edge-to-content` is a Spectrum CSS variable, not a token), thickness per Q6 | Remove `--mod-menu-section-divider-margin-block` overrides; no replacement API planned. |
+| **B4** | No `--mod-*`; S2 tokens                | Thickness and color from `--mod-divider-thickness` and `--mod-divider-background-color` (`divider.css`); margin-block from `--mod-menu-section-divider-margin-block`; margin-inline from item label edge | Spacing from S2 tokens (`menu-item-section-divider-height`, `base-padding-horizontal-*`; `menu-item-label-inline-edge-to-content` is a Spectrum CSS variable, not a token), thickness per Q6 | Remove `--mod-divider-*` and `--mod-menu-section-divider-margin-block` overrides; no replacement API planned. |
 
 #### Accessibility and behavior
 
@@ -233,12 +233,12 @@ None. The host must not expose a default slot (confirmed by the accessibility an
 
 No `--mod-*` properties will be exposed. New `--swc-*` component-level properties may be introduced where needed — these are additive and not breaking. See [Component Custom Property Exposure](../../../02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure) for what to expose and how.
 
-Initial expectation for menu separator is zero or one reviewed property (for example thickness), documented with `@cssprop`.
+Initial expectation for menu separator is zero or one reviewed property (for example thickness). The shipped decision: `--_swc-menu-separator-thickness` stays internal, is declared once on `.swc-MenuSeparator` with the medium divider thickness, and is not documented with `@cssprop`.
 
 ### Behavioral semantics
 
 - Static, non-interactive, no events, not focusable, not a `menuitem`.
-- Spacing is derived from the parent menu's size via tokens, not from a `size` attribute (Q3).
+- Spacing comes from tokens, not from a `size` attribute (Q3).
 
 ### Accessibility semantics notes (gen2)
 
@@ -282,18 +282,18 @@ Planned rendering shape:
 
 ### Setup
 
-- [ ] Create `gen2/packages/core/components/menu-separator/`
-- [ ] Create `gen2/packages/swc/components/menu-separator/`
-- [ ] Wire exports in both `package.json` files
+- [x] Create `gen2/packages/core/components/menu-separator/`
+- [x] Create `gen2/packages/swc/components/menu-separator/`
+- [x] Wire exports in both `package.json` files (the swc package uses a wildcard export, so only core needed entries)
 - [x] Check out `spectrum-css` at `spectrum-two` branch as sibling directory (done at `4df8792e1`)
 
 ### API
 
 #### Naming and public surface
 
-- [ ] `MenuSeparator.base.ts`: set `role="separator"`; no public properties
-- [ ] No default slot
-- [ ] Add `swc-menu-separator` to the allowed children of `swc-menu`, `swc-action-menu`, and `swc-menu-item` (Menu Phase B)
+- [x] `MenuSeparator.base.ts`: set `role="separator"`; no public properties
+- [x] No default slot
+- [x] Add `swc-menu-separator` to the allowed children of `swc-menu` (`MENU_ALLOWED_CHILDREN`). `swc-action-menu` and `swc-menu-item` do not exist yet, so they stay with Menu Phase B
 
 #### Alignment checks
 
@@ -304,11 +304,11 @@ Planned rendering shape:
 
 > Follow the [CSS style guide](../../../02_style-guide/01_css/) as the source of truth for all styling work. Key references: [migration steps](../../../02_style-guide/01_css/04_spectrum-swc-migration.md), [custom properties](../../../02_style-guide/01_css/02_custom-properties.md), [anti-patterns](../../../02_style-guide/01_css/05_anti-patterns.md).
 
-- [ ] Add `.swc-MenuSeparator` to the internal element in `render()`; keep styling off `:host`
-- [ ] Copy the `.spectrum-Menu-divider` rule from `spectrum-css` `spectrum-two` `components/menu/index.css` into `menu-separator.css` as baseline
-- [ ] Apply the Medium divider thickness (2px, Q6) and the container heights from Q3
-- [ ] Add `@cssprop` JSDoc for every exposed `--swc-*` property
-- [ ] Pass stylelint (property order, `no-descending-specificity`, token validation)
+- [x] Add `.swc-MenuSeparator` to the internal element in `render()`; keep styling off `:host`
+- [x] Copy the `.spectrum-Menu-divider` rule from `spectrum-css` `spectrum-two` `components/menu/index.css` into `menu-separator.css` as baseline
+- [x] Apply the Medium divider thickness (2px, Q6) and the container heights from Q3 (12px container via `menu-item-section-divider-height`; the 7px token update is still pending, Q3)
+- [x] Add `@cssprop` JSDoc for every exposed `--swc-*` property (none: `--_swc-menu-separator-thickness` is internal, declared on `.swc-MenuSeparator`; no `--mod-*` per B4)
+- [x] Pass stylelint (property order, `no-descending-specificity`, token validation)
 
 #### Visual model and regressions
 
@@ -318,8 +318,8 @@ Planned rendering shape:
 
 #### Naming and semantics
 
-- [ ] Host `role="separator"`, no accessible name by default, no splitter value semantics
-- [ ] Contrast of the line versus menu background meets [1.4.11](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html)
+- [x] Host `role="separator"`, no accessible name by default, no splitter value semantics (set in `connectedCallback`; no `aria-*`, `tabindex` or slot is rendered)
+- [x] Contrast of the line versus menu background meets [1.4.11](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html) (`gray-500` on `background-layer-2-color`: about 3.2:1 light, 3.1:1 dark; design to confirm the token)
 
 #### State verification
 
@@ -329,7 +329,7 @@ Planned rendering shape:
 ### Testing
 
 - [ ] Port 1st-gen menu tests that include `sp-menu-divider` ([`menu.test.ts`](../../../../1st-gen/packages/menu/test/menu.test.ts), [`menu-group.test.ts`](../../../../1st-gen/packages/menu/test/menu-group.test.ts))
-- [ ] Add Playwright `menu-separator.a11y.spec.ts` with `toMatchAriaSnapshot`
+- [x] Add Playwright `menu-separator.a11y.spec.ts` with `toMatchAriaSnapshot` (authored; needs a Storybook run in CI to confirm)
 
 #### Behavior
 
@@ -343,12 +343,12 @@ Planned rendering shape:
 
 #### General
 
-- [ ] JSDoc on the class and any CSS custom properties
+- [x] JSDoc on the class and any CSS custom properties (no public custom properties, so no `@cssprop`)
 - [ ] Storybook story with a separator between labelled `swc-menu-group` blocks
 
 #### Breaking changes
 
-- [ ] Migration guide: `sp-menu-divider` → `swc-menu-separator`, `size` removed, placement rules (B1 to B3)
+- [x] Migration guide: `sp-menu-divider` → `swc-menu-separator`, `size` removed, placement rules (B1 to B3)
 
 ### Review
 
@@ -371,10 +371,8 @@ Planned rendering shape:
 
 | #   | Item                                                                                                                                                                                  | Blocking? | Status | Owner                 |
 | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- | ------ | --------------------- |
-| Q2  | Core base: extend `DividerBase` (reuses role and line CSS, but inherits `size`, `vertical`, `staticColor`) or stand alone on `SpectrumElement` (recommended). Duplicated line CSS is small. | Yes       | Open   | Architecture reviewer |
 | Q5  | Should shared line styling be extracted to a `_lit-styles/` fragment used by both `swc-divider` and `swc-menu-separator`? Recommend no unless Q2 chooses standalone and duplication grows. | No        | Open   | CSS reviewer          |
-| Q8  | Confirm when `role="separator"` is applied (constructor, `connectedCallback`, or `firstUpdated`) so it is present before first paint.                                                  | No        | Open   | Accessibility reviewer |
-| Q7  | Dev-mode warning for placement inside `swc-menu-group` or outside a menu (A1): in scope or deferred?                                                                                  | No        | Open   | Architecture reviewer |
+| Q7  | Dev-mode warning for placement inside `swc-menu-group` or outside a menu (A1): not implemented in the API phase; stays Additive until the team decides it is in scope. | No        | Open   | Architecture reviewer |
 
 ### Scope and prerequisites
 
@@ -382,6 +380,8 @@ Planned rendering shape:
 | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- | ------ | ---------------------- |
 | Q4  | Breaking-change ticket(s) for B1 to B3 are missing. The Jira query found no open gen1 issue specific to `sp-menu-divider`. | No        | Open   | Ticket owner           |
 | Q9  | Which tickets and migration order cover `swc-menu-separator` relative to `swc-menu`, `swc-menu-item`, and `swc-menu-group` (Menu plan Q15)?                                                                                                      | No        | Open   | Ticket owner           |
+| Q2  | Core base: extend `SpectrumElement` (implemented) or `DividerBase`? `DividerBase` carries `size`, `vertical` and `staticColor`, which the separator must not expose. Pending reviewer confirmation. | No        | Open   | Architecture reviewer  |
+| Q8  | `role="separator"` is set in `connectedCallback` (implemented), unlike 1st-gen and `swc-divider`, which set it in `firstUpdated`. Pending accessibility reviewer confirmation. | No        | Open   | Accessibility reviewer |
 
 ---
 

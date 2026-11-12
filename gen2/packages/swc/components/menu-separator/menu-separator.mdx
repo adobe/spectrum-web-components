@@ -1,0 +1,57 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
+
+import * as MenuSeparatorStories from './stories/menu-separator.stories';
+
+<Meta of={MenuSeparatorStories} />
+
+<DocsHeader />
+
+## Anatomy
+
+A menu separator consists of:
+
+- **Line**: a 2px horizontal line that visually separates groups of items in a menu
+
+<Canvas of={MenuSeparatorStories.Anatomy} />
+
+## Options
+
+`<swc-menu-separator>` has no attributes, properties, slots, or events. Its thickness, color, and spacing come from Spectrum 2 tokens and are not configurable. It also exposes no public custom properties.
+
+## Behaviors
+
+### Placement
+
+Place a menu separator between groups of menu items, not before the first item or after the last. The separator is not interactive and does not receive focus.
+
+Place it as a direct child of `swc-menu`. `swc-menu-item` has not shipped yet, so the examples slot placeholder rows with `role="menuitem"`.
+
+### Upcoming parents
+
+When `swc-action-menu`, submenus, and `swc-menu-group` ship, they will define where a separator is valid. Until then, only a direct child of `swc-menu` is supported, and a separator must not be placed inside a menu group.
+
+## Accessibility
+
+### Features
+
+The `<swc-menu-separator>` element implements several accessibility features:
+
+#### ARIA implementation
+
+1. **ARIA role**: sets `role="separator"` on the host so assistive technologies announce a boundary between groups
+2. **No accessible name**: the separator is purely structural, so it has no label
+3. **Not focusable**: it receives no keyboard interaction, and arrow-key navigation moves past it
+
+#### Visual accessibility
+
+- In forced-colors mode, the line uses the `CanvasText` system color
+
+### Best practices
+
+- Use a separator only where it reinforces a real grouping of related items
+- Don't use a separator as the only cue for a group; pair it with a menu group heading when the group needs a name
+
+<Canvas of={MenuSeparatorStories.Accessibility} />
+
+<DocsFooter />
