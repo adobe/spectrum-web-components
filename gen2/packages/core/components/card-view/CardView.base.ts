@@ -44,6 +44,9 @@ export abstract class CardViewBase extends SpectrumElement {
   @state()
   protected selectionAnnouncement = { text: '' };
 
+  @state()
+  protected expandedInfo = new Set<string>();
+
   private lastSelection?: Set<string>;
   private selectionFrame?: number;
 
@@ -51,6 +54,10 @@ export abstract class CardViewBase extends SpectrumElement {
 
   protected get groupedControls(): boolean {
     return this.model === 'toolbar' || this.model === 'fieldset';
+  }
+
+  protected get moreInfoEnabled(): boolean {
+    return false;
   }
 
   protected abstract readonly model: CardViewModel;
@@ -409,6 +416,32 @@ export abstract class CardViewBase extends SpectrumElement {
       return;
     }
     const index = Number(wrapper.dataset.index);
+    if (
+      this.moreInfoEnabled &&
+      event.ctrlKey &&
+      !event.altKey &&
+      !event.metaKey &&
+      !event.shiftKey &&
+      event.key.toLowerCase() === 'i'
+    ) {
+      event.preventDefault();
+      if (event.repeat || this.items[index]?.disabled) {
+        return;
+      }
+      const id = this.items[index]?.id;
+      if (id === undefined) {
+        return;
+      }
+      const expanded = new Set(this.expandedInfo);
+      if (expanded.has(id)) {
+        this.focusTargets[index]?.focus({ preventScroll: true });
+        expanded.delete(id);
+      } else {
+        expanded.add(id);
+      }
+      this.expandedInfo = expanded;
+      return;
+    }
     if (this.groupedControls) {
       this.handleGroupedKeydown(event, target);
       return;

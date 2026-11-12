@@ -231,6 +231,109 @@ export const NamedLayoutNavigation: StoryObj = {
   },
 };
 
+export const MoreInfo: StoryObj = {
+  render: () => html`
+    <div></div>
+  `,
+  play: async ({ canvasElement }) => {
+    for (const layout of ['grid', 'waterfall']) {
+      for (const mode of [
+        'nowrap',
+        'loop',
+        'advance',
+        'semantic',
+        ...(layout === 'waterfall' ? ['top-to-bottom'] : []),
+      ]) {
+        const view = await mount(
+          canvasElement,
+          `swc-card-view-${layout}-${mode}`,
+          layout
+        );
+        const root = view.shadowRoot!;
+        const cells = [
+          ...root.querySelectorAll<HTMLElement>('[role="gridcell"]'),
+        ];
+        const cards = [...root.querySelectorAll<HTMLElement>('swc-card')];
+        for (const [index, cell] of cells.entries()) {
+          expect(cards[index].getAttribute('aria-hidden')).toBe('true');
+          expect(cards[index].getAttribute('aria-live')).toBe('polite');
+          const hint = root.getElementById(
+            cell.getAttribute('aria-describedby')!
+          )!;
+          expect(hint.parentElement).toBe(cell);
+          expect(hint.textContent?.trim()).toBe(
+            'control + I to toggle more info'
+          );
+          expect(getComputedStyle(hint).clipPath).toBe('inset(50%)');
+          expect(
+            [
+              ...cards[index].querySelectorAll<HTMLElement>('input, button'),
+            ].every((control) => control.tabIndex === -1)
+          ).toBe(true);
+        }
+        const toggle = async (
+          target: HTMLElement,
+          modifiers: KeyboardEventInit = { ctrlKey: true }
+        ) => {
+          const event = new KeyboardEvent('keydown', {
+            key: 'i',
+            bubbles: true,
+            composed: true,
+            cancelable: true,
+            ...modifiers,
+          });
+          target.dispatchEvent(event);
+          await view.updateComplete;
+          return event.defaultPrevented;
+        };
+        cells[0].focus();
+        expect(await toggle(cells[0], {})).toBe(false);
+        expect(await toggle(cells[0], { ctrlKey: true, altKey: true })).toBe(
+          false
+        );
+        expect(await toggle(cells[0])).toBe(true);
+        expect(cards[0].getAttribute('aria-hidden')).toBe('false');
+        expect(cards[1].getAttribute('aria-hidden')).toBe('true');
+        expect(
+          [...cards[0].querySelectorAll<HTMLElement>('input, button')].every(
+            (control) => control.tabIndex === 0
+          )
+        ).toBe(true);
+        await toggle(cells[0], { ctrlKey: true, repeat: true });
+        expect(cards[0].getAttribute('aria-hidden')).toBe('false');
+        const title = cards[0].querySelector<HTMLElement>('.title')!;
+        title.focus();
+        await toggle(title);
+        expect(root.activeElement).toBe(cells[0]);
+        expect(cards[0].getAttribute('aria-hidden')).toBe('true');
+        expect(view.selected).toEqual([]);
+        cells[1].focus();
+        await toggle(cells[1]);
+        expect(cards[1].getAttribute('aria-hidden')).toBe('false');
+        expect(cards[0].getAttribute('aria-hidden')).toBe('true');
+        const hiddenControl = cards[0].querySelector<HTMLElement>('.title')!;
+        hiddenControl.focus();
+        await view.updateComplete;
+        expect(cards[0].getAttribute('aria-hidden')).toBe('false');
+        expect(root.activeElement).toBe(hiddenControl);
+        await toggle(hiddenControl);
+        view.items = [...items].reverse();
+        await view.updateComplete;
+        const reorderedCards = [...root.querySelectorAll('swc-card')];
+        expect(reorderedCards[6].getAttribute('aria-hidden')).toBe('false');
+        expect(reorderedCards[7].getAttribute('aria-hidden')).toBe('true');
+      }
+    }
+    for (const tag of tags) {
+      const view = await mount(canvasElement, tag);
+      expect(
+        view.shadowRoot!.querySelector('swc-card')!.hasAttribute('aria-hidden')
+      ).toBe(false);
+      expect(view.shadowRoot!.querySelector('.more-info-hint')).toBeNull();
+    }
+  },
+};
+
 export const PicsumImageSources: StoryObj = {
   render: () => html`
     <div></div>

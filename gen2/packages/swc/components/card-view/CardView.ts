@@ -166,6 +166,9 @@ export class CardView extends CardViewBase {
   }
 
   private childTabIndex(index: number): number {
+    if (this.moreInfoEnabled && !this.expandedInfo.has(this.items[index].id)) {
+      return -1;
+    }
     if (this.groupedControls) {
       return index === this.activeIndex && !this.items[index].disabled ? 0 : -1;
     }
@@ -196,6 +199,14 @@ export class CardView extends CardViewBase {
         variant=${this.variant}
         density=${this.density}
         data-selected=${selected}
+        aria-hidden=${ifDefined(
+          this.moreInfoEnabled
+            ? this.expandedInfo.has(item.id)
+              ? 'false'
+              : 'true'
+            : undefined
+        )}
+        aria-live=${ifDefined(this.moreInfoEnabled ? 'polite' : undefined)}
       >
         <img
           slot="preview"
@@ -327,6 +338,12 @@ export class CardView extends CardViewBase {
           data-index=${index}
           role="gridcell"
           aria-label=${label}
+          aria-describedby=${ifDefined(
+            this.moreInfoEnabled ? `more-info-${index}` : undefined
+          )}
+          aria-keyshortcuts=${ifDefined(
+            this.moreInfoEnabled ? 'Control+i' : undefined
+          )}
           aria-selected=${ifDefined(
             this.selectionMode === 'none'
               ? undefined
@@ -338,6 +355,13 @@ export class CardView extends CardViewBase {
           tabindex=${!item.disabled && index === this.activeIndex ? 0 : -1}
           style=${style}
         >
+          ${this.moreInfoEnabled
+            ? html`
+                <div id=${`more-info-${index}`} class="more-info-hint">
+                  control + I to toggle more info
+                </div>
+              `
+            : ''}
           ${this.renderCard(item, index)}
         </div>
       `;
@@ -499,6 +523,10 @@ export class CardViewFieldset extends CardView {
 /** @element swc-card-view-grid-nowrap */
 export class CardViewGridNoWrap extends CardViewSingleRowGrid {
   protected override readonly navigation: CardViewNavigation = 'spatial';
+
+  protected override get moreInfoEnabled(): boolean {
+    return true;
+  }
 }
 
 /** @element swc-card-view-grid-loop */
