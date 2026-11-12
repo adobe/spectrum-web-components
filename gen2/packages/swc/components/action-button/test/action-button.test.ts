@@ -13,6 +13,11 @@
 import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import {
+  getComponent,
+  getComponents,
+  withWarningSpy,
+} from '@swc-test-helpers/dom';
 
 import { ActionButton } from '@adobe/spectrum-wc/action-button';
 import {
@@ -22,11 +27,6 @@ import {
 
 import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
 
-import {
-  getComponent,
-  getComponents,
-  withWarningSpy,
-} from '../../../utils/test-utils.js';
 import meta, {
   Accessibility,
   Anatomy,
