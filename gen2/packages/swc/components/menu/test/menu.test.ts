@@ -1904,6 +1904,50 @@ export const ItemTypeaheadTest: Story = {
 const pointerEvent = (type: 'pointerover' | 'pointermove'): PointerEvent =>
   new PointerEvent(type, { bubbles: true, composed: true });
 
+// ──────────────────────────────────────────────────────────────
+// TEST: Only the pointer fades the highlight
+// ──────────────────────────────────────────────────────────────
+
+export const ItemHighlightTimingTest: Story = {
+  render: () => rowsInMenu(threeRows, 'highlight-timing-trigger'),
+  play: async ({ canvasElement, step }) => {
+    const trigger = canvasElement.querySelector(
+      '#highlight-timing-trigger'
+    ) as HTMLElement;
+    const menu = canvasElement.querySelector('swc-menu') as HTMLElement & {
+      open: boolean;
+    };
+
+    await userEvent.click(trigger);
+    await waitFor(() => expect(menu.open).toBe(true));
+    const rows = getRows(canvasElement);
+    const transitions = (row: MenuItem): string =>
+      getComputedStyle(
+        row.shadowRoot?.querySelector('.swc-MenuItem') as Element
+      ).transitionProperty;
+
+    // Asserted on `transition-property` rather than by timing a fade, because
+    // the Chromium Playwright project forces reduced motion and would report
+    // every transition as instant.
+    await step('a keyboard-moved row paints at once', async () => {
+      expect(transitions(rows[2]), 'colour is not transitioned').not.toMatch(
+        /background-color/
+      );
+    });
+
+    await step('a pointer-moved row keeps the fade', async () => {
+      rows[2].dispatchEvent(
+        new PointerEvent('pointermove', { bubbles: true, composed: true })
+      );
+      await rows[2].updateComplete;
+
+      expect(transitions(rows[2]), 'colour is transitioned').toMatch(
+        /background-color/
+      );
+    });
+  },
+};
+
 export const ItemHoverModalityTest: Story = {
   render: () => rowsInMenu(threeRows, 'hover-modality-trigger'),
   play: async ({ canvasElement, step }) => {

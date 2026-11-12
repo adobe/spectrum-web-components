@@ -46,7 +46,11 @@
   user-select: none;
   transition-timing-function: token("animation-ease-in-out");
   transition-duration: token("animation-duration-100");
-  transition-property: color, background-color, transform;
+
+  /* Colour is left out: focus changes it too, and fading it leaves the
+   * highlight trailing behind arrow-key navigation. The pointer gets it back
+   * below. */
+  transition-property: transform;
 }
 
 .swc-MenuItem-content {
@@ -130,6 +134,12 @@
 /* ──────────────
  *    STATES
  * ────────────── */
+
+/* The pointer gets the colour fade back; the keyboard does not, so a row it
+ * moves to is painted on the frame the key lands. */
+:host([pointer-focus]) .swc-MenuItem {
+  transition-property: color, background-color, transform;
+}
 
 /* Hover follows the row the pointer focused; `pointer-focus` is set by the
  * owning menu and cleared on the next key press, so only one row looks active. */
