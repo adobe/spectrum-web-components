@@ -9,11 +9,11 @@ import '@spectrum-web-components/alert-banner/sp-alert-banner.js';
 
 ## Attributes
 
-| Name          | Type                 | Default | Description                                                                                                                                |
-| ------------- | -------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| `open`        | `boolean`            | `false` | Controls the display of the alert banner.                                                                                                  |
-| `dismissible` | `boolean`            | `false` | Whether to include an icon-only close button to dismiss the alert banner.                                                                  |
-| `variant`     | `AlertBannerVariant` | -       | The variant applies specific styling when set to `negative` or `info`; `variant` attribute is removed when it's passed an invalid variant. |
+| Name          | Type                 | Default | Description                                                                                                                                     |
+| ------------- | -------------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| `open`        | `boolean`            | `false` | Controls the display of the alert banner.                                                                                                       |
+| `dismissible` | `boolean`            | `false` | Whether to include an icon-only close button to dismiss the alert banner.                                                                       |
+| `variant`     | `AlertBannerVariant` | `''`    | The variant applies specific styling when set to `negative` or `info`. Invalid values are kept as set, warn in dev mode, and render as neutral. |
 
 ## Slots
 
