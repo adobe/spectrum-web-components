@@ -22,14 +22,15 @@ import '@adobe/spectrum-wc/components/button/swc-button.js';
 
 Every component class has a static `define()` method. It defines the component, the elements it renders internally, and the child elements it needs, such as `<swc-tab>` and `<swc-tab-panel>` for `<swc-tabs>`. It registers the same elements as the component's `swc-*.js` file. With no argument, it uses the global registry.
 
-Give each app its own registry, and export it so the host can mount the app:
+Define the components an app uses in the registry of the loaded copy of Spectrum Web Components. `getRegistry()` creates it on the first call:
 
 ```js
 // apps/image/registry.js
 import { Badge } from '@adobe/spectrum-wc/badge';
 import { CloseButton } from '@adobe/spectrum-wc/close-button';
+import { getRegistry } from '@adobe/spectrum-wc/registry';
 
-export const registry = new CustomElementRegistry();
+export const registry = getRegistry();
 // Defines <swc-close-button> and its internal <swc-ui-icon>.
 CloseButton.define(registry);
 Badge.define(registry);
@@ -39,75 +40,83 @@ Importing a component class has no side effects. Only `define()` and the `swc-*.
 
 ### Share a registry between apps
 
-Apps that load the same copy of `@adobe/spectrum-wc` can share that copy's registry instead. `getRegistry()` creates it on the first call and publishes it at `window.__swc.scopedRegistries`, keyed by version, so a host can find it:
+Apps that load the same copy of `@adobe/spectrum-wc` get the same registry from `getRegistry()`. In one build, apps that depend on the same version usually load one copy. Separately built apps load one copy only when they load the same module files, for example through an import map. Another copy, even of the same version, gets its own registry, because its classes are different.
+
+`Component.define(registry)` does nothing when the registry already has that class, so each app can define every component it uses. Apps that share a registry also share the names of their own elements, as they do in the global registry, and `registry.define()` throws for a name that's already defined. To keep an app's element names to itself, give the app its own registry instead:
 
 ```js
-import { Button } from '@adobe/spectrum-wc/button';
-import { getRegistry } from '@adobe/spectrum-wc/registry';
-
-Button.define(getRegistry());
+export const registry = new CustomElementRegistry();
 ```
-
-Each version can publish one registry. If a second copy of the same version calls `getRegistry()`, it throws, because the two copies have different classes, and components check each other with `instanceof`. Load one copy of each version per page, for example with an import map or a shared chunk, or give each app its own registry.
-
-Give apps their own registries when they define elements of their own with the same names.
 
 ## Mount an app
 
-Define the app's own elements in its registry, attach the registry to the app's shadow root, and render with `scopedRenderOptions()`:
+A host usually renders an app by the tag name of the app's root element, so the host creates that element in the global registry. Define the root element globally, and attach its shadow root with the app's registry. Everything the root element renders then comes from the app's registry:
 
 ```js
-import { html, render } from 'lit';
-import { scopedRenderOptions } from '@adobe/spectrum-wc/registry';
-import { registry } from './apps/image/registry.js';
-
-registry.define('image-panel', ImagePanel);
-
-const root = host.attachShadow({
-  mode: 'open',
-  customElementRegistry: registry,
-});
-render(
-  html`
-    <image-panel></image-panel>
-  `,
-  root,
-  scopedRenderOptions(registry)
-);
-```
-
-App elements built with Lit that render Spectrum Web Components use `ScopedElementMixin`. Their templates then create elements in the registry the element was created in. This works for shadow roots the mixin attaches, existing shadow roots, and light-DOM render roots:
-
-```js
+// apps/image/image-app.js
 import { html, LitElement } from 'lit';
-import { ScopedElementMixin } from '@adobe/spectrum-wc/registry';
+import { ScopedRenderMixin } from '@adobe/spectrum-wc/registry';
+import { registry } from './registry.js';
 
-class ImagePanel extends ScopedElementMixin(LitElement) {
+class ImageApp extends ScopedRenderMixin(LitElement) {
+  static shadowRootOptions = {
+    ...LitElement.shadowRootOptions,
+    customElementRegistry: registry,
+  };
+
   render() {
     return html`
-      <swc-button>Save</swc-button>
+      <swc-close-button accessible-label="Close"></swc-close-button>
+      <image-panel></image-panel>
     `;
   }
 }
+
+// The global registry has one definition for each name. Use a name that no
+// other app uses.
+customElements.define('image-app', ImageApp);
 ```
 
-Spectrum Web Components use the same mechanism internally. Lit creates elements in the global registry by default. `scopedRenderOptions()` and `ScopedElementMixin` bridge that gap until Lit supports scoped registries, and will then be deprecated.
+The host then renders `<image-app></image-app>` like any other element.
+
+Define the app's other elements in the app's registry. With `ScopedRenderMixin`, they render with the registry they were created in, so they don't need `shadowRootOptions`:
+
+```js
+class ImagePanel extends ScopedRenderMixin(LitElement) {
+  render() {
+    return html`
+      <swc-badge>New</swc-badge>
+    `;
+  }
+}
+
+registry.define('image-panel', ImagePanel);
+```
+
+`ScopedRenderMixin` does two things, for app elements and for Spectrum Web Components:
+
+- **Shadow root:** It attaches the element's shadow root with the registry the element was created in, unless `shadowRootOptions` names a registry. Without the mixin, a shadow root uses the document's registry.
+- **Templates:** It makes Lit create template content in the registry of the element's render root, including a light-DOM render root. Current Lit versions create template content in the global registry. Lit versions that support scoped registries use the shadow root's registry themselves, so with them, an element whose `shadowRootOptions` name a registry doesn't need the mixin. With those versions, the mixin sets `creationScope.customElementRegistry`, so Lit doesn't warn that `creationScope.importNode()` is deprecated. An app element that uses another copy of Lit than Spectrum Web Components gets both, which works with any Lit version, but newer versions warn about `importNode()` in development.
 
 ## Load each app's styles
 
-Load the app's own `tokens.css` and `swc.css` in its shadow root. There, they set the design tokens on the shadow host, so the app's components use the tokens of the app's version, even when the page loads another version:
+Load the app's own `tokens.css` and `swc.css` in the shadow root of the app's root element. There, they set the design tokens on the root element, so the app's components use the tokens of the app's version, even when the page loads another version:
 
 ```js
-// `tokensCss` and `swcCss` hold the text of the app's own copies of
-// `@adobe/spectrum-wc/tokens.css` and `swc.css`, for example from a raw CSS import.
-const styles = new CSSStyleSheet();
-styles.replaceSync(tokensCss + swcCss);
-root.adoptedStyleSheets = [styles];
+import { unsafeCSS } from 'lit';
+
+class ImageApp extends ScopedRenderMixin(LitElement) {
+  // `tokensCss` and `swcCss` hold the text of the app's own copies of
+  // `@adobe/spectrum-wc/tokens.css` and `swc.css`, for example from a raw CSS import.
+  static styles = unsafeCSS(tokensCss + swcCss);
+
+  // `shadowRootOptions` and `render()` as in "Mount an app".
+}
 ```
 
-Load both files. Style sheets created from text, such as `adoptedStyleSheets` and Lit's `static styles`, ignore the `@import` in `swc.css`. A `<link rel="stylesheet">` to `swc.css` in the shadow root loads `tokens.css` itself.
+Load both files. Style sheets created from text, such as Lit's `static styles` and `adoptedStyleSheets`, ignore the `@import` in `swc.css`. A `<link rel="stylesheet">` to `swc.css` in the shadow root loads `tokens.css` itself.
 
-- **Theme classes:** To change the app's color scheme, add the theme classes, for example `swc-theme swc-theme--dark`, to an element in the app's shadow root. Don't add them to the element that hosts the app. Page styles that match that element take precedence over the app's own, so the page's `swc.css` would set its version's tokens there.
+- **Theme classes:** To change the app's color scheme, add the theme classes, for example `swc-theme swc-theme--dark`, to an element in the root element's shadow root. Don't add them to the root element. Page styles that match the root element take precedence over the app's own, so the page's `swc.css` would set its version's tokens there.
 - **Inherited styles:** The app inherits the page's color scheme and font.
 
 ## Things to know
@@ -115,24 +124,24 @@ Load both files. Style sheets created from text, such as `adoptedStyleSheets` an
 - **No fallback to global:** A scoped shadow root never uses global definitions. Define every element the app renders, including its own, in the app's registry.
 - **Creation decides the registry:** `document.createElement('swc-button')` creates a global element, even after you append it to a scoped root. Pass `{ customElementRegistry: registry }`. Don't create components with `new`: `new Button()` throws "Illegal constructor" when `Button` is defined only in scoped registries.
 - **Lit's `templateContent` directive:** It clones template content with `document.importNode()`, which creates elements in the global registry. Render that content with a regular Lit template instead.
-- **No redefinition:** A registry can't replace a definition. To change an app's version, mount the app again in a new host element with a new registry.
+- **No redefinition:** A registry can't replace a definition. To run another version of an app on the same page, give it a new registry and a root element with a new name.
 - **Shared page state:** Each version keeps its own page scroll lock and stack of dismissible overlays, so overlays from two versions don't coordinate with each other.
 - **Registered properties:** `@property` rules in a shadow root don't register their properties. Prompt Field needs properties that `swc.css` registers, so it relies on the `swc.css` that the page loads, and on that version's registrations.
 - **Workflow icons:** Each `swc-icon-*.js` module from `@adobe/spectrum-wc-icons` defines its element globally when imported, so two copies on one page conflict. In a scoped app, render the icon's SVG function inside `<swc-icon>` instead, for example `` html`<swc-icon>${unsafeSVG(Icon_Star())}</swc-icon>` `` with `Icon_Star` from `@adobe/spectrum-wc-icons/Star.js`.
-- **Not a security boundary:** Scoped registries isolate element definitions, not scripts. Any script on the page can read or change `window.__swc.scopedRegistries`.
+- **Not a security boundary:** Scoped registries isolate element definitions, not scripts. Any script on the page can get an app's registry from the `customElementRegistry` property of the app's elements.
 
 ## Browser support
 
 Chrome and Edge 146+, and Safari 26+, support scoped registries natively. Firefox supports them in Nightly only.
 
-Spectrum Web Components never fall back to the global registry, because two versions would then collide without an error. In unsupported browsers, `getRegistry()` throws an error. Importing `@adobe/spectrum-wc/registry` is safe in any browser, so check support first, and render the app in an iframe or load one version per page otherwise:
+Spectrum Web Components never fall back to the global registry, because two versions would then collide without an error. In unsupported browsers, `getRegistry()` and `new CustomElementRegistry()` throw. Check support before you load the app, and render the app in an iframe or load one version per page otherwise:
 
 ```js
 import { supportsScopedRegistries } from '@adobe/spectrum-wc/registry';
 
 if (supportsScopedRegistries()) {
-  const { registry } = await import('./apps/image/registry.js');
-  // Mount the app with `registry`.
+  // Creates the app's registry and defines <image-app>.
+  await import('./apps/image/image-app.js');
 } else {
   // Render the app in an iframe.
 }
