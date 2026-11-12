@@ -70,7 +70,8 @@
   --_swc-menu-content-secondary-row: "visual description description";
 
   &.swc-MenuItem-content--hasDescription {
-    ::slotted([slot="label"]) {
+    ::slotted([slot="label"]),
+    ::slotted([slot="secondary"]) {
       align-self: end;
     }
   }
@@ -144,25 +145,32 @@
 /* Hover follows the row the pointer focused; `pointer-focus` is set by the
  * owning menu and cleared on the next key press, so only one row looks active. */
 :host(:hover[pointer-focus]:not([disabled])) {
-  --swc-menu-item-background-color: token("menu-item-background-color-hover");
   --swc-menu-item-label-color: token("neutral-content-color-hover");
   --swc-menu-item-description-color: token("neutral-subdued-content-color-hover");
   --swc-menu-item-secondary-color: token("neutral-subdued-content-color-hover");
 }
 
+/* `:where()` keeps the guard from adding specificity, so hover, focus and down
+ * tie and the later rule wins, in that order. */
+:host(:hover[pointer-focus]:where(:not([disabled]))) .swc-MenuItem {
+  background-color: var(--swc-menu-item-background-color-hover, token("menu-item-background-color-hover"));
+}
+
 /* `:focus-visible`, not `:focus`: opening the menu focuses the first row even
  * on a mouse click, which must not paint it as chosen. */
 :host(:focus-visible:not([disabled])) {
-  --swc-menu-item-background-color: token("menu-item-background-color-keyboard-focus");
   --swc-menu-item-label-color: token("neutral-content-color-key-focus");
   --swc-menu-item-description-color: token("neutral-subdued-content-color-key-focus");
   --swc-menu-item-secondary-color: token("neutral-subdued-content-color-key-focus");
 }
 
+:host(:focus-visible:not([disabled])) .swc-MenuItem {
+  background-color: var(--swc-menu-item-background-color-focus, token("menu-item-background-color-keyboard-focus"));
+}
+
 /* Spectrum's down colors match hover, so the press is carried by the
  * transform below. */
 :host(:active:not([disabled])) {
-  --swc-menu-item-background-color: token("menu-item-background-color-down");
   --swc-menu-item-label-color: token("neutral-content-color-down");
   --swc-menu-item-description-color: token("neutral-subdued-content-color-down");
   --swc-menu-item-secondary-color: token("neutral-subdued-content-color-down");
@@ -171,6 +179,7 @@
 /* The row recedes along Z against a perspective of its own height, matching
  * the button family. */
 :host(:active:not([disabled])) .swc-MenuItem {
+  background-color: var(--swc-menu-item-background-color-down, token("menu-item-background-color-down"));
   transform: perspective(var(--_swc-menu-item-min-block-size)) translate3d(0, 0, token("component-size-difference-down"));
   will-change: transform;
 }
@@ -185,7 +194,7 @@
   ::slotted(swc-thumbnail) {
     /* In Figma, this is applied to an overlay instead of the thumbnail,
     so we need to inverse the value for the correct effect. */
-    opacity: calc(1 - token("opacity-disabled"));
+    opacity: calc(1 - token("thumbnail-opacity-disabled"));
   }
 }
 
@@ -220,6 +229,7 @@
   color: var(--swc-menu-item-description-color, token("neutral-subdued-content-color-default"));
 }
 
+/* stylelint-disable-next-line no-descending-specificity */
 ::slotted([slot="secondary"]) {
   grid-area: secondary;
   min-inline-size: 0; /* Enables overflow text wrapping */

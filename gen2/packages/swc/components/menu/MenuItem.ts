@@ -50,7 +50,10 @@ import styles from './menu-item.css';
  * @cssprop --swc-menu-item-padding-inline - Inline padding of the row.
  * @cssprop --swc-menu-item-gap - Horizontal gap between menu item elements.
  * @cssprop --swc-menu-item-corner-radius - Corner radius of the row.
- * @cssprop --swc-menu-item-background-color - Background color of the row at rest. The hover, keyboard focus, and pressed states set their own.
+ * @cssprop --swc-menu-item-background-color - Background color in the default state.
+ * @cssprop --swc-menu-item-background-color-hover - Background color on hover.
+ * @cssprop --swc-menu-item-background-color-focus - Background color when keyboard focused.
+ * @cssprop --swc-menu-item-background-color-down - Background color when pressed.
  * @cssprop --swc-menu-item-label-color - Color of the label.
  * @cssprop --swc-menu-item-label-font-size - Font size of the label.
  * @cssprop --swc-menu-item-label-line-height - Line height of the label.
