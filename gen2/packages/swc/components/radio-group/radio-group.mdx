@@ -28,13 +28,13 @@ A radio group consists of:
 
 ### Labelling
 
-Three sources can provide the group's accessible name. When more than one is set, the first one in this order is announced:
+Three sources can provide the group's accessible name. When more than one is set, the browser's [accessible-name computation](https://www.w3.org/TR/accname-1.2/) decides which one is announced, in this order:
 
-1. **`accessible-labelledby`**: space-separated element `id`s, resolved against the group's root node, for naming the group with content it does not own, such as a nearby heading.
+1. **`accessible-labelledby`** (highest precedence): space-separated element `id`s, resolved against the group's root node, for naming the group with content it does not own, such as a nearby heading.
 2. **`accessible-label`**: a string accessible name for a group with no visible label.
-3. **A slotted `label`**: the default for a group with a visible label.
+3. **A slotted `label`** (lowest precedence): the default, recommended path for a group with a visible label.
 
-The examples show a slotted label, `accessible-label`, and `accessible-labelledby` referencing the "Favorite sport" heading.
+The examples follow precedence order. The `accessible-labelledby` example references the heading above its group.
 
 <Canvas of={RadioGroupStories.Labelling} />
 
@@ -221,9 +221,7 @@ Setting `selected` in code, resetting the form, and browser form restoration do 
 - <kbd>Tab</kbd>: moves focus into the group, onto the selected item or onto the
   first enabled item when nothing is selected. Entering the group does not
   change the selection.
-- Arrow keys: move focus to the next or previous enabled item and
-  select it, wrapping at either end. <kbd>Left</kbd> and <kbd>Right</kbd> follow
-  the reading direction, including right-to-left.
+- Arrow keys: move focus to the next or previous enabled item and select it, wrapping at either end. <kbd>Left</kbd> and <kbd>Right</kbd> follow the reading direction, including right-to-left.
 - <kbd>Home</kbd> and <kbd>End</kbd>: move focus to the first or last enabled
   item and select it.
 - <kbd>Space</kbd>: selects the focused item.

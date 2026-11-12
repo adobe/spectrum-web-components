@@ -198,16 +198,9 @@ export const Anatomy: Story = {
 
 export const Labelling: Story = {
   render: () => html`
-    <swc-radio-group selected="soccer">
-      <span slot="label">Slotted label</span>
-      ${SPORT_ITEMS_HTML}
-    </swc-radio-group>
-    <swc-radio-group accessible-label="Favorite sport" selected="soccer">
-      ${SPORT_ITEMS_HTML}
-    </swc-radio-group>
     <section style="display: grid; gap: var(--swc-spacing-100);">
       <h4 id="labelling-heading" class="swc-Heading swc-Heading--sizeXS">
-        Favorite sport
+        accessible-labelledby attribute
       </h4>
       <swc-radio-group
         accessible-labelledby="labelling-heading"
@@ -216,6 +209,16 @@ export const Labelling: Story = {
         ${SPORT_ITEMS_HTML}
       </swc-radio-group>
     </section>
+    <swc-radio-group
+      accessible-label="accessible-label attribute"
+      selected="soccer"
+    >
+      ${SPORT_ITEMS_HTML}
+    </swc-radio-group>
+    <swc-radio-group selected="soccer">
+      <span slot="label">Slotted label</span>
+      ${SPORT_ITEMS_HTML}
+    </swc-radio-group>
   `,
   parameters: {
     flexLayout: 'row-wrap',

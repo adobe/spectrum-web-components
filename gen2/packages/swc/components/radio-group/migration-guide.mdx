@@ -46,6 +46,7 @@ import '@adobe/spectrum-wc/components/radio-group/swc-radio.js';
 | Invalid               | `invalid` on the group or item                        | `field-status="invalid"` on the group                               |
 | Read-only             | `readonly` on the item (not enforced)                 | `field-status="readonly"` on the group                              |
 | `size`, `emphasized`  | Set on each `sp-radio`                                | Set once on `swc-radio-group`; it applies them to every item        |
+| Unmatched `selected`  | Reset to `''` when no item has the value              | Kept as set; nothing is submitted until an item has that value      |
 | CSS custom properties | `--mod-radio-*`                                       | `--swc-radio-*` and `--swc-radio-group-*` (see [Styling](#styling)) |
 
 ### Added in Spectrum 2
@@ -263,4 +264,5 @@ Spectrum 2 exposes a reduced set of `--swc-*` custom properties on `<swc-radio-g
 - [ ] Move `size` and `emphasized` from the items to the group, and replace `horizontal`/`vertical` with `orientation`.
 - [ ] Replace `invalid`, item `readonly`, and group-wide item `disabled` with `field-status` on the group.
 - [ ] Replace `buttons` with `querySelectorAll('swc-radio')`.
+- [ ] Update code that reads an empty `selected` to mean nothing is selected; check for a checked item with `group.querySelector('swc-radio[checked]')` instead.
 - [ ] Remove all `--mod-radio-*` overrides; adopt the `--swc-*` properties above where needed.
