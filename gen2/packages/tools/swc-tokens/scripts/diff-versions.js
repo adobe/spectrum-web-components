@@ -44,7 +44,10 @@ import { fileURLToPath } from 'node:url';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 
-import { ZERO_VALUE_COMMENT_PATTERN } from '../src/tokens.js';
+import {
+  removeActiveTokensFromDeleted,
+  ZERO_VALUE_COMMENT_PATTERN,
+} from '../src/tokens.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PACKAGE_ROOT = join(__dirname, '..');
@@ -220,26 +223,24 @@ const installedPkg = JSON.parse(readFileSync(installedPkgPath, 'utf8'));
 const fromVersion = installedPkg.version;
 const fromSrcDir = join(dirname(installedPkgPath), 'src');
 
-if (fromVersion === toVersion) {
-  console.log(
-    `\nFrom and to versions are both ${fromVersion} — nothing to diff.\n`
-  );
-  process.exit(0);
-}
-
-console.log(
-  `\nDiffing @adobe/spectrum-tokens:\n  from: ${fromVersion}\n  to:   ${toVersion}\n`
-);
-
-// Install the target version to a temp dir.
-let toSrcDir;
+let toSrcDir = fromSrcDir;
 let tmpDir;
 
-try {
-  ({ srcDir: toSrcDir, tmpDir } = installVersion(toVersion));
-} catch (err) {
-  console.error(`\n✖ ${err.message}\n`);
-  process.exit(1);
+if (fromVersion === toVersion) {
+  console.log(
+    `\nFrom and to versions are both ${fromVersion}; checking deleted-token curation for stale entries.\n`
+  );
+} else {
+  console.log(
+    `\nDiffing @adobe/spectrum-tokens:\n  from: ${fromVersion}\n  to:   ${toVersion}\n`
+  );
+
+  try {
+    ({ srcDir: toSrcDir, tmpDir } = installVersion(toVersion));
+  } catch (err) {
+    console.error(`\n✖ ${err.message}\n`);
+    process.exit(1);
+  }
 }
 
 try {
@@ -330,41 +331,41 @@ try {
   /* Write custom/deleted.json                  */
   /* ------------------------------------------ */
 
-  if (!deleted.size) {
+  // Load existing deleted.json so we don't overwrite curated replacements.
+  let existing = {};
+  if (existsSync(DELETED_PATH)) {
+    try {
+      existing = JSON.parse(readFileSync(DELETED_PATH, 'utf8'));
+    } catch {
+      // Ignore parse errors — start fresh.
+    }
+  }
+
+  const output = removeActiveTokensFromDeleted(existing, to.active);
+  const removedActiveEntries =
+    Object.keys(existing).length - Object.keys(output).length;
+
+  for (const name of deleted) {
+    if (name in output) {
+      continue;
+    }
+
+    // Zero-value tokens: seed with "0" as the replacement hint.
+    const comment = to.comments[name];
+    if (comment && ZERO_VALUE_COMMENT_PATTERN.test(comment)) {
+      output[name] = '0';
+      continue;
+    }
+
+    // Seed with best fuzzy match from the added set, or null.
+    output[name] = findBestMatch(name, added);
+  }
+
+  if (!deleted.size && !removedActiveEntries) {
     console.log(
-      `✔ No truly deleted tokens found. custom/deleted.json not written.\n`
+      `✔ No truly deleted tokens found and no stale deleted-token entries to remove.\n`
     );
   } else {
-    // Load existing deleted.json so we don't overwrite curated replacements.
-    let existing = {};
-    if (existsSync(DELETED_PATH)) {
-      try {
-        existing = JSON.parse(readFileSync(DELETED_PATH, 'utf8'));
-      } catch {
-        // Ignore parse errors — start fresh.
-      }
-    }
-
-    // Start from every existing entry (curated across past version diffs) so
-    // none are dropped, then append only the newly-found deleted tokens.
-    const output = { ...existing };
-
-    for (const name of deleted) {
-      if (name in output) {
-        continue;
-      }
-
-      // Zero-value tokens: seed with "0" as the replacement hint.
-      const comment = to.comments[name];
-      if (comment && ZERO_VALUE_COMMENT_PATTERN.test(comment)) {
-        output[name] = '0';
-        continue;
-      }
-
-      // Seed with best fuzzy match from the added set, or null.
-      output[name] = findBestMatch(name, added);
-    }
-
     const sortedOutput = Object.fromEntries(
       Object.keys(output)
         .sort()
@@ -392,6 +393,9 @@ try {
 
     console.log(`✔ Wrote custom/deleted.json:`);
     console.log(`  ${deleted.size} deleted token(s)`);
+    console.log(
+      `  ${removedActiveEntries} stale active-token entry/entries removed`
+    );
     console.log(`  ${preserved} preserved from previous curation`);
     if (zeroSeeded) {
       console.log(
@@ -405,8 +409,10 @@ try {
       `  ${needsCuration} with null (no replacement found — requires manual curation)`
     );
     console.log();
-    console.log(`Review custom/deleted.json and update null values where a`);
-    console.log(`reasonable replacement exists, then commit the file.\n`);
+    if (deleted.size) {
+      console.log(`Review custom/deleted.json and update null values where a`);
+      console.log(`reasonable replacement exists, then commit the file.\n`);
+    }
   }
 } finally {
   // Always clean up the temp dir.

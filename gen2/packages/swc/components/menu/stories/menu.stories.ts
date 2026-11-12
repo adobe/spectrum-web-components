@@ -16,8 +16,6 @@ import { expect, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import { MENU_PLACEMENTS } from '@adobe/spectrum-wc-core/components/menu';
-
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc/components/menu/swc-menu.js';
 
@@ -26,15 +24,6 @@ import '@adobe/spectrum-wc/components/menu/swc-menu.js';
 // ────────────────
 
 const { args, argTypes, template } = getStorybookHelpers('swc-menu');
-
-// The manifest only records the type alias name, not its expanded union, so
-// the helper falls back to free text without this override.
-argTypes.placement = {
-  ...argTypes.placement,
-  control: { type: 'select' },
-  options: MENU_PLACEMENTS,
-  table: { category: 'attributes', defaultValue: { summary: 'bottom-start' } },
-};
 
 // Internal CSS-only state `Menu` sets itself; excluded so the helper's
 // attribute round-trip doesn't clobber it with a stale value.

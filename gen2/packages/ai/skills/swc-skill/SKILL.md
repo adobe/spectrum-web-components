@@ -4,7 +4,7 @@ description: "Build UIs with Spectrum Web Components (SWC), Adobe's Spectrum 1 w
 license: 'Apache-2.0'
 metadata:
   author: 'Adobe'
-  website: 'https://opensource.adobe.com/spectrum-web-components/'
+  website: 'https://spectrum-web-components.adobe.com'
 ---
 
 # Spectrum Web Components (Spectrum 1)

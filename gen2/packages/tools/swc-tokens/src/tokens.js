@@ -21,6 +21,7 @@ const require = createRequire(import.meta.url);
  * -------------------------------------------------------------------------- */
 
 const ALLOWED_SETS = new Set(['desktop', 'mobile', 'light', 'dark']);
+const RENAMED_TOKEN = Symbol('renamedToken');
 
 // Matches the Spectrum team's standard wording for zero-pixel removals in deprecated_comment.
 // Exported so diff-versions.js can reuse the same pattern when seeding custom/deleted.json.
@@ -192,6 +193,11 @@ function buildRawLookup(json) {
   const out = {};
 
   for (const [name, token] of Object.entries(json)) {
+    if (token?.deprecated && typeof token?.renamed === 'string') {
+      out[name] = { [RENAMED_TOKEN]: token.renamed };
+      continue;
+    }
+
     if ('value' in token && token.value !== undefined) {
       out[name] = token.value;
       continue;
@@ -244,6 +250,16 @@ function resolveAlias(lookup, value, prefix, seen, debug) {
 
   const nextSeen = new Set(seen);
   nextSeen.add(name);
+
+  if (target[RENAMED_TOKEN]) {
+    return resolveAlias(
+      lookup,
+      `{${target[RENAMED_TOKEN]}}`,
+      prefix,
+      nextSeen,
+      debug
+    );
+  }
 
   // --- shallow resolution for multi-set targets (ex. scales) ---
   if (isAlias(target)) {
@@ -342,7 +358,14 @@ function normalizePrimitive(
   const withRGB = convertRGB(value);
 
   if (!resolveAliases) {
-    return convertToProperty(withRGB, prefix);
+    const aliasTarget = isAlias(withRGB)
+      ? lookup[unwrapAlias(withRGB)]
+      : undefined;
+    const renamedTarget = aliasTarget?.[RENAMED_TOKEN];
+    return convertToProperty(
+      renamedTarget ? `{${renamedTarget}}` : withRGB,
+      prefix
+    );
   }
 
   if (isAlias(withRGB)) {
@@ -730,6 +753,12 @@ export function deriveZeroValueEntries(deprecatedComments, customDeleted) {
   return derived;
 }
 
+export function removeActiveTokensFromDeleted(deleted, activeTokenNames) {
+  return Object.fromEntries(
+    Object.entries(deleted).filter(([name]) => !activeTokenNames.has(name))
+  );
+}
+
 async function loadAllTokenData(prefix, debug = false) {
   const [rawFiles, customDeleted] = await Promise.all([
     loadTokenSources(),
@@ -741,17 +770,21 @@ async function loadAllTokenData(prefix, debug = false) {
     {},
     ...rawFiles.map((f) => extractDeprecatedComments(f.raw, debug))
   );
+  const tokens = extractAllTokenValues(rawFiles, prefix, debug, globalLookup);
 
   return {
-    tokens: extractAllTokenValues(rawFiles, prefix, debug, globalLookup),
+    tokens,
     renamed: Object.assign(
       {},
       ...rawFiles.map((f) => extractRenamedTokenValues(f.raw, debug))
     ),
-    deleted: {
-      ...customDeleted,
-      ...deriveZeroValueEntries(deprecatedComments, customDeleted),
-    },
+    deleted: removeActiveTokensFromDeleted(
+      {
+        ...customDeleted,
+        ...deriveZeroValueEntries(deprecatedComments, customDeleted),
+      },
+      new Set(Object.keys(tokens))
+    ),
     deprecatedComments,
   };
 }
@@ -816,5 +849,6 @@ export const __test__ = {
   extractRenamedTokenValues,
   extractDeprecatedComments,
   deriveZeroValueEntries,
+  removeActiveTokensFromDeleted,
   lookupToken,
 };

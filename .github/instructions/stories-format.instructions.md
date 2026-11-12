@@ -156,5 +156,5 @@ See the `stories-documentation` skill at `.ai/skills/stories-documentation/SKILL
 - [ ] No `section-order` parameter on any story
 - [ ] No `description-only` tag on any story
 - [ ] All stories accessible with meaningful content
-- [ ] Image assets: use `picsum.photos` with static IDs (if applicable)
+- [ ] Image assets: use checked-in local assets (if applicable)
 - [ ] Per-unit MDX file exists at the unit root and references each section-tagged story via `<Canvas of={Stories.StoryName} />` (see `.ai/rules/stories-documentation.md`)

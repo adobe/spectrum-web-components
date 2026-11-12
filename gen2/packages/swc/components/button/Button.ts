@@ -17,6 +17,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 
 import {
   BUTTON_FILL_STYLES,
+  BUTTON_STATIC_COLORS,
   BUTTON_VARIANTS,
   ButtonBase,
   type ButtonFillStyle,
@@ -68,7 +69,6 @@ import baseStyles from './button-base.css';
  * @cssprop --swc-button-background-color-disabled - Background color when disabled or pending.
  * @cssprop --swc-button-border-color-disabled - Border color when disabled or pending.
  * @cssprop --swc-button-content-color-disabled - Text and icon color when disabled or pending.
- * @cssprop --swc-button-down-state-transform - Transform applied to the button in the pressed (down) state. Defaults to a scale/translate effect; set to `none` to disable.
  *
  * @example
  * <swc-button>Save</swc-button>
@@ -157,7 +157,6 @@ export class Button extends PendingMixin(ButtonBase) {
   }
 
   protected override update(changedProperties: PropertyValues): void {
-    super.update(changedProperties);
     validateEnum(this, {
       prop: 'variant',
       value: this.variant,
@@ -170,6 +169,14 @@ export class Button extends PendingMixin(ButtonBase) {
       valid: BUTTON_FILL_STYLES,
       url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-button--docs',
     });
+    if (this.staticColor) {
+      validateEnum(this, {
+        prop: 'static-color',
+        value: this.staticColor,
+        valid: BUTTON_STATIC_COLORS,
+        url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-button--docs',
+      });
+    }
     warnIf(
       this,
       this.fillStyle === 'outline' &&
@@ -186,5 +193,6 @@ export class Button extends PendingMixin(ButtonBase) {
       'https://spectrum-web-components.adobe.com/?path=/docs/components-button--docs',
       { issues: ['primary', 'secondary'] }
     );
+    super.update(changedProperties);
   }
 }

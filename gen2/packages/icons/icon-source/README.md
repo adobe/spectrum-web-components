@@ -50,6 +50,7 @@ Workflow icons ship **one drawing per icon** scaled to a token box, so there is 
 - Refuses to run if this folder has no SVGs, so a clean checkout can't wipe the committed art.
 - Rewrites the A4U `var(--iconPrimary, …)` fill to `var(--swc-icon-color, currentColor)`, then cleans each SVG with SVGO (`preset-default` keeps the `viewBox`; `removeDimensions` drops `width` and `height` so the element sizes the box).
 - Fails on a tag collision (two logical names mapping to the same `swc-icon-*` tag).
+- Preserves each existing element's `@since` introduction version, even when its artwork changes. Only new icons receive the current package version. If an existing element is missing `@since`, generation fails before deleting any output; restore its introduction version before retrying.
 - Replaces every top-level module in `src/` with, per icon, an SVG-string function (`<Name>.ts`) and a custom element (`swc-icon-<kebab>.ts`), plus `index.ts`, `elements.ts`, and `manifest.ts`, then formats them with Prettier.
 - Re-copies the shared stylesheet by running `yarn generate:icon-styles`.
 

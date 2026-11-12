@@ -26,12 +26,11 @@ import {
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { styleMap } from 'lit/directives/style-map.js';
+import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import { ResizeController } from '@lit-labs/observers/resize-controller.js';
 
 import {
   DragAndDropController,
-  focusgroupNavigationActiveChange,
-  type FocusgroupNavigationActiveChangeDetail,
   FocusgroupNavigationController,
 } from '@adobe/spectrum-wc-core/controllers/index.js';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
@@ -41,13 +40,13 @@ import {
   getActiveElement,
   isFocusVisibleInTree,
 } from '@adobe/spectrum-wc-core/utils/index.js';
+import { Icon_ChevronLeft } from '@adobe/spectrum-wc-icons/ChevronLeft.js';
+import { Icon_ChevronRight } from '@adobe/spectrum-wc-icons/ChevronRight.js';
 
 import '@adobe/spectrum-wc/components/icon/swc-icon.js';
-import '@adobe/spectrum-wc/components/ui-icons/swc-ui-icon.js';
 import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
 import '../pixel-loader/swc-pixel-loader.js';
 
-import { uniqueId } from '../../../utils/id.js';
 import type {
   PixelLoaderIconName,
   PixelLoaderPresetName,
@@ -55,7 +54,6 @@ import type {
 import { PIXEL_LOADER_PRESET_NAMES } from '../pixel-loader/index.js';
 import { ChevronUpIcon, PlusIcon, StopIcon } from '../utils/icons/index.js';
 
-import visuallyHiddenStyles from '../../../stylesheets/_lit-styles/visually-hidden.css';
 import styles from './prompt-field.css';
 
 export interface PromptFieldSubmitDetail {
@@ -64,6 +62,10 @@ export interface PromptFieldSubmitDetail {
 
 // Matches the pixel-loader's own `icon` default.
 const DEFAULT_LOADER_ICON: PixelLoaderIconName = 'aiLogo';
+
+/** Docs URL attributed to dev-mode validation warnings. */
+const DOCS_URL =
+  'https://spectrum-web-components.adobe.com/?path=/docs/patterns-ai-toolkit-prompt-field--docs';
 
 const isFileDrag = (event: DragEvent): boolean => {
   const dataTransfer = event.dataTransfer;
@@ -87,7 +89,7 @@ const SUPPORTS_FIELD_SIZING =
  * @element swc-prompt-field
  *
  * @example
- * <swc-prompt-field label="Prompt">
+ * <swc-prompt-field accessible-label="AI prompt">
  *   <div slot="legal">Responses are generated using AI and may be inaccurate.</div>
  * </swc-prompt-field>
  *
@@ -114,13 +116,19 @@ const SUPPORTS_FIELD_SIZING =
  * @since 2.0.0-beta.3
  */
 export class PromptField extends SpectrumElement {
-  private readonly labelId = uniqueId('swc-prompt-field-label');
-
-  /** Disables the textarea and all actions. */
+  /**
+   * Disables the textarea, the upload button, file drop, and send. While
+   * `generating`, the stop button stays enabled so generation can still be
+   * stopped.
+   */
   @property({ type: Boolean, reflect: true })
   public disabled = false;
 
-  /** Shows the stop button in place of send while a response is generating. */
+  /**
+   * Replaces the send button with a stop button that fires
+   * `swc-prompt-field-stop`. The textarea stays editable, but Enter doesn't
+   * submit until `generating` is removed.
+   */
   @property({ type: Boolean, reflect: true })
   public generating = false;
 
@@ -150,37 +158,39 @@ export class PromptField extends SpectrumElement {
   @property({ type: Boolean, reflect: true, attribute: 'animate-loader' })
   public animateLoader = false;
 
-  /** Accessible name for the textarea; visually hidden. */
-  @property({ type: String })
-  public label = 'Prompt';
-
-  /** Optional accessible label override for the textarea. */
+  /** Accessible name for the textarea, applied as `aria-label`. Not rendered as visible text. */
   @property({ type: String, attribute: 'accessible-label' })
-  public accessibleLabel = '';
+  public accessibleLabel = 'AI prompt';
 
-  /** Accessible label for the send action button. */
-  @property({ type: String, attribute: 'send-label' })
-  public sendLabel = 'Send';
+  /** Accessible name for the send button. */
+  @property({ type: String, attribute: 'send-accessible-label' })
+  public sendAccessibleLabel = 'Submit AI prompt';
 
-  /** Accessible label for the stop action button while generating. */
-  @property({ type: String, attribute: 'stop-label' })
-  public stopLabel = 'Stop generating';
+  /** Accessible name for the send button while it acts as stop during `generating`. */
+  @property({ type: String, attribute: 'stop-accessible-label' })
+  public stopAccessibleLabel = 'Stop generating';
 
-  /** Accessible label for the upload button. */
-  @property({ type: String, attribute: 'upload-label' })
-  public uploadLabel = 'Add attachment';
+  /** Accessible name for the upload button. */
+  @property({ type: String, attribute: 'upload-accessible-label' })
+  public uploadAccessibleLabel = 'Add attachment';
 
-  /** Accessible label for the previous-attachment scroll button. */
-  @property({ type: String, attribute: 'attachment-scroll-prev-label' })
-  public attachmentScrollPrevLabel = 'Show previous attachments';
+  /** Accessible name for the previous-attachment scroll button. */
+  @property({
+    type: String,
+    attribute: 'attachment-scroll-prev-accessible-label',
+  })
+  public attachmentScrollPrevAccessibleLabel = 'Show previous attachments';
 
-  /** Accessible label for the next-attachment scroll button. */
-  @property({ type: String, attribute: 'attachment-scroll-next-label' })
-  public attachmentScrollNextLabel = 'Show more attachments';
+  /** Accessible name for the next-attachment scroll button. */
+  @property({
+    type: String,
+    attribute: 'attachment-scroll-next-accessible-label',
+  })
+  public attachmentScrollNextAccessibleLabel = 'Show more attachments';
 
   /** Accessible name for the uploaded-attachments strip landmark. */
-  @property({ type: String, attribute: 'attachment-strip-label' })
-  public attachmentStripLabel = 'Uploaded assets strip';
+  @property({ type: String, attribute: 'attachment-strip-accessible-label' })
+  public attachmentStripAccessibleLabel = 'Uploaded assets strip';
 
   /** Placeholder text shown inside the textarea. */
   @property({ type: String })
@@ -220,6 +230,10 @@ export class PromptField extends SpectrumElement {
   @state()
   private _attachmentCanScrollNext = false;
 
+  /** The chevron that has keyboard focus. It stays visible. */
+  @state()
+  private _focusVisibleChevron: 'prev' | 'next' | null = null;
+
   // `scrollend` support isn't a reliable gate on its own: browsers that
   // report support (feature-detected via `'onscrollend' in window`) can
   // still skip firing it for particular scroll triggers (observed on both
@@ -230,6 +244,15 @@ export class PromptField extends SpectrumElement {
   // `scrollend` winning first, or the host going away) is a no-op instead
   // of firing late.
   private _attachmentScrollFallbackGeneration = 0;
+
+  // Set by chevron paging. When that scroll ends, the first visible tile
+  // becomes the Tab stop (see `_syncAttachmentActiveItemToVisible`).
+  private _attachmentPagedScroll = false;
+
+  // The strip's scroll offset when it last came to rest. `focus()` can
+  // scroll the strip before `focusin` fires, so a focus-driven scroll uses
+  // this to tell which way the strip moved (see `_scrollAttachmentsTo`).
+  private _attachmentRestingOffset = 0;
 
   // Observed targets accumulate across slot changes (dismissed tiles are
   // never explicitly unobserved); the browser drops a target's callbacks
@@ -269,6 +292,9 @@ export class PromptField extends SpectrumElement {
 
   // Attachment tiles present at drop time; diffed on the next slotchange to find the new one(s) to focus.
   private _pendingAttachmentDropFocus?: HTMLElement[];
+
+  // Attachment tiles at the last slotchange; diffed to find added tiles.
+  private _knownAttachments: HTMLElement[] = [];
 
   /** Whether a file is currently being dragged over the field. Drives the same visual as the textarea's own focus ring. */
   @state()
@@ -312,28 +338,19 @@ export class PromptField extends SpectrumElement {
   }
 
   public static override get styles(): CSSResultArray {
-    return [styles, visuallyHiddenStyles];
-  }
-
-  public override connectedCallback(): void {
-    super.connectedCallback();
-    this.addEventListener(
-      focusgroupNavigationActiveChange,
-      this._handleAttachmentActiveChange as EventListener
-    );
+    return [styles];
   }
 
   public override disconnectedCallback(): void {
-    this.removeEventListener(
-      focusgroupNavigationActiveChange,
-      this._handleAttachmentActiveChange as EventListener
-    );
     this._attachmentScrollFallbackGeneration++;
     super.disconnectedCallback();
   }
 
   protected override updated(changedProperties: PropertyValues<this>): void {
     this._warnIfMissingLegalContent();
+    if (changedProperties.has('accessibleLabel')) {
+      this._warnIfMissingAccessibleLabel();
+    }
     if (changedProperties.has('value')) {
       this._autosizeTextarea();
     }
@@ -387,6 +404,10 @@ export class PromptField extends SpectrumElement {
     const box = event.currentTarget as HTMLElement;
     let target = event.target as Element | null;
     while (target && target !== box && !this._isFocusableOrSlotted(target)) {
+      // Clicks on empty space in the attachment strip must not focus the textarea.
+      if (target.classList.contains('swc-PromptField-attachments')) {
+        return;
+      }
       target = target.parentElement;
     }
     if (target === box) {
@@ -397,6 +418,14 @@ export class PromptField extends SpectrumElement {
 
   private _isFocusableOrSlotted(element: Element): boolean {
     return element.matches(`${focusableSelector}, slot`);
+  }
+
+  private _handleActionClick(): void {
+    if (this.generating) {
+      this._handleStopClick();
+      return;
+    }
+    this._handleSendClick();
   }
 
   private _handleSendClick(): void {
@@ -465,13 +494,50 @@ export class PromptField extends SpectrumElement {
         this._prepareAttachmentDropTarget(droppedAttachment);
       }
     }
+    // Only when some earlier tiles are still there, so the first render,
+    // restoring a draft, or replacing every tile doesn't scroll.
+    const known = this._knownAttachments;
+    this._knownAttachments = [...attachments];
+    const addedAttachment = attachments.some((tile) => known.includes(tile))
+      ? attachments.find((tile) => !known.includes(tile))
+      : undefined;
     this.requestUpdate();
     void this.updateComplete.then(() => {
       requestAnimationFrame(() => {
         this._observeAttachmentScrollViewport();
         this._updateAttachmentScrollState();
+        if (addedAttachment) {
+          void this.updateComplete.then(() =>
+            this._revealAddedAttachment(addedAttachment)
+          );
+        }
       });
     });
+  }
+
+  /**
+   * Scrolls a newly added tile into view, so a new upload shows even when
+   * the strip already overflows. Focus doesn't move. While focus is in the
+   * strip, the strip doesn't move either, so the focused control stays in
+   * view.
+   */
+  private _revealAddedAttachment(tile: HTMLElement): void {
+    const scrollEl = this._attachmentScrollEl;
+    const attachments = this._assignedAttachmentElements ?? [];
+    if (!scrollEl || !attachments.includes(tile)) {
+      return;
+    }
+    const focused = getActiveElement();
+    const focusInStrip =
+      this._focusedChevronDirection() !== null ||
+      (!!focused && attachments.some((item) => deepContains(item, focused)));
+    if (focusInStrip) {
+      return;
+    }
+    this._scrollAttachmentsTo(
+      this._attachmentOffsetFor(scrollEl, tile, 'nearest'),
+      this._attachmentScrollOffset()
+    );
   }
 
   private _handleAttachmentDismiss(event: Event): void {
@@ -548,11 +614,10 @@ export class PromptField extends SpectrumElement {
   }
 
   /**
-   * `scrollend`, not `scroll`: paging/scrollbar-drag animate over several
-   * frames, and `scroll` fires on every one of them. Reacting mid-gesture
-   * can lock in a tile that's only transiently passing through the
-   * visible region as active, or flip the chevrons' aria-disabled state
-   * back and forth for no reason a user would ever see settled.
+   * Runs on `scrollend`, not on each `scroll` tick. State changes during a
+   * smooth scroll can stop it early, and a tile that only passes through
+   * the view must not become active. Where scroll-driven animations are
+   * supported, CSS still updates the chevrons and fades during the scroll.
    *
    * Also reachable from `_handleAttachmentScroll`'s poll, which is why this
    * bumps the generation counter itself: whichever of the two (a real
@@ -561,6 +626,7 @@ export class PromptField extends SpectrumElement {
    */
   private _handleAttachmentScrollEnd(): void {
     this._attachmentScrollFallbackGeneration++;
+    this._attachmentRestingOffset = this._attachmentScrollOffset();
     this._updateAttachmentScrollState();
     void this.updateComplete.then(() =>
       this._syncAttachmentActiveItemToVisible()
@@ -574,64 +640,106 @@ export class PromptField extends SpectrumElement {
    * visible, having scrolled out from under it. Re-point the roving stop
    * at a currently visible tile whenever the strip scrolls, so Tab always
    * lands somewhere the user can see.
+   *
+   * After chevron paging, the stop always moves to the first visible tile.
+   * The paged-to tile can end up mid-strip, because the scroll stops at
+   * either end of the strip. A tile that has focus keeps the stop.
    */
   private _syncAttachmentActiveItemToVisible(): void {
+    const afterPaging = this._attachmentPagedScroll;
+    this._attachmentPagedScroll = false;
     const scrollEl = this._attachmentScrollEl;
     const attachments = this._assignedAttachmentElements ?? [];
     if (!scrollEl || attachments.length < 2) {
       return;
     }
 
-    const { left, right } = this._attachmentVisibleBounds(scrollEl);
+    // Use a tile that looks whole: its edge can reach into the lighter half
+    // of an edge fade. In a narrow strip no tile can look whole, so use a
+    // tile that is partly visible.
+    const { left, right } = this._attachmentVisibleBounds(scrollEl, true);
+    const tolerance = 1;
+    const fullyVisible = (tile: HTMLElement): boolean => {
+      const rect = tile.getBoundingClientRect();
+      return rect.left >= left - tolerance && rect.right <= right + tolerance;
+    };
+    const intersecting = (tile: HTMLElement): boolean => {
+      const rect = tile.getBoundingClientRect();
+      return rect.right > left + tolerance && rect.left < right - tolerance;
+    };
     const active = this._attachmentNavigation.getActiveItem();
-    if (active && this._isAttachmentVisible(active, left, right)) {
+    const focused = getActiveElement();
+    const focusInTile =
+      !!focused && attachments.some((tile) => deepContains(tile, focused));
+    if (active && fullyVisible(active) && (!afterPaging || focusInTile)) {
       return;
     }
-
-    this._attachmentNavigation.setActiveItem(
-      this._findAttachmentAtOrPastBoundary(this._isRtl() ? right : left)
-    );
+    const target =
+      attachments.find(fullyVisible) ?? attachments.find(intersecting);
+    if (target && target !== active) {
+      this._attachmentNavigation.setActiveItem(target);
+    }
   }
 
   /**
-   * The scroll viewport's own bounds, clear of the chevron overlays on
-   * both sides. Reads the same `scroll-padding-inline` the
-   * `has-scroll-prev`/`has-scroll-next` CSS rules set (prompt-field.css)
-   * as the single source of truth for how much clearance a visible
-   * chevron needs, instead of duplicating that math here.
+   * The part of the scroll viewport that no chevron covers. A side with a
+   * chevron uses `scroll-padding-inline` (the chevron clearance); a side
+   * without one uses the strip's padding.
+   *
+   * With `looksWhole`, a side with a chevron ends halfway through its edge
+   * fade instead. The fade starts at the chevron and is opaque at the
+   * scroll-padding edge, so a tile that only reaches its lighter half still
+   * looks whole.
    */
-  private _attachmentVisibleBounds(scrollEl: HTMLElement): {
+  private _attachmentVisibleBounds(
+    scrollEl: HTMLElement,
+    looksWhole = false
+  ): {
     left: number;
     right: number;
   } {
     const scrollRect = scrollEl.getBoundingClientRect();
     const scrollStyle = getComputedStyle(scrollEl);
-    return {
-      left: scrollRect.left + (parseFloat(scrollStyle.scrollPaddingLeft) || 0),
-      right:
-        scrollRect.right - (parseFloat(scrollStyle.scrollPaddingRight) || 0),
-    };
-  }
-
-  private _isAttachmentVisible(
-    attachment: HTMLElement,
-    visibleLeft: number,
-    visibleRight: number
-  ): boolean {
-    const rect = attachment.getBoundingClientRect();
-    const tolerance = 1;
-    return (
-      rect.left >= visibleLeft - tolerance &&
-      rect.right <= visibleRight + tolerance
-    );
+    const rtl = this._isRtl();
+    const leftChevron = rtl
+      ? this._attachmentCanScrollNext
+      : this._attachmentCanScrollPrev;
+    const rightChevron = rtl
+      ? this._attachmentCanScrollPrev
+      : this._attachmentCanScrollNext;
+    const leftInset = leftChevron
+      ? scrollStyle.scrollPaddingLeft
+      : scrollStyle.paddingLeft;
+    const rightInset = rightChevron
+      ? scrollStyle.scrollPaddingRight
+      : scrollStyle.paddingRight;
+    let left = scrollRect.left + (parseFloat(leftInset) || 0);
+    let right = scrollRect.right - (parseFloat(rightInset) || 0);
+    if (looksWhole) {
+      const chevronRect = (direction: 'prev' | 'next'): DOMRect | undefined =>
+        this.shadowRoot
+          ?.querySelector<HTMLElement>(
+            `.swc-PromptField-attachments-scroll-${direction}`
+          )
+          ?.getBoundingClientRect();
+      const leftRect = leftChevron
+        ? chevronRect(rtl ? 'next' : 'prev')
+        : undefined;
+      const rightRect = rightChevron
+        ? chevronRect(rtl ? 'prev' : 'next')
+        : undefined;
+      if (leftRect) {
+        left = (left + leftRect.right) / 2;
+      }
+      if (rightRect) {
+        right = (right + rightRect.left) / 2;
+      }
+    }
+    return { left, right };
   }
 
   private _focusAttachment(el: HTMLElement): void {
     this._attachmentNavigation.setActiveItem(el);
-    el.scrollIntoView({
-      block: 'nearest',
-      inline: 'nearest',
-    });
     el.focus();
   }
 
@@ -639,27 +747,147 @@ export class PromptField extends SpectrumElement {
   private _prepareAttachmentDropTarget(el: HTMLElement): void {
     this._attachmentNavigation.setActiveItem(el);
     if (isFocusVisibleInTree()) {
-      el.scrollIntoView({
-        block: 'nearest',
-        inline: 'nearest',
-      });
       el.focus();
     }
   }
 
-  /** Reacts to `swc-focusgroup-navigation-active-change` from `_attachmentNavigation`. */
-  private _handleAttachmentActiveChange = (
-    event: CustomEvent<FocusgroupNavigationActiveChangeDetail>
-  ): void => {
-    const { activeElement, source } = event.detail;
-    if (!activeElement || (source !== 'keyboard' && source !== 'focus')) {
+  /**
+   * Scrolls a tile fully into view, clear of the chevrons, when the tile or
+   * its Close button gets focus: from the arrow keys, Tab, or script. This
+   * waits a frame because `focus()` does its own scroll, which stops a
+   * smooth scroll that started before it. If focus has left the tile by
+   * then, the strip doesn't move.
+   */
+  private _handleAttachmentFocusIn(event: FocusEvent): void {
+    const scrollEl = this._attachmentScrollEl;
+    const attachments = this._assignedAttachmentElements ?? [];
+    const tile = event
+      .composedPath()
+      .find(
+        (node): node is HTMLElement =>
+          node instanceof HTMLElement && attachments.includes(node)
+      );
+    if (!scrollEl || !tile) {
       return;
     }
-    activeElement.scrollIntoView({
-      block: 'nearest',
-      inline: 'nearest',
+    const from = this._attachmentRestingOffset;
+    requestAnimationFrame(() => {
+      const focused = getActiveElement();
+      if (!focused || !deepContains(tile, focused)) {
+        return;
+      }
+      this._scrollAttachmentsTo(
+        this._attachmentOffsetFor(scrollEl, tile, 'nearest'),
+        from
+      );
     });
-  };
+  }
+
+  /**
+   * How far the strip is scrolled from its start edge. In RTL, `scrollLeft`
+   * is 0 or negative.
+   */
+  private _attachmentScrollOffset(): number {
+    return Math.abs(this._attachmentScrollEl?.scrollLeft ?? 0);
+  }
+
+  /**
+   * The scroll offset that puts `tile` in the area the chevrons don't cover
+   * (the scroll-padding box). `start` and `end` align that inline edge.
+   * `nearest` aligns the edge that is cut off, as `scrollIntoView()` does,
+   * and keeps the offset when no edge is cut off.
+   */
+  private _attachmentOffsetFor(
+    scrollEl: HTMLElement,
+    tile: HTMLElement,
+    align: 'start' | 'end' | 'nearest'
+  ): number {
+    const rect = tile.getBoundingClientRect();
+    const scrollRect = scrollEl.getBoundingClientRect();
+    const scrollStyle = getComputedStyle(scrollEl);
+    const left =
+      scrollRect.left + (parseFloat(scrollStyle.scrollPaddingLeft) || 0);
+    const right =
+      scrollRect.right - (parseFloat(scrollStyle.scrollPaddingRight) || 0);
+    const rtl = this._isRtl();
+    let edge: 'left' | 'right' | undefined;
+    if (align === 'nearest') {
+      const tolerance = 1;
+      const cutLeft = rect.left < left - tolerance;
+      const cutRight = rect.right > right + tolerance;
+      // A tile wider than the area aligns its other edge.
+      const wider = rect.width > right - left;
+      if (cutLeft !== cutRight) {
+        edge = cutLeft !== wider ? 'left' : 'right';
+      }
+    } else {
+      edge = (align === 'start') !== rtl ? 'left' : 'right';
+    }
+    // How far the content must move to the left.
+    const shift =
+      edge === 'left'
+        ? rect.left - left
+        : edge === 'right'
+          ? rect.right - right
+          : 0;
+    return this._attachmentScrollOffset() + (rtl ? -shift : shift);
+  }
+
+  /** The scroll distance over which each edge fade grows in. */
+  private _attachmentFadeRange(): number {
+    const row = this.shadowRoot?.querySelector(
+      '.swc-PromptField-attachments-row'
+    );
+    return row
+      ? parseFloat(
+          getComputedStyle(row).getPropertyValue(
+            '--_swc-prompt-field-attachment-fade-range'
+          )
+        ) || 0
+      : 0;
+  }
+
+  /**
+   * Scrolls the strip from `from` to `offset`, both measured from its start
+   * edge. Where scroll-driven animations are supported, a chevron only shows
+   * once the strip has scrolled past its edge fade. So the scroll doesn't
+   * stop inside a fade, where a tile is cut off but the chevron is hidden:
+   * it goes on to the end of the strip, or, moving away from that end, just
+   * past the fade, where the chevron shows.
+   */
+  private _scrollAttachmentsTo(offset: number, from: number): void {
+    const scrollEl = this._attachmentScrollEl;
+    if (!scrollEl) {
+      return;
+    }
+    const max = scrollEl.scrollWidth - scrollEl.clientWidth;
+    const range = PromptField._scrollDrivenChevrons
+      ? this._attachmentFadeRange()
+      : 0;
+    let target = Math.min(Math.max(offset, 0), max);
+    if (target > from) {
+      if (target < range) {
+        target = range + 1;
+      }
+      if (target > max - range) {
+        target = max;
+      }
+    } else if (target < from) {
+      if (target > max - range) {
+        target = max - range - 1;
+      }
+      if (target < range) {
+        target = 0;
+      }
+    }
+    if (Math.abs(target - this._attachmentScrollOffset()) < 1) {
+      return;
+    }
+    // Aim past the end at the end: the browser stops the scroll at the true
+    // end, which can be fractional.
+    const left = target >= max ? scrollEl.scrollWidth : target;
+    scrollEl.scrollTo({ left: this._isRtl() ? -left : left });
+  }
 
   private _handleAttachmentRowKeydown(event: KeyboardEvent): void {
     if (event.key !== 'Tab') {
@@ -710,8 +938,8 @@ export class PromptField extends SpectrumElement {
       return;
     }
 
-    // From a tile's Close button: Tab moves to the Next chevron (if
-    // rendered); Shift+Tab returns to the tile.
+    // From a tile's Close button: Tab moves to the Next chevron (if shown);
+    // Shift+Tab returns to the tile.
     const root = active.getRootNode();
     if (
       root instanceof ShadowRoot &&
@@ -724,7 +952,7 @@ export class PromptField extends SpectrumElement {
         tile.focus();
         return;
       }
-      if (nextButton && this._attachmentCanScrollNext) {
+      if (nextButton && this._isChevronShown(nextButton, 'next')) {
         event.preventDefault();
         nextButton.focus();
       }
@@ -732,11 +960,11 @@ export class PromptField extends SpectrumElement {
     }
 
     // From the Next chevron: Shift+Tab moves backward into the roving
-    // controller's current active tile (updated by `_scrollAttachmentsByPage`
-    // after paging, so this lands in the newly displayed set rather than
-    // wherever focus was before the page turned) — its Close button when
-    // visible, mirroring the forward tile -> Close -> Next chain in reverse,
-    // otherwise the tile itself.
+    // controller's current active tile (after paging, the first tile that is
+    // shown; see `_syncAttachmentActiveItemToVisible`, so this lands in the
+    // newly displayed set rather than wherever focus was before the page
+    // turned) — its Close button when visible, mirroring the forward
+    // tile -> Close -> Next chain in reverse, otherwise the tile itself.
     if (active === nextButton && event.shiftKey) {
       const activeTile = this._attachmentNavigation.getActiveItem();
       if (activeTile) {
@@ -792,10 +1020,8 @@ export class PromptField extends SpectrumElement {
       if (event.shiftKey) {
         return;
       }
-      const dismiss = tile.shadowRoot?.querySelector<HTMLButtonElement>(
-        '.swc-UploadAttachment-dismiss'
-      );
-      if (dismiss && !dismiss.hidden) {
+      const dismiss = this._attachmentDismissButton(tile);
+      if (dismiss) {
         event.preventDefault();
         dismiss.focus();
       }
@@ -834,100 +1060,145 @@ export class PromptField extends SpectrumElement {
   }
 
   /**
-   * First attachment whose leading (reading-direction-start) edge is at or
-   * past the physical viewport x-coordinate `boundary`. Falls back to the
-   * last attachment if none qualify. Shared by `_scrollAttachmentsByPage`
-   * (`boundary` is where the next/previous page will start) and
-   * `_syncAttachmentActiveItemToVisible` (`boundary` is the visible
-   * window's own start edge) so both "find the first attachment at a given
-   * point" needs go through one RTL-aware comparison instead of two.
+   * Next moves the tile that is partly hidden at the end to the start.
+   * Prev moves the tile that is partly hidden at the start to the end.
+   * When no tile is left to move, it scrolls to that end of the strip.
    */
-  private _findAttachmentAtOrPastBoundary(boundary: number): HTMLElement {
-    const children = this._assignedAttachmentElements ?? [];
-    const rtl = this._isRtl();
-    const tolerance = 1;
-    return (
-      children.find((child) =>
-        rtl
-          ? child.getBoundingClientRect().right <= boundary + tolerance
-          : child.getBoundingClientRect().left >= boundary - tolerance
-      ) ?? children[children.length - 1]!
-    );
-  }
-
   private _scrollAttachmentsByPage(direction: -1 | 1): void {
+    // The strip can still be moving (a scroll-driven chevron shows before
+    // `scrollend`), so refresh the state before the guard.
+    this._updateAttachmentScrollState();
+    const canScroll =
+      direction === 1
+        ? this._attachmentCanScrollNext
+        : this._attachmentCanScrollPrev;
     const scrollEl = this._attachmentScrollEl;
     const children = this._assignedAttachmentElements ?? [];
-    if (!scrollEl || children.length < 2) {
+    if (!canScroll || !scrollEl || children.length < 2) {
       return;
     }
 
-    // Scroll the page-start tile into view: snap-aligned, clamps at the edge.
+    const { left, right } = this._attachmentVisibleBounds(scrollEl);
+    // scrollIntoView() aligns a tile to the scroll-padding edges. Near an end
+    // of the strip, a hidden chevron puts the visible edge outside them.
     const scrollRect = scrollEl.getBoundingClientRect();
-    const pageStart = this._isRtl()
-      ? scrollRect.right - direction * scrollEl.clientWidth
-      : scrollRect.left + direction * scrollEl.clientWidth;
-    const target = this._findAttachmentAtOrPastBoundary(pageStart);
+    const scrollStyle = getComputedStyle(scrollEl);
+    const alignLeft =
+      scrollRect.left + (parseFloat(scrollStyle.scrollPaddingLeft) || 0);
+    const alignRight =
+      scrollRect.right - (parseFloat(scrollStyle.scrollPaddingRight) || 0);
+    const tolerance = 1;
+    const rtl = this._isRtl();
+    // Skip a tile that is already at the edge it would be aligned to. In a
+    // narrow strip a tile can be wider than the clear area, so it stays
+    // partly hidden, and paging would select it again and not move.
+    const nextTarget = (child: HTMLElement): boolean => {
+      const rect = child.getBoundingClientRect();
+      return rtl
+        ? rect.left < left - tolerance && rect.right < alignRight - tolerance
+        : rect.right > right + tolerance && rect.left > alignLeft + tolerance;
+    };
+    const prevTarget = (child: HTMLElement): boolean => {
+      const rect = child.getBoundingClientRect();
+      return rtl
+        ? rect.right > right + tolerance && rect.left > alignLeft + tolerance
+        : rect.left < left - tolerance && rect.right < alignRight - tolerance;
+    };
+    const found =
+      direction === 1
+        ? children.find(nextTarget)
+        : [...children].reverse().find(prevTarget);
+    const target =
+      found ??
+      (direction === 1 ? children[children.length - 1]! : children[0]!);
+
     this._attachmentNavigation.setActiveItem(target);
-    target.scrollIntoView({ block: 'nearest', inline: 'start' });
+    this._attachmentPagedScroll = true;
+    // When no tile is left to move in, scroll to that end of the strip. The
+    // end tile can still be partly hidden, when it is wider than the space
+    // next to the chevron, and aligning it again would not move the strip.
+    const offset = found
+      ? this._attachmentOffsetFor(
+          scrollEl,
+          target,
+          direction === 1 ? 'start' : 'end'
+        )
+      : direction === 1
+        ? scrollEl.scrollWidth
+        : 0;
+    this._scrollAttachmentsTo(offset, this._attachmentScrollOffset());
   }
 
-  // aria-disabled, not disabled: a chevron the user just activated stays
-  // focused instead of being blurred by the browser's own disabled-element
-  // handling. That leaves it keyboard-activatable in the brief window
-  // before its aria-disabled state actually updates, hence these guards.
-  private _handleAttachmentScrollPrev(): void {
-    if (!this._attachmentCanScrollPrev) {
-      return;
+  /**
+   * Where scroll-driven animations are supported, CSS shows and hides the
+   * chevrons from the scroll position, as in React Spectrum, and they are
+   * never disabled. Other browsers use `aria-disabled`, set on `scrollend`.
+   */
+  private static readonly _scrollDrivenChevrons =
+    typeof CSS !== 'undefined' &&
+    typeof CSS.supports === 'function' &&
+    CSS.supports('animation-timeline: scroll()');
+
+  private _isChevronInactive(canScroll: boolean): boolean {
+    return !PromptField._scrollDrivenChevrons && !canScroll;
+  }
+
+  /**
+   * Whether `button` is shown: from its computed visibility where the scroll
+   * position drives it (the JS state lags until `scrollend`), else from the
+   * scroll state.
+   */
+  private _isChevronShown(
+    button: HTMLElement,
+    direction: 'prev' | 'next'
+  ): boolean {
+    if (PromptField._scrollDrivenChevrons) {
+      return getComputedStyle(button).visibility !== 'hidden';
     }
+    return direction === 'prev'
+      ? this._attachmentCanScrollPrev
+      : this._attachmentCanScrollNext;
+  }
+
+  // A chevron uses aria-disabled, not disabled, so it keeps focus.
+  private _handleAttachmentScrollPrev(): void {
     this._scrollAttachmentsByPage(-1);
   }
 
   private _handleAttachmentScrollNext(): void {
-    if (!this._attachmentCanScrollNext) {
-      return;
-    }
     this._scrollAttachmentsByPage(1);
   }
 
   private _updateAttachmentScrollState(): void {
     const focusedChevron = this._focusedChevronDirection();
     const scrollEl = this._attachmentScrollEl;
-    if (!scrollEl) {
-      this._attachmentScrollOverflow = false;
-      this._attachmentCanScrollPrev = false;
-      this._attachmentCanScrollNext = false;
-      this._redirectFocusFromDisabledChevron(focusedChevron);
-      return;
-    }
-
-    const { scrollWidth, clientWidth } = scrollEl;
     const tolerance = 1;
-    const overflow = scrollWidth > clientWidth + tolerance;
-    const children = this._assignedAttachmentElements ?? [];
-    const firstAttachment = children[0];
-    const lastAttachment = children[children.length - 1];
+    const maxOffset = scrollEl
+      ? scrollEl.scrollWidth - scrollEl.clientWidth
+      : 0;
+    const overflow =
+      maxOffset > tolerance &&
+      (this._assignedAttachmentElements?.length ?? 0) > 0;
+    // Use the scroll offset, as the CSS scroll timeline does, so a visible
+    // chevron can always scroll. In RTL, scrollLeft is 0 or negative.
+    const offset = overflow ? Math.abs(scrollEl!.scrollLeft) : 0;
 
     this._attachmentScrollOverflow = overflow;
-    if (!overflow || !firstAttachment || !lastAttachment) {
-      this._attachmentCanScrollPrev = false;
-      this._attachmentCanScrollNext = false;
-      this._redirectFocusFromDisabledChevron(focusedChevron);
-      return;
-    }
-
-    const scrollRect = scrollEl.getBoundingClientRect();
-    const firstRect = firstAttachment.getBoundingClientRect();
-    const lastRect = lastAttachment.getBoundingClientRect();
-    const rtl = this._isRtl();
-
-    this._attachmentCanScrollPrev = rtl
-      ? firstRect.right > scrollRect.right + tolerance
-      : firstRect.left < scrollRect.left - tolerance;
-    this._attachmentCanScrollNext = rtl
-      ? lastRect.left < scrollRect.left - tolerance
-      : lastRect.right > scrollRect.right + tolerance;
+    this._attachmentCanScrollPrev = overflow && offset > tolerance;
+    this._attachmentCanScrollNext = overflow && offset < maxOffset - tolerance;
     this._redirectFocusFromDisabledChevron(focusedChevron);
+  }
+
+  // Only keyboard focus keeps a chevron shown during a scroll, as in React
+  // Spectrum. After a mouse click, the chevron still follows the scroll.
+  private _handleChevronFocusIn(): void {
+    this._focusVisibleChevron = isFocusVisibleInTree()
+      ? this._focusedChevronDirection()
+      : null;
+  }
+
+  private _handleChevronFocusOut(): void {
+    this._focusVisibleChevron = null;
   }
 
   /** 'prev'/'next' when a scroll chevron currently holds focus, else null. */
@@ -946,9 +1217,8 @@ export class PromptField extends SpectrumElement {
     return null;
   }
 
-  // A chevron the user is on can lose its scroll direction (or unrender) as the
-  // strip settles; move focus to the active tile so it isn't stranded on the
-  // now-hidden control.
+  // When a focused chevron can no longer scroll, move focus to the tile at
+  // that end: the last tile for Next, the first tile for Prev.
   private _redirectFocusFromDisabledChevron(
     direction: 'prev' | 'next' | null
   ): void {
@@ -962,15 +1232,46 @@ export class PromptField extends SpectrumElement {
     if (canStillScroll) {
       return;
     }
+    const attachments = this._assignedAttachmentElements ?? [];
     const tile =
-      this._attachmentNavigation.getActiveItem() ??
-      this._assignedAttachmentElements?.[0];
-    tile?.focus();
+      direction === 'prev'
+        ? attachments[0]
+        : attachments[attachments.length - 1];
+    if (!tile) {
+      return;
+    }
+    this._attachmentNavigation.setActiveItem(tile);
+    tile.focus();
   }
 
   private _warnedMixedAttachmentTypes = false;
 
   private _warnedMissingLegalContent = false;
+
+  private _warnedMissingAccessibleLabel = false;
+
+  private _warnIfMissingAccessibleLabel(): void {
+    if (!window.__swc?.DEBUG) {
+      return;
+    }
+
+    if ((this.accessibleLabel ?? '').trim().length > 0) {
+      this._warnedMissingAccessibleLabel = false;
+      return;
+    }
+
+    if (this._warnedMissingAccessibleLabel) {
+      return;
+    }
+
+    this._warnedMissingAccessibleLabel = true;
+    window.__swc.warn(
+      this,
+      'The accessible-label is empty, so the prompt textarea has no accessible name. Set accessible-label to a localized name such as "AI prompt".',
+      DOCS_URL,
+      { type: 'accessibility', level: 'high' }
+    );
+  }
 
   private _warnIfMixedAttachmentTypes(): void {
     if (!window.__swc?.DEBUG) {
@@ -1000,7 +1301,7 @@ export class PromptField extends SpectrumElement {
     window.__swc.warn(
       this,
       'The attachment slot contains both card and media upload attachments. Use one layout type per composer session (all card or all media). When uploads mix images and documents, normalize to media tiles with thumbnails and optional badges.',
-      'https://spectrum-web-components.adobe.com/patterns/ai-toolkit/prompt-field/'
+      DOCS_URL
     );
   }
 
@@ -1024,7 +1325,7 @@ export class PromptField extends SpectrumElement {
     window.__swc.warn(
       this,
       'The legal slot is empty. Product implementations must provide Legal-approved disclaimer content via the legal slot.',
-      'https://spectrum-web-components.adobe.com/patterns/ai-toolkit/prompt-field/'
+      DOCS_URL
     );
   }
 
@@ -1105,27 +1406,11 @@ export class PromptField extends SpectrumElement {
           class="swc-PromptField-attachments-row"
           @keydown=${this._handleAttachmentRowKeydown}
         >
-          ${this._attachmentScrollOverflow
-            ? html`
-                <swc-action-button
-                  class="swc-PromptField-attachments-scroll-prev"
-                  accessible-label=${this.attachmentScrollPrevLabel}
-                  aria-disabled=${!this._attachmentCanScrollPrev}
-                  tabindex=${this._attachmentCanScrollPrev ? nothing : -1}
-                  @click=${this._handleAttachmentScrollPrev}
-                >
-                  <swc-ui-icon
-                    slot="icon"
-                    icon="chevron"
-                    size="s"
-                  ></swc-ui-icon>
-                </swc-action-button>
-              `
-            : nothing}
+          ${this._renderAttachmentChevron('prev')}
           <div
             class="swc-PromptField-attachments-viewport"
             role="region"
-            aria-label=${this.attachmentStripLabel}
+            aria-label=${this.attachmentStripAccessibleLabel}
           >
             <div
               class=${classMap({
@@ -1136,6 +1421,7 @@ export class PromptField extends SpectrumElement {
               tabindex="-1"
               @scroll=${this._handleAttachmentScroll}
               @scrollend=${this._handleAttachmentScrollEnd}
+              @focusin=${this._handleAttachmentFocusIn}
             >
               <div class="swc-PromptField-attachments-tiles">
                 <slot
@@ -1145,51 +1431,75 @@ export class PromptField extends SpectrumElement {
               </div>
             </div>
           </div>
-          ${this._attachmentScrollOverflow
-            ? html`
-                <swc-action-button
-                  class="swc-PromptField-attachments-scroll-next"
-                  accessible-label=${this.attachmentScrollNextLabel}
-                  aria-disabled=${!this._attachmentCanScrollNext}
-                  tabindex=${this._attachmentCanScrollNext ? nothing : -1}
-                  @click=${this._handleAttachmentScrollNext}
-                >
-                  <swc-ui-icon
-                    slot="icon"
-                    icon="chevron"
-                    size="s"
-                  ></swc-ui-icon>
-                </swc-action-button>
-              `
-            : nothing}
+          ${this._renderAttachmentChevron('next')}
         </div>
       </div>
     `;
   }
 
-  private _renderSendButton(): TemplateResult {
+  private _renderAttachmentChevron(
+    direction: 'prev' | 'next'
+  ): TemplateResult | typeof nothing {
+    if (!this._attachmentScrollOverflow) {
+      return nothing;
+    }
+    const prev = direction === 'prev';
+    const inactive = this._isChevronInactive(
+      prev ? this._attachmentCanScrollPrev : this._attachmentCanScrollNext
+    );
     return html`
       <swc-action-button
-        class="swc-PromptField-send"
-        size=${this.size}
-        ?disabled=${!this._isPopulated || this.disabled}
-        accessible-label=${this.sendLabel}
-        @click=${this._handleSendClick}
+        class=${classMap({
+          [`swc-PromptField-attachments-scroll-${direction}`]: true,
+          'is-focus-visible': this._focusVisibleChevron === direction,
+        })}
+        accessible-label=${prev
+          ? this.attachmentScrollPrevAccessibleLabel
+          : this.attachmentScrollNextAccessibleLabel}
+        aria-disabled=${inactive}
+        tabindex=${inactive ? -1 : nothing}
+        @focusin=${this._handleChevronFocusIn}
+        @focusout=${this._handleChevronFocusOut}
+        @click=${prev
+          ? this._handleAttachmentScrollPrev
+          : this._handleAttachmentScrollNext}
       >
-        <swc-icon slot="icon" aria-hidden="true">${ChevronUpIcon()}</swc-icon>
+        <swc-icon slot="icon" aria-hidden="true">
+          ${unsafeSVG(prev ? Icon_ChevronLeft() : Icon_ChevronRight())}
+        </swc-icon>
       </swc-action-button>
     `;
   }
 
-  private _renderStopButton(): TemplateResult {
+  /**
+   * One persistent button for send and stop, so focus survives the
+   * `generating` swap and the new name lands on the focused control. An empty
+   * prompt uses `aria-disabled`, not `disabled`, so clearing the value after
+   * submit doesn't blur it; `Button.base` blocks clicks while aria-disabled.
+   */
+  private _renderActionButton(): TemplateResult {
+    const generating = this.generating;
     return html`
       <swc-action-button
-        class="swc-PromptField-stop"
+        class=${classMap({
+          'swc-PromptField-send': !generating,
+          'swc-PromptField-stop': generating,
+        })}
         size=${this.size}
-        accessible-label=${this.stopLabel}
-        @click=${this._handleStopClick}
+        ?disabled=${this.disabled && !generating}
+        aria-disabled=${ifDefined(
+          !generating && !this.disabled && !this._isPopulated
+            ? 'true'
+            : undefined
+        )}
+        accessible-label=${generating
+          ? this.stopAccessibleLabel
+          : this.sendAccessibleLabel}
+        @click=${this._handleActionClick}
       >
-        <swc-icon slot="icon" aria-hidden="true">${StopIcon()}</swc-icon>
+        <swc-icon slot="icon" aria-hidden="true">
+          ${generating ? StopIcon() : ChevronUpIcon()}
+        </swc-icon>
       </swc-action-button>
     `;
   }
@@ -1221,7 +1531,6 @@ export class PromptField extends SpectrumElement {
   }
 
   protected override render(): TemplateResult {
-    const showStop = this.generating;
     const hasAttachments = (this._assignedAttachmentElements?.length ?? 0) > 0;
 
     return html`
@@ -1243,12 +1552,6 @@ export class PromptField extends SpectrumElement {
                 : ''}"
             >
               ${this._renderAttachment()}
-              <span
-                id=${this.labelId}
-                class="swc-PromptField-label swc-VisuallyHidden"
-              >
-                ${this.label}
-              </span>
               <div class="swc-PromptField-controls">
                 <div class="swc-PromptField-text-group">
                   ${this._renderStatusIcon()}
@@ -1256,12 +1559,7 @@ export class PromptField extends SpectrumElement {
                     class="swc-PromptField-textarea"
                     .value=${this.value}
                     placeholder=${this.placeholder}
-                    aria-labelledby=${this.labelId}
-                    aria-label=${ifDefined(
-                      this.accessibleLabel.trim().length > 0
-                        ? this.accessibleLabel.trim()
-                        : undefined
-                    )}
+                    aria-label=${this.accessibleLabel}
                     aria-placeholder=${ifDefined(this.placeholder || undefined)}
                     ?disabled=${this.disabled}
                     rows=${this._normalizedMinRows}
@@ -1288,7 +1586,7 @@ export class PromptField extends SpectrumElement {
                       quiet
                       class="swc-PromptField-upload"
                       size=${this.size}
-                      accessible-label=${this.uploadLabel}
+                      accessible-label=${this.uploadAccessibleLabel}
                       ?disabled=${this.disabled}
                       @click=${this._handleUploadClick}
                     >
@@ -1298,9 +1596,7 @@ export class PromptField extends SpectrumElement {
                     </swc-action-button>
                   </div>
                 </div>
-                ${showStop
-                  ? this._renderStopButton()
-                  : this._renderSendButton()}
+                ${this._renderActionButton()}
               </div>
             </div>
           </div>

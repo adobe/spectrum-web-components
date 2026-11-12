@@ -16,10 +16,14 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import '../swc-response-status.js';
 
-import { getComponent } from '../../../../utils/test-utils.js';
+import { getComponent, withWarningSpy } from '../../../../utils/test-utils.js';
 import type { ResponseStatusStep } from '../response-status-step/ResponseStatusStep.js';
 import type { ResponseStatus } from '../ResponseStatus.js';
-import { LongDescription, meta } from '../stories/response-status.stories.js';
+import {
+  LongDescription,
+  meta,
+  Playground,
+} from '../stories/response-status.stories.js';
 
 export default {
   ...meta,
@@ -32,6 +36,114 @@ export default {
 } as Meta;
 
 type TestResponseStatus = ResponseStatus;
+
+export const PlaygroundLabelControlTest: Story = {
+  ...Playground,
+  args: {
+    ...Playground.args,
+    'label-slot': 'Reviewing uploaded documents',
+  },
+  play: async ({ canvasElement }) => {
+    const el = await getComponent<TestResponseStatus>(
+      canvasElement,
+      'swc-response-status'
+    );
+
+    await waitFor(() => {
+      expect(
+        el.shadowRoot
+          ?.querySelector('.swc-ResponseStatus-label')
+          ?.textContent?.trim()
+      ).toBe('Reviewing uploaded documents');
+    });
+  },
+};
+
+export const PlaygroundDisclosureLabelTest: Story = {
+  ...Playground,
+  play: async ({ canvasElement }) => {
+    const el = await getComponent<TestResponseStatus>(
+      canvasElement,
+      'swc-response-status'
+    );
+    const expectLabel = async (label: string): Promise<void> => {
+      await waitFor(
+        () => {
+          expect(
+            el.shadowRoot
+              ?.querySelector('.swc-ResponseStatus-label')
+              ?.textContent?.trim()
+          ).toBe(label);
+        },
+        { timeout: 2000 }
+      );
+    };
+
+    await expectLabel('Searching repositories for Europe trips');
+    const button = el.shadowRoot?.querySelector('button');
+    expect(button).toBeTruthy();
+    await userEvent.click(button as HTMLButtonElement);
+    await expectLabel('Processing…');
+    await userEvent.click(button as HTMLButtonElement);
+    await expectLabel('Searching repositories for Europe trips');
+  },
+};
+
+export const PlaygroundCompleteStatusTest: Story = {
+  ...Playground,
+  args: {
+    ...Playground.args,
+    status: 'complete',
+  },
+  play: async ({ canvasElement }) => {
+    const el = await getComponent<TestResponseStatus>(
+      canvasElement,
+      'swc-response-status'
+    );
+
+    await waitFor(() => {
+      expect(el.status).toBe('complete');
+      expect(
+        el.shadowRoot
+          ?.querySelector('.swc-ResponseStatus-label')
+          ?.textContent?.trim()
+      ).toBe('Thought for 9 seconds');
+      expect(
+        Array.from(el.querySelectorAll('swc-response-status-step')).map(
+          (step) => step.getAttribute('status')
+        )
+      ).toEqual(['complete', 'complete', 'complete', 'complete']);
+    });
+  },
+};
+
+export const PlaygroundStoppedStatusTest: Story = {
+  ...Playground,
+  args: {
+    ...Playground.args,
+    status: 'stopped',
+  },
+  play: async ({ canvasElement }) => {
+    const el = await getComponent<TestResponseStatus>(
+      canvasElement,
+      'swc-response-status'
+    );
+
+    await waitFor(() => {
+      expect(el.status).toBe('stopped');
+      expect(
+        el.shadowRoot
+          ?.querySelector('.swc-ResponseStatus-label')
+          ?.textContent?.trim()
+      ).toBe('You stopped the response');
+      expect(
+        Array.from(el.querySelectorAll('swc-response-status-step')).map(
+          (step) => step.getAttribute('status')
+        )
+      ).toEqual(['complete', 'complete', 'stopped']);
+    });
+  },
+};
 
 // A step's label/description are projected through a `<slot>`, so
 // `.textContent` (raw-tree only) reads empty, and `.innerText` is gated by
@@ -150,20 +262,25 @@ export const StatusApiTest: Story = {
     });
 
     await step(
-      'coerces unsupported host status to active behavior',
-      async () => {
-        el.setAttribute('status', 'pending');
-        await el.updateComplete;
+      'warns on an unsupported host status and renders active behavior',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          el.setAttribute('status', 'pending');
+          await el.updateComplete;
 
-        expect(el.getAttribute('status')).toBe('pending');
-        expect(el.shadowRoot?.querySelector('[role="status"]')).toBeTruthy();
-        expect(
-          el.shadowRoot?.querySelector('.swc-ResponseStatus-row--processing')
-        ).toBeTruthy();
-        const loader = el.shadowRoot?.querySelector('swc-pixel-loader');
-        expect(loader).toBeTruthy();
-        expect(loader?.getAttribute('preset')).toBe('mega');
-      }
+          expect(
+            String(warnCalls[0]?.[1] || ''),
+            'warning names the property and received value'
+          ).toMatch(/"status".*"pending"/);
+          expect(el.getAttribute('status')).toBe('pending');
+          expect(el.shadowRoot?.querySelector('[role="status"]')).toBeTruthy();
+          expect(
+            el.shadowRoot?.querySelector('.swc-ResponseStatus-row--processing')
+          ).toBeTruthy();
+          const loader = el.shadowRoot?.querySelector('swc-pixel-loader');
+          expect(loader).toBeTruthy();
+          expect(loader?.getAttribute('preset')).toBe('mega');
+        })
     );
 
     await step('forwards a generating preset to the pixel loader', async () => {
@@ -187,18 +304,33 @@ export const StatusApiTest: Story = {
     });
 
     await step(
-      'coerces an unsupported loader value to the mega preset',
-      async () => {
-        el.setAttribute('loader', 'not-a-preset-or-icon');
-        await el.updateComplete;
+      'warns on an unsupported loader value and renders the mega preset',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          el.setAttribute('loader', 'not-a-preset-or-icon');
+          await el.updateComplete;
 
-        expect(el.getAttribute('loader')).toBe('not-a-preset-or-icon');
-        expect(
-          el.shadowRoot
-            ?.querySelector('swc-pixel-loader')
-            ?.getAttribute('preset')
-        ).toBe('mega');
-      }
+          expect(el.getAttribute('loader')).toBe('not-a-preset-or-icon');
+          expect(
+            el.shadowRoot
+              ?.querySelector('swc-pixel-loader')
+              ?.getAttribute('preset')
+          ).toBe('mega');
+          expect(
+            String(warnCalls[0]?.[1] || ''),
+            'warning names the property and received value'
+          ).toMatch(/"loader".*"not-a-preset-or-icon"/);
+        })
+    );
+
+    await step('does not warn on valid loader values', () =>
+      withWarningSpy(async (warnCalls) => {
+        el.loader = 'cc';
+        await el.updateComplete;
+        el.loader = 'wand';
+        await el.updateComplete;
+        expect(warnCalls.length, 'no warnings for valid loaders').toBe(0);
+      })
     );
   },
 };
@@ -374,31 +506,37 @@ export const StepApiTest: Story = {
       }
     );
 
-    await step('coerces unsupported step statuses to active', async () => {
-      const invalidStep = document.createElement('swc-response-status-step');
-      invalidStep.setAttribute('status', 'pending');
-      invalidStep.innerHTML = `
+    await step('warns on unsupported step statuses and renders active', () =>
+      withWarningSpy(async (warnCalls) => {
+        const invalidStep = document.createElement('swc-response-status-step');
+        invalidStep.setAttribute('status', 'pending');
+        invalidStep.innerHTML = `
         <span slot="label">Unsupported pending step</span>
         <span slot="description">This should still render as active.</span>
       `;
 
-      el.append(invalidStep);
-      await el.updateComplete;
+        el.append(invalidStep);
+        await el.updateComplete;
 
-      // The raw attribute is reflected verbatim (unvalidated); the step's own
-      // rendering is what falls back to `active` for an unsupported value.
-      await waitFor(
-        () => {
-          expect(invalidStep.getAttribute('status')).toBe('pending');
-          expect(
-            invalidStep.shadowRoot?.querySelector(
-              '.swc-ResponseStatusStep-icon--active'
-            )
-          ).toBeTruthy();
-        },
-        { timeout: 2000 }
-      );
-    });
+        // The raw attribute is kept as set; the step's own rendering falls back
+        // to `active` for an unsupported value.
+        await waitFor(
+          () => {
+            expect(invalidStep.getAttribute('status')).toBe('pending');
+            expect(
+              invalidStep.shadowRoot?.querySelector(
+                '.swc-ResponseStatusStep-icon--active'
+              )
+            ).toBeTruthy();
+          },
+          { timeout: 2000 }
+        );
+        expect(
+          warnCalls.some((call) => call[0] === invalidStep),
+          'the step warns about its own status'
+        ).toBe(true);
+      })
+    );
   },
 };
 
@@ -831,5 +969,75 @@ export const LoaderReconnectTest: Story = {
     await el.updateComplete;
 
     expect(loader()?.hasAttribute('paused')).toBe(false);
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Properties / Attributes
+// ──────────────────────────────────────────────────────────────
+
+export const AttributeRemovalResetsTest: Story = {
+  render: () => html`
+    <swc-response-status>
+      <span slot="label">Thinking</span>
+    </swc-response-status>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const el = await getComponent<TestResponseStatus>(
+      canvasElement,
+      'swc-response-status'
+    );
+    const cases: [string, string, string, unknown][] = [
+      ['status', 'complete', 'status', 'active'],
+      ['loader', 'cc', 'loader', 'mega'],
+    ];
+
+    for (const [attribute, value, property, defaultValue] of cases) {
+      await step(
+        `resets ${attribute} to its default without a warning when removed`,
+        () =>
+          withWarningSpy(async (warnCalls) => {
+            el.setAttribute(attribute, value);
+            await el.updateComplete;
+            el.removeAttribute(attribute);
+            await el.updateComplete;
+
+            expect(
+              (el as unknown as Record<string, unknown>)[property],
+              `${property} after removal`
+            ).toBe(defaultValue);
+            expect(warnCalls.length, 'no warning when unset').toBe(0);
+          })
+      );
+    }
+  },
+};
+
+export const StepStatusRemovalResetsTest: Story = {
+  render: () => html`
+    <swc-response-status>
+      <span slot="label">Thinking</span>
+      <swc-response-status-step status="complete">
+        <span slot="label">Step</span>
+      </swc-response-status-step>
+    </swc-response-status>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const stepEl = await getComponent<ResponseStatusStep>(
+      canvasElement,
+      'swc-response-status-step'
+    );
+
+    await step(
+      'resets the step status to active without a warning when removed',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          stepEl.removeAttribute('status');
+          await stepEl.updateComplete;
+
+          expect(stepEl.status, 'status after removal').toBe('active');
+          expect(warnCalls.length, 'no warning when unset').toBe(0);
+        })
+    );
   },
 };

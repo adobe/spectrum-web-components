@@ -10,8 +10,10 @@
  * governing permissions and limitations under the License.
  */
 
-import { html } from 'lit';
+import { html, nothing } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+
+import { BUTTON_STATIC_COLORS } from '@adobe/spectrum-wc-core/components/button';
 
 import {
   FORCED_STATES,
@@ -49,14 +51,27 @@ const globalIconSvg = html`
 
 // One <a> and one <button>, both with the same classes. The whole point of
 // the global stylesheet is that both element types render identically.
-const asLinkAndButton = (classes: string, label: string) => [
+const asLinkAndButton = (
+  classes: string,
+  label: string,
+  forceState?: (typeof FORCED_STATES)[number]
+) => [
   html`
-    <a href="#" class="swc-Button ${classes}" onclick="return false;">
+    <a
+      href="#"
+      class="swc-Button ${classes}"
+      data-force-state=${forceState ?? nothing}
+      onclick="return false;"
+    >
       ${label} (link)
     </a>
   `,
   html`
-    <button type="button" class="swc-Button ${classes}">
+    <button
+      type="button"
+      class="swc-Button ${classes}"
+      data-force-state=${forceState ?? nothing}
+    >
       ${label} (button)
     </button>
   `,
@@ -67,6 +82,15 @@ const VARIANT_CASES = [
   { classes: 'swc-Button--secondary', label: 'Secondary' },
   { classes: 'swc-Button--accent', label: 'Accent' },
   { classes: 'swc-Button--negative', label: 'Negative' },
+  { classes: 'swc-Button--outline', label: 'Primary outline' },
+  {
+    classes: 'swc-Button--secondary swc-Button--outline',
+    label: 'Secondary outline',
+  },
+];
+
+const STATIC_TREATMENT_CASES = [
+  { classes: 'swc-Button--secondary', label: 'Secondary' },
   { classes: 'swc-Button--outline', label: 'Primary outline' },
   {
     classes: 'swc-Button--secondary swc-Button--outline',
@@ -181,32 +205,33 @@ const globalStylesContent = () => html`
     ],
     'Justified'
   )}
-  ${staticColorBackground(
-    row(
+  ${BUTTON_STATIC_COLORS.map((color) => {
+    const staticClass =
+      color === 'white' ? 'swc-Button--staticWhite' : 'swc-Button--staticBlack';
+
+    return staticColorBackground(
       [
-        ...asLinkAndButton('swc-Button--staticWhite', 'White'),
-        ...asLinkAndButton(
-          'swc-Button--staticWhite swc-Button--secondary',
-          'White secondary'
+        row(
+          [
+            ...asLinkAndButton(staticClass, 'Primary'),
+            ...STATIC_TREATMENT_CASES.flatMap(({ classes, label }) =>
+              asLinkAndButton(`${staticClass} ${classes}`, label)
+            ),
+          ],
+          `Static ${color}`
+        ),
+        ...FORCED_STATES.map((state) =>
+          row(
+            STATIC_TREATMENT_CASES.flatMap(({ classes, label }) =>
+              asLinkAndButton(`${staticClass} ${classes}`, label, state)
+            ),
+            `Static ${color} · ${state}`
+          )
         ),
       ],
-      'Static white'
-    ),
-    'white'
-  )}
-  ${staticColorBackground(
-    row(
-      [
-        ...asLinkAndButton('swc-Button--staticBlack', 'Black'),
-        ...asLinkAndButton(
-          'swc-Button--staticBlack swc-Button--secondary',
-          'Black secondary'
-        ),
-      ],
-      'Static black'
-    ),
-    'black'
-  )}
+      color
+    );
+  })}
   ${row(
     FORCED_STATES.flatMap((state) => [
       html`
