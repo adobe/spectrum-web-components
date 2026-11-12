@@ -20,6 +20,7 @@ const meta: Meta = {
     'Semantic collection-order navigation on both arrow axes, with wrapping.'
   ),
   title: 'Card view/Waterfall advance',
+  tags: ['migrated'],
 };
 
 export default meta;

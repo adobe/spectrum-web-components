@@ -20,6 +20,7 @@ const meta: Meta = {
     'Spatial navigation without wrapping in a uniform grid.'
   ),
   title: 'Card view/Grid nowrap',
+  tags: ['migrated'],
 };
 
 export default meta;

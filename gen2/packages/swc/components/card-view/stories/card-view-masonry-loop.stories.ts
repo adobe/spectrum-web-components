@@ -20,6 +20,7 @@ const meta: Meta = {
     'Spatial navigation that loops within an overlapping masonry band.'
   ),
   title: 'Card view/Masonry loop',
+  tags: ['migrated'],
 };
 
 export default meta;

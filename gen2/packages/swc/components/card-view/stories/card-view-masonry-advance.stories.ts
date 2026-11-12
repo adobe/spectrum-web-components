@@ -20,6 +20,7 @@ const meta: Meta = {
     'Spatial navigation with advancement between masonry bands.'
   ),
   title: 'Card view/Masonry advance',
+  tags: ['migrated'],
 };
 
 export default meta;

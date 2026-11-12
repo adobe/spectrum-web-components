@@ -20,6 +20,7 @@ const meta: Meta = {
     'Spatial navigation without wrapping in a shortest-column masonry.'
   ),
   title: 'Card view/Masonry nowrap',
+  tags: ['migrated'],
 };
 
 export default meta;

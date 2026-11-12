@@ -20,6 +20,7 @@ const meta: Meta = {
     'Visual-order navigation down each column, then right to the next.'
   ),
   title: 'Card view/Masonry top to bottom',
+  tags: ['migrated'],
 };
 
 export default meta;

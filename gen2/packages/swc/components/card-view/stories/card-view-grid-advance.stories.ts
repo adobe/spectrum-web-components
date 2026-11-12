@@ -20,6 +20,7 @@ const meta: Meta = {
     'Spatial navigation with advancement across visual boundaries.'
   ),
   title: 'Card view/Grid advance',
+  tags: ['migrated'],
 };
 
 export default meta;

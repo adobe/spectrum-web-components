@@ -20,6 +20,7 @@ const meta: Meta = {
     'Spatial navigation with same-row or same-column looping.'
   ),
   title: 'Card view/Grid loop',
+  tags: ['migrated'],
 };
 
 export default meta;

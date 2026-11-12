@@ -20,6 +20,7 @@ const meta: Meta = {
     'Sequential navigation through a visually two-dimensional grid.'
   ),
   title: 'Card view/Grid semantic',
+  tags: ['migrated'],
 };
 
 export default meta;

@@ -20,6 +20,7 @@ const meta: Meta = {
     'Sequential navigation through a column-major masonry.'
   ),
   title: 'Card view/Masonry semantic',
+  tags: ['migrated'],
 };
 
 export default meta;
