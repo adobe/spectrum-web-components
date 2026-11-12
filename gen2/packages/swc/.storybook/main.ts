@@ -130,6 +130,7 @@ const TEST_FIXTURES = [
   { ...PATTERN_STORIES, files: '**/*.test.ts' },
   { ...CORE_STORIES, files: '**/*.test.ts' },
   { ...ICONS_STORIES, files: '**/*.test.ts' },
+  { ...GUIDE_STORIES, files: '**/*.test.ts' },
 ];
 
 const VRT_STORIES = [
