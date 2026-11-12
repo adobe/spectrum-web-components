@@ -2223,7 +2223,13 @@ export const DisabledClickSuppressionTest: Story = {
         name="username"
         accessible-label="Username"
         field-status="disabled"
-      ></swc-text-field>
+      >
+        <span slot="description">
+          See the
+          <a href="#username-rules">username rules</a>
+          .
+        </span>
+      </swc-text-field>
     </fieldset>
   `,
   play: async ({ canvasElement, step }) => {
@@ -2254,6 +2260,20 @@ export const DisabledClickSuppressionTest: Story = {
       await field.updateComplete;
       clickEverywhere();
       expect(hostClick).not.toHaveBeenCalled();
+    });
+
+    await step('a slotted description link stays clickable', () => {
+      const link = field.querySelector('a')!;
+      const linkClick = fn();
+      link.addEventListener('click', linkClick);
+      link.addEventListener('click', (event) => event.preventDefault());
+      link.click();
+      expect(linkClick).toHaveBeenCalledTimes(1);
+      expect(
+        hostClick,
+        'the click still bubbles to the host'
+      ).toHaveBeenCalledTimes(1);
+      hostClick.mockClear();
     });
 
     await step('an enabled field still receives clicks', async () => {

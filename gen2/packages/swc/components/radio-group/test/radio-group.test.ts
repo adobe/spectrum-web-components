@@ -550,6 +550,11 @@ export const DisabledClickSuppressionTest: Story = {
     <fieldset>
       <swc-radio-group name="color" field-status="disabled">
         <span slot="label">Favorite color</span>
+        <span slot="description">
+          See the
+          <a href="#color-guide">color guide</a>
+          .
+        </span>
         <swc-radio value="1"><span slot="label">Red</span></swc-radio>
         <swc-radio value="2"><span slot="label">Green</span></swc-radio>
       </swc-radio-group>
@@ -574,6 +579,16 @@ export const DisabledClickSuppressionTest: Story = {
       clickEverywhere();
       expect(hostClick).not.toHaveBeenCalled();
       expect(group.selected).toBe('');
+    });
+
+    await step('a slotted description link stays clickable', () => {
+      const link = group.querySelector('a')!;
+      const linkClick = fn();
+      link.addEventListener('click', linkClick);
+      link.addEventListener('click', (event) => event.preventDefault());
+      link.click();
+      expect(linkClick).toHaveBeenCalledTimes(1);
+      hostClick.mockClear();
     });
 
     await step('a disabled fieldset drops clicks', async () => {
