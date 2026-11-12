@@ -29,6 +29,7 @@ import '../swc-card-view-masonry-loop.js';
 import '../swc-card-view-masonry-advance.js';
 import '../swc-card-view-masonry-semantic.js';
 import '../swc-card-view-masonry-top-to-bottom.js';
+import '../swc-card-view-waterfall-advance.js';
 
 const photoTemplates: CardViewItem[] = [
   {
@@ -153,7 +154,11 @@ export function navigationMeta(tag: string, subtitle: string): Partial<Meta> {
     ],
     args: {
       ...base.args,
-      layout: tag.includes('-masonry-') ? 'masonry' : 'grid',
+      layout: tag.includes('-waterfall-')
+        ? 'waterfall'
+        : tag.includes('-masonry-')
+          ? 'masonry'
+          : 'grid',
       items: photos.slice(0, 50),
     },
     argTypes: {
@@ -194,7 +199,7 @@ export function prototypeMeta(
       items: photos,
     },
     argTypes: {
-      layout: { control: 'select', options: ['grid', 'masonry'] },
+      layout: { control: 'select', options: ['grid', 'masonry', 'waterfall'] },
       selectionMode: {
         control: 'select',
         options: ['none', 'single', 'multiple'],

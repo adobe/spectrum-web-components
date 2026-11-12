@@ -10,24 +10,43 @@ import borderArtwork from './assets/border.png';
 <Meta title="Card view/The card view oracle" />
 
 export const readings = {
+  waterfall: {
+    label: 'Waterfall · Advance policy',
+    title: 'Independent columns. Uneven heights.',
+    summary:
+      'Equal-width cards fill columns left to right before returning to the first column, mirrored in RTL. Each column stacks independently, so later card tops can stagger. Collection order and single-row semantics stay fixed.',
+    caution:
+      'Left/Right follows collection order, not visual neighbors. Test vertical advancement through staggered columns separately.',
+    variants: [
+      [
+        'advance',
+        'Advance.',
+        'Up/Down follows overlapping vertical neighbors; cross an edge into the next or previous column and cycle at the collection boundary.',
+      ],
+    ],
+  },
   grid: {
-    label: 'Uniform grid · Four keyboard policies',
+    label: 'Uniform grid · Four vertical policies',
     title: 'One semantic row. Four routes to test.',
     summary:
-      'All four examples use our recommended single-row grid: 50 named card cells in one semantic row. Explicit ARIA indices and counts are omitted; every cell name includes its collection position. Only keyboard navigation changes.',
+      'All four examples use our recommended single-row grid: 50 named card cells in one semantic row. Left/Right follows collection order and wraps. Only Up/Down behavior changes; every cell name includes its collection position.',
     caution:
       'Users relying on semantics encounter one sequence. Sighted keyboard users see two visual dimensions. Test whether both can predict movement and reach every card.',
     variants: [
-      ['nowrap', 'NoWrap.', 'Follow visual neighbors and stop at an edge.'],
+      [
+        'nowrap',
+        'NoWrap.',
+        'Up/Down follows visual neighbors and stops at an edge.',
+      ],
       [
         'loop',
         'Loop.',
-        'Return to the opposite edge of the same visual row or column.',
+        'Up/Down returns to the opposite vertical edge of the same overlapping column.',
       ],
       [
         'advance',
         'Advance.',
-        'Cross an edge into the next or previous visual row or column; cycle at the collection boundary.',
+        'Up/Down crosses an edge into the next or previous column; cycle at the collection boundary.',
       ],
       [
         'semantic',
@@ -37,27 +56,27 @@ export const readings = {
     ],
   },
   masonry: {
-    label: 'Masonry · Five keyboard policies',
+    label: 'Masonry · Five vertical policies',
     title: 'Rows align. Vertical edges can differ.',
     summary:
-      'The same single-row semantics now contain adaptive visual rows: cards share a row height, with widths based on image aspect ratios. All five policies place consecutive cards across rows. Compare navigation, not different placement algorithms.',
+      'The same single-row semantics contain adaptive visual rows: equal row heights and aspect-ratio-based widths. All five policies share placement and horizontal collection-order cycling. Compare their Up/Down routes.',
     caution:
       'Several cards in another row may overlap the active card horizontally. Which one should Up or Down choose? Test adaptive rows separately from waterfall columns.',
     variants: [
       [
         'nowrap',
         'NoWrap.',
-        'Choose an overlapping spatial neighbor; stop when none exists.',
+        'Up/Down chooses an overlapping vertical neighbor; stop when none exists.',
       ],
       [
         'loop',
         'Loop.',
-        'Loop within the same overlapping band or visual column, not into another one.',
+        'Up/Down loops within the same overlapping column, not into another one.',
       ],
       [
         'advance',
         'Advance.',
-        'Cross an edge in visual band or column order; cycle at the collection boundary.',
+        'Up/Down crosses an edge in column order; cycle at the collection boundary.',
       ],
       [
         'semantic',
@@ -67,7 +86,7 @@ export const readings = {
       [
         'top-to-bottom',
         'Top to bottom.',
-        'Move down each visual column, then right to the next. Left/Up reverses the route. Cycle at the collection boundary.',
+        'Down follows each visual column, then the next column group. Up reverses that route. Left/Right still cycles in collection order.',
       ],
     ],
   },
@@ -624,8 +643,23 @@ export const oracleStyles = `.sbdocs-wrapper:has(#card-view-oracle) { padding: 0
       }
       #card-view-oracle .receipts .wrap {
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 60px;
+      }
+      #card-view-oracle .receipts-column {
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+        min-width: 0;
+      }
+      #card-view-oracle .receipts-column section + section {
+        padding-top: 32px;
+        border-top: 1px solid #ffffff30;
+      }
+      #card-view-oracle .receipts h2 {
+        font-size: 32px;
+        line-height: 1.15;
+        margin-bottom: 18px;
       }
       #card-view-oracle .dark .source-links a {
         color: var(--gold);
@@ -873,7 +907,7 @@ export const Oracle = () => {
 <em>{"oracle"}</em>
 {" "}</h1>
 {" "}
-<p className="lede">{" One recommended semantic row. Nine keyboard experiments. "}
+<p className="lede">{" One recommended semantic row. Ten keyboard experiments. "}
 <br />
 {" One question: can everyone find their way through the cards? "}</p>
 {" "}
@@ -1081,13 +1115,13 @@ export const Oracle = () => {
 {" "}
 <p>{" "}
 <strong>{" Use a single-row grid for “x of y” feedback. "}</strong>
-{" Hold those semantics fixed while users test four grid policies and five masonry policies, but keep the reported verbosity problems visible as evidence against the recommendation. Row-focused semantics remain a meaningful reference, not a dismissed concern. "}</p>
+{" Hold those semantics and horizontal collection-order cycling fixed while users compare vertical policies: four in grid, five in masonry, and Advance in waterfall. Keep reported verbosity problems visible as evidence against the recommendation. Row-focused semantics remain a meaningful reference, not a dismissed concern. "}</p>
 {" "}</div>
 {" "}
 <ol className="plan">{" "}
 <li>{" "}
 <strong>{"First, a fair reading."}</strong>
-{" Compare nine examples with identical single-row semantics, 50 cards, content, and actions. Verify positional speech. "}</li>
+{" Compare ten examples with identical single-row semantics, 50 cards, content, and actions. Verify positional speech. "}</li>
 {" "}
 <li>{" "}
 <strong>{"Make the task real."}</strong>
@@ -1105,9 +1139,10 @@ export const Oracle = () => {
 <div className="lore-intro">{" "}
 <p className="eyebrow">{"Know your navigation spells"}</p>
 {" "}
-<h2 id="oracle-lore-title">{"Four shared policies. One masonry variation."}</h2>
+<h2 id="oracle-lore-title">{"One horizontal route. Five vertical policies."}</h2>
 {" "}
-<p>{" NoWrap, Loop, Advance, and Semantic share the recommended single-row grid semantics. Each policy has a uniform-grid and masonry playground. Compare their arrow-key destinations and boundary behavior without changing the meaning of the cards. "}</p>
+<p>All ten named grid, masonry, and waterfall examples share one horizontal rule: <kbd>ArrowRight</kbd> moves to the next enabled collection item; <kbd>ArrowLeft</kbd> moves to the previous. Wrap from the last item to the first, or the first to the last. Right stays next and Left stays previous in RTL, regardless of visual placement. The single-column grid and other semantic reference examples keep their existing navigation.</p>
+<p>NoWrap, Loop, Advance, and Semantic distinguish Up/Down behavior in grid and masonry. Masonry also offers Top to bottom; waterfall currently offers Advance. Compare these vertical routes without changing the horizontal rule or the cards' semantics.</p>
 {" "}</div>
 {" "}
 <div className="spells">{" "}
@@ -1128,7 +1163,7 @@ export const Oracle = () => {
 {" "}
 <h3 id="oracle-nowrap">{"NoWrap"}</h3>
 {" "}
-<p>{" Arrow keys move to an enabled visual neighbor in the pressed direction. Candidates must overlap on the perpendicular axis: the same visual row or column in a grid, or an overlapping band in a masonry. If no candidate exists, focus stays put. Repeating one arrow does not necessarily visit every card. "}</p>
+<p><kbd>ArrowUp</kbd>/<kbd>ArrowDown</kbd> moves to an enabled spatial vertical neighbor whose bounds overlap horizontally. If none exists, focus stays put. A repeated vertical arrow need not visit every card. Left/Right still follows collection order and wraps.</p>
 {" "}
 <span className="pair">{"Grid + masonry · NoWrap"}</span>
 {" "}</article>
@@ -1150,7 +1185,7 @@ export const Oracle = () => {
 {" "}
 <h3 id="oracle-loop">{"Loop"}</h3>
 {" "}
-<p>{" Move spatially like NoWrap. At an edge, loop to the opposite end of the same visual row, overlapping masonry band, or visual column. Do not advance to another band or column. Repeating one arrow can stay in a local loop rather than visiting the whole collection. "}</p>
+<p>Move vertically like NoWrap. At an edge, loop to the opposite vertical end of the same overlapping column, not another column. A repeated Up/Down arrow can stay in a local loop; Left/Right provides a complete collection-order route.</p>
 {" "}
 <span className="pair">{"Grid + masonry · Loop"}</span>
 {" "}</article>
@@ -1172,9 +1207,9 @@ export const Oracle = () => {
 {" "}
 <h3 id="oracle-advance">{"Advance"}</h3>
 {" "}
-<p>{" Move spatially until an edge. Then cross into the next visual row or masonry band for horizontal movement, or the next visual column for vertical movement; reverse arrows retreat to the previous one. Unlike Loop, movement leaves the current band or column. At the outer collection boundary, cycle to the opposite end. "}</p>
+<p>Up/Down moves spatially until a vertical edge, then continues into the next or previous column. Unlike Loop, movement leaves the current column. At the outer collection boundary, cycle to the opposite end. Left/Right uses collection order instead of this spatial route.</p>
 {" "}
-<span className="pair">{"Grid + masonry · Advance"}</span>
+<span className="pair">{"Grid + masonry + waterfall · Advance"}</span>
 {" "}</article>
 {" "}
 <article className="spell">{" "}
@@ -1208,13 +1243,13 @@ export const Oracle = () => {
     <i></i>
   </div>
   <h3 id="oracle-top-to-bottom">Top to bottom</h3>
-  <p>Keep the same adaptive row placement. Down/Right follows the column-oriented navigation route from top to bottom, then moves to the next column group. Left/Up reverses the route. Skip disabled cards and cycle at the collection boundary. Home/End reaches the first/last enabled card in this route.</p>
-  <p>This keyboard policy does not renumber or rearrange the cards. Collection order runs across rows; a column-oriented route can instead visit 1, 4, 7 before 2, 5, 8 in a three-card-per-row example. Variable widths mean vertical edges need not align, and resizing can change the route. Evaluate this policy separately from Semantic.</p>
+  <p>Keep the same adaptive row placement. <kbd>ArrowDown</kbd> follows the column-oriented route from top to bottom, then continues to the next column group. <kbd>ArrowUp</kbd> reverses it. Skip disabled cards and cycle at the collection boundary. <kbd>Home</kbd>/<kbd>End</kbd> reaches the first/last enabled card in this route. Left/Right still follows collection order and wraps.</p>
+  <p>This policy does not renumber or rearrange cards. In a three-card-per-row example, Down can visit 1, 4, 7 before 2, 5, 8, while Right visits 1, 2, 3. Variable widths mean vertical edges need not align, and resizing can change the vertical route. Evaluate switching axes separately from Semantic.</p>
   <span className="pair">Masonry only · Visual column order</span>
 </article>
 {" "}</div>
 {" "}
-<p className="note">{" Spatial alignment uses perpendicular overlap. Adaptive masonry rows are visual, not additional semantic rows. Semantic follows collection order; Top to bottom uses a column-oriented route. All nine playgrounds contain 50 Picsum photos with collection-position image IDs. "}</p>
+<p className="note">{" Spatial vertical movement uses horizontal overlap. Visual rows and bands do not create semantic rows. Left/Right cycles through collection order in every named variant; only Up/Down differs by policy. All ten playgrounds contain 50 Picsum photos with collection-position image IDs. "}</p>
 {" "}</section>
 {" "}
 {" "}</div>
@@ -1233,7 +1268,7 @@ export const Oracle = () => {
         <figcaption>
           <h3 id="oracle-uniform-layout">Grid</h3>
           <p>Equal-width, equal-height cards form aligned rows and columns. Consecutive items fill each row before starting the next.</p>
-          <p><strong>Navigation question:</strong> Should arrows follow aligned visual neighbors or collection order?</p>
+          <p><strong>Navigation question:</strong> Which Up/Down policy best complements the shared Left/Right collection-order route?</p>
         </figcaption>
       </figure>
       <figure>
@@ -1272,16 +1307,16 @@ export const Oracle = () => {
         </div>
         <figcaption>
           <h3 id="oracle-waterfall-layout">Waterfall</h3>
-          <p>Equal-width, variable-height cards stack in independent columns. A card can start before its neighbors finish. This illustration distributes consecutive items across columns, without prescribing a keyboard route.</p>
-          <p><strong>Navigation question:</strong> Which card should Left or Right reach when several cards overlap vertically?</p>
+          <p>Equal-width, variable-height cards fill columns left to right before returning to the first column: 1, 2, 3, then 4, 5, 6. Each column stacks independently, so later card tops can stagger. <a href="./?path=/docs/components-card-view-waterfall-advance--docs" target="_top">Waterfall advance</a> preserves this order rather than choosing the shortest column.</p>
+          <p><strong>Navigation question:</strong> How should Up/Down advance through staggered columns while Left/Right follows collection order?</p>
         </figcaption>
       </figure>
     </div>
-    <p className="layout-context"><strong>Same semantics, separate policies.</strong> The current grid and masonry examples expose one semantic row, without explicit ARIA row/column indices or counts. Cell names use "x of y, title." Semantic follows collection order; Top to bottom is a separate column-oriented route through the same masonry placement. Waterfall is shown for comparison only, not as an implemented component family.</p>
+    <p className="layout-context"><strong>Same semantics, separate vertical policies.</strong> The grid, masonry, and waterfall examples expose one semantic row, without explicit ARIA row/column indices or counts. Cell names use "x of y, title." Left/Right cycles in collection order, including in RTL. Up/Down follows each variant's policy: Semantic uses collection order, Top to bottom uses a column-oriented route, and waterfall currently provides Advance.</p>
   </div>
 </section>
 <div className="deck-section wrap">
-{['grid', 'masonry'].map((family) => {
+{['grid', 'masonry', 'waterfall'].map((family) => {
   const reading = readings[family];
   return (
     <section className="reading" key={family} aria-labelledby={`oracle-reading-title-${family}`}>
@@ -1306,7 +1341,8 @@ export const Oracle = () => {
 {" "}
 <section className="receipts dark" aria-labelledby="oracle-receipts-title">{" "}
 <div className="wrap">{" "}
-<div>{" "}
+<div className="receipts-column">{" "}
+<section aria-labelledby="oracle-receipts-title">{" "}
 <p className="eyebrow">{"Read the leaves, then the receipts"}</p>
 {" "}
 <h2 id="oracle-receipts-title">{"Guidance, not gospel."}</h2>
@@ -1314,27 +1350,33 @@ export const Oracle = () => {
 <p>{" APG permits layout grids and optional wrapping. RSP and Piyush's PR informed the earlier research. Reported single-row positional feedback supports today's recommendation, not a guarantee of speech or a final keyboard policy. "}</p>
 {" "}
 <p>{" Higley and Roselli caution against choosing a grid just because it looks like one or saves tab stops. A feed suits reading; a toolbar suits commands. The role should match the task. "}</p>
+<div className="source-links">
+  <a href="https://www.w3.org/WAI/ARIA/apg/patterns/grid/">APG grid pattern</a>
+  <a href="https://sarahmhigley.com/writing/grids-part1/">Higley on grids</a>
+  <a href="https://adrianroselli.com/2020/07/aria-grid-as-an-anti-pattern.html">Roselli's caution</a>
+</div>
+</section>
+<section aria-labelledby="oracle-speech-title">
+<p className="eyebrow">What the voices reveal</p>
+<h2 id="oracle-speech-title">Less speech. No lost detail.</h2>
 <p>React Spectrum's feedback identifies a real cost of cell focus: screen readers can string together the entire cell, including selection-checkbox and action labels, instead of reading only its accessible name. <a href="https://github.com/adobe/react-spectrum/issues/2946">The ListView verbosity report</a> led to <a href="https://github.com/adobe/react-spectrum/pull/3000">focusing the row instead</a>; the team cites this as the reason for its single-column approach. Adding a cell label alone did not solve that report.</p>
 <p>Google Drive uses a single semantic row. The reported implementation hides cell contents beyond the title with <code>aria-hidden</code>; this is a product observation, not independently verified guidance. Reading additional cell content can be necessary to distinguish cards with identical titles, so reducing speech must not remove access to that information.</p>
 <p>VoiceOver reads an entire row in the reported tests, which can mean every card here. Users can pause speech or navigate without automatically interacting with a webpage group: <kbd>VO</kbd> + <kbd>Shift</kbd> + <kbd>Left Arrow</kbd> or <kbd>Right Arrow</kbd>; with Quick Nav on, <kbd>Shift</kbd> + <kbd>Right Arrow</kbd> or <kbd>Left Arrow</kbd>. <a href="https://support.apple.com/guide/voiceover/interaction-commands-cpvokys07/mac">Apple documents these interaction commands</a>, not a guarantee that they suppress row speech. They do not turn Quick Nav on. Test them separately from ordinary component arrows; repeated full-row speech remains a usability concern.</p>
+<p>The prototypes now have a visually hidden ARIA live region for selection feedback, following <a href="https://github.com/adobe/react-spectrum/blob/main/packages/react-aria/src/grid/useGridSelectionAnnouncement.ts">React Aria's selection-announcement hook</a>: announce an individually selected or deselected title and the selected count when appropriate, while keeping unfocused changes silent. The current region is assertive; test interruptions as well as message content. Selection messages address missing selection feedback, not verbose cell or row announcements.</p>
+</section>
+</div>
+<div className="receipts-column">
+<section aria-labelledby="oracle-disclosure-title">
+<p className="eyebrow">The card-detail experiment</p>
+<h2 id="oracle-disclosure-title">Reveal details on entry.</h2>
 <p>We are implementing Google Drive's reported <code>aria-hidden</code> strategy for cards in all nine named grid and masonry navigation examples. Each <code>swc-card</code> starts with <code>aria-hidden="true"</code> and <code>aria-live="polite"</code>. Its containing gridcell stays exposed and focusable, with an accessible name. The updated interaction specifies the visually hidden description "press tab for more info" on every operating system. The six semantic references, including the single-column grid, remain unchanged. This is a Google-inspired experiment, not a claim of identical behavior.</p>
 <p>With focus on a gridcell, <kbd>Tab</kbd> must expose its card with <code>aria-hidden="false"</code> before moving focus to the first enabled focusable element inside it, without selecting the card or activating an action. Subsequent <kbd>Tab</kbd> presses follow the card's control order and then leave the collection; <kbd>Shift</kbd> + <kbd>Tab</kbd> reverses the path. Hidden controls remain outside the sequential tab order until revealed. This replaces the modifier-key toggle with ordinary <kbd>Tab</kbd> entry, not a More info button. The cell's accessible name preserves the title while its card is hidden. Tab-to-reveal is the implementation target; runtime validation remains pending.</p>
 <p>Focus safety is not yet complete: the regression for pointer or programmatic focus entering a hidden card control currently fails. No focused control may remain inside an <code>aria-hidden="true"</code> subtree. Test discovery of the <kbd>Tab</kbd> hint, focus on the first enabled control, forward and reverse exit, touch access, duplicate-title disambiguation, and actual VoiceOver output before approving this approach. Focusing a control should announce that control, not necessarily every detail in the card. Unhiding existing content in a polite live region does not guarantee an announcement.</p>
-<p>The prototypes now have a visually hidden ARIA live region for selection feedback, following <a href="https://github.com/adobe/react-spectrum/blob/main/packages/react-aria/src/grid/useGridSelectionAnnouncement.ts">React Aria's selection-announcement hook</a>: announce an individually selected or deselected title and the selected count when appropriate, while keeping unfocused changes silent. The current region is assertive; test interruptions as well as message content. Selection messages address missing selection feedback, not verbose cell or row announcements.</p>
-{" "}
-<div className="source-links">{" "}
-<a href="https://www.w3.org/WAI/ARIA/apg/patterns/grid/">{" APG grid pattern "}</a>
-{" "}
-<a href="https://sarahmhigley.com/writing/grids-part1/">{" Higley on grids "}</a>
-{" "}
-<a href="https://adrianroselli.com/2020/07/aria-grid-as-an-anti-pattern.html">{" Roselli's caution "}</a>
-{" "}</div>
-{" "}</div>
-{" "}
-<div>{" "}
+</section>
+<section aria-labelledby="oracle-requirements-title">{" "}
 <p className="eyebrow">{"The non-negotiables"}</p>
 {" "}
-<h2>{"Good fortune is usable."}</h2>
+<h2 id="oracle-requirements-title">{"Good fortune is usable."}</h2>
 {" "}
 <ul>{" "}
 <li>{"Every enabled card and child control is reachable."}</li>
@@ -1347,6 +1389,7 @@ export const Oracle = () => {
 {" "}</ul>
 {" "}
 <p className="small">{" Test NVDA, JAWS, VoiceOver, Narrator, mobile screen readers, and keyboard-only use. Reports are not independently verified findings. Automated tests do not establish usability or WCAG conformance. "}</p>
+{" "}</section>
 {" "}</div>
 {" "}</div>
 {" "}</section>

@@ -29,6 +29,7 @@ import '../swc-card-view-masonry-nowrap.js';
 import '../swc-card-view-masonry-loop.js';
 import '../swc-card-view-masonry-advance.js';
 import '../swc-card-view-masonry-semantic.js';
+import '../swc-card-view-waterfall-advance.js';
 
 import { photos } from '../stories/story-helpers.js';
 
@@ -97,6 +98,163 @@ export const MasonryRegistration: StoryObj = {
       const tag = `swc-card-view-masonry-${mode}`;
       expect(customElements.get(tag), `${tag} is registered`).toBeDefined();
       expect((document.createElement(tag) as Prototype).layout).toBe('masonry');
+    }
+  },
+};
+
+export const WaterfallAdvance: StoryObj = {
+  render: () => html`
+    <div></div>
+  `,
+  play: async ({ canvasElement }) => {
+    const tag = 'swc-card-view-waterfall-advance';
+    expect(customElements.get(tag), `${tag} is registered`).toBeDefined();
+    expect((document.createElement(tag) as Prototype).layout).toBe('waterfall');
+    const view = await mount(canvasElement, tag, 'waterfall');
+    const root = view.shadowRoot!;
+    const cells = [...root.querySelectorAll<HTMLElement>('[role="gridcell"]')];
+    const cards = [...root.querySelectorAll<HTMLElement>('swc-card')];
+    expect(root.querySelectorAll('[role="row"]')).toHaveLength(1);
+    expect(cells.map((cell) => cell.getAttribute('aria-label'))).toEqual(
+      items.map(
+        (item, index) => `${index + 1} of ${items.length}, ${item.title}`
+      )
+    );
+    await waitFor(() => {
+      const bounds = cards.map((card) => card.getBoundingClientRect());
+      const columnBottoms = [bounds[0].top, bounds[0].top, bounds[0].top];
+      for (const [index, card] of bounds.entries()) {
+        const column = index % columnBottoms.length;
+        expect(card.width).toBeCloseTo(bounds[0].width);
+        expect(card.left).toBeCloseTo(bounds[column].left);
+        expect(card.top).toBeCloseTo(columnBottoms[column]);
+        columnBottoms[column] = card.bottom + 16;
+      }
+      expect(bounds[0].height).not.toBeCloseTo(bounds[1].height);
+      expect(
+        root.querySelector('.collection')!.getBoundingClientRect().height
+      ).toBeCloseTo(
+        Math.max(...bounds.map((card) => card.bottom)) - bounds[0].top
+      );
+    });
+    const move = async (index: number, key: string) => {
+      cells[index].focus();
+      cells[index].dispatchEvent(
+        new KeyboardEvent('keydown', { key, bubbles: true, composed: true })
+      );
+      await view.updateComplete;
+      return root.activeElement;
+    };
+    expect(await move(0, 'ArrowRight')).toBe(cells[1]);
+    expect(await move(0, 'ArrowDown')).toBe(cells[3]);
+    expect(await move(2, 'ArrowRight')).toBe(cells[3]);
+    expect(await move(0, 'End')).toBe(cells[7]);
+    expect(await move(7, 'Home')).toBe(cells[0]);
+    cells[0].dispatchEvent(
+      new KeyboardEvent('keydown', {
+        key: 'Tab',
+        bubbles: true,
+        composed: true,
+        cancelable: true,
+      })
+    );
+    await view.updateComplete;
+    expect(root.activeElement).toBe(cards[0].querySelector('input'));
+    expect(cards[0].hasAttribute('aria-hidden')).toBe(false);
+    cells[1].focus();
+    await view.updateComplete;
+    expect(cards[0].getAttribute('aria-hidden')).toBe('true');
+    view.dir = 'rtl';
+    await waitFor(() => {
+      expect(cells[0].getBoundingClientRect().left).toBeGreaterThan(
+        cells[2].getBoundingClientRect().left
+      );
+      const bounds = cards.map((card) => card.getBoundingClientRect());
+      for (const [index, card] of bounds.entries()) {
+        expect(card.left).toBeCloseTo(bounds[index % 3].left);
+        if (index >= 3) {
+          expect(card.top).toBeCloseTo(bounds[index - 3].bottom + 16);
+        }
+      }
+    });
+    view.style.width = '400px';
+    await waitFor(() => {
+      const bounds = cards.map((card) => card.getBoundingClientRect());
+      for (let index = 1; index < bounds.length; index++) {
+        expect(bounds[index].left).toBeCloseTo(bounds[0].left);
+        expect(bounds[index].top).toBeCloseTo(bounds[index - 1].bottom + 16);
+      }
+    });
+    expect(root.activeElement).toBe(cells[1]);
+  },
+};
+
+export const HorizontalSemanticNavigation: StoryObj = {
+  render: () => html`
+    <div></div>
+  `,
+  play: async ({ canvasElement }) => {
+    const variants = [
+      ...['nowrap', 'loop', 'advance', 'semantic'].map(
+        (mode) => ['grid', mode] as const
+      ),
+      ...['nowrap', 'loop', 'advance', 'semantic', 'top-to-bottom'].map(
+        (mode) => ['masonry', mode] as const
+      ),
+      ['waterfall', 'advance'],
+    ];
+    for (const [layout, mode] of variants) {
+      const view = await mount(
+        canvasElement,
+        `swc-card-view-${layout}-${mode}`,
+        layout
+      );
+      const cells = [
+        ...view.shadowRoot!.querySelectorAll<HTMLElement>('[role="gridcell"]'),
+      ];
+      const move = async (index: number, key: string) => {
+        cells[index].focus();
+        cells[index].dispatchEvent(
+          new KeyboardEvent('keydown', { key, bubbles: true, composed: true })
+        );
+        await view.updateComplete;
+        return view.shadowRoot!.activeElement;
+      };
+      for (const direction of ['ltr', 'rtl']) {
+        view.dir = direction;
+        view.items = items;
+        await view.updateComplete;
+        for (let index = 0; index < items.length; index++) {
+          expect(await move(index, 'ArrowRight')).toBe(
+            cells[(index + 1) % items.length]
+          );
+          expect(await move(index, 'ArrowLeft')).toBe(
+            cells[(index + items.length - 1) % items.length]
+          );
+        }
+        view.items = items.map((item, index) => ({
+          ...item,
+          disabled: index === 1,
+        }));
+        await view.updateComplete;
+        expect(await move(0, 'ArrowRight')).toBe(cells[2]);
+        expect(await move(2, 'ArrowLeft')).toBe(cells[0]);
+        view.items = items.map((item, index) => ({
+          ...item,
+          disabled: index === 0 || index === items.length - 1,
+        }));
+        await view.updateComplete;
+        expect(await move(6, 'ArrowRight')).toBe(cells[1]);
+        expect(await move(1, 'ArrowLeft')).toBe(cells[6]);
+        view.items = items.map((item, index) => ({
+          ...item,
+          disabled: index !== 4,
+        }));
+        await view.updateComplete;
+        expect(await move(4, 'ArrowRight')).toBe(cells[4]);
+        expect(await move(4, 'ArrowLeft')).toBe(cells[4]);
+        expect(view.selected).toEqual([]);
+      }
     }
   },
 };

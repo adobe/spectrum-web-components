@@ -568,6 +568,12 @@ export abstract class CardViewBase extends SpectrumElement {
         visualOrder[visualOrder.length - 1] ??
         this.items.map((item) => !item.disabled).lastIndexOf(true);
     } else if (
+      this.model === 'single-row' &&
+      this.navigation !== 'legacy' &&
+      (event.key === 'ArrowLeft' || event.key === 'ArrowRight')
+    ) {
+      next = this.cycle(index, event.key === 'ArrowRight' ? 1 : -1);
+    } else if (
       this.navigation !== 'legacy' &&
       ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key)
     ) {

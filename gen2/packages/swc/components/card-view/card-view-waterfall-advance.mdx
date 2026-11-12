@@ -1,0 +1,41 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
+import * as Stories from './stories/card-view-waterfall-advance.stories';
+
+<Meta of={Stories} />
+
+<DocsHeader />
+
+## Anatomy
+
+`swc-card-view-waterfall-advance` places equal-width, variable-height cards across the visual columns in collection order before returning to the first column. In a three-column LTR layout, cards 1, 2, 3 fill the first group, followed by 4, 5, 6 in the next. Each card contains a photo, selection checkbox, title action, description, and Share action. The Playground contains 50 cards.
+
+Unlike masonry's adaptive rows, waterfall columns stack independently: each card sits below the previous card in its assigned column, so the tops of cards in later groups need not align. Placement does not choose the shortest column. Collection order stays unchanged in the DOM, including when resizing or mirroring placement in RTL. One semantic row contains every gridcell.
+
+## Behaviors
+
+### Playground
+
+<kbd>ArrowRight</kbd> moves to the next enabled collection item and
+<kbd>ArrowLeft</kbd> to the previous, wrapping at both ends, including in RTL.
+<kbd>ArrowUp</kbd>/<kbd>ArrowDown</kbd> chooses a spatial vertical neighbor with
+horizontal overlap. When none exists, vertical arrows advance or retreat in
+column order and cycle at the collection boundary. <kbd>Home</kbd> and
+<kbd>End</kbd> reach the first and last enabled cards in collection order.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## Accessibility
+
+Cell names use "x of y, title." Explicit ARIA row/column indices and counts are omitted. These labels do not establish native positional announcements; verify spoken output with real screen readers and browsers.
+
+With direct gridcell focus, the visually hidden instruction "tab for more info" is exposed. <kbd>Tab</kbd> reveals the card's contents before focusing its first enabled control. Further <kbd>Tab</kbd> and <kbd>Shift</kbd> + <kbd>Tab</kbd> presses follow normal control order. Leaving the card's descendants hides its contents again. Pointer or programmatic focus on a control also exposes its card.
+
+<kbd>Space</kbd> toggles selection and <kbd>Enter</kbd> opens the active card.
+Selection, disclosure, and activation remain separate. Test horizontal
+collection-order cycling, vertical-neighbor choices where staggered cards
+overlap, disabled cards, reverse traversal, RTL, resizing, and access to details
+on touch devices. This prototype does not establish accessibility conformance.
+
+<DocsFooter />

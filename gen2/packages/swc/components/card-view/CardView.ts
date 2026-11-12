@@ -137,57 +137,74 @@ export class CardView extends CardViewBase {
     const rtl = hostStyle.direction === 'rtl';
     const next: CardViewPosition[] = [];
     const contentHeights: number[] = [];
-    let top = 0;
-    for (let start = 0; start < cards.length; start += columns) {
-      const row = cards.slice(start, start + columns);
-      const ratios = row.map((_, offset) => {
-        const ratio = this.items[start + offset].aspectRatio ?? 1;
-        return Number.isFinite(ratio) && ratio > 0 ? ratio : 1;
-      });
-      const available = width - (row.length - 1) * gap;
-      const justifiedHeight =
-        available / ratios.reduce((sum, ratio) => sum + ratio, 0);
-      const previewHeight =
-        row.length === columns
-          ? justifiedHeight
-          : Math.min(justifiedHeight, cardWidth / 1.5);
-      const contentHeight = Math.max(
-        0,
-        ...row.map(
-          (card) =>
-            card.shadowRoot?.querySelector<HTMLElement>('.swc-CardBase-content')
-              ?.scrollHeight ?? 0
-        )
-      );
-      const height =
-        this.layout === 'masonry'
-          ? previewHeight +
-            Math.max(
-              0,
-              ...row.map(
-                (card, offset) =>
-                  heights[start + offset] -
-                  card.querySelector('img')!.getBoundingClientRect().height
-              )
-            )
-          : rowHeight;
-      let left = 0;
-      row.forEach((_, column) => {
-        const itemWidth =
-          this.layout === 'masonry'
-            ? ratios[column] * previewHeight
-            : cardWidth;
-        contentHeights.push(contentHeight);
+    if (this.layout === 'waterfall') {
+      const columnBottoms = Array<number>(columns).fill(0);
+      cards.forEach((_, index) => {
+        const column = index % columns;
+        const left = column * (cardWidth + gap);
         next.push({
-          left: rtl ? width - left - itemWidth : left,
-          top,
-          width: itemWidth,
-          height,
+          left: rtl ? width - left - cardWidth : left,
+          top: columnBottoms[column],
+          width: cardWidth,
+          height: heights[index],
           column,
         });
-        left += itemWidth + gap;
+        columnBottoms[column] += heights[index] + gap;
       });
-      top += height + gap;
+    } else {
+      let top = 0;
+      for (let start = 0; start < cards.length; start += columns) {
+        const row = cards.slice(start, start + columns);
+        const ratios = row.map((_, offset) => {
+          const ratio = this.items[start + offset].aspectRatio ?? 1;
+          return Number.isFinite(ratio) && ratio > 0 ? ratio : 1;
+        });
+        const available = width - (row.length - 1) * gap;
+        const justifiedHeight =
+          available / ratios.reduce((sum, ratio) => sum + ratio, 0);
+        const previewHeight =
+          row.length === columns
+            ? justifiedHeight
+            : Math.min(justifiedHeight, cardWidth / 1.5);
+        const contentHeight = Math.max(
+          0,
+          ...row.map(
+            (card) =>
+              card.shadowRoot?.querySelector<HTMLElement>(
+                '.swc-CardBase-content'
+              )?.scrollHeight ?? 0
+          )
+        );
+        const height =
+          this.layout === 'masonry'
+            ? previewHeight +
+              Math.max(
+                0,
+                ...row.map(
+                  (card, offset) =>
+                    heights[start + offset] -
+                    card.querySelector('img')!.getBoundingClientRect().height
+                )
+              )
+            : rowHeight;
+        let left = 0;
+        row.forEach((_, column) => {
+          const itemWidth =
+            this.layout === 'masonry'
+              ? ratios[column] * previewHeight
+              : cardWidth;
+          contentHeights.push(contentHeight);
+          next.push({
+            left: rtl ? width - left - itemWidth : left,
+            top,
+            width: itemWidth,
+            height,
+            column,
+          });
+          left += itemWidth + gap;
+        });
+        top += height + gap;
+      }
     }
     if (
       JSON.stringify(contentHeights) !== JSON.stringify(this.contentHeights)
@@ -260,7 +277,7 @@ export class CardView extends CardViewBase {
           alt=""
           style=${styleMap({
             aspectRatio: String(
-              this.layout === 'masonry' ? (item.aspectRatio ?? 1) : 1.5
+              this.layout !== 'grid' ? (item.aspectRatio ?? 1) : 1.5
             ),
             objectFit: 'cover',
           })}
@@ -602,6 +619,11 @@ export class CardViewMasonryLoop extends CardViewGridLoop {
 /** @element swc-card-view-masonry-advance */
 export class CardViewMasonryAdvance extends CardViewGridAdvance {
   public override layout: CardViewLayout = 'masonry';
+}
+
+/** @element swc-card-view-waterfall-advance */
+export class CardViewWaterfallAdvance extends CardViewGridAdvance {
+  public override layout: CardViewLayout = 'waterfall';
 }
 
 /** @element swc-card-view-masonry-semantic */
