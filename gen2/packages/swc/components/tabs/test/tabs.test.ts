@@ -12,6 +12,12 @@
 import { html, render } from 'lit';
 import { expect, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import {
+  fixture,
+  getComponent,
+  getComponents,
+  withWarningSpy,
+} from '@swc-test-helpers/dom';
 
 import { Tab, TabPanel, Tabs } from '@adobe/spectrum-wc/tabs';
 import { TABS_DIRECTIONS } from '@adobe/spectrum-wc-core/components/tabs/index.js';
@@ -20,12 +26,6 @@ import '@adobe/spectrum-wc/components/tabs/swc-tabs.js';
 import '@adobe/spectrum-wc/components/tabs/swc-tab.js';
 import '@adobe/spectrum-wc/components/tabs/swc-tab-panel.js';
 
-import {
-  fixture,
-  getComponent,
-  getComponents,
-  withWarningSpy,
-} from '../../../utils/test-utils.js';
 import {
   Anatomy,
   DensityVariants,

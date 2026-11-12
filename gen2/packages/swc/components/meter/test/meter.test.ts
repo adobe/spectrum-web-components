@@ -12,17 +12,17 @@
 import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
-
-import { Meter } from '@adobe/spectrum-wc/meter';
-
-import '@adobe/spectrum-wc/components/meter/swc-meter.js';
-
 import {
   fixture,
   getComponent,
   getComponents,
   withWarningSpy,
-} from '../../../utils/test-utils.js';
+} from '@swc-test-helpers/dom';
+
+import { Meter } from '@adobe/spectrum-wc/meter';
+
+import '@adobe/spectrum-wc/components/meter/swc-meter.js';
+
 import meta from '../stories/meter.stories.js';
 import { Overview, Sizes, Variants } from '../stories/meter.stories.js';
 
