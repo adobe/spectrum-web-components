@@ -192,7 +192,7 @@ In this example, **Submit** clears the previous error and rechecks the selection
 
 <Canvas of={RadioGroupStories.FormParticipation} />
 
-`group.focus()` moves focus to the group, so your handler can focus the group it found. Disabled and read-only groups do not block validation.
+`group.focus()` moves focus to the selected item, or to the first enabled item when nothing is selected, so your handler can focus the group it found. A blocked native submit and `reportValidity()` focus the same item. Disabled and read-only groups do not block validation.
 
 #### Reset
 

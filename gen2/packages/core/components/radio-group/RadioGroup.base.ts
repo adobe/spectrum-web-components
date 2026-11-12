@@ -47,6 +47,16 @@ const DOCS_URL =
 /** The validation message when no `error-text` is supplied. */
 const FALLBACK_VALIDATION_MESSAGE = 'Select an option.';
 
+/** Keys that select the focused radio. */
+const NAVIGATION_KEYS = new Set([
+  'ArrowUp',
+  'ArrowDown',
+  'ArrowLeft',
+  'ArrowRight',
+  'Home',
+  'End',
+]);
+
 /**
  * Coordinates a set of `swc-radio` items as a single mutually-exclusive selection.
  * Rendering lives in `swc-radio-group`.
@@ -196,12 +206,33 @@ export abstract class RadioGroupBase extends SizedMixin(
     return this.fieldAssoc.reportValidity();
   }
 
-  /** Focuses the group (the validation anchor), so `:invalid` hosts are focusable. */
+  /**
+   * Focuses the checked radio, or the first enabled one, like a native radio
+   * group. Falls back to the group element when no radio is enabled.
+   */
   public override focus(options?: FocusOptions): void {
-    const target = this.roleElement;
-    if (!this.effectiveDisabled && target instanceof HTMLElement) {
+    if (this.effectiveDisabled) {
+      return;
+    }
+    const target = this.focusTarget ?? this.roleElement;
+    if (target instanceof HTMLElement) {
       target.focus(options);
     }
+  }
+
+  /**
+   * The radio that takes focus and anchors validation: the enabled radio
+   * matching `selected`, otherwise the first enabled one. Matches on
+   * `selected` rather than `checked` so it's current before the next update.
+   */
+  private get focusTarget(): RadioBase | undefined {
+    const enabled = this.assignedItems().filter(
+      (item) => !item.effectiveDisabled
+    );
+    return (
+      enabled.find((item) => this.selected && item.value === this.selected) ??
+      enabled[0]
+    );
   }
 
   /** The initial selection (pre-checked item or `selected`), restored on form reset. */
@@ -297,7 +328,9 @@ export abstract class RadioGroupBase extends SizedMixin(
 
   /**
    * Only keyboard movement (arrows, Home, End) selects the active item;
-   * Tab-entry and `.focus()` do not.
+   * Tab-entry and `.focus()` do not. The controller dispatches this before it
+   * moves focus, so focus moves here first: `change` listeners then see the
+   * newly focused radio, as with native radios.
    */
   private readonly handleNavigationActiveChange = (event: Event): void => {
     const { activeElement, source } = (
@@ -310,8 +343,53 @@ export abstract class RadioGroupBase extends SizedMixin(
     ) {
       return;
     }
-    this.proposeSelection(activeElement.value);
+    activeElement.focus();
+    this.proposeKeyboardSelection(activeElement);
   };
+
+  /**
+   * Selects the focused radio for a navigation key the controller didn't act
+   * on because focus didn't move, such as Home on the first radio or an arrow
+   * key with only one enabled radio.
+   */
+  private readonly handleKeydown = (event: KeyboardEvent): void => {
+    if (
+      event.defaultPrevented ||
+      event.altKey ||
+      event.ctrlKey ||
+      event.metaKey ||
+      !NAVIGATION_KEYS.has(event.key) ||
+      this.fieldStatus === 'readonly' ||
+      this.effectiveDisabled
+    ) {
+      return;
+    }
+    const item = event
+      .composedPath()
+      .find((node): node is RadioBase => node instanceof RadioBase);
+    if (
+      !item ||
+      item.checked ||
+      item.effectiveDisabled ||
+      !this.assignedItems().includes(item)
+    ) {
+      return;
+    }
+    event.preventDefault();
+    this.proposeKeyboardSelection(item);
+  };
+
+  /**
+   * Proposes `item` as the selection. When a listener cancels the change,
+   * focus returns to the roving tab stop so it isn't left on a radio with
+   * `tabindex="-1"`. The refocus waits a microtask because the navigation
+   * controller focuses the item after its active-change event returns.
+   */
+  private proposeKeyboardSelection(item: RadioBase): void {
+    if (!this.proposeSelection(item.value)) {
+      queueMicrotask(() => this.navigation.getActiveItem()?.focus());
+    }
+  }
 
   public override connectedCallback(): void {
     super.connectedCallback();
@@ -346,6 +424,7 @@ export abstract class RadioGroupBase extends SizedMixin(
       focusgroupNavigationActiveChange,
       this.handleNavigationActiveChange
     );
+    this.addEventListener('keydown', this.handleKeydown);
   }
 
   public override disconnectedCallback(): void {
@@ -353,6 +432,7 @@ export abstract class RadioGroupBase extends SizedMixin(
       focusgroupNavigationActiveChange,
       this.handleNavigationActiveChange
     );
+    this.removeEventListener('keydown', this.handleKeydown);
     this.itemStateObserver?.disconnect();
     this.errorTextObserver.disconnect();
     super.disconnectedCallback();
@@ -537,10 +617,11 @@ export abstract class RadioGroupBase extends SizedMixin(
    * and reverting on `preventDefault()`. Checked state, validity, and the form
    * value are synced before dispatch so listeners read the new state, as with
    * a native radio. Shared by item activation and keyboard navigation.
+   * Returns `false` when a listener cancelled the change.
    */
-  private proposeSelection(value: string): void {
+  private proposeSelection(value: string): boolean {
     if (value === this.selected) {
-      return;
+      return true;
     }
     const previous = this.selected;
     this.selected = value;
@@ -554,19 +635,30 @@ export abstract class RadioGroupBase extends SizedMixin(
       this.syncCheckedState();
       this.syncFormState();
     }
+    return applyDefault;
   }
 
-  /** Sets each item's `checked` from `selected` and keeps the roving tab stop on the checked item. */
+  /**
+   * Sets each item's `checked` from `selected` and keeps the roving tab stop
+   * on the checked item. With nothing checked, the tab stop moves to the first
+   * enabled item, unless focus is already in the group.
+   */
   private syncCheckedState(): void {
     let checkedItem: RadioBase | undefined;
-    for (const item of this.assignedItems()) {
+    const items = this.assignedItems();
+    for (const item of items) {
       item.checked = this.selected !== '' && item.value === this.selected;
       if (item.checked) {
         checkedItem = item;
       }
     }
-    if (checkedItem) {
-      this.navigation.setActiveItem(checkedItem);
+    const tabStop =
+      checkedItem ??
+      (this.matches(':focus-within')
+        ? undefined
+        : items.find((item) => !item.effectiveDisabled));
+    if (tabStop) {
+      this.navigation.setActiveItem(tabStop);
     }
   }
 
@@ -626,15 +718,16 @@ export abstract class RadioGroupBase extends SizedMixin(
    * selection is `valueMissing`; `field-status="invalid"` is `customError`. While
    * invalid, the plain text of `error-text` is the validation message,
    * otherwise a standard fallback. `setValidity` throws on an empty message
-   * when a flag is set; the inline UI is rendered elsewhere. The role element is
-   * the validation anchor, so a blocked submit focuses it. Disabled and
+   * when a flag is set; the inline UI is rendered elsewhere. The checked or
+   * first enabled radio is the validation anchor, so a blocked submit focuses
+   * it, as with native radios. Disabled and
    * read-only groups are barred from validation, as native controls are.
    */
   private syncValidity(): void {
     const valueMissing =
       !this.fieldAssoc.barred && this.required && this.submittedValue === null;
     const invalid = this.fieldStatus === 'invalid';
-    const anchor = this.roleElement;
+    const anchor = this.focusTarget ?? this.roleElement;
     this.internals.setValidity(
       { valueMissing, customError: invalid },
       valueMissing || invalid

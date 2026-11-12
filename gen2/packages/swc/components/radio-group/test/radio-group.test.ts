@@ -951,13 +951,11 @@ export const InvalidSubmitFocusTest: Story = {
     );
 
     form.requestSubmit();
-    expect(document.activeElement, 'the group host is the focus target').toBe(
-      group
-    );
+    const [firstRadio] = Array.from(group.querySelectorAll<Radio>('swc-radio'));
     expect(
-      group.shadowRoot?.activeElement,
-      'focus lands on the radiogroup element'
-    ).toBe(group.roleElement);
+      document.activeElement,
+      'a blocked submit focuses the first radio when none is checked'
+    ).toBe(firstRadio);
 
     before.focus();
     group.fieldStatus = 'disabled';
@@ -1013,20 +1011,21 @@ export const InvalidSubmitNoValidateTest: Story = {
       const [invalidEvent] = invalid.mock.calls[0] as [Event];
       expect(invalidEvent.target, 'invalid targets the host').toBe(group);
       expect(group.matches(':invalid'), 'the host matches :invalid').toBe(true);
-      group.focus();
-      expect(document.activeElement, 'host.focus() reaches the wrapper').toBe(
-        group
+      const [firstRadio] = Array.from(
+        group.querySelectorAll<Radio>('swc-radio')
       );
+      group.focus();
       expect(
-        group.shadowRoot?.activeElement,
-        'the inner wrapper has focus'
-      ).toBe(group.roleElement);
+        document.activeElement,
+        'host.focus() reaches the first radio'
+      ).toBe(firstRadio);
       before.focus();
 
       expect(form.reportValidity()).toBe(false);
-      expect(document.activeElement, 'reportValidity focuses the group').toBe(
-        group
-      );
+      expect(
+        document.activeElement,
+        'reportValidity focuses the first radio'
+      ).toBe(firstRadio);
     } finally {
       form.removeEventListener('submit', submit);
       group.removeEventListener('invalid', invalid);
@@ -1633,6 +1632,93 @@ export const KeyboardNavigationTest: Story = {
       items[0]
     );
     expect(group.selected).toBe('1');
+  },
+};
+
+export const FocusAndTabStopTest: Story = {
+  render: () => html`
+    <form @reset=${preventDefault}>
+      <swc-radio-group name="shipping">
+        <span slot="label">Shipping method</span>
+        <swc-radio value="1"><span slot="label">Standard</span></swc-radio>
+        <swc-radio value="2"><span slot="label">Priority</span></swc-radio>
+        <swc-radio value="3"><span slot="label">Express</span></swc-radio>
+      </swc-radio-group>
+      <button type="button" id="outside">Outside</button>
+    </form>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const group = await getComponent<RadioGroup>(
+      canvasElement,
+      'swc-radio-group'
+    );
+    const items = await getComponents<Radio>(group, 'swc-radio');
+    const outside = canvasElement.querySelector<HTMLElement>('#outside')!;
+    const press = (target: Radio, key: string) =>
+      target.dispatchEvent(
+        new KeyboardEvent('keydown', {
+          key,
+          bubbles: true,
+          composed: true,
+          cancelable: true,
+        })
+      );
+    const tabIndexes = (): number[] => items.map((item) => item.tabIndex);
+
+    await step('Home on the focused first radio selects it', () => {
+      items[0].focus();
+      press(items[0], 'Home');
+      expect(group.selected).toBe('1');
+    });
+
+    await step('focus() lands on the checked radio, where keys work', () => {
+      group.selected = '2';
+      outside.focus();
+      group.focus();
+      expect(document.activeElement).toBe(items[1]);
+      press(items[1], 'ArrowDown');
+      expect(document.activeElement).toBe(items[2]);
+      expect(group.selected).toBe('3');
+    });
+
+    await step('a cancelled keyboard change returns focus', async () => {
+      let focusedDuringChange: Element | null = null;
+      const cancel = (event: Event): void => {
+        if (event.target === group) {
+          focusedDuringChange = document.activeElement;
+          event.preventDefault();
+        }
+      };
+      group.addEventListener('change', cancel);
+      press(items[2], 'ArrowUp');
+      group.removeEventListener('change', cancel);
+      expect(
+        focusedDuringChange,
+        'change listeners see the newly focused radio'
+      ).toBe(items[1]);
+      await waitFor(() => expect(document.activeElement).toBe(items[2]));
+      expect(group.selected).toBe('3');
+      expect(tabIndexes()).toEqual([-1, -1, 0]);
+    });
+
+    await step(
+      'with nothing checked, the tab stop is the first radio',
+      async () => {
+        outside.focus();
+        group.selected = '';
+        await group.updateComplete;
+        expect(tabIndexes()).toEqual([0, -1, -1]);
+      }
+    );
+
+    await step('an arrow key with one enabled radio selects it', async () => {
+      items[0].disabled = true;
+      items[2].disabled = true;
+      await waitFor(() => expect(items[1].tabIndex).toBe(0));
+      items[1].focus();
+      press(items[1], 'ArrowDown');
+      expect(group.selected).toBe('2');
+    });
   },
 };
 
