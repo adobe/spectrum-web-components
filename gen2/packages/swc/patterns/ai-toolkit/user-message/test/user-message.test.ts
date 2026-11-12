@@ -13,11 +13,11 @@
 import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import { getComponent, getComponents } from '@swc-test-helpers/dom';
 
 import '../../conversation-turn/swc-conversation-turn.js';
 import '../swc-user-message.js';
 
-import { getComponent, getComponents } from '../../../../utils/test-utils.js';
 import { meta, Overview } from '../stories/user-message.stories.js';
 import { UserMessage } from '../UserMessage.js';
 

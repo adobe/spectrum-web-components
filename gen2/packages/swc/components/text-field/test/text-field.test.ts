@@ -12,18 +12,18 @@
 import { html, type PropertyValues } from 'lit';
 import { expect, fn, userEvent, waitFor, within } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import {
+  fixture,
+  getComponent,
+  getComponents,
+  withWarningSpy,
+} from '@swc-test-helpers/dom';
 
 import { TextField } from '@adobe/spectrum-wc/text-field';
 
 import '@adobe/spectrum-wc/components/avatar/swc-avatar.js';
 import '@adobe/spectrum-wc/components/text-field/swc-text-field.js';
 
-import {
-  fixture,
-  getComponent,
-  getComponents,
-  withWarningSpy,
-} from '../../../utils/test-utils.js';
 import * as TextFieldStories from '../stories/text-field.stories.js';
 import meta from '../stories/text-field.stories.js';
 import {
