@@ -44,6 +44,12 @@ export abstract class CardViewBase extends SpectrumElement {
   @state()
   protected selectionAnnouncement = { text: '' };
 
+  @state()
+  protected expandedInfo = new Set<string>();
+
+  @state()
+  protected focusedCellId?: string;
+
   private lastSelection?: Set<string>;
   private selectionFrame?: number;
 
@@ -51,6 +57,10 @@ export abstract class CardViewBase extends SpectrumElement {
 
   protected get groupedControls(): boolean {
     return this.model === 'toolbar' || this.model === 'fieldset';
+  }
+
+  protected get moreInfoEnabled(): boolean {
+    return false;
   }
 
   protected abstract readonly model: CardViewModel;
@@ -188,7 +198,57 @@ export abstract class CardViewBase extends SpectrumElement {
     );
     if (target) {
       this.activeIndex = Number(target.dataset.index);
+      if (this.moreInfoEnabled) {
+        const id = this.items[this.activeIndex]?.id;
+        this.focusedCellId =
+          target === this.focusTargets[this.activeIndex] ? id : undefined;
+        this.expandedInfo =
+          id !== undefined && target !== this.focusTargets[this.activeIndex]
+            ? new Set([id])
+            : new Set();
+      }
     }
+  }
+
+  protected handleFocusOut(event: FocusEvent): void {
+    if (!this.moreInfoEnabled) {
+      return;
+    }
+    this.focusedCellId = undefined;
+    const target = (event.composedPath() as HTMLElement[]).find(
+      (element) => element.dataset?.index !== undefined
+    );
+    if (!target) {
+      return;
+    }
+    const index = Number(target.dataset.index);
+    const cell = this.focusTargets[index];
+    const next = event.relatedTarget;
+    if (next instanceof Node && next !== cell && cell?.contains(next)) {
+      return;
+    }
+    const expanded = new Set(this.expandedInfo);
+    expanded.delete(this.items[index]?.id);
+    this.expandedInfo = expanded;
+  }
+
+  private async enterCard(index: number): Promise<void> {
+    const item = this.items[index];
+    const cell = this.focusTargets[index];
+    if (!item || !cell || item.disabled) {
+      return;
+    }
+    this.expandedInfo = new Set([item.id]);
+    await this.updateComplete;
+    if (this.shadowRoot?.activeElement !== cell) {
+      return;
+    }
+    const control = [
+      ...cell.querySelectorAll<HTMLElement>(
+        'input, button, select, textarea, a[href], [tabindex]'
+      ),
+    ].find((element) => element.tabIndex >= 0 && !element.matches(':disabled'));
+    control?.focus();
   }
 
   protected async focusCardControl(index: number): Promise<void> {
@@ -409,6 +469,20 @@ export abstract class CardViewBase extends SpectrumElement {
       return;
     }
     const index = Number(wrapper.dataset.index);
+    if (
+      this.moreInfoEnabled &&
+      target === this.focusTargets[index] &&
+      !this.items[index]?.disabled &&
+      !event.ctrlKey &&
+      !event.altKey &&
+      !event.metaKey &&
+      !event.shiftKey &&
+      event.key === 'Tab'
+    ) {
+      event.preventDefault();
+      void this.enterCard(index);
+      return;
+    }
     if (this.groupedControls) {
       this.handleGroupedKeydown(event, target);
       return;
@@ -494,6 +568,12 @@ export abstract class CardViewBase extends SpectrumElement {
         visualOrder[visualOrder.length - 1] ??
         this.items.map((item) => !item.disabled).lastIndexOf(true);
     } else if (
+      this.model === 'single-row' &&
+      this.navigation !== 'legacy' &&
+      (event.key === 'ArrowLeft' || event.key === 'ArrowRight')
+    ) {
+      next = this.cycle(index, event.key === 'ArrowRight' ? 1 : -1);
+    } else if (
       this.navigation !== 'legacy' &&
       ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key)
     ) {
@@ -522,19 +602,19 @@ export abstract class CardViewBase extends SpectrumElement {
                     ? this.advancedSpatial(index, event.key)
                     : this.spatial(index, event.key);
     } else if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
-      if (this.model === 'vertical' && this.layout === 'waterfall') {
+      if (this.model === 'vertical' && this.layout === 'masonry') {
         return;
       }
       const rtl = getComputedStyle(this).direction === 'rtl';
       const direction = (event.key === 'ArrowRight' ? 1 : -1) * (rtl ? -1 : 1);
       next =
         this.model === 'single-row' ||
-        (this.model === 'baseline' && this.layout === 'waterfall')
+        (this.model === 'baseline' && this.layout === 'masonry')
           ? this.spatial(index, event.key)
           : this.sequential(index, direction);
     } else if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
       next =
-        this.model === 'vertical' && this.layout === 'waterfall'
+        this.model === 'vertical' && this.layout === 'masonry'
           ? this.columnStep(index, event.key === 'ArrowDown' ? 1 : -1)
           : this.model === 'wrapping'
             ? this.columnStep(index, event.key === 'ArrowDown' ? 1 : -1)

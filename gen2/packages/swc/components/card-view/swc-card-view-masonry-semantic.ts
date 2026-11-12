@@ -9,19 +9,14 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import type { Meta, StoryObj } from '@storybook/web-components';
+import { defineElement } from '@adobe/spectrum-wc-core/element/index.js';
 
-import { navigationMeta } from './story-helpers.js';
+import { CardViewMasonrySemantic } from './CardView.js';
 
-/** A single-row semantic grid with spatial navigation among unequal-height cards. */
-const meta: Meta = {
-  ...navigationMeta(
-    'swc-card-view-waterfall-nowrap',
-    'Spatial navigation without wrapping in a shortest-column waterfall.'
-  ),
-  title: 'Card view/Waterfall nowrap',
-};
+declare global {
+  interface HTMLElementTagNameMap {
+    'swc-card-view-masonry-semantic': CardViewMasonrySemantic;
+  }
+}
 
-export default meta;
-
-export const Playground: StoryObj = { tags: ['behaviors'] };
+defineElement('swc-card-view-masonry-semantic', CardViewMasonrySemantic);

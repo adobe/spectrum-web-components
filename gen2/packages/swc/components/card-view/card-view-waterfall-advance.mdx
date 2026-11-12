@@ -8,21 +8,34 @@ import * as Stories from './stories/card-view-waterfall-advance.stories';
 
 ## Anatomy
 
-`swc-card-view-waterfall-advance` places 50 unequal-height cards into the shortest available visual column. Each card contains a Picsum photo, selection checkbox, primary action, and Share action. One semantic row contains all 50 gridcells, each with its collection-order column index.
+`swc-card-view-waterfall-advance` places equal-width, variable-height cards left to right across the available columns before returning to the first column. In a three-column LTR layout, the sequence is 1, 2, 3, then 4, 5, 6, then 7, 8, 9. Each card contains a photo, selection checkbox, title action, description, and Share action. The Playground contains 50 cards.
+
+Unlike masonry's adaptive rows, waterfall columns stack independently: each card sits below the previous card in its assigned column, so the tops of cards in later groups need not align. In the example above, the first column contains 1, 4, 7; the second 2, 5, 8; and the third 3, 6, 9. Placement does not choose the shortest column or fill an entire column before moving across. RTL mirrors placement from the inline start, while DOM collection order stays unchanged through direction and viewport changes. One semantic row contains every gridcell.
 
 ## Behaviors
 
 ### Playground
 
-Arrow keys first choose the nearest enabled visual neighbor with perpendicular overlap. At a horizontal edge, focus advances or retreats in visual top-to-bottom band order. At a vertical edge, it advances or retreats in column order. Traversal cycles at the outer collection boundary. These visual bands do not create semantic rows.
+<kbd>ArrowRight</kbd> moves to the next enabled collection item and
+<kbd>ArrowLeft</kbd> to the previous, wrapping at both ends, including in RTL.
+<kbd>ArrowUp</kbd>/<kbd>ArrowDown</kbd> chooses a spatial vertical neighbor with
+horizontal overlap. When none exists, vertical arrows advance or retreat in
+column order and cycle at the collection boundary. <kbd>Home</kbd> and
+<kbd>End</kbd> reach the first and last enabled cards in collection order.
 
 <Canvas of={Stories.Playground} />
 <Controls of={Stories.Playground} />
 
 ## Accessibility
 
-We recommend a single-row grid for collection-position feedback such as "x of y," keeping semantic indices stable as cards reflow. Actual positional announcements require screen reader and browser testing.
+Cell names use "x of y, title." Explicit ARIA row/column indices and counts are omitted. These labels do not establish native positional announcements; verify spoken output with real screen readers and browsers.
 
-This example tests whether advancement between waterfall bands gives a predictable route for both sighted keyboard users and users who encounter only one semantic sequence. Horizontal neighbors are still ambiguous because card heights differ and no aligned horizontal rows exist. Compare the resulting order with Waterfall Semantic. <kbd>Home</kbd> and <kbd>End</kbd> reach collection boundaries; <kbd>Space</kbd> toggles selection and <kbd>Enter</kbd> opens the active card.
+With direct gridcell focus, the visually hidden instruction "tab for more info" is exposed. <kbd>Tab</kbd> reveals the card's contents before focusing its first enabled control. Further <kbd>Tab</kbd> and <kbd>Shift</kbd> + <kbd>Tab</kbd> presses follow normal control order. Leaving the card's descendants hides its contents again. Pointer or programmatic focus on a control also exposes its card.
+
+<kbd>Space</kbd> toggles selection and <kbd>Enter</kbd> opens the active card.
+Selection, disclosure, and activation remain separate. Test horizontal
+collection-order cycling, vertical-neighbor choices where staggered cards
+overlap, disabled cards, reverse traversal, RTL, resizing, and access to details
+on touch devices. This prototype does not establish accessibility conformance.
 
 <DocsFooter />

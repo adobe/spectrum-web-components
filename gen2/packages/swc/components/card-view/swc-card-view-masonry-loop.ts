@@ -11,12 +11,12 @@
  */
 import { defineElement } from '@adobe/spectrum-wc-core/element/index.js';
 
-import { CardViewWaterfallSemantic } from './CardView.js';
+import { CardViewMasonryLoop } from './CardView.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'swc-card-view-waterfall-semantic': CardViewWaterfallSemantic;
+    'swc-card-view-masonry-loop': CardViewMasonryLoop;
   }
 }
 
-defineElement('swc-card-view-waterfall-semantic', CardViewWaterfallSemantic);
+defineElement('swc-card-view-masonry-loop', CardViewMasonryLoop);

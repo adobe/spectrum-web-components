@@ -13,11 +13,11 @@ import type { Meta, StoryObj } from '@storybook/web-components';
 
 import { navigationMeta } from './story-helpers.js';
 
-/** A single-row semantic grid with spatial advancement among unequal-height cards. */
+/** A single-row semantic grid of variable-height cards in independent columns. */
 const meta: Meta = {
   ...navigationMeta(
     'swc-card-view-waterfall-advance',
-    'Spatial navigation with advancement between waterfall bands.'
+    'Spatial navigation with advancement between waterfall bands and columns.'
   ),
   title: 'Card view/Waterfall advance',
 };

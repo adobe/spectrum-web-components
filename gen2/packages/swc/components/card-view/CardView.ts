@@ -50,6 +50,9 @@ export class CardView extends CardViewBase {
   private previewSizes: number[][] = [];
 
   @state()
+  private contentHeights: number[] = [];
+
+  @state()
   private collectionHeight = 0;
 
   private observer?: ResizeObserver;
@@ -130,29 +133,84 @@ export class CardView extends CardViewBase {
     if (JSON.stringify(previewSizes) !== JSON.stringify(this.previewSizes)) {
       this.previewSizes = previewSizes;
     }
-    const columnHeights = Array.from({ length: columns }, () => 0);
-    const itemsPerColumn = Math.ceil(cards.length / columns);
     const rowHeight = Math.max(0, ...heights);
     const rtl = hostStyle.direction === 'rtl';
-    const next = cards.map((_, index) => {
-      const column =
-        this.layout === 'waterfall'
-          ? Math.floor(index / itemsPerColumn)
-          : index % columns;
-      const top =
-        this.layout === 'waterfall'
-          ? columnHeights[column]
-          : Math.floor(index / columns) * (rowHeight + gap);
-      const height = heights[index];
-      columnHeights[column] = top + height + gap;
-      return {
-        left: (rtl ? columns - column - 1 : column) * (cardWidth + gap),
-        top,
-        width: cardWidth,
-        height,
-        column,
-      };
-    });
+    const next: CardViewPosition[] = [];
+    const contentHeights: number[] = [];
+    if (this.layout === 'waterfall') {
+      const columnBottoms = Array<number>(columns).fill(0);
+      cards.forEach((_, index) => {
+        const column = index % columns;
+        const left = column * (cardWidth + gap);
+        next.push({
+          left: rtl ? width - left - cardWidth : left,
+          top: columnBottoms[column],
+          width: cardWidth,
+          height: heights[index],
+          column,
+        });
+        columnBottoms[column] += heights[index] + gap;
+      });
+    } else {
+      let top = 0;
+      for (let start = 0; start < cards.length; start += columns) {
+        const row = cards.slice(start, start + columns);
+        const ratios = row.map((_, offset) => {
+          const ratio = this.items[start + offset].aspectRatio ?? 1;
+          return Number.isFinite(ratio) && ratio > 0 ? ratio : 1;
+        });
+        const available = width - (row.length - 1) * gap;
+        const justifiedHeight =
+          available / ratios.reduce((sum, ratio) => sum + ratio, 0);
+        const previewHeight =
+          row.length === columns
+            ? justifiedHeight
+            : Math.min(justifiedHeight, cardWidth / 1.5);
+        const contentHeight = Math.max(
+          0,
+          ...row.map(
+            (card) =>
+              card.shadowRoot?.querySelector<HTMLElement>(
+                '.swc-CardBase-content'
+              )?.scrollHeight ?? 0
+          )
+        );
+        const height =
+          this.layout === 'masonry'
+            ? previewHeight +
+              Math.max(
+                0,
+                ...row.map(
+                  (card, offset) =>
+                    heights[start + offset] -
+                    card.querySelector('img')!.getBoundingClientRect().height
+                )
+              )
+            : rowHeight;
+        let left = 0;
+        row.forEach((_, column) => {
+          const itemWidth =
+            this.layout === 'masonry'
+              ? ratios[column] * previewHeight
+              : cardWidth;
+          contentHeights.push(contentHeight);
+          next.push({
+            left: rtl ? width - left - itemWidth : left,
+            top,
+            width: itemWidth,
+            height,
+            column,
+          });
+          left += itemWidth + gap;
+        });
+        top += height + gap;
+      }
+    }
+    if (
+      JSON.stringify(contentHeights) !== JSON.stringify(this.contentHeights)
+    ) {
+      this.contentHeights = contentHeights;
+    }
     const height = Math.max(
       0,
       ...next.map((position) => position.top + position.height)
@@ -166,6 +224,9 @@ export class CardView extends CardViewBase {
   }
 
   private childTabIndex(index: number): number {
+    if (this.moreInfoEnabled && !this.expandedInfo.has(this.items[index].id)) {
+      return -1;
+    }
     if (this.groupedControls) {
       return index === this.activeIndex && !this.items[index].disabled ? 0 : -1;
     }
@@ -195,7 +256,20 @@ export class CardView extends CardViewBase {
       <swc-card
         variant=${this.variant}
         density=${this.density}
+        style=${styleMap({
+          '--swc-card-base-grid-template-rows':
+            this.layout === 'masonry' &&
+            this.contentHeights[index] !== undefined
+              ? `auto minmax(${this.contentHeights[index]}px, auto) auto`
+              : undefined,
+        })}
         data-selected=${selected}
+        aria-hidden=${ifDefined(
+          this.moreInfoEnabled && !this.expandedInfo.has(item.id)
+            ? 'true'
+            : undefined
+        )}
+        aria-live=${ifDefined(this.moreInfoEnabled ? 'polite' : undefined)}
       >
         <img
           slot="preview"
@@ -203,7 +277,7 @@ export class CardView extends CardViewBase {
           alt=""
           style=${styleMap({
             aspectRatio: String(
-              this.layout === 'waterfall' ? (item.aspectRatio ?? 1) : 1.5
+              this.layout !== 'grid' ? (item.aspectRatio ?? 1) : 1.5
             ),
             objectFit: 'cover',
           })}
@@ -315,10 +389,7 @@ export class CardView extends CardViewBase {
         </div>
       `;
     }
-    const label =
-      this.navigation === 'spatial-advance'
-        ? `${index + 1} of ${this.items.length}, ${item.title}`
-        : item.title;
+    const label = `${index + 1} of ${this.items.length}, ${item.title}`;
     if (this.singleRow) {
       return html`
         <div
@@ -338,6 +409,19 @@ export class CardView extends CardViewBase {
           tabindex=${!item.disabled && index === this.activeIndex ? 0 : -1}
           style=${style}
         >
+          ${this.moreInfoEnabled
+            ? html`
+                <div
+                  id=${`more-info-${index}`}
+                  class="more-info-hint"
+                  aria-hidden=${this.focusedCellId === item.id
+                    ? 'false'
+                    : 'true'}
+                >
+                  tab for more info
+                </div>
+              `
+            : ''}
           ${this.renderCard(item, index)}
         </div>
       `;
@@ -434,6 +518,7 @@ export class CardView extends CardViewBase {
                 style=${height}
                 @keydown=${this.handleKeydown}
                 @focusin=${this.handleFocus}
+                @focusout=${this.handleFocusOut}
               >
                 ${this.singleRow
                   ? html`
@@ -499,6 +584,10 @@ export class CardViewFieldset extends CardView {
 /** @element swc-card-view-grid-nowrap */
 export class CardViewGridNoWrap extends CardViewSingleRowGrid {
   protected override readonly navigation: CardViewNavigation = 'spatial';
+
+  protected override get moreInfoEnabled(): boolean {
+    return true;
+  }
 }
 
 /** @element swc-card-view-grid-loop */
@@ -517,14 +606,19 @@ export class CardViewGridSemantic extends CardViewGridNoWrap {
   protected override readonly navigation: CardViewNavigation = 'semantic';
 }
 
-/** @element swc-card-view-waterfall-nowrap */
-export class CardViewWaterfallNoWrap extends CardViewGridNoWrap {
-  public override layout: CardViewLayout = 'waterfall';
+/** @element swc-card-view-masonry-nowrap */
+export class CardViewMasonryNoWrap extends CardViewGridNoWrap {
+  public override layout: CardViewLayout = 'masonry';
 }
 
-/** @element swc-card-view-waterfall-loop */
-export class CardViewWaterfallLoop extends CardViewGridLoop {
-  public override layout: CardViewLayout = 'waterfall';
+/** @element swc-card-view-masonry-loop */
+export class CardViewMasonryLoop extends CardViewGridLoop {
+  public override layout: CardViewLayout = 'masonry';
+}
+
+/** @element swc-card-view-masonry-advance */
+export class CardViewMasonryAdvance extends CardViewGridAdvance {
+  public override layout: CardViewLayout = 'masonry';
 }
 
 /** @element swc-card-view-waterfall-advance */
@@ -532,12 +626,12 @@ export class CardViewWaterfallAdvance extends CardViewGridAdvance {
   public override layout: CardViewLayout = 'waterfall';
 }
 
-/** @element swc-card-view-waterfall-semantic */
-export class CardViewWaterfallSemantic extends CardViewGridSemantic {
-  public override layout: CardViewLayout = 'waterfall';
+/** @element swc-card-view-masonry-semantic */
+export class CardViewMasonrySemantic extends CardViewGridSemantic {
+  public override layout: CardViewLayout = 'masonry';
 }
 
-/** @element swc-card-view-waterfall-top-to-bottom */
-export class CardViewWaterfallTopToBottom extends CardViewWaterfallNoWrap {
+/** @element swc-card-view-masonry-top-to-bottom */
+export class CardViewMasonryTopToBottom extends CardViewMasonryNoWrap {
   protected override readonly navigation: CardViewNavigation = 'visual-column';
 }

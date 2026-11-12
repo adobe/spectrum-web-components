@@ -9,14 +9,19 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { defineElement } from '@adobe/spectrum-wc-core/element/index.js';
+import type { Meta, StoryObj } from '@storybook/web-components';
 
-import { CardViewWaterfallLoop } from './CardView.js';
+import { navigationMeta } from './story-helpers.js';
 
-declare global {
-  interface HTMLElementTagNameMap {
-    'swc-card-view-waterfall-loop': CardViewWaterfallLoop;
-  }
-}
+/** A single-row semantic grid with spatial navigation among unequal-height cards. */
+const meta: Meta = {
+  ...navigationMeta(
+    'swc-card-view-masonry-nowrap',
+    'Spatial navigation without wrapping in a shortest-column masonry.'
+  ),
+  title: 'Card view/Masonry nowrap',
+};
 
-defineElement('swc-card-view-waterfall-loop', CardViewWaterfallLoop);
+export default meta;
+
+export const Playground: StoryObj = { tags: ['behaviors'] };
