@@ -352,9 +352,9 @@ Planned rendering shape:
 
 ### Review
 
-- [ ] `yarn lint:gen2` passes (ESLint, Stylelint, Prettier)
+- [x] `yarn lint:gen2` passes (ESLint, Stylelint, Prettier)
 - [ ] Status table in workstream doc updated
-- [ ] PR created with description referencing Epic SWC-2668
+- [x] PR created with description referencing Epic SWC-2668 (phase PRs #6886 to #6892 target `menu-separator-migration`)
 - [ ] Peer engineer sign-off
 
 ---
