@@ -231,6 +231,58 @@ export const NamedLayoutNavigation: StoryObj = {
   },
 };
 
+export const MoreInfoTabFocus: StoryObj = {
+  render: () => html`
+    <div></div>
+  `,
+  play: async ({ canvasElement }) => {
+    const view = await mount(canvasElement, 'swc-card-view-grid-advance');
+    const root = view.shadowRoot!;
+    const cell = root.querySelector<HTMLElement>('[role="gridcell"]')!;
+    const card = cell.querySelector('swc-card')!;
+    expect(root.querySelector('.more-info-hint')!.textContent?.trim()).toBe(
+      'tab for more info'
+    );
+    expect(cell.hasAttribute('aria-keyshortcuts')).toBe(false);
+    expect(cell.hasAttribute('aria-describedby')).toBe(false);
+    cell.focus();
+    const tab = new KeyboardEvent('keydown', {
+      key: 'Tab',
+      bubbles: true,
+      composed: true,
+      cancelable: true,
+    });
+    cell.dispatchEvent(tab);
+    await view.updateComplete;
+    expect(tab.defaultPrevented).toBe(true);
+    expect(card.hasAttribute('aria-hidden')).toBe(false);
+    expect(root.activeElement).toBe(card.querySelector('input'));
+    card.querySelector<HTMLElement>('.title')!.focus();
+    await view.updateComplete;
+    expect(card.hasAttribute('aria-hidden')).toBe(false);
+    cell.focus();
+    await waitFor(() => expect(card.getAttribute('aria-hidden')).toBe('true'));
+    expect(view.selected).toEqual([]);
+    view.selectionMode = 'none';
+    await view.updateComplete;
+    cell.dispatchEvent(
+      new KeyboardEvent('keydown', {
+        key: 'Tab',
+        bubbles: true,
+        composed: true,
+        cancelable: true,
+      })
+    );
+    await view.updateComplete;
+    expect(root.activeElement).toBe(card.querySelector('.title'));
+    const outside = document.createElement('button');
+    canvasElement.append(outside);
+    outside.focus();
+    await waitFor(() => expect(card.getAttribute('aria-hidden')).toBe('true'));
+    outside.remove();
+  },
+};
+
 export const MoreInfo: StoryObj = {
   render: () => html`
     <div></div>
@@ -257,13 +309,11 @@ export const MoreInfo: StoryObj = {
         for (const [index, cell] of cells.entries()) {
           expect(cards[index].getAttribute('aria-hidden')).toBe('true');
           expect(cards[index].getAttribute('aria-live')).toBe('polite');
-          const hint = root.getElementById(
-            cell.getAttribute('aria-describedby')!
-          )!;
+          expect(cell.hasAttribute('aria-describedby')).toBe(false);
+          const hint = cell.querySelector<HTMLElement>('.more-info-hint')!;
           expect(hint.parentElement).toBe(cell);
-          expect(hint.textContent?.trim()).toBe(
-            'control + I to toggle more info'
-          );
+          expect(hint.textContent?.trim()).toBe('tab for more info');
+          expect(cell.hasAttribute('aria-keyshortcuts')).toBe(false);
           expect(getComputedStyle(hint).clipPath).toBe('inset(50%)');
           expect(
             [
@@ -271,12 +321,12 @@ export const MoreInfo: StoryObj = {
             ].every((control) => control.tabIndex === -1)
           ).toBe(true);
         }
-        const toggle = async (
+        const press = async (
           target: HTMLElement,
-          modifiers: KeyboardEventInit = { ctrlKey: true }
+          modifiers: KeyboardEventInit = {}
         ) => {
           const event = new KeyboardEvent('keydown', {
-            key: 'i',
+            key: 'Tab',
             bubbles: true,
             composed: true,
             cancelable: true,
@@ -287,41 +337,45 @@ export const MoreInfo: StoryObj = {
           return event.defaultPrevented;
         };
         cells[0].focus();
-        expect(await toggle(cells[0], {})).toBe(false);
-        expect(await toggle(cells[0], { ctrlKey: true, altKey: true })).toBe(
-          false
-        );
-        expect(await toggle(cells[0])).toBe(true);
-        expect(cards[0].getAttribute('aria-hidden')).toBe('false');
+        expect(await press(cells[0], { shiftKey: true })).toBe(false);
+        expect(await press(cells[0], { ctrlKey: true })).toBe(false);
+        expect(await press(cells[0], { metaKey: true })).toBe(false);
+        expect(await press(cells[0], { altKey: true })).toBe(false);
+        expect(cards[0].getAttribute('aria-hidden')).toBe('true');
+        expect(await press(cells[0])).toBe(true);
+        expect(cards[0].hasAttribute('aria-hidden')).toBe(false);
+        expect(root.activeElement).toBe(cards[0].querySelector('input'));
         expect(cards[1].getAttribute('aria-hidden')).toBe('true');
         expect(
           [...cards[0].querySelectorAll<HTMLElement>('input, button')].every(
             (control) => control.tabIndex === 0
           )
         ).toBe(true);
-        await toggle(cells[0], { ctrlKey: true, repeat: true });
-        expect(cards[0].getAttribute('aria-hidden')).toBe('false');
+        expect(await press(root.activeElement as HTMLElement)).toBe(false);
+        expect(
+          await press(root.activeElement as HTMLElement, { shiftKey: true })
+        ).toBe(false);
         const title = cards[0].querySelector<HTMLElement>('.title')!;
         title.focus();
-        await toggle(title);
-        expect(root.activeElement).toBe(cells[0]);
-        expect(cards[0].getAttribute('aria-hidden')).toBe('true');
+        expect(await press(title)).toBe(false);
+        expect(root.activeElement).toBe(title);
+        expect(cards[0].hasAttribute('aria-hidden')).toBe(false);
         expect(view.selected).toEqual([]);
         cells[1].focus();
-        await toggle(cells[1]);
-        expect(cards[1].getAttribute('aria-hidden')).toBe('false');
+        await view.updateComplete;
         expect(cards[0].getAttribute('aria-hidden')).toBe('true');
+        await press(cells[1]);
+        expect(cards[1].hasAttribute('aria-hidden')).toBe(false);
+        expect(root.activeElement).toBe(cards[1].querySelector('input'));
         const hiddenControl = cards[0].querySelector<HTMLElement>('.title')!;
         hiddenControl.focus();
         await view.updateComplete;
-        expect(cards[0].getAttribute('aria-hidden')).toBe('false');
+        expect(cards[0].hasAttribute('aria-hidden')).toBe(false);
+        expect(cards[1].getAttribute('aria-hidden')).toBe('true');
         expect(root.activeElement).toBe(hiddenControl);
-        await toggle(hiddenControl);
-        view.items = [...items].reverse();
+        cells[0].focus();
         await view.updateComplete;
-        const reorderedCards = [...root.querySelectorAll('swc-card')];
-        expect(reorderedCards[6].getAttribute('aria-hidden')).toBe('false');
-        expect(reorderedCards[7].getAttribute('aria-hidden')).toBe('true');
+        expect(cards[0].getAttribute('aria-hidden')).toBe('true');
       }
     }
     for (const tag of tags) {

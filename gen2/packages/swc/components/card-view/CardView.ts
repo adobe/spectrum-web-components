@@ -200,10 +200,8 @@ export class CardView extends CardViewBase {
         density=${this.density}
         data-selected=${selected}
         aria-hidden=${ifDefined(
-          this.moreInfoEnabled
-            ? this.expandedInfo.has(item.id)
-              ? 'false'
-              : 'true'
+          this.moreInfoEnabled && !this.expandedInfo.has(item.id)
+            ? 'true'
             : undefined
         )}
         aria-live=${ifDefined(this.moreInfoEnabled ? 'polite' : undefined)}
@@ -341,9 +339,6 @@ export class CardView extends CardViewBase {
           aria-describedby=${ifDefined(
             this.moreInfoEnabled ? `more-info-${index}` : undefined
           )}
-          aria-keyshortcuts=${ifDefined(
-            this.moreInfoEnabled ? 'Control+i' : undefined
-          )}
           aria-selected=${ifDefined(
             this.selectionMode === 'none'
               ? undefined
@@ -358,7 +353,7 @@ export class CardView extends CardViewBase {
           ${this.moreInfoEnabled
             ? html`
                 <div id=${`more-info-${index}`} class="more-info-hint">
-                  control + I to toggle more info
+                  tab for more info
                 </div>
               `
             : ''}
@@ -458,6 +453,7 @@ export class CardView extends CardViewBase {
                 style=${height}
                 @keydown=${this.handleKeydown}
                 @focusin=${this.handleFocus}
+                @focusout=${this.handleFocusOut}
               >
                 ${this.singleRow
                   ? html`

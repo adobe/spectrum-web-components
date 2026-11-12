@@ -195,7 +195,54 @@ export abstract class CardViewBase extends SpectrumElement {
     );
     if (target) {
       this.activeIndex = Number(target.dataset.index);
+      if (this.moreInfoEnabled) {
+        const id = this.items[this.activeIndex]?.id;
+        this.expandedInfo =
+          id !== undefined && target !== this.focusTargets[this.activeIndex]
+            ? new Set([id])
+            : new Set();
+      }
     }
+  }
+
+  protected handleFocusOut(event: FocusEvent): void {
+    if (!this.moreInfoEnabled) {
+      return;
+    }
+    const target = (event.composedPath() as HTMLElement[]).find(
+      (element) => element.dataset?.index !== undefined
+    );
+    if (!target) {
+      return;
+    }
+    const index = Number(target.dataset.index);
+    const cell = this.focusTargets[index];
+    const next = event.relatedTarget;
+    if (next instanceof Node && next !== cell && cell?.contains(next)) {
+      return;
+    }
+    const expanded = new Set(this.expandedInfo);
+    expanded.delete(this.items[index]?.id);
+    this.expandedInfo = expanded;
+  }
+
+  private async enterCard(index: number): Promise<void> {
+    const item = this.items[index];
+    const cell = this.focusTargets[index];
+    if (!item || !cell || item.disabled) {
+      return;
+    }
+    this.expandedInfo = new Set([item.id]);
+    await this.updateComplete;
+    if (this.shadowRoot?.activeElement !== cell) {
+      return;
+    }
+    const control = [
+      ...cell.querySelectorAll<HTMLElement>(
+        'input, button, select, textarea, a[href], [tabindex]'
+      ),
+    ].find((element) => element.tabIndex >= 0 && !element.matches(':disabled'));
+    control?.focus();
   }
 
   protected async focusCardControl(index: number): Promise<void> {
@@ -418,28 +465,16 @@ export abstract class CardViewBase extends SpectrumElement {
     const index = Number(wrapper.dataset.index);
     if (
       this.moreInfoEnabled &&
-      event.ctrlKey &&
+      target === this.focusTargets[index] &&
+      !this.items[index]?.disabled &&
+      !event.ctrlKey &&
       !event.altKey &&
       !event.metaKey &&
       !event.shiftKey &&
-      event.key.toLowerCase() === 'i'
+      event.key === 'Tab'
     ) {
       event.preventDefault();
-      if (event.repeat || this.items[index]?.disabled) {
-        return;
-      }
-      const id = this.items[index]?.id;
-      if (id === undefined) {
-        return;
-      }
-      const expanded = new Set(this.expandedInfo);
-      if (expanded.has(id)) {
-        this.focusTargets[index]?.focus({ preventScroll: true });
-        expanded.delete(id);
-      } else {
-        expanded.add(id);
-      }
-      this.expandedInfo = expanded;
+      void this.enterCard(index);
       return;
     }
     if (this.groupedControls) {
