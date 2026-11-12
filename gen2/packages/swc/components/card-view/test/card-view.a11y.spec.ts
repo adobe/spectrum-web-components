@@ -174,12 +174,15 @@ for (const prototype of prototypes) {
         }) => {
           const view = await openPrototype(page, prototype, layout);
           const grid = view.getByRole('grid');
-          await expect(grid).toHaveAttribute('aria-rowcount', '1');
-          await expect(grid).toHaveAttribute('aria-colcount', '100');
+          await expect(grid).not.toHaveAttribute('aria-rowcount');
+          await expect(grid).not.toHaveAttribute('aria-colcount');
           await expect(grid.getByRole('row')).toHaveCount(1);
           const entries = grid.getByRole('gridcell');
           await expect(entries).toHaveCount(100);
-          await expect(entries.last()).toHaveAttribute('aria-colindex', '100');
+          await expect(entries.last()).not.toHaveAttribute('aria-colindex');
+          await expect(entries.last()).toHaveAccessibleName(
+            '100 of 100, Along the shore 9'
+          );
           const positions = await entries.evaluateAll((elements) =>
             elements.map((element) => {
               const bounds = element.getBoundingClientRect();
@@ -199,13 +202,14 @@ for (const prototype of prototypes) {
             for (let index = 1; index < positions.length; index++) {
               const previous = positions[index - 1];
               const current = positions[index];
-              if (current.left === previous.left) {
+              if (current.top !== previous.top) {
                 expect(current.top).toBeGreaterThanOrEqual(
                   previous.top + previous.height
                 );
+                expect(current.left).toBe(positions[0].left);
               } else {
                 expect(current.left).toBeGreaterThan(previous.left);
-                expect(current.top).toBe(positions[0].top);
+                expect(current.height).toBe(previous.height);
               }
             }
           }
@@ -280,9 +284,7 @@ for (const prototype of prototypes) {
           await page.keyboard.press('Tab');
           const entries = view.getByRole('gridcell');
           await expect(entries.first()).toBeFocused();
-          await page.keyboard.press(
-            layout === 'masonry' ? 'ArrowDown' : 'ArrowRight'
-          );
+          await page.keyboard.press('ArrowRight');
           await expect(entries.nth(1)).toBeFocused();
           await page.keyboard.press('Tab');
           const checkbox = entries.nth(1).getByRole('checkbox');
