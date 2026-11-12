@@ -11,17 +11,17 @@ import borderArtwork from './assets/border.png';
 
 export const readings = {
   waterfall: {
-    label: 'Waterfall · Advance policy',
+    label: 'Waterfall · Semantic navigation',
     title: 'Independent columns. Uneven heights.',
     summary:
       'Equal-width cards fill columns left to right before returning to the first column, mirrored in RTL. Each column stacks independently, so later card tops can stagger. Collection order and single-row semantics stay fixed.',
     caution:
-      'Left/Right follows collection order, not visual neighbors. Test vertical advancement through staggered columns separately.',
+      'Both arrow axes follow collection order, not visual neighbors. Test whether sequential movement is predictable despite staggered card positions.',
     variants: [
       [
         'advance',
-        'Advance.',
-        'Up/Down follows overlapping vertical neighbors; cross an edge into the next or previous column and cycle at the collection boundary.',
+        'Waterfall advance.',
+        'The existing name is retained. Right/Down moves next and Left/Up moves previous in collection order, skipping disabled cards and wrapping at both ends.',
       ],
     ],
   },
@@ -1115,7 +1115,7 @@ export const Oracle = () => {
 {" "}
 <p>{" "}
 <strong>{" Use a single-row grid for “x of y” feedback. "}</strong>
-{" Hold those semantics and horizontal collection-order cycling fixed while users compare vertical policies: four in grid, five in masonry, and Advance in waterfall. Keep reported verbosity problems visible as evidence against the recommendation. Row-focused semantics remain a meaningful reference, not a dismissed concern. "}</p>
+{" Hold those semantics and horizontal collection-order cycling fixed while users compare vertical policies: four in grid and five in masonry. Waterfall uses semantic collection order on both axes. Keep reported verbosity problems visible as evidence against the recommendation. Row-focused semantics remain a meaningful reference, not a dismissed concern. "}</p>
 {" "}</div>
 {" "}
 <ol className="plan">{" "}
@@ -1142,7 +1142,7 @@ export const Oracle = () => {
 <h2 id="oracle-lore-title">{"One horizontal route. Five vertical policies."}</h2>
 {" "}
 <p>All ten named grid, masonry, and waterfall examples share one horizontal rule: <kbd>ArrowRight</kbd> moves to the next enabled collection item; <kbd>ArrowLeft</kbd> moves to the previous. Wrap from the last item to the first, or the first to the last. Right stays next and Left stays previous in RTL, regardless of visual placement. The single-column grid and other semantic reference examples keep their existing navigation.</p>
-<p>NoWrap, Loop, Advance, and Semantic distinguish Up/Down behavior in grid and masonry. Masonry also offers Top to bottom; waterfall currently offers Advance. Compare these vertical routes without changing the horizontal rule or the cards' semantics.</p>
+<p>NoWrap, Loop, Advance, and Semantic distinguish Up/Down behavior in grid and masonry. Masonry also offers Top to bottom. Waterfall follows semantic collection order on both axes, despite retaining the Waterfall advance name. Compare these routes without changing the horizontal rule or the cards' semantics.</p>
 {" "}</div>
 {" "}
 <div className="spells">{" "}
@@ -1209,7 +1209,7 @@ export const Oracle = () => {
 {" "}
 <p>Up/Down moves spatially until a vertical edge, then continues into the next or previous column. Unlike Loop, movement leaves the current column. At the outer collection boundary, cycle to the opposite end. Left/Right uses collection order instead of this spatial route.</p>
 {" "}
-<span className="pair">{"Grid + masonry + waterfall · Advance"}</span>
+<span className="pair">{"Grid + masonry · Advance"}</span>
 {" "}</article>
 {" "}
 <article className="spell">{" "}
@@ -1231,7 +1231,7 @@ export const Oracle = () => {
 {" "}
 <p>{" Right/Down moves to the next enabled item in semantic collection order; Left/Up moves to the previous one, including in RTL. Geometry does not decide the destination. Cycle between the last and first enabled items at the collection boundary. Repeating an arrow visits every enabled item. The adaptive masonry version places consecutive cards across each visual row before starting the next. "}</p>
 {" "}
-<span className="pair">{"Grid + masonry · Semantic"}</span>
+<span className="pair">{"Grid + masonry + waterfall · Semantic"}</span>
 {" "}</article>
 <article className="spell visual-order-spell">
   <div className="diagram" role="img" aria-label="Current card at the bottom of the first column; next card at the top of the second column.">
@@ -1308,11 +1308,11 @@ export const Oracle = () => {
         <figcaption>
           <h3 id="oracle-waterfall-layout">Waterfall</h3>
           <p>Equal-width, variable-height cards are assigned left to right: 1, 2, 3, then 4, 5, 6, then 7, 8, 9. Each column stacks independently, so later card tops can stagger rather than align in rows. <a href="./?path=/docs/components-card-view-waterfall-advance--docs" target="_top">Waterfall advance</a> follows this sequence, not shortest-column or column-first placement. RTL mirrors the placement without changing collection order.</p>
-          <p><strong>Navigation question:</strong> How should Up/Down advance through staggered columns while Left/Right follows collection order?</p>
+          <p><strong>Navigation question:</strong> Is collection-order movement on both arrow axes predictable when card positions are staggered?</p>
         </figcaption>
       </figure>
     </div>
-    <p className="layout-context"><strong>Same semantics, separate vertical policies.</strong> The grid, masonry, and waterfall examples expose one semantic row, without explicit ARIA row/column indices or counts. Cell names use "x of y, title." Left/Right cycles in collection order, including in RTL. Up/Down follows each variant's policy: Semantic uses collection order, Top to bottom uses a column-oriented route, and waterfall currently provides Advance.</p>
+    <p className="layout-context"><strong>Same semantics, separate vertical policies.</strong> The grid, masonry, and waterfall examples expose one semantic row, without explicit ARIA row/column indices or counts. Cell names use "x of y, title." Left/Right cycles in collection order, including in RTL. Up/Down follows each variant's policy: Semantic and waterfall use collection order; Top to bottom uses a column-oriented route.</p>
   </div>
 </section>
 <div className="deck-section wrap">

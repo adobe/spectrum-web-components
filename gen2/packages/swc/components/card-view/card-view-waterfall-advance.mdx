@@ -16,12 +16,13 @@ Unlike masonry's adaptive rows, waterfall columns stack independently: each card
 
 ### Playground
 
-<kbd>ArrowRight</kbd> moves to the next enabled collection item and
-<kbd>ArrowLeft</kbd> to the previous, wrapping at both ends, including in RTL.
-<kbd>ArrowUp</kbd>/<kbd>ArrowDown</kbd> chooses a spatial vertical neighbor with
-horizontal overlap. When none exists, vertical arrows advance or retreat in
-column order and cycle at the collection boundary. <kbd>Home</kbd> and
-<kbd>End</kbd> reach the first and last enabled cards in collection order.
+<kbd>ArrowRight</kbd> and <kbd>ArrowDown</kbd> move to the next enabled
+collection item. <kbd>ArrowLeft</kbd> and <kbd>ArrowUp</kbd> move to the
+previous. All four arrows follow semantic collection order, skip disabled cards,
+and wrap at both ends, including in RTL. Visual columns and staggered card
+heights do not determine the destination. <kbd>Home</kbd> and <kbd>End</kbd>
+reach the first and last enabled cards in collection order. The existing element
+name is retained; its navigation is semantic, not spatial Advance.
 
 <Canvas of={Stories.Playground} />
 <Controls of={Stories.Playground} />
@@ -33,9 +34,9 @@ Cell names use "x of y, title." Explicit ARIA row/column indices and counts are 
 With direct gridcell focus, the visually hidden instruction "tab for more info" is exposed. <kbd>Tab</kbd> reveals the card's contents before focusing its first enabled control. Further <kbd>Tab</kbd> and <kbd>Shift</kbd> + <kbd>Tab</kbd> presses follow normal control order. Leaving the card's descendants hides its contents again. Pointer or programmatic focus on a control also exposes its card.
 
 <kbd>Space</kbd> toggles selection and <kbd>Enter</kbd> opens the active card.
-Selection, disclosure, and activation remain separate. Test horizontal
-collection-order cycling, vertical-neighbor choices where staggered cards
-overlap, disabled cards, reverse traversal, RTL, resizing, and access to details
-on touch devices. This prototype does not establish accessibility conformance.
+Selection, disclosure, and activation remain separate. Test collection-order
+cycling on both arrow axes, disabled cards, reverse traversal, RTL, resizing,
+and access to details on touch devices. This prototype does not establish
+accessibility conformance.
 
 <DocsFooter />

@@ -622,7 +622,7 @@ export class CardViewMasonryAdvance extends CardViewGridAdvance {
 }
 
 /** @element swc-card-view-waterfall-advance */
-export class CardViewWaterfallAdvance extends CardViewGridAdvance {
+export class CardViewWaterfallAdvance extends CardViewGridSemantic {
   public override layout: CardViewLayout = 'waterfall';
 }
 

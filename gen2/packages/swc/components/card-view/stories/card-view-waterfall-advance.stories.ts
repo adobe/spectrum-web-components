@@ -17,7 +17,7 @@ import { navigationMeta } from './story-helpers.js';
 const meta: Meta = {
   ...navigationMeta(
     'swc-card-view-waterfall-advance',
-    'Spatial navigation with advancement between waterfall bands and columns.'
+    'Semantic collection-order navigation on both arrow axes, with wrapping.'
   ),
   title: 'Card view/Waterfall advance',
 };

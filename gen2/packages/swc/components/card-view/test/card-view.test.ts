@@ -88,6 +88,9 @@ export const MasonryRegistration: StoryObj = {
     <div></div>
   `,
   play: async () => {
+    expect(
+      customElements.get('swc-card-view-masonry-top-to-bottom')
+    ).toBeUndefined();
     for (const mode of [
       'nowrap',
       'loop',
@@ -146,8 +149,42 @@ export const WaterfallAdvance: StoryObj = {
       return root.activeElement;
     };
     expect(await move(0, 'ArrowRight')).toBe(cells[1]);
-    expect(await move(0, 'ArrowDown')).toBe(cells[3]);
+    expect(await move(0, 'ArrowDown')).toBe(cells[1]);
     expect(await move(2, 'ArrowRight')).toBe(cells[3]);
+    const verifySemanticArrows = async () => {
+      for (const [key, direction] of [
+        ['ArrowRight', 1],
+        ['ArrowDown', 1],
+        ['ArrowLeft', -1],
+        ['ArrowUp', -1],
+      ] as const) {
+        for (let index = 0; index < items.length; index++) {
+          expect(await move(index, key)).toBe(
+            cells[(index + direction + items.length) % items.length]
+          );
+        }
+      }
+      view.items = items.map((item, index) => ({
+        ...item,
+        disabled: index === 1,
+      }));
+      await view.updateComplete;
+      expect(await move(0, 'ArrowDown')).toBe(cells[2]);
+      expect(await move(2, 'ArrowUp')).toBe(cells[0]);
+      view.items = items.map((item, index) => ({
+        ...item,
+        disabled: index === 0 || index === items.length - 1,
+      }));
+      await view.updateComplete;
+      expect(await move(6, 'ArrowDown')).toBe(cells[1]);
+      expect(await move(1, 'ArrowUp')).toBe(cells[6]);
+      view.items = items;
+      await view.updateComplete;
+      expect(view.selected).toEqual([]);
+      cells[1].focus();
+      await view.updateComplete;
+    };
+    await verifySemanticArrows();
     expect(await move(0, 'End')).toBe(cells[7]);
     expect(await move(7, 'Home')).toBe(cells[0]);
     cells[0].dispatchEvent(
@@ -177,6 +214,7 @@ export const WaterfallAdvance: StoryObj = {
         }
       }
     });
+    await verifySemanticArrows();
     view.style.width = '400px';
     await waitFor(() => {
       const bounds = cards.map((card) => card.getBoundingClientRect());
