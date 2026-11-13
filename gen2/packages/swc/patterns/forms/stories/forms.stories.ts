@@ -19,7 +19,6 @@ import { TextField } from '@adobe/spectrum-wc/text-field';
 import '@adobe/spectrum-wc/components/text-field/swc-text-field.js';
 import '@adobe/spectrum-wc/components/radio-group/swc-radio-group.js';
 import '@adobe/spectrum-wc/components/radio-group/swc-radio.js';
-import '@adobe/spectrum-wc/components/button-group/swc-button-group.js';
 
 // ────────────────
 //    METADATA
@@ -47,41 +46,21 @@ export default meta;
 
 type FormField = TextField | RadioGroup;
 
-const requiredMessages: Record<string, string> = {
-  name: 'Enter your name.',
-  email: 'Enter an email address.',
-  'account-type': 'Choose an account type.',
-};
-
 const validateField = async (field: FormField): Promise<void> => {
   if (field.fieldStatus === 'invalid') {
     field.fieldStatus = undefined;
   }
   await field.updateComplete;
-  if (!field.willValidate) {
+  if (!field.willValidate || field.validity.valid) {
     return;
   }
-
-  let message = '';
-  if (field.validity.valueMissing) {
-    message = field.name
-      ? (requiredMessages[field.name] ?? field.validationMessage)
-      : field.validationMessage;
-  } else if (field.validity.typeMismatch) {
-    message = 'Enter a valid email address.';
-  } else if (!field.validity.valid) {
-    message = field.validationMessage;
+  const errorText = field.querySelector('[slot="error-text"]');
+  if (!errorText) {
+    throw new Error('Form field error text not found.');
   }
-
-  if (message) {
-    const errorText = field.querySelector('[slot="error-text"]');
-    if (!errorText) {
-      throw new Error('Form field error text not found.');
-    }
-    errorText.textContent = message;
-    field.fieldStatus = 'invalid';
-    await field.updateComplete;
-  }
+  errorText.textContent = field.validationMessage;
+  field.fieldStatus = 'invalid';
+  await field.updateComplete;
 };
 
 const handleFieldEdit = async (event: Event): Promise<void> => {
@@ -109,28 +88,37 @@ const handleSubmit = async (event: SubmitEvent): Promise<void> => {
   }
 
   await Promise.all(fields.map(validateField));
-  if (!form.checkValidity()) {
-    output.value = 'Submission blocked. Correct the highlighted fields.';
+  const valid = form.checkValidity();
+  output.value = JSON.stringify(
+    {
+      valid,
+      data: [...new FormData(form, event.submitter)],
+    },
+    null,
+    2
+  );
+  if (!valid) {
     fields
       .find((field) => field.willValidate && !field.validity.valid)
       ?.focus();
-    return;
   }
-
-  const data = [...new FormData(form, event.submitter)]
-    .map(([name, value]) => `${name}: ${value}`)
-    .join('\n');
-  output.value = `Submitted:\n${data || 'No enabled fields to include.'}`;
 };
 
 const toggleFieldsetDisabled = (event: Event): void => {
-  const button = event.currentTarget as HTMLButtonElement;
+  const button = event.currentTarget;
+  if (!(button instanceof HTMLButtonElement)) {
+    throw new Error('Form fieldset toggle requires a button.');
+  }
   const fieldset = button.form?.querySelector('fieldset');
   if (!fieldset) {
     throw new Error('Form fieldset not found.');
   }
+  const label = button.querySelector('.swc-Button-label');
+  if (!label) {
+    throw new Error('Form fieldset toggle label not found.');
+  }
   fieldset.disabled = !fieldset.disabled;
-  button.setAttribute('aria-pressed', String(fieldset.disabled));
+  label.textContent = fieldset.disabled ? 'Enable fields' : 'Disable fields';
 };
 
 // ──────────────────────────────
@@ -142,85 +130,74 @@ export const FormBehavior: Story = {
     <form
       novalidate
       aria-label="Account details"
-      style="display: flex; flex-direction: column; gap: 24px; inline-size: 28rem; max-inline-size: 100%;"
+      style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr)); align-items: start; gap: 24px; inline-size: min(48rem, 100vw - 2rem); max-inline-size: 100%; padding-block: 32px;"
       @submit=${handleSubmit}
     >
-      <fieldset
-        aria-label="Profile"
-        style="display: flex; flex-direction: column; gap: 24px; margin: 0; min-inline-size: 0; padding: 0; border: 0;"
-      >
-        <swc-text-field
-          name="name"
-          autocomplete="name"
-          placeholder="Enter your name"
-          required
-          style="inline-size: 100%;"
-          @input=${handleFieldEdit}
-        >
-          <span slot="label">Name</span>
-          <span slot="error-text">Enter your name.</span>
-        </swc-text-field>
-        <swc-text-field
-          name="email"
-          type="email"
-          autocomplete="email"
-          placeholder="Enter your email address"
-          required
-          style="inline-size: 100%;"
-          @input=${handleFieldEdit}
-        >
-          <span slot="label">Email address</span>
-          <span slot="description">For account updates.</span>
-          <span slot="error-text">Enter an email address.</span>
-        </swc-text-field>
-        <swc-radio-group
-          name="account-type"
-          required
-          @change=${handleFieldEdit}
-        >
-          <span slot="label">Account type</span>
-          <span slot="error-text">Choose an account type.</span>
-          <swc-radio value="personal">
-            <span slot="label">Personal</span>
-          </swc-radio>
-          <swc-radio value="work"><span slot="label">Work</span></swc-radio>
-        </swc-radio-group>
-      </fieldset>
       <div
-        style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px;"
+        style="display: flex; flex-direction: column; gap: 24px; min-inline-size: 0;"
       >
-        <swc-button-group aria-label="Form actions">
-          <button type="submit" class="swc-Button">
+        <fieldset
+          aria-label="Account fields"
+          style="display: flex; flex-direction: column; gap: 24px; margin: 0; min-inline-size: 0; padding: 0; border: 0;"
+        >
+          <swc-text-field
+            name="email"
+            type="email"
+            autocomplete="email"
+            required
+            style="inline-size: 100%; --swc-field-input-max-inline-size: 100%;"
+            @input=${handleFieldEdit}
+          >
+            <span slot="label">Email address</span>
+            <span slot="error-text"></span>
+          </swc-text-field>
+          <swc-radio-group
+            name="account-type"
+            orientation="horizontal"
+            required
+            style="inline-size: 100%;"
+            @change=${handleFieldEdit}
+          >
+            <span slot="label">Account type</span>
+            <span slot="error-text"></span>
+            <swc-radio value="personal">
+              <span slot="label">Personal</span>
+            </swc-radio>
+            <swc-radio value="work"><span slot="label">Work</span></swc-radio>
+          </swc-radio-group>
+        </fieldset>
+        <div style="display: flex; flex-wrap: wrap; gap: 12px;">
+          <button
+            type="submit"
+            name="action"
+            value="inspect"
+            class="swc-Button"
+          >
             <span class="swc-Button-label">Submit</span>
           </button>
           <button type="reset" class="swc-Button swc-Button--secondary">
             <span class="swc-Button-label">Reset</span>
           </button>
-        </swc-button-group>
-        <button
-          type="button"
-          class="swc-Button swc-Button--secondary"
-          data-toggle-fieldset
-          aria-pressed="false"
-          @click=${toggleFieldsetDisabled}
-        >
-          <span class="swc-Button-label">Disable fields</span>
-        </button>
+          <button
+            type="button"
+            class="swc-Button swc-Button--secondary"
+            data-toggle-fieldset
+            @click=${toggleFieldsetDisabled}
+          >
+            <span class="swc-Button-label">Disable fields</span>
+          </button>
+        </div>
       </div>
-      <div style="display: flex; flex-direction: column; gap: 12px;">
-        <span
-          id="submitted-form-data-label"
-          class="swc-Detail swc-Detail--sizeM"
-        >
-          Form result
-        </span>
-        <output
+      <div style="min-inline-size: 0;">
+        <pre style="margin: 0;"><code style="display: block;"><output
           data-form-data
-          aria-labelledby="submitted-form-data-label"
+          class="swc-Code swc-Code--sizeS"
+          aria-label="Form results"
           aria-live="polite"
-          style="display: block; min-block-size: 2lh; font-family: monospace; font-size: 0.875rem; white-space: pre-wrap; overflow-wrap: anywhere;"
-          .defaultValue=${'Submit the form to see its data.'}
-        ></output>
+          tabindex="0"
+          style="display: block; box-sizing: border-box; block-size: 16rem; padding: 16px; overflow: auto; border: 1px solid var(--swc-gray-300); border-radius: var(--swc-corner-radius-100); background: var(--swc-gray-75); white-space: pre;"
+          .defaultValue=${'Submit to view results.'}
+        ></output></code></pre>
       </div>
     </form>
   `,

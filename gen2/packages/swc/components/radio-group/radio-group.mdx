@@ -101,11 +101,15 @@ To disable a single option, set `disabled` on that `swc-radio`. Arrow keys skip 
 
 #### Invalid
 
-`field-status="invalid"` shows supplied `error-text` instead of the description. Without an `error-text` slot, the description stays visible in the error color. An alert icon shows beside the message or description, or on its own when there is neither, so the state never relies on color alone. Eligible groups fail validation and block submission, even when an item is selected.
+`field-status="invalid"` shows supplied `error-text` instead of the description. Without an `error-text` slot, the description stays visible in the error color. An alert icon shows beside the message or description, or on its own when there is neither, so the state never relies on color alone. Eligible groups fail validation and block submission, even when an item is selected. Changing the selection does not clear this status.
 
 Always pair `field-status="invalid"` with `error-text`. Explain what happened, why (if known), and how to fix it.
 
-Native validation, such as `required`, does not set `field-status="invalid"` automatically. Set this status in your application as described in [showing and clearing errors](#showing-and-clearing-errors).
+Native validation, such as `required`, does not set `field-status="invalid"` automatically. Error text alone does not make the group invalid. See [Error messages](../?path=/docs/patterns-forms--docs#error-messages) in the Forms pattern for showing and clearing errors.
+
+While invalid, the plain text of `error-text` becomes `validationMessage` and updates when the content changes. Without it, the message is "Select an option." This fallback is not shown inline automatically.
+
+The group's `:invalid` match follows live validity, including before your application shows an error. Use `field-status="invalid"` to style its displayed error state.
 
 <Canvas of={RadioGroupStories.Invalid} />
 
@@ -123,76 +127,28 @@ Native validation, such as `required`, does not set `field-status="invalid"` aut
 
 ### Form participation
 
-`swc-radio-group` works with native forms, including validation, reset, and `FormData`. The group submits one entry under its `name`, holding the selected item's `value`. Like a native radio, when no enabled item matches `selected` it submits nothing, and a `required` group fails validation.
+`swc-radio-group` works with native forms, including validation, reset, and `FormData`. The group submits one entry under its `name`, holding the selected item's `value`. Like a native radio, when no enabled item matches `selected` it submits nothing, and a `required` group fails validation. Individual `swc-radio` items do not participate in the form separately.
 
 See the [Forms pattern](../?path=/docs/patterns-forms--docs) for shared validation, submission, and reset guidance, including an example with Text field and Radio group.
 
-#### Showing and clearing errors
-
-Set `fieldStatus = 'invalid'` and provide `error-text` to show an inline error. Neither happens automatically, and error text alone does not make the group invalid. Errors show when your application sets them, on a commit such as a selection change or on submit, not as users move through the items.
-
-The plain text of `error-text` also becomes `validationMessage` and updates automatically when the content changes. Without it, the message is "Select an option." That message appears only in the browser's own validation bubble (a form without `novalidate`, or a call to `reportValidity()`) or where your code reads `validationMessage`. It is never shown inline. To change the message, change the text in `error-text`.
-
-Clear the status explicitly when the error is resolved. Changing the selection does not clear it. Native constraints still affect `checkValidity()`, but do not set `fieldStatus` or show inline errors. Await `group.updateComplete` after changes before checking validity.
-
-#### Validating a form
-
-Use `novalidate` on the form and `checkValidity()` in your submit handler for inline errors instead of browser validation bubbles. With `novalidate`, the browser does not block submission, fire `invalid` events, or move focus, so your handler does all three:
-
-1. Call `event.preventDefault()` before the first `await`. The browser does not wait for an async handler.
-2. Clear a previous `invalid` status, and only `invalid`, so `disabled` and `readonly` stay.
-3. Await `updateComplete`, then call `checkValidity()`.
-4. If it returns `false`, set `fieldStatus = 'invalid'` and move focus to the group, or to another target such as an inline alert.
-5. If it returns `true`, send the data.
-
-<details>
-<summary>Submit handler example</summary>
-
 ```html
-<form novalidate>
+<form>
   <swc-radio-group name="shipping" required>
     <span slot="label">Shipping options</span>
-    <span slot="error-text">Select a shipping option.</span>
     <swc-radio value="standard">
-      <span slot="label">Standard Shipping (Free)</span>
+      <span slot="label">Standard</span>
     </swc-radio>
     <swc-radio value="expedited">
-      <span slot="label">Expedited Shipping ($9.99)</span>
+      <span slot="label">Expedited</span>
     </swc-radio>
   </swc-radio-group>
   <button type="submit">Submit</button>
 </form>
 ```
 
-```js
-const form = document.querySelector('form');
-const group = form.querySelector('swc-radio-group');
+This form uses browser validation. For inline errors, follow the [Forms pattern](../?path=/docs/patterns-forms--docs#handling-invalid-submissions).
 
-form.addEventListener('submit', async (event) => {
-  event.preventDefault(); // before any await
-
-  if (group.fieldStatus === 'invalid') {
-    group.fieldStatus = undefined; // only invalid; keep disabled and read-only
-  }
-  await group.updateComplete;
-
-  if (!group.checkValidity()) {
-    group.fieldStatus = 'invalid'; // shows the error-text above
-    group.focus();
-    return;
-  }
-
-  // The group is valid. Send new FormData(form, event.submitter).
-});
-```
-
-Do not call `form.submit()` to send the data. It skips validation and the `submit` event. Use a submit button, or `form.requestSubmit()`.
-
-</details>
-
-In this example, **Submit** clears the previous error and rechecks the selection. Accepted submissions are not sent anywhere. **Reset** restores the initial selection and clears the error.
-
-<Canvas of={RadioGroupStories.FormParticipation} />
+#### Focus
 
 `group.focus()` moves focus to the selected item, or to the first enabled item when nothing is selected, so your handler can focus the group it found. A blocked native submit and `reportValidity()` focus the same item. Disabled and read-only groups do not block validation.
 
@@ -204,15 +160,7 @@ Reset restores the initial selection, which is the pre-checked item or the `sele
 
 When the browser restores a form, for example after back/forward navigation or through autofill, the group restores its saved selection. A restored selection takes precedence over a pre-checked item, but reset still returns to the initial selection.
 
-<details>
-<summary>Additional form behavior</summary>
-
-- **Validation methods**: `checkValidity()` fires `invalid` on failure without changing `fieldStatus` or showing browser validation UI. `reportValidity()` also requests that UI, even with `novalidate`. Canceling `invalid` suppresses reporting without making validation pass. An invalid status sets `validity.customError`, and a required group with no selection sets `validity.valueMissing`.
-- **Styling hooks**: style the invalid state from `field-status="invalid"`, and the disabled state from `:state(disabled)`. The group's `:invalid` match follows live validity, including before your application shows any error.
-
 Setting `selected` in code, resetting the form, and browser form restoration do not fire `change`.
-
-</details>
 
 ## Accessibility
 

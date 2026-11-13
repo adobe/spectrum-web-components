@@ -23,7 +23,7 @@ A clear label tells people what to enter. Help text explains requirements before
 
 Screen readers announce the label and description when the field receives focus. A placeholder does not replace a label. If a visible label is not possible, use `accessible-label` or `accessible-labelledby`.
 
-Add `required` when a value is needed. See [Text field](/docs/components-text-field--docs) for label and required-indicator options.
+Add `required` when a value is needed. See [Text field](/docs/components-text-field--docs) and [Radio group](/docs/components-radio-group--docs) for their label and required-indicator options.
 
 ## Submitting data
 
@@ -213,7 +213,7 @@ If the form uses `novalidate`, the browser already skips validation for every su
 
 ## Resetting a form
 
-Use a reset button or `form.reset()` to restore initial values. Reset does not necessarily mean empty: a text field returns to its initial `value` attribute.
+Use a reset button or `form.reset()` to restore initial values. Reset does not necessarily mean empty: a text field returns to its initial `value` attribute, and a radio group returns to its pre-checked item or initial `selected` attribute. See [Radio group reset](/docs/components-radio-group--docs#reset) for selection defaults.
 
 ```html
 <form id="profile-form">
@@ -241,13 +241,7 @@ Reset and programmatic value changes do not fire `input` or `change`. Await fiel
 
 ## Form example
 
-Try submitting the form with missing or incorrect information, then correct it and submit again.
-
-- Select **Submit** to check for empty fields or an invalid email address. Errors appear below the fields, and focus moves to the first field with an error.
-- Correct an error to see validation update as you type. Other fields are checked on submission.
-- Enter a name and a valid email address, choose an account type, then submit to see the form data below.
-- Select **Reset** to clear the fields, errors, and result.
-- Select **Disable fields** to exclude all fields from validation and submission. Reset leaves them disabled.
+Explore validation, form data, and reset with Email address and Account type. The results panel shows validity and form data, even when invalid, so you can inspect them. No data is sent.
 
 <Canvas of={FormsStories.FormBehavior} />
 
@@ -264,4 +258,4 @@ Try submitting the form with missing or incorrect information, then correct it a
 
 </details>
 
-See [Text field](/docs/components-text-field--docs) for field-specific behavior. To check your form, use the [keyboard](/docs/guides-accessibility-keyboard-testing--docs) and [screen reader](/docs/guides-accessibility-screen-reader-testing--docs) testing guides.
+See [Text field](/docs/components-text-field--docs) and [Radio group](/docs/components-radio-group--docs) for component-specific behavior. To check your form, use the [keyboard](/docs/guides-accessibility-keyboard-testing--docs) and [screen reader](/docs/guides-accessibility-screen-reader-testing--docs) testing guides.
