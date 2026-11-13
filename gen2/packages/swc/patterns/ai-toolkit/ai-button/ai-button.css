@@ -381,6 +381,13 @@ slot[name="icon"]::slotted(*) {
     border-color: GrayText;
   }
 
+  /* Forced colors hide the glow, so the border shows hover instead. */
+  @media (hover: hover) and (pointer: fine) {
+    .swc-AiButton:not(:disabled):hover::after {
+      border-color: Highlight;
+    }
+  }
+
   .swc-AiButton::before,
   .swc-AiButton-glow,
   .swc-AiButton-surface {
