@@ -191,6 +191,14 @@
       "types": "./dist/components/progress-circle/index.d.ts",
       "import": "./dist/components/progress-circle/index.js"
     },
+    "./components/radio-group": {
+      "types": "./dist/components/radio-group/index.d.ts",
+      "import": "./dist/components/radio-group/index.js"
+    },
+    "./components/radio-group/index.js": {
+      "types": "./dist/components/radio-group/index.d.ts",
+      "import": "./dist/components/radio-group/index.js"
+    },
     "./components/status-light": {
       "types": "./dist/components/status-light/index.d.ts",
       "import": "./dist/components/status-light/index.js"
@@ -383,6 +391,18 @@
       "types": "./dist/mixins/sized-mixin.d.ts",
       "import": "./dist/mixins/sized-mixin.js"
     },
+    "./types": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/types/index.js"
+    },
+    "./types/field-status.js": {
+      "types": "./dist/types/field-status.d.ts",
+      "import": "./dist/types/field-status.js"
+    },
+    "./types/index.js": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/types/index.js"
+    },
     "./utils": {
       "types": "./dist/utils/index.d.ts",
       "import": "./dist/utils/index.js"
@@ -553,6 +573,12 @@
       "components/progress-circle/index.js": [
         "dist/components/progress-circle/index.d.ts"
       ],
+      "components/radio-group": [
+        "dist/components/radio-group/index.d.ts"
+      ],
+      "components/radio-group/index.js": [
+        "dist/components/radio-group/index.d.ts"
+      ],
       "components/status-light": [
         "dist/components/status-light/index.d.ts"
       ],
@@ -696,6 +722,15 @@
       ],
       "mixins/sized-mixin.js": [
         "dist/mixins/sized-mixin.d.ts"
+      ],
+      "types": [
+        "dist/types/index.d.ts"
+      ],
+      "types/field-status.js": [
+        "dist/types/field-status.d.ts"
+      ],
+      "types/index.js": [
+        "dist/types/index.d.ts"
       ],
       "utils": [
         "dist/utils/index.d.ts"
