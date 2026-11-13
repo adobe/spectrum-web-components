@@ -117,7 +117,7 @@ Use `field-status="readonly"` instead when users need to review or copy the valu
 
 `field-status="invalid"` shows supplied `error-text` instead of the description. Without an `error-text` slot, the description stays visible in the error color. The input shows an invalid border and icon. Eligible fields fail validation and block submission.
 
-Native validation through constraints such as `required` or `pattern` does not set `field-status="invalid"` automatically. See [Error messages](../?path=/docs/guides-forms--docs#error-messages) in the Forms guide for showing and clearing errors.
+Native validation through constraints such as `required` or `pattern` does not set `field-status="invalid"` automatically. See [Error messages](../?path=/docs/patterns-forms--docs#error-messages) in the Forms pattern for showing and clearing errors.
 
 <Canvas of={TextFieldStories.Invalid} />
 
@@ -131,7 +131,7 @@ Set `field-status="valid"` to record that your application has validated the val
 
 ### Forms
 
-Give the text field a `name` to include its value when submitting a form. Use `required`, `minlength`, `maxlength`, `pattern`, and `type` to define valid input. Your application controls custom validation and inline error messages. See the [Forms guide](../?path=/docs/guides-forms--docs) for validation, submission, reset, and a working example.
+Give the text field a `name` to include its value when submitting a form. Use `required`, `minlength`, `maxlength`, `pattern`, and `type` to define valid input. Your application controls custom validation and inline error messages. See the [Forms pattern](../?path=/docs/patterns-forms--docs) for validation, submission, reset, and a working example.
 
 ```html
 <form>
@@ -142,7 +142,7 @@ Give the text field a `name` to include its value when submitting a form. Use `r
 </form>
 ```
 
-This form uses browser validation. For inline errors, follow the [Forms guide](../?path=/docs/guides-forms--docs#handling-invalid-submissions).
+This form uses browser validation. For inline errors, follow the [Forms pattern](../?path=/docs/patterns-forms--docs#handling-invalid-submissions).
 
 ### Label overflow
 

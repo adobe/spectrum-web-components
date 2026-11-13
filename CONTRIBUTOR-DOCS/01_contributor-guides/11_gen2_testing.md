@@ -27,5 +27,6 @@ gen2 components use three types of tests: Storybook play functions for interacti
 - Keep docs stories in `gen2/packages/swc/components/<component>/stories/<component>.stories.ts`.
 - Add test stories in `gen2/packages/swc/components/<component>/test/<component>.test.ts`.
 - Add accessibility tests in `gen2/packages/swc/components/<component>/test/<component>.a11y.spec.ts`.
+- Add cross-component Forms coverage in `gen2/packages/swc/patterns/forms/test/forms.test.ts`. See [Testing forms](../02_style-guide/04_testing/01_testing-overview.md#testing-forms) for what stays local and how new form components join the shared suite.
 - Reuse the base stories and metadata from the main doc stories file.
 - Test stories run in development Storybook only and are excluded from `storybook:build`.

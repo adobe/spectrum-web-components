@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { expect, test } from '@playwright/test';
+import { expect, type Page, test } from '@playwright/test';
 import { gotoStory } from '@swc-test-helpers/playwright';
 
 import type { TextField } from '@adobe/spectrum-wc/text-field';
@@ -28,6 +28,27 @@ import type { TextField } from '@adobe/spectrum-wc/text-field';
  * internal `<input>`. Keyboard-interaction tests exercise that contract
  * with real trusted input.
  */
+
+async function openTextFieldForm(page: Page) {
+  const root = await gotoStory(
+    page,
+    'components-text-field--overview',
+    'swc-text-field'
+  );
+  const field = root.locator('swc-text-field');
+  await field.evaluate(async (field: TextField) => {
+    const form = document.createElement('form');
+    field.before(form);
+    form.append(field);
+    field.name = 'username';
+    await field.updateComplete;
+  });
+  return {
+    field,
+    input: field.locator('input'),
+    form: root.locator('form'),
+  };
+}
 
 test.describe('Text field - ARIA Snapshots', () => {
   for (const story of ['overview', 'playground']) {
@@ -729,20 +750,96 @@ test.describe('Text field - Keyboard interactions', () => {
     await expect(field.locator('input')).not.toBeFocused();
   });
 
+  test('trusted Enter submits once and respects other text fields', async ({
+    page,
+  }) => {
+    const { field, input, form } = await openTextFieldForm(page);
+    await field.evaluate(async (field: TextField) => {
+      const form = field.form;
+      if (!form) {
+        throw new Error('Keyboard submission test requires a form');
+      }
+      field.value = 'River';
+      field.required = true;
+      const submit = document.createElement('button');
+      submit.type = 'submit';
+      submit.id = 'keyboard-submit';
+      submit.textContent = 'Save';
+      form.append(submit);
+      const submitters: (string | null)[] = [];
+      form.dataset.submitters = JSON.stringify(submitters);
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        submitters.push(event.submitter?.id ?? null);
+        form.dataset.submitters = JSON.stringify(submitters);
+      });
+      field.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+          field.dataset.trustedEnter = String(event.isTrusted);
+        }
+      });
+      await field.updateComplete;
+    });
+    await input.focus();
+
+    await test.step('Enter activates the native submit button once', async () => {
+      await page.keyboard.press('Enter');
+      await expect(field).toHaveAttribute('data-trusted-enter', 'true');
+      await expect(form).toHaveAttribute(
+        'data-submitters',
+        JSON.stringify(['keyboard-submit'])
+      );
+    });
+
+    await test.step('one field submits without a button', async () => {
+      await form.locator('button').evaluate((button) => button.remove());
+      await page.keyboard.press('Enter');
+      await expect(form).toHaveAttribute(
+        'data-submitters',
+        JSON.stringify(['keyboard-submit', null])
+      );
+    });
+
+    await test.step('a second field prevents buttonless submission', async () => {
+      await form.evaluate(async (form) => {
+        const second = document.createElement('swc-text-field');
+        second.name = 'second';
+        second.accessibleLabel = 'Second';
+        form.append(second);
+        await second.updateComplete;
+      });
+      await page.keyboard.press('Enter');
+      // Queue behind deferred Enter handling before asserting no submission.
+      await form.evaluate(
+        () => new Promise<void>((resolve) => setTimeout(resolve, 0))
+      );
+      await expect(form).toHaveAttribute(
+        'data-submitters',
+        JSON.stringify(['keyboard-submit', null])
+      );
+    });
+
+    await test.step('removing the second field permits submission', async () => {
+      await form
+        .locator('swc-text-field[name="second"]')
+        .evaluate((second) => second.remove());
+      await page.keyboard.press('Enter');
+      await expect(form).toHaveAttribute(
+        'data-submitters',
+        JSON.stringify(['keyboard-submit', null, null])
+      );
+    });
+  });
+
   test('synchronizes form state before trusted input listeners run', async ({
     page,
   }) => {
-    const root = await gotoStory(
-      page,
-      'components-text-field--overview',
-      'swc-text-field'
-    );
-    const field = root.locator('swc-text-field');
+    const { field, input } = await openTextFieldForm(page);
     await field.evaluate(async (field: TextField) => {
-      const form = document.createElement('form');
-      field.before(form);
-      form.append(field);
-      field.name = 'username';
+      const form = field.form;
+      if (!form) {
+        throw new Error('Trusted input event test requires a form');
+      }
       field.required = true;
       await field.updateComplete;
       const states: {
@@ -770,7 +867,7 @@ test.describe('Text field - Keyboard interactions', () => {
         });
       }
     });
-    await field.locator('input').focus();
+    await input.focus();
     await page.keyboard.type('ab');
     await page.keyboard.press('Backspace');
     await page.keyboard.press('Backspace');
@@ -793,22 +890,11 @@ test.describe('Text field - Keyboard interactions', () => {
   test('preserves native minimum-length validation with trusted input', async ({
     page,
   }) => {
-    const root = await gotoStory(
-      page,
-      'components-text-field--overview',
-      'swc-text-field'
-    );
-    const field = root.locator('swc-text-field');
+    const { field, input, form } = await openTextFieldForm(page);
     await field.evaluate(async (field: TextField) => {
-      const form = document.createElement('form');
-      field.before(form);
-      form.append(field);
-      field.name = 'username';
       field.minlength = 5;
       await field.updateComplete;
     });
-    const input = field.locator('input');
-    const form = root.locator('form');
     await form.evaluate((form) => {
       form.dataset.submissions = '0';
       form.addEventListener('submit', (event) => {
@@ -919,6 +1005,75 @@ test.describe('Text field - Keyboard interactions', () => {
         tooShort: false,
         formValid: true,
         formValue: 'abc',
+      });
+    });
+  });
+
+  test('preserves native maximum-length limits with trusted input', async ({
+    page,
+  }) => {
+    const { field, input } = await openTextFieldForm(page);
+    await field.evaluate(async (field: TextField) => {
+      field.maxlength = 5;
+      await field.updateComplete;
+    });
+    await input.evaluate((input) => {
+      input.addEventListener('input', (event) => {
+        input.dataset.trustedInput = String(event.isTrusted);
+      });
+    });
+    const readValues = () =>
+      field.evaluate((field: TextField) => {
+        const input = field.roleElement;
+        const form = field.form;
+        if (!input || !form) {
+          throw new Error('Maximum-length test requires a form and input');
+        }
+        return {
+          value: field.value,
+          inputValue: input.value,
+          formValue: new FormData(form).get('username'),
+          trustedInput: input.dataset.trustedInput,
+        };
+      });
+
+    await input.focus();
+    await test.step('typing stops at the authored maximum length', async () => {
+      await page.keyboard.type('abcdef');
+      await expect.poll(readValues).toEqual({
+        value: 'abcde',
+        inputValue: 'abcde',
+        formValue: 'abcde',
+        trustedInput: 'true',
+      });
+    });
+
+    await test.step('changing the maximum length updates the limit', async () => {
+      await field.evaluate(async (field: TextField) => {
+        field.maxlength = 7;
+        await field.updateComplete;
+      });
+      await page.keyboard.type('fghi');
+      await expect.poll(readValues).toEqual({
+        value: 'abcdefg',
+        inputValue: 'abcdefg',
+        formValue: 'abcdefg',
+        trustedInput: 'true',
+      });
+    });
+
+    await test.step('clearing the maximum length permits more typing', async () => {
+      await field.evaluate(async (field: TextField) => {
+        field.maxlength = undefined;
+        await field.updateComplete;
+      });
+      await expect(input).not.toHaveAttribute('maxlength');
+      await page.keyboard.type('hi');
+      await expect.poll(readValues).toEqual({
+        value: 'abcdefghi',
+        inputValue: 'abcdefghi',
+        formValue: 'abcdefghi',
+        trustedInput: 'true',
       });
     });
   });

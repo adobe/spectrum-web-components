@@ -672,15 +672,17 @@ export const SelectionTest: Story = {
       canvasElement,
       'swc-text-field'
     );
-    const input = field.shadowRoot?.querySelector('input');
+    const input = field.roleElement;
+    if (!input) {
+      throw new Error('Selection test requires a native input');
+    }
 
     await step('select() selects all text through the host', () => {
       field.select();
-      expect(
-        input?.selectionStart,
-        'select() updates the selection start'
-      ).toBe(0);
-      expect(input?.selectionEnd, 'select() updates the selection end').toBe(
+      expect(input.selectionStart, 'select() updates the selection start').toBe(
+        0
+      );
+      expect(input.selectionEnd, 'select() updates the selection end').toBe(
         'hello world'.length
       );
     });
@@ -688,11 +690,11 @@ export const SelectionTest: Story = {
     await step('setSelectionRange() sets a range on the native input', () => {
       field.setSelectionRange(0, 5);
       expect(
-        input?.selectionStart,
+        input.selectionStart,
         'setSelectionRange() sets the selection start'
       ).toBe(0);
       expect(
-        input?.selectionEnd,
+        input.selectionEnd,
         'setSelectionRange() sets the selection end'
       ).toBe(5);
     });
@@ -712,10 +714,13 @@ export const AccessibilityTest: Story = {
       'swc-text-field'
     );
     const externallyDescribed = fields[1];
-    const input = externallyDescribed.shadowRoot?.querySelector('input');
+    const input = externallyDescribed.roleElement;
+    if (!input) {
+      throw new Error('Description test requires a native input');
+    }
 
     await step('accessible-describedby resolves the external paragraph', () => {
-      const resolved = input?.ariaDescribedByElements ?? [];
+      const resolved = input.ariaDescribedByElements ?? [];
       expect(resolved, 'external description resolves once').toHaveLength(1);
       expect(resolved[0]?.id, 'input references the external description').toBe(
         'accessibility-external-description'
@@ -725,7 +730,7 @@ export const AccessibilityTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
-// TEST: readonly, aria-invalid, and value round-trip bindings
+// TEST: placeholder, value, and focus bindings
 // ──────────────────────────────────────────────────────────────
 
 export const BindingsTest: Story = {
@@ -740,30 +745,10 @@ export const BindingsTest: Story = {
       canvasElement,
       'swc-text-field'
     );
-    const input = () =>
-      field.shadowRoot?.querySelector('input') as HTMLInputElement;
-
-    await step('readonly reflects onto the native input', async () => {
-      expect(input().readOnly, 'input starts editable').toBe(false);
-      field.fieldStatus = 'readonly';
-      await field.updateComplete;
-      expect(input().readOnly, 'readonly property reaches the input').toBe(
-        true
-      );
-    });
-
-    await step('invalid sets aria-invalid on the native input', async () => {
-      expect(
-        input().getAttribute('aria-invalid'),
-        'valid input omits aria-invalid'
-      ).toBe(null);
-      field.fieldStatus = 'invalid';
-      await field.updateComplete;
-      expect(
-        input().getAttribute('aria-invalid'),
-        'invalid property sets aria-invalid'
-      ).toBe('true');
-    });
+    const input = field.roleElement;
+    if (!input) {
+      throw new Error('Bindings test requires a native input');
+    }
 
     await step(
       'placeholder passes through natively, not as aria-placeholder',
@@ -771,12 +756,11 @@ export const BindingsTest: Story = {
         // component-accessibility-specification.md (placeholder section): the
         // browser exposes native `placeholder` to the a11y tree, so gen2 does
         // not duplicate via `aria-placeholder`.
+        expect(input.placeholder, 'placeholder reaches the native input').toBe(
+          'Enter your username'
+        );
         expect(
-          input().placeholder,
-          'placeholder reaches the native input'
-        ).toBe('Enter your username');
-        expect(
-          input().getAttribute('aria-placeholder'),
+          input.getAttribute('aria-placeholder'),
           'placeholder is not duplicated as aria-placeholder'
         ).toBeNull();
       }
@@ -786,8 +770,8 @@ export const BindingsTest: Story = {
       // The @input handler is the only path that syncs user edits onto
       // the host `value`; assert it so `.value` in render can't silently
       // drift from what the user sees.
-      input().value = 'typed by user';
-      input().dispatchEvent(new Event('input'));
+      input.value = 'typed by user';
+      input.dispatchEvent(new Event('input'));
       expect(field.value, 'host value reflects typed input').toBe(
         'typed by user'
       );
@@ -800,11 +784,57 @@ export const BindingsTest: Story = {
       expect(
         field.shadowRoot?.activeElement,
         'host focus lands on the internal input'
-      ).toBe(input());
+      ).toBe(input);
     });
   },
 };
 BindingsTest.storyName = 'Bindings';
+
+// ──────────────────────────────────────────────────────────────
+// TEST: native keyboard and autofill hints
+// ──────────────────────────────────────────────────────────────
+
+export const InputHintsTest: Story = {
+  render: () => html`
+    <swc-text-field
+      accessible-label="Contact"
+      inputmode="email"
+      autocomplete="email"
+    ></swc-text-field>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const field = await getComponent<TextField>(
+      canvasElement,
+      'swc-text-field'
+    );
+    const input = field.roleElement;
+    if (!input) {
+      throw new Error('Input hints test requires a native input');
+    }
+
+    await step('authored hints reach the native input', () => {
+      expect(input).toHaveAttribute('inputmode', 'email');
+      expect(input).toHaveAttribute('autocomplete', 'email');
+    });
+
+    await step('property changes update the native hints', async () => {
+      field.inputmode = 'tel';
+      field.autocomplete = 'tel';
+      await field.updateComplete;
+      expect(input).toHaveAttribute('inputmode', 'tel');
+      expect(input).toHaveAttribute('autocomplete', 'tel');
+    });
+
+    await step('clearing properties removes the native hints', async () => {
+      field.inputmode = undefined;
+      field.autocomplete = undefined;
+      await field.updateComplete;
+      expect(input).not.toHaveAttribute('inputmode');
+      expect(input).not.toHaveAttribute('autocomplete');
+    });
+  },
+};
+InputHintsTest.storyName = 'Native input hints';
 
 // ──────────────────────────────────────────────────────────────
 // TEST: Invalid enum values emit a DEBUG warning
@@ -826,10 +856,9 @@ export const EnumValidationTest: Story = {
         `);
         await field.updateComplete;
         const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
-        expect(
-          messages.some((m) => m.includes('expects "type"')),
-          'warning names the unsupported type value'
-        ).toBe(true);
+        expect(messages, 'warning names the unsupported type value').toEqual(
+          expect.arrayContaining([expect.stringContaining('expects "type"')])
+        );
         field.parentElement?.remove();
       })
     );
@@ -850,11 +879,11 @@ export const EnumValidationTest: Story = {
             expect(field.roleElement?.type).toBe('text');
             expect(field.value).toBe('Unchanged text');
             expect(field.roleElement?.value).toBe('Unchanged text');
-            expect(
-              warnCalls.some((call) =>
-                String(call?.[1]).includes(`Received "${type}"`)
-              )
-            ).toBe(true);
+            expect(warnCalls.map((call) => String(call?.[1]))).toEqual(
+              expect.arrayContaining([
+                expect.stringContaining(`Received "${type}"`),
+              ])
+            );
 
             field.type = 'email';
             await field.updateComplete;
@@ -881,9 +910,13 @@ export const EnumValidationTest: Story = {
         await field.updateComplete;
         const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
         expect(
-          messages.some((m) => m.includes('expects "label-position"')),
+          messages,
           'warning names the unsupported label position'
-        ).toBe(true);
+        ).toEqual(
+          expect.arrayContaining([
+            expect.stringContaining('expects "label-position"'),
+          ])
+        );
         field.parentElement?.remove();
       })
     );
@@ -902,9 +935,13 @@ export const EnumValidationTest: Story = {
           await field.updateComplete;
           const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
           expect(
-            messages.some((m) => m.includes('expects "necessity-indicator"')),
+            messages,
             'warning names the unsupported necessity indicator'
-          ).toBe(true);
+          ).toEqual(
+            expect.arrayContaining([
+              expect.stringContaining('expects "necessity-indicator"'),
+            ])
+          );
           field.parentElement?.remove();
         })
     );
@@ -928,10 +965,9 @@ export const MissingAccessibleNameTest: Story = {
         `);
         await field.updateComplete;
         const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
-        expect(
-          messages.some((m) => m.includes('accessible name')),
-          'warning requests an accessible name'
-        ).toBe(true);
+        expect(messages, 'warning requests an accessible name').toEqual(
+          expect.arrayContaining([expect.stringContaining('accessible name')])
+        );
         field.parentElement?.remove();
       })
     );
@@ -955,14 +991,22 @@ export const PlaceholderOnlyNameTest: Story = {
         await field.updateComplete;
         const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
         expect(
-          messages.some((m) => m.includes('named only by its placeholder')),
+          messages,
           'warning identifies the placeholder-only name'
-        ).toBe(true);
+        ).toEqual(
+          expect.arrayContaining([
+            expect.stringContaining('named only by its placeholder'),
+          ])
+        );
         // The generic missing-name warning is suppressed in favor of this one.
         expect(
-          messages.some((m) => m.includes('requires an accessible name')),
+          messages,
           'placeholder-only warning replaces generic missing-name warning'
-        ).toBe(false);
+        ).not.toEqual(
+          expect.arrayContaining([
+            expect.stringContaining('requires an accessible name'),
+          ])
+        );
         field.parentElement?.remove();
       })
     );
@@ -977,10 +1021,9 @@ export const PlaceholderOnlyNameTest: Story = {
         `);
         await field.updateComplete;
         const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
-        expect(
-          messages.some((m) => m.includes('placeholder')),
-          'named field has no placeholder warning'
-        ).toBe(false);
+        expect(messages, 'named field has no placeholder warning').not.toEqual(
+          expect.arrayContaining([expect.stringContaining('placeholder')])
+        );
         field.parentElement?.remove();
       })
     );
@@ -1005,9 +1048,11 @@ export const HostAriaLabelWarningTest: Story = {
         await field.updateComplete;
         const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
         expect(
-          messages.some((m) => m.includes('set on the host')),
+          messages,
           'warning explains aria-label belongs on the input'
-        ).toBe(true);
+        ).toEqual(
+          expect.arrayContaining([expect.stringContaining('set on the host')])
+        );
         field.parentElement?.remove();
       })
     );
@@ -1047,11 +1092,11 @@ export const LabelConflictTest: Story = {
           await field.updateComplete;
           const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
           expect(
-            messages.some(
-              (m) => m.includes(CONFLICT_PHRASE) && m.includes(IGNORED_PHRASE)
-            ),
+            messages.filter((message) => message.includes(CONFLICT_PHRASE)),
             'warning identifies conflicting accessible name sources'
-          ).toBe(true);
+          ).toEqual(
+            expect.arrayContaining([expect.stringContaining(IGNORED_PHRASE)])
+          );
           field.parentElement?.remove();
         })
     );
@@ -1068,9 +1113,11 @@ export const LabelConflictTest: Story = {
           await field.updateComplete;
           const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
           expect(
-            messages.some((m) => m.includes(CONFLICT_PHRASE)),
+            messages,
             'visible label with accessible-label is allowed'
-          ).toBe(false);
+          ).not.toEqual(
+            expect.arrayContaining([expect.stringContaining(CONFLICT_PHRASE)])
+          );
           field.parentElement?.remove();
         })
     );
@@ -1090,9 +1137,11 @@ export const LabelConflictTest: Story = {
           await field.updateComplete;
           const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
           expect(
-            messages.some((m) => m.includes(CONFLICT_PHRASE)),
+            messages,
             'visible label with accessible-labelledby is allowed'
-          ).toBe(false);
+          ).not.toEqual(
+            expect.arrayContaining([expect.stringContaining(CONFLICT_PHRASE)])
+          );
           field.parentElement?.remove();
         })
     );
@@ -1105,9 +1154,11 @@ export const LabelConflictTest: Story = {
         await field.updateComplete;
         const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
         expect(
-          messages.some((m) => m.includes(CONFLICT_PHRASE)),
+          messages,
           'accessible-label alone does not trigger a conflict warning'
-        ).toBe(false);
+        ).not.toEqual(
+          expect.arrayContaining([expect.stringContaining(CONFLICT_PHRASE)])
+        );
         field.parentElement?.remove();
       })
     );
@@ -1321,7 +1372,7 @@ export const FormStateRestoreTest: Story = {
       'swc-text-field'
     );
     const form = canvasElement.querySelector('form');
-    const input = field.shadowRoot?.querySelector('input');
+    const input = field.roleElement;
     if (!form || !input) {
       throw new Error('form or input not found');
     }
@@ -1462,22 +1513,6 @@ export const InvalidContractTest: Story = {
     });
 
     await step(
-      'clearing invalid preserves native constraint errors',
-      async () => {
-        field.fieldStatus = 'invalid';
-        await field.updateComplete;
-        expect(field.validity.customError).toBe(true);
-        expect(field.validity.valueMissing).toBe(true);
-        field.fieldStatus = undefined;
-        await field.updateComplete;
-        expect(field.validity.customError).toBe(false);
-        expect(field.validity.valueMissing).toBe(true);
-        expect(field.validationMessage).toBe(input.validationMessage);
-        expect(field.checkValidity()).toBe(false);
-      }
-    );
-
-    await step(
       'disabled and readonly fields do not block submission',
       async () => {
         field.fieldStatus = 'invalid';
@@ -1607,13 +1642,7 @@ export const SlotBackedValidationTest: Story = {
     field.fieldStatus = 'invalid';
     await field.updateComplete;
 
-    await step('uses the inline error as the validation message', () => {
-      expect(field.validationMessage).toBe('Username is already taken.');
-      expect(field.roleElement?.validationMessage).toBe(
-        'Username is already taken.'
-      );
-      expect(field.validity.customError).toBe(true);
-      expect(field.checkValidity()).toBe(false);
+    await step('custom validity is controlled through field status', () => {
       expect('setCustomValidity' in field).toBe(false);
     });
 
@@ -1665,26 +1694,6 @@ export const SlotBackedValidationTest: Story = {
         expect(field.validationMessage).toBe('Enter a valid value.')
       );
     });
-
-    await step(
-      'clears derived errors without clearing native constraints',
-      async () => {
-        field.required = true;
-        field.value = '';
-        field.fieldStatus = undefined;
-        await field.updateComplete;
-        expect(field.validity.customError).toBe(false);
-        expect(field.validity.valueMissing).toBe(true);
-        expect(field.validationMessage).toBe(
-          field.roleElement?.validationMessage
-        );
-        expect(field.checkValidity()).toBe(false);
-        field.value = 'available';
-        await field.updateComplete;
-        expect(field.validationMessage).toBe('');
-        expect(field.checkValidity()).toBe(true);
-      }
-    );
 
     await step('reads changed error text after reconnection', async () => {
       field.fieldStatus = 'invalid';
@@ -1744,10 +1753,16 @@ export const ValidationSourcesTest: Story = {
           field.fieldStatus = undefined;
           await field.updateComplete;
           expect(field.validity.customError).toBe(false);
+          expect(field.validity.valueMissing).toBe(value === '');
+          expect(field.validity.patternMismatch).toBe(value === '123');
           expect(field.checkValidity()).toBe(false);
           expect(field.validationMessage).toBe(
             field.roleElement?.validationMessage
           );
+          field.value = 'available';
+          await field.updateComplete;
+          expect(field.validationMessage).toBe('');
+          expect(field.checkValidity()).toBe(true);
         }
       }
     );
@@ -1898,8 +1913,11 @@ export const ChangeEventTest: Story = {
       // Native change is composed:false and would never reach a host listener.
       let heard = false;
       field.addEventListener('change', () => (heard = true));
-      const input = field.shadowRoot?.querySelector('input');
-      input?.dispatchEvent(new Event('change'));
+      const input = field.roleElement;
+      if (!input) {
+        throw new Error('Change event test requires a native input');
+      }
+      input.dispatchEvent(new Event('change'));
       expect(heard, 'host emits a change event').toBe(true);
     });
   },
@@ -2094,19 +2112,6 @@ export const ImplicitSubmitWithoutButtonTest: Story = {
           expect(submissions, `${type} blocks submission`).toHaveLength(1);
         }
         otherInput.remove();
-      }
-    );
-
-    await step(
-      'another custom text field blocks implicit submission',
-      async () => {
-        const otherField = document.createElement('swc-text-field');
-        otherField.accessibleLabel = 'Other';
-        form.append(otherField);
-        await otherField.updateComplete;
-        await userEvent.keyboard('{Enter}');
-        expect(submissions).toHaveLength(1);
-        otherField.remove();
       }
     );
 

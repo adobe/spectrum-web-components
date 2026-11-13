@@ -27,6 +27,7 @@ import '@adobe/spectrum-wc/components/button-group/swc-button-group.js';
  */
 const meta: Meta = {
   title: 'Forms',
+  tags: ['migrated'],
   parameters: {
     docs: {
       subtitle: 'Form-level behavior with Spectrum Web Components',
