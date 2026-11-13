@@ -347,6 +347,34 @@ export const MasonryFractionalRowHeights: StoryObj = {
   },
 };
 
+export const MasonryNarrowContentSizing: StoryObj = {
+  render: () => html`
+    <div></div>
+  `,
+  play: async ({ canvasElement }) => {
+    const view = await mount(
+      canvasElement,
+      'swc-card-view-masonry-nowrap',
+      'masonry'
+    );
+    view.items = items.map((item, index) => ({
+      ...item,
+      title: index === 7 ? 'AnUnbrokenPhotographTitle' : item.title,
+    }));
+    await view.updateComplete;
+    const cards = [
+      ...view.shadowRoot!.querySelectorAll<HTMLElement>('swc-card'),
+    ];
+    await waitFor(() => {
+      const bounds = cards.map((card) => card.getBoundingClientRect());
+      expect(
+        cards[7].querySelector('img')!.getBoundingClientRect().width
+      ).toBeCloseTo(bounds[7].width, 1);
+      expect(bounds[7].height).toBeCloseTo(bounds[6].height, 1);
+    });
+  },
+};
+
 export const NamedLayoutNavigation: StoryObj = {
   render: () => html`
     <div></div>
