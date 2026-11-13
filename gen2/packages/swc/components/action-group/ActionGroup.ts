@@ -51,6 +51,8 @@ import styles from './action-group.css';
  * </swc-action-group>
  */
 export class ActionGroup extends ActionGroupBase {
+  public static override readonly tagName = 'swc-action-group';
+
   // ───────────────────
   //     API ADDITIONS
   // ───────────────────

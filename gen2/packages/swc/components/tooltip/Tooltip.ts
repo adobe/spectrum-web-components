@@ -35,6 +35,8 @@ import styles from './tooltip.css';
  * @fires swc-after-close - Dispatched after the tooltip finishes closing, once the transition completes.
  */
 export class Tooltip extends TooltipBase {
+  public static override readonly tagName = 'swc-tooltip';
+
   // ──────────────────────────────
   //     RENDERING & STYLING
   // ──────────────────────────────

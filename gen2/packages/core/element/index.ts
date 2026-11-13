@@ -11,5 +11,9 @@
  */
 
 export { defineElement } from './define-element.js';
-export { SpectrumElement } from './spectrum-element.js';
+export {
+  ScopedRenderMixin,
+  supportsScopedRegistries,
+} from './scoped-registry.js';
+export { type DefinableElement, SpectrumElement } from './spectrum-element.js';
 export { coreVersion, version } from './version.js';

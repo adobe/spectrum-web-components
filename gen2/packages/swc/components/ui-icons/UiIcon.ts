@@ -39,6 +39,8 @@ import uiIconSizeStyles from './ui-icon-sizes.css';
  * @cssprop --swc-icon-color - Color of the icon.
  */
 export class UiIcon extends IconBase {
+  public static override readonly tagName = 'swc-ui-icon';
+
   /**
    * The logical UI icon to render, matching a key in the icon-set registry (for
    * example `chevron` or `corner-triangle`). Reflected so RTL mirroring can key off

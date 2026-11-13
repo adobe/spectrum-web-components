@@ -42,6 +42,8 @@ import styles from './asset.css';
  * </swc-asset>
  */
 export class Asset extends AssetBase {
+  public static override readonly tagName = 'swc-asset';
+
   // ──────────────────────────────
   //     RENDERING & STYLING
   // ──────────────────────────────

@@ -12,10 +12,9 @@
 
 import { CSSResultArray, html, TemplateResult } from 'lit';
 
+import { Button } from '@adobe/spectrum-wc/components/button/Button.js';
+import { Icon } from '@adobe/spectrum-wc/components/icon/Icon.js';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
-
-import '@adobe/spectrum-wc/components/button/swc-button.js';
-import '@adobe/spectrum-wc/components/icon/swc-icon.js';
 
 import { ArrowCurvedIcon } from '../utils/icons/index.js';
 
@@ -35,6 +34,9 @@ import styles from './suggestion-item.css';
  * @since 2.0.0-beta.3
  */
 export class SuggestionItem extends SpectrumElement {
+  public static override readonly tagName = 'swc-suggestion-item';
+  public static override readonly dependencies = [Button, Icon];
+
   public static override get styles(): CSSResultArray {
     return [styles];
   }

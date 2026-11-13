@@ -44,6 +44,8 @@ import styles from './progress-circle.css';
  * @cssprop --swc-progress-circle-thickness - Stroke width of the circle rings, as a length such as 4px. The rings grow inward, so the circle keeps its size.
  */
 export class ProgressCircle extends ProgressCircleBase {
+  public static override readonly tagName = 'swc-progress-circle';
+
   // ────────────────────
   //     API OVERRIDES
   // ────────────────────

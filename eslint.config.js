@@ -427,6 +427,47 @@ export default defineConfig([
   },
 
   // ────────────────────────────────────────────────────────────────────────────
+  // gen2 component modules: declare rendered and required child elements in
+  // `static dependencies` instead of importing global `swc-*.js` registration
+  // files, so `Component.define(registry)` registers the same elements as the
+  // component's `swc-*.js` file, and class imports stay free of global
+  // registration.
+  // ────────────────────────────────────────────────────────────────────────────
+  {
+    files: [
+      'gen2/packages/swc/components/**/*.ts',
+      'gen2/packages/swc/patterns/**/*.ts',
+    ],
+    ignores: [
+      '**/stories/**',
+      '**/test/**',
+      '**/*.stories.ts',
+      '**/*.test.ts',
+      '**/*.vrt.ts',
+    ],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              regex:
+                '^(?!@adobe/spectrum-wc-icons/).*(^|/)swc-[a-z0-9-]+(\\.js)?$',
+              message:
+                'Import the class and list it in `static dependencies` instead of importing its registration file.',
+            },
+            {
+              regex: '^@adobe/spectrum-wc-icons/swc-icon-[a-z0-9-]+(\\.js)?$',
+              message:
+                'Workflow icon element modules register globally. Render the `Icon_*` SVG function inside `<swc-icon>` instead.',
+            },
+          ],
+        },
+      ],
+    },
+  },
+
+  // ────────────────────────────────────────────────────────────────────────────
   // Node/scripts: globals for .js/.ts that runs in Node (config files are ignored above)
   // ────────────────────────────────────────────────────────────────────────────
   {

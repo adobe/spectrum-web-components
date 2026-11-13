@@ -37,6 +37,8 @@ import styles from './conversation-turn.css';
  * @since 2.0.0-beta.3
  */
 export class ConversationTurn extends SpectrumElement {
+  public static override readonly tagName = 'swc-conversation-turn';
+
   /**
    * `user` — end-aligned; `system` — start-aligned, full width of the column.
    * Drives the accessible name of the turn (`User message` vs `System message`).

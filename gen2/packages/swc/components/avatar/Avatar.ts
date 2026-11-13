@@ -40,6 +40,8 @@ import styles from './avatar.css';
  * @cssprop --swc-avatar-opacity-disabled - Opacity when the avatar is disabled.
  */
 export class Avatar extends AvatarBase {
+  public static override readonly tagName = 'swc-avatar';
+
   // ──────────────────────────────
   //     RENDERING & STYLING
   // ──────────────────────────────

@@ -50,6 +50,8 @@ import styles from './progress-bar.css';
  * @cssprop --swc-linear-progress-top-to-text - Spacing between the bar and the text. Defaults to the size-specific component top-to-text token.
  */
 export class ProgressBar extends ProgressBarBase {
+  public static override readonly tagName = 'swc-progress-bar';
+
   // ──────────────────────────────
   //     RENDERING & STYLING
   // ──────────────────────────────

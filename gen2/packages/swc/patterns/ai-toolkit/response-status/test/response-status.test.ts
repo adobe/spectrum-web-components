@@ -17,8 +17,8 @@ import { getComponent, withWarningSpy } from '@swc-test-helpers/dom';
 
 import '../swc-response-status.js';
 
-import type { ResponseStatusStep } from '../response-status-step/ResponseStatusStep.js';
-import type { ResponseStatus } from '../ResponseStatus.js';
+import { ResponseStatusStep } from '../response-status-step/ResponseStatusStep.js';
+import { ResponseStatus } from '../ResponseStatus.js';
 import {
   LongDescription,
   meta,
@@ -1039,5 +1039,17 @@ export const StepStatusRemovalResetsTest: Story = {
           expect(warnCalls.length, 'no warning when unset').toBe(0);
         })
     );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Registration
+// ──────────────────────────────────────────────────────────────
+
+export const DependenciesTest: Story = {
+  play: async ({ step }) => {
+    await step('ResponseStatus.define() also defines its steps', () => {
+      expect(ResponseStatus.dependencies).toContain(ResponseStatusStep);
+    });
   },
 };

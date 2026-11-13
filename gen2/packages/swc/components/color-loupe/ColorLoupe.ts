@@ -31,6 +31,8 @@ import styles from './color-loupe.css';
  * <swc-color-loupe open color="rgba(0, 128, 255, 0.7)"></swc-color-loupe>
  */
 export class ColorLoupe extends ColorLoupeBase {
+  public static override readonly tagName = 'swc-color-loupe';
+
   // ──────────────────────────────
   //     RENDERING & STYLING
   // ──────────────────────────────

@@ -29,6 +29,8 @@ import { styleMap } from 'lit/directives/style-map.js';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import { ResizeController } from '@lit-labs/observers/resize-controller.js';
 
+import { ActionButton } from '@adobe/spectrum-wc/components/action-button/ActionButton.js';
+import { Icon } from '@adobe/spectrum-wc/components/icon/Icon.js';
 import {
   DragAndDropController,
   FocusgroupNavigationController,
@@ -43,15 +45,12 @@ import {
 import { Icon_ChevronLeft } from '@adobe/spectrum-wc-icons/ChevronLeft.js';
 import { Icon_ChevronRight } from '@adobe/spectrum-wc-icons/ChevronRight.js';
 
-import '@adobe/spectrum-wc/components/icon/swc-icon.js';
-import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
-import '../pixel-loader/swc-pixel-loader.js';
-
 import type {
   PixelLoaderIconName,
   PixelLoaderPresetName,
 } from '../pixel-loader/index.js';
 import { PIXEL_LOADER_PRESET_NAMES } from '../pixel-loader/index.js';
+import { PixelLoader } from '../pixel-loader/PixelLoader.js';
 import { ChevronUpIcon, PlusIcon, StopIcon } from '../utils/icons/index.js';
 
 import styles from './prompt-field.css';
@@ -116,6 +115,13 @@ const SUPPORTS_FIELD_SIZING =
  * @since 2.0.0-beta.3
  */
 export class PromptField extends SpectrumElement {
+  public static override readonly tagName = 'swc-prompt-field';
+  public static override readonly dependencies = [
+    Icon,
+    ActionButton,
+    PixelLoader,
+  ];
+
   /**
    * Disables the textarea, the upload button, file drop, and send. While
    * `generating`, the stop button stays enabled so generation can still be

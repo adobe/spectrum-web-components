@@ -20,12 +20,11 @@ import {
 import { property, query } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
+import { ActionButton } from '@adobe/spectrum-wc/components/action-button/ActionButton.js';
+import { Card } from '@adobe/spectrum-wc/components/card/Card.js';
+import { ProgressCircle } from '@adobe/spectrum-wc/components/progress-circle/ProgressCircle.js';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import { getLabelFromSlot } from '@adobe/spectrum-wc-core/utils/index.js';
-
-import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
-import '@adobe/spectrum-wc/components/card/swc-card.js';
-import '@adobe/spectrum-wc/components/progress-circle/swc-progress-circle.js';
 
 import { CrossIcon } from '../utils/icons/index.js';
 
@@ -71,6 +70,13 @@ import styles from './upload-attachment.css';
  * @since 2.0.0-beta.3
  */
 export class UploadAttachment extends SpectrumElement {
+  public static override readonly tagName = 'swc-upload-attachment';
+  public static override readonly dependencies = [
+    ActionButton,
+    Card,
+    ProgressCircle,
+  ];
+
   /** Visual treatment type for this attachment. */
   @property({ type: String, reflect: true })
   public type: 'card' | 'media' = 'card';

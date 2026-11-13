@@ -14,7 +14,10 @@
 
 /* stylelint-disable value-keyword-case */
 
-:root {
+/* `:host` sets the tokens on the shadow host when an app loads this file in its shadow root. It matches nothing in the document. */
+
+:root,
+:host {
   --swc-accent-background-color-default: light-dark(
     var(--swc-accent-color-900),
     var(--swc-accent-color-800)
@@ -2278,6 +2281,7 @@
 }
 
 :root,
+:host,
 .swc-theme {
   --swc-ui-icon-2x-large: var(--swc-theme--sizeM, 16px)
     var(--swc-theme--sizeL, 18px);

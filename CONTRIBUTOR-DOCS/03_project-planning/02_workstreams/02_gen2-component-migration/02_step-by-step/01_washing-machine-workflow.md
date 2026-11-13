@@ -239,9 +239,12 @@ Use the decision tree under **Decision trees** below. If the answer is "split," 
 
 1. **Core:** Create `gen2/packages/core/components/<name>/` with `Component.base.ts`, `Component.types.ts`, `index.ts`.
 2. **SWC:** Create `gen2/packages/swc/components/<name>/` with `Component.ts`, `component.css`, `index.ts`, `swc-<tag>.ts`, `stories/`, `test/`.
-   - `index.ts` — class re-export only (`export * from './Component.js'`). No `defineElement`, no `HTMLElementTagNameMap`.
-   - `swc-<tag>.ts` — side-effect entry point that calls `defineElement('swc-<tag>', Component)` and declares the `HTMLElementTagNameMap` augmentation. Use `gen2/packages/swc/components/badge/swc-badge.ts` as the reference.
+   - `Component.ts`: declares `public static override readonly tagName = 'swc-<tag>'` as its first member. If the component renders other SWC elements in its shadow root or needs child elements to work, it imports their classes and lists them in `static dependencies`.
+   - `index.ts`: class re-export only (`export * from './Component.js'`). No registration, no `HTMLElementTagNameMap`.
+   - `swc-<tag>.ts`: registration file that declares the `HTMLElementTagNameMap` augmentation and calls `Component.define()`. Use `gen2/packages/swc/components/badge/swc-badge.ts` as the reference.
 3. **Wire up exports** in `package.json` with a `./components/<name>/swc-<tag>.js` export entry so the side-effect file is importable as `@adobe/spectrum-wc/components/<name>/swc-<tag>.js`.
+
+See [Element registration](../../../../02_style-guide/02_typescript/01_file-organization.md#element-registration) for the `tagName` and `dependencies` rules.
 
 See [Step 2](02_factor-rendering-out-of-1st-gen-component.md) and [Step 3](03_move-base-class-to-gen2-core.md) for directory layout, code structure, and reference implementations (Badge).
 
@@ -249,6 +252,7 @@ See [Step 2](02_factor-rendering-out-of-1st-gen-component.md) and [Step 3](03_mo
 
 - [ ] Core base class extends the right mixins (e.g. `SizedMixin`, `SpectrumElement`).
 - [ ] SWC class extends the core base (e.g. `extends BadgeBase`).
+- [ ] SWC class declares `tagName`, and `dependencies` lists every SWC element it renders or requires.
 - [ ] Imports resolve; build passes with minimal or stub implementation.
 
 ### Common problems and solutions
@@ -258,12 +262,16 @@ See [Step 2](02_factor-rendering-out-of-1st-gen-component.md) and [Step 3](03_mo
 | Wrong base or mixin | See Badge and [Step 2](02_factor-rendering-out-of-1st-gen-component.md). |
 | CSS not applied | Add `static override get styles()` and import the CSS module. See Badge. |
 | Package not exporting | Add a `./components/<name>/swc-<tag>.js` entry to the SWC `package.json` exports map. |
-| `defineElement` in `index.ts` | Move it to `swc-<tag>.ts`; `index.ts` should only re-export the class. |
+| Registration in `index.ts` | Move it to `swc-<tag>.ts`; `index.ts` should only re-export the class. |
+| `define()` throws "must declare its own static tagName" | Add `public static override readonly tagName = 'swc-<tag>'` to the concrete class. Base classes in core don't declare it. |
+| ESLint `no-restricted-imports` error on a `swc-*.js` import | Import the class instead and add it to `dependencies`. For a workflow icon, render its `Icon_*` SVG function inside `<swc-icon>` and add `Icon` to `dependencies`. |
+| An element in the shadow root doesn't upgrade | Add its class to `dependencies`. |
 
 ### Quality gate
 
 - [ ] All files exist, including `swc-<tag>.ts`; `nx build` (or equivalent) for the affected packages succeeds.
-- [ ] `import '@adobe/spectrum-wc/components/<name>/swc-<tag>.js'` registers the element; `import { Class } from '@adobe/spectrum-wc/<name>'` does not.
+- [ ] `import '@adobe/spectrum-wc/components/<name>/swc-<tag>.js'` registers the element and its dependencies; `import { Class } from '@adobe/spectrum-wc/<name>'` registers nothing.
+- [ ] ESLint passes; component modules don't import any `swc-*.js` file.
 
 ---
 

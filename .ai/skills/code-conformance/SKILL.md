@@ -56,6 +56,7 @@ Reference: [Linting tools](../../../CONTRIBUTOR-DOCS/02_style-guide/03_linting-t
 
 - File organization matches the documented section order
 - Class structure follows the prescribed ordering: decorators, properties, lifecycle, render
+- Registration follows [Element registration](../../../CONTRIBUTOR-DOCS/02_style-guide/02_typescript/01_file-organization.md#element-registration): the concrete class declares `tagName`, `dependencies` lists every SWC element it renders or requires, no component module imports another component's `swc-*.js` file, and `swc-<tag>.ts` only calls `Component.define()`
 - Properties use the correct decorator patterns and reflect values
 - Methods follow visibility and naming conventions
 - JSDoc is present and well-formed on public API members

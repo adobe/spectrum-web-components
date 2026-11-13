@@ -6,7 +6,7 @@
 
 ```text
 core/
-├── element/       # SpectrumElement base class, defineElement, version tracking
+├── element/       # SpectrumElement base class, defineElement, scoped registry helpers, version tracking
 ├── mixins/        # SizedMixin, PendingMixin, LinearProgressMixin
 ├── controllers/   # LanguageResolutionController, PlacementController, SlotPresenceController, SlotTextController, …
 ├── utils/         # capitalize, getLabelFromSlot
@@ -24,7 +24,7 @@ Use [Badge](./components/badge/) as the reference implementation.
 
 - `render()` — goes in the SWC concrete class
 - CSS / `static get styles()` — goes in SWC
-- `customElements.define()` / `defineElement()` — goes in SWC `index.ts`
+- `tagName`, `dependencies`, and registration calls (`define()`, `defineElement()`): go in the SWC concrete class and its `swc-<tag>.ts` file
 - S2-only props — goes in SWC with a `@todo` to move to base once 1st-gen is removed
 
 ## Where to look next

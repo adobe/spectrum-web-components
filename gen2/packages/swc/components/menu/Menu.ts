@@ -45,6 +45,8 @@ import styles from './menu.css';
  * @fires swc-after-close - Dispatched after the close transition completes.
  */
 export class Menu extends MenuBase {
+  public static override readonly tagName = 'swc-menu';
+
   public static override get styles(): CSSResultArray {
     return [styles];
   }

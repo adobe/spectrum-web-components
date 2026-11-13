@@ -38,6 +38,8 @@ import styles from './tab.css';
  * <swc-tab tab-id="settings">Settings</swc-tab>
  */
 export class Tab extends TabBase {
+  public static override readonly tagName = 'swc-tab';
+
   // ─────────────────────────────
   //     RENDERING & STYLING
   // ─────────────────────────────

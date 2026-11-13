@@ -53,8 +53,11 @@ Then follow **[Phase 2: Setup](../../../CONTRIBUTOR-DOCS/03_project-planning/02_
 
 **Key file split (SWC package):**
 
-- `index.ts` — class re-export only (`export * from './Component.js'`). No `defineElement`, no `HTMLElementTagNameMap` augmentation.
-- `swc-<tag>.ts` — side-effect entry point. Contains `defineElement('swc-<tag>', Component)` and the `HTMLElementTagNameMap` augmentation. Use `gen2/packages/swc/components/badge/swc-badge.ts` as the reference.
-- `package.json` — must export `./components/<name>/swc-<tag>.js` so consumers can import `@adobe/spectrum-wc/components/<name>/swc-<tag>.js` to register the element without pulling in a class re-export.
+- `Component.ts`: the concrete class declares its tag as its first member, `public static override readonly tagName = 'swc-<tag>';`. If it renders other SWC elements in its shadow root, such as `<swc-ui-icon>`, or needs child elements to work, such as `<swc-tab>` for `<swc-tabs>`, it imports their classes and lists them in `public static override readonly dependencies = [...]`. It never imports another component's `swc-*.js` file; ESLint (`no-restricted-imports`) reports that. Render workflow icons with their `Icon_*` SVG function inside `<swc-icon>`, and list `Icon` in `dependencies`.
+- `index.ts`: class re-export only (`export * from './Component.js'`). No registration, no `HTMLElementTagNameMap` augmentation.
+- `swc-<tag>.ts`: the registration file. It imports the class, declares the `HTMLElementTagNameMap` augmentation, and calls `Component.define()`, which registers the class and its `dependencies`. Use `gen2/packages/swc/components/badge/swc-badge.ts` as the reference, and `gen2/packages/swc/components/close-button/CloseButton.ts` for a class with `dependencies`.
+- `package.json`: must export `./components/<name>/swc-<tag>.js` so consumers can import `@adobe/spectrum-wc/components/<name>/swc-<tag>.js` to register the element without pulling in a class re-export.
+
+See [Element registration](../../../CONTRIBUTOR-DOCS/02_style-guide/02_typescript/01_file-organization.md#element-registration) for the full rules.
 
 If the required file layout or naming in code would drift from the migration plan, follow [`migration-plan-contract`](../migration-prep/references/migration-plan-contract.md).

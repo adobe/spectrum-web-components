@@ -13,10 +13,9 @@
 import { CSSResultArray, html, PropertyValues, TemplateResult } from 'lit';
 import { property, queryAll } from 'lit/decorators.js';
 
+import { Icon } from '@adobe/spectrum-wc/components/icon/Icon.js';
 import { FocusgroupNavigationController } from '@adobe/spectrum-wc-core/controllers/index.js';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
-
-import '@adobe/spectrum-wc/components/icon/swc-icon.js';
 
 import { ThumbDownIcon, ThumbUpIcon } from '../utils/icons/index.js';
 
@@ -34,6 +33,9 @@ import styles from './message-feedback.css';
  * @since 2.0.0-beta.3
  */
 export class MessageFeedback extends SpectrumElement {
+  public static override readonly tagName = 'swc-message-feedback';
+  public static override readonly dependencies = [Icon];
+
   /**
    * The currently selected feedback status.
    * - `positive`: positive feedback selected

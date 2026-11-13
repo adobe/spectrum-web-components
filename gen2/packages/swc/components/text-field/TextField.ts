@@ -13,15 +13,17 @@
 import { CSSResultArray, html, nothing, TemplateResult } from 'lit';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { live } from 'lit/directives/live.js';
+import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 
 import {
   TextFieldBase,
   type TextFieldSize,
 } from '@adobe/spectrum-wc-core/components/text-field';
 import { SlotAttributePropagationController } from '@adobe/spectrum-wc-core/controllers/index.js';
+import { Icon_AlertTriangle } from '@adobe/spectrum-wc-icons/AlertTriangle.js';
 
-import '@adobe/spectrum-wc-icons/swc-icon-alert-triangle.js';
-import '../ui-icons/swc-ui-icon.js';
+import { Icon } from '../icon/Icon.js';
+import { UiIcon } from '../ui-icons/UiIcon.js';
 
 import formFieldStyles from '../../stylesheets/_lit-styles/form-fields.css';
 import styles from './text-field.css';
@@ -76,6 +78,9 @@ const PREFIX_AVATAR_SIZE = {
  * <swc-text-field></swc-text-field>
  */
 export class TextField extends TextFieldBase {
+  public static override readonly tagName = 'swc-text-field';
+  public static override readonly dependencies = [UiIcon, Icon];
+
   private readonly prefixAvatarSize = new SlotAttributePropagationController(
     this,
     {
@@ -170,10 +175,9 @@ export class TextField extends TextFieldBase {
           />
           ${this.fieldStatus === 'invalid' && !this.effectiveDisabled
             ? html`
-                <swc-icon-alert-triangle
-                  class="swc-TextField-invalidIcon"
-                  aria-hidden="true"
-                ></swc-icon-alert-triangle>
+                <swc-icon class="swc-TextField-invalidIcon" aria-hidden="true">
+                  ${unsafeSVG(Icon_AlertTriangle())}
+                </swc-icon>
               `
             : nothing}
         </div>

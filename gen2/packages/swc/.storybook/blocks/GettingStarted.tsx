@@ -87,13 +87,16 @@ Import the side effectful registration of \`<${tagName}>\` via:
 import '@adobe/spectrum-wc/${path}/${tagName}.js';
 \`\`\`
 
-To reference the \`${className}\` type, import it as a type-only import:
+When apps on one page each need their own version of Spectrum Web Components, define \`<${tagName}>\` in a scoped registry instead. \`${className}.define()\` defines the same elements as \`${tagName}.js\`. Scoped registries are experimental. To set up an app with one, see [Scoped registries](/docs/guides-scoped-registries--docs).
 
 \`\`\`typescript
-import type { ${className} } from '@adobe/spectrum-wc/${path}';
+import { ${className} } from '@adobe/spectrum-wc/${path}';
+import { getRegistry } from '@adobe/spectrum-wc/registry';
+
+${className}.define(getRegistry());
 \`\`\`
 
-> The class is exposed primarily for type purposes. Extending it is possible, but the internal shape is not part of the public API — if you choose to subclass, you do so at your own risk and may need to adjust your code between releases.
+> Extending the class is possible, but its internal shape isn't part of the public API. If you choose to subclass it, you do so at your own risk and may need to adjust your code between releases.
 `;
 
     return <Markdown>{markdownContent}</Markdown>;

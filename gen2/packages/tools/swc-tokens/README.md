@@ -298,15 +298,19 @@ The unified token stylesheet splits tokens into two groups:
 The token groups are segmented into specific selectors in the final unified stylesheet:
 
 ```css
-:root {
+:root,
+:host {
   /* Non-scaling values */
 }
 
 :root,
+:host,
 .swc-theme {
   /* Scaling values */
 }
 ```
+
+`:host` matches nothing in the document. When an app loads the stylesheet in its shadow root, for example to use its own version of Spectrum Web Components with a scoped registry, `:host` sets the tokens on the shadow host. For the same reason, `swc.css` declares the toggles that the scaling tokens read (`--swc-theme-size`, `--swc-theme--sizeM`, and `--swc-theme--sizeL`) on `:host`. Without them, a scaling token holds both its medium and its large value, for example `14px 17px`, instead of one.
 
 CSS computes custom property values at declaration time. For scale-aware tokens, their resolved values must be re-evaluated whenever a size context changes (for example, from medium to large).
 

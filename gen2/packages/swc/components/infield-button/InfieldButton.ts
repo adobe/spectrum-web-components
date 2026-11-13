@@ -69,6 +69,8 @@ import styles from './infield-button.css';
  * </swc-infield-button>
  */
 export class InfieldButton extends InfieldButtonBase {
+  public static override readonly tagName = 'swc-infield-button';
+
   // ────────────────────
   //     API OVERRIDES
   // ────────────────────

@@ -20,8 +20,9 @@
   background-color: var(--swc-application-background, token("background-base-color"));
 }
 
-/* Theme scaling setup */
+/* Some tokens in tokens.css need these properties to resolve. `:host` also declares them in a shadow root that loads this file. */
 :root,
+:host,
 .swc-theme,
 .swc-theme--sizeM {
   --swc-theme-size: var(--swc-theme--sizeM,);

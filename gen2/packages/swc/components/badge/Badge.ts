@@ -60,6 +60,8 @@ import styles from './badge.css';
  * @cssprop --swc-badge-outline-label-icon-color - Label and icon color override for the outline variant.
  */
 export class Badge extends BadgeBase {
+  public static override readonly tagName = 'swc-badge';
+
   // ────────────────────
   //     API OVERRIDES
   // ────────────────────

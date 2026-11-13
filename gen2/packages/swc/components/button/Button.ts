@@ -77,6 +77,8 @@ import baseStyles from './button-base.css';
  * <swc-button variant="secondary" fill-style="outline">Cancel</swc-button>
  */
 export class Button extends PendingMixin(ButtonBase) {
+  public static override readonly tagName = 'swc-button';
+
   // ───────────────────
   //     API ADDITIONS
   // ───────────────────

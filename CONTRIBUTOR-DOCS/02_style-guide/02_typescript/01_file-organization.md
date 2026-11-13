@@ -25,6 +25,9 @@
 - [Export patterns](#export-patterns)
     - [Core index.ts](#core-indexts)
     - [SWC index.ts](#swc-indexts)
+- [Element registration](#element-registration)
+    - [Tag name and dependencies](#tag-name-and-dependencies)
+    - [SWC registration file](#swc-registration-file)
 
 </details>
 
@@ -69,6 +72,8 @@ Imports that run code but don't export a binding (e.g. polyfills or registration
 ```ts
 import './some-polyfill.js';
 ```
+
+Component modules never import another component's `swc-*.js` registration file. Import the class and list it in `static dependencies` instead. See [Element registration](#element-registration).
 
 ### Group 4: Relative imports
 
@@ -183,7 +188,8 @@ Each component has files in two packages: **core** and **swc**.
 | core | `index.ts` | Re-exports base class and types |
 | swc | `Component.ts` | Concrete class with styles and rendering |
 | swc | `component.css` | Component stylesheet |
-| swc | `index.ts` | Registers the custom element and re-exports |
+| swc | `index.ts` | Re-exports the concrete class |
+| swc | `swc-<tag>.ts` | Registers the custom element and its dependencies |
 
 The core package also lives at `gen2/packages/core/components/<name>/` and the swc package at `gen2/packages/swc/components/<name>/`.
 
@@ -197,6 +203,7 @@ The core package also lives at `gen2/packages/core/components/<name>/` and the s
 | `Badge.ts` | `swc/components/badge/Badge.ts` |
 | `badge.css` | `swc/components/badge/badge.css` |
 | `index.ts` | `swc/components/badge/index.ts` |
+| `swc-badge.ts` | `swc/components/badge/swc-badge.ts` |
 
 ## Where types files live
 
@@ -228,24 +235,54 @@ export * from './Badge.types.js';
 
 ### SWC index.ts
 
-The SWC `index.ts` does three things:
-
-1. Registers the custom element using `defineElement`.
-2. Re-exports the concrete class.
-3. Declares the element in the global `HTMLElementTagNameMap`.
+The SWC `index.ts` only re-exports the concrete class. It doesn't register anything, so importing the class has no side effects.
 
 ```ts
-import { defineElement } from '@adobe/spectrum-wc-core/element/index.js';
+export * from './Badge.js';
+```
 
+For more on type file patterns (naming, structure, S1/S2 split), see [Component types](08_component-types.md).
+
+## Element registration
+
+The concrete class declares its tag and the elements it needs as static fields, and its `swc-<tag>.ts` file registers it. With this pattern, the same class can register in the global registry or in a scoped registry. Apps use scoped registries when one page loads more than one version of Spectrum Web Components.
+
+### Tag name and dependencies
+
+Declare `tagName` as the first class member. If the component renders other SWC elements in its shadow root, or needs child elements to work, import their classes and list them in `dependencies`:
+
+```ts
+import { UiIcon } from '../ui-icons/UiIcon.js';
+
+export class CloseButton extends ButtonBase {
+  public static override readonly tagName = 'swc-close-button';
+  public static override readonly dependencies = [UiIcon];
+
+  // ...
+}
+```
+
+`define()` registers the `dependencies` first, then the class. Leave out `dependencies` when the component renders only native elements and slots, like Badge.
+
+- List an element in `dependencies` when the component renders it in its shadow root, like `UiIcon` in Close Button, or can't work without it as a child, like `Tab` and `TabPanel` in Tabs.
+- Don't list children the consumer chooses, like the buttons in a button group.
+- Never import another component's `swc-*.js` file from a component module. It registers that element globally as a side effect. ESLint's `no-restricted-imports` rule reports it.
+- Render workflow icons with their `Icon_*` SVG function inside `<swc-icon>`, and list `Icon` in `dependencies`. Workflow icon element modules (`swc-icon-*.js`) register globally when imported.
+
+### SWC registration file
+
+The `swc-<tag>.ts` file imports the class, declares the element in `HTMLElementTagNameMap`, and calls `define()`. Keep other code out of it:
+
+```ts
 import { Badge } from './Badge.js';
 
-export * from './Badge.js';
 declare global {
   interface HTMLElementTagNameMap {
     'swc-badge': Badge;
   }
 }
-defineElement('swc-badge', Badge);
+
+Badge.define();
 ```
 
-For more on type file patterns (naming, structure, S1/S2 split), see [Component types](08_component-types.md).
+Without an argument, `define()` uses the global registry. Apps that use scoped registries call `Badge.define(registry)` instead; see the "Scoped registries" guide in Storybook.

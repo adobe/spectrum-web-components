@@ -17,7 +17,7 @@ import { html as staticHtml, unsafeStatic } from 'lit/static-html.js';
 
 import { AccordionItemBase } from '@adobe/spectrum-wc-core/components/accordion';
 
-import '../ui-icons/swc-ui-icon.js';
+import { UiIcon } from '../ui-icons/UiIcon.js';
 
 import styles from './accordion-item.css';
 
@@ -51,6 +51,9 @@ import styles from './accordion-item.css';
  * @cssprop --swc-accordion-item-divider-color - Color of the item's top and bottom divider borders.
  */
 export class AccordionItem extends AccordionItemBase {
+  public static override readonly tagName = 'swc-accordion-item';
+  public static override readonly dependencies = [UiIcon];
+
   // ──────────────────────────────
   //     STYLING
   // ──────────────────────────────

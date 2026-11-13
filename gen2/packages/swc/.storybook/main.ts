@@ -98,6 +98,11 @@ const ICONS_STORIES = {
   titlePrefix: 'Icons',
 };
 
+const STYLESHEET_STORIES = {
+  directory: '../stylesheets',
+  titlePrefix: 'Stylesheets',
+};
+
 const GUIDES = [
   {
     directory: 'learn-about-swc',
@@ -128,6 +133,7 @@ const TEST_FIXTURES = [
   { ...PATTERN_STORIES, files: '**/*.test.ts' },
   { ...CORE_STORIES, files: '**/*.test.ts' },
   { ...ICONS_STORIES, files: '**/*.test.ts' },
+  { ...STYLESHEET_STORIES, files: '**/*.test.ts' },
 ];
 
 const VRT_STORIES = [
@@ -314,6 +320,10 @@ const config: StorybookConfig = {
           {
             find: '@adobe/spectrum-wc/patterns',
             replacement: resolve(__dirname, '../patterns'),
+          },
+          {
+            find: '@adobe/spectrum-wc/registry',
+            replacement: resolve(__dirname, '../registry'),
           },
           {
             find: '@adobe/spectrum-wc',

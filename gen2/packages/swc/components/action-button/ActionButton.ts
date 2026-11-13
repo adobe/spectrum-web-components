@@ -79,6 +79,8 @@ import styles from './action-button.css';
  * </swc-action-button>
  */
 export class ActionButton extends PendingMixin(ButtonBase) {
+  public static override readonly tagName = 'swc-action-button';
+
   // ────────────────────
   //     API OVERRIDES
   // ────────────────────

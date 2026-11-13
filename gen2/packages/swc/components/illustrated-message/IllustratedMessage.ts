@@ -46,6 +46,8 @@ import styles from './illustrated-message.css';
  * </swc-illustrated-message>
  */
 export class IllustratedMessage extends IllustratedMessageBase {
+  public static override readonly tagName = 'swc-illustrated-message';
+
   // ──────────────────────────────
   //     RENDERING & STYLING
   // ──────────────────────────────

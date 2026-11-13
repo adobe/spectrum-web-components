@@ -27,6 +27,10 @@ const browserInstances = (process.env.VITEST_BROWSER_INSTANCES ?? 'chromium')
 const resolvedBrowserInstances =
   browserInstances.length > 0 ? browserInstances : [{ browser: 'chromium' }];
 
+// Optional Playwright browser channel, for example `chrome`, to run the tests
+// in an installed browser instead of Playwright's bundled one.
+const browserChannel = process.env.VITEST_BROWSER_CHANNEL;
+
 // Cap parallel browser contexts for memory-heavy browsers. At the default
 // (CPU-count) parallelism they exceed CI's 8 GiB and get OOM-killed.
 const maxWorkersByBrowser = { webkit: 2, firefox: 4 };
@@ -151,6 +155,10 @@ export default mergeConfig(
               // Without these, imports can resolve to built output and/or be excluded from coverage.
               '@adobe/spectrum-wc-core': path.resolve(dirname, '../core'),
               '@adobe/spectrum-wc-icons': path.resolve(dirname, '../icons/src'),
+              '@adobe/spectrum-wc/registry': path.resolve(
+                dirname,
+                './registry'
+              ),
               '@adobe/spectrum-wc': path.resolve(dirname, './components'),
               '@adobe/postcss-token': path.resolve(
                 dirname,
@@ -190,7 +198,11 @@ export default mergeConfig(
             ],
             browser: {
               enabled: true,
-              provider: playwright(),
+              provider: playwright(
+                browserChannel
+                  ? { launchOptions: { channel: browserChannel } }
+                  : undefined
+              ),
               headless: true,
               instances: resolvedBrowserInstances,
             },

@@ -15,7 +15,7 @@ import { styleMap } from 'lit/directives/style-map.js';
 
 import { ColorHandleBase } from '@adobe/spectrum-wc-core/components/color-handle';
 
-import '../color-loupe/swc-color-loupe.js';
+import { ColorLoupe } from '../color-loupe/ColorLoupe.js';
 
 import opacityCheckerboardStyles from '../../stylesheets/_lit-styles/opacity-checkerboard.css';
 import styles from './color-handle.css';
@@ -33,6 +33,9 @@ import styles from './color-handle.css';
  * <swc-color-handle color="rgba(0, 128, 255, 0.7)"></swc-color-handle>
  */
 export class ColorHandle extends ColorHandleBase {
+  public static override readonly tagName = 'swc-color-handle';
+  public static override readonly dependencies = [ColorLoupe];
+
   // ──────────────────────────────
   //     RENDERING & STYLING
   // ──────────────────────────────
