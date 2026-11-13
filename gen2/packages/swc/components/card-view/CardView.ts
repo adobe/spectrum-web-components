@@ -168,11 +168,12 @@ export class CardView extends CardViewBase {
             : Math.min(justifiedHeight, cardWidth / 1.5);
         const contentHeight = Math.max(
           0,
-          ...row.map(
-            (card) =>
-              card.shadowRoot?.querySelector<HTMLElement>(
-                '.swc-CardBase-content'
-              )?.scrollHeight ?? 0
+          ...row.map((card) =>
+            Math.ceil(
+              card.shadowRoot
+                ?.querySelector<HTMLElement>('.swc-CardBase-content')
+                ?.getBoundingClientRect().height ?? 0
+            )
           )
         );
         const height =

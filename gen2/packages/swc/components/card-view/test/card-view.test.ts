@@ -156,7 +156,11 @@ export const WaterfallAdvance: StoryObj = {
       ] as const) {
         for (let index = 0; index < items.length; index++) {
           expect(await move(index, key)).toBe(
-            cells[order[(order.indexOf(index) + direction + order.length) % order.length]]
+            cells[
+              order[
+                (order.indexOf(index) + direction + order.length) % order.length
+              ]
+            ]
           );
         }
       }
@@ -165,15 +169,25 @@ export const WaterfallAdvance: StoryObj = {
         disabled: index === verticalOrder[1],
       }));
       await view.updateComplete;
-      expect(await move(verticalOrder[0], 'ArrowDown')).toBe(cells[verticalOrder[2]]);
-      expect(await move(verticalOrder[2], 'ArrowUp')).toBe(cells[verticalOrder[0]]);
+      expect(await move(verticalOrder[0], 'ArrowDown')).toBe(
+        cells[verticalOrder[2]]
+      );
+      expect(await move(verticalOrder[2], 'ArrowUp')).toBe(
+        cells[verticalOrder[0]]
+      );
       view.items = items.map((item, index) => ({
         ...item,
-        disabled: index === verticalOrder[0] || index === verticalOrder[verticalOrder.length - 1],
+        disabled:
+          index === verticalOrder[0] ||
+          index === verticalOrder[verticalOrder.length - 1],
       }));
       await view.updateComplete;
-      expect(await move(verticalOrder[verticalOrder.length - 2], 'ArrowDown')).toBe(cells[verticalOrder[1]]);
-      expect(await move(verticalOrder[1], 'ArrowUp')).toBe(cells[verticalOrder[verticalOrder.length - 2]]);
+      expect(
+        await move(verticalOrder[verticalOrder.length - 2], 'ArrowDown')
+      ).toBe(cells[verticalOrder[1]]);
+      expect(await move(verticalOrder[1], 'ArrowUp')).toBe(
+        cells[verticalOrder[verticalOrder.length - 2]]
+      );
       if (verticalOrder[1] === 3) {
         view.items = items.map((item, index) => ({
           ...item,
@@ -300,6 +314,36 @@ export const HorizontalSemanticNavigation: StoryObj = {
         expect(view.selected).toEqual([]);
       }
     }
+  },
+};
+
+export const MasonryFractionalRowHeights: StoryObj = {
+  render: () => html`
+    <div></div>
+  `,
+  play: async ({ canvasElement }) => {
+    const view = await mount(
+      canvasElement,
+      'swc-card-view-masonry-nowrap',
+      'masonry'
+    );
+    const cards = [
+      ...view.shadowRoot!.querySelectorAll<HTMLElement>('swc-card'),
+    ];
+    const content = cards[0].shadowRoot!.querySelector<HTMLElement>(
+      '.swc-CardBase-content'
+    )!;
+    content.style.minBlockSize = '180.4px';
+    await waitFor(() => {
+      const bounds = cards
+        .slice(0, 3)
+        .map((card) => card.getBoundingClientRect());
+      expect(content.getBoundingClientRect().height).toBeGreaterThan(180);
+      for (const card of bounds.slice(1)) {
+        expect(card.top).toBeCloseTo(bounds[0].top);
+        expect(card.height).toBeCloseTo(bounds[0].height, 1);
+      }
+    });
   },
 };
 
