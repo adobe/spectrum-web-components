@@ -27,9 +27,8 @@ const browserInstances = (process.env.VITEST_BROWSER_INSTANCES ?? 'chromium')
 const resolvedBrowserInstances =
   browserInstances.length > 0 ? browserInstances : [{ browser: 'chromium' }];
 
-// Optional Playwright browser channel, for example `chrome`, to test platform
-// features that the bundled browsers don't ship yet, such as scoped custom
-// element registries (Chrome 146+).
+// Optional Playwright browser channel, for example `chrome`, to run the tests
+// in an installed browser instead of Playwright's bundled one.
 const browserChannel = process.env.VITEST_BROWSER_CHANNEL;
 
 // Cap parallel browser contexts for memory-heavy browsers. At the default

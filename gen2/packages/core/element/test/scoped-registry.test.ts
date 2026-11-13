@@ -36,9 +36,8 @@ let tagCount = 0;
 const uniqueTag = (name: string): string =>
   `test-${name}-${Date.now().toString(36)}-${tagCount++}`;
 
-// Playwright 1.53's bundled Chromium (138) predates native scoped registries
-// (Chrome 146). Scoped stories return early there; run them natively with
-// `VITEST_BROWSER_CHANNEL=chrome`.
+// Scoped stories return early in browsers without scoped registries, such as
+// Firefox. Playwright's bundled Chromium supports them.
 const scoped = supportsScopedRegistries();
 
 // Chrome 146 shipped scoped registries natively. A Chrome 146+ run must detect
@@ -176,6 +175,29 @@ export const StaticDefineTest: Story = {
       );
       element.remove();
     });
+
+    await step('global hosts keep their shadow root options', async () => {
+      const tag = uniqueTag('global-options');
+      class GlobalOptions extends SpectrumElement {
+        static override readonly tagName = tag;
+        static override shadowRootOptions: ShadowRootInit = {
+          ...SpectrumElement.shadowRootOptions,
+          delegatesFocus: true,
+        };
+      }
+      GlobalOptions.define();
+      const element = document.createElement(tag) as GlobalOptions;
+      document.body.append(element);
+      await element.updateComplete;
+
+      expect(element.shadowRoot?.delegatesFocus).toBe(true);
+      // The mixin leaves `customElementRegistry` out for a global host:
+      // `null` would attach a shadow root without a registry.
+      if (scoped) {
+        expect(element.shadowRoot?.customElementRegistry).toBe(customElements);
+      }
+      element.remove();
+    });
   },
 };
 
@@ -268,6 +290,26 @@ export const ScopedRenderRootTest: Story = {
         cleanup();
       }
     );
+
+    await step('scoped hosts keep their shadow root options', async () => {
+      class ScopedOptions extends SpectrumElement {
+        static override readonly tagName = 'scoped-test-options';
+        static override shadowRootOptions: ShadowRootInit = {
+          ...SpectrumElement.shadowRootOptions,
+          delegatesFocus: true,
+        };
+      }
+      const registry = new CustomElementRegistry();
+      ScopedOptions.define(registry);
+      const element = await mount<ScopedOptions>(
+        registry,
+        'scoped-test-options'
+      );
+
+      expect(element.shadowRoot?.delegatesFocus).toBe(true);
+      expect(element.shadowRoot?.customElementRegistry).toBe(registry);
+      cleanup();
+    });
 
     await step('scopes a shadow root that Lit reuses', async () => {
       // Declarative shadow DOM gives an element its shadow root before it

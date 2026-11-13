@@ -27,9 +27,8 @@ export default {
   `,
 } as Meta;
 
-// Playwright 1.53's bundled Chromium (138) predates native scoped registries
-// (Chrome 146). Scoped stories return early there; run them natively with
-// `VITEST_BROWSER_CHANNEL=chrome`.
+// Scoped stories return early in browsers without scoped registries, such as
+// Firefox. Playwright's bundled Chromium supports them.
 const scoped = supportsScopedRegistries();
 
 // This file imports class modules only. Nothing here may define globally.
