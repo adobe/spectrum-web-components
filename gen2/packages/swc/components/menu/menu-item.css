@@ -10,21 +10,277 @@
  * governing permissions and limitations under the License.
  */
 
-/* Layout only. Row chrome (background, border, radius, hover and focus
- * treatments) is the next story; see the migration plan's styling section. */
-
 :host {
-  display: flex;
-  gap: token("spacing-100");
-  align-items: center;
-}
-
-/* The label and its description stack; the visual sits beside both. */
-.swc-MenuItem-text {
-  display: flex;
-  flex-direction: column;
+  display: block;
 }
 
 * {
   box-sizing: border-box;
+}
+
+/* TODO: Add back "gap" spacing as margin once selection and/or decorator areas are implemented.
+   Due to the use of `grid-template-areas`, use of gap would mean the space would always be present,
+   even if the areas are empty. */
+.swc-MenuItem {
+  --_swc-menu-item-icon-size: var(--swc-menu-item-icon-size, token("workflow-icon-medium"));
+  --_swc-menu-item-thumbnail-size: var(--swc-menu-item-thumbnail-size, token("thumbnail-size-500"));
+  --_swc-menu-item-gap: var(--swc-menu-item-gap, token("base-gap-medium"));
+
+  /* Also the perspective depth of the press transform. */
+  --_swc-menu-item-min-block-size: var(--swc-menu-item-min-block-size, token("component-height-100"));
+
+  display: grid;
+
+  /* Only applicable grid areas will be filled */
+  grid-template-areas: "selection content decorator";
+  grid-template-columns: auto 1fr auto;
+  min-block-size: var(--_swc-menu-item-min-block-size);
+  padding-block: var(--swc-menu-item-padding-block, token("base-padding-vertical-medium"));
+  padding-inline: var(--swc-menu-item-padding-inline, token("base-padding-horizontal-medium"));
+  font-size: var(--swc-menu-item-label-font-size, token("font-size-100"));
+  line-height: var(--swc-menu-item-label-line-height, token("line-height-font-size-100"));
+  color: var(--swc-menu-item-label-color, token("neutral-content-color-default"));
+  background-color: var(--swc-menu-item-background-color, transparent);
+  border-radius: var(--swc-menu-item-corner-radius, token("corner-radius-medium-size-medium"));
+  cursor: default;
+  user-select: none;
+  transition-timing-function: token("animation-ease-in-out");
+  transition-duration: token("animation-duration-100");
+
+  /* Colour is left out: focus changes it too, and fading it leaves the
+   * highlight trailing behind arrow-key navigation. The pointer gets it back
+   * below. */
+  transition-property: transform;
+}
+
+.swc-MenuItem-content {
+  --_swc-menu-content-primary-row: "visual label secondary";
+  --_swc-menu-content-secondary-row: ". description description";
+
+  display: grid;
+  grid-area: content;
+  grid-template-areas: var(--_swc-menu-content-primary-row) var(--_swc-menu-content-secondary-row);
+  grid-template-rows: auto auto;
+  grid-template-columns: auto 1fr auto;
+  min-inline-size: 0;
+  overflow-wrap: break-word;
+}
+
+.swc-MenuItem-content--hasThumbnail {
+  --_swc-menu-content-secondary-row: "visual description description";
+
+  &.swc-MenuItem-content--hasDescription {
+    ::slotted([slot="label"]),
+    ::slotted([slot="secondary"]) {
+      align-self: end;
+    }
+  }
+
+  &:not(.swc-MenuItem-content--hasDescription) {
+    --_swc-menu-content-secondary-row: ". . .";
+
+    align-items: center;
+  }
+}
+
+/* ──────────────
+ *    SIZES
+ * ────────────── */
+
+:host([size="s"]) {
+  --swc-menu-item-min-block-size: token("component-height-75");
+  --swc-menu-item-padding-block: token("base-padding-vertical-small");
+  --swc-menu-item-padding-inline: token("base-padding-horizontal-small");
+  --swc-menu-item-gap: token("base-gap-small");
+  --swc-menu-item-corner-radius: token("corner-radius-medium-size-small");
+  --swc-menu-item-label-font-size: token("font-size-75");
+  --swc-menu-item-label-line-height: token("line-height-font-size-75");
+  --swc-menu-item-description-font-size: token("font-size-50");
+  --swc-menu-item-description-line-height: token("line-height-font-size-50");
+  --swc-menu-item-text-gap: token("text-gap-small");
+  --swc-menu-item-icon-size: token("workflow-icon-small");
+  --swc-menu-item-thumbnail-size: token("thumbnail-size-300");
+}
+
+:host([size="l"]) {
+  --swc-menu-item-min-block-size: token("component-height-200");
+  --swc-menu-item-padding-block: token("base-padding-vertical-large");
+  --swc-menu-item-padding-inline: token("base-padding-horizontal-large");
+  --swc-menu-item-gap: token("base-gap-large");
+  --swc-menu-item-corner-radius: token("corner-radius-medium-size-large");
+  --swc-menu-item-label-font-size: token("font-size-200");
+  --swc-menu-item-label-line-height: token("line-height-font-size-200");
+  --swc-menu-item-description-font-size: token("font-size-100");
+  --swc-menu-item-description-line-height: token("line-height-font-size-100");
+  --swc-menu-item-text-gap: token("text-gap-large");
+  --swc-menu-item-icon-size: token("workflow-icon-large");
+  --swc-menu-item-thumbnail-size: token("thumbnail-size-700");
+}
+
+:host([size="xl"]) {
+  --swc-menu-item-min-block-size: token("component-height-300");
+  --swc-menu-item-padding-block: token("base-padding-vertical-extra-large");
+  --swc-menu-item-padding-inline: token("base-padding-horizontal-extra-large");
+  --swc-menu-item-gap: token("base-gap-extra-large");
+  --swc-menu-item-corner-radius: token("corner-radius-medium-size-extra-large");
+  --swc-menu-item-label-font-size: token("font-size-300");
+  --swc-menu-item-label-line-height: token("line-height-font-size-300");
+  --swc-menu-item-description-font-size: token("font-size-200");
+  --swc-menu-item-description-line-height: token("line-height-font-size-200");
+  --swc-menu-item-text-gap: token("text-gap-extra-large");
+  --swc-menu-item-icon-size: token("workflow-icon-extra-large");
+  --swc-menu-item-thumbnail-size: token("thumbnail-size-900");
+}
+
+/* ──────────────
+ *    STATES
+ * ────────────── */
+
+/* The pointer gets the colour fade back; the keyboard does not, so a row it
+ * moves to is painted on the frame the key lands. */
+:host([pointer-focus]) .swc-MenuItem {
+  transition-property: color, background-color, transform;
+}
+
+/* Hover follows the row the pointer focused; `pointer-focus` is set by the
+ * owning menu and cleared on the next key press, so only one row looks active. */
+:host(:hover[pointer-focus]:not([disabled])) {
+  --swc-menu-item-label-color: token("neutral-content-color-hover");
+  --swc-menu-item-description-color: token("neutral-subdued-content-color-hover");
+  --swc-menu-item-secondary-color: token("neutral-subdued-content-color-hover");
+}
+
+/* `:where()` keeps the guard from adding specificity, so hover, focus and down
+ * tie and the later rule wins, in that order. */
+:host(:hover[pointer-focus]:where(:not([disabled]))) .swc-MenuItem {
+  background-color: var(--swc-menu-item-background-color-hover, token("menu-item-background-color-hover"));
+}
+
+/* `:focus-visible`, not `:focus`: opening the menu focuses the first row even
+ * on a mouse click, which must not paint it as chosen. */
+:host(:focus-visible:not([disabled])) {
+  --swc-menu-item-label-color: token("neutral-content-color-key-focus");
+  --swc-menu-item-description-color: token("neutral-subdued-content-color-key-focus");
+  --swc-menu-item-secondary-color: token("neutral-subdued-content-color-key-focus");
+}
+
+:host(:focus-visible:not([disabled])) .swc-MenuItem {
+  background-color: var(--swc-menu-item-background-color-focus, token("menu-item-background-color-keyboard-focus"));
+}
+
+/* Spectrum's down colors match hover, so the press is carried by the
+ * transform below. */
+:host(:active:not([disabled])) {
+  --swc-menu-item-label-color: token("neutral-content-color-down");
+  --swc-menu-item-description-color: token("neutral-subdued-content-color-down");
+  --swc-menu-item-secondary-color: token("neutral-subdued-content-color-down");
+}
+
+/* The row recedes along Z against a perspective of its own height, matching
+ * the button family. */
+:host(:active:not([disabled])) .swc-MenuItem {
+  background-color: var(--swc-menu-item-background-color-down, token("menu-item-background-color-down"));
+  transform: perspective(var(--_swc-menu-item-min-block-size)) translate3d(0, 0, token("component-size-difference-down"));
+  will-change: transform;
+}
+
+/* No background: the disabled token is the same grey as hover, so painting it
+ * would make a disabled row read as hovered. */
+:host([disabled]) {
+  --swc-menu-item-label-color: token("disabled-content-color");
+  --swc-menu-item-description-color: token("disabled-content-color");
+  --swc-menu-item-secondary-color: token("disabled-content-color");
+
+  ::slotted(swc-thumbnail) {
+    /* In Figma, this is applied to an overlay instead of the thumbnail,
+    so we need to inverse the value for the correct effect. */
+    opacity: calc(1 - token("thumbnail-opacity-disabled"));
+  }
+}
+
+/* Drawn on the chrome element, inset so the surface's `overflow: auto` doesn't
+ * clip it. `pointer-focus` suppresses it for pointer-driven focus, which
+ * `:focus-visible` alone would leave following the pointer. */
+:host(:focus-visible:not([pointer-focus])) .swc-MenuItem {
+  outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
+  outline-offset: calc(token("focus-ring-gap") * -1);
+}
+
+:host(:focus) {
+  outline: none;
+}
+
+/* ──────────────
+ *    SLOTS
+ * ────────────── */
+
+/* stylelint-disable-next-line no-descending-specificity */
+::slotted([slot="label"]) {
+  grid-area: label;
+  min-inline-size: 0; /* Enables overflow text wrapping */
+}
+
+::slotted([slot="description"]) {
+  grid-area: description;
+  min-inline-size: 0; /* Enables overflow text wrapping */
+  margin-block-start: var(--swc-menu-item-text-gap, token("text-gap-medium"));
+  font-size: var(--swc-menu-item-description-font-size, token("font-size-75"));
+  line-height: var(--swc-menu-item-description-line-height, token("line-height-font-size-75"));
+  color: var(--swc-menu-item-description-color, token("neutral-subdued-content-color-default"));
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+::slotted([slot="secondary"]) {
+  grid-area: secondary;
+  min-inline-size: 0; /* Enables overflow text wrapping */
+  margin-inline-start: var(--_swc-menu-item-gap);
+  color: var(--swc-menu-item-secondary-color, token("neutral-subdued-content-color-default"));
+}
+
+::slotted([slot="visual"]) {
+  --_swc-menu-item-visual-size: var(--_swc-menu-item-icon-size);
+
+  box-sizing: border-box;
+  grid-area: visual;
+  inline-size: var(--_swc-menu-item-visual-size);
+  block-size: var(--_swc-menu-item-visual-size);
+
+  /* Center the icon along the block axis */
+  margin-block-start: calc((var(--_swc-menu-item-icon-size) - 1lh) / -2);
+  margin-inline-end: var(--_swc-menu-item-gap);
+  color: inherit;
+}
+
+.swc-MenuItem-content--hasThumbnail ::slotted([slot="visual"]) {
+  --_swc-menu-item-visual-size: var(--_swc-menu-item-thumbnail-size);
+  --swc-thumbnail-size: var(--_swc-menu-item-thumbnail-size);
+
+  margin-block-start: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .swc-MenuItem {
+    transition-duration: 0ms;
+  }
+}
+
+@media (forced-colors: active) {
+  :host([disabled]) ::slotted(*) {
+    color: GrayText;
+  }
+
+  :host(:focus-visible:not([pointer-focus])) .swc-MenuItem {
+    outline-color: Highlight;
+  }
+
+  /* Follows RSP behavior */
+  :host([pointer-focus]:hover:not([disabled])) .swc-MenuItem {
+    background: Highlight;
+    transition-duration: 0ms;
+
+    ::slotted(*) {
+      color: HighlightText;
+      forced-color-adjust: none;
+    }
+  }
 }

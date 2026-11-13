@@ -50,7 +50,8 @@ export const isMenuActivationKey = (event: KeyboardEvent): boolean => {
  *
  * @slot label - Required text of the row; provides its accessible name.
  * @slot visual - Optional leading icon or thumbnail.
- * @slot description - Optional secondary text; provides the accessible description.
+ * @slot description - Optional supporting text below the label; provides the accessible description.
+ * @slot secondary - Optional trailing text, such as a keyboard shortcut; appended to the accessible description after `description`.
  */
 export abstract class MenuItemBase extends SizedMixin(SpectrumElement, {
   validSizes: MENU_ITEM_VALID_SIZES,
@@ -75,6 +76,22 @@ export abstract class MenuItemBase extends SizedMixin(SpectrumElement, {
   public disabled = false;
 
   /**
+   * Whether the pointer, rather than the keyboard, last moved focus to this
+   * row. Suppresses the focus ring while it is set.
+   *
+   * The owning `swc-menu` sets it, because a row cannot tell which input moved
+   * focus to it. `:focus-visible` alone is not enough: it stays on once a key
+   * press has set the modality, so the ring would follow the pointer from row
+   * to row and stay behind on the row the pointer left. 1st-gen carries the
+   * same state the other way up, as a `focused` attribute it sets on keyboard
+   * focus and clears on `mouseover`.
+   *
+   * @internal Set by the owning menu; not part of the row's public API.
+   */
+  @property({ type: Boolean, reflect: true, attribute: 'pointer-focus' })
+  public pointerFocus = false;
+
+  /**
    * Carries the row's name and description references. On `internals` they are
    * defaults a consumer's own attributes replace; writing them to `this` would
    * reflect onto the host and clobber whatever was already there.
@@ -90,6 +107,9 @@ export abstract class MenuItemBase extends SizedMixin(SpectrumElement, {
 
   @query('slot[name="description"]')
   private descriptionSlot?: HTMLSlotElement;
+
+  @query('slot[name="secondary"]')
+  private secondarySlot?: HTMLSlotElement;
 
   // ──────────────────────
   //     IMPLEMENTATION
@@ -111,66 +131,43 @@ export abstract class MenuItemBase extends SizedMixin(SpectrumElement, {
     this.setAttribute('role', 'menuitem');
     this.addEventListener('keydown', this.handleKeyDown);
     this.addEventListener('keyup', this.handleKeyUp);
-    this.addEventListener('blur', this.handleBlur);
   }
 
   public override disconnectedCallback(): void {
     this.removeEventListener('keydown', this.handleKeyDown);
     this.removeEventListener('keyup', this.handleKeyUp);
-    this.removeEventListener('blur', this.handleBlur);
-    // A row torn out mid-press must not come back armed if it is re-slotted.
-    this.pressedKey = null;
     super.disconnectedCallback();
   }
 
-  // The key this row saw go down, so a keyup can tell its own press from one
-  // that began elsewhere. Native buttons track the same thing.
-  private pressedKey: string | null = null;
-
-  // Claims the key and arms the row, but does not act. Activating here would
-  // restore focus to the trigger mid-press, handing the rest of the same
-  // press (the repeats, then the keyup) to a button that then activates and
-  // reopens the menu. Space would also scroll the page under the surface.
+  // Selection and closing happen on `keydown`, matching React Spectrum. The
+  // row that receives the keydown is the row that activates, so there is no
+  // press state spanning the two halves of a press and nothing to strand: a
+  // press begun on the trigger lands its keydown there and only its keyup
+  // reaches the row.
   private readonly handleKeyDown = (event: KeyboardEvent): void => {
     if (!isMenuActivationKey(event)) {
       return;
     }
+    // Claimed even when the row is disabled or the press is a repeat, so Space
+    // never scrolls the surface out from under the menu.
     event.preventDefault();
-    // A disabled row claims the key but never arms, so the press cannot
-    // survive the row being enabled before its own keyup.
-    if (!event.repeat && !this.disabled) {
-      this.pressedKey = event.key;
+    if (event.repeat || this.disabled) {
+      return;
     }
+    // Turning the key into a click is what makes keyboard and pointer
+    // activation reach the same consumer handler, and lets the owning menu
+    // close through one path for both.
+    this.click();
   };
 
-  // Activation happens here so focus moves only once the press is over.
-  // Turning the key into a click is what makes keyboard and pointer
-  // activation reach the same consumer handler, and lets the owning menu
-  // close through one path for both.
+  // The release is claimed but never acts. A row that still has focus, because
+  // a consumer kept the menu open, must not activate a second time on the same
+  // press.
   private readonly handleKeyUp = (event: KeyboardEvent): void => {
-    // Only the release of the key that armed the row ends the press, with or
-    // without modifiers, so a Shift+Enter release still disarms it. Another key
-    // released mid-press, like the arrow that moved focus here, leaves it armed.
-    const armed = this.pressedKey === event.key;
-    if (armed) {
-      this.pressedKey = null;
-    }
     if (!isMenuActivationKey(event)) {
       return;
     }
     event.preventDefault();
-    // Only a press this row also saw start counts. Enter on the trigger opens
-    // the menu and moves focus here before its own keyup, so without this the
-    // first row would activate the instant the menu appeared.
-    if (armed && !this.disabled) {
-      this.click();
-    }
-  };
-
-  // A press that starts on this row and ends on another is not an activation
-  // of either.
-  private readonly handleBlur = (): void => {
-    this.pressedKey = null;
   };
 
   private readonly handleClickCapture = (event: Event): void => {
@@ -191,8 +188,8 @@ export abstract class MenuItemBase extends SizedMixin(SpectrumElement, {
 
   /**
    * Names the row from its `label` slot and describes it from its
-   * `description` slot. Wire this to both slots' `slotchange` event in the
-   * SWC render().
+   * `description` slot, followed by its `secondary` slot. Wire this to all
+   * three slots' `slotchange` event in the SWC render().
    *
    * Element references rather than ID refs: the slotted content is
    * consumer-authored, so there is no `id` to point at.
@@ -201,8 +198,11 @@ export abstract class MenuItemBase extends SizedMixin(SpectrumElement, {
     // Flattened, so a row whose slots are forwarded through another
     // component still resolves to the elements that actually render.
     const label = this.labelSlot?.assignedElements({ flatten: true }) ?? [];
-    const description =
-      this.descriptionSlot?.assignedElements({ flatten: true }) ?? [];
+    // Secondary text, such as a shortcut, is announced after the description.
+    const description = [
+      ...(this.descriptionSlot?.assignedElements({ flatten: true }) ?? []),
+      ...(this.secondarySlot?.assignedElements({ flatten: true }) ?? []),
+    ];
     // `menuitem` names from contents, so without explicit references the
     // description is folded into the name rather than announced as one.
     this.internals.ariaLabelledByElements = label.length > 0 ? label : null;

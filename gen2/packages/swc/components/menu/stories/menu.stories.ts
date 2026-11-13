@@ -18,9 +18,12 @@ import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import { MENU_PLACEMENTS } from '@adobe/spectrum-wc-core/components/menu';
 
+import '@adobe/spectrum-wc-icons/swc-icon-copy.js';
+import '@adobe/spectrum-wc-icons/swc-icon-cut.js';
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc/components/menu/swc-menu.js';
 import '@adobe/spectrum-wc/components/menu/swc-menu-item.js';
+import '@adobe/spectrum-wc/components/thumbnail/swc-thumbnail.js';
 
 // ────────────────
 //    METADATA
@@ -171,6 +174,7 @@ export const Sizes: Story = {
 
 export const ItemContent: Story = {
   args: {
+    open: true,
     for: 'item-content-trigger',
     'actual-placement': null,
   },
@@ -180,12 +184,30 @@ export const ItemContent: Story = {
       args,
       html`
         <swc-menu-item>
-          <span slot="visual" aria-hidden="true">📋</span>
-          <span slot="label">Paste</span>
+          <swc-icon-copy slot="visual"></swc-icon-copy>
+          <span slot="label">Copy</span>
+          <span slot="secondary">⌘C</span>
+        </swc-menu-item>
+        <swc-menu-item disabled>
+          <swc-icon-cut slot="visual"></swc-icon-cut>
+          <span slot="label">Cut</span>
+          <span slot="description">Cut the selected text</span>
+          <span slot="secondary">⌘X</span>
         </swc-menu-item>
         <swc-menu-item>
+          <swc-thumbnail slot="visual">
+            <img src="./images/avatar-preview.png" alt="" />
+          </swc-thumbnail>
+          <span slot="label">Paste</span>
+          <span slot="secondary">⌘V</span>
+        </swc-menu-item>
+        <swc-menu-item disabled>
+          <swc-thumbnail slot="visual">
+            <img src="./images/landscape-asset.jpg" alt="" />
+          </swc-thumbnail>
           <span slot="label">Paste special</span>
           <span slot="description">Keeps the source formatting</span>
+          <span slot="secondary">⌘⇧V</span>
         </swc-menu-item>
       `
     )}
