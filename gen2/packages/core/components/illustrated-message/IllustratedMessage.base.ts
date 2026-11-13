@@ -16,6 +16,7 @@ import { property } from 'lit/decorators.js';
 import { SlotTextController } from '@adobe/spectrum-wc-core/controllers/slot-text-controller/index.js';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import {
+  resolveEnum,
   validateAllowedChildren,
   validateEnum,
   warnIf,
@@ -94,7 +95,10 @@ export abstract class IllustratedMessageBase extends SpectrumElement {
     this,
     {
       attribute: 'size',
-      getValue: () => this.size,
+      // Slotted actions get a valid size, so an invalid `size` warns once,
+      // on the message, rather than on every action.
+      getValue: () =>
+        resolveEnum(this.size, ILLUSTRATED_MESSAGE_VALID_SIZES, 'm'),
       slotName: 'actions',
     }
   );

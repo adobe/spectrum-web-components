@@ -218,6 +218,30 @@ export const EmptySizeTest: Story = {
   },
 };
 
+export const EmptySizePropertyTest: Story = {
+  play: async ({ canvasElement, step }) => {
+    const container = canvasElement.querySelector<HTMLElement>('#container')!;
+
+    await step(
+      'keeps the attribute and property in step when size is set to an empty string',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          const el = await mount<TestSizedHost>(
+            container,
+            '<test-sized-host size="l"></test-sized-host>'
+          );
+          el.size = '' as TestSizedHost['size'];
+          await el.updateComplete;
+
+          expect(el.getAttribute('size'), 'attribute is updated').toBe('');
+          expect(el.size, 'property keeps the empty string').toBe('');
+          expect(el.resolvedSize, 'renders the default').toBe('m');
+          expect(warningText(warnCalls)).toMatch(/"size".*Received ""/);
+        })
+    );
+  },
+};
+
 export const AttributeRemovalTest: Story = {
   play: async ({ canvasElement, step }) => {
     const container = canvasElement.querySelector<HTMLElement>('#container')!;

@@ -123,7 +123,7 @@ export function SizedMixin<T extends Constructor<ReactiveElement>>(
      */
     @property({ type: String })
     public get size(): ElementSize {
-      return this._size || defaultSize;
+      return this._size ?? defaultSize;
     }
 
     public set size(value: ElementSize | null) {
@@ -133,10 +133,11 @@ export function SizedMixin<T extends Constructor<ReactiveElement>>(
       // default, or stays unset for classes whose parent supplies the size.
       const size =
         value ?? (sizedConstructor.NO_DEFAULT_SIZE ? null : defaultSize);
-      // Reflect the value as set, without correcting it. When the change
-      // came from the attribute, this rewrites the same text, and Lit ignores
-      // the nested attribute callback.
-      if (size) {
+      // Reflect the value as set, without correcting it, so the attribute
+      // and the property always agree (including an empty string). When the
+      // change came from the attribute, this rewrites the same text, and Lit
+      // ignores the nested attribute callback.
+      if (size !== null) {
         this.setAttribute('size', size);
       }
       if (this._size === size) {
