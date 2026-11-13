@@ -39,6 +39,9 @@ import {
   focusableSelector,
   getActiveElement,
   isFocusVisibleInTree,
+  resolveEnum,
+  stringAttribute,
+  validateEnum,
 } from '@adobe/spectrum-wc-core/utils/index.js';
 import { Icon_ChevronLeft } from '@adobe/spectrum-wc-icons/ChevronLeft.js';
 import { Icon_ChevronRight } from '@adobe/spectrum-wc-icons/ChevronRight.js';
@@ -66,6 +69,8 @@ const DEFAULT_LOADER_ICON: PixelLoaderIconName = 'aiLogo';
 /** Docs URL attributed to dev-mode validation warnings. */
 const DOCS_URL =
   'https://spectrum-web-components.adobe.com/?path=/docs/patterns-ai-toolkit-prompt-field--docs';
+
+const PROMPT_FIELD_SIZES = ['s', 'm'] as const;
 
 const isFileDrag = (event: DragEvent): boolean => {
   const dataTransfer = event.dataTransfer;
@@ -146,9 +151,20 @@ export class PromptField extends SpectrumElement {
   @property({ type: String, reflect: true })
   public variant: 'subtle' | 'balanced' | 'prominent' = 'balanced';
 
-  /** Size of the prompt field. */
-  @property({ type: String, reflect: true })
+  /**
+   * Size of the prompt field. An invalid value is kept as set, warns in dev
+   * mode, and renders the default (`m`).
+   */
+  @property({ type: String, reflect: true, converter: stringAttribute('m') })
   public size: 's' | 'm' = 'm';
+
+  /**
+   * The size passed to the field's action buttons: `size` when valid,
+   * otherwise the default.
+   */
+  private get _resolvedSize(): 's' | 'm' {
+    return resolveEnum(this.size, PROMPT_FIELD_SIZES, 'm');
+  }
 
   /** Status loader artwork: a single icon name (static), or a preset name (`cc`, `dc`, `exp`, `analyze`, `mega`) that cycles a themed sequence. Routed to the loader's icon/preset in `_renderStatusIcon`. */
   @property({ type: String, reflect: true })
@@ -344,6 +360,16 @@ export class PromptField extends SpectrumElement {
   public override disconnectedCallback(): void {
     this._attachmentScrollFallbackGeneration++;
     super.disconnectedCallback();
+  }
+
+  protected override update(changedProperties: PropertyValues<this>): void {
+    validateEnum(this, {
+      prop: 'size',
+      value: this.size,
+      valid: PROMPT_FIELD_SIZES,
+      url: DOCS_URL,
+    });
+    super.update(changedProperties);
   }
 
   protected override updated(changedProperties: PropertyValues<this>): void {
@@ -1485,7 +1511,7 @@ export class PromptField extends SpectrumElement {
           'swc-PromptField-send': !generating,
           'swc-PromptField-stop': generating,
         })}
-        size=${this.size}
+        size=${this._resolvedSize}
         ?disabled=${this.disabled && !generating}
         aria-disabled=${ifDefined(
           !generating && !this.disabled && !this._isPopulated
@@ -1585,7 +1611,7 @@ export class PromptField extends SpectrumElement {
                     <swc-action-button
                       quiet
                       class="swc-PromptField-upload"
-                      size=${this.size}
+                      size=${this._resolvedSize}
                       accessible-label=${this.uploadAccessibleLabel}
                       ?disabled=${this.disabled}
                       @click=${this._handleUploadClick}

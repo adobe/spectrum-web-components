@@ -309,6 +309,60 @@ export const PendingAriaAttributesTest: Story = {
   },
 };
 
+export const InvalidSizeTest: Story = {
+  render: () => html`
+    <swc-button size="M">Uppercase</swc-button>
+    <swc-button size="banana">Invalid</swc-button>
+    <swc-button>Default</swc-button>
+    <swc-button size="l">Large</swc-button>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const [upper, invalid, reference, large] = await getComponents<Button>(
+      canvasElement,
+      'swc-button'
+    );
+    const height = (button: Button): number =>
+      button.shadowRoot!.querySelector('button')!.getBoundingClientRect()
+        .height;
+
+    await step(
+      'keeps an uppercase or invalid size as written and renders medium',
+      () => {
+        expect(upper.getAttribute('size'), 'attribute stays "M"').toBe('M');
+        expect(invalid.getAttribute('size')).toBe('banana');
+        expect(height(upper), 'size="M" renders medium').toBe(
+          height(reference)
+        );
+        expect(height(invalid), 'invalid size renders medium').toBe(
+          height(reference)
+        );
+        expect(height(large), 'a valid size still differs').not.toBe(
+          height(reference)
+        );
+      }
+    );
+
+    await step('warns with the property and received value', () =>
+      withWarningSpy(async (warnCalls) => {
+        upper.size = 'XL' as Button['size'];
+        await upper.updateComplete;
+        expect(upper.getAttribute('size')).toBe('XL');
+        expect(String(warnCalls[0]?.[1] ?? '')).toMatch(/"size".*"XL"/);
+      })
+    );
+
+    await step('warns when an invalid size is set as an attribute', () =>
+      withWarningSpy(async (warnCalls) => {
+        upper.setAttribute('size', 'huge');
+        await upper.updateComplete;
+        expect(upper.getAttribute('size')).toBe('huge');
+        expect(upper.size).toBe('huge');
+        expect(String(warnCalls[0]?.[1] ?? '')).toMatch(/"size".*"huge"/);
+      })
+    );
+  },
+};
+
 // ──────────────────────────────────────────────────────────────
 // SECTION 3: Slots
 // ──────────────────────────────────────────────────────────────

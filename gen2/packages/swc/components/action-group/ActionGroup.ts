@@ -263,9 +263,7 @@ export class ActionGroup extends ActionGroupBase {
         child.removeAttribute('quiet');
       }
 
-      if (this.size) {
-        child.setAttribute('size', this.size);
-      }
+      child.setAttribute('size', this.resolvedSize);
 
       // Children get only a valid color, so an invalid group value renders
       // them at their default without a second warning from each child.

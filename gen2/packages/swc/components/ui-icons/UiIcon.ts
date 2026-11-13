@@ -64,7 +64,7 @@ export class UiIcon extends IconBase {
   protected override render(): TemplateResult {
     // Prefer the step for the current size; `resolveUiIconArt` falls back to the
     // nearest available step when a logical icon does not ship every step.
-    const art = resolveUiIconArt(UI_ICONS[this.icon], this.size);
+    const art = resolveUiIconArt(UI_ICONS[this.icon], this.resolvedSize);
     return html`
       ${art}
     `;

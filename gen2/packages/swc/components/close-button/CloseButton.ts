@@ -100,7 +100,7 @@ export class CloseButton extends ButtonBase {
         aria-label=${ifDefined(this.accessibleLabel ?? undefined)}
       >
         <span class="swc-CloseButton-icon" aria-hidden="true">
-          <swc-ui-icon icon="cross" size=${this.size}></swc-ui-icon>
+          <swc-ui-icon icon="cross" size=${this.resolvedSize}></swc-ui-icon>
         </span>
       </button>
     `;

@@ -527,3 +527,40 @@ export const ValidAlignNoWarningTest: Story = {
     );
   },
 };
+
+export const InvalidSizeTest: Story = {
+  render: () => html`
+    <swc-button-group>
+      <swc-button>First</swc-button>
+      <swc-button>Second</swc-button>
+    </swc-button-group>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const group = await getComponent<ButtonGroup>(
+      canvasElement,
+      'swc-button-group'
+    );
+    const buttons = Array.from(canvasElement.querySelectorAll('swc-button'));
+
+    await step(
+      'keeps an invalid size, warns once, and passes children the default',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          group.setAttribute('size', 'banana');
+          await group.updateComplete;
+
+          expect(group.getAttribute('size')).toBe('banana');
+          for (const button of buttons) {
+            expect(button.getAttribute('size'), 'child gets the default').toBe(
+              'm'
+            );
+          }
+          expect(
+            warnCalls.every((call) => call[0] === group),
+            'only the group warns'
+          ).toBe(true);
+          expect(String(warnCalls[0]?.[1] ?? '')).toMatch(/"size".*"banana"/);
+        })
+    );
+  },
+};

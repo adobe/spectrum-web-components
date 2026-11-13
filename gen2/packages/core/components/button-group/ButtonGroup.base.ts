@@ -113,7 +113,7 @@ export abstract class ButtonGroupBase extends SizedMixin(SpectrumElement, {
     this,
     {
       attribute: 'size',
-      getValue: () => this.size,
+      getValue: () => this.resolvedSize,
     }
   );
 

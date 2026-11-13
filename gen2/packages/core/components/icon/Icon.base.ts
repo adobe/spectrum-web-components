@@ -40,6 +40,9 @@ export abstract class IconBase extends SizedMixin(SpectrumElement, {
    */
   declare public size: (typeof ICON_VALID_SIZES)[number];
 
+  /** @internal */
+  declare public readonly resolvedSize: (typeof ICON_VALID_SIZES)[number];
+
   // ──────────────────
   //     SHARED API
   // ──────────────────
