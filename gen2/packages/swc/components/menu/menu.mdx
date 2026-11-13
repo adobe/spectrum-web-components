@@ -124,10 +124,16 @@ When no CSS transition is active (for example when `prefers-reduced-motion` remo
 
 ## Upcoming features
 
-The following are planned for future releases:
+The following are planned for future releases.
 
-- Single- and multi-select modes.
-- Grouped sections with headers, and dividers as separators between items.
-- Nested submenus.
+| Feature                | What it will do                                                                                |
+| ---------------------- | ---------------------------------------------------------------------------------------------- |
+| Selection              | Single- and multi-select rows, as dedicated checkbox and radio items that carry `aria-checked` |
+| Sections and dividers  | Grouped items under a heading, with a divider drawn between groups                             |
+| Submenus               | A nested menu opened from an item, with its own trigger and keyboard path                      |
+| Link items             | An item that navigates, rendering a real anchor rather than relying on a click handler         |
+| Non-text trailing slot | Trailing content other than text, such as a switch, a badge, or an external-link arrow         |
+
+Until selection and link items ship, handle both from the menu's `click` event. See the [Menu item migration guide](?path=/docs/components-menu-menu-item-migration-guide--docs) for the full list of 1st-gen API that is not yet available.
 
 <DocsFooter />
