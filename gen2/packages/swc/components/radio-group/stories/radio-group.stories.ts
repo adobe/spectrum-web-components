@@ -18,7 +18,6 @@ import { RADIO_GROUP_STATUSES } from '@adobe/spectrum-wc-core/components/radio-g
 
 import '@adobe/spectrum-wc/components/radio-group/swc-radio-group.js';
 import '@adobe/spectrum-wc/components/radio-group/swc-radio.js';
-import '@adobe/spectrum-wc/components/button-group/swc-button-group.js';
 
 // ────────────────
 //    METADATA
@@ -121,27 +120,6 @@ const group = (
     'default-slot': ITEMS,
     ...overrides,
   });
-
-const handleFormSubmit = async (event: SubmitEvent): Promise<void> => {
-  event.preventDefault();
-
-  const form = event.currentTarget as HTMLFormElement;
-  const field = form.querySelector('swc-radio-group');
-
-  if (!field) {
-    return;
-  }
-
-  // Clear only `invalid` so `disabled` and `readonly` survive.
-  if (field.fieldStatus === 'invalid') {
-    field.fieldStatus = undefined;
-  }
-
-  await field.updateComplete;
-  if (!field.checkValidity()) {
-    field.fieldStatus = 'invalid';
-  }
-};
 
 // ────────────────────
 //    PLAYGROUND STORY
@@ -429,47 +407,6 @@ export const ReadOnly: Story = {
   tags: ['states'],
 };
 ReadOnly.storyName = 'Read-only';
-
-// ──────────────────────────────
-//    BEHAVIORS STORIES
-// ──────────────────────────────
-
-export const FormParticipation: Story = {
-  render: () => html`
-    <form
-      novalidate
-      @submit=${handleFormSubmit}
-      style="display: grid; gap: var(--swc-spacing-300);"
-    >
-      <swc-radio-group name="shipping" required>
-        <span slot="label">Shipping options</span>
-        <span slot="description">Choose how fast your order arrives.</span>
-        <span slot="error-text">Select a shipping option.</span>
-        <swc-radio value="standard">
-          <span slot="label">Standard Shipping (Free)</span>
-        </swc-radio>
-        <swc-radio value="expedited">
-          <span slot="label">Expedited Shipping ($9.99)</span>
-        </swc-radio>
-        <swc-radio value="overnight">
-          <span slot="label">Overnight Shipping ($19.99)</span>
-        </swc-radio>
-      </swc-radio-group>
-
-      <swc-button-group>
-        <button class="swc-Button" type="submit">Submit</button>
-        <button class="swc-Button swc-Button--secondary" type="reset">
-          Reset
-        </button>
-      </swc-button-group>
-    </form>
-  `,
-  parameters: {
-    styles: { 'inline-size': 'min(240px, 100vw)' },
-  },
-  tags: ['behaviors'],
-};
-FormParticipation.storyName = 'Form participation';
 
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES

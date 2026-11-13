@@ -28,7 +28,6 @@ import * as TextFieldStories from '../stories/text-field.stories.js';
 import meta from '../stories/text-field.stories.js';
 import {
   Accessibility,
-  FormBehavior,
   Invalid,
   Labelling,
   LabelOverflow,
@@ -735,15 +734,17 @@ export const SelectionTest: Story = {
       canvasElement,
       'swc-text-field'
     );
-    const input = field.shadowRoot?.querySelector('input');
+    const input = field.roleElement;
+    if (!input) {
+      throw new Error('Selection test requires a native input');
+    }
 
     await step('select() selects all text through the host', () => {
       field.select();
-      expect(
-        input?.selectionStart,
-        'select() updates the selection start'
-      ).toBe(0);
-      expect(input?.selectionEnd, 'select() updates the selection end').toBe(
+      expect(input.selectionStart, 'select() updates the selection start').toBe(
+        0
+      );
+      expect(input.selectionEnd, 'select() updates the selection end').toBe(
         'hello world'.length
       );
     });
@@ -751,11 +752,11 @@ export const SelectionTest: Story = {
     await step('setSelectionRange() sets a range on the native input', () => {
       field.setSelectionRange(0, 5);
       expect(
-        input?.selectionStart,
+        input.selectionStart,
         'setSelectionRange() sets the selection start'
       ).toBe(0);
       expect(
-        input?.selectionEnd,
+        input.selectionEnd,
         'setSelectionRange() sets the selection end'
       ).toBe(5);
     });
@@ -775,10 +776,13 @@ export const AccessibilityTest: Story = {
       'swc-text-field'
     );
     const externallyDescribed = fields[1];
-    const input = externallyDescribed.shadowRoot?.querySelector('input');
+    const input = externallyDescribed.roleElement;
+    if (!input) {
+      throw new Error('Description test requires a native input');
+    }
 
     await step('accessible-describedby resolves the external paragraph', () => {
-      const resolved = input?.ariaDescribedByElements ?? [];
+      const resolved = input.ariaDescribedByElements ?? [];
       expect(resolved, 'external description resolves once').toHaveLength(1);
       expect(resolved[0]?.id, 'input references the external description').toBe(
         'accessibility-external-description'
@@ -788,7 +792,7 @@ export const AccessibilityTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
-// TEST: readonly, aria-invalid, and value round-trip bindings
+// TEST: placeholder, value, and focus bindings
 // ──────────────────────────────────────────────────────────────
 
 export const BindingsTest: Story = {
@@ -803,30 +807,10 @@ export const BindingsTest: Story = {
       canvasElement,
       'swc-text-field'
     );
-    const input = () =>
-      field.shadowRoot?.querySelector('input') as HTMLInputElement;
-
-    await step('readonly reflects onto the native input', async () => {
-      expect(input().readOnly, 'input starts editable').toBe(false);
-      field.fieldStatus = 'readonly';
-      await field.updateComplete;
-      expect(input().readOnly, 'readonly property reaches the input').toBe(
-        true
-      );
-    });
-
-    await step('invalid sets aria-invalid on the native input', async () => {
-      expect(
-        input().getAttribute('aria-invalid'),
-        'valid input omits aria-invalid'
-      ).toBe(null);
-      field.fieldStatus = 'invalid';
-      await field.updateComplete;
-      expect(
-        input().getAttribute('aria-invalid'),
-        'invalid property sets aria-invalid'
-      ).toBe('true');
-    });
+    const input = field.roleElement;
+    if (!input) {
+      throw new Error('Bindings test requires a native input');
+    }
 
     await step(
       'placeholder passes through natively, not as aria-placeholder',
@@ -834,12 +818,11 @@ export const BindingsTest: Story = {
         // component-accessibility-specification.md (placeholder section): the
         // browser exposes native `placeholder` to the a11y tree, so gen2 does
         // not duplicate via `aria-placeholder`.
+        expect(input.placeholder, 'placeholder reaches the native input').toBe(
+          'Enter your username'
+        );
         expect(
-          input().placeholder,
-          'placeholder reaches the native input'
-        ).toBe('Enter your username');
-        expect(
-          input().getAttribute('aria-placeholder'),
+          input.getAttribute('aria-placeholder'),
           'placeholder is not duplicated as aria-placeholder'
         ).toBeNull();
       }
@@ -849,8 +832,8 @@ export const BindingsTest: Story = {
       // The @input handler is the only path that syncs user edits onto
       // the host `value`; assert it so `.value` in render can't silently
       // drift from what the user sees.
-      input().value = 'typed by user';
-      input().dispatchEvent(new Event('input'));
+      input.value = 'typed by user';
+      input.dispatchEvent(new Event('input'));
       expect(field.value, 'host value reflects typed input').toBe(
         'typed by user'
       );
@@ -863,11 +846,57 @@ export const BindingsTest: Story = {
       expect(
         field.shadowRoot?.activeElement,
         'host focus lands on the internal input'
-      ).toBe(input());
+      ).toBe(input);
     });
   },
 };
 BindingsTest.storyName = 'Bindings';
+
+// ──────────────────────────────────────────────────────────────
+// TEST: native keyboard and autofill hints
+// ──────────────────────────────────────────────────────────────
+
+export const InputHintsTest: Story = {
+  render: () => html`
+    <swc-text-field
+      accessible-label="Contact"
+      inputmode="email"
+      autocomplete="email"
+    ></swc-text-field>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const field = await getComponent<TextField>(
+      canvasElement,
+      'swc-text-field'
+    );
+    const input = field.roleElement;
+    if (!input) {
+      throw new Error('Input hints test requires a native input');
+    }
+
+    await step('authored hints reach the native input', () => {
+      expect(input).toHaveAttribute('inputmode', 'email');
+      expect(input).toHaveAttribute('autocomplete', 'email');
+    });
+
+    await step('property changes update the native hints', async () => {
+      field.inputmode = 'tel';
+      field.autocomplete = 'tel';
+      await field.updateComplete;
+      expect(input).toHaveAttribute('inputmode', 'tel');
+      expect(input).toHaveAttribute('autocomplete', 'tel');
+    });
+
+    await step('clearing properties removes the native hints', async () => {
+      field.inputmode = undefined;
+      field.autocomplete = undefined;
+      await field.updateComplete;
+      expect(input).not.toHaveAttribute('inputmode');
+      expect(input).not.toHaveAttribute('autocomplete');
+    });
+  },
+};
+InputHintsTest.storyName = 'Native input hints';
 
 // ──────────────────────────────────────────────────────────────
 // TEST: Invalid enum values emit a DEBUG warning
@@ -889,10 +918,9 @@ export const EnumValidationTest: Story = {
         `);
         await field.updateComplete;
         const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
-        expect(
-          messages.some((m) => m.includes('expects "type"')),
-          'warning names the unsupported type value'
-        ).toBe(true);
+        expect(messages, 'warning names the unsupported type value').toEqual(
+          expect.arrayContaining([expect.stringContaining('expects "type"')])
+        );
         field.parentElement?.remove();
       })
     );
@@ -913,11 +941,11 @@ export const EnumValidationTest: Story = {
             expect(field.roleElement?.type).toBe('text');
             expect(field.value).toBe('Unchanged text');
             expect(field.roleElement?.value).toBe('Unchanged text');
-            expect(
-              warnCalls.some((call) =>
-                String(call?.[1]).includes(`Received "${type}"`)
-              )
-            ).toBe(true);
+            expect(warnCalls.map((call) => String(call?.[1]))).toEqual(
+              expect.arrayContaining([
+                expect.stringContaining(`Received "${type}"`),
+              ])
+            );
 
             field.type = 'email';
             await field.updateComplete;
@@ -944,9 +972,13 @@ export const EnumValidationTest: Story = {
         await field.updateComplete;
         const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
         expect(
-          messages.some((m) => m.includes('expects "label-position"')),
+          messages,
           'warning names the unsupported label position'
-        ).toBe(true);
+        ).toEqual(
+          expect.arrayContaining([
+            expect.stringContaining('expects "label-position"'),
+          ])
+        );
         field.parentElement?.remove();
       })
     );
@@ -965,9 +997,13 @@ export const EnumValidationTest: Story = {
           await field.updateComplete;
           const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
           expect(
-            messages.some((m) => m.includes('expects "necessity-indicator"')),
+            messages,
             'warning names the unsupported necessity indicator'
-          ).toBe(true);
+          ).toEqual(
+            expect.arrayContaining([
+              expect.stringContaining('expects "necessity-indicator"'),
+            ])
+          );
           field.parentElement?.remove();
         })
     );
@@ -991,10 +1027,9 @@ export const MissingAccessibleNameTest: Story = {
         `);
         await field.updateComplete;
         const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
-        expect(
-          messages.some((m) => m.includes('accessible name')),
-          'warning requests an accessible name'
-        ).toBe(true);
+        expect(messages, 'warning requests an accessible name').toEqual(
+          expect.arrayContaining([expect.stringContaining('accessible name')])
+        );
         field.parentElement?.remove();
       })
     );
@@ -1018,14 +1053,22 @@ export const PlaceholderOnlyNameTest: Story = {
         await field.updateComplete;
         const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
         expect(
-          messages.some((m) => m.includes('named only by its placeholder')),
+          messages,
           'warning identifies the placeholder-only name'
-        ).toBe(true);
+        ).toEqual(
+          expect.arrayContaining([
+            expect.stringContaining('named only by its placeholder'),
+          ])
+        );
         // The generic missing-name warning is suppressed in favor of this one.
         expect(
-          messages.some((m) => m.includes('requires an accessible name')),
+          messages,
           'placeholder-only warning replaces generic missing-name warning'
-        ).toBe(false);
+        ).not.toEqual(
+          expect.arrayContaining([
+            expect.stringContaining('requires an accessible name'),
+          ])
+        );
         field.parentElement?.remove();
       })
     );
@@ -1040,10 +1083,9 @@ export const PlaceholderOnlyNameTest: Story = {
         `);
         await field.updateComplete;
         const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
-        expect(
-          messages.some((m) => m.includes('placeholder')),
-          'named field has no placeholder warning'
-        ).toBe(false);
+        expect(messages, 'named field has no placeholder warning').not.toEqual(
+          expect.arrayContaining([expect.stringContaining('placeholder')])
+        );
         field.parentElement?.remove();
       })
     );
@@ -1068,9 +1110,11 @@ export const HostAriaLabelWarningTest: Story = {
         await field.updateComplete;
         const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
         expect(
-          messages.some((m) => m.includes('set on the host')),
+          messages,
           'warning explains aria-label belongs on the input'
-        ).toBe(true);
+        ).toEqual(
+          expect.arrayContaining([expect.stringContaining('set on the host')])
+        );
         field.parentElement?.remove();
       })
     );
@@ -1110,11 +1154,11 @@ export const LabelConflictTest: Story = {
           await field.updateComplete;
           const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
           expect(
-            messages.some(
-              (m) => m.includes(CONFLICT_PHRASE) && m.includes(IGNORED_PHRASE)
-            ),
+            messages.filter((message) => message.includes(CONFLICT_PHRASE)),
             'warning identifies conflicting accessible name sources'
-          ).toBe(true);
+          ).toEqual(
+            expect.arrayContaining([expect.stringContaining(IGNORED_PHRASE)])
+          );
           field.parentElement?.remove();
         })
     );
@@ -1131,9 +1175,11 @@ export const LabelConflictTest: Story = {
           await field.updateComplete;
           const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
           expect(
-            messages.some((m) => m.includes(CONFLICT_PHRASE)),
+            messages,
             'visible label with accessible-label is allowed'
-          ).toBe(false);
+          ).not.toEqual(
+            expect.arrayContaining([expect.stringContaining(CONFLICT_PHRASE)])
+          );
           field.parentElement?.remove();
         })
     );
@@ -1153,9 +1199,11 @@ export const LabelConflictTest: Story = {
           await field.updateComplete;
           const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
           expect(
-            messages.some((m) => m.includes(CONFLICT_PHRASE)),
+            messages,
             'visible label with accessible-labelledby is allowed'
-          ).toBe(false);
+          ).not.toEqual(
+            expect.arrayContaining([expect.stringContaining(CONFLICT_PHRASE)])
+          );
           field.parentElement?.remove();
         })
     );
@@ -1168,9 +1216,11 @@ export const LabelConflictTest: Story = {
         await field.updateComplete;
         const messages = warnCalls.map((c) => String(c?.[1] ?? ''));
         expect(
-          messages.some((m) => m.includes(CONFLICT_PHRASE)),
+          messages,
           'accessible-label alone does not trigger a conflict warning'
-        ).toBe(false);
+        ).not.toEqual(
+          expect.arrayContaining([expect.stringContaining(CONFLICT_PHRASE)])
+        );
         field.parentElement?.remove();
       })
     );
@@ -1384,7 +1434,7 @@ export const FormStateRestoreTest: Story = {
       'swc-text-field'
     );
     const form = canvasElement.querySelector('form');
-    const input = field.shadowRoot?.querySelector('input');
+    const input = field.roleElement;
     if (!form || !input) {
       throw new Error('form or input not found');
     }
@@ -1525,22 +1575,6 @@ export const InvalidContractTest: Story = {
     });
 
     await step(
-      'clearing invalid preserves native constraint errors',
-      async () => {
-        field.fieldStatus = 'invalid';
-        await field.updateComplete;
-        expect(field.validity.customError).toBe(true);
-        expect(field.validity.valueMissing).toBe(true);
-        field.fieldStatus = undefined;
-        await field.updateComplete;
-        expect(field.validity.customError).toBe(false);
-        expect(field.validity.valueMissing).toBe(true);
-        expect(field.validationMessage).toBe(input.validationMessage);
-        expect(field.checkValidity()).toBe(false);
-      }
-    );
-
-    await step(
       'disabled and readonly fields do not block submission',
       async () => {
         field.fieldStatus = 'invalid';
@@ -1670,13 +1704,7 @@ export const SlotBackedValidationTest: Story = {
     field.fieldStatus = 'invalid';
     await field.updateComplete;
 
-    await step('uses the inline error as the validation message', () => {
-      expect(field.validationMessage).toBe('Username is already taken.');
-      expect(field.roleElement?.validationMessage).toBe(
-        'Username is already taken.'
-      );
-      expect(field.validity.customError).toBe(true);
-      expect(field.checkValidity()).toBe(false);
+    await step('custom validity is controlled through field status', () => {
       expect('setCustomValidity' in field).toBe(false);
     });
 
@@ -1728,26 +1756,6 @@ export const SlotBackedValidationTest: Story = {
         expect(field.validationMessage).toBe('Enter a valid value.')
       );
     });
-
-    await step(
-      'clears derived errors without clearing native constraints',
-      async () => {
-        field.required = true;
-        field.value = '';
-        field.fieldStatus = undefined;
-        await field.updateComplete;
-        expect(field.validity.customError).toBe(false);
-        expect(field.validity.valueMissing).toBe(true);
-        expect(field.validationMessage).toBe(
-          field.roleElement?.validationMessage
-        );
-        expect(field.checkValidity()).toBe(false);
-        field.value = 'available';
-        await field.updateComplete;
-        expect(field.validationMessage).toBe('');
-        expect(field.checkValidity()).toBe(true);
-      }
-    );
 
     await step('reads changed error text after reconnection', async () => {
       field.fieldStatus = 'invalid';
@@ -1807,10 +1815,16 @@ export const ValidationSourcesTest: Story = {
           field.fieldStatus = undefined;
           await field.updateComplete;
           expect(field.validity.customError).toBe(false);
+          expect(field.validity.valueMissing).toBe(value === '');
+          expect(field.validity.patternMismatch).toBe(value === '123');
           expect(field.checkValidity()).toBe(false);
           expect(field.validationMessage).toBe(
             field.roleElement?.validationMessage
           );
+          field.value = 'available';
+          await field.updateComplete;
+          expect(field.validationMessage).toBe('');
+          expect(field.checkValidity()).toBe(true);
         }
       }
     );
@@ -1847,253 +1861,6 @@ export const BeforeRenderErrorTextTest: Story = {
   },
 };
 BeforeRenderErrorTextTest.storyName = 'Error text before first render';
-
-// ──────────────────────────────────────────────────────────────
-// TEST: Native form validation, reset, and submit behavior
-// ──────────────────────────────────────────────────────────────
-
-export const FormBehaviorTest: Story = {
-  ...FormBehavior,
-  play: async ({ canvasElement, step }) => {
-    const field = await getComponent<TextField>(
-      canvasElement,
-      'swc-text-field'
-    );
-    const form = canvasElement.querySelector('form');
-    const input = field.shadowRoot?.querySelector('input');
-    const output = form?.querySelector<HTMLOutputElement>('[data-form-data]');
-    if (!form || !input || !output) {
-      throw new Error('form, input, or submission output not found');
-    }
-
-    await step('only basic form controls are shown', () => {
-      const canvas = within(canvasElement);
-      expect(canvas.getAllByRole('button')).toHaveLength(3);
-      for (const name of ['Submit', 'Reset', 'Disable']) {
-        expect(canvas.getByRole('button', { name })).toBeVisible();
-      }
-      expect(form.querySelector('details')).toBeNull();
-      expect(form.querySelector('[data-validity]')).toBeNull();
-    });
-
-    await step('headings distinguish the form, actions, and results', () => {
-      const canvas = within(canvasElement);
-      expect(
-        canvas.getByRole('heading', { name: 'Form participation', level: 2 })
-      ).toBeVisible();
-      for (const name of ['Form actions', 'Last submission']) {
-        const heading = canvas.getByRole('heading', { name, level: 3 });
-        expect(heading).toBeVisible();
-        expect(heading).toHaveClass('swc-Heading--sizeXS');
-      }
-      expect(parseFloat(getComputedStyle(output).fontSize)).toBeLessThan(
-        parseFloat(getComputedStyle(form).fontSize)
-      );
-      expect(output.value).toBe('Submit the form to see its data.');
-    });
-
-    await step('required participates in native validation', async () => {
-      field.value = '';
-      await field.updateComplete;
-      expect(input.required, 'native input is required').toBe(true);
-      expect(
-        input.validity.valueMissing,
-        'empty input is missing its value'
-      ).toBe(true);
-      expect(
-        field.validity.valueMissing,
-        'host validity reflects missing value'
-      ).toBe(true);
-      expect(field.checkValidity(), 'empty field fails validity check').toBe(
-        false
-      );
-      expect(
-        form.checkValidity(),
-        'form fails while required field is empty'
-      ).toBe(false);
-      field.value = 'Filled';
-      await field.updateComplete;
-      expect(
-        input.validity.valueMissing,
-        'filled input is not missing a value'
-      ).toBe(false);
-      expect(field.validity.valid, 'host validity becomes valid').toBe(true);
-      expect(field.checkValidity(), 'filled field passes validity check').toBe(
-        true
-      );
-      expect(
-        form.checkValidity(),
-        'form is valid when required field is filled'
-      ).toBe(true);
-    });
-
-    await step('reset restores the initial (empty) value', async () => {
-      field.value = 'Changed';
-      await field.updateComplete;
-      form.reset();
-      await field.updateComplete;
-      expect(field.value, 'reset restores the host value to empty').toBe('');
-      expect(
-        new FormData(form).get('username'),
-        'reset submits an empty username'
-      ).toBe('');
-    });
-
-    await step(
-      // `novalidate` on the form means submission is no longer natively
-      // blocked, so the field's own invalid presentation (icon + error text)
-      // is what signals the empty required field instead.
-      'invalid submission surfaces the field-level invalid state',
-      async () => {
-        field.value = '';
-        field.fieldStatus = undefined;
-        await field.updateComplete;
-        form.requestSubmit();
-        await field.updateComplete;
-        expect(
-          field.fieldStatus,
-          'empty submission marks the field invalid'
-        ).toBe('invalid');
-        await waitFor(() =>
-          expect(
-            field.shadowRoot?.querySelector('.swc-TextField-invalidIcon'),
-            'invalid submission renders the validation icon'
-          ).toBeTruthy()
-        );
-        expect(
-          output.textContent?.trim(),
-          'invalid submission does not show submitted form data'
-        ).toBe('Submission blocked: the field is invalid.');
-        expect(field.validationMessage).toBe('Enter a username.');
-      }
-    );
-
-    await step('submit includes the field value when valid', async () => {
-      field.value = 'Submitted';
-      await field.updateComplete;
-      form.requestSubmit();
-      await field.updateComplete;
-      expect(
-        field.fieldStatus,
-        'valid submission clears invalid state'
-      ).toBeUndefined();
-      expect(
-        new FormData(form).get('username'),
-        'submitted username is included in FormData'
-      ).toBe('Submitted');
-      await waitFor(() =>
-        expect(
-          output.textContent?.trim(),
-          'output displays the submitted username'
-        ).toBe('username: Submitted')
-      );
-    });
-
-    await step('Reset clears the previous submission and error', async () => {
-      const resetButton = form.querySelector<HTMLButtonElement>(
-        'button[type="reset"]'
-      );
-      if (!resetButton) {
-        throw new Error('reset button not found');
-      }
-      field.fieldStatus = 'invalid';
-      await field.updateComplete;
-      await userEvent.click(resetButton);
-      await field.updateComplete;
-      expect(field.value).toBe('');
-      expect(field.fieldStatus).toBeUndefined();
-      expect(field.validity.customError).toBe(false);
-      expect(field.roleElement).not.toHaveAttribute('aria-invalid');
-      expect(
-        field.shadowRoot?.querySelector('.swc-FormFieldErrorText')
-      ).toBeNull();
-      expect(output.textContent?.trim()).toBe(
-        'Submit the form to see its data.'
-      );
-      expect(field.validity.valueMissing).toBe(true);
-    });
-
-    await step(
-      'a blocked attempt replaces the previous submission result',
-      async () => {
-        field.value = 'Previous';
-        await field.updateComplete;
-        form.requestSubmit();
-        await waitFor(() => expect(output.value).toBe('username: Previous'));
-        field.value = '';
-        await field.updateComplete;
-        form.requestSubmit();
-        await waitFor(() =>
-          expect(output.value).toBe('Submission blocked: the field is invalid.')
-        );
-        expect(
-          canvasElement
-            .querySelector('#submitted-form-data-label')
-            ?.textContent?.trim()
-        ).toBe('Last submission');
-      }
-    );
-
-    await step(
-      'the fieldset toggle can disable and re-enable the field',
-      async () => {
-        const fieldset = form.querySelector('fieldset');
-        const toggleButton = form.querySelector<HTMLButtonElement>(
-          '[data-toggle-fieldset]'
-        );
-        expect(fieldset).toBeTruthy();
-        expect(toggleButton).toBeTruthy();
-        if (!fieldset || !toggleButton) {
-          throw new Error('fieldset or toggle button not found');
-        }
-
-        expect(fieldset.contains(toggleButton)).toBe(false);
-        await userEvent.click(toggleButton);
-        await field.updateComplete;
-        expect(fieldset.disabled).toBe(true);
-        expect(input.disabled).toBe(true);
-        expect(toggleButton).toHaveAttribute('aria-pressed', 'true');
-        expect(toggleButton).toBeEnabled();
-        expect(field.willValidate).toBe(false);
-        expect(new FormData(form).has('username')).toBe(false);
-
-        await userEvent.click(toggleButton);
-        await field.updateComplete;
-        expect(fieldset.disabled).toBe(false);
-        expect(input.disabled).toBe(false);
-        expect(toggleButton).toHaveAttribute('aria-pressed', 'false');
-        expect(toggleButton).toBeEnabled();
-      }
-    );
-
-    await step('content changes do not resize the form', async () => {
-      form.reset();
-      await field.updateComplete;
-      const initialWidth = form.getBoundingClientRect().width;
-
-      form.requestSubmit();
-      await waitFor(() =>
-        expect(output.value).toBe('Submission blocked: the field is invalid.')
-      );
-      expect(form.getBoundingClientRect().width).toBeCloseTo(initialWidth, 1);
-
-      const longUsername = 'long-username-'.repeat(30);
-      field.value = longUsername;
-      await field.updateComplete;
-      form.requestSubmit();
-      await waitFor(() =>
-        expect(output.value).toBe(`username: ${longUsername}`)
-      );
-      expect(form.getBoundingClientRect().width).toBeCloseTo(initialWidth, 1);
-
-      form.reset();
-      await field.updateComplete;
-      expect(output.value).toBe('Submit the form to see its data.');
-      expect(form.getBoundingClientRect().width).toBeCloseTo(initialWidth, 1);
-    });
-  },
-};
-FormBehaviorTest.storyName = 'Form participation example';
 
 export const DisabledStateTest: Story = {
   render: () => html`
@@ -2299,8 +2066,11 @@ export const ChangeEventTest: Story = {
       // Native change is composed:false and would never reach a host listener.
       let heard = false;
       field.addEventListener('change', () => (heard = true));
-      const input = field.shadowRoot?.querySelector('input');
-      input?.dispatchEvent(new Event('change'));
+      const input = field.roleElement;
+      if (!input) {
+        throw new Error('Change event test requires a native input');
+      }
+      input.dispatchEvent(new Event('change'));
       expect(heard, 'host emits a change event').toBe(true);
     });
   },
@@ -2495,19 +2265,6 @@ export const ImplicitSubmitWithoutButtonTest: Story = {
           expect(submissions, `${type} blocks submission`).toHaveLength(1);
         }
         otherInput.remove();
-      }
-    );
-
-    await step(
-      'another custom text field blocks implicit submission',
-      async () => {
-        const otherField = document.createElement('swc-text-field');
-        otherField.accessibleLabel = 'Other';
-        form.append(otherField);
-        await otherField.updateComplete;
-        await userEvent.keyboard('{Enter}');
-        expect(submissions).toHaveLength(1);
-        otherField.remove();
       }
     );
 

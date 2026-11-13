@@ -12,6 +12,7 @@
 <summary><strong>In this doc</strong></summary>
 
 - [What to test](#what-to-test)
+- [Testing forms](#testing-forms)
 - [What not to test](#what-not-to-test)
 - [Excluding stories from tests](#excluding-stories-from-tests)
 
@@ -37,6 +38,34 @@ Test things that users and developers depend on:
 - All variants and states
 - Error handling and edge cases
 - Dev mode warnings for invalid usage
+
+## Testing forms
+
+- **Component tests** cover value, validity, reset, disabled behavior, state restoration, and events. Keep them beside the component, even when they use `<form>` or `FormData`.
+- **Integration tests** cover controls working together. The shared [Forms integration suite](../../../gen2/packages/swc/patterns/forms/test/forms.test.ts) checks combined submission, native and custom validation, reset, disabled groups, fields associated from outside the form, draft submitters that bypass native validation, and buttonless submission with multiple Text fields.
+
+When adding a form component:
+
+1. Test its own behavior locally and add it to relevant shared scenarios without duplicating local checks.
+2. Add a focused scenario for new interactions between controls. Preserve specific assertions when moving tests.
+
+Keep test fixtures independent of the pattern's example and its handlers. Native placeholders do not prove that future custom components work. Reuse existing DOM helpers and keep form operations and assertions visible.
+
+In development Storybook, open **Patterns > Forms** for the manual **Playground** and automated **Tests**. Both are excluded from production builds.
+
+Run the suite directly, or through `yarn test:gen2`:
+
+```bash
+yarn workspace @adobe/spectrum-wc exec vitest run patterns/forms/test/forms.test.ts --project storybook
+```
+
+Cover browser-enforced submission blocking without `novalidate` and application-controlled errors with it. With `novalidate`, submit events still fire, but `form.checkValidity()` must reflect every control.
+
+Use [Playwright for trusted keyboard input](02_storybook-testing.md#native-dismissal-and-trusted-input); Storybook keyboard events are simulated. The shared [Forms keyboard tests](../../../gen2/packages/swc/patterns/forms/test/forms.a11y.spec.ts) verify buttonless submission with real browser input using independent fixtures:
+
+```bash
+yarn workspace @adobe/spectrum-wc exec playwright test patterns/forms/test/forms.a11y.spec.ts
+```
 
 ## What not to test
 

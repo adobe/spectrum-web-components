@@ -25,7 +25,6 @@ import '@adobe/spectrum-wc/components/radio-group/swc-radio-group.js';
 import '@adobe/spectrum-wc/components/radio-group/swc-radio.js';
 
 import meta, {
-  FormParticipation,
   Invalid,
   NecessityIndicator,
   Playground,
@@ -1268,10 +1267,71 @@ export const BarredStatusesValidityTest: Story = {
   },
 };
 
-// Reset clears `invalid`, and a resubmit clears only `invalid`, so `disabled`
-// and `readonly` are kept.
+export const StatusFormDataTest: Story = {
+  render: () => html`
+    <form>
+      <swc-radio-group name="shipping" selected="standard" required>
+        <span slot="label">Shipping method</span>
+        <swc-radio value="standard">
+          <span slot="label">Standard</span>
+        </swc-radio>
+        <swc-radio value="express"><span slot="label">Express</span></swc-radio>
+      </swc-radio-group>
+    </form>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const group = await getComponent<RadioGroup>(
+      canvasElement,
+      'swc-radio-group'
+    );
+    const form = canvasElement.querySelector('form')!;
+
+    await step('read-only keeps the selected value in form data', async () => {
+      group.fieldStatus = 'readonly';
+      await group.updateComplete;
+      expect(group.selected).toBe('standard');
+      expect([...new FormData(form).entries()]).toEqual([
+        ['shipping', 'standard'],
+      ]);
+    });
+
+    await step(
+      'disabled excludes the selected value from form data',
+      async () => {
+        group.fieldStatus = 'disabled';
+        await group.updateComplete;
+        expect(group.selected).toBe('standard');
+        expect([...new FormData(form).entries()]).toEqual([]);
+      }
+    );
+
+    await step(
+      'clearing disabled includes the same selection again',
+      async () => {
+        group.fieldStatus = undefined;
+        await group.updateComplete;
+        expect(group.selected).toBe('standard');
+        expect([...new FormData(form).entries()]).toEqual([
+          ['shipping', 'standard'],
+        ]);
+      }
+    );
+  },
+};
+
 export const StatusKeptOnResetAndResubmitTest: Story = {
-  ...FormParticipation,
+  render: () => html`
+    <form @submit=${preventDefault}>
+      <swc-radio-group name="shipping" required>
+        <span slot="label">Shipping method</span>
+        <span slot="error-text">Choose a shipping method.</span>
+        <swc-radio value="standard">
+          <span slot="label">Standard</span>
+        </swc-radio>
+        <swc-radio value="express"><span slot="label">Express</span></swc-radio>
+      </swc-radio-group>
+    </form>
+  `,
   play: async ({ canvasElement, step }) => {
     const group = await getComponent<RadioGroup>(
       canvasElement,
@@ -1283,8 +1343,11 @@ export const StatusKeptOnResetAndResubmitTest: Story = {
       await step(`resubmitting keeps ${status}`, async () => {
         group.fieldStatus = status;
         await group.updateComplete;
+        const submit = fn();
+        form.addEventListener('submit', submit, { once: true });
         form.requestSubmit();
         await group.updateComplete;
+        expect(submit).toHaveBeenCalledTimes(1);
         expect(group.fieldStatus).toBe(status);
       });
 
@@ -2014,8 +2077,22 @@ export const SubmittableSelectionTest: Story = {
 };
 
 export const FormParticipationTest: Story = {
-  ...FormParticipation,
-  play: async ({ canvasElement }) => {
+  render: () => html`
+    <form novalidate @submit=${preventDefault}>
+      <swc-radio-group name="shipping" required>
+        <span slot="label">Shipping method</span>
+        <span slot="error-text">Choose a shipping method.</span>
+        <swc-radio value="standard">
+          <span slot="label">Standard</span>
+        </swc-radio>
+        <swc-radio value="express"><span slot="label">Express</span></swc-radio>
+      </swc-radio-group>
+      <button class="swc-Button swc-Button--secondary" type="reset">
+        Reset
+      </button>
+    </form>
+  `,
+  play: async ({ canvasElement, step }) => {
     const group = await getComponent<RadioGroup>(
       canvasElement,
       'swc-radio-group'
@@ -2023,61 +2100,81 @@ export const FormParticipationTest: Story = {
     const form = canvasElement.querySelector('form')!;
     const items = Array.from(group.querySelectorAll<Radio>('swc-radio'));
     const submittedEntries: [string, FormDataEntryValue][][] = [];
-    const submit = (event: Event): void => {
-      event.preventDefault();
+    const submit = (): void => {
       submittedEntries.push([...new FormData(form).entries()]);
     };
     form.addEventListener('submit', submit);
 
     try {
-      expect(group.selected).toBe('');
-      expect([...new FormData(form).entries()]).toEqual([]);
-      form.requestSubmit();
-      await waitFor(() => expect(group.fieldStatus).toBe('invalid'));
-      expect(
-        group.shadowRoot?.querySelector('.swc-FormFieldErrorText')
-      ).toBeTruthy();
-      expect(submittedEntries).toEqual([[]]);
-
-      await userEvent.click(items[0]);
-      await group.updateComplete;
-      expect(group.selected).toBe('standard');
-      expect(
-        group.fieldStatus,
-        'changing selection alone does not clear the error before resubmission'
-      ).toBe('invalid');
-      expect(
-        group.shadowRoot?.querySelector('.swc-FormFieldErrorText')
-      ).toBeTruthy();
-      expect([...new FormData(form).entries()]).toEqual([
-        ['shipping', 'standard'],
-      ]);
-      form.requestSubmit();
-      await waitFor(() => expect(group.fieldStatus).toBeUndefined());
-      expect(submittedEntries).toEqual([[], [['shipping', 'standard']]]);
-
-      group.selected = '';
-      await group.updateComplete;
-      form.requestSubmit();
-      await waitFor(() => expect(group.fieldStatus).toBe('invalid'));
-      expect(
-        group.shadowRoot?.querySelector('.swc-FormFieldErrorText')
-      ).toBeTruthy();
-
-      await userEvent.click(
-        form.querySelector<HTMLButtonElement>('button[type="reset"]')!
+      await step(
+        'novalidate submits an empty group without setting an error',
+        () => {
+          expect(group.selected).toBe('');
+          expect(group.validity.valueMissing).toBe(true);
+          expect([...new FormData(form).entries()]).toEqual([]);
+          form.requestSubmit();
+          expect(group.fieldStatus).toBeUndefined();
+          expect(
+            group.shadowRoot?.querySelector('.swc-FormFieldErrorText')
+          ).toBeNull();
+          expect(submittedEntries).toEqual([[]]);
+        }
       );
-      await group.updateComplete;
-      expect(
-        group.fieldStatus,
-        'reset clears the custom invalid state'
-      ).toBeUndefined();
-      expect(group.selected, 'reset restores the authored default').toBe('');
-      expect(
-        group.shadowRoot?.querySelector('.swc-FormFieldErrorText')
-      ).toBeNull();
-      expect([...new FormData(form).entries()]).toEqual([]);
-      expect(group.validity.valueMissing).toBe(true);
+
+      await step(
+        'user selection updates form data without clearing an authored error',
+        async () => {
+          group.fieldStatus = 'invalid';
+          await group.updateComplete;
+          await userEvent.click(items[0]);
+          await group.updateComplete;
+          expect(group.selected).toBe('standard');
+          expect(group.fieldStatus).toBe('invalid');
+          expect(group.validity.valueMissing).toBe(false);
+          expect(group.validity.customError).toBe(true);
+          expect(
+            group.shadowRoot?.querySelector('.swc-FormFieldErrorText')
+          ).toBeTruthy();
+          expect([...new FormData(form).entries()]).toEqual([
+            ['shipping', 'standard'],
+          ]);
+        }
+      );
+
+      await step('explicitly clearing invalid restores validity', async () => {
+        group.fieldStatus = undefined;
+        await group.updateComplete;
+        expect(group.checkValidity()).toBe(true);
+        expect(
+          group.shadowRoot?.querySelector('.swc-FormFieldErrorText')
+        ).toBeNull();
+        form.requestSubmit();
+        expect(submittedEntries).toEqual([[], [['shipping', 'standard']]]);
+      });
+
+      await step(
+        'reset restores the empty default and clears invalid',
+        async () => {
+          group.fieldStatus = 'invalid';
+          await group.updateComplete;
+          expect(group.selected).toBe('standard');
+          expect(
+            group.shadowRoot?.querySelector('.swc-FormFieldErrorText')
+          ).toBeTruthy();
+
+          await userEvent.click(
+            form.querySelector<HTMLButtonElement>('button[type="reset"]')!
+          );
+          await group.updateComplete;
+          expect(group.fieldStatus).toBeUndefined();
+          expect(group.selected).toBe('');
+          expect(
+            group.shadowRoot?.querySelector('.swc-FormFieldErrorText')
+          ).toBeNull();
+          expect([...new FormData(form).entries()]).toEqual([]);
+          expect(group.validity.valueMissing).toBe(true);
+        }
+      );
     } finally {
       form.removeEventListener('submit', submit);
     }
