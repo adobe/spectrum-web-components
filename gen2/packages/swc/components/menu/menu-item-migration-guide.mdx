@@ -1,0 +1,180 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Menu/Menu item migration guide" />
+
+# Menu item migration guide
+
+Replace `<sp-menu-item>` with `<swc-menu-item>`, move the row's text into the `label` slot, and update the import. Link rows, selection, and submenus are not part of this release.
+
+## Installation
+
+```bash
+# Remove
+yarn remove @spectrum-web-components/menu
+
+# Add
+yarn add @adobe/spectrum-wc
+```
+
+Update your import:
+
+```js
+// Before
+import '@spectrum-web-components/menu/sp-menu-item.js';
+
+// After
+import '@adobe/spectrum-wc/components/menu/swc-menu-item.js';
+```
+
+> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g., `@adobe/spectrum-wc/components/menu/swc-menu-item.js`) registers and loads only that component's bundle.
+
+## What changed
+
+### Renamed
+
+| Area             | Spectrum 1 (`sp-menu-item`)     | Spectrum 2 (`swc-menu-item`)                          |
+| ---------------- | ------------------------------- | ----------------------------------------------------- |
+| Tag              | `sp-menu-item`                  | `swc-menu-item`                                       |
+| Import path      | `@spectrum-web-components/menu` | `@adobe/spectrum-wc/components/menu/swc-menu-item.js` |
+| Label            | Default slot                    | `label` slot, required                                |
+| Leading visual   | `icon` slot                     | `visual` slot, which also accepts `swc-thumbnail`     |
+| Trailing text    | `value` slot                    | `secondary` slot                                      |
+| CSS custom props | `--mod-menu-item-*`             | `--swc-menu-item-*` (see [Styling](#styling))         |
+
+### Added in Spectrum 2
+
+| Addition                    | Notes                                                                                    |
+| --------------------------- | ---------------------------------------------------------------------------------------- |
+| `size`                      | `s`, `m`, `l`, `xl`. Set it on `swc-menu`, which propagates it to every row it slots     |
+| `swc-thumbnail` in `visual` | Thumbnails are sized separately from icons, so a row keeps its proportions at every size |
+| `--swc-menu-item-*`         | Public theming hooks, including per-state background colors                              |
+
+### Removed in Spectrum 2
+
+| Removed                                               | Replacement                                                          |
+| ----------------------------------------------------- | -------------------------------------------------------------------- |
+| `href`, `target`, `download`, `rel`, `referrerpolicy` | None. A row never renders an anchor; link rows are not supported yet |
+| `selected`, `value` property                          | None. Selection is not part of this release                          |
+| `active`, `focused`                                   | None. The owning `swc-menu` tracks focus with a roving tabindex      |
+| `has-submenu`, `open`, `submenu` slot                 | None. Submenus are not part of this release                          |
+| `no-wrap`                                             | None. Long rows wrap within the menu's maximum width                 |
+| `sp-menu-item-added` event                            | None. `swc-menu` discovers its rows itself                           |
+| `--mod-menu-item-*` custom properties                 | `--swc-menu-item-*` (see [Styling](#styling))                        |
+
+## Update your code
+
+### 1. Update the import
+
+```js
+// Before
+import '@spectrum-web-components/menu/sp-menu-item.js';
+
+// After
+import '@adobe/spectrum-wc/components/menu/swc-menu-item.js';
+```
+
+### 2. Rename the tag and move the text into the `label` slot
+
+The label is a named slot so it stays distinct from the description. A row without one has no accessible name and logs a warning in development.
+
+```html
+<!-- Before -->
+<sp-menu-item>Cut</sp-menu-item>
+
+<!-- After -->
+<swc-menu-item>
+  <span slot="label">Cut</span>
+</swc-menu-item>
+```
+
+### 3. Rename the `icon` and `value` slots
+
+```html
+<!-- Before -->
+<sp-menu-item>
+  <sp-icon-copy slot="icon"></sp-icon-copy>
+  Copy
+  <kbd slot="value">⌘C</kbd>
+</sp-menu-item>
+
+<!-- After -->
+<swc-menu-item>
+  <swc-icon-copy slot="visual"></swc-icon-copy>
+  <span slot="label">Copy</span>
+  <kbd slot="secondary">⌘C</kbd>
+</swc-menu-item>
+```
+
+### 4. Set `size` on the menu, not the row
+
+```html
+<!-- Before -->
+<sp-menu size="l">
+  <sp-menu-item size="l">Cut</sp-menu-item>
+</sp-menu>
+
+<!-- After -->
+<swc-menu for="trigger" size="l">
+  <swc-menu-item>
+    <span slot="label">Cut</span>
+  </swc-menu-item>
+</swc-menu>
+```
+
+### 5. Replace link rows
+
+A row never renders an anchor. Handle navigation from the menu's `click` event until a dedicated link row ships.
+
+```html
+<!-- Before -->
+<sp-menu-item href="/settings">Settings</sp-menu-item>
+
+<!-- After -->
+<swc-menu-item id="settings">
+  <span slot="label">Settings</span>
+</swc-menu-item>
+```
+
+```js
+menu.addEventListener('click', (event) => {
+  if (event.target.closest('#settings')) {
+    location.assign('/settings');
+  }
+});
+```
+
+## Accessibility
+
+- The `label` slot provides the row's accessible name. See [step 2](#2-rename-the-tag-and-move-the-text-into-the-label-slot).
+- `description` and `secondary` both become part of the row's accessible description, announced in that order. Put a keyboard shortcut in `secondary` so it is announced rather than folded into the name.
+- `disabled` maps to `aria-disabled="true"`, not the native attribute. Disabled rows stay focusable and keep their place in arrow-key navigation, so do not rely on them being skipped.
+- Do not slot buttons, links, or other focusable elements into a row. They break the roving tabindex the menu uses.
+
+## Styling
+
+Spectrum 2 replaces the 45 `--mod-menu-item-*` properties with a smaller `--swc-menu-item-*` set:
+
+| Property                                                                                                                   | Controls                                  |
+| -------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- |
+| `--swc-menu-item-min-block-size`, `--swc-menu-item-padding-block`, `--swc-menu-item-padding-inline`, `--swc-menu-item-gap` | Row size and spacing                      |
+| `--swc-menu-item-corner-radius`                                                                                            | Corner radius                             |
+| `--swc-menu-item-background-color` and its `-hover`, `-focus`, and `-down` variants                                        | Row fill per state                        |
+| `--swc-menu-item-label-color`, `--swc-menu-item-label-font-size`, `--swc-menu-item-label-line-height`                      | Label text                                |
+| `--swc-menu-item-description-color`, `--swc-menu-item-description-font-size`, `--swc-menu-item-description-line-height`    | Description text                          |
+| `--swc-menu-item-text-gap`                                                                                                 | Gap between the label and the description |
+| `--swc-menu-item-secondary-color`                                                                                          | Trailing text                             |
+| `--swc-menu-item-icon-size`, `--swc-menu-item-thumbnail-size`                                                              | Slotted visual, inline and block          |
+
+Do not target internal class names or shadow DOM; they are not public API and change without notice.
+
+## Checklist
+
+- [ ] Swap `@spectrum-web-components/menu` for `@adobe/spectrum-wc` and update imports
+- [ ] Rename `sp-menu-item` to `swc-menu-item`
+- [ ] Move each row's text into a `label` slot
+- [ ] Rename `icon` slots to `visual` and `value` slots to `secondary`
+- [ ] Move `size` from rows onto the owning `swc-menu`
+- [ ] Replace `href` rows with a click handler
+- [ ] Remove `selected`, `value`, `active`, `focused`, `no-wrap`, `has-submenu`, `open`, and `submenu` usage
+- [ ] Replace `--mod-menu-item-*` overrides with `--swc-menu-item-*`
+- [ ] Remove `sp-menu-item-added` listeners
