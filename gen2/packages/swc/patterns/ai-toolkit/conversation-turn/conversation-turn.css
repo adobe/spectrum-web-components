@@ -44,6 +44,7 @@
 }
 
 :host([type="user"]) .swc-ConversationTurn > slot {
+  gap: token("spacing-300");
   align-items: flex-end;
 
   /* Keep bubbles readable in narrow and wide columns alike. */

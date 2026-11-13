@@ -288,14 +288,23 @@ function expandRemainingTypeAliases() {
 }
 
 /**
- * CEM plugin that records the default value of accessor-backed properties
- * (Tabs’ `density`). The analyzer reads defaults only from field initializers,
- * so this reads the initializer of the backing field that the getter returns.
+ * CEM plugin that records the literal default value of properties whose
+ * default the analyzer can't read:
+ *
+ * - Accessor-backed properties: the analyzer reads defaults only from field
+ *   initializers, so this reads the initializer of the backing field that the
+ *   getter returns.
+ * - Instance fields initialized from a named constant (Tabs’
+ *   `density = TAB_DENSITY_DEFAULT`): the analyzer records the constant's name,
+ *   so this resolves it to the constant's literal value.
  *
  * @returns {object} The CEM plugin.
  */
 function accessorDefaults() {
-  /** `ClassName.propName` -> default value. */
+  /**
+   * `ClassName.propName` -> default value, plus the source text the analyzer
+   * records for a constant-initialized field so only that default is replaced.
+   */
   const defaults = new Map();
 
   /** The `_field` a getter returns, if it is a simple `return this._field`. */
@@ -354,7 +363,29 @@ function accessorDefaults() {
 
         const value = literalValue(initializer);
         if (value !== undefined) {
-          defaults.set(`${className}.${member.name.getText()}`, value);
+          defaults.set(`${className}.${member.name.getText()}`, { value });
+        }
+      }
+
+      for (const member of node.members) {
+        const isStatic = member.modifiers?.some(
+          (modifier) => modifier.kind === ts.SyntaxKind.StaticKeyword
+        );
+        if (
+          !ts.isPropertyDeclaration(member) ||
+          isStatic ||
+          !member.initializer ||
+          !ts.isIdentifier(member.initializer)
+        ) {
+          continue;
+        }
+
+        const value = literalValue(member.initializer);
+        if (value !== undefined) {
+          defaults.set(`${className}.${member.name.getText()}`, {
+            value,
+            replaces: member.initializer.getText(),
+          });
         }
       }
     },
@@ -362,15 +393,31 @@ function accessorDefaults() {
       for (const module of customElementsManifest.modules ?? []) {
         for (const declaration of module.declarations ?? []) {
           for (const member of declaration.members ?? []) {
-            if (member.kind !== 'field' || member.default !== undefined) {
+            if (member.kind !== 'field') continue;
+
+            const owner = member.inheritedFrom?.name ?? declaration.name;
+            const recorded = defaults.get(`${owner}.${member.name}`);
+            if (!recorded) continue;
+            // Fill a missing default, or replace the constant name the analyzer
+            // recorded; never overwrite any other default.
+            if (
+              member.default !== undefined &&
+              member.default !== recorded.replaces
+            ) {
               continue;
             }
 
-            const owner = member.inheritedFrom?.name ?? declaration.name;
-            const value = defaults.get(`${owner}.${member.name}`);
-            if (value === undefined) continue;
+            member.default = recorded.value;
+          }
 
-            member.default = value;
+          // The analyzer copies a constant-initialized field's default to its
+          // attribute as the constant name too; resolve that the same way.
+          for (const attribute of declaration.attributes ?? []) {
+            const owner = attribute.inheritedFrom?.name ?? declaration.name;
+            const recorded = defaults.get(`${owner}.${attribute.fieldName}`);
+            if (recorded?.replaces && attribute.default === recorded.replaces) {
+              attribute.default = recorded.value;
+            }
           }
         }
       }

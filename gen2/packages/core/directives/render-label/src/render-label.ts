@@ -28,9 +28,11 @@ export interface RenderFieldLabelOptions {
 
   /**
    * The role element's `id` (e.g. the `<input>`), wired as the rendered
-   * `<label for>` so the label gives native click-to-focus.
+   * `<label for>` so the label gives native click-to-focus. Omit for a group
+   * with no labelable control (e.g. a radio group); a `<span>` renders instead
+   * and the host wires the name via `aria-labelledby`.
    */
-  forId: string;
+  forId?: string;
 
   /**
    * Whether the field is required. The icon indicator is decorative; text
@@ -87,15 +89,21 @@ export function renderFieldLabel({
     labels: necessityIndicatorText,
     icon: necessityIcon,
   });
+  if (forId === undefined) {
+    // prettier-ignore
+    return html`<span class="swc-FormFieldLabel"><slot name="label"></slot>${necessity}</span>`;
+  }
   // prettier-ignore
   return html`<label class="swc-FormFieldLabel" for=${forId}><slot name="label"></slot>${necessity}</label>`;
 }
 
 /**
- * The necessity indicator span; only the icon is hidden from assistive
- * technology. With no whitespace text node between the slot and
- * this span, the indicator stays on the same wrap line as the last word; its
- * gap from the label text is applied by CSS, not a literal space character.
+ * The necessity indicator span. The icon wrapper is `aria-hidden`, so any
+ * supplied icon stays decorative even if it doesn't hide itself; text
+ * indicators contribute to the label. With no whitespace text node between the
+ * slot and this span, the indicator stays on the same wrap line as the last
+ * word; its gap from the label text is applied by CSS, not a literal space
+ * character.
  */
 function renderNecessityIndicator({
   indicator,

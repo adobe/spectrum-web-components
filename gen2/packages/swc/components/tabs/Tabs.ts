@@ -70,7 +70,7 @@ export class Tabs extends TabsBase {
         class="tablist"
         aria-label=${this.accessibleLabel || nothing}
         aria-orientation=${ifDefined(
-          this.direction === 'vertical' ? 'vertical' : undefined
+          this.resolvedDirection === 'vertical' ? 'vertical' : undefined
         )}
         aria-disabled=${ifDefined(this.disabled ? 'true' : undefined)}
         @click=${this.handleClick}

@@ -21,6 +21,8 @@ import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import { SizedMixin } from '@adobe/spectrum-wc-core/mixins/index.js';
 import {
   isDebug,
+  numberAttribute,
+  parseNumericText,
   validateEnum,
   warnIf,
 } from '@adobe/spectrum-wc-core/utils/index.js';
@@ -100,11 +102,19 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
    * When `null` (indeterminate), the component shows a loading animation.
    * Setting a number switches to determinate mode. Removing the `progress`
    * attribute or setting this property to `null` returns to indeterminate.
-   * Values outside 0–100 or non-finite numbers are clamped (non-finite becomes 0).
+   * Values outside 0–100, non-finite numbers, and non-numeric text are kept
+   * as set, warn in dev mode, and render clamped (anything that isn't a
+   * finite number renders as 0).
    *
    * Reflected to the `progress` attribute when set; the attribute is omitted when indeterminate.
    */
-  @property({ type: Number, reflect: true })
+  @property({
+    type: Number,
+    reflect: true,
+    // Non-numeric text is kept so reflection never writes `NaN` over the
+    // consumer's markup; a removed attribute returns to indeterminate.
+    converter: numberAttribute(null),
+  })
   public progress: number | null = null;
 
   private languageResolver = new LanguageResolutionController(this);
@@ -140,18 +150,29 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
     );
   }
 
-  private static clampProgress(value: number): number {
-    if (!Number.isFinite(value)) {
+  /**
+   * @internal
+   *
+   * The progress used for rendering and ARIA, clamped to 0–100 (non-finite
+   * becomes 0), or `null` when indeterminate. `progress` keeps the value the
+   * consumer set.
+   */
+  protected get clampedProgress(): number | null {
+    const progress = parseNumericText(this.progress);
+    if (progress === null || progress === undefined) {
+      return null;
+    }
+    if (!Number.isFinite(progress)) {
       return 0;
     }
-    return Math.min(100, Math.max(0, value));
+    return Math.min(100, Math.max(0, progress));
   }
 
   private formatProgress(): string {
     return new Intl.NumberFormat(this.languageResolver.language, {
       style: 'percent',
       unitDisplay: 'narrow',
-    }).format((this.progress ?? 0) / 100);
+    }).format((this.clampedProgress ?? 0) / 100);
   }
 
   private warnDeprecatedLightDomChildren(): void {
@@ -164,15 +185,28 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
     );
   }
 
-  protected override willUpdate(changes: PropertyValues): void {
-    if (changes.has('progress') && this.progress !== null) {
-      const clamped = ProgressCircleBase.clampProgress(this.progress);
-      if (clamped !== this.progress) {
-        this.progress = clamped;
-      }
+  protected override update(changes: PropertyValues): void {
+    // `null` is the indeterminate state, not an invalid value.
+    if (this.progress != null) {
+      const received = String(this.progress);
+      warnIf(
+        this,
+        this.clampedProgress !== parseNumericText(this.progress),
+        `<${this.localName}> expects "progress" to be a number from 0 to 100. Received "${received}"; rendering ${this.clampedProgress}.`,
+        'https://spectrum-web-components.adobe.com/?path=/docs/components-progress-circle--docs',
+        { issues: [`progress="${received}"`] }
+      );
     }
-
-    super.willUpdate(changes);
+    // `static-color` is optional; unset means the default colors.
+    if (this.staticColor != null) {
+      validateEnum(this, {
+        prop: 'static-color',
+        value: this.staticColor,
+        valid: (this.constructor as typeof ProgressCircleBase).STATIC_COLORS,
+        url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-progress-circle--docs',
+      });
+    }
+    super.update(changes);
   }
 
   protected override firstUpdated(changes: PropertyValues): void {
@@ -184,10 +218,11 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
     super.updated(changes);
 
     if (changes.has('progress')) {
-      if (this.progress !== null && this.progress >= 0) {
+      const clampedProgress = this.clampedProgress;
+      if (clampedProgress !== null) {
         this.setAttribute('aria-valuemin', '0');
         this.setAttribute('aria-valuemax', '100');
-        this.setAttribute('aria-valuenow', String(this.progress));
+        this.setAttribute('aria-valuenow', String(clampedProgress));
         this.setAttribute('aria-valuetext', this.formatProgress());
       } else {
         this.removeAttribute('aria-valuemin');
@@ -226,16 +261,6 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
           ],
         }
       );
-    }
-
-    if (changes.has('staticColor') && this.staticColor !== undefined) {
-      const constructor = this.constructor as typeof ProgressCircleBase;
-      validateEnum(this, {
-        prop: 'static-color',
-        value: this.staticColor,
-        valid: constructor.STATIC_COLORS,
-        url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-progress-circle--docs',
-      });
     }
 
     // Guard the call site: `hasMeaningfulLightDomChildren` traverses the light
