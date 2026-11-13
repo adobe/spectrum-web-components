@@ -15,6 +15,9 @@ import type { ActionItem } from 'storybook/internal/components';
 
 import { formatTitle, sourceLocation } from '../helpers/index.js';
 
+const DESIGN_GUIDANCE_BASE_URL =
+  'https://spectrum.adobe.com/web/swc/components';
+
 export const OverviewStory = () => {
   const resolvedOf = useOf('meta', ['meta']);
 
@@ -36,17 +39,25 @@ export const OverviewStory = () => {
   // Build additional actions dynamically based on available metadata
   const additionalActions: ActionItem[] = [];
 
-  // Spectrum Design Guidance - requires valid component name
+  // Spectrum Design Guidance - component pages only; patterns and other
+  // sections have no SWC guidance page. `designGuidanceSlug` covers components
+  // whose page slug differs from the title; `missingDesignDocs` hides the
+  // action when no page exists.
+  const metaParameters = resolvedOf.csfFile.meta?.parameters;
+  const isComponentPage =
+    resolvedOf.preparedMeta?.title?.startsWith('Components/');
+  const designGuidanceSlug =
+    metaParameters?.designGuidanceSlug ?? componentName;
+
   if (
-    componentName &&
-    !resolvedOf.csfFile.meta?.parameters?.missingDesignDocs
+    isComponentPage &&
+    designGuidanceSlug &&
+    !metaParameters?.missingDesignDocs
   ) {
     additionalActions.push({
       title: 'Read Spectrum Design Guidance',
       onClick: () => {
-        window.open(
-          `https://s2.spectrum.corp.adobe.com/page/${componentName}/`
-        );
+        window.open(`${DESIGN_GUIDANCE_BASE_URL}/${designGuidanceSlug}`);
       },
     });
   }

@@ -16,6 +16,7 @@ import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import {
   isTopDismissible,
   registerDismissible,
+  stringAttribute,
   unregisterDismissible,
   validateEnum,
   warnIf,
@@ -83,7 +84,12 @@ export abstract class TooltipBase
    *
    * @default 'neutral'
    */
-  @property({ type: String, reflect: true })
+  @property({
+    type: String,
+    reflect: true,
+    // A removed attribute resets to the default rather than `null`.
+    converter: stringAttribute('neutral'),
+  })
   public variant: TooltipVariant = 'neutral';
 
   /**
@@ -93,7 +99,12 @@ export abstract class TooltipBase
    *
    * @default 'top'
    */
-  @property({ type: String, reflect: true })
+  @property({
+    type: String,
+    reflect: true,
+    // A removed attribute resets to the default rather than `null`.
+    converter: stringAttribute('top'),
+  })
   public placement: TooltipPlacement = 'top';
 
   /**
@@ -479,47 +490,27 @@ export abstract class TooltipBase
     if (this.disabled && this.open) {
       this.open = false;
     }
+  }
 
-    if (changedProperties.has('variant')) {
-      const constructor = this.constructor as typeof TooltipBase;
-      validateEnum(this, {
-        prop: 'variant',
-        value: this.variant,
-        valid: constructor.VARIANTS,
-        url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-tooltip--docs',
-      });
-    }
-    if (changedProperties.has('placement')) {
-      const constructor = this.constructor as typeof TooltipBase;
-      validateEnum(this, {
-        prop: 'placement',
-        value: this.placement,
-        valid: constructor.PLACEMENTS,
-        url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-tooltip--docs',
-      });
-    }
+  protected override update(changedProperties: PropertyValues): void {
+    const constructor = this.constructor as typeof TooltipBase;
+    validateEnum(this, {
+      prop: 'variant',
+      value: this.variant,
+      valid: constructor.VARIANTS,
+      url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-tooltip--docs',
+    });
+    validateEnum(this, {
+      prop: 'placement',
+      value: this.placement,
+      valid: constructor.PLACEMENTS,
+      url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-tooltip--docs',
+    });
+    super.update(changedProperties);
   }
 
   protected override updated(changedProperties: PropertyValues): void {
     super.updated(changedProperties);
-    if (changedProperties.has('variant')) {
-      const constructor = this.constructor as typeof TooltipBase;
-      validateEnum(this, {
-        prop: 'variant',
-        value: this.variant,
-        valid: constructor.VARIANTS,
-        url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-tooltip--docs',
-      });
-    }
-    if (changedProperties.has('placement')) {
-      const constructor = this.constructor as typeof TooltipBase;
-      validateEnum(this, {
-        prop: 'placement',
-        value: this.placement,
-        valid: constructor.PLACEMENTS,
-        url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-tooltip--docs',
-      });
-    }
     if (changedProperties.has('offset')) {
       this.style.setProperty(
         '--_swc-tooltip-animation-distance',

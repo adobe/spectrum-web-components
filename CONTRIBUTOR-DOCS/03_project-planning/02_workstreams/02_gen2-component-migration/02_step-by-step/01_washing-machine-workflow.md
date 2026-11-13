@@ -540,7 +540,7 @@ For troubleshooting and detailed patterns (e.g. 1st-gen Constructable Stylesheet
 3. **Storybook play functions:** Add play functions for defaults, variants, keyboard.
 4. **Visual regression stories:** Add dedicated `test/vrt/*.vrt.ts` stories for dense visual coverage. See [Visual regression testing](../../../../02_style-guide/04_testing/04_visual-regresssion-testing.md).
 5. **Coverage:** Main props, variants, user actions, visual states, global styles, and public custom properties when applicable.
-6. **Dev-warning tests:** For every dev-warning check added in Phase 3/4, add a pair of test cases (fires for the invalid/missing case, silent for the valid case) using `withWarningSpy` from `@spectrum-web-components/swc/utils/test-utils`. See the **Testing deprecation warnings** pattern in [Debug and validation](../../../../02_style-guide/02_typescript/17_debug-validation.md#testing-deprecation-warnings), which applies to all warning categories, not just deprecations.
+6. **Dev-warning tests:** For every dev-warning check added in Phase 3/4, add a pair of test cases (fires for the invalid/missing case, silent for the valid case) using `withWarningSpy` from `@swc-test-helpers/dom`. See the **Testing deprecation warnings** pattern in [Debug and validation](../../../../02_style-guide/02_typescript/17_debug-validation.md#testing-deprecation-warnings), which applies to all warning categories, not just deprecations.
 
 Follow the two-file layout (`test/<component>.test.ts`, `test/<component>.a11y.spec.ts`). See the [gen2 testing conventions](../../../../01_contributor-guides/11_gen2_testing.md) and reference implementations in `link/test/`, `checkbox/test/`, `badge/test/`, etc.
 
