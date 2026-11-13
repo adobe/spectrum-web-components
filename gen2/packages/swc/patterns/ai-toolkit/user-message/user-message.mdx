@@ -11,8 +11,10 @@ import * as UserMessageStories from './stories/user-message.stories';
 
 A user message consists of:
 
-1. **Bubble**: rounded container with a neutral gray background (`gray-50`)
-2. **Default slot**: the message content: plain text, a card attachment, or image-first content
+- **Bubble**: rounded container with a neutral gray background (`gray-50`)
+- **Message text**, provided through the default slot for `type="copy"` (the default)
+- **Attachments**, provided through the `thumbnail` slot for card and media messages
+- **File metadata**, provided through each nested upload card's `title` and `subtitle` slots
 
 <Canvas of={UserMessageStories.Anatomy} />
 
@@ -20,13 +22,38 @@ A user message consists of:
 
 ### Content
 
-Bubble sizing and padding are inferred from slotted content:
+User messages display text by default (`type="copy"`). Put the message in the default slot and omit `type` or set it to `copy`. Removing the `type` attribute also renders text. Attachment types describe presentation, not file format:
 
-- **Copy**: default text-only content with the bubble's default width and padding
-- **Card**: compact attachment layout with thumbnail, title, and subtitle
-- **Media**: larger preview-first attachment layout with metadata beneath the preview
+- **`card`**: attachments with visible filenames and file details
+- **`media`**: square attachment previews or file icons without visible metadata
 
-<Canvas of={UserMessageStories.Content} />
+Both attachment layouts use the `thumbnail` slot and group their content in one bubble that fits its columns.
+
+Keep the attachment presentation chosen in the prompt field when sending, regardless of whether the files are images or documents.
+
+When a submission includes attachments and a prompt, put them in separate `<swc-user-message>` elements inside the same `<swc-conversation-turn type="user">`. The turn right-aligns the bubbles with a 16px gap. For attachment-only submissions, omit the text message.
+
+### Card
+
+Use `type="card"` to show attachments with previews or file icons, filenames, and file details in a shared bubble.
+
+<Canvas of={UserMessageStories.Card} />
+
+### Media
+
+Use `type="media"` to show images and documents as square previews in a shared bubble.
+
+Supply your own image or icon through each upload tile's `thumbnail` slot. The examples use document icons when no preview is available; consumers choose their own fallbacks.
+
+<Canvas of={UserMessageStories.Media} />
+
+## Behaviors
+
+### Overflow
+
+Card and media bubbles grow up to 240px tall, then scroll vertically to reveal more attachments. The message text stays outside the scroll area.
+
+<Canvas of={UserMessageStories.Overflow} />
 
 ## Accessibility
 
@@ -36,14 +63,17 @@ The `<swc-user-message>` element implements the following accessibility features
 
 #### Semantic structure
 
-- The bubble is rendered as a `<div>` acting as a visual container
-- `type="copy"` uses the default slot for message text
-- `type="card"` and `type="media"` use named slots for thumbnail, title, and subtitle
+- The custom element acts as the visual bubble inside a semantic user turn
+- `type="copy"` (the default) uses the default slot for message text
+- `type="card"` and `type="media"` render attachments through the `thumbnail` slot; title and subtitle content belongs to each card tile rather than the outer message
+- Every attachment collection is a keyboard-focusable group named "Uploaded attachments", including collections without overflow. Use <kbd>Tab</kbd> to enter it, native scrolling keys to explore overflowing attachments, and <kbd>Tab</kbd> or <kbd>Shift</kbd> + <kbd>Tab</kbd> to leave
+- The gallery scroll area's focus indicator is drawn outside the gradient mask so it remains visible
 
 ### Best practices
 
 - Ensure message text is descriptive and self-contained
-- For card and media attachments, ensure titles/subtitles and `aria-label`/`alt` text are present for previews
+- For card attachments, provide descriptive filenames and metadata, and keep redundant previews and file icons decorative
+- For media attachments, provide a filename through the upload tile's `title` slot or `accessible-label`. Give standalone images descriptive `alt` text
 
 <Canvas of={UserMessageStories.Accessibility} />
 

@@ -21,20 +21,16 @@ export type UserMessageType = 'copy' | 'card' | 'media';
 
 /**
  * User-authored conversation bubble for AI Toolkit pattern exploration.
- * Default slot content is rendered only when `type="copy"` and ignored when
- * `type="card"` or `type="media"`.
+ * Default slot content is rendered for `type="copy"` (the default) or when
+ * the `type` attribute is removed, and ignored for `type="card"` or `type="media"`.
  *
  * @element swc-user-message
- * @slot - Message copy content when `type="copy"`.
- * @slot thumbnail - Attachment preview when `type="card"` or `type="media"`.
- * @slot title - Attachment title when `type="card"` or `type="media"`.
- * @slot subtitle - Attachment subtitle when `type="card"` or `type="media"`.
+ * @slot - Message text for `type="copy"` (the default) or when the `type` attribute is removed.
+ * @slot thumbnail - Attachments grouped by their card or media presentation, regardless of file format.
  * @since 2.0.0-beta.3
  */
 export class UserMessage extends SpectrumElement {
-  /**
-   * Visual content type for the user message bubble.
-   */
+  /** Visual content type. Defaults to `copy` for message text. */
   @property({ type: String, reflect: true })
   public type: UserMessageType = 'copy';
 
@@ -43,26 +39,18 @@ export class UserMessage extends SpectrumElement {
   }
 
   protected override render(): TemplateResult {
-    return this.type === 'copy'
+    return !this.type || this.type === 'copy'
       ? html`
           <slot></slot>
         `
       : html`
           <div
-            class="swc-UserMessage-attachment swc-UserMessage-attachment--${this
-              .type}"
+            class="swc-UserMessage-galleryViewport"
+            role="group"
+            aria-label="Uploaded attachments"
+            tabindex="0"
           >
-            <div class="swc-UserMessage-thumbnail">
-              <slot name="thumbnail"></slot>
-            </div>
-            <div class="swc-UserMessage-meta">
-              <div class="swc-UserMessage-title">
-                <slot name="title"></slot>
-              </div>
-              <div class="swc-UserMessage-subtitle">
-                <slot name="subtitle"></slot>
-              </div>
-            </div>
+            <slot name="thumbnail" class="swc-UserMessage-gallery"></slot>
           </div>
         `;
   }
