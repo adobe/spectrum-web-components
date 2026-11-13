@@ -98,11 +98,6 @@ const ICONS_STORIES = {
   titlePrefix: 'Icons',
 };
 
-const GUIDE_STORIES = {
-  directory: 'guides',
-  titlePrefix: 'Guides',
-};
-
 const GUIDES = [
   {
     directory: 'learn-about-swc',
@@ -110,8 +105,11 @@ const GUIDES = [
     files: '*.mdx',
     titlePrefix: 'Learn about SWC',
   },
-  { ...GUIDE_STORIES, files: '**/!(*documentation).mdx' },
-  { ...GUIDE_STORIES, files: '**/*.stories.ts' },
+  {
+    directory: 'guides',
+    files: '**/!(*documentation).mdx',
+    titlePrefix: 'Guides',
+  },
   { directory: 'resources', files: '**/*.mdx', titlePrefix: 'Resources' },
 ];
 
@@ -167,7 +165,7 @@ const STORIES_BY_MODE: Record<StorybookMode, StorybookConfig['stories']> = {
     { ...ICONS_STORIES, files: '**/!(*.internal).mdx' },
     ...GUIDES,
   ],
-  // CI accessibility checks: component, pattern, icon, and guide stories.
+  // CI accessibility checks: component, pattern, and icon stories.
   // addon-docs stays enabled (see `addons` below) so pattern .mdx still
   // parses, but component docs, core, contributor docs, and guide docs
   // are all skipped — they're not needed for axe checks.
@@ -176,7 +174,6 @@ const STORIES_BY_MODE: Record<StorybookMode, StorybookConfig['stories']> = {
     { ...PATTERN_STORIES, files: '**/*.stories.ts' },
     { ...PATTERN_STORIES, files: '**/*.mdx' },
     { ...ICONS_STORIES, files: '**/*.stories.ts' },
-    { ...GUIDE_STORIES, files: '**/*.stories.ts' },
   ],
   // Chromatic-only: just the hand-picked VRT stories.
   vrt: VRT_STORIES,

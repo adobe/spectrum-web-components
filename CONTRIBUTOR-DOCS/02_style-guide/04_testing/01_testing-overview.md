@@ -42,7 +42,7 @@ Test things that users and developers depend on:
 ## Testing forms
 
 - **Component tests** cover value, validity, reset, disabled behavior, state restoration, and events. Keep them beside the component, even when they use `<form>` or `FormData`.
-- **Integration tests** cover controls working together. The shared [Forms integration suite](../../../gen2/packages/swc/patterns/forms/test/forms.test.ts) checks combined submission, native and custom validation, reset, disabled groups, and buttonless submission with multiple Text fields.
+- **Integration tests** cover controls working together. The shared [Forms integration suite](../../../gen2/packages/swc/patterns/forms/test/forms.test.ts) checks combined submission, native and custom validation, reset, disabled groups, fields associated from outside the form, draft submitters that bypass native validation, and buttonless submission with multiple Text fields.
 
 When adding a form component:
 
@@ -61,7 +61,11 @@ yarn workspace @adobe/spectrum-wc exec vitest run patterns/forms/test/forms.test
 
 Cover browser-enforced submission blocking without `novalidate` and application-controlled errors with it. With `novalidate`, submit events still fire, but `form.checkValidity()` must reflect every control.
 
-Use [Playwright for trusted keyboard input](02_storybook-testing.md#native-dismissal-and-trusted-input); Storybook keyboard events are simulated.
+Use [Playwright for trusted keyboard input](02_storybook-testing.md#native-dismissal-and-trusted-input); Storybook keyboard events are simulated. The shared [Forms keyboard tests](../../../gen2/packages/swc/patterns/forms/test/forms.a11y.spec.ts) verify buttonless submission with real browser input using independent fixtures:
+
+```bash
+yarn workspace @adobe/spectrum-wc exec playwright test patterns/forms/test/forms.a11y.spec.ts
+```
 
 ## What not to test
 

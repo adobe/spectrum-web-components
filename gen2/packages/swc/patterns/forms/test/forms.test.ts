@@ -140,6 +140,198 @@ export const CombinedSubmissionTest: Story = {
 };
 CombinedSubmissionTest.storyName = 'Controls contribute to one submission';
 
+export const ExternalFormAssociationTest: Story = {
+  render: () => html`
+    <swc-text-field
+      form="external-account-form"
+      name="email"
+      type="email"
+      value="river@example.com"
+      required
+    >
+      <span slot="label">Email outside the form</span>
+    </swc-text-field>
+    <form
+      id="external-account-form"
+      aria-label="Account with an external field"
+      style="display: flex; flex-direction: column; gap: 24px; inline-size: 28rem; max-inline-size: 100%;"
+    >
+      <swc-radio-group name="account-type" selected="personal" required>
+        <span slot="label">Account type</span>
+        <swc-radio value="personal">
+          <span slot="label">Personal</span>
+        </swc-radio>
+        <swc-radio value="work"><span slot="label">Work</span></swc-radio>
+      </swc-radio-group>
+      ${formActions}
+    </form>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const { form, email, emailInput, accountType, workRadio, submit, reset } =
+      await getFormControls(canvasElement);
+    const submissions: {
+      submitter: HTMLElement | null;
+      data: [string, FormDataEntryValue][];
+    }[] = [];
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      submissions.push({
+        submitter: event.submitter,
+        data: [...new FormData(form, event.submitter)],
+      });
+    });
+
+    await step('the form includes its external field in tree order', () => {
+      expect(form.contains(email)).toBe(false);
+      expect(email.form).toBe(form);
+      expect(accountType.form).toBe(form);
+      expect(Array.from(form.elements)).toContain(email);
+      expect(Array.from(form.elements)).toContain(accountType);
+      expect([...new FormData(form)]).toEqual([
+        ['email', 'river@example.com'],
+        ['account-type', 'personal'],
+      ]);
+    });
+
+    await step('an invalid external field blocks the shared form', async () => {
+      email.value = '';
+      await email.updateComplete;
+      expect(email.validity.valueMissing).toBe(true);
+      expect(accountType.checkValidity()).toBe(true);
+      expect(form.checkValidity()).toBe(false);
+      await userEvent.click(submit);
+      expect(submissions).toEqual([]);
+    });
+
+    await step(
+      'one submission includes internal and external fields',
+      async () => {
+        await userEvent.type(emailInput, 'taylor@example.com');
+        await userEvent.click(workRadio);
+        await Promise.all([email.updateComplete, accountType.updateComplete]);
+        await userEvent.click(submit);
+        expect(submissions).toEqual([
+          {
+            submitter: submit,
+            data: [
+              ['email', 'taylor@example.com'],
+              ['account-type', 'work'],
+              ['action', 'save'],
+            ],
+          },
+        ]);
+      }
+    );
+
+    await step(
+      'one reset restores internal and external defaults',
+      async () => {
+        await userEvent.click(reset);
+        await Promise.all([email.updateComplete, accountType.updateComplete]);
+        expect(emailInput.value).toBe('river@example.com');
+        expect(accountType.selected).toBe('personal');
+        expect(form.checkValidity()).toBe(true);
+        expect([...new FormData(form)]).toEqual([
+          ['email', 'river@example.com'],
+          ['account-type', 'personal'],
+        ]);
+      }
+    );
+  },
+};
+ExternalFormAssociationTest.storyName = 'Fields outside their owning form';
+
+export const DraftSubmitterTest: Story = {
+  render: () => html`
+    <form
+      aria-label="Account with draft submission"
+      style="display: flex; flex-direction: column; gap: 24px; inline-size: 28rem; max-inline-size: 100%;"
+    >
+      ${accountFields} ${formActions}
+      <button
+        type="submit"
+        name="action"
+        value="draft"
+        formnovalidate
+        class="swc-Button swc-Button--secondary"
+      >
+        <span class="swc-Button-label">Save draft</span>
+      </button>
+    </form>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const { form, email, accountType, submit } =
+      await getFormControls(canvasElement);
+    const draft = form.querySelector<HTMLButtonElement>(
+      'button[formnovalidate]'
+    );
+    if (!draft) {
+      throw new Error('Draft submission fixture is missing its draft button');
+    }
+    const submissions: {
+      submitter: HTMLElement | null;
+      data: [string, FormDataEntryValue][];
+    }[] = [];
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      submissions.push({
+        submitter: event.submitter,
+        data: [...new FormData(form, event.submitter)],
+      });
+    });
+    email.value = '';
+    accountType.selected = '';
+    await Promise.all([email.updateComplete, accountType.updateComplete]);
+
+    await step('normal submission validates every control', async () => {
+      expect(form.noValidate).toBe(false);
+      expect(submit.formNoValidate).toBe(false);
+      expect(email.validity.valueMissing).toBe(true);
+      expect(accountType.validity.valueMissing).toBe(true);
+      expect(form.checkValidity()).toBe(false);
+      await userEvent.click(submit);
+      expect(submissions).toEqual([]);
+    });
+
+    await step('the draft submitter bypasses native constraints', async () => {
+      expect(draft.formNoValidate).toBe(true);
+      await userEvent.click(draft);
+      expect(submissions).toEqual([
+        {
+          submitter: draft,
+          data: [
+            ['email', ''],
+            ['action', 'draft'],
+          ],
+        },
+      ]);
+      expect(form.checkValidity()).toBe(false);
+    });
+
+    await step('draft submission leaves authored errors intact', async () => {
+      email.fieldStatus = 'invalid';
+      accountType.fieldStatus = 'invalid';
+      await Promise.all([email.updateComplete, accountType.updateComplete]);
+      expect(email.validity.customError).toBe(true);
+      expect(accountType.validity.customError).toBe(true);
+      await userEvent.click(draft);
+      expect(submissions).toHaveLength(2);
+      expect(submissions[1]).toEqual({
+        submitter: draft,
+        data: [
+          ['email', ''],
+          ['action', 'draft'],
+        ],
+      });
+      expect(email.fieldStatus).toBe('invalid');
+      expect(accountType.fieldStatus).toBe('invalid');
+      await userEvent.click(submit);
+      expect(submissions).toHaveLength(2);
+    });
+  },
+};
+DraftSubmitterTest.storyName = 'Draft submitters skip native validation';
+
 export const AggregateValidationTest: Story = {
   play: async ({ canvasElement, step }) => {
     const { form, email, emailInput, accountType, workRadio, submit } =

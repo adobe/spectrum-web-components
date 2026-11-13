@@ -750,7 +750,7 @@ test.describe('Text field - Keyboard interactions', () => {
     await expect(field.locator('input')).not.toBeFocused();
   });
 
-  test('trusted Enter submits once and respects other text fields', async ({
+  test('trusted Enter submits once with and without a button', async ({
     page,
   }) => {
     const { field, input, form } = await openTextFieldForm(page);
@@ -797,36 +797,6 @@ test.describe('Text field - Keyboard interactions', () => {
       await expect(form).toHaveAttribute(
         'data-submitters',
         JSON.stringify(['keyboard-submit', null])
-      );
-    });
-
-    await test.step('a second field prevents buttonless submission', async () => {
-      await form.evaluate(async (form) => {
-        const second = document.createElement('swc-text-field');
-        second.name = 'second';
-        second.accessibleLabel = 'Second';
-        form.append(second);
-        await second.updateComplete;
-      });
-      await page.keyboard.press('Enter');
-      // Queue behind deferred Enter handling before asserting no submission.
-      await form.evaluate(
-        () => new Promise<void>((resolve) => setTimeout(resolve, 0))
-      );
-      await expect(form).toHaveAttribute(
-        'data-submitters',
-        JSON.stringify(['keyboard-submit', null])
-      );
-    });
-
-    await test.step('removing the second field permits submission', async () => {
-      await form
-        .locator('swc-text-field[name="second"]')
-        .evaluate((second) => second.remove());
-      await page.keyboard.press('Enter');
-      await expect(form).toHaveAttribute(
-        'data-submitters',
-        JSON.stringify(['keyboard-submit', null, null])
       );
     });
   });

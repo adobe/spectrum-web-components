@@ -136,9 +136,9 @@ Run application rules before checking the form's overall validity. `form.checkVa
 
 ### When to validate
 
-An unfinished value is not necessarily a mistake. Validate when someone finishes editing (`change`) or submits the form, rather than showing errors on every keystroke. Once an error is visible, rechecking that field on `input` can help someone see when they have corrected it.
+An unfinished value is not necessarily a mistake. Validate when someone finishes editing (`change`) or submits the form, rather than showing errors on every keystroke. After a failed submission, keep the same timing: recheck the field on the next completed edit, not while someone types.
 
-Immediate feedback can help with requirements such as password strength. For those cases, listen for `input` instead. Your application controls this timing and clears errors when the value is corrected.
+Immediate feedback can help with requirements such as password strength. For those cases, explicitly opt into feedback on `input` instead. Your application controls this timing and clears errors when the value is corrected.
 
 ### Server errors
 

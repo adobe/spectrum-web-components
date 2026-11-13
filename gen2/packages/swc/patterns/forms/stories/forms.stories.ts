@@ -146,7 +146,7 @@ export const FormBehavior: Story = {
             autocomplete="email"
             required
             style="inline-size: 100%; --swc-field-input-max-inline-size: 100%;"
-            @input=${handleFieldEdit}
+            @change=${handleFieldEdit}
           >
             <span slot="label">Email address</span>
             <span slot="error-text"></span>
