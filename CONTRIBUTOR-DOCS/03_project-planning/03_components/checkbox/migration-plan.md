@@ -77,7 +77,7 @@
 
 None. Q14 is settled in the [Decision log](#decision-log).
 
-Q8 and Q12 are open but do not block implementation. Q15 must be settled with Design before the Styling phase. See [Blockers and open questions](#blockers-and-open-questions).
+Q8, Q12, and Q17 are open but do not block implementation: Q8 and Q17 are confirmed in Styling review. Q15 is settled in the [Decision log](#decision-log). See [Blockers and open questions](#blockers-and-open-questions).
 
 ---
 
@@ -163,7 +163,8 @@ gen2 (planned; see [Architecture](#architecture-core-vs-swc-split)):
 ```html
 <swc-checkbox name="terms" value="accepted" required>
   #shadow-root (delegatesFocus: true)
-  <div class="swc-Checkbox">
+  <div class="swc-FormField swc-Checkbox">
+  <div class="swc-Checkbox-control">
     <input
       type="checkbox"
       class="swc-Checkbox-input"
@@ -173,7 +174,8 @@ gen2 (planned; see [Architecture](#architecture-core-vs-swc-split)):
       required
     />
     <span class="swc-Checkbox-box" aria-hidden="true">
-      <!-- S2 Checkmark or Dash UI icon, sized per component size -->
+      <swc-ui-icon class="swc-Checkbox-checkmark" icon="checkmark" size="s"></swc-ui-icon>
+      <swc-ui-icon class="swc-Checkbox-dash" icon="dash" size="s"></swc-ui-icon>
     </span>
     <!-- LabellingMixin.renderLabel(): only when the label slot has content -->
     <label class="swc-FormFieldLabel" for="…input…">
@@ -190,6 +192,7 @@ gen2 (planned; see [Architecture](#architecture-core-vs-swc-split)):
     </span>
     <span class="swc-FormFieldErrorText-text"><slot name="error-text"></slot></span>
   </span>
+  </div>
 </swc-checkbox>
 ```
 
@@ -317,7 +320,7 @@ Q8 (open until the Styling phase): recommended local description and error rules
 | #   | What changes | 1st-gen behavior | gen2 behavior | Consumer migration path |
 | --- | ------------ | ---------------- | ------------- | ----------------------- |
 | B11 | `--mod-checkbox-*` and `--system-checkbox-*` removed | 38 modifiers plus 6 system bridges | Not exposed; a small reviewed `--swc-*` set only. Source: CSS style guide, [Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure). | Remove overrides; request `--swc-*` properties if needed. |
-| B12 | Icon elements replaced with inline S2 UI icons | `sp-icon-checkmark*`/`sp-icon-dash*` elements with ids `checkmark`/`partial-checkmark` | Inline `Checkmark`/`Dash` SVGs inside `.swc-Checkbox-box`, sized 50/75/100/200 for `s`/`m`/`l`/`xl` (C5). Source: Spectrum CSS `spectrum-two` template, gen2 UI icon set. | None for normal usage; tests querying `#checkmark` must change. |
+| B12 | Icon elements replaced with inline S2 UI icons | `sp-icon-checkmark*`/`sp-icon-dash*` elements with ids `checkmark`/`partial-checkmark` | `swc-ui-icon` checkmark and dash inside `.swc-Checkbox-box`, at the 50/75/100/200 steps for `s`/`m`/`l`/`xl` (C5, C15). Source: Spectrum CSS `spectrum-two` template, gen2 UI icon set. | None for normal usage; tests querying `#checkmark` must change. |
 | B13 | S2 visual refresh | S1 tokens | S2 tokens, including the new down-state perspective shift on the box. Source: Spectrum CSS `spectrum-two`. | None. |
 | B14 | Invalid visual treatment | Negative border via `.is-invalid` | **Confirmed (Q1).** The box's border and fill colors do not change for invalid, per Design. A decorative error icon (`swc-icon-alert-triangle`, `aria-hidden`) shows while `field-status="invalid"`: beside the error text, beside the description when there is no error text, and alone when there is neither, so the state never relies on color. Because authored statuses are exclusive (B22), only an ancestor `<fieldset disabled>` can disable an invalid checkbox; then the icon hides while `aria-invalid="true"` and the error text stay, as in `swc-text-field`. Rendered through `renderFieldDescription()`'s `errorIcon` option, as `swc-radio-group` does. This settles the rendering question the accessibility analysis cites. Source: Design, in a Slack discussion relayed in plan review; `swc-radio-group` (radio branch). | None. |
 
@@ -399,7 +402,7 @@ Additional Figma-confirmed presentation modes:
 
 Not shown in the Figma frame, sourced elsewhere:
 
-- **Focus-visible**: the focus ring draws on the box (`.swc-Checkbox-box::after`), not on the native input, which is visually hidden. The inner input drives it through a sibling selector, as Spectrum CSS does (`.spectrum-Checkbox-input:focus-visible + .spectrum-Checkbox-box`), and the label takes its focus color the same way. **Inferred.**
+- **Focus-visible**: the focus ring draws on the box as an outline, as in `radio.css` (C15), not on the native input, which is visually hidden. The inner input drives it through a sibling selector, as Spectrum CSS does (`.spectrum-Checkbox-input:focus-visible + .spectrum-Checkbox-box`), and the label takes its focus color the same way. **Inferred.**
 - **Down (active)**: Spectrum CSS perspective shift, suppressed when read-only or disabled (C6); React has the matching `pressScale`. **Inferred.**
 - **Invalid**: box colors unchanged; an error icon shows beside the help text, or alone (B14). **Confirmed (Q1).**
 - **Read-only**: No distinct visual; keeps Spectrum CSS's suppression of the down-state transform. **Confirmed (Q2).**
@@ -419,7 +422,7 @@ No `--mod-*` properties will be exposed. New `--swc-*` component-level propertie
 
 Each exposed `--swc-*` property must be documented with a `@cssprop` JSDoc tag on the primary SWC component class. Storybook picks these up and surfaces them in the API docs panel automatically.
 
-Initial expectation for Checkbox is a small reviewed set. Candidates: control size and corner radius (the two values 1st-gen's `--system-checkbox-*` bridge and `--mod-*` users override most).
+**Confirmed (C16):** checkbox exposes `--swc-checkbox-control-size`, `--swc-checkbox-corner-radius`, and `--swc-checkbox-text-to-control`, which change by size; `--swc-checkbox-border-color-{default,hover,down,focus,disabled}` and `--swc-checkbox-content-color-{default,hover,down,focus,disabled}`, as `swc-radio` does; and `--swc-checkbox-selected-color-{default,hover,down,focus}` for the checked and indeterminate fill, which `emphasized` overrides. It also documents the shared `--swc-form-field-label-font-size`, `--swc-form-field-description-font-size`, `--swc-form-field-row-gap`, and `--swc-form-field-invalid-icon-gap`. The checkmark and dash sizes stay private, because UI icons are not resized in CSS (C15).
 
 ### Behavioral semantics
 
@@ -511,23 +514,23 @@ Rationale for using `LabellingMixin` and skipping `DisabledMixin`: C4 and C3 in 
 
 > Follow the [CSS style guide](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/) as the source of truth for all styling work. Key references: [migration steps](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/04_spectrum-swc-migration.md), [custom properties](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md), [anti-patterns](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/05_anti-patterns.md).
 
-- [ ] Add `.swc-Checkbox` to the internal wrapper in `render()`; keep styling off `:host`
-- [ ] Copy S2 source from `spectrum-css` `spectrum-two` branch `index.css` (not `/dist`) into `checkbox.css` as baseline
-- [ ] After the baseline copy, align `checkbox.css` with `swc-radio`'s `radio.css` where it fits (Q8): the box-and-label grid, label wrapping and first-line box alignment, size custom properties, label typography, and state colors, including `disabled-content-color` for disabled. Leave out its description layout and description font sizes (the in-group layout that Q7 defers), its host focus selectors (checkbox focuses the inner input), and its group read-only container query (checkbox read-only is per item)
-- [ ] Map `.is-indeterminate`, `.is-readOnly`, `--emphasized`, and `--size*` selectors to host attribute selectors; map disabled to `:host(:state(disabled))`, as `text-field.css` does after #6872 (B22)
+- [x] Add `.swc-Checkbox` to the internal wrapper in `render()`; keep styling off `:host`
+- [x] Copy S2 source from `spectrum-css` `spectrum-two` branch `index.css` (not `/dist`) into `checkbox.css` as baseline
+- [x] After the baseline copy, align `checkbox.css` with `swc-radio`'s `radio.css` where it fits (Q8): the box-and-label grid, label wrapping and first-line box alignment, size custom properties, label typography, and state colors, including `disabled-content-color` for disabled. Leave out its description layout and description font sizes (the in-group layout that Q7 defers), its host focus selectors (checkbox focuses the inner input), and its group read-only container query (checkbox read-only is per item)
+- [x] Map `.is-indeterminate`, `.is-readOnly`, `--emphasized`, and `--size*` selectors to host attribute selectors; map disabled to `:host(:state(disabled))`, as `text-field.css` does after #6872 (B22)
 - [ ] Q8: settle both open choices, record them in the Decision log, then implement them. Error text needs styles from the shared `form-fields` rules or `checkbox.css`; `radio.css` has none
-- [ ] Style the label and required indicator that `renderLabel()` emits, per Q8. Its `swc-FormFieldLabel`, `swc-FormFieldLabel-requiredIndicator`, and `swc-FormFieldLabel-necessityLabel` classes are fixed. If Q15 adopts `necessity-indicator`, `checkbox.css` also supplies the indicator and necessity-label styles
-- [ ] Implement the Q7 standalone placement for description and error text
-- [ ] After the baseline copy, remove the `.is-invalid` box color rules. Style the error icon to match `swc-radio-group`: negative color, one line tall, the `--swc-form-field-invalid-icon-gap` gap, and `CanvasText` in forced colors; copy these from the shared `form-fields` fragment if Q8 picks local rules (B14)
+- [x] Style the label that `renderLabel()` emits, per Q8. Its `swc-FormFieldLabel` class is fixed. Q15 adds no necessity indicator, so the indicator classes aren't rendered
+- [x] Implement the Q7 standalone placement for description and error text
+- [x] After the baseline copy, remove the `.is-invalid` box color rules. Style the error icon to match `swc-radio-group`: negative color, one line tall, the `--swc-form-field-invalid-icon-gap` gap, and `CanvasText` in forced colors; copy these from the shared `form-fields` fragment if Q8 picks local rules (B14)
 
 #### Visual model and regressions
 
-- [ ] Carry over the CJK line-height rule (`:lang(ja)`, `:lang(ko)`, `:lang(zh)`) from the S2 source
-- [ ] Verify label wrap keeps the box aligned to the first line at every size
-- [ ] Carry over the `@media (forced-colors: active)` block from the S2 source
-- [ ] Focus ring: draw it on `.swc-Checkbox-box`, not the visually hidden native input, and apply the label's focus color. Drive both from the inner input's `:focus-visible` with sibling selectors (`+` for the box; `~` for the label, which follows the box). Radio's host focus selectors don't apply (Q8)
-- [ ] Add `@cssprop` JSDoc tag to the primary SWC component class for every exposed `--swc-*` property (e.g. `@cssprop --swc-checkbox-control-size - Inline and block size of the checkbox box.`)
-- [ ] Pass stylelint (property order, `no-descending-specificity`, token validation)
+- [x] Carry over the CJK line-height rule (`:lang(ja)`, `:lang(ko)`, `:lang(zh)`) from the S2 source
+- [x] Verify label wrap keeps the box aligned to the first line at every size
+- [x] Carry over the `@media (forced-colors: active)` block from the S2 source
+- [x] Focus ring: draw it on `.swc-Checkbox-box`, not the visually hidden native input, and apply the label's focus color. Drive both from the inner input's `:focus-visible` with sibling selectors (`+` for the box; `~` for the label, which follows the box). Radio's host focus selectors don't apply (Q8)
+- [x] Add `@cssprop` JSDoc tag to the primary SWC component class for every exposed `--swc-*` property (e.g. `@cssprop --swc-checkbox-control-size - Inline and block size of the checkbox box.`)
+- [x] Pass stylelint (property order, `no-descending-specificity`, token validation)
 
 ### Accessibility
 
@@ -636,13 +639,13 @@ Accessibility (`checkbox.a11y.spec.ts` plus Storybook axe):
 
 #### Visual regression
 
-- [ ] VRT for every "Yes" cell of the visual matrix in [Public API](#public-api), at each size
-- [ ] VRT for wrapped labels at every size
-- [ ] VRT for invalid: box colors unchanged across unchecked, checked, indeterminate, emphasized, and disabled by a fieldset; error icon with error text, with only a description, and alone; error icon visible in forced colors (B14)
-- [ ] VRT for the focus-visible ring on the box, including that it is not clipped
-- [ ] VRT for forced-colors mode across checked, indeterminate, and disabled
-- [ ] VRT for description and error text placement (Q7), at every size and with a wrapped label
-- [ ] Custom-properties VRT for each exposed `--swc-*` property
+- [x] VRT for every "Yes" cell of the visual matrix in [Public API](#public-api), at each size
+- [x] VRT for wrapped labels at every size
+- [x] VRT for invalid: box colors unchanged across unchecked, checked, indeterminate, emphasized, and disabled by a fieldset; error icon with error text, with only a description, and alone; error icon visible in forced colors (B14)
+- [x] VRT for the focus-visible ring on the box, including that it is not clipped
+- [x] VRT for forced-colors mode across checked, indeterminate, and disabled
+- [x] VRT for description and error text placement (Q7), at every size and with a wrapped label
+- [x] Custom-properties VRT for each exposed `--swc-*` property
 
 ### Documentation
 
@@ -673,15 +676,15 @@ During drafting, this section tracks active blockers and open questions. As each
 
 | #   | Item | Blocking? | Status | Owner |
 | --- | ---- | --------- | ------ | ----- |
-| Q15 | Whether `swc-checkbox` exposes `necessity-indicator` (`icon` or `label`) like `swc-text-field`, so `renderLabel()` adds a required marker to the inline label. React S2's checkbox has none. Recommended: match `swc-text-field`, because a required consent checkbox needs a visible cue ([WCAG 3.3.2](https://www.w3.org/WAI/WCAG22/Understanding/labels-or-instructions.html)) and the field family stays consistent. If adopted, ship the `icon` default from the start: adding it later would change how every existing required checkbox looks. | Before Styling | Open: Design confirms before the Styling phase | Design + implementation |
+| Q17 | Design confirms three Styling divergences from Spectrum CSS and React S2 (C15): the box-to-label gap is `form-item-gap-*` (4, 6, 6, and 6px) where both render 9, 10, 11, and 13px from the deprecated `text-to-control-*` tokens; the description and error text sit one shared form-field row gap below the row (6px at `m`), where React S2 offsets them by the control height; and the checkmark and dash use the `ui-icon-*` box for their step, so the `s` checkmark is 8px instead of 10px and the `m` dash is 10px instead of 8px. | No | Open: confirm in Styling review | Design |
 
-_Q1 and Q2 are settled in the [Decision log](#decision-log)._
+_Q1, Q2, and Q15 are settled in the [Decision log](#decision-log)._
 
 ### Architecture and behavior
 
 | #   | Item | Blocking? | Status | Owner |
 | --- | ---- | --------- | ------ | ----- |
-| Q8 | Direction from review: checkbox mostly uses custom styles, with `swc-radio`'s `radio.css` as a base where it fits, and likely won't fully share the shared `form-fields` `_lit-styles/` fragment. The fragment's `.swc-FormFieldLabel` rules lay out the labels of `swc-text-field` and `swc-radio-group` above or to the side of the field, not inline after a control, so the checkbox label needs its own styles. Open choices: (a) whether description and error text reuse the fragment's `.swc-FormFieldDescription` (including its `--invalid` modifier) and `.swc-FormFieldErrorText` rules or get local rules, judged against the Q7 placement; (b) whether `checkbox.css` styles the fixed `swc-FormFieldLabel*` classes that `renderLabel()` emits, or the directive gains a class option. Recommended: local rules for (a), and the fixed classes for (b), which needs no core change. | No | Open: settle in the Styling phase | CSS reviewer |
+| Q8 | Implemented as proposed; awaiting CSS review. Checkbox has its own row and label styles in `checkbox.css`, based on `radio.css`, and shares the `form-fields` fragment for the rest: (a) description and error text reuse the fragment's `.swc-FormFieldDescription` and `.swc-FormFieldErrorText` rules, including the invalid icon, below the row at the control's text size (Q7); (b) `checkbox.css` restyles the fixed `swc-FormFieldLabel` classes that `renderLabel()` emits (grid area, inline gap, no bottom margin, checkbox content colors), with no core change. Reusing the fragment keeps messages, the error icon, and disabled dimming identical to `swc-text-field` and `swc-radio-group`; it reverses the earlier recommendation of local rules for (a). | No | Open: CSS reviewer confirms in Styling review | CSS reviewer |
 
 ### Scope and prerequisites
 
@@ -722,6 +725,8 @@ A2–A4 have no tickets by decision (Q11): they are on-request or follow from sh
 | C12 | A future `swc-checkbox-group` disables its items by setting the host `disabled` attribute. The browser treats a form-associated element with `disabled` like one inside a `<fieldset disabled>`, so `FieldAssociationController` reports it as disabled, and the item's own `field-status` stays intact for when the group re-enables it. Read-only gets an internal hook when the group is built (A1). | Found in the API review: `field-status` holds one value, so a group that wrote it would overwrite the item's own status. Radio items keep a separate `disabled` boolean for this; checkbox gets the same effect without new API. A form test confirms the attribute disables the checkbox, excludes it from `FormData`, bars validation, and keeps `field-status`. |
 | C13 | An external `<label for>` that targets the checkbox neither toggles nor names it. A ticket covering `swc-text-field`, `swc-radio-group`, and `swc-checkbox` tracks support. Until then, the accessibility phase adds a dev warning when an external label targets the checkbox, pointing to the `label` slot or `accessible-labelledby`. | Found in the API review and verified in Chromium: the label's click lands on the host, not the inner input, and the accessible name comes only from the in-shadow label. Text field has the same naming gap, so the fix belongs to the shared form foundation. Ticket to be filed. |
 | C14 | Read-only sets `aria-disabled="true"` on the inner input instead of `aria-readonly`. The input keeps no native `disabled`, so it stays focusable, and the base class still blocks the toggle. | Native `readonly` doesn't apply to checkbox inputs ([MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/readonly)), and `aria-readonly` wasn't announced in manual testing: VoiceOver with Safari read "Send me product updates, unchecked, checkbox", and Chromium's accessibility tree doesn't expose it on checkboxes. Recommended by accessibility review in the accessibility phase. The switch specification has the same open question. |
+| C15 | Layout and tokens. The render root is `.swc-FormField swc-Checkbox`, so the shared `form-fields` fragment's variables, error icon, and messages row apply; the box-and-label row (`.swc-Checkbox-control`) sits in its `input` area. The native input shares the box's grid cell at the box's size, transparent. The box centers on the label's first line with `1lh`, with no block padding or `min-block-size`, and has no offset without a visible label. The checkmark and dash are `swc-ui-icon` elements one size smaller than the checkbox (`xs`, `s`, `m`, `l`), which gives C5's 50, 75, 100, and 200 steps at the `ui-icon-*` box sizes (8, 10, 10, and 12px). The box-to-label gap is `form-item-gap-*` (4, 6, 6, and 6px), as in `radio.css`, and the description and error text use the shared form-field row gap. The focus ring is an outline on the box, as in `radio.css`. Transitions stop under `prefers-reduced-motion`. | Spectrum CSS and React S2 render a 9, 10, 11, and 13px gap from `text-to-control-*`, which the token data deprecates and renames to `base-gap-*` (4, 6, 6, and 6px, the same as `form-item-gap-*`); the build rejects the old names. The per-icon `checkmark-icon-size-*` and `dash-icon-size-*` tokens are deleted in gen2 in favor of the `ui-icon-*` scale, and the [icon RFC](../../05_strategies/icon-rfc.md#7-sizing) forbids resizing UI icons in CSS. Q17 asks Design to confirm these differences. Checked and indeterminate select on the inner input's `:checked` and `:indeterminate`, because `checked` doesn't reflect (B9). No cascade layers: the shared fragment is unlayered, so it would outrank every layered checkbox rule; `:where()` keeps selectors at (0,1,0). |
+| C16 | Expose the size properties and the state-color sets listed under CSS custom properties (gen2) in [Public API](#public-api), and document the shared `--swc-form-field-*` properties checkbox uses. | The custom properties guide asks for exposed `-default`, `-hover`, `-down`, and `-focus` properties for native states on internal elements, and for one exposed property per size-dependent value; `swc-radio` exposes the same border and content color sets. A custom-properties VRT story covers every documented property. |
 | Q1 / B14 | Invalid leaves the box colors unchanged; a decorative error icon marks the state, as specified in B14. | Design decided, in a Slack discussion relayed in plan review, that invalid does not change the input's border or fill. This matches Figma, where checkbox has no invalid state, and follows Spectrum CSS, which already removed radio's invalid styles ([spectrum-css#2209](https://github.com/adobe/spectrum-css/pull/2209)). The error icon placement copies the `swc-radio-group` decision: the icon shows while `field-status="invalid"`, so the state never relies on color alone. Inside a disabled fieldset, the icon follows `swc-text-field` instead and hides (B22). This replaces the earlier plan to follow React S2's negative box colors and brings the error icon, formerly A5, into scope. |
 | Q2 | Read-only has no distinct visual treatment; it looks like the enabled state. Spectrum CSS's suppression of the down-state transform for read-only is kept. | Follows React S2, whose checkbox styles have no read-only condition. Figma's component frame has no read-only state. Read-only is conveyed to assistive technology by `aria-disabled="true"` (C14). |
 | Q3 | Build on the shared form mixins and controller; start Setup (SWC-2343) once the radio branch merges to `main`; the text field branch already merged. **Amended at Setup:** Setup started on `main` before the radio branch was ready, then moved onto `seckles/radio-migration` after [#6872](https://github.com/adobe/spectrum-web-components/pull/6872) merged into it. `Checkbox.types.ts` uses the shared `FieldStatus` type, and the API phase renders the B14 error icon through the `errorIcon` option. | The foundation landed on `main` with the text field migration; building on it avoids a second labelling and form implementation and validates its boolean-field path. Plan review asked to wait for the radio branch too, so checkbox reuses settled radio patterns instead of chasing them while they shift; that branch also carries the `errorIcon` option that B14 needs. Details: [Dependency-aware recommendation](#dependency-aware-recommendation). |
@@ -734,6 +739,7 @@ A2–A4 have no tickets by decision (Q11): they are on-request or follow from sh
 | Q11 | Only A1 gets a deferred ticket; A2–A4 are tracked in the Additive table without tickets. | A2 and A4 are on-request; A3 belongs to the shared forms strategy. Keeps the backlog limited to real, scheduled work. The former A5, the error icon, moved into scope with B14. |
 | Q13 | Use `LabellingMixin`'s name wiring unchanged: an in-shadow `<label for>` names the inner input from the `label` slot, `aria-label` carries `accessible-label`, and `ariaLabelledByElements` carries `accessible-labelledby`. | Testing during plan review found an in-shadow `<label for>` acceptable, and it matches `swc-text-field`. Browsers rank `aria-labelledby` over `aria-label` over a native label, so the precedence matches the order the accessibility analysis specifies. Internal wiring only; no public API change. This supersedes the accessibility analysis's description of the slotted label wired through `ariaLabelledByElements`, under [ARIA roles, states, and properties](./component-accessibility-specification.md#aria-roles-states-and-properties), [Shadow DOM and cross-root ARIA issues](./component-accessibility-specification.md#shadow-dom-and-cross-root-aria-issues), and [Summary checklist](./component-accessibility-specification.md#summary-checklist). |
 | Q14 | Focus after a failed submit is consumer-owned. In a form without `novalidate`, a blocked submit focuses the inner input, the validation anchor, with no extra code. In a `novalidate` form (C7), the submit handler focuses the first entry in `form.elements` where `willValidate && !validity.valid`, as [forms RFC §3.6](../../05_strategies/forms-strategy-rfc.md#36-validation-timing-and-submit-behavior) specifies; it doesn't call `form.reportValidity()`, which shows the native bubble. The checkbox meets §3.6's two requirements: the inner input is the focusable validation anchor, and `delegatesFocus` makes `host.focus()` reach it. Focus for an invalid `swc-checkbox-group` belongs to A1 (B18). | Settled in the accessibility phase. `swc-text-field` and `swc-radio-group` leave this to the application too, and the text field plan (Q19) defers the broader validation model to the forms strategy. A Playwright test confirms a blocked native submit focuses the inner input. |
+| Q15 | `swc-checkbox` has no necessity indicator. A required standalone checkbox shows no asterisk or "(required)" text; consumers who need a visible cue write it in the label. The indicator belongs to the group label of `swc-checkbox-group` (A1). | Settled in the Styling phase by the S2 sources: React Spectrum S2's `Checkbox` has `isRequired` but no `necessityIndicator`, while `CheckboxGroup` shows it on the group label (default `icon`); Spectrum CSS's `spectrum-two` checkbox has no required marker; the Figma `S2 / Web` checkbox frame has no required state; and 1st-gen has none. [WCAG 3.3.2](https://www.w3.org/WAI/WCAG22/Understanding/labels-or-instructions.html) needs a visible label, which the `label` slot supplies. |
 | Q16 | `swc-radio-group` adopts `field-status` too, in [#6872](https://github.com/adobe/spectrum-web-components/pull/6872) on the radio branch. | Confirmed by the radio owner in plan review. The item `swc-radio` keeps its own `disabled` boolean, because the group owns the field status. `swc-checkbox` stands alone, so it follows `swc-text-field` (B22). |
 | B17 | `field-status="invalid"` sets host `customError` validity, so `checkValidity()` is `false` even when the box is checked, and native submit is blocked in a form without `novalidate`. | Settled in plan review. It covers errors the application sets, such as a checked option the application then rejects, and matches `swc-radio-group` and `swc-text-field`. Details, including the read-only and disabled exceptions: B17. |
 | B18 | Inside a group, `swc-checkbox-group` owns the invalid state, its error text, and its constraint validity; items show no error text or error icon of their own. | From plan review; the checkbox-group plan confirms the details. This supersedes the accessibility analysis notes that keep item-level invalidity in a group, under [Overview](./component-accessibility-specification.md#overview) and [ARIA roles, states, and properties](./component-accessibility-specification.md#aria-roles-states-and-properties). How the group exposes the state to assistive technology is the checkbox-group plan's decision; its [component accessibility specification](../checkbox-group/component-accessibility-specification.md#aria-roles-states-and-properties) advises against `aria-invalid` on `role="group"` without a separate standards and assistive-technology decision. Details: B18. |
