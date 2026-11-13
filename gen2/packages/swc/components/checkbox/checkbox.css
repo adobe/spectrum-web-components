@@ -12,9 +12,280 @@
 
 :host {
   display: inline-block;
+  max-inline-size: 100%;
+  vertical-align: top;
 }
 
+*,
+*::before {
+  box-sizing: border-box;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   BASE CHECKBOX
+   The root is also `.swc-FormField`, so the shared fragment lays out the
+   description and error text below the box-and-label row.
+   ───────────────────────────────────────────────────────────────────────────── */
+
 .swc-Checkbox {
-  display: inline-flex;
+  --_swc-checkbox-control-size: var(--swc-checkbox-control-size, token("checkbox-control-size-medium"));
+  --_swc-checkbox-down-transform: perspective(token("component-size-minimum-perspective-down")) translateZ(token("component-size-difference-down"));
+  --_swc-checkbox-background-color: token("gray-25");
+  --_swc-checkbox-checkmark-color: var(--_swc-checkbox-background-color);
+  --_swc-checkbox-focus-indicator-color: token("focus-indicator-color");
+
+  -webkit-tap-highlight-color: transparent;
+  cursor: default;
+}
+
+/* NOTE: the shared form-field fragment reads this line height for the label,
+   description, and error text, so the CJK override sets it here. */
+.swc-Checkbox:lang(ja),
+.swc-Checkbox:lang(zh),
+.swc-Checkbox:lang(ko) {
+  --_swc-form-field-line-height: token("cjk-line-height-100");
+}
+
+/* The box is centered on the label's first line, so there is no block
+   padding. Without a visible label, the box has no offset. */
+.swc-Checkbox-control {
+  --_swc-checkbox-border-color: var(--swc-checkbox-border-color-default, token("neutral-content-color-default"));
+  --_swc-checkbox-selected-color: var(--swc-checkbox-selected-color-default, token("neutral-content-color-default"));
+  --_swc-checkbox-control-offset: calc((1lh - var(--_swc-checkbox-control-size)) / 2);
+
+  display: grid;
+  grid-area: input;
+  grid-template-areas: "box label";
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  font-size: var(--swc-form-field-label-font-size, token("font-size-100"));
+  line-height: var(--_swc-form-field-line-height);
+  color: var(--swc-checkbox-content-color-default, token("neutral-content-color-default"));
+}
+
+.swc-Checkbox-control:where(:not(:has(.swc-FormFieldLabel))) {
+  --_swc-checkbox-control-offset: 0px;
+}
+
+/* The native input stays in the box's grid cell at the box's size, so touch
+   and pointer input land on it; it is transparent so the box shows through. */
+.swc-Checkbox-input {
+  z-index: 1;
+  grid-area: box;
+  inline-size: var(--_swc-checkbox-control-size);
+  block-size: var(--_swc-checkbox-control-size);
+  padding: 0;
+  margin: 0;
+  margin-block-start: var(--_swc-checkbox-control-offset);
+  font: inherit;
+  opacity: 0;
+}
+
+.swc-Checkbox-box {
+  display: flex;
+  position: relative;
+  grid-area: box;
   align-items: center;
+  justify-content: center;
+  inline-size: var(--_swc-checkbox-control-size);
+  block-size: var(--_swc-checkbox-control-size);
+  margin-block-start: var(--_swc-checkbox-control-offset);
+  border-radius: var(--swc-checkbox-corner-radius, token("corner-radius-small-size-medium"));
+  transition-duration: token("animation-duration-100");
+  transition-property: transform;
+
+  /* The border fills the box while checked or indeterminate. */
+  &::before {
+    position: absolute;
+    inset: 0;
+    background-color: var(--_swc-checkbox-background-color);
+    border: token("border-width-200") solid var(--_swc-checkbox-border-color);
+    border-radius: inherit;
+    content: "";
+    transition-duration: token("animation-duration-100");
+    transition-property: border-color, border-width;
+  }
+}
+
+.swc-Checkbox-checkmark,
+.swc-Checkbox-dash {
+  --swc-icon-color: var(--_swc-checkbox-checkmark-color);
+
+  position: absolute;
+  opacity: 0;
+  transform: scale(0);
+  transition-timing-function: ease-in-out;
+  transition-duration: token("animation-duration-100");
+  transition-property: opacity, transform;
+}
+
+/* The label sits inline after the box instead of in the shared fragment's
+   label row. */
+.swc-FormFieldLabel {
+  grid-area: label;
+  margin-block-end: 0;
+  margin-inline-start: var(--swc-checkbox-text-to-control, token("form-item-gap-medium"));
+  color: inherit;
+  text-align: start;
+  transition-duration: token("animation-duration-100");
+  transition-property: color;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   SIZES
+   ───────────────────────────────────────────────────────────────────────────── */
+
+:host([size="s"]) {
+  --swc-checkbox-control-size: token("checkbox-control-size-small");
+  --swc-checkbox-corner-radius: token("corner-radius-small-size-small");
+  --swc-checkbox-text-to-control: token("form-item-gap-small");
+}
+
+:host([size="l"]) {
+  --swc-checkbox-control-size: token("checkbox-control-size-large");
+  --swc-checkbox-corner-radius: token("corner-radius-small-size-large");
+  --swc-checkbox-text-to-control: token("form-item-gap-large");
+}
+
+:host([size="xl"]) {
+  --swc-checkbox-control-size: token("checkbox-control-size-extra-large");
+  --swc-checkbox-corner-radius: token("corner-radius-small-size-extra-large");
+  --swc-checkbox-text-to-control: token("form-item-gap-extra-large");
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   EMPHASIZED
+   Emphasized changes only the checked and indeterminate fill.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+:host([emphasized]) {
+  --swc-checkbox-selected-color-default: token("accent-content-color-default");
+  --swc-checkbox-selected-color-hover: token("accent-content-color-hover");
+  --swc-checkbox-selected-color-down: token("accent-content-color-down");
+  --swc-checkbox-selected-color-focus: token("accent-content-color-key-focus");
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   STATES
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.swc-Checkbox-control:hover {
+  --_swc-checkbox-border-color: var(--swc-checkbox-border-color-hover, token("neutral-content-color-hover"));
+  --_swc-checkbox-selected-color: var(--swc-checkbox-selected-color-hover, token("neutral-content-color-hover"));
+
+  color: var(--swc-checkbox-content-color-hover, token("neutral-content-color-hover"));
+}
+
+.swc-Checkbox-control:active {
+  --_swc-checkbox-border-color: var(--swc-checkbox-border-color-down, token("neutral-content-color-down"));
+  --_swc-checkbox-selected-color: var(--swc-checkbox-selected-color-down, token("neutral-content-color-down"));
+
+  color: var(--swc-checkbox-content-color-down, token("neutral-content-color-down"));
+}
+
+:where(.swc-Checkbox-control:active) .swc-Checkbox-box {
+  transform: var(--_swc-checkbox-down-transform);
+}
+
+:where(.swc-Checkbox-input:checked, .swc-Checkbox-input:indeterminate) + .swc-Checkbox-box::before {
+  border-color: var(--_swc-checkbox-selected-color);
+  border-width: calc(var(--_swc-checkbox-control-size) / 2);
+}
+
+:where(.swc-Checkbox-input:checked:not(:indeterminate) + .swc-Checkbox-box) .swc-Checkbox-checkmark,
+:where(.swc-Checkbox-input:indeterminate + .swc-Checkbox-box) .swc-Checkbox-dash {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* The native input is the focus target, so the ring is drawn on the box. */
+:where(.swc-Checkbox-input:focus-visible) + .swc-Checkbox-box {
+  --_swc-checkbox-border-color: var(--swc-checkbox-border-color-focus, token("neutral-content-color-key-focus"));
+  --_swc-checkbox-selected-color: var(--swc-checkbox-selected-color-focus, token("neutral-content-color-key-focus"));
+
+  outline: token("focus-indicator-thickness") solid var(--_swc-checkbox-focus-indicator-color);
+  outline-offset: token("focus-ring-gap");
+}
+
+:where(.swc-Checkbox-input:focus-visible) ~ .swc-FormFieldLabel {
+  color: var(--swc-checkbox-content-color-focus, token("neutral-content-color-key-focus"));
+}
+
+/* Read-only and disabled checkboxes don't shift when pressed. */
+:host([field-status="readonly"]) .swc-Checkbox,
+:host(:state(disabled)) .swc-Checkbox {
+  --_swc-checkbox-down-transform: none;
+}
+
+/* Disabled uses one color for the box border and its checked fill. */
+:host(:state(disabled)) .swc-Checkbox-control {
+  --_swc-checkbox-border-color: var(--swc-checkbox-border-color-disabled, token("disabled-content-color"));
+  --_swc-checkbox-selected-color: var(--swc-checkbox-border-color-disabled, token("disabled-content-color"));
+}
+
+:host(:state(disabled)) .swc-FormFieldLabel {
+  color: var(--swc-checkbox-content-color-disabled, token("disabled-content-color"));
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   REDUCED MOTION
+   ───────────────────────────────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .swc-Checkbox-box,
+  .swc-Checkbox-box::before,
+  .swc-Checkbox-checkmark,
+  .swc-Checkbox-dash,
+  .swc-FormFieldLabel {
+    transition-duration: 0ms;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   FORCED COLORS
+   The box is decorative, so every state restates its system colors.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+@media (forced-colors: active) {
+  .swc-Checkbox {
+    --_swc-checkbox-background-color: Canvas;
+    --_swc-checkbox-focus-indicator-color: CanvasText;
+  }
+
+  .swc-Checkbox-control {
+    --_swc-checkbox-border-color: ButtonText;
+    --_swc-checkbox-selected-color: Highlight;
+
+    color: CanvasText;
+  }
+
+  .swc-Checkbox-control:hover,
+  .swc-Checkbox-control:active {
+    --_swc-checkbox-border-color: Highlight;
+    --_swc-checkbox-selected-color: Highlight;
+
+    color: CanvasText;
+  }
+
+  .swc-Checkbox-box {
+    forced-color-adjust: none;
+  }
+
+  :where(.swc-Checkbox-input:focus-visible) + .swc-Checkbox-box {
+    --_swc-checkbox-border-color: Highlight;
+    --_swc-checkbox-selected-color: Highlight;
+  }
+
+  :where(.swc-Checkbox-input:focus-visible) ~ .swc-FormFieldLabel {
+    color: CanvasText;
+  }
+
+  :host(:state(disabled)) .swc-Checkbox-control {
+    --_swc-checkbox-border-color: GrayText;
+    --_swc-checkbox-selected-color: GrayText;
+  }
+
+  :host(:state(disabled)) .swc-FormFieldLabel {
+    color: GrayText;
+  }
 }

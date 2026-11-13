@@ -111,6 +111,12 @@ export const RegistrationTest: Story = {
       expect(checkbox.name).toBeUndefined();
       expect(checkbox.value).toBe('on');
     });
+
+    await step('renders a decorative box after the input', () => {
+      const box = checkbox.shadowRoot?.querySelector('.swc-Checkbox-box');
+      expect(box).toHaveAttribute('aria-hidden', 'true');
+      expect(inputOf(checkbox).nextElementSibling).toBe(box);
+    });
   },
 };
 RegistrationTest.storyName = 'Registration and render';
@@ -655,6 +661,118 @@ export const FieldStatusTest: Story = {
   },
 };
 FieldStatusTest.storyName = 'field-status values';
+
+// ──────────────────────────────────────────────────────────────
+// TEST: checkmark and dash icons
+// ──────────────────────────────────────────────────────────────
+
+export const BoxIconsTest: Story = {
+  render: () => html`
+    <swc-checkbox><span slot="label">Icons</span></swc-checkbox>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const checkbox = await getComponent<Checkbox>(
+      canvasElement,
+      'swc-checkbox'
+    );
+    const icon = (name: string): Element | null | undefined =>
+      checkbox.shadowRoot?.querySelector(
+        `.swc-Checkbox-box swc-ui-icon[icon="${name}"]`
+      );
+
+    await step('the box holds the checkmark and dash icons', () => {
+      expect(icon('checkmark')).toBeTruthy();
+      expect(icon('dash')).toBeTruthy();
+    });
+
+    await step('icons are one size smaller than the checkbox', async () => {
+      const expected = { s: 'xs', m: 's', l: 'm', xl: 'l' } as const;
+      for (const [size, iconSize] of Object.entries(expected)) {
+        checkbox.size = size as Checkbox['size'];
+        await checkbox.updateComplete;
+        expect(icon('checkmark')).toHaveAttribute('size', iconSize);
+        expect(icon('dash')).toHaveAttribute('size', iconSize);
+      }
+    });
+  },
+};
+BoxIconsTest.storyName = 'Checkmark and dash icons';
+
+// ──────────────────────────────────────────────────────────────
+// TEST: box layout
+// ──────────────────────────────────────────────────────────────
+
+function boxOf(checkbox: Checkbox): DOMRect {
+  const box = checkbox.shadowRoot?.querySelector('.swc-Checkbox-box');
+  if (!box) {
+    throw new Error('swc-checkbox rendered no box');
+  }
+  return box.getBoundingClientRect();
+}
+
+export const BoxLayoutTest: Story = {
+  render: () => html`
+    <div style="inline-size: 160px">
+      <swc-checkbox>
+        <span slot="label">A long label that wraps across several lines</span>
+      </swc-checkbox>
+      <swc-checkbox accessible-label="No visible label"></swc-checkbox>
+    </div>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const [wrapped, unlabeled] = await getComponents<Checkbox>(
+      canvasElement,
+      'swc-checkbox'
+    );
+
+    await step('the root is the form-field grid and the checkbox', () => {
+      const root = wrapped.shadowRoot?.firstElementChild;
+      expect(root).toHaveClass('swc-FormField', 'swc-Checkbox');
+    });
+
+    await step(
+      'icons keep the UI icon box for their step, without CSS resizing',
+      async () => {
+        // Desktop ui-icon tokens for the xs, s, m, and l icon sizes, in pixels.
+        // The per-icon checkmark and dash size tokens are deleted in gen2.
+        const expected = {
+          s: [8, 8],
+          m: [10, 10],
+          l: [10, 10],
+          xl: [12, 12],
+        } as const;
+        for (const [size, [checkmark, dash]] of Object.entries(expected)) {
+          wrapped.size = size as Checkbox['size'];
+          await wrapped.updateComplete;
+          // offsetWidth ignores the scale(0) that hides an unselected icon.
+          const width = (name: string): number | undefined =>
+            wrapped.shadowRoot?.querySelector<HTMLElement>(
+              `swc-ui-icon[icon="${name}"]`
+            )?.offsetWidth;
+          expect(width('checkmark'), `${size} checkmark`).toBe(checkmark);
+          expect(width('dash'), `${size} dash`).toBe(dash);
+        }
+        wrapped.size = 'm';
+        await wrapped.updateComplete;
+      }
+    );
+
+    await step('the input covers only the box when the label wraps', () => {
+      const box = boxOf(wrapped);
+      const input = inputOf(wrapped).getBoundingClientRect();
+      expect(input.height).toBe(box.height);
+      expect(input.top).toBe(box.top);
+    });
+
+    await step('without a visible label, the box has no offset', () => {
+      const box = boxOf(unlabeled);
+      const host = unlabeled.getBoundingClientRect();
+      expect(box.top).toBe(host.top);
+      expect(host.height).toBe(box.height);
+    });
+  },
+};
+BoxLayoutTest.storyName = 'Box layout';
 
 // ──────────────────────────────────────────────────────────────
 // TEST: description, error text, and error icon
