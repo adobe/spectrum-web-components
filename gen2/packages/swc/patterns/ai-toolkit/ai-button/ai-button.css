@@ -148,8 +148,12 @@
   content: "";
 }
 
-.swc-AiButton:hover {
-  --_swc-ai-button-glow-hover-opacity: token("opacity-900");
+/* A touch screen keeps :hover after a tap, so only a precise pointer that can
+   hover shows the hover glow. */
+@media (hover: hover) and (pointer: fine) {
+  .swc-AiButton:hover {
+    --_swc-ai-button-glow-hover-opacity: token("opacity-900");
+  }
 }
 
 .swc-AiButton:focus-visible {
