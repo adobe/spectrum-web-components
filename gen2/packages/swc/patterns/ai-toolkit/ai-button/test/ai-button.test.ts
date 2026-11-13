@@ -101,13 +101,14 @@ const STAR_POINTS =
   '10,1.41 12.13,7.97 19.04,7.97 13.45,12.03 15.58,18.59 10,14.54 4.42,18.59 6.55,12.03 0.96,7.97 7.87,7.97';
 
 /**
- * Dimensions per size, in pixels. They match the standard button's sizes, so
- * medium is shorter than the design's 36px.
+ * Block and icon sizes per size, in pixels. They match the standard button's
+ * sizes, so medium is shorter than the design's 36px. `StandardButtonParityTest`
+ * checks the padding, gap, and font size against the standard button.
  */
 const DESIGN_SIZES = {
-  m: { blockSize: 32, edgeToText: 12, iconSize: 18, fontSize: 14 },
-  l: { blockSize: 40, edgeToText: 16, iconSize: 20, fontSize: 16 },
-  xl: { blockSize: 48, edgeToText: 18, iconSize: 22, fontSize: 18 },
+  m: { blockSize: 32, iconSize: 18 },
+  l: { blockSize: 40, iconSize: 20 },
+  xl: { blockSize: 48, iconSize: 22 },
 } as const;
 
 // ────────────────────
@@ -397,20 +398,14 @@ export const SizesTest: Story = {
       'swc-ai-button'
     );
 
-    await step('matches the expected dimensions for each size', async () => {
+    await step('matches the expected button and icon sizes', async () => {
       for (const el of buttons) {
-        const button = innerButton(el);
-        const icon = button.querySelector<HTMLElement>('.swc-AiButton-icon')!;
-        const { blockSize, edgeToText, iconSize, fontSize } =
-          DESIGN_SIZES[el.size];
+        const { blockSize, iconSize } = DESIGN_SIZES[el.size];
 
-        expect(button.offsetHeight, `${el.size} block size`).toBe(blockSize);
-        expect(el.offsetHeight, `${el.size} host block size`).toBe(blockSize);
-        expect(getComputedStyle(button).paddingInlineStart).toBe(
-          `${edgeToText}px`
+        expect(innerButton(el).offsetHeight, `${el.size} button height`).toBe(
+          blockSize
         );
-        expect(icon.offsetWidth, `${el.size} icon size`).toBe(iconSize);
-        expect(getComputedStyle(button).fontSize).toBe(`${fontSize}px`);
+        expect(el.offsetHeight, `${el.size} host height`).toBe(blockSize);
         expect(
           builtInIcon(el).getBoundingClientRect().width,
           `${el.size} drawn icon size`
