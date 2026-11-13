@@ -11,8 +11,7 @@
  */
 
 import { expect, test } from '@playwright/test';
-
-import { gotoStory } from '../../../../utils/a11y-helpers.js';
+import { gotoStory } from '@swc-test-helpers/playwright';
 
 test.describe('UserMessage - ARIA Snapshots', () => {
   test('exposes message copy without an attachment tab stop', async ({

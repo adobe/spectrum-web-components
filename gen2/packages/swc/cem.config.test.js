@@ -106,6 +106,16 @@ describe('cem.config.js', () => {
     );
   });
 
+  test('resolves fields initialized from a named constant', () => {
+    const tabs = element('swc-tabs');
+    assert.equal(field(tabs, 'direction')?.default, 'horizontal');
+    assert.equal(attribute(tabs, 'direction')?.default, 'horizontal');
+    assert.equal(field(element('swc-avatar'), 'size')?.default, '100');
+    assert.equal(field(element('swc-thumbnail'), 'fit')?.default, 'contain');
+    assert.equal(field(element('swc-accordion'), 'level')?.default, '3');
+    assert.equal(field(element('swc-dropzone'), 'dropEffect')?.default, 'copy');
+  });
+
   test('keeps no accessor default from the previous watch pass', () => {
     // `cem analyze --watch` calls `create()` again with the same plugins.
     const plugins = config.plugins.filter(

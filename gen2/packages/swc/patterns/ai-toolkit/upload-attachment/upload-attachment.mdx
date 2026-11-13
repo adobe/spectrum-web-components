@@ -20,6 +20,55 @@ When a single upload batch mixes **images and documents**, normalize the whole s
 
 The tile's own accessible name derives automatically from the `title` slot's text content. Its Close button uses "Remove [title]", or "Remove attachment" when no title is available, and appends nonempty `badge` text for media attachments (for example, "Remove Campaign brief, PDF"). The generated label updates when title or badge text changes. Set `accessible-label` / `dismiss-label` to override; an explicit `dismiss-label` is used unchanged. The upload-progress circle's accessible label defaults to "Uploading"; set `progress-label` to localize it. This tile has no default `tabindex` of its own; `swc-prompt-field` manages roving `tabindex` and keyboard focus for tiles slotted into its `attachment` slot.
 
+### Building tiles from files
+
+To turn `File` objects from a drop or a file picker into tile data, use `filesToAttachments()`, and release image thumbnails with `revokeAttachment()`. The helpers return plain data and never create elements, so your app keeps control of its markup, uploads, and validation. Use the same data for `swc-prompt-field` tiles and `swc-user-message` attachments. See [Prompt field → Drag and drop](../?path=/docs/patterns-ai-toolkit-prompt-field--docs#drag-and-drop) for the full recipe.
+
+```ts
+import {
+  filesToAttachments,
+  revokeAttachment,
+  revokeAttachments,
+  type FilesToAttachmentsOptions,
+  type UploadAttachmentData,
+} from '@adobe/spectrum-wc/patterns/ai-toolkit/upload-attachment/files-to-attachments.js';
+```
+
+The helpers are also exported from `@adobe/spectrum-wc/patterns/ai-toolkit/upload-attachment`. Prefer the `files-to-attachments.js` path in server-rendered apps: it doesn't load element code, so importing it outside the browser doesn't throw. The helpers only touch the DOM through `URL.createObjectURL()` and `URL.revokeObjectURL()`, so call them in the browser.
+
+#### Functions
+
+| Function                                                         | Description                                                                                                                                                                                                                                                            |
+| ---------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `filesToAttachments(files, options?)` → `UploadAttachmentData[]` | Returns one data object per file, in the same order. `files` accepts an array, a `FileList`, or any iterable of `File`, for example `detail.files` from `swc-prompt-field-drop` or `input.files`. Creates an object URL for each image file. Empty input returns `[]`. |
+| `revokeAttachment(attachment)`                                   | Releases the attachment's `thumbnailUrl`. Safe to call more than once, on copies of the same object, and on attachments without a thumbnail. After this call the URL no longer loads, so stop rendering the attachment too.                                            |
+| `revokeAttachments(attachments)`                                 | Calls `revokeAttachment()` for each attachment in an array or iterable.                                                                                                                                                                                                |
+
+#### `FilesToAttachmentsOptions`
+
+| Option   | Type                 | Default        | Description                                                                                                 |
+| -------- | -------------------- | -------------- | ----------------------------------------------------------------------------------------------------------- |
+| `locale` | `string \| string[]` | Runtime locale | BCP 47 locale(s) for `sizeLabel`. An invalid locale throws a `RangeError` before any object URL is created. |
+
+#### `UploadAttachmentData`
+
+All fields are read-only.
+
+| Field          | Type                  | Description                                                                                                                                                                                                   |
+| -------------- | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `id`           | `string`              | Unique, opaque id. Use it as a render key and to find the item when a tile is dismissed, for example through a `data-attachment-id` attribute.                                                                |
+| `file`         | `File`                | The original file, for upload or validation.                                                                                                                                                                  |
+| `name`         | `string`              | The file name, for the `title` slot, `accessible-label`, and `dismiss-label`.                                                                                                                                 |
+| `sizeLabel`    | `string`              | Localized size in decimal units: bytes below 1,000 bytes (for example, "512 bytes"), then kB, MB, and GB. One decimal place below 10 (for example, "1.5 MB"), otherwise whole numbers (for example, "12 kB"). |
+| `thumbnailUrl` | `string \| undefined` | Object URL for image files only. A file counts as an image when its MIME type starts with `image/` or its name ends in `.png`, `.jpg`, `.jpeg`, `.gif`, `.webp`, `.bmp`, `.svg`, or `.avif`.                  |
+| `badgeLabel`   | `string \| undefined` | Upper-case file-type label for non-image files, for the `badge` slot. Comes from the file extension (for example, "PDF" or "7Z"), then from the MIME type (for example, "DOCX" or "TXT").                     |
+
+`badgeLabel` is `undefined` for images and for files whose type can't be determined, such as a name without an extension and an `application/octet-stream` type. The label is visible text that the helper can't localize, so render your own localized fallback (for example, "File") in that case. Extensions longer than 8 characters, all-digit suffixes such as `.20260415`, and dotfile names such as `.gitignore` don't count as extensions.
+
+#### Releasing object URLs
+
+Each image thumbnail keeps the file data in memory until you call `revokeAttachment()`. Call it when a tile is dismissed, when the prompt is submitted, and when your view is torn down. If you keep showing a submitted thumbnail, for example in an `swc-user-message` in the conversation thread, revoke it when that message is removed instead.
+
 ## Options
 
 ### Sizes

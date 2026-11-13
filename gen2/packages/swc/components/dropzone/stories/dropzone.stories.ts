@@ -63,6 +63,7 @@ const meta: Meta = {
     docs: {
       subtitle: `Target area for drag-and-drop file uploads with a required browse control.`,
     },
+    designGuidanceSlug: 'drop-zone',
     stackblitz: {
       url: 'https://stackblitz.com/edit/vitejs-vite-wcmws1cg',
     },

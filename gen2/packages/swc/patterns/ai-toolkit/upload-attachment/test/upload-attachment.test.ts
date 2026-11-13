@@ -13,11 +13,11 @@
 import { html, type LitElement } from 'lit';
 import { expect, userEvent, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import { getComponent } from '@swc-test-helpers/dom';
 
 import '../swc-upload-attachment.js';
 import '@adobe/spectrum-wc/components/thumbnail/swc-thumbnail.js';
 
-import { getComponent } from '../../../../utils/test-utils.js';
 import meta, { Overview } from '../stories/upload-attachment.stories.js';
 import { UploadAttachment } from '../UploadAttachment.js';
 

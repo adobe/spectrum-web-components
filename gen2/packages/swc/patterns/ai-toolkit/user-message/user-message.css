@@ -81,6 +81,7 @@
 }
 
 .swc-UserMessage-galleryViewport:focus-visible {
+  /* The host draws the focus ring outside the scroll mask; avoid a second ring. */
   outline: none;
 }
 

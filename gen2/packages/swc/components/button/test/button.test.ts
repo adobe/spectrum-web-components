@@ -13,6 +13,11 @@
 import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import {
+  getComponent,
+  getComponents,
+  withWarningSpy,
+} from '@swc-test-helpers/dom';
 
 import { Button } from '@adobe/spectrum-wc/button';
 import {
@@ -25,11 +30,6 @@ import {
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc-icons/swc-icon-add.js';
 
-import {
-  getComponent,
-  getComponents,
-  withWarningSpy,
-} from '../../../utils/test-utils.js';
 import meta, {
   Accessibility,
   Anatomy,
@@ -756,6 +756,52 @@ export const InvalidFillStyleWarningTest: Story = {
           String(warnCalls[0]?.[1] || ''),
           'warning message mentions fill-style'
         ).toContain('fill-style');
+      })
+    );
+  },
+};
+
+export const InvalidStaticColorWarningTest: Story = {
+  render: () => html`
+    <swc-button>Label</swc-button>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const button = await getComponent<Button>(canvasElement, 'swc-button');
+    const inner = button.shadowRoot!.querySelector('button')!;
+    const defaultBackground = getComputedStyle(inner).backgroundColor;
+
+    await step(
+      'warns, keeps the value, and renders the default for an invalid static-color',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          button.staticColor = 'purple' as Button['staticColor'];
+          await button.updateComplete;
+
+          expect(
+            String(warnCalls[0]?.[1] || ''),
+            'warning names the property and received value'
+          ).toMatch(/"static-color".*"purple"/);
+          expect(
+            button.getAttribute('static-color'),
+            'attribute keeps the value set'
+          ).toBe('purple');
+          expect(
+            getComputedStyle(inner).backgroundColor,
+            'renders the default background'
+          ).toBe(defaultBackground);
+        })
+    );
+
+    await step('does not warn for valid static-color values', () =>
+      withWarningSpy(async (warnCalls) => {
+        for (const staticColor of BUTTON_STATIC_COLORS) {
+          button.staticColor = staticColor;
+          await button.updateComplete;
+        }
+        button.staticColor = undefined;
+        await button.updateComplete;
+
+        expect(warnCalls.length, 'no warnings for valid static-colors').toBe(0);
       })
     );
   },

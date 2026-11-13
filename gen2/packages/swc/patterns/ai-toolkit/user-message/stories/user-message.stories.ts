@@ -119,6 +119,19 @@ export const Overview: Story = {
   tags: ['overview'],
 };
 
+// ──────────────────────────
+//    ANATOMY STORIES
+// ──────────────────────────
+
+export const Anatomy: Story = {
+  args: Playground.args,
+  render: (args) => html`
+    ${renderWithAttachments({ ...args, type: 'card' }, attachments('card', 2))}
+    ${template({ ...args, type: 'copy', 'thumbnail-slot': '' })}
+  `,
+  tags: ['anatomy'],
+};
+
 // ────────────────────
 //    OPTIONS STORIES
 // ────────────────────

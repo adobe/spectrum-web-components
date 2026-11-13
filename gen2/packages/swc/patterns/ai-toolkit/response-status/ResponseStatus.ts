@@ -28,6 +28,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { MutationController } from '@lit-labs/observers/mutation-controller.js';
 
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
+import { stringAttribute, validateEnum } from '@adobe/spectrum-wc-core/utils';
 
 import '@adobe/spectrum-wc/components/icon/swc-icon.js';
 import '@adobe/spectrum-wc/components/ui-icons/swc-ui-icon.js';
@@ -150,7 +151,12 @@ export class ResponseStatus extends SpectrumElement {
   private _loaderStartTimer: number | null = null;
 
   /** Whole response lifecycle status. */
-  @property({ type: String, reflect: true })
+  @property({
+    type: String,
+    reflect: true,
+    // A removed attribute resets to the default rather than `null`.
+    converter: stringAttribute('active'),
+  })
   public status: ResponseStatusStatus = 'active';
 
   /** `true`: step timeline open. */
@@ -165,10 +171,15 @@ export class ResponseStatus extends SpectrumElement {
    * Status loader artwork shown while `status="active"`, matching
    * `swc-prompt-field`'s `loader` attribute for the same underlying control:
    * a preset name (`cc`, `dc`, `exp`, `analyze`, `mega`) cycles a themed icon
-   * sequence; an icon name shows a single static icon. Invalid values fall
-   * back to the `mega` preset.
+   * sequence; an icon name shows a single static icon. Invalid values are
+   * kept as set, warn in dev mode, and render the `mega` preset.
    */
-  @property({ type: String, reflect: true })
+  @property({
+    type: String,
+    reflect: true,
+    // A removed attribute resets to the default rather than `null`.
+    converter: stringAttribute('mega'),
+  })
   public loader: PixelLoaderIconName | PixelLoaderPresetName = 'mega';
 
   @queryAssignedNodes({ slot: 'label', flatten: true })
@@ -233,6 +244,24 @@ export class ResponseStatus extends SpectrumElement {
       this._loaderPaused = true;
       this._engageLoader();
     }
+  }
+
+  protected override update(changed: PropertyValues<this>): void {
+    // Invalid values are kept as set; `_resolvedStatus` and `_resolvedLoader`
+    // render the defaults.
+    validateEnum(this, {
+      prop: 'status',
+      value: this.status,
+      valid: RESPONSE_STATUSES,
+      url: 'https://spectrum-web-components.adobe.com/?path=/docs/patterns-ai-toolkit-response-status--docs',
+    });
+    validateEnum(this, {
+      prop: 'loader',
+      value: this.loader,
+      valid: [...PIXEL_LOADER_PRESET_NAMES, ...PIXEL_LOADER_ICON_NAMES],
+      url: 'https://spectrum-web-components.adobe.com/?path=/docs/patterns-ai-toolkit-response-status--docs',
+    });
+    super.update(changed);
   }
 
   public override disconnectedCallback(): void {

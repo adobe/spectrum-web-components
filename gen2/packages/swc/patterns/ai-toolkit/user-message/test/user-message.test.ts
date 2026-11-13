@@ -13,12 +13,12 @@
 import { html } from 'lit';
 import { expect, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import { getComponent } from '@swc-test-helpers/dom';
 
 import '@adobe/spectrum-wc/components/thumbnail/swc-thumbnail.js';
 import '../../upload-attachment/swc-upload-attachment.js';
 import '../swc-user-message.js';
 
-import { getComponent } from '../../../../utils/test-utils.js';
 import { meta } from '../stories/user-message.stories.js';
 import type { UserMessage } from '../UserMessage.js';
 
@@ -43,6 +43,7 @@ export const ContentTest: Story = {
     const stories = await import('../stories/user-message.stories.js');
     expect(stories).toHaveProperty('Overview.tags', ['overview']);
     expect(stories).toHaveProperty('Accessibility.tags', ['a11y']);
+    expect(stories).toHaveProperty('Anatomy.tags', ['anatomy']);
     expect(stories).toHaveProperty('Playground.tags', ['dev']);
     expect(meta.argTypes?.type?.options).toEqual(['copy', 'card', 'media']);
     const message = await getComponent<UserMessage>(

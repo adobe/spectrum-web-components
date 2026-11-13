@@ -26,11 +26,16 @@ import '../suggestion-item/swc-suggestion-item.js';
 import '../prompt-field/swc-prompt-field.js';
 import '../upload-attachment/swc-upload-attachment.js';
 
-import { uniqueId } from '../../../utils/id.js';
 import {
   PIXEL_LOADER_ICON_NAMES,
   PIXEL_LOADER_PRESET_NAMES,
 } from '../pixel-loader/index.js';
+import {
+  filesToAttachments,
+  revokeAttachment,
+  revokeAttachments,
+  type UploadAttachmentData,
+} from '../upload-attachment/index.js';
 import type { UserMessageType } from '../user-message/index.js';
 import { renderAttachmentPreview } from './attachment-preview.js';
 
@@ -119,15 +124,8 @@ const meta: Meta<PlaygroundArgs> = {
 export { meta };
 export default meta;
 
-type DemoAttachment = {
-  id: string;
+type DemoAttachment = UploadAttachmentData & {
   type: Exclude<UserMessageType, 'copy'>;
-  title: string;
-  subtitle: string;
-  /** Image preview URL when the attachment is a visual file. */
-  thumbnailUrl?: string;
-  objectUrl?: string;
-  file?: File;
 };
 
 const renderDemoAttachment = (
@@ -138,15 +136,15 @@ const renderDemoAttachment = (
     slot=${sent ? 'thumbnail' : 'attachment'}
     type=${attachment.type}
     ?dismissible=${!sent}
-    accessible-label=${attachment.title}
+    accessible-label=${`${attachment.name}, ${attachment.sizeLabel}`}
     data-attachment-id=${attachment.id}
   >
     ${renderAttachmentPreview({
-      fileName: attachment.title,
+      fileName: attachment.name,
       src: attachment.thumbnailUrl,
     })}
-    <span slot="title">${attachment.title}</span>
-    <span slot="subtitle">${attachment.subtitle}</span>
+    <span slot="title">${attachment.name}</span>
+    <span slot="subtitle">${attachment.sizeLabel}</span>
   </swc-upload-attachment>
 `;
 
@@ -276,11 +274,11 @@ class ConversationFullPatternDemo extends LitElement {
   public override connectedCallback(): void {
     super.connectedCallback();
     const restorePreview = (attachment: DemoAttachment): DemoAttachment => {
-      if (!attachment.objectUrl || !attachment.file) {
+      if (!attachment.thumbnailUrl) {
         return attachment;
       }
-      const objectUrl = URL.createObjectURL(attachment.file);
-      return { ...attachment, objectUrl, thumbnailUrl: objectUrl };
+      const [{ thumbnailUrl }] = filesToAttachments([attachment.file]);
+      return { ...attachment, thumbnailUrl };
     };
     this.attachments = this.attachments.map(restorePreview);
     this.turns = this.turns.map((turn) => ({
@@ -295,13 +293,11 @@ class ConversationFullPatternDemo extends LitElement {
       this.responseTimer = null;
     }
     this.clearStepTimer();
-    for (const attachment of [
-      ...this.attachments,
-      ...this.turns.flatMap((turn) => turn.attachments ?? []),
-    ]) {
-      if (attachment.objectUrl) {
-        URL.revokeObjectURL(attachment.objectUrl);
-      }
+    // Submitted attachments stay visible in the thread, so their thumbnails
+    // are released here rather than on submit.
+    revokeAttachments(this.attachments);
+    for (const turn of this.turns) {
+      revokeAttachments(turn.attachments ?? []);
     }
     super.disconnectedCallback();
   }
@@ -354,7 +350,7 @@ class ConversationFullPatternDemo extends LitElement {
     this.isGenerating = true;
     this.lastPrompt =
       value ||
-      (hasAttachments ? this.attachments.map((a) => a.title).join(', ') : '');
+      (hasAttachments ? this.attachments.map((a) => a.name).join(', ') : '');
     this.responseTargetId = systemTurn.id;
     this.promptValue = '';
     this.attachments = [];
@@ -450,34 +446,16 @@ class ConversationFullPatternDemo extends LitElement {
   };
 
   private appendFiles(files: File[]): void {
-    const nextAttachments = files.map((file, index) => {
-      const mimeType = file.type || '';
-      const lowerName = file.name.toLowerCase();
-      const isImage =
-        mimeType.startsWith('image/') ||
-        /\.(png|jpe?g|gif|webp|bmp|svg|avif)$/.test(lowerName);
-      const objectUrl = isImage ? URL.createObjectURL(file) : undefined;
-      const sizeLabel =
-        typeof file.size === 'number'
-          ? `${Math.max(1, Math.round(file.size / 1024))} KB`
-          : 'Attachment';
-      const fileName = file.name || 'Attachment';
-
-      return {
-        id: uniqueId(`attachment-${index}`),
-        type: this.config['attachment-type'],
-        title: fileName,
-        subtitle: sizeLabel,
-        thumbnailUrl: objectUrl,
-        objectUrl,
-        file: isImage ? file : undefined,
-      } satisfies DemoAttachment;
-    });
-
-    if (!nextAttachments.length) {
+    if (!files.length) {
       return;
     }
-    this.attachments = [...this.attachments, ...nextAttachments];
+    this.attachments = [
+      ...this.attachments,
+      ...filesToAttachments(files).map((attachment) => ({
+        ...attachment,
+        type: this.config['attachment-type'],
+      })),
+    ];
   }
 
   private handleUploadClick = (event: Event): void => {
@@ -533,8 +511,8 @@ class ConversationFullPatternDemo extends LitElement {
       return;
     }
     const removed = this.attachments.find((item) => item.id === attachmentId);
-    if (removed?.objectUrl) {
-      URL.revokeObjectURL(removed.objectUrl);
+    if (removed) {
+      revokeAttachment(removed);
     }
     this.attachments = this.attachments.filter(
       (item) => item.id !== attachmentId
