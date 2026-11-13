@@ -11,15 +11,16 @@
  */
 
 import { html } from 'lit';
-import { expect } from '@storybook/test';
+import { expect, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
-import { getComponent, getComponents } from '@swc-test-helpers/dom';
+import { getComponent } from '@swc-test-helpers/dom';
 
-import '../../conversation-turn/swc-conversation-turn.js';
+import '@adobe/spectrum-wc/components/thumbnail/swc-thumbnail.js';
+import '../../upload-attachment/swc-upload-attachment.js';
 import '../swc-user-message.js';
 
-import { meta, Overview } from '../stories/user-message.stories.js';
-import { UserMessage } from '../UserMessage.js';
+import { meta } from '../stories/user-message.stories.js';
+import type { UserMessage } from '../UserMessage.js';
 
 export default {
   ...meta,
@@ -31,203 +32,182 @@ export default {
   tags: ['!autodocs', 'dev'],
 } as Meta;
 
-export const OverviewTest: Story = {
-  ...Overview,
-  play: async ({ canvasElement, step }) => {
-    const el = await getComponent<UserMessage>(
-      canvasElement,
-      'swc-user-message'
-    );
-
-    await step('uses copy type by default', async () => {
-      expect(el.type).toBe('copy');
-      expect(el.getAttribute('type')).toBe('copy');
-    });
-  },
-};
-
-export const TypeAndSlotTest: Story = {
-  ...Overview,
-  play: async ({ canvasElement, step }) => {
-    const el = await getComponent<UserMessage>(
-      canvasElement,
-      'swc-user-message'
-    );
-
-    await step(
-      'type reflects to the host and drives card structure',
-      async () => {
-        el.type = 'card';
-        el.innerHTML = `
-        <div
-          slot="thumbnail"
-          role="img"
-          aria-label="File preview"
-        ></div>
-        <span slot="title">Brand guidelines</span>
-        <span slot="subtitle">PDF</span>
-      `;
-        await el.updateComplete;
-
-        const title = el.shadowRoot?.querySelector('.swc-UserMessage-title');
-        const subtitle = el.shadowRoot?.querySelector(
-          '.swc-UserMessage-subtitle'
-        );
-        expect(el.getAttribute('type')).toBe('card');
-        expect(title).toBeTruthy();
-        expect(subtitle).toBeTruthy();
-      }
-    );
-
-    await step(
-      'media type renders the media attachment container',
-      async () => {
-        el.type = 'media';
-        el.innerHTML = `
-        <div slot="thumbnail" role="img" aria-label="Preview"></div>
-        <span slot="title">Preview image</span>
-        <span slot="subtitle">PNG</span>
-      `;
-        await el.updateComplete;
-
-        const attachment = el.shadowRoot?.querySelector(
-          '.swc-UserMessage-attachment--media'
-        );
-        expect(el.getAttribute('type')).toBe('media');
-        expect(attachment).toBeTruthy();
-      }
-    );
-
-    await step('copy type uses the default slot text path', async () => {
-      el.type = 'copy';
-      el.innerHTML = `Can you summarize this document?`;
-      await el.updateComplete;
-
-      const textSlot =
-        el.shadowRoot?.querySelector<HTMLSlotElement>('slot:not([name])');
-      const assignedText = textSlot
-        ?.assignedNodes({ flatten: true })
-        .map((node) => node.textContent ?? '')
-        .join('')
-        .trim();
-
-      expect(el.getAttribute('type')).toBe('copy');
-      expect(assignedText).toBe('Can you summarize this document?');
-    });
-  },
-};
-
-export const DefaultSlotHiddenForAttachmentTypesTest: Story = {
-  name: 'Default slot not used for card and media',
-  ...Overview,
-  play: async ({ canvasElement, step }) => {
-    const el = await getComponent<UserMessage>(
-      canvasElement,
-      'swc-user-message'
-    );
-
-    const attachmentMarkup = (label: string) => `
-        <p data-test-default-slotted>${label}</p>
-        <div slot="thumbnail" role="img" aria-label="Preview"></div>
-        <span slot="title">T</span>
-        <span slot="subtitle">S</span>
-      `;
-
-    for (const type of ['card', 'media'] as const) {
-      await step(
-        `type="${type}": no unnamed slot; default-slot children are not shown`,
-        async () => {
-          el.type = type;
-          el.innerHTML = attachmentMarkup(
-            'Default copy that must not appear in the bubble for attachment types.'
-          );
-          await el.updateComplete;
-
-          expect(el.shadowRoot?.querySelector('slot:not([name])')).toBeNull();
-
-          const leaked = el.querySelector<HTMLElement>(
-            '[data-test-default-slotted]'
-          );
-          expect(leaked).toBeTruthy();
-          const { width, height } = leaked!.getBoundingClientRect();
-          expect(width * height).toBe(0);
-        }
-      );
-    }
-
-    await step(
-      'type="copy" keeps an unnamed (default) slot in the shadow root',
-      async () => {
-        el.type = 'copy';
-        el.innerHTML = 'Visible copy text';
-        await el.updateComplete;
-
-        const defaultSlot =
-          el.shadowRoot?.querySelector<HTMLSlotElement>('slot:not([name])');
-        expect(defaultSlot).toBeTruthy();
-      }
-    );
-  },
-};
-
-const longSpacedCopy =
-  'This is a deliberately long line of user copy that should wrap within a narrow column without horizontal overflow. '.repeat(
-    3
-  );
-
-const longUnbrokenFileName = `${'VeryLongAttachmentNamePortion'.repeat(12)}.pdf`;
-
-/**
- * Exercises long copy in a tight column and a long unbroken card title
- * (ellipsis) so the bubble does not grow past its layout width.
- */
-export const LongTextWrapTest: Story = {
-  name: 'Long text wrap and containment',
+export const ContentTest: Story = {
   render: () => html`
-    <div style="max-inline-size: 220px;">
-      <swc-conversation-turn type="user">
-        <swc-user-message>${longSpacedCopy}</swc-user-message>
-      </swc-conversation-turn>
-    </div>
-    <div
-      style="max-inline-size: 640px; margin-block-start: 32px; padding-inline: 1px;"
-    >
-      <swc-conversation-turn type="user">
-        <swc-user-message type="card">
-          <div
-            slot="thumbnail"
-            style="inline-size:32px;block-size:32px;border-radius:3px;background:var(--swc-gray-200);"
-            role="img"
-            aria-label="File"
-          ></div>
-          <span slot="title">${longUnbrokenFileName}</span>
-          <span slot="subtitle">PDF</span>
-        </swc-user-message>
-      </swc-conversation-turn>
+    <div style="inline-size:320px;max-inline-size:100%;">
+      <swc-user-message>Summarize these references.</swc-user-message>
+      <swc-user-message type="copy">Explicit message text.</swc-user-message>
     </div>
   `,
   play: async ({ canvasElement, step }) => {
-    const [copyBubble, cardBubble] = await getComponents<UserMessage>(
+    const stories = await import('../stories/user-message.stories.js');
+    expect(stories).toHaveProperty('Overview.tags', ['overview']);
+    expect(stories).toHaveProperty('Accessibility.tags', ['a11y']);
+    expect(stories).toHaveProperty('Anatomy.tags', ['anatomy']);
+    expect(stories).toHaveProperty('Playground.tags', ['dev']);
+    expect(meta.argTypes?.type?.options).toEqual(['copy', 'card', 'media']);
+    const message = await getComponent<UserMessage>(
       canvasElement,
       'swc-user-message'
     );
+    expect(message.type).toBe('copy');
+    expect(message.getAttribute('type')).toBe('copy');
+    expect(
+      message.shadowRoot!.querySelector('slot')!.assignedNodes()[0].textContent
+    ).toContain('Summarize these references.');
+
+    const explicitCopy = await getComponent<UserMessage>(
+      canvasElement,
+      'swc-user-message[type="copy"]:last-child'
+    );
+    expect(explicitCopy.type).toBe('copy');
+    expect(
+      explicitCopy
+        .shadowRoot!.querySelector<HTMLSlotElement>('slot:not([name])')!
+        .assignedNodes()[0].textContent
+    ).toBe('Explicit message text.');
+    expect(explicitCopy.shadowRoot!.querySelector('[role="group"]')).toBeNull();
+
+    for (const type of ['media', 'card'] as const) {
+      await step(
+        `renders a named, keyboard-accessible ${type} collection`,
+        async () => {
+          message.type = type;
+          message.innerHTML =
+            type === 'media'
+              ? '<img slot="thumbnail" src="images/card-preview.jpg" alt="Campaign reference" />'
+              : `<swc-upload-attachment slot="thumbnail" type="card">
+              <swc-thumbnail slot="thumbnail" decorative></swc-thumbnail>
+              <span slot="title">Campaign brief.pdf</span>
+              <span slot="subtitle">840 KB</span>
+            </swc-upload-attachment>`;
+          message.append('Copy belongs in a separate message.');
+          await message.updateComplete;
+
+          const slot = message.shadowRoot!.querySelector<HTMLSlotElement>(
+            'slot[name="thumbnail"]'
+          )!;
+          const group = message.shadowRoot!.querySelector('[role="group"]')!;
+          expect(message.getAttribute('type')).toBe(type);
+          expect(slot.assignedElements()).toHaveLength(1);
+          expect(
+            message.shadowRoot!.querySelector('slot:not([name])')
+          ).toBeNull();
+          expect(group).not.toBeNull();
+          expect(group.getAttribute('aria-label')).toBe('Uploaded attachments');
+          expect(group.getAttribute('tabindex')).toBe('0');
+          expect(message.scrollWidth).toBeLessThanOrEqual(message.clientWidth);
+          if (type === 'card') {
+            expect(
+              message.querySelector('swc-thumbnail[decorative]')
+            ).not.toBeNull();
+            expect(
+              message.querySelector('img, swc-asset, [dismissible]')
+            ).toBeNull();
+          }
+          message.setAttribute('type', 'copy');
+          await message.updateComplete;
+          expect(message.type).toBe('copy');
+          expect(
+            message.shadowRoot!.querySelector('slot:not([name])')
+          ).not.toBeNull();
+          expect(
+            message.shadowRoot!.querySelector('[role="group"]')
+          ).toBeNull();
+          message.type = type;
+          await message.updateComplete;
+          message.removeAttribute('type');
+          await message.updateComplete;
+          expect(message.hasAttribute('type')).toBe(false);
+          expect(
+            message.shadowRoot!.querySelector('slot:not([name])')
+          ).not.toBeNull();
+          expect(
+            message.shadowRoot!.querySelector('[role="group"]')
+          ).toBeNull();
+        }
+      );
+    }
+  },
+};
+
+export const OverflowTest: Story = {
+  render: () => html`
+    <div style="inline-size:220px;max-inline-size:100%;">
+      <swc-user-message type="media">
+        ${Array.from(
+          { length: 24 },
+          (_, index) => html`
+            <img
+              slot="thumbnail"
+              src="images/card-preview.jpg"
+              alt="Reference ${index + 1}"
+            />
+          `
+        )}
+      </swc-user-message>
+    </div>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const message = await getComponent<UserMessage>(
+      canvasElement,
+      'swc-user-message'
+    );
+    const viewport =
+      message.shadowRoot!.querySelector<HTMLElement>('[role="group"]')!;
 
     await step(
-      'long copy message does not overflow horizontally in a narrow column',
+      'hugs columns, caps the bubble, and scrolls without horizontal overflow',
       async () => {
-        expect(copyBubble.scrollWidth).toBeLessThanOrEqual(
-          copyBubble.clientWidth + 1
+        expect(viewport).not.toBeNull();
+        expect(message.getBoundingClientRect().height).toBeLessThanOrEqual(240);
+        expect(viewport.scrollHeight).toBeGreaterThan(viewport.clientHeight);
+        expect(viewport.scrollWidth).toBeLessThanOrEqual(viewport.clientWidth);
+        expect(getComputedStyle(viewport).overflowY).toBe('auto');
+        for (const width of ['480px', '220px', '120px']) {
+          message.parentElement!.style.inlineSize = width;
+          const bounds = message.getBoundingClientRect();
+          const thumbnails = [...message.children].map((item) =>
+            item.getBoundingClientRect()
+          );
+          const style = getComputedStyle(message);
+          const occupied =
+            Math.max(...thumbnails.map((item) => item.right)) -
+            Math.min(...thumbnails.map((item) => item.left));
+          const paddingAndBorders =
+            parseFloat(style.paddingInlineStart) +
+            parseFloat(style.paddingInlineEnd) +
+            parseFloat(style.borderInlineStartWidth) +
+            parseFloat(style.borderInlineEndWidth);
+          expect(
+            Math.abs(bounds.width - occupied - paddingAndBorders)
+          ).toBeLessThanOrEqual(
+            viewport.offsetWidth - viewport.clientWidth + 1
+          );
+        }
+        viewport.focus();
+        await waitFor(() =>
+          expect(message.shadowRoot!.activeElement).toBe(viewport)
         );
-        expect(copyBubble.getBoundingClientRect().height).toBeGreaterThan(40);
+        viewport.scrollTop = viewport.scrollHeight;
+        await waitFor(() => expect(viewport.scrollTop).toBeGreaterThan(0));
       }
     );
 
     await step(
-      'long unbroken card title is confined with ellipsis (no host overflow)',
+      'returns to natural height when attachments no longer overflow',
       async () => {
-        expect(cardBubble.scrollWidth).toBeLessThanOrEqual(
-          cardBubble.clientWidth + 1
-        );
+        [...message.children]
+          .slice(1)
+          .forEach((attachment) => attachment.remove());
+        await waitFor(() => {
+          expect(viewport.scrollHeight).toBeLessThanOrEqual(
+            viewport.clientHeight
+          );
+          expect(message.getBoundingClientRect().height).toBeLessThan(240);
+          expect(getComputedStyle(viewport).maskImage).toBe('none');
+        });
+        expect(viewport.getAttribute('tabindex')).toBe('0');
       }
     );
   },
