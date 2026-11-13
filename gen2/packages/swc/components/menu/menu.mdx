@@ -7,6 +7,8 @@ import * as MenuStories from './stories/menu.stories';
 
 <DocsHeader />
 
+Migrating from `<sp-menu>`? See the [Menu migration guide](?path=/docs/components-menu-migration-guide--docs) and the [Menu item migration guide](?path=/docs/components-menu-menu-item-migration-guide--docs).
+
 ## Anatomy
 
 A `<swc-menu>` consists of:
@@ -33,6 +35,8 @@ The menu's `PlacementController` handles pixel positioning automatically. When t
 
 `size` accepts `s`, `m`, `l`, and `xl` (default `m`). Set it on `swc-menu`, which propagates its own size onto every `swc-menu-item` it slots. A `size` set on an item directly is not rejected: it holds until the next propagation, which runs when the menu's size changes or when its slotted items change. Set the size on the menu rather than per item.
 
+> **Note**: In Spectrum 1, `size` could be set on each `sp-menu-item`; in Spectrum 2 the menu owns it. See the [Menu item migration guide](?path=/docs/components-menu-menu-item-migration-guide--docs).
+
 <Canvas of={MenuStories.Sizes} />
 
 ### Item content
@@ -40,6 +44,8 @@ The menu's `PlacementController` handles pixel positioning automatically. When t
 A menu item is composed from four named slots: `label` for its text, `visual` for an optional leading icon or thumbnail, `description` for optional supporting text below the label, and `secondary` for optional trailing text, such as a keyboard shortcut. `label` is required. Naming the label keeps it distinct from `description` and gives each part a handle for grid placement in the item layout.
 
 A menu item is named from its `label` slot and described from its `description` slot followed by its `secondary` slot, so both are announced as a description rather than folded into the item's name. Keep descriptions short, and do not repeat the label in them.
+
+> **Note**: In Spectrum 1, an item's text went in the default slot, its leading icon in `icon`, and its trailing text in `value`. Those are now `label`, `visual`, and `secondary`, and `label` is required. See the [Menu item migration guide](?path=/docs/components-menu-menu-item-migration-guide--docs).
 
 <Canvas of={MenuStories.ItemContent} />
 
@@ -53,7 +59,7 @@ Because `<swc-menu>` uses `popover="auto"`, opening it dismisses any other open 
 
 ### Item states
 
-A menu item is either default or `disabled`. A disabled item is exposed with `aria-disabled="true"` rather than removed from the tab order, so arrow keys still reach it and a screen reader can announce that the option exists but is unavailable. It does not activate on click, <kbd>Enter</kbd>, or <kbd>Space</kbd>, and it does not close the menu.
+A menu item is either default or `disabled`. A disabled item is exposed with `aria-disabled="true"` rather than removed from the tab order, so arrow keys still reach it and a screen reader can announce that the option exists but is unavailable. It does not activate on click, <kbd>Enter</kbd>, or <kbd>Space</kbd>, and it does not close the menu. `disabled` maps to `aria-disabled`, not the native attribute, so do not rely on disabled items being skipped; see the [Menu item migration guide](?path=/docs/components-menu-menu-item-migration-guide--docs).
 
 <Canvas of={MenuStories.ItemStates} />
 
@@ -124,16 +130,12 @@ When no CSS transition is active (for example when `prefers-reduced-motion` remo
 
 ## Upcoming features
 
-The following are planned for future releases.
+The following features are planned for future releases:
 
-| Feature                | What it will do                                                                                |
-| ---------------------- | ---------------------------------------------------------------------------------------------- |
-| Selection              | Single- and multi-select rows, as dedicated checkbox and radio items that carry `aria-checked` |
-| Sections and dividers  | Grouped items under a heading, with a divider drawn between groups                             |
-| Submenus               | A nested menu opened from an item, with its own trigger and keyboard path                      |
-| Link items             | An item that navigates, rendering a real anchor rather than relying on a click handler         |
-| Non-text trailing slot | Trailing content other than text, such as a switch, a badge, or an external-link arrow         |
-
-Until selection and link items ship, handle both from the menu's `click` event. See the [Menu item migration guide](?path=/docs/components-menu-menu-item-migration-guide--docs) for the full list of 1st-gen API that is not yet available.
+- **Selection**: single- and multi-select items, as dedicated checkbox and radio items carrying `aria-checked`. Until then, track the chosen item from the menu's `click` event.
+- **Sections and dividers**: items grouped under a heading, with a divider drawn between groups.
+- **Submenus**: a nested menu opened from an item, with its own trigger and keyboard path.
+- **Link items**: an item that navigates, rendering a real anchor. Until then, navigate from the menu's `click` event.
+- **Non-text trailing content**: trailing content other than text, such as a switch, a badge, or an external-link arrow. The `secondary` slot takes text today.
 
 <DocsFooter />
