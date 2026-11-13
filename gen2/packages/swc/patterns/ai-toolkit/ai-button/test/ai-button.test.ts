@@ -13,6 +13,11 @@
 import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import {
+  getComponent,
+  getComponents,
+  withWarningSpy,
+} from '@swc-test-helpers/dom';
 
 import { Icon_AIChatConversation } from '@adobe/spectrum-wc-icons/AIChatConversation.js';
 import { Icon_AIExpand } from '@adobe/spectrum-wc-icons/AIExpand.js';
@@ -32,11 +37,6 @@ import {
   forcePseudoState,
   theme,
 } from '../../../../.storybook/helpers/index.js';
-import {
-  getComponent,
-  getComponents,
-  withWarningSpy,
-} from '../../../../utils/test-utils.js';
 import {
   AI_BUTTON_ICONS,
   AI_BUTTON_VALID_SIZES,
