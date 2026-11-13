@@ -8,14 +8,16 @@ name: Package validation
 #
 # Report-only for publint and attw: their findings show in the job summary but
 # don't fail the check. Drop `--report-only` once the existing findings are
-# fixed or allowed. CSS errors always fail the check.
+# fixed or allowed. CSS errors, and tools that crash, always fail the check.
 #
 # Runs only on release PRs, picked by the marker in the PR title:
 #   - `#gen2-publish` validates gen2 (the gen2 Version PR).
 #   - `#publish` validates 1st gen (the gen1 Version PR).
-# Other PRs skip it. Version PRs are opened by github-actions[bot], so a
+# Markers match whole words, ignoring case. Other PRs skip it. Version PRs are opened by github-actions[bot], so a
 # maintainer approves the run ("Approve and run workflows") as with the other
-# checks on those PRs. Use workflow_dispatch to run both generations by hand.
+# checks on those PRs. Make these checks required so a Version PR can't merge
+# before they run. The publish jobs validate again before publishing. Use
+# workflow_dispatch to run both generations by hand.
 #
 
 on:
@@ -48,7 +50,7 @@ jobs:
       github.event_name == 'workflow_dispatch' ||
       contains(github.event.pull_request.title, '#gen2-publish') ||
       contains(github.event.pull_request.title, '#publish')
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     outputs:
       matrix: ${{ steps.select.outputs.matrix }}
     steps:
@@ -58,27 +60,35 @@ jobs:
           EVENT: ${{ github.event_name }}
           TITLE: ${{ github.event.pull_request.title }}
         run: |
-          gen1='{"gen":"1st-gen","build":"yarn build"}'
+          # The 1st-gen packages ship custom-elements.json, which isn't committed.
+          gen1='{"gen":"1st-gen","build":"yarn build && yarn workspace @spectrum-web-components/1st-gen custom-element-json"}'
           gen2='{"gen":"gen2","build":"yarn build:gen2"}'
+          # The job `if` matches markers loosely; match whole words here, so
+          # `#publish` doesn't match `#publish-gen2-docs`.
+          shopt -s nocasematch
+          marker() { [[ " $TITLE " =~ [[:space:]]$1[[:space:]] ]]; }
           include=()
-          if [ "$EVENT" = workflow_dispatch ] || [[ "$TITLE" == *"#publish"* ]]; then
+          if [ "$EVENT" = workflow_dispatch ] || marker '#publish'; then
             include+=("$gen1")
           fi
-          if [ "$EVENT" = workflow_dispatch ] || [[ "$TITLE" == *"#gen2-publish"* ]]; then
+          if [ "$EVENT" = workflow_dispatch ] || marker '#gen2-publish'; then
             include+=("$gen2")
           fi
-          echo "matrix={\"include\":[$(IFS=,; echo "${include[*]}")]}" >> "$GITHUB_OUTPUT"
+          if [ ${#include[@]} -gt 0 ]; then
+            echo "matrix={\"include\":[$(IFS=,; echo "${include[*]}")]}" >> "$GITHUB_OUTPUT"
+          fi
 
   validate:
     name: Package validation (${{ matrix.gen }})
     needs: select
-    runs-on: ubuntu-latest
+    if: needs.select.outputs.matrix != ''
+    runs-on: ubuntu-26.04
     strategy:
       fail-fast: false
       matrix: ${{ fromJSON(needs.select.outputs.matrix) }}
     steps:
       - name: Check out code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Setup job and install dependencies
         uses: ./.github/actions/setup-job

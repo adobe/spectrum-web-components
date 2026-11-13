@@ -29,7 +29,8 @@
  *
  * Packages must be built first. With --report-only, publint and attw findings
  * are reported but don't fail the script. CSS errors always fail it: there are
- * no known existing ones, and they break consumers' production builds. Writes a
+ * no known existing ones, and they break consumers' production builds. So does
+ * a tool that crashes, since its checks didn't run. Writes a
  * Markdown report to $GITHUB_STEP_SUMMARY when set.
  */
 
@@ -82,27 +83,51 @@ async function pack(dir, destination) {
 }
 
 /**
+ * Returns the index of the `}` that closes the block opened at `open`, skipping
+ * braces inside comments and strings, or -1 if the block never closes.
+ */
+function findBlockEnd(css, open) {
+  let depth = 0;
+  for (let i = open; i < css.length; i++) {
+    const char = css[i];
+    if (char === '/' && css[i + 1] === '*') {
+      const close = css.indexOf('*/', i + 2);
+      if (close === -1) {
+        return -1;
+      }
+      i = close + 1;
+    } else if (char === '"' || char === "'") {
+      for (i++; i < css.length && css[i] !== char; i++) {
+        if (css[i] === '\\') {
+          i++;
+        }
+      }
+    } else if (char === '{') {
+      depth++;
+    } else if (char === '}' && --depth === 0) {
+      return i;
+    }
+  }
+  return -1;
+}
+
+/**
  * Lightning CSS doesn't parse `@property` nested in `@media` or `@supports`.
  * It warns "Unknown at rule" whether or not the rule is valid. Extract the
  * nested rule and parse it at the top level, where its descriptors are checked.
  * Returns the parse error, or `null` if the rule is valid.
  */
-function checkNestedProperty(css, { line }) {
+function checkNestedProperty(css, { line, column }) {
   const lineStart = css
     .split('\n', line - 1)
     .reduce((offset, text) => offset + text.length + 1, 0);
-  const start = css.indexOf('@property', lineStart);
-  const open = css.indexOf('{', start);
-  if (start === -1 || open === -1) {
+  // The warning's column points just past the `@property` it's about, so
+  // search backward from there to find that rule, not the first on the line.
+  const start = css.lastIndexOf('@property', lineStart + column - 1);
+  const open = start < lineStart ? -1 : css.indexOf('{', start);
+  const end = open === -1 ? -1 : findBlockEnd(css, open);
+  if (end === -1) {
     return 'Unknown at rule: @property';
-  }
-  let depth = 0;
-  let end = open;
-  for (; end < css.length; end++) {
-    depth += css[end] === '{' ? 1 : css[end] === '}' ? -1 : 0;
-    if (depth === 0) {
-      break;
-    }
   }
   try {
     const { warnings } = transform({
@@ -198,6 +223,7 @@ async function runAttw(tarball, pkg) {
   // attw calls process.exit() after printing, which can truncate piped output
   // larger than 64 KB, so write it to a file instead.
   const output = openSync(outputPath, 'w');
+  let stderr = '';
   try {
     await new Promise((resolve, reject) => {
       const child = spawn(
@@ -212,17 +238,24 @@ async function runAttw(tarball, pkg) {
         ],
         { stdio: ['ignore', output, 'pipe'] }
       );
-      let stderr = '';
       child.stderr.on('data', (chunk) => (stderr += chunk));
       child.on('error', reject);
       // attw exits non-zero when it finds problems, and still writes its JSON.
-      child.on('close', () => resolve(stderr));
+      child.on('close', resolve);
     });
   } finally {
     closeSync(output);
   }
 
-  const { analysis, problems } = JSON.parse(readFileSync(outputPath, 'utf-8'));
+  let json;
+  try {
+    json = JSON.parse(readFileSync(outputPath, 'utf-8'));
+  } catch (error) {
+    throw new Error(
+      `no JSON output (${error.message})${stderr ? `: ${stderr.trim()}` : ''}`
+    );
+  }
+  const { analysis, problems } = json;
   if (!analysis?.types) {
     // No types shipped at all: nothing for TypeScript consumers to resolve.
     return [];
@@ -236,25 +269,47 @@ async function runAttw(tarball, pkg) {
     );
 }
 
-async function validate({ dir, pkg }, destination) {
+/**
+ * A tool that crashes hasn't checked anything, so its error is reported
+ * separately and always fails the script, even with --report-only.
+ */
+async function settle(tool, check) {
   try {
-    const { tarball, files } = await pack(dir, destination);
-    const [publintMessages, attwProblems] = await Promise.all([
-      runPublint(tarball, pkg),
-      runAttw(tarball, pkg),
-    ]);
-    const cssProblems = runCssCheck(dir, files);
-    return { name: pkg.name, publintMessages, attwProblems, cssProblems };
+    return { value: await check() };
   } catch (error) {
-    return {
-      name: pkg.name,
-      publintMessages: [
-        { type: 'error', text: `Validation failed: ${error.message}` },
-      ],
-      attwProblems: [],
-      cssProblems: [],
-    };
+    // Flattened, so a multi-line error doesn't break the Markdown report.
+    const message = error.message.replace(/\s+/g, ' ').trim();
+    return { toolError: `${tool}: ${message}` };
   }
+}
+
+async function validate({ dir, pkg }, destination) {
+  const result = {
+    name: pkg.name,
+    publintMessages: [],
+    attwProblems: [],
+    cssProblems: [],
+    toolErrors: [],
+  };
+  const packed = await settle('npm pack', () => pack(dir, destination));
+  if (packed.toolError) {
+    result.toolErrors.push(packed.toolError);
+    return result;
+  }
+  const { tarball, files } = packed.value;
+  // CSS is checked first and on its own, so a publint or attw crash can't skip it.
+  const css = await settle('Lightning CSS', () => runCssCheck(dir, files));
+  const [publint, attw] = await Promise.all([
+    settle('publint', () => runPublint(tarball, pkg)),
+    settle('attw', () => runAttw(tarball, pkg)),
+  ]);
+  result.cssProblems = css.value ?? [];
+  result.publintMessages = publint.value ?? [];
+  result.attwProblems = attw.value ?? [];
+  result.toolErrors = [css, publint, attw]
+    .map(({ toolError }) => toolError)
+    .filter(Boolean);
+  return result;
 }
 
 function report(results) {
@@ -264,21 +319,25 @@ function report(results) {
     (result) =>
       count(result, 'error') > 0 ||
       result.attwProblems.length > 0 ||
-      result.cssProblems.length > 0
+      result.cssProblems.length > 0 ||
+      result.toolErrors.length > 0
   );
 
-  const cssFailing = results.filter((result) => result.cssProblems.length > 0);
+  // Always blocking: invalid CSS, or a check that didn't run.
+  const blocking = results.filter(
+    (result) => result.cssProblems.length > 0 || result.toolErrors.length > 0
+  );
 
   const lines = [
     `## Package validation (${gen})`,
     '',
-    `Checked ${results.length} public packages with \`publint\`, \`attw --profile esm-only\`, and Lightning CSS. ${failing.length} with errors.${reportOnly ? ' Report-only for `publint` and `attw`: those findings do not fail this check yet. CSS errors always fail it.' : ''}`,
+    `Checked ${results.length} public packages with \`publint\`, \`attw --profile esm-only\`, and Lightning CSS. ${failing.length} with errors.${reportOnly ? ' Report-only for `publint` and `attw`: those findings do not fail this check yet. CSS errors and tool errors always fail it.' : ''}`,
     '',
-    '| Package | publint errors | publint warnings | attw problems | CSS errors |',
-    '| --- | --- | --- | --- | --- |',
+    '| Package | publint errors | publint warnings | attw problems | CSS errors | Tool errors |',
+    '| --- | --- | --- | --- | --- | --- |',
     ...results.map(
       (result) =>
-        `| \`${result.name}\` | ${count(result, 'error') || '✅'} | ${count(result, 'warning') || '–'} | ${result.attwProblems.length || '✅'} | ${result.cssProblems.length || '✅'} |`
+        `| \`${result.name}\` | ${count(result, 'error') || '✅'} | ${count(result, 'warning') || '–'} | ${result.attwProblems.length || '✅'} | ${result.cssProblems.length || '✅'} | ${result.toolErrors.length || '✅'} |`
     ),
     '',
   ];
@@ -287,7 +346,8 @@ function report(results) {
     if (
       !result.publintMessages.length &&
       !result.attwProblems.length &&
-      !result.cssProblems.length
+      !result.cssProblems.length &&
+      !result.toolErrors.length
     ) {
       continue;
     }
@@ -301,6 +361,9 @@ function report(results) {
     for (const problem of result.cssProblems) {
       lines.push(`- CSS: ${problem}`);
     }
+    for (const error of result.toolErrors) {
+      lines.push(`- Tool error: ${error}`);
+    }
     lines.push('', '</details>', '');
   }
 
@@ -312,24 +375,24 @@ function report(results) {
   if (process.env.GITHUB_OUTPUT) {
     appendFileSync(
       process.env.GITHUB_OUTPUT,
-      `checked=${results.length}\nfailing=${failing.length}\ncss_failing=${cssFailing.length}\n`
+      `checked=${results.length}\nfailing=${failing.length}\nblocking=${blocking.length}\n`
     );
   }
   if (process.env.GITHUB_ACTIONS) {
     // An annotation shows on the run page, so findings aren't buried in logs.
-    if (cssFailing.length) {
+    if (blocking.length) {
       console.log(
-        `::error title=Package validation (${gen})::${cssFailing.length} of ${results.length} packages ship CSS that doesn't parse. See the job summary.`
+        `::error title=Package validation (${gen})::${blocking.length} of ${results.length} packages ship CSS that doesn't parse or couldn't be checked. See the job summary.`
       );
     }
-    if (failing.length > cssFailing.length || (failing.length && !reportOnly)) {
+    if (failing.length > blocking.length || (failing.length && !reportOnly)) {
       const level = reportOnly ? 'warning' : 'error';
       console.log(
         `::${level} title=Package validation (${gen})::${failing.length} of ${results.length} packages have findings. See the job summary.`
       );
     }
   }
-  return { failing: failing.length, cssFailing: cssFailing.length };
+  return { failing: failing.length, blocking: blocking.length };
 }
 
 const packages = findPublicPackages(gen);
@@ -339,8 +402,8 @@ try {
     validate(entry, destination)
   );
   results.sort((a, b) => a.name.localeCompare(b.name));
-  const { failing, cssFailing } = report(results);
-  if (cssFailing || (failing && !reportOnly)) {
+  const { failing, blocking } = report(results);
+  if (blocking || (failing && !reportOnly)) {
     process.exitCode = 1;
   }
 } finally {
