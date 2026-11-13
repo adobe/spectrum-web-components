@@ -82,8 +82,11 @@ export const AppRootTokensTest: Story = {
       );
     });
 
+    // Size-dependent tokens, such as `--swc-font-size`, hold a medium and a
+    // large value. The toggles that `swc.css` declares pick one. Resetting
+    // them on <html> stands in for a page that doesn't load `swc.css`.
     await step(
-      "scale tokens resolve when the page doesn't set up a scale",
+      "size-dependent tokens resolve when the page doesn't load swc.css",
       () => {
         withPageProperties(
           {

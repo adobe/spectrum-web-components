@@ -20,7 +20,7 @@
   background-color: var(--swc-application-background, token("background-base-color"));
 }
 
-/* Theme scaling setup. `:host` gives an app that loads this file in its shadow root its own scale. */
+/* Theme scaling setup. With `:host`, the size-dependent tokens also resolve in a shadow root that loads this file. */
 :root,
 :host,
 .swc-theme,
