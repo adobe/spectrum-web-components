@@ -87,12 +87,6 @@ Import the side effectful registration of \`<${tagName}>\` via:
 import '@adobe/spectrum-wc/${path}/${tagName}.js';
 \`\`\`
 
-To reference the \`${className}\` type, import it as a type-only import:
-
-\`\`\`typescript
-import type { ${className} } from '@adobe/spectrum-wc/${path}';
-\`\`\`
-
 When apps on one page each need their own version of Spectrum Web Components, define \`<${tagName}>\` in a scoped registry instead. \`${className}.define()\` defines the same elements as \`${tagName}.js\`. Scoped registries are experimental. To set up an app with one, see [Scoped registries](/docs/guides-scoped-registries--docs).
 
 \`\`\`typescript
