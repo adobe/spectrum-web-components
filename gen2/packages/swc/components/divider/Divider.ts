@@ -25,6 +25,8 @@ import styles from './divider.css';
  * @since 2.0.0-beta.1
  *
  * @cssprop --swc-divider-background-color - Background color of the divider.
+ * @cssprop --swc-divider-minimum-block-size - Minimum block size of a vertical divider defaults to one line of text.
+ * @cssprop --swc-divider-minimum-inline-size - Minimum inline size of a horizontal divider, capped at the width of its container.
  * @cssprop --swc-divider-thickness - Thickness of the divider.
  */
 export class Divider extends DividerBase {

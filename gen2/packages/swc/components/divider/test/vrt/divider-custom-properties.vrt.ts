@@ -37,22 +37,60 @@ export default meta;
 
 // Helpers
 type DividerPropertyCase = CustomPropertyCase<
-  '--swc-divider-background-color' | '--swc-divider-thickness'
+  | '--swc-divider-background-color'
+  | '--swc-divider-minimum-block-size'
+  | '--swc-divider-minimum-inline-size'
+  | '--swc-divider-thickness'
 >;
 
 const DIVIDER_PROPERTY_CASES: readonly DividerPropertyCase[] = [
   { property: '--swc-divider-background-color', value: 'magenta' },
+  { property: '--swc-divider-minimum-block-size', value: '40px' },
+  { property: '--swc-divider-minimum-inline-size', value: '40px' },
   { property: '--swc-divider-thickness', value: '20px' },
 ];
 
-const renderPropertyCase = (
-  _testCase: DividerPropertyCase,
-  style?: string
-) => html`
-  <div style="inline-size: 200px;">
-    <swc-divider style=${style ?? nothing}></swc-divider>
-  </div>
-`;
+const CONTAINER_STYLE =
+  'box-sizing: border-box; border: 1px dashed var(--swc-gray-500, #909090);';
+const SIBLING_STYLE =
+  'flex: none; inline-size: 200px; block-size: 16px; background: var(--swc-gray-400, #b0b0b0);';
+
+// The inline minimum is the floor a horizontal divider can shrink to, so it
+// goes in a flex row with a sibling that leaves less room than the default
+// minimum. The reference cell holds the default floor and overflows the
+// container; the override lets the divider shrink to fit. The block minimum
+// only applies when the container gives a vertical divider no height, so it
+// goes in plain flow, where the reference falls back to one line of text. Both
+// are centered so the divider itself is easy to see.
+const renderPropertyCase = (testCase: DividerPropertyCase, style?: string) => {
+  switch (testCase.property) {
+    case '--swc-divider-minimum-inline-size':
+      return html`
+        <div
+          style="display: flex; align-items: center; overflow: hidden; inline-size: 240px; block-size: 48px; ${CONTAINER_STYLE}"
+        >
+          <swc-divider style=${style ?? nothing}></swc-divider>
+          <div style=${SIBLING_STYLE}></div>
+        </div>
+      `;
+    case '--swc-divider-minimum-block-size':
+      return html`
+        <div
+          style="display: flex; align-items: center; justify-content: center; inline-size: 240px; block-size: 64px; ${CONTAINER_STYLE}"
+        >
+          <div style="outline: 1px dashed magenta;">
+            <swc-divider vertical style=${style ?? nothing}></swc-divider>
+          </div>
+        </div>
+      `;
+    default:
+      return html`
+        <div style="inline-size: 200px;">
+          <swc-divider style=${style ?? nothing}></swc-divider>
+        </div>
+      `;
+  }
+};
 
 const modPropertiesContent = () =>
   customPropertyRows(DIVIDER_PROPERTY_CASES, renderPropertyCase);

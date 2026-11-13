@@ -30,6 +30,33 @@ formatTitle('Components/Action button');
 
 The slug matches Spectrum design page names. Do not use it for folder, tag, or import names; use `sourceLocation` instead.
 
+## layoutContexts
+
+Renders a component as the direct child of each flex and grid layout context, so a VRT can show whether the host box matches the rendered box wherever an app places the component. The first element in the content is the component under test. A magenta outline marks its host box and a dashed border marks the container.
+
+```typescript
+import { layoutContexts } from '../../../../.storybook/helpers/index.js';
+
+layoutContexts(
+  html`
+    <swc-divider></swc-divider>
+  `,
+  { label: 'Horizontal' }
+);
+
+// Skip contexts that don't apply to the component.
+layoutContexts(
+  html`
+    <swc-divider vertical></swc-divider>
+  `,
+  {
+    exclude: ['flex-column-center', 'grid-place-content', 'grid-narrow-track'],
+  }
+);
+```
+
+The contexts are: flex row and column centering, grid `place-items` and `place-content` centering, a taller sibling in a flex row and in a grid, shrink pressure, a narrow grid track, `flex: 1` on the host, and inline with text. Overlapping cases, such as a fixed-height parent and a taller sibling, are not listed separately. Pass `label` to name the row, `include` or `exclude` to limit the contexts, and `descriptions` to replace a cell's description when the outcome is specific to the component.
+
 ## Adding new helpers
 
 When adding new helpers to this directory:

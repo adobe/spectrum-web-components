@@ -11,6 +11,7 @@
  */
 
 :host {
+  box-sizing: border-box;
   display: block;
 }
 
@@ -36,19 +37,26 @@
   --swc-divider-background-color: token("gray-800");
 }
 
-/* Minimum tracks below cap percentage fill; when the basis does not resolve, set a definite inline size on :host for horizontal dividers or block size for vertical. */
-.swc-Divider:not(.swc-Divider--vertical) {
-  min-inline-size: min(100%, token("divider-horizontal-minimum-width"));
+/* Fills the container width. The minimum is capped at the container so it fits
+ * small spaces, and fit-content keeps the host as thin as the bar. */
+:host(:not([vertical])) {
+  inline-size: 100%;
+  min-inline-size: min(100%, var(--swc-divider-minimum-inline-size, token("divider-horizontal-minimum-width")));
+  block-size: fit-content;
 }
 
+/* Stretches to the height of its row; fit-content keeps the host as thin as
+ * the bar. */
 :host([vertical]) {
   align-self: stretch;
+  inline-size: fit-content;
 }
 
+/* One line of text tall when the container gives it no height to fill. */
 .swc-Divider--vertical {
   inline-size: var(--_swc-divider-thickness);
   block-size: 100%;
-  min-block-size: min(100%, token("divider-vertical-minimum-height"));
+  min-block-size: var(--swc-divider-minimum-block-size, 1lh);
 }
 
 .swc-Divider--staticWhite {
