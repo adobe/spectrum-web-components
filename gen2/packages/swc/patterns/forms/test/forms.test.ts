@@ -15,9 +15,12 @@ import { expect, userEvent, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getComponent, getComponents } from '@swc-test-helpers/dom';
 
+import type { Radio, RadioGroup } from '@adobe/spectrum-wc/radio-group';
 import type { TextField } from '@adobe/spectrum-wc/text-field';
 
 import '@adobe/spectrum-wc/components/text-field/swc-text-field.js';
+import '@adobe/spectrum-wc/components/radio-group/swc-radio-group.js';
+import '@adobe/spectrum-wc/components/radio-group/swc-radio.js';
 
 export default {
   title: 'Forms/Tests',
@@ -43,6 +46,14 @@ export default {
         >
           <span slot="label">Email</span>
         </swc-text-field>
+        <swc-radio-group name="account-type" selected="personal" required>
+          <span slot="label">Account type</span>
+          <span slot="error-text">This account type needs review.</span>
+          <swc-radio value="personal">
+            <span slot="label">Personal</span>
+          </swc-radio>
+          <swc-radio value="work"><span slot="label">Work</span></swc-radio>
+        </swc-radio-group>
         <label>
           <input
             type="checkbox"
@@ -74,6 +85,15 @@ const getFormControls = async (canvasElement: HTMLElement) => {
     canvasElement,
     'swc-text-field'
   );
+  const accountType = await getComponent<RadioGroup>(
+    canvasElement,
+    'swc-radio-group'
+  );
+  const radios = await getComponents<Radio>(accountType, 'swc-radio');
+  const workRadio = radios.find((radio) => radio.value === 'work');
+  if (!workRadio) {
+    throw new Error('Forms integration fixture is missing the "work" radio');
+  }
   const name = fields.find((field) => field.name === 'name');
   const email = fields.find((field) => field.name === 'email');
   const reference = fields.find((field) => field.name === 'reference');
@@ -136,6 +156,8 @@ const getFormControls = async (canvasElement: HTMLElement) => {
     confirmed,
     reference,
     referenceInput,
+    accountType,
+    workRadio,
     submit,
     reset,
   };
@@ -143,7 +165,7 @@ const getFormControls = async (canvasElement: HTMLElement) => {
 
 export const CombinedSubmissionTest: Story = {
   play: async ({ canvasElement }) => {
-    const { form, name, nameInput, submit } =
+    const { form, name, nameInput, accountType, workRadio, submit } =
       await getFormControls(canvasElement);
     const submissions: {
       submitter: HTMLElement | null;
@@ -160,7 +182,8 @@ export const CombinedSubmissionTest: Story = {
     nameInput.focus();
     nameInput.select();
     await userEvent.keyboard('Taylor');
-    await name.updateComplete;
+    await userEvent.click(workRadio);
+    await Promise.all([name.updateComplete, accountType.updateComplete]);
     await userEvent.click(submit);
 
     expect(submissions).toEqual([
@@ -169,6 +192,7 @@ export const CombinedSubmissionTest: Story = {
         data: [
           ['name', 'Taylor'],
           ['email', 'river@example.com'],
+          ['account-type', 'work'],
           ['confirmed', 'yes'],
           ['reference', 'account'],
           ['action', 'save'],
@@ -181,8 +205,15 @@ CombinedSubmissionTest.storyName = 'Controls contribute to one submission';
 
 export const AggregateValidationTest: Story = {
   play: async ({ canvasElement, step }) => {
-    const { form, email, emailInput, confirmed, submit } =
-      await getFormControls(canvasElement);
+    const {
+      form,
+      email,
+      emailInput,
+      accountType,
+      workRadio,
+      confirmed,
+      submit,
+    } = await getFormControls(canvasElement);
     let submissions = 0;
     form.addEventListener('submit', (event) => {
       event.preventDefault();
@@ -201,13 +232,25 @@ export const AggregateValidationTest: Story = {
       expect(submissions).toBe(0);
     });
 
-    await step('an invalid native control also blocks the form', async () => {
+    await step('an unselected radio group also blocks the form', async () => {
       email.value = '';
       await email.updateComplete;
       await userEvent.type(emailInput, 'taylor@example.com');
-      await email.updateComplete;
+      accountType.selected = '';
+      await Promise.all([email.updateComplete, accountType.updateComplete]);
+      expect(email.checkValidity()).toBe(true);
+      expect(accountType.validity.valueMissing).toBe(true);
+      expect(form.checkValidity()).toBe(false);
+      await userEvent.click(submit);
+      expect(submissions).toBe(0);
+    });
+
+    await step('an invalid native control also blocks the form', async () => {
+      await userEvent.click(workRadio);
+      await accountType.updateComplete;
       await userEvent.click(confirmed);
       expect(email.checkValidity()).toBe(true);
+      expect(accountType.checkValidity()).toBe(true);
       expect(confirmed.validity.valueMissing).toBe(true);
       expect(form.checkValidity()).toBe(false);
       await userEvent.click(submit);
@@ -226,7 +269,7 @@ AggregateValidationTest.storyName = 'All controls must pass validation';
 
 export const NoValidateCustomErrorsTest: Story = {
   play: async ({ canvasElement, step }) => {
-    const { form, name, email, emailInput, submit } =
+    const { form, name, email, emailInput, accountType, submit } =
       await getFormControls(canvasElement);
     form.noValidate = true;
     const error = document.createElement('span');
@@ -243,8 +286,12 @@ export const NoValidateCustomErrorsTest: Story = {
       'custom errors affect form validity without blocking submit events',
       async () => {
         name.fieldStatus = 'invalid';
-        await name.updateComplete;
+        accountType.fieldStatus = 'invalid';
+        await Promise.all([name.updateComplete, accountType.updateComplete]);
         expect(name.validationMessage).toBe(error.textContent);
+        expect(accountType.validationMessage).toBe(
+          'This account type needs review.'
+        );
         expect(email.checkValidity()).toBe(true);
         await userEvent.click(submit);
         expect(validityAtSubmit).toEqual([false]);
@@ -252,15 +299,28 @@ export const NoValidateCustomErrorsTest: Story = {
     );
 
     await step(
-      'clearing a custom error preserves a different control constraint',
+      'clearing one custom error leaves another custom control invalid',
       async () => {
         email.value = '';
         name.fieldStatus = undefined;
         await Promise.all([name.updateComplete, email.updateComplete]);
         expect(name.checkValidity()).toBe(true);
+        expect(accountType.validity.customError).toBe(true);
         expect(email.validity.valueMissing).toBe(true);
         await userEvent.click(submit);
         expect(validityAtSubmit).toEqual([false, false]);
+      }
+    );
+
+    await step(
+      'clearing the group error preserves the email constraint',
+      async () => {
+        accountType.fieldStatus = undefined;
+        await accountType.updateComplete;
+        expect(accountType.checkValidity()).toBe(true);
+        expect(email.validity.valueMissing).toBe(true);
+        await userEvent.click(submit);
+        expect(validityAtSubmit).toEqual([false, false, false]);
       }
     );
 
@@ -270,7 +330,7 @@ export const NoValidateCustomErrorsTest: Story = {
         await userEvent.type(emailInput, 'taylor@example.com');
         await email.updateComplete;
         await userEvent.click(submit);
-        expect(validityAtSubmit).toEqual([false, false, true]);
+        expect(validityAtSubmit).toEqual([false, false, false, true]);
       }
     );
   },
@@ -289,6 +349,8 @@ export const WholeFormResetTest: Story = {
       confirmed,
       reference,
       referenceInput,
+      accountType,
+      workRadio,
       reset,
     } = await getFormControls(canvasElement);
 
@@ -302,14 +364,17 @@ export const WholeFormResetTest: Story = {
     referenceInput.focus();
     referenceInput.select();
     await userEvent.keyboard('changed');
+    await userEvent.click(workRadio);
     await Promise.all([
       name.updateComplete,
       email.updateComplete,
       reference.updateComplete,
+      accountType.updateComplete,
     ]);
     expect([...new FormData(form)]).toEqual([
       ['name', 'Taylor'],
       ['email', 'taylor@example.com'],
+      ['account-type', 'work'],
       ['reference', 'changed'],
     ]);
 
@@ -318,16 +383,19 @@ export const WholeFormResetTest: Story = {
       name.updateComplete,
       email.updateComplete,
       reference.updateComplete,
+      accountType.updateComplete,
     ]);
 
     expect(nameInput.value).toBe('River');
     expect(emailInput.value).toBe('river@example.com');
     expect(confirmed.checked).toBe(true);
     expect(referenceInput.value).toBe('account');
+    expect(accountType.selected).toBe('personal');
     expect(form.checkValidity()).toBe(true);
     expect([...new FormData(form)]).toEqual([
       ['name', 'River'],
       ['email', 'river@example.com'],
+      ['account-type', 'personal'],
       ['confirmed', 'yes'],
       ['reference', 'account'],
     ]);
@@ -346,6 +414,7 @@ export const FieldsetBoundaryTest: Story = {
       emailInput,
       reference,
       referenceInput,
+      accountType,
       submit,
     } = await getFormControls(canvasElement);
     let submissions = 0;
@@ -359,12 +428,21 @@ export const FieldsetBoundaryTest: Story = {
     email.value = '';
     await email.updateComplete;
     await userEvent.type(emailInput, 'not-an-email');
-    await Promise.all([name.updateComplete, email.updateComplete]);
+    accountType.fieldStatus = 'invalid';
+    await Promise.all([
+      name.updateComplete,
+      email.updateComplete,
+      accountType.updateComplete,
+    ]);
     expect(form.checkValidity()).toBe(false);
 
     await step('disabling a group excludes only its controls', async () => {
       fieldset.disabled = true;
-      await Promise.all([name.updateComplete, email.updateComplete]);
+      await Promise.all([
+        name.updateComplete,
+        email.updateComplete,
+        accountType.updateComplete,
+      ]);
       expect([...new FormData(form)]).toEqual([['reference', 'account']]);
       expect(form.checkValidity()).toBe(true);
       await userEvent.click(submit);
@@ -396,10 +474,15 @@ export const FieldsetBoundaryTest: Story = {
 
     await step('re-enabling restores group values and validation', async () => {
       fieldset.disabled = false;
-      await Promise.all([name.updateComplete, email.updateComplete]);
+      await Promise.all([
+        name.updateComplete,
+        email.updateComplete,
+        accountType.updateComplete,
+      ]);
       expect([...new FormData(form)]).toEqual([
         ['name', ''],
         ['email', 'not-an-email'],
+        ['account-type', 'personal'],
         ['confirmed', 'yes'],
         ['reference', 'account'],
       ]);
@@ -407,6 +490,28 @@ export const FieldsetBoundaryTest: Story = {
       await userEvent.click(submit);
       expect(submissions).toBe(2);
     });
+
+    await step(
+      'the re-enabled group error still blocks valid siblings',
+      async () => {
+        await userEvent.type(nameInput, 'Taylor');
+        email.value = '';
+        await email.updateComplete;
+        await userEvent.type(emailInput, 'taylor@example.com');
+        await Promise.all([name.updateComplete, email.updateComplete]);
+        expect(name.checkValidity()).toBe(true);
+        expect(email.checkValidity()).toBe(true);
+        expect(form.checkValidity()).toBe(false);
+        await userEvent.click(submit);
+        expect(submissions).toBe(2);
+
+        accountType.fieldStatus = undefined;
+        await accountType.updateComplete;
+        expect(form.checkValidity()).toBe(true);
+        await userEvent.click(submit);
+        expect(submissions).toBe(3);
+      }
+    );
   },
 };
 FieldsetBoundaryTest.storyName = 'Disabled groups preserve form boundaries';

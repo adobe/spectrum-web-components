@@ -8,6 +8,8 @@ import * as FormsStories from './stories/forms.stories';
 
 Combine Spectrum Web Components with native HTML forms to collect and submit data, validate input, and display helpful error messages.
 
+The full example combines [Text field](/docs/components-text-field--docs) and [Radio group](/docs/components-radio-group--docs) with native form actions.
+
 ## Labels and help text
 
 A clear label tells people what to enter. Help text explains requirements before they become errors. Use the `label` and `description` slots to provide both:
@@ -243,9 +245,9 @@ Try submitting the form with missing or incorrect information, then correct it a
 
 - Select **Submit** to check for empty fields or an invalid email address. Errors appear below the fields, and focus moves to the first field with an error.
 - Correct an error to see validation update as you type. Other fields are checked on submission.
-- Enter a name and a valid email address, then submit to see the form data below.
+- Enter a name and a valid email address, choose an account type, then submit to see the form data below.
 - Select **Reset** to clear the fields, errors, and result.
-- Select **Disable fields** to exclude both fields from validation and submission. Reset leaves them disabled.
+- Select **Disable fields** to exclude all fields from validation and submission. Reset leaves them disabled.
 
 <Canvas of={FormsStories.FormBehavior} />
 

@@ -13,9 +13,12 @@
 import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import type { TextField } from '@adobe/spectrum-wc/text-field';
+import { RadioGroup } from '@adobe/spectrum-wc/radio-group';
+import { TextField } from '@adobe/spectrum-wc/text-field';
 
 import '@adobe/spectrum-wc/components/text-field/swc-text-field.js';
+import '@adobe/spectrum-wc/components/radio-group/swc-radio-group.js';
+import '@adobe/spectrum-wc/components/radio-group/swc-radio.js';
 import '@adobe/spectrum-wc/components/button-group/swc-button-group.js';
 
 // ────────────────
@@ -42,7 +45,15 @@ export default meta;
 //    HELPERS
 // ────────────────────
 
-const validateField = async (field: TextField): Promise<void> => {
+type FormField = TextField | RadioGroup;
+
+const requiredMessages: Record<string, string> = {
+  name: 'Enter your name.',
+  email: 'Enter an email address.',
+  'account-type': 'Choose an account type.',
+};
+
+const validateField = async (field: FormField): Promise<void> => {
   if (field.fieldStatus === 'invalid') {
     field.fieldStatus = undefined;
   }
@@ -53,8 +64,9 @@ const validateField = async (field: TextField): Promise<void> => {
 
   let message = '';
   if (field.validity.valueMissing) {
-    message =
-      field.name === 'name' ? 'Enter your name.' : 'Enter an email address.';
+    message = field.name
+      ? (requiredMessages[field.name] ?? field.validationMessage)
+      : field.validationMessage;
   } else if (field.validity.typeMismatch) {
     message = 'Enter a valid email address.';
   } else if (!field.validity.valid) {
@@ -72,8 +84,11 @@ const validateField = async (field: TextField): Promise<void> => {
   }
 };
 
-const handleInput = async (event: Event): Promise<void> => {
-  const field = event.currentTarget as TextField;
+const handleFieldEdit = async (event: Event): Promise<void> => {
+  const field = event.currentTarget;
+  if (!(field instanceof TextField) && !(field instanceof RadioGroup)) {
+    throw new Error('Form field edit requires a supported control.');
+  }
   if (field.fieldStatus === 'invalid') {
     await validateField(field);
   }
@@ -81,8 +96,13 @@ const handleInput = async (event: Event): Promise<void> => {
 
 const handleSubmit = async (event: SubmitEvent): Promise<void> => {
   event.preventDefault();
-  const form = event.currentTarget as HTMLFormElement;
-  const fields = Array.from(form.querySelectorAll('swc-text-field'));
+  const form = event.currentTarget;
+  if (!(form instanceof HTMLFormElement)) {
+    throw new Error('Form submission requires a form.');
+  }
+  const fields = Array.from(
+    form.querySelectorAll<FormField>('swc-text-field, swc-radio-group')
+  );
   const output = form.querySelector<HTMLOutputElement>('[data-form-data]');
   if (!output) {
     throw new Error('Form result output not found.');
@@ -135,7 +155,7 @@ export const FormBehavior: Story = {
           placeholder="Enter your name"
           required
           style="inline-size: 100%;"
-          @input=${handleInput}
+          @input=${handleFieldEdit}
         >
           <span slot="label">Name</span>
           <span slot="error-text">Enter your name.</span>
@@ -147,12 +167,24 @@ export const FormBehavior: Story = {
           placeholder="Enter your email address"
           required
           style="inline-size: 100%;"
-          @input=${handleInput}
+          @input=${handleFieldEdit}
         >
           <span slot="label">Email address</span>
           <span slot="description">For account updates.</span>
           <span slot="error-text">Enter an email address.</span>
         </swc-text-field>
+        <swc-radio-group
+          name="account-type"
+          required
+          @change=${handleFieldEdit}
+        >
+          <span slot="label">Account type</span>
+          <span slot="error-text">Choose an account type.</span>
+          <swc-radio value="personal">
+            <span slot="label">Personal</span>
+          </swc-radio>
+          <swc-radio value="work"><span slot="label">Work</span></swc-radio>
+        </swc-radio-group>
       </fieldset>
       <div
         style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px;"

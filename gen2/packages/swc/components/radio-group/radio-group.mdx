@@ -125,6 +125,8 @@ Native validation, such as `required`, does not set `field-status="invalid"` aut
 
 `swc-radio-group` works with native forms, including validation, reset, and `FormData`. The group submits one entry under its `name`, holding the selected item's `value`. Like a native radio, when no enabled item matches `selected` it submits nothing, and a `required` group fails validation.
 
+See the [Forms pattern](../?path=/docs/patterns-forms--docs) for shared validation, submission, and reset guidance, including an example with Text field and Radio group.
+
 #### Showing and clearing errors
 
 Set `fieldStatus = 'invalid'` and provide `error-text` to show an inline error. Neither happens automatically, and error text alone does not make the group invalid. Errors show when your application sets them, on a commit such as a selection change or on submit, not as users move through the items.

@@ -13,9 +13,12 @@
 import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import type { TextField } from '@adobe/spectrum-wc/text-field';
+import { RadioGroup } from '@adobe/spectrum-wc/radio-group';
+import { TextField } from '@adobe/spectrum-wc/text-field';
 
 import '@adobe/spectrum-wc/components/text-field/swc-text-field.js';
+import '@adobe/spectrum-wc/components/radio-group/swc-radio-group.js';
+import '@adobe/spectrum-wc/components/radio-group/swc-radio.js';
 
 // ────────────────
 //    METADATA
@@ -34,7 +37,36 @@ export default {
 //    HELPERS
 // ────────────────────
 
-const inspectForm = (event: SubmitEvent): void => {
+type FormField = TextField | RadioGroup;
+
+const validateField = async (field: FormField): Promise<void> => {
+  if (field.fieldStatus === 'invalid') {
+    field.fieldStatus = undefined;
+  }
+  await field.updateComplete;
+  if (!field.willValidate || field.validity.valid) {
+    return;
+  }
+  const errorText = field.querySelector('[slot="error-text"]');
+  if (!errorText) {
+    throw new Error('Forms playground requires field error text');
+  }
+  errorText.textContent = field.validationMessage;
+  field.fieldStatus = 'invalid';
+  await field.updateComplete;
+};
+
+const handleFieldEdit = async (event: Event): Promise<void> => {
+  const field = event.currentTarget;
+  if (!(field instanceof TextField) && !(field instanceof RadioGroup)) {
+    throw new Error('Forms playground requires a supported control');
+  }
+  if (field.fieldStatus === 'invalid') {
+    await validateField(field);
+  }
+};
+
+const inspectForm = async (event: SubmitEvent): Promise<void> => {
   event.preventDefault();
   const form = event.currentTarget;
   if (!(form instanceof HTMLFormElement)) {
@@ -44,28 +76,24 @@ const inspectForm = (event: SubmitEvent): void => {
   if (!output) {
     throw new Error('Forms playground requires an inspection output');
   }
+  const fields = Array.from(
+    form.querySelectorAll<FormField>('swc-text-field, swc-radio-group')
+  );
+  await Promise.all(fields.map(validateField));
+  const valid = form.checkValidity();
   output.value = JSON.stringify(
     {
-      valid: form.checkValidity(),
+      valid,
       data: [...new FormData(form, event.submitter)],
     },
     null,
     2
   );
-};
-
-const toggleCustomError = (event: Event): void => {
-  const checkbox = event.currentTarget;
-  if (!(checkbox instanceof HTMLInputElement)) {
-    throw new Error('Forms playground requires a custom-error checkbox');
+  if (!valid) {
+    fields
+      .find((field) => field.willValidate && !field.validity.valid)
+      ?.focus();
   }
-  const field = checkbox.form?.querySelector<TextField>(
-    'swc-text-field[name="name"]'
-  );
-  if (!field) {
-    throw new Error('Forms playground requires the "name" field');
-  }
-  field.fieldStatus = checkbox.checked ? 'invalid' : undefined;
 };
 
 // ────────────────────
@@ -74,43 +102,74 @@ const toggleCustomError = (event: Event): void => {
 
 export const Playground: Story = {
   render: () => html`
-    <form
-      novalidate
-      aria-label="Forms playground"
-      style="display: flex; flex-direction: column; gap: 24px; inline-size: 28rem; max-inline-size: 100%;"
-      @submit=${inspectForm}
+    <div
+      style="display: flex; flex-direction: column; gap: 32px; inline-size: min(48rem, 100vw - 2rem); padding-block: 32px;"
     >
-      <p>
-        Edit the controls and check their validity and data. Nothing is sent.
-      </p>
-      <swc-text-field name="name" value="River" autocomplete="name" required>
-        <span slot="label">Name</span>
-        <span slot="error-text">This name needs review.</span>
-      </swc-text-field>
-      <label>
-        <input type="checkbox" name="confirmed" value="yes" checked required />
-        Confirm details
-      </label>
-      <label>
-        <input type="checkbox" @change=${toggleCustomError} />
-        Show a custom error on Name
-      </label>
-      <div style="display: flex; flex-wrap: wrap; gap: 12px;">
-        <button type="submit" name="action" value="inspect" class="swc-Button">
-          <span class="swc-Button-label">Check form</span>
-        </button>
-        <button type="reset" class="swc-Button swc-Button--secondary">
-          <span class="swc-Button-label">Reset</span>
-        </button>
-      </div>
-      <pre style="margin: 0;"><code style="display: block;"><output
-        class="swc-Code swc-Code--sizeS"
-        aria-label="Form inspection"
-        aria-live="polite"
-        tabindex="0"
-        style="display: block; box-sizing: border-box; block-size: 16rem; padding: 16px; overflow: auto; border: 1px solid var(--swc-gray-300); border-radius: var(--swc-corner-radius-100); background: var(--swc-gray-75); white-space: pre;"
-        .defaultValue=${'Check the form to view results.'}
-      ></output></code></pre>
-    </form>
+      <header style="display: flex; flex-direction: column; gap: 8px;">
+        <h1 class="swc-Heading swc-Heading--sizeL">Forms playground</h1>
+        <p class="swc-Body swc-Body--sizeS">
+          Explore form behavior. No data is sent.
+        </p>
+      </header>
+      <form
+        novalidate
+        aria-label="Forms playground"
+        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr)); align-items: start; gap: 24px;"
+        @submit=${inspectForm}
+      >
+        <div
+          style="display: flex; flex-direction: column; gap: 24px; min-inline-size: 0;"
+        >
+          <swc-text-field
+            name="email"
+            type="email"
+            autocomplete="email"
+            required
+            style="inline-size: 100%; --swc-field-input-max-inline-size: 100%;"
+            @input=${handleFieldEdit}
+          >
+            <span slot="label">Email address</span>
+            <span slot="error-text"></span>
+          </swc-text-field>
+          <swc-radio-group
+            name="account-type"
+            orientation="horizontal"
+            required
+            style="inline-size: 100%;"
+            @change=${handleFieldEdit}
+          >
+            <span slot="label">Account type</span>
+            <span slot="error-text"></span>
+            <swc-radio value="personal">
+              <span slot="label">Personal</span>
+            </swc-radio>
+            <swc-radio value="work"><span slot="label">Work</span></swc-radio>
+          </swc-radio-group>
+          <div style="display: flex; flex-wrap: wrap; gap: 12px;">
+            <button
+              type="submit"
+              name="action"
+              value="inspect"
+              class="swc-Button"
+            >
+              <span class="swc-Button-label">Submit</span>
+            </button>
+            <button type="reset" class="swc-Button swc-Button--secondary">
+              <span class="swc-Button-label">Reset</span>
+            </button>
+          </div>
+        </div>
+        <div style="min-inline-size: 0;">
+          <pre style="margin: 0;"><code style="display: block;"><output
+            class="swc-Code swc-Code--sizeS"
+            aria-label="Form results"
+            aria-live="polite"
+            tabindex="0"
+            style="display: block; box-sizing: border-box; block-size: 16rem; padding: 16px; overflow: auto; border: 1px solid var(--swc-gray-300); border-radius: var(--swc-corner-radius-100); background: var(--swc-gray-75); white-space: pre;"
+            .defaultValue=${'Submit to view results.'}
+          ></output></code></pre>
+        </div>
+      </form>
+    </div>
   `,
 };
