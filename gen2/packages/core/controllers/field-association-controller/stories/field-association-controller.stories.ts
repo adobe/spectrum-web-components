@@ -207,6 +207,28 @@ export const Validity: Story = {
 };
 Validity.storyName = 'Validity pass-throughs';
 
+export const FieldStatusBarring: Story = {
+  render: () => html`
+    <form novalidate>
+      <demo-field-status
+        name="locked"
+        value="Example"
+        label="Locked"
+        field-status="disabled"
+      ></demo-field-status>
+      <demo-field-status
+        name="viewonly"
+        label="View only"
+        required
+        field-status="readonly"
+      ></demo-field-status>
+      <demo-form-readout></demo-form-readout>
+    </form>
+  `,
+  tags: ['behaviors'],
+};
+FieldStatusBarring.storyName = 'Field status barring';
+
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES
 // ────────────────────────────────

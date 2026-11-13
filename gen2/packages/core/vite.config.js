@@ -103,6 +103,9 @@ function getEntries() {
   // Find all utils/*.ts files
   Object.assign(entries, scanTsFiles(resolve(__dirname, 'utils'), 'utils'));
 
+  // Find all types/*.ts files
+  Object.assign(entries, scanTsFiles(resolve(__dirname, 'types'), 'types'));
+
   return entries;
 }
 
