@@ -369,13 +369,14 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
     );
   }
 
-  // Clearing `actual-placement` mid-fade would snap the surface to its
-  // default, so this waits for the exit and bails if a reopen beat it.
+  // Clearing the position or `actual-placement` mid-fade would snap the
+  // surface, so this waits for the exit and bails if a reopen beat it.
   private _stopPositioningWhenClosed(): void {
     if (this.open) {
       return;
     }
     this.placementController.stop();
+    this.placementController.clearStyles();
     this.removeAttribute('actual-placement');
   }
 

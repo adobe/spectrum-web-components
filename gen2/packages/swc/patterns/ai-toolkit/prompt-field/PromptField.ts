@@ -62,6 +62,10 @@ export interface PromptFieldSubmitDetail {
 // Matches the pixel-loader's own `icon` default.
 const DEFAULT_LOADER_ICON: PixelLoaderIconName = 'aiLogo';
 
+/** Docs URL attributed to dev-mode validation warnings. */
+const DOCS_URL =
+  'https://spectrum-web-components.adobe.com/?path=/docs/patterns-ai-toolkit-prompt-field--docs';
+
 const isFileDrag = (event: DragEvent): boolean => {
   const dataTransfer = event.dataTransfer;
   return Boolean(
@@ -1270,7 +1274,7 @@ export class PromptField extends SpectrumElement {
     window.__swc.warn(
       this,
       'The accessible-label is empty, so the prompt textarea has no accessible name. Set accessible-label to a localized name such as "AI prompt".',
-      'https://spectrum-web-components.adobe.com/patterns/ai-toolkit/prompt-field/',
+      DOCS_URL,
       { type: 'accessibility', level: 'high' }
     );
   }
@@ -1303,7 +1307,7 @@ export class PromptField extends SpectrumElement {
     window.__swc.warn(
       this,
       'The attachment slot contains both card and media upload attachments. Use one layout type per composer session (all card or all media). When uploads mix images and documents, normalize to media tiles with thumbnails and optional badges.',
-      'https://spectrum-web-components.adobe.com/patterns/ai-toolkit/prompt-field/'
+      DOCS_URL
     );
   }
 
@@ -1327,7 +1331,7 @@ export class PromptField extends SpectrumElement {
     window.__swc.warn(
       this,
       'The legal slot is empty. Product implementations must provide Legal-approved disclaimer content via the legal slot.',
-      'https://spectrum-web-components.adobe.com/patterns/ai-toolkit/prompt-field/'
+      DOCS_URL
     );
   }
 

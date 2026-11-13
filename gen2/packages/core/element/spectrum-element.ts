@@ -198,9 +198,15 @@ export function recordAffectedElement(
   }
 }
 
-// Enabled in every environment except production (the ecosystem convention);
-// a production build strips this block via dead-code elimination.
-if (process.env.NODE_ENV !== 'production') {
+/**
+ * Creates the dev-mode `window.__swc` API. Keeps the settings that the page
+ * put on `window.__swc` before the first component loaded, including
+ * `DEBUG: false`, which also turns off the dev-mode notice. Runs once when this
+ * module loads outside production; exported so tests can run it again.
+ *
+ * @internal
+ */
+export function installDevMode(): void {
   const ignoreWarningTypes = {
     default: false,
     accessibility: false,
@@ -235,7 +241,7 @@ if (process.env.NODE_ENV !== 'production') {
 
   window.__swc = {
     ...window.__swc,
-    DEBUG: true,
+    DEBUG: window.__swc?.DEBUG ?? true,
     ignoreWarningLocalNames: {
       ...(window.__swc?.ignoreWarningLocalNames || {}),
     },
@@ -300,10 +306,18 @@ if (process.env.NODE_ENV !== 'production') {
     },
   };
 
-  window.__swc.warn(
-    undefined,
-    'Spectrum Web Components is in dev mode. Not recommended for production!',
-    'https://spectrum-web-components.adobe.com/dev-mode/',
-    { type: 'default' }
-  );
+  if (window.__swc.DEBUG) {
+    window.__swc.warn(
+      undefined,
+      'Spectrum Web Components is in dev mode. Not recommended for production!',
+      'https://spectrum-web-components.adobe.com/?path=/docs/guides-dev-mode-warnings--docs',
+      { type: 'default' }
+    );
+  }
+}
+
+// Enabled in every environment except production (the ecosystem convention);
+// a production build strips this call via dead-code elimination.
+if (process.env.NODE_ENV !== 'production') {
+  installDevMode();
 }

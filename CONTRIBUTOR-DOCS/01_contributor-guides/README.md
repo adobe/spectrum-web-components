@@ -27,6 +27,7 @@
 - [Focus management](14_focus-management.md)
 - [Changelog strategy](15_changelog-strategy.md)
 - [gen2 shared resources quick reference](16_gen2-shared-resources.md)
+- [Component status and since tags](17_component-status-and-since.md)
 
 </details>
 

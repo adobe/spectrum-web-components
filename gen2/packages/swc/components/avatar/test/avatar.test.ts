@@ -12,17 +12,18 @@
 import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import {
+  fixture,
+  getComponent,
+  getComponents,
+  withWarningSpy,
+} from '@swc-test-helpers/dom';
 
 import { Avatar } from '@adobe/spectrum-wc/avatar';
 import { AVATAR_VALID_SIZES } from '@adobe/spectrum-wc-core/components/avatar/index.js';
 
 import '@adobe/spectrum-wc/components/avatar/swc-avatar.js';
 
-import {
-  getComponent,
-  getComponents,
-  withWarningSpy,
-} from '../../../utils/test-utils.js';
 import meta, {
   Decorative,
   Disabled,
@@ -132,22 +133,130 @@ export const SizeReflectionTest: Story = {
   },
 };
 
-export const SizeInvalidFallbackTest: Story = {
+export const InvalidSizeTest: Story = {
   ...Overview,
   play: async ({ canvasElement, step }) => {
     const avatar = await getComponent<Avatar>(canvasElement, 'swc-avatar');
+    const renderedWidth = (): number =>
+      avatar.shadowRoot!.querySelector('.swc-Avatar')!.getBoundingClientRect()
+        .width;
+
+    avatar.size = 100;
+    await avatar.updateComplete;
+    const defaultWidth = renderedWidth();
 
     await step(
-      'falls back to default size (100) when given an invalid value',
-      async () => {
-        avatar.size = 999 as Avatar['size'];
-        await avatar.updateComplete;
-        expect(avatar.size, 'size after invalid value').toBe(100);
-        expect(
-          avatar.getAttribute('size'),
-          'size attribute after invalid'
-        ).toBe('100');
-      }
+      'keeps an invalid property value, warns, and renders at the default size',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          avatar.size = 999 as Avatar['size'];
+          await avatar.updateComplete;
+
+          expect(avatar.size, 'size property keeps the value set').toBe(999);
+          expect(
+            avatar.getAttribute('size'),
+            'size attribute keeps the value set'
+          ).toBe('999');
+          expect(renderedWidth(), 'renders at the default size').toBe(
+            defaultWidth
+          );
+          expect(
+            warnCalls.length,
+            'warning count for invalid size'
+          ).toBeGreaterThan(0);
+          expect(
+            String(warnCalls[0]?.[1] ?? ''),
+            'warning names the property and received value'
+          ).toMatch(/"size".*"999"/);
+        })
+    );
+
+    await step(
+      'keeps an invalid attribute value, warns, and renders at the default size',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          avatar.setAttribute('size', 'banana');
+          await avatar.updateComplete;
+
+          expect(
+            avatar.getAttribute('size'),
+            'size attribute keeps the value set'
+          ).toBe('banana');
+          expect(renderedWidth(), 'renders at the default size').toBe(
+            defaultWidth
+          );
+          expect(
+            String(warnCalls[0]?.[1] ?? ''),
+            'warning names the received value'
+          ).toContain('"banana"');
+        })
+    );
+
+    await step(
+      'accepts a numeric string size, as frameworks set it, without a warning',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          avatar.size = '200' as unknown as Avatar['size'];
+          await avatar.updateComplete;
+
+          expect(avatar.getAttribute('size')).toBe('200');
+          expect(renderedWidth(), 'renders size 200').not.toBe(defaultWidth);
+          expect(warnCalls.length, 'no warning for numeric text').toBe(0);
+        })
+    );
+
+    await step(
+      'resets to the default without a warning when the attribute is removed',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          avatar.removeAttribute('size');
+          await avatar.updateComplete;
+
+          expect(avatar.size, 'size after the attribute is removed').toBe(100);
+          expect(warnCalls.length, 'no warning when size is unset').toBe(0);
+        })
+    );
+  },
+};
+
+export const InvalidSizeInMarkupTest: Story = {
+  render: () => html`
+    <span></span>
+  `,
+  play: async ({ step }) => {
+    await step(
+      'keeps an invalid size from the initial markup and renders at the default size',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          const avatar = await fixture<Avatar>(html`
+            <swc-avatar
+              src=${PLACEHOLDER_SRC}
+              alt=""
+              size="banana"
+            ></swc-avatar>
+          `);
+          const reference = await fixture<Avatar>(html`
+            <swc-avatar src=${PLACEHOLDER_SRC} alt=""></swc-avatar>
+          `);
+          const width = (el: Avatar): number =>
+            el.shadowRoot!.querySelector('.swc-Avatar')!.getBoundingClientRect()
+              .width;
+
+          expect(
+            avatar.getAttribute('size'),
+            'attribute is not rewritten'
+          ).toBe('banana');
+          expect(avatar.size, 'property keeps the text').toBe('banana');
+          expect(width(avatar), 'renders at the default size').toBe(
+            width(reference)
+          );
+          expect(
+            warnCalls.map((call) => String(call[1])).join('\n'),
+            'warning names the received value'
+          ).toContain('Received "banana"');
+          avatar.parentElement?.remove();
+          reference.parentElement?.remove();
+        })
     );
   },
 };

@@ -45,9 +45,7 @@ export class Tooltip extends TooltipBase {
     return [styles];
   }
 
-  // The tip is static in the template, so resolve it once and cache it. The
-  // getter is read multiple times per open/close cycle (startPlacement and
-  // clearPositioningState), and querySelector on every access is wasteful.
+  // The tip is static in the template, so resolve it once and cache it.
   private _tipElement: HTMLElement | null = null;
 
   protected override get tipElement(): HTMLElement | null {

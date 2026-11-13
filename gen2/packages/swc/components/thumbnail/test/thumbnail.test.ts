@@ -12,6 +12,12 @@
 import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import {
+  fixture,
+  getComponent,
+  getComponents,
+  withWarningSpy,
+} from '@swc-test-helpers/dom';
 import { computeAccessibleName } from 'dom-accessibility-api';
 
 import { Thumbnail } from '@adobe/spectrum-wc/thumbnail';
@@ -23,11 +29,6 @@ import {
 
 import '@adobe/spectrum-wc/components/thumbnail/swc-thumbnail.js';
 
-import {
-  getComponent,
-  getComponents,
-  withWarningSpy,
-} from '../../../utils/test-utils.js';
 import meta, {
   Fit,
   Overview,
@@ -164,38 +165,92 @@ export const SizeReflectionTest: Story = {
   },
 };
 
-export const SizeInvalidFallbackTest: Story = {
+export const InvalidSizeTest: Story = {
   ...Overview,
   play: async ({ canvasElement, step }) => {
     const thumbnail = await getComponent<Thumbnail>(
       canvasElement,
       'swc-thumbnail'
     );
-    // Start from a non-default size so the fallback is a real change.
+    const renderedWidth = (): number =>
+      thumbnail
+        .shadowRoot!.querySelector('.swc-Thumbnail')!
+        .getBoundingClientRect().width;
+
+    thumbnail.size = THUMBNAIL_DEFAULT_SIZE;
+    await thumbnail.updateComplete;
+    const defaultWidth = renderedWidth();
+    // Start from a non-default size so the fallback is a visible change.
     thumbnail.size = 300;
     await thumbnail.updateComplete;
-    expect(thumbnail.getAttribute('size'), 'starting size attribute').toBe(
-      '300'
+    expect(renderedWidth(), 'starting width differs from default').not.toBe(
+      defaultWidth
     );
 
     await step(
-      'falls back to the default size and warns on an invalid value',
+      'keeps an invalid value, warns, and renders the default size',
       () =>
         withWarningSpy(async (warnCalls) => {
           thumbnail.size = 999 as Thumbnail['size'];
           await thumbnail.updateComplete;
 
-          expect(thumbnail.size, 'size after invalid value').toBe(
-            THUMBNAIL_DEFAULT_SIZE
-          );
+          expect(thumbnail.size, 'size property keeps the value set').toBe(999);
           expect(
             thumbnail.getAttribute('size'),
-            'size attribute after invalid value'
-          ).toBe(String(THUMBNAIL_DEFAULT_SIZE));
+            'size attribute keeps the value set'
+          ).toBe('999');
+          expect(renderedWidth(), 'renders at the default size').toBe(
+            defaultWidth
+          );
           expect(
             warnCalls.length,
             'warning count for invalid size'
           ).toBeGreaterThan(0);
+          expect(
+            String(warnCalls[0]?.[1] ?? ''),
+            'warning names the property and received value'
+          ).toMatch(/"size".*"999"/);
+        })
+    );
+  },
+};
+
+export const InvalidSizeInMarkupTest: Story = {
+  render: () => html`
+    <span></span>
+  `,
+  play: async ({ step }) => {
+    await step(
+      'keeps an invalid size from the initial markup and renders at the default size',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          const thumbnail = await fixture<Thumbnail>(html`
+            <swc-thumbnail size="banana">
+              <img src="a.png" alt="" />
+            </swc-thumbnail>
+          `);
+          const reference = await fixture<Thumbnail>(html`
+            <swc-thumbnail><img src="a.png" alt="" /></swc-thumbnail>
+          `);
+          const width = (el: Thumbnail): number =>
+            el
+              .shadowRoot!.querySelector('.swc-Thumbnail')!
+              .getBoundingClientRect().width;
+
+          expect(
+            thumbnail.getAttribute('size'),
+            'attribute is not rewritten'
+          ).toBe('banana');
+          expect(thumbnail.size, 'property keeps the text').toBe('banana');
+          expect(width(thumbnail), 'renders at the default size').toBe(
+            width(reference)
+          );
+          expect(
+            warnCalls.map((call) => String(call[1])).join('\n'),
+            'warning names the received value'
+          ).toContain('Received "banana"');
+          thumbnail.parentElement?.remove();
+          reference.parentElement?.remove();
         })
     );
   },
@@ -230,14 +285,14 @@ export const FitReflectionTest: Story = {
   },
 };
 
-export const FitInvalidFallbackTest: Story = {
+export const InvalidFitTest: Story = {
   ...Overview,
   play: async ({ canvasElement, step }) => {
     const thumbnail = await getComponent<Thumbnail>(
       canvasElement,
       'swc-thumbnail'
     );
-    // Start from a non-default fit so the fallback is a real change.
+    // Start from a non-default fit so the fallback is a visible change.
     thumbnail.fit = 'cover';
     await thumbnail.updateComplete;
     expect(thumbnail.getAttribute('fit'), 'starting fit attribute').toBe(
@@ -245,23 +300,32 @@ export const FitInvalidFallbackTest: Story = {
     );
 
     await step(
-      'falls back to the default fit and warns on an invalid value',
+      'keeps an invalid value, warns, and renders the default fit',
       () =>
         withWarningSpy(async (warnCalls) => {
           thumbnail.fit = 'invalid' as Thumbnail['fit'];
           await thumbnail.updateComplete;
 
-          expect(thumbnail.fit, 'fit after invalid value').toBe(
-            THUMBNAIL_DEFAULT_FIT
+          expect(thumbnail.fit, 'fit property keeps the value set').toBe(
+            'invalid'
           );
           expect(
             thumbnail.getAttribute('fit'),
-            'fit attribute after invalid value'
+            'fit attribute keeps the value set'
+          ).toBe('invalid');
+          const image = thumbnail.querySelector('img') as HTMLImageElement;
+          expect(
+            getComputedStyle(image).objectFit,
+            'renders the default object-fit'
           ).toBe(THUMBNAIL_DEFAULT_FIT);
           expect(
             warnCalls.length,
             'warning count for invalid fit'
           ).toBeGreaterThan(0);
+          expect(
+            String(warnCalls[0]?.[1] ?? ''),
+            'warning names the property and received value'
+          ).toMatch(/"fit".*"invalid"/);
         })
     );
   },

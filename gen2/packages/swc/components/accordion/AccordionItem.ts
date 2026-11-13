@@ -111,7 +111,7 @@ export class AccordionItem extends AccordionItemBase {
         <swc-ui-icon
           class="swc-AccordionItem-indicator"
           icon="chevron"
-          size=${ifDefined(this.size)}
+          size=${ifDefined(this.resolvedSize)}
         ></swc-ui-icon>
         <span class="swc-AccordionItem-label">
           <slot name="label"></slot>

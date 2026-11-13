@@ -13,6 +13,11 @@
 import { html } from 'lit';
 import { expect, userEvent, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import {
+  getComponent,
+  getComponents,
+  withWarningSpy,
+} from '@swc-test-helpers/dom';
 
 import type { Button } from '@adobe/spectrum-wc/button';
 import type { Popover } from '@adobe/spectrum-wc/popover';
@@ -26,11 +31,6 @@ import {
   TOOLTIP_PLACEMENTS,
   TOOLTIP_VARIANTS,
 } from '../../../../core/components/tooltip/Tooltip.types.js';
-import {
-  getComponent,
-  getComponents,
-  withWarningSpy,
-} from '../../../utils/test-utils.js';
 import meta, {
   Overview,
   Placements,
@@ -645,6 +645,38 @@ export const AriaWiringManualModeTest: Story = {
   },
 };
 
+export const AttributeRemovalResetsTest: Story = {
+  render: () => html`
+    <swc-tooltip>Tooltip text</swc-tooltip>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const el = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
+    const cases: [string, string, string, unknown][] = [
+      ['variant', 'negative', 'variant', 'neutral'],
+      ['placement', 'bottom', 'placement', 'top'],
+    ];
+
+    for (const [attribute, value, property, defaultValue] of cases) {
+      await step(
+        `resets ${attribute} to its default without a warning when removed`,
+        () =>
+          withWarningSpy(async (warnCalls) => {
+            el.setAttribute(attribute, value);
+            await el.updateComplete;
+            el.removeAttribute(attribute);
+            await el.updateComplete;
+
+            expect(
+              (el as unknown as Record<string, unknown>)[property],
+              `${property} after removal`
+            ).toBe(defaultValue);
+            expect(warnCalls.length, 'no warning when unset').toBe(0);
+          })
+      );
+    }
+  },
+};
+
 // ──────────────────────────────────────────────────────────────
 // TEST: ARIA wiring — labeling attribute
 // ──────────────────────────────────────────────────────────────
@@ -1136,7 +1168,7 @@ export const PlacementControllerTest: Story = {
       );
     });
 
-    await step('clears translate when closed', async () => {
+    await step('clears the inline position styles when closed', async () => {
       const tip = tooltip.shadowRoot?.querySelector(
         '.swc-Tooltip-tip'
       ) as HTMLElement | null;
@@ -1155,12 +1187,29 @@ export const PlacementControllerTest: Story = {
           ).toBeFalsy(),
         { timeout: 2000 }
       );
-      // Tip translate is also cleared by dispatchAfterEvent — both are cleared
-      // in the same call, so no additional polling is needed here.
+      // The rest is cleared in the same call, so no more polling is needed.
+      for (const property of [
+        'top',
+        'left',
+        'translate',
+        '--swc-placement-available-width',
+        '--swc-placement-available-height',
+      ]) {
+        expect(
+          tooltip.style.getPropertyValue(property),
+          `bubble ${property} is cleared after close`
+        ).toBe('');
+      }
+      for (const property of ['top', 'left', 'translate']) {
+        expect(
+          tip?.style.getPropertyValue(property),
+          `tip ${property} is cleared after close`
+        ).toBe('');
+      }
       expect(
-        tip?.style.translate,
-        'tip translate is cleared after close'
-      ).toBeFalsy();
+        tooltip.style.getPropertyValue('--_swc-tooltip-animation-distance'),
+        'the tooltip keeps its own inline animation distance'
+      ).toBe('4px');
     });
 
     await step(

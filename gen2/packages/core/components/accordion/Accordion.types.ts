@@ -25,6 +25,8 @@ export type AccordionDensity = (typeof ACCORDION_DENSITIES)[number];
 
 export const ACCORDION_HEADING_LEVELS = [2, 3, 4, 5, 6] as const;
 export type AccordionHeadingLevel = (typeof ACCORDION_HEADING_LEVELS)[number];
+export const ACCORDION_DEFAULT_HEADING_LEVEL =
+  3 as const satisfies AccordionHeadingLevel;
 
 export const SWC_ACCORDION_ITEM_TOGGLE_EVENT = 'swc-accordion-item-toggle';
 export const SWC_ACCORDION_ITEM_OPEN_EVENT = 'swc-open';

@@ -164,8 +164,8 @@ const STORIES_BY_MODE: Record<StorybookMode, StorybookConfig['stories']> = {
   // dependencies production doesn't need), and .test.ts fixtures.
   build: [
     { ...COMPONENT_STORIES, files: '**/!(*.internal).stories.ts' },
-    { ...PATTERN_STORIES, files: '**/*.stories.ts' },
-    { ...PATTERN_STORIES, files: '**/*.mdx' },
+    { ...PATTERN_STORIES, files: '**/!(*.internal).stories.ts' },
+    { ...PATTERN_STORIES, files: '**/!(*.internal).mdx' },
     { ...COMPONENT_STORIES, files: '**/!(*.internal).mdx' },
     { ...ICONS_STORIES, files: '**/!(*.internal).stories.ts' },
     { ...ICONS_STORIES, files: '**/!(*.internal).mdx' },
@@ -286,6 +286,20 @@ const config: StorybookConfig = {
       ],
       resolve: {
         alias: [
+          {
+            find: /^@swc-test-helpers\/dom$/,
+            replacement: resolve(
+              __dirname,
+              '../../../test/helpers/dom/index.ts'
+            ),
+          },
+          {
+            find: /^@swc-test-helpers\/playwright$/,
+            replacement: resolve(
+              __dirname,
+              '../../../test/helpers/playwright/index.ts'
+            ),
+          },
           {
             find: '@adobe/spectrum-wc-core',
             replacement: resolve(__dirname, '../../core'),
