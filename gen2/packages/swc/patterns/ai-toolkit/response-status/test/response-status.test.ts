@@ -13,10 +13,10 @@
 import { html } from 'lit';
 import { expect, userEvent, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import { getComponent, withWarningSpy } from '@swc-test-helpers/dom';
 
 import '../swc-response-status.js';
 
-import { getComponent, withWarningSpy } from '../../../../utils/test-utils.js';
 import type { ResponseStatusStep } from '../response-status-step/ResponseStatusStep.js';
 import type { ResponseStatus } from '../ResponseStatus.js';
 import {

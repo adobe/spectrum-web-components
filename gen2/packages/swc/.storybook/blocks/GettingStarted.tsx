@@ -12,6 +12,7 @@
 import { Markdown, type Of, useOf } from '@storybook/addon-docs/blocks';
 import React from 'react';
 
+import customElements from '../../dist/custom-elements.json' with { type: 'json' };
 import { sourceLocation } from '../helpers/index.js';
 
 const toPascalCase = (kebab: string) =>
@@ -20,11 +21,49 @@ const toPascalCase = (kebab: string) =>
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join('');
 
+/** Joins items as prose: `a`, `a and b`, or `a, b, and c`. */
+const joinList = (items: string[]) =>
+  items.length <= 2
+    ? items.join(' and ')
+    : `${items.slice(0, -1).join(', ')}, and ${items[items.length - 1]}`;
+
+type ManifestModule = {
+  path: string;
+  declarations?: { name: string; tagName?: string }[];
+};
+
+/**
+ * Resolves an element's class name and the directory its registration file
+ * lives in from the custom elements manifest. Registration files
+ * (`swc-<name>.ts`) sit next to the class module, which may be in a
+ * subdirectory of the documented component (e.g. a pattern's step element).
+ * Falls back to `fallbackPath` and a name derived from the tag.
+ */
+const resolveElement = (tagName: string, fallbackPath: string) => {
+  for (const module of customElements.modules as ManifestModule[]) {
+    const declaration = module.declarations?.find(
+      (candidate) => candidate.tagName === tagName
+    );
+    if (declaration) {
+      return {
+        className: declaration.name,
+        path: module.path.split('/').slice(0, -1).join('/'),
+      };
+    }
+  }
+  return {
+    className: toPascalCase(tagName.replace(/^swc-/, '')),
+    path: fallbackPath,
+  };
+};
+
 /**
  * A block that renders getting started instructions for a Spectrum Web Component.
  * Derives the import paths from the documented element (`meta.component`) and
  * from where the stories file lives, so they match the published packages.
- * Renders nothing for pages that document no single element.
+ * Elements listed in `parameters.additionalApiTables` (e.g. `swc-radio` on
+ * the radio group page) get their own registration import. Renders nothing for
+ * pages that document no single element.
  *
  * @param props - The block's props.
  * @param props.of - The Storybook meta or story to resolve the component from
@@ -71,7 +110,24 @@ import { ${exportName} } from '@adobe/spectrum-wc-core/${entry}';
     if (typeof tagName !== 'string' || packageName !== 'swc') {
       return null;
     }
-    const className = toPascalCase(tagName.replace(/^swc-/, ''));
+    const additionalTags: string[] =
+      (resolvedOf.preparedMeta?.parameters?.additionalApiTables as
+        | string[]
+        | undefined) ?? [];
+    const elements = [tagName, ...additionalTags].map((tag) => ({
+      tagName: tag,
+      ...resolveElement(tag, path),
+    }));
+    const tagList = joinList(
+      elements.map((element) => `\`<${element.tagName}>\``)
+    );
+    const classList = elements.map((element) => element.className);
+    const registrations = elements
+      .map(
+        (element) =>
+          `import '@adobe/spectrum-wc/${element.path}/${element.tagName}.js';`
+      )
+      .join('\n');
 
     const markdownContent = `## Getting started
 
@@ -81,19 +137,19 @@ Add the package to your project:
 yarn add @adobe/spectrum-wc
 \`\`\`
 
-Import the side effectful registration of \`<${tagName}>\` via:
+Import the side effectful registration of ${tagList} via:
 
 \`\`\`typescript
-import '@adobe/spectrum-wc/${path}/${tagName}.js';
+${registrations}
 \`\`\`
 
-To reference the \`${className}\` type, import it as a type-only import:
+To reference the ${joinList(classList.map((name) => `\`${name}\``))} ${classList.length > 1 ? 'types' : 'type'}, import ${classList.length > 1 ? 'them' : 'it'} as a type-only import:
 
 \`\`\`typescript
-import type { ${className} } from '@adobe/spectrum-wc/${path}';
+import type { ${classList.join(', ')} } from '@adobe/spectrum-wc/${path}';
 \`\`\`
 
-> The class is exposed primarily for type purposes. Extending it is possible, but the internal shape is not part of the public API — if you choose to subclass, you do so at your own risk and may need to adjust your code between releases.
+> The ${classList.length > 1 ? 'classes are' : 'class is'} exposed primarily for type purposes. Extending ${classList.length > 1 ? 'them' : 'it'} is possible, but the internal shape is not part of the public API — if you choose to subclass, you do so at your own risk and may need to adjust your code between releases.
 `;
 
     return <Markdown>{markdownContent}</Markdown>;
