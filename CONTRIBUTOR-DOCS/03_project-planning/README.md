@@ -36,6 +36,7 @@
     - Button
     - Button Group
     - Card
+    - Card View
     - Checkbox
     - Checkbox Group
     - Close Button
