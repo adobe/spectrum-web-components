@@ -192,9 +192,10 @@ export const KeyboardFocusTest: Story = {
     const anchor = getAnchor(canvasElement);
 
     await step('link accepts programmatic focus', async () => {
-      // Headless Firefox can drop programmatic focus while a sibling test
-      // frame holds it, so retry until the anchor really is active.
+      // Headless Firefox reports `body` as the active element while a sibling
+      // test frame holds focus, so reclaim it and retry.
       await waitFor(() => {
+        window.focus();
         anchor.focus();
         expect(document.activeElement, 'anchor receives focus').toBe(anchor);
       });

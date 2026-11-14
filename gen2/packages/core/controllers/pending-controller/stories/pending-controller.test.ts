@@ -29,7 +29,7 @@
  * same internal button after the re-render.
  */
 
-import { expect } from '@storybook/test';
+import { expect, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import './demo-hosts.js';
@@ -44,6 +44,25 @@ import pendingMeta, { FocusRetained } from './pending-controller.stories.js';
 /** Waits `ms` milliseconds for async timers to settle. */
 function wait(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+/**
+ * Asserts the shadow root's active element, tolerating frame-level focus loss.
+ *
+ * Vitest runs several tester frames in parallel in one page, and headless
+ * Firefox reports `body` as the active element while a sibling frame holds
+ * focus. Reclaim this frame's focus and retry; the element is never re-focused,
+ * so a component that really drops focus still fails.
+ */
+function expectActiveElement(
+  root: ShadowRoot,
+  expected: Element,
+  message: string
+): Promise<void> {
+  return waitFor(() => {
+    window.focus();
+    expect(root.activeElement, message).toBe(expected);
+  });
 }
 
 // ─────────────────────────
@@ -109,11 +128,14 @@ export const FocusRetainedTest: Story = {
         internalButton.dispatchEvent(
           new PointerEvent('pointerdown', { bubbles: true, composed: true })
         );
-        internalButton.focus();
-        expect(
-          shadowRoot.activeElement,
-          'internal button is the active element in the shadow root'
-        ).toBe(internalButton);
+        await waitFor(() => {
+          window.focus();
+          internalButton.focus();
+          expect(
+            shadowRoot.activeElement,
+            'internal button is the active element in the shadow root'
+          ).toBe(internalButton);
+        });
       }
     );
 
@@ -131,10 +153,11 @@ export const FocusRetainedTest: Story = {
           internalButton.getAttribute('aria-label'),
           'aria-label is set to the derived busy name immediately'
         ).toBe('Save, busy');
-        expect(
-          shadowRoot.activeElement,
+        await expectActiveElement(
+          shadowRoot,
+          internalButton,
           'focus is still on the internal button after the immediate aria update'
-        ).toBe(internalButton);
+        );
       }
     );
 
@@ -154,10 +177,11 @@ export const FocusRetainedTest: Story = {
           internalButton.classList.contains('is-pendingActive'),
           'pendingActive CSS class is applied after the controller delay'
         ).toBe(true);
-        expect(
-          shadowRoot.activeElement,
+        await expectActiveElement(
+          shadowRoot,
+          internalButton,
           'focus is still on the same button element after the controller-triggered re-render'
-        ).toBe(internalButton);
+        );
       }
     );
 
@@ -178,10 +202,11 @@ export const FocusRetainedTest: Story = {
           internalButton.classList.contains('is-pendingActive'),
           'pendingActive class is removed after pending clears'
         ).toBe(false);
-        expect(
-          shadowRoot.activeElement,
+        await expectActiveElement(
+          shadowRoot,
+          internalButton,
           'focus is still on the button after pending clears'
-        ).toBe(internalButton);
+        );
       }
     );
   },

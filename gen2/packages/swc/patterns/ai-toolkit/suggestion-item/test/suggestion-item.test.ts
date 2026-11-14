@@ -106,10 +106,12 @@ export const EventTest: Story = {
         const innerButton = button?.shadowRoot?.querySelector('button');
         expect(innerButton, 'chip renders a native button').toBeTruthy();
 
-        // Headless Firefox can drop programmatic focus while a sibling test
-        // frame holds it, so retry until `delegatesFocus` actually lands.
+        // Headless Firefox reports `body` as the active element while a
+        // sibling test frame holds focus, so reclaim it and retry until
+        // `delegatesFocus` lands.
         const focusInnerButton = (): Promise<void> =>
           waitFor(() => {
+            window.focus();
             button?.focus();
             expect(button?.shadowRoot?.activeElement).toBe(innerButton);
           });
