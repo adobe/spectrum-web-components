@@ -165,8 +165,20 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
   @property({ type: Boolean, reflect: true })
   public override disabled = false;
 
+  /**
+   * When true, enables haptic feedback on click (release) interaction
+   * (Vibration API on Android; native switch haptic on iOS 18+ Safari).
+   *
+   * @see https://webkit.org/blog/15865/webkit-features-in-safari-18-0/
+   */
+  @property({ type: Boolean, attribute: 'haptic-feedback', reflect: true })
+  public hapticFeedback = false;
+
   @property({ type: Number, reflect: true, attribute: 'fill-start' })
   public fillStart?: number | boolean;
+
+  @query('#haptic-trigger')
+  private hapticTriggerEl?: HTMLInputElement;
 
   /**
    * Applies `quiet` to the underlying `sp-number-field` when `editable === true`.
@@ -204,9 +216,44 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
     }
   }
 
+  /**
+   * Triggers haptic feedback when enabled (e.g. on handle press).
+   * Uses Vibration API on Android; on iOS, clicks the hidden switch label.
+   */
+  public triggerHapticFeedback(): void {
+    if (!this.hapticFeedback) {
+      return;
+    }
+    if ('vibrate' in navigator) {
+      navigator.vibrate(16);
+      return;
+    }
+    const label = this.shadowRoot?.getElementById('haptic-label');
+    if (label) {
+      label.click();
+    }
+  }
+
   protected override render(): TemplateResult {
     return html`
       ${this.renderLabel()} ${this.renderTrack()}
+      ${this.hapticFeedback
+        ? html`
+            <label
+              id="haptic-label"
+              for="haptic-trigger"
+              class="visually-hidden"
+              aria-hidden="true"
+            ></label>
+            <input
+              type="checkbox"
+              id="haptic-trigger"
+              class="visually-hidden"
+              aria-hidden="true"
+              tabindex="-1"
+            />
+          `
+        : nothing}
       ${this.editable
         ? html`
             <sp-number-field
@@ -552,6 +599,12 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
     }
     await this.handleController.handleUpdatesComplete();
     return complete;
+  }
+
+  protected override updated(_changed: PropertyValues): void {
+    if (this.hapticFeedback && this.hapticTriggerEl) {
+      this.hapticTriggerEl.setAttribute('switch', '');
+    }
   }
 
   protected override willUpdate(changed: PropertyValues): void {
