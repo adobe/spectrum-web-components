@@ -10,8 +10,16 @@
  * governing permissions and limitations under the License.
  */
 
+/* Fills its parent down to a 90% cap in narrow containers (e.g. a
+   mobile-width conversation thread), scaling down to a 65% floor in wide
+   ones, so the status never reads as the full width of its row.
+   `clamp()` holds 90%/65% outside a ~395-960px container-width range;
+   `calc(168px + 47.5%)` is the line through 90% at 395px and 65% at
+   960px in between. */
 :host {
   display: block;
+  inline-size: 100%;
+  max-inline-size: clamp(65%, calc(168px + 47.5%), 90%);
 }
 
 *,
@@ -140,28 +148,26 @@
   text-overflow: ellipsis;
 }
 
-/* Settled: allow the label to wrap across multiple lines instead of
-   truncating to one, since a narrow container or a longer translation can
-   easily exceed one line's width. Mid-roll (no `--settled` class) keeps the
-   single line + ellipsis the cross-fade geometry above depends on. */
+/* Settled labels stay on one line and truncate at the available width. */
 .swc-ResponseStatus-headerTrailLine--settled {
   block-size: auto;
   white-space: normal;
 }
 
-/* Active and stopped labels default to two lines. */
+/* Disclosure labels default to one line. */
 .swc-ResponseStatus-headerTrailLine--settled .swc-ResponseStatus-label {
   -webkit-box-orient: vertical;
   display: -webkit-box;
   white-space: normal;
   overflow: hidden;
-  -webkit-line-clamp: var(--swc-response-status-label-max-lines, 2);
-  line-clamp: var(--swc-response-status-label-max-lines, 2);
+  -webkit-line-clamp: var(--swc-response-status-label-max-lines, 1);
+  line-clamp: var(--swc-response-status-label-max-lines, 1);
 }
 
-/* A completed label has no disclosure if there are no steps, so keep its
-   full text visible unless the consumer explicitly sets a line cap. */
-.swc-ResponseStatus-row--complete .swc-ResponseStatus-headerTrailLine--settled .swc-ResponseStatus-label {
+/* A label with no disclosure to expand into (any status without steps, not
+   just `complete`) has no escape hatch if it's clamped, so keep its full
+   text visible unless the consumer explicitly sets a line cap. */
+.swc-ResponseStatus-row:not(.swc-ResponseStatus-row--button) .swc-ResponseStatus-headerTrailLine--settled .swc-ResponseStatus-label {
   -webkit-line-clamp: var(--swc-response-status-label-max-lines, unset);
   line-clamp: var(--swc-response-status-label-max-lines, unset);
 }
@@ -237,6 +243,11 @@
    Agentic mode
    ───────────────────────────────────── */
 
+/* The width clamp lives on `:host` (not here) so the custom element's own
+   box matches what's painted — anything hanging host-level styling off
+   `swc-response-status` (a border, an outline, a surrounding grid track)
+   sees the same 65-90% width as the content, instead of a full-width host
+   with a narrower box centered inside it. */
 .swc-ResponseStatus--agentic {
   inline-size: 100%;
 }

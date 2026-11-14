@@ -17,6 +17,7 @@ import '../../swc-conversation-thread.js';
 import '../../../conversation-turn/swc-conversation-turn.js';
 import '../../../message-feedback/swc-message-feedback.js';
 import '../../../response-status/swc-response-status.js';
+import '../../../response-status/response-status-step/swc-response-status-step.js';
 import '../../../system-message/swc-system-message.js';
 import '../../../user-message/swc-user-message.js';
 
@@ -73,7 +74,13 @@ const systemTurn = (text: string, withChrome = false) => html`
       ${withChrome
         ? html`
             <swc-response-status slot="status" status="complete">
-              <span slot="label">Response complete</span>
+              <span slot="label">
+                Response complete: reviewed the source material, verified the
+                findings, and prepared the final response
+              </span>
+              <swc-response-status-step status="complete">
+                <span slot="label">Reviewed the source material</span>
+              </swc-response-status-step>
             </swc-response-status>
           `
         : nothing}
@@ -176,5 +183,14 @@ export const Permutations: Story = {
     ${theme(permutationContent(), 'light', 'ltr')}
     ${theme(permutationContent(), 'dark', 'rtl')}
   `,
-  parameters: vrtParameters,
+  parameters: {
+    ...vrtParameters,
+    chromatic: {
+      modes: {
+        mobile: { viewport: { width: 320, height: 800 } },
+        tablet: { viewport: { width: 500, height: 900 } },
+        desktop: { viewport: { width: 1280, height: 1000 } },
+      },
+    },
+  },
 };

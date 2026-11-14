@@ -68,7 +68,7 @@ export type ResponseStatusStatus = (typeof RESPONSE_STATUSES)[number];
  * Detail: `{ open: boolean }`
  * @fires swc-response-status-step-toggle - Dispatched when the user expands or collapses
  * a step's description. Detail: `{ open: boolean, index: number }`
- * @cssprop --swc-response-status-label-max-lines - Maximum number of lines for a settled header label. Defaults to 2 when active or stopped; completed labels show in full unless a cap is set.
+ * @cssprop --swc-response-status-label-max-lines - Maximum number of lines for a settled header label. Defaults to 1; a label with no disclosure to open into (any status with no steps) shows in full unless a cap is set.
  * @since 2.0.0-beta.3
  */
 export class ResponseStatus extends SpectrumElement {
@@ -576,9 +576,10 @@ export class ResponseStatus extends SpectrumElement {
     if (!this._rollActive) {
       // Settled (no transition in flight): the roll geometry below assumes a
       // fixed single-line height, so only constrain to one line while actually
-      // rolling. At rest, let the label wrap across multiple lines instead of
-      // truncating, since a narrow container (or a longer translation) can
-      // easily exceed one line's width.
+      // rolling. At rest, the CSS defaults to clamping the label to one line
+      // (with an ellipsis) when there's a disclosure to expand into, or
+      // wrapping it in full otherwise; either way, `--swc-response-status-
+      // label-max-lines` lets a consumer override the line count.
       return html`
         <span
           class="swc-ResponseStatus-headerTrailViewport swc-ResponseStatus-headerTrailViewport--settled"

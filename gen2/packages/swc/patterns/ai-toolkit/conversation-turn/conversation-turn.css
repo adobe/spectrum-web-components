@@ -59,8 +59,15 @@
   align-items: stretch;
 }
 
-/* Let system stacks span the full turn column. */
-:host([type="system"]) ::slotted(*) {
+/* Let the documented `swc-system-message` stack span the full turn column.
+ * Scoped to this element (not `*`) so a component slotted in directly
+ * (e.g. `swc-response-status`, bypassing the system-message wrapper) keeps
+ * its own intrinsic width instead of being stretched by this rule — a
+ * `::slotted()` rule always wins over a slotted component's own `:host`
+ * styles regardless of specificity, since the browser treats it as this
+ * tree's authority over projected content, so narrowing the selector is
+ * the fix rather than fighting that with specificity tricks. */
+:host([type="system"]) ::slotted(swc-system-message) {
   flex: 1 1 100%;
   min-inline-size: 0;
   max-inline-size: 100%;
