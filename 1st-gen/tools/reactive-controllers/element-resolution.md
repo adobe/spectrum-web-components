@@ -343,7 +343,7 @@ When using `ElementResolutionController` for accessibility-related functionality
 
 - **ID selectors are optimized**: The controller uses `getElementById()` for ID-based selectors (starting with `#`), which is faster than `querySelector()`.
 - **MutationObserver scope**: The observer watches the entire root node (Shadow DOM or document) for changes. For large DOMs, this could have performance implications.
-- **Automatic cleanup**: The controller automatically disconnects the MutationObserver when the host is disconnected from the DOM.
+- **Automatic cleanup**: The controller clears the resolved element and disconnects its MutationObserver when the host is disconnected. Selector lookups resume after the host is reconnected.
 
 ### References
 
