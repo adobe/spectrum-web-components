@@ -1,0 +1,1394 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import artwork0 from './assets/illusionist.png';
+import artwork1 from './assets/revelation.png';
+import artwork2 from './assets/familiar.png';
+import artwork3 from './assets/endless.png';
+import artwork4 from './assets/commander.png';
+import artwork5 from './assets/gathering.png';
+import borderArtwork from './assets/border.png';
+
+<Meta title="Card view/The card view oracle" />
+
+export const readings = {
+  waterfall: {
+    label: 'Waterfall · Column advance',
+    title: 'Independent columns. Uneven heights.',
+    summary:
+      'Equal-width cards fill columns left to right before returning to the first column, mirrored in RTL. Each column stacks independently, so later card tops can stagger. Collection order and single-row semantics stay fixed.',
+    caution:
+      'Left/Right follows collection order. Up/Down follows each visual column and advances to the next or previous column at its edge. Test switching between these routes.',
+    variants: [
+      [
+        'advance',
+        'Waterfall advance.',
+        'Down follows the current column, then the next; Up reverses that route. Left/Right stays in collection order. Skip disabled cards and cycle at collection boundaries.',
+      ],
+    ],
+  },
+  grid: {
+    label: 'Uniform grid · Four vertical policies',
+    title: 'One semantic row. Four routes to test.',
+    summary:
+      'All four examples use our recommended single-row grid: 50 named card cells in one semantic row. Left/Right follows collection order and wraps. Only Up/Down behavior changes; every cell name includes its collection position.',
+    caution:
+      'Users relying on semantics encounter one sequence. Sighted keyboard users see two visual dimensions. Test whether both can predict movement and reach every card.',
+    variants: [
+      [
+        'nowrap',
+        'NoWrap.',
+        'Up/Down follows visual neighbors and stops at an edge.',
+      ],
+      [
+        'loop',
+        'Loop.',
+        'Up/Down returns to the opposite vertical edge of the same overlapping column.',
+      ],
+      [
+        'advance',
+        'Advance.',
+        'Up/Down crosses an edge into the next or previous column; cycle at the collection boundary.',
+      ],
+      [
+        'semantic',
+        'Semantic.',
+        'Right/Down follows the next semantic item; Left/Up follows the previous. Cycle through the whole collection.',
+      ],
+    ],
+  },
+  masonry: {
+    label: 'Masonry · Four vertical policies',
+    title: 'Rows align. Vertical edges can differ.',
+    summary:
+      'The same single-row semantics contain adaptive visual rows: equal row heights and aspect-ratio-based widths. All four policies share placement and horizontal collection-order cycling. Compare their Up/Down routes.',
+    caution:
+      'Several cards in another row may overlap the active card horizontally. Which one should Up or Down choose? Test adaptive rows separately from waterfall columns.',
+    variants: [
+      [
+        'nowrap',
+        'NoWrap.',
+        'Up/Down chooses an overlapping vertical neighbor; stop when none exists.',
+      ],
+      [
+        'loop',
+        'Loop.',
+        'Up/Down loops within the same overlapping column, not into another one.',
+      ],
+      [
+        'advance',
+        'Advance.',
+        'Up/Down crosses an edge in column order; cycle at the collection boundary.',
+      ],
+      [
+        'semantic',
+        'Semantic.',
+        'Visit every enabled item in semantic order. Right/Down advances even when the next card is visually below.',
+      ],
+    ],
+  },
+};
+
+export const oracleStyles = `.sbdocs-wrapper:has(#card-view-oracle) { padding: 0; }
+.sbdocs-content:has(#card-view-oracle) { width: 100%; max-width: none !important; }
+#card-view-oracle { position: relative; container: oracle / inline-size; isolation: isolate; box-sizing: border-box; font-family: var(--sans) !important; }
+#card-view-oracle * { font-family: inherit !important; }
+#card-view-oracle :is(h1, h2, h3, .card-title) { font-family: var(--serif) !important; }
+#card-view-oracle :where(h1, h2, h3, p, li) { font-family: inherit; color: inherit; }
+#card-view-oracle :where(h1, h2, h3) { padding: 0; border: 0; }
+
+      #card-view-oracle {
+        color-scheme: light;
+        --paper: #fcfbf8;
+        --ink: #25251f;
+        --forest: #173f36;
+        --wine: #75283e;
+        --gold: #f0cc79;
+        --pale-yellow: #f5f0df;
+        --line: #d2d3c8;
+        --muted: #595e51;
+        --serif: 'Cormorant Garamond', Georgia, serif;
+        --sans: 'DM Sans', sans-serif;
+      }
+      #card-view-oracle * {
+        box-sizing: border-box;
+      }
+      #card-view-oracle {
+        scroll-behavior: smooth;
+        scroll-padding-top: 24px;
+      }
+      #card-view-oracle {
+        margin: 0;
+        background: var(--paper);
+        color: var(--ink);
+        font: 16px/1.6 var(--sans);
+      }
+      #card-view-oracle button,#card-view-oracle
+      select {
+        font: inherit;
+      }
+      #card-view-oracle a {
+        color: inherit;
+        text-underline-offset: 4px;
+      }
+      #card-view-oracle a:hover {
+        text-decoration-thickness: 2px;
+      }
+      #card-view-oracle :is(nav a, .variant-id, .source-links a, footer a) {
+        display: inline-block;
+        min-width: 24px;
+        min-height: 24px;
+      }
+      #card-view-oracle :focus-visible {
+        outline: 3px solid var(--wine);
+        outline-offset: 5px;
+      }
+      #card-view-oracle .dark :focus-visible {
+        outline-color: var(--gold);
+      }
+      #card-view-oracle .skip {
+        position: absolute;
+        top: -100px;
+        left: 16px;
+        padding: 12px;
+        z-index: 10;
+        background: white;
+      }
+      #card-view-oracle .skip:focus {
+        top: 12px;
+      }
+      #card-view-oracle .wrap {
+        width: min(1180px, calc(100% - 64px));
+        margin-inline: auto;
+      }
+      #card-view-oracle .masthead {
+        border-bottom: 1px solid var(--line);
+      }
+      #card-view-oracle .masthead .wrap {
+        display: flex;
+        gap: 24px;
+        justify-content: space-between;
+        align-items: center;
+        min-height: 76px;
+      }
+      #card-view-oracle .imprint {
+        font-size: 14px;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+      #card-view-oracle .imprint span {
+        color: var(--wine);
+        margin-right: 10px;
+        font-size: 22px;
+        vertical-align: middle;
+      }
+      #card-view-oracle nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px 25px;
+        font-size: 14px !important;
+      }
+      #card-view-oracle nav a {
+        font-size: inherit;
+        text-decoration: none;
+        padding-block: 8px;
+      }
+      #card-view-oracle .hero {
+        padding: 50px 0 34px;
+        text-align: center;
+        background-image: repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent 79px,
+          #173f3605 80px
+        );
+      }
+      #card-view-oracle .eyebrow {
+        margin: 0 0 12px;
+        text-transform: uppercase;
+        font-weight: 600;
+        font-size: 14px;
+      }
+      #card-view-oracle h1,#card-view-oracle
+      h2,#card-view-oracle
+      h3,#card-view-oracle
+      p {
+        margin-top: 0;
+      }
+      #card-view-oracle h1,#card-view-oracle
+      h2,#card-view-oracle
+      h3 {
+        font-family: var(--serif);
+        line-height: 1.05;
+        font-weight: 600;
+        letter-spacing: 0;
+      }
+      #card-view-oracle h1 {
+        font-size: 76px;
+        margin-bottom: 14px;
+      }
+      #card-view-oracle h1 em {
+        color: var(--wine);
+        font-weight: 500;
+      }
+      #card-view-oracle .hero .lede {
+        max-width: 630px;
+        margin: 0 auto;
+        font-size: 17px;
+      }
+      #card-view-oracle .ornament {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        width: min(380px, 100%);
+        margin: 24px auto 0;
+        color: var(--wine);
+      }
+      #card-view-oracle .ornament::before,#card-view-oracle
+      .ornament::after {
+        content: '';
+        height: 1px;
+        background: var(--line);
+        flex: 1;
+      }
+      #card-view-oracle .border-artwork {
+        display: block;
+        height: auto;
+        margin-block: 0 24px;
+      }
+      #card-view-oracle .strategy-callout {
+        margin-block-start: 40px;
+        padding: 16px 20px;
+        border-inline-start: 4px solid var(--gold);
+        background: var(--pale-yellow);
+      }
+      #card-view-oracle .strategy-callout p {
+        margin: 0;
+      }
+      #card-view-oracle .deck-section {
+        padding: 28px 0 58px;
+      }
+      #card-view-oracle .section-line {
+        display: flex;
+        justify-content: space-between;
+        gap: 24px;
+        align-items: baseline;
+        margin-bottom: 20px;
+      }
+      #card-view-oracle .section-line h2 {
+        font-size: 32px;
+        margin: 0;
+      }
+      #card-view-oracle .small {
+        font-size: 14px;
+        color: var(--muted);
+      }
+      #card-view-oracle .deck {
+        display: grid;
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        gap: 18px;
+      }
+      #card-view-oracle .tarot {
+        display: block;
+        min-width: 0;
+        border: 0;
+        padding: 0 0 8px;
+        background: transparent;
+        color: inherit;
+        text-align: left;
+        margin: 0;
+        overflow-wrap: anywhere;
+      }
+      #card-view-oracle .portrait {
+        display: block;
+        position: relative;
+        aspect-ratio: 0.58;
+        background: var(--forest);
+        border: 1px solid var(--ink);
+        border-radius: 3px;
+        overflow: hidden;
+        transition:
+          transform 180ms ease,
+          box-shadow 180ms ease;
+      }
+      #card-view-oracle .portrait img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      #card-view-oracle .tarot:nth-child(even) .portrait {
+        transform: translateY(10px);
+      }
+      #card-view-oracle .card-number {
+        display: block;
+        margin-top: 25px;
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--wine);
+        text-transform: uppercase;
+      }
+      #card-view-oracle .card-title {
+        display: block;
+        font-family: var(--serif);
+        font-size: 24px;
+        font-weight: 700;
+        line-height: 1.12;
+        margin-top: 5px;
+      }
+      #card-view-oracle .card-role {
+        display: block;
+        font-size: 14px;
+        margin-top: 7px;
+        color: var(--muted);
+      }
+      #card-view-oracle .reading {
+        margin-top: 34px;
+        padding: 30px 0 0;
+        border-top: 1px solid var(--line);
+        display: grid;
+        grid-template-columns: 1fr 1.7fr;
+        gap: 50px;
+      }
+      #card-view-oracle .reading h3 {
+        font-size: 38px;
+        margin-bottom: 12px;
+      }
+      #card-view-oracle .reading p {
+        margin-bottom: 14px;
+      }
+      #card-view-oracle .reading .caution {
+        color: var(--wine);
+        font-size: 14px;
+      }
+      #card-view-oracle .variants {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+      #card-view-oracle .variants li {
+        display: block;
+        padding: 11px 0;
+        border-bottom: 1px solid var(--line);
+        font-size: 14px;
+      }
+      #card-view-oracle .variant-id {
+        color: var(--wine);
+        font-weight: 700;
+      }
+      #card-view-oracle .variants strong {
+        font-weight: 600;
+      }
+      #card-view-oracle .status {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+      }
+      #card-view-oracle .dark {
+        background: var(--forest);
+        color: var(--paper);
+      }
+      #card-view-oracle .dark .small {
+        color: inherit;
+      }
+      #card-view-oracle .dilemma {
+        padding: 55px 0;
+      }
+      #card-view-oracle .dilemma .wrap {
+        display: grid;
+        grid-template-columns: 0.8fr 1.5fr;
+        gap: 70px;
+      }
+      #card-view-oracle .dark .eyebrow {
+        color: var(--gold);
+      }
+      #card-view-oracle h2 {
+        font-size: 48px;
+        margin-bottom: 18px;
+      }
+      #card-view-oracle .dilemma h2 em {
+        color: var(--gold);
+        font-weight: 500;
+      }
+      #card-view-oracle .omens {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        counter-reset: omens;
+      }
+      #card-view-oracle .omens li {
+        display: grid;
+        grid-template-columns: 32px 1fr;
+        gap: 16px;
+        padding-block: 14px;
+        border-bottom: 1px solid #ffffff30;
+      }
+      #card-view-oracle .omens li::before {
+        counter-increment: omens;
+        content: '0' counter(omens);
+        color: var(--gold);
+        font-family: var(--serif);
+        font-size: 26px;
+      }
+      #card-view-oracle .omens strong {
+        display: block;
+        color: var(--gold);
+        margin-bottom: 3px;
+      }
+      #card-view-oracle .omens p {
+        margin: 0;
+        font-size: 14px;
+      }
+      #card-view-oracle .lore {
+        padding: 64px 0;
+      }
+      #card-view-oracle .lore-intro {
+        max-width: 660px;
+      }
+      #card-view-oracle .lore-intro p {
+        color: var(--muted);
+      }
+      #card-view-oracle .spells {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        border-top: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+        margin-top: 30px;
+      }
+      #card-view-oracle .spell {
+        padding: 25px 22px;
+        border-left: 1px solid var(--line);
+      }
+      #card-view-oracle .spell:first-child {
+        border-left: 0;
+        padding-left: 0;
+      }
+      #card-view-oracle .spell h3 {
+        font-size: 29px;
+        margin-block: 16px 10px;
+      }
+      #card-view-oracle .spell p {
+        font-size: 14px;
+        margin-bottom: 16px;
+      }
+      #card-view-oracle .spell .pair {
+        font-weight: 700;
+        color: var(--wine);
+        font-size: 14px;
+      }
+      #card-view-oracle .diagram {
+        display: grid;
+        grid-template-columns: repeat(3, 22px);
+        gap: 5px;
+        width: fit-content;
+        height: 49px;
+        position: relative;
+      }
+      #card-view-oracle .diagram i {
+        display: block;
+        height: 22px;
+        border: 1px solid var(--forest);
+        background: #dfe9e2;
+      }
+      #card-view-oracle .diagram i.active {
+        background: var(--wine);
+        border-color: var(--wine);
+      }
+      #card-view-oracle .diagram i.exit {
+        background: var(--gold);
+        border-color: var(--forest);
+      }
+      #card-view-oracle .spell .glyph {
+        display: block;
+        color: var(--wine);
+        font-size: 30px;
+        line-height: 49px;
+      }
+      #card-view-oracle .note {
+        font-size: 14px;
+        margin: 20px 0 0;
+        color: var(--muted);
+      }
+      #card-view-oracle .layout-explainer {
+        background: #edf7fc;
+        padding: 56px 0;
+      }
+      #card-view-oracle .layout-intro {
+        max-width: 70ch;
+      }
+      #card-view-oracle .layout-diagrams {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 36px;
+        margin-top: 28px;
+      }
+      #card-view-oracle .layout-diagrams figure {
+        display: grid;
+        grid-template-columns: minmax(0, 320px) minmax(0, 1fr);
+        gap: 32px;
+        align-items: center;
+        margin: 0;
+        min-width: 0;
+      }
+      #card-view-oracle .layout-diagrams figure + figure {
+        padding-top: 36px;
+        border-top: 1px solid #6b909e;
+      }
+      #card-view-oracle .layout-diagrams figcaption {
+        min-width: 0;
+        max-width: 65ch;
+      }
+      #card-view-oracle .layout-diagrams h3 {
+        font-size: 28px;
+        line-height: 1.2;
+        margin: 0 0 12px;
+      }
+      #card-view-oracle .layout-diagrams p {
+        margin-bottom: 12px;
+      }
+      #card-view-oracle .layout-context {
+        max-width: 76ch;
+        margin: 24px 0 0;
+        padding-top: 20px;
+        border-top: 1px solid #6b909e;
+        font-size: 14px;
+      }
+      #card-view-oracle .layout-diagram {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+        height: 288px;
+        padding: 12px;
+        background: #dceef7;
+      }
+      #card-view-oracle .uniform-layout {
+        grid-template-rows: repeat(3, 1fr);
+      }
+      #card-view-oracle .masonry-layout {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+      }
+      #card-view-oracle .layout-visual-row {
+        display: grid;
+        gap: 10px;
+        min-width: 0;
+        min-height: 0;
+      }
+      #card-view-oracle .layout-visual-column {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        min-width: 0;
+      }
+      #card-view-oracle .layout-card {
+        display: grid;
+        place-items: center;
+        flex-shrink: 0;
+        border: 1px solid #6b909e;
+        border-radius: 4px;
+        background: var(--paper);
+        color: var(--wine);
+        font-size: 18px;
+        font-weight: 700;
+      }
+      #card-view-oracle .verdict {
+        background: var(--pale-yellow);
+        padding: 56px 0;
+        border-top: 1px solid #dfcc8f;
+        border-bottom: 1px solid #dfcc8f;
+      }
+      #card-view-oracle .verdict .wrap {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+      }
+      #card-view-oracle .verdict h2 {
+        font-size: 52px;
+        color: var(--wine);
+      }
+      #card-view-oracle .verdict p {
+        max-width: 480px;
+      }
+      #card-view-oracle .plan {
+        padding-left: 22px;
+        margin: 0;
+      }
+      #card-view-oracle .plan li {
+        padding: 0 0 15px 10px;
+        font-size: 15px;
+      }
+      #card-view-oracle .plan li::marker {
+        font-family: var(--serif);
+        font-weight: 700;
+        color: var(--wine);
+        font-size: 23px;
+      }
+      #card-view-oracle .plan strong {
+        display: block;
+      }
+      #card-view-oracle .receipts {
+        padding: 55px 0;
+      }
+      #card-view-oracle .receipts .wrap {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 60px;
+      }
+      #card-view-oracle .receipts-column {
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+        min-width: 0;
+      }
+      #card-view-oracle .receipts-column section + section {
+        padding-top: 32px;
+        border-top: 1px solid #ffffff30;
+      }
+      #card-view-oracle .receipts h2 {
+        font-size: 32px;
+        line-height: 1.15;
+        margin-bottom: 18px;
+      }
+      #card-view-oracle .dark .source-links a {
+        color: var(--gold);
+      }
+      #card-view-oracle .receipts p,#card-view-oracle
+      .receipts li {
+        font-size: 14px;
+      }
+      #card-view-oracle .receipts ul {
+        padding-left: 20px;
+      }
+      #card-view-oracle .source-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px 24px;
+        margin-top: 20px;
+        font-size: 14px;
+      }
+      #card-view-oracle footer {
+        border-top: 1px solid var(--line);
+        padding: 24px 0;
+      }
+      #card-view-oracle footer .wrap {
+        display: flex;
+        justify-content: space-between;
+        gap: 24px;
+        font-size: 14px;
+        color: var(--muted);
+      }
+      #card-view-oracle .credit {
+        max-width: 650px;
+      }
+      #card-view-oracle .noscript {
+        border-top: 1px solid var(--line);
+        padding-top: 20px;
+      }
+      #card-view-oracle .noscript h3 {
+        font-size: 26px;
+        margin-bottom: 8px;
+      }
+      @container oracle (max-width: 1000px) {
+        #card-view-oracle .deck {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: 30px 22px;
+        }
+        #card-view-oracle .portrait {
+          max-height: 310px;
+        }
+        #card-view-oracle .spells {
+          grid-template-columns: 1fr 1fr;
+        }
+        #card-view-oracle .spell:nth-child(3) {
+          border-left: 0;
+          padding-left: 0;
+          border-top: 1px solid var(--line);
+        }
+        #card-view-oracle .spell:nth-child(4) {
+          border-top: 1px solid var(--line);
+        }
+        #card-view-oracle .dilemma .wrap {
+          gap: 35px;
+        }
+      }
+      @container oracle (max-width: 640px) {
+        #card-view-oracle .layout-diagrams figure {
+          grid-template-columns: minmax(0, 1fr);
+          gap: 20px;
+        }
+        #card-view-oracle .wrap {
+          width: calc(100% - 36px);
+        }
+        #card-view-oracle .masthead .wrap {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 2px;
+          padding-block: 13px;
+        }
+        #card-view-oracle nav {
+          gap: 10px 19px;
+          font-size: 14px;
+        }
+        #card-view-oracle .hero {
+          padding-top: 32px;
+        }
+        #card-view-oracle h1 {
+          font-size: 49px;
+        }
+        #card-view-oracle .hero .lede {
+          font-size: 15px;
+        }
+        #card-view-oracle .section-line {
+          display: block;
+        }
+        #card-view-oracle .section-line .small {
+          display: block;
+          margin-top: 9px;
+        }
+        #card-view-oracle .deck {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 24px 16px;
+        }
+        #card-view-oracle .portrait {
+          max-height: none;
+        }
+        #card-view-oracle .card-title {
+          font-size: 25px;
+        }
+        #card-view-oracle .card-number {
+          margin-top: 22px;
+        }
+        #card-view-oracle .layout-diagrams,#card-view-oracle
+        .reading,#card-view-oracle
+        .dilemma .wrap,#card-view-oracle
+        .verdict .wrap,#card-view-oracle
+        .receipts .wrap {
+          grid-template-columns: 1fr;
+          gap: 22px;
+        }
+        #card-view-oracle .reading h3 {
+          font-size: 34px;
+        }
+        #card-view-oracle .dilemma,#card-view-oracle
+        .lore,#card-view-oracle
+        .verdict {
+          padding-block: 40px;
+        }
+        #card-view-oracle h2,#card-view-oracle
+        .verdict h2 {
+          font-size: 40px;
+        }
+        #card-view-oracle .spell {
+          padding: 20px 0 20px 16px;
+        }
+        #card-view-oracle .spell h3 {
+          font-size: 25px;
+        }
+        #card-view-oracle .spell p {
+          font-size: 14px;
+        }
+        #card-view-oracle .receipts {
+          padding-block: 40px;
+        }
+        #card-view-oracle footer .wrap {
+          flex-direction: column;
+          gap: 10px;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        #card-view-oracle {
+          scroll-behavior: auto;
+        }
+        #card-view-oracle *,#card-view-oracle
+        *::before,#card-view-oracle
+        *::after {
+          transition: none !important;
+          animation: none !important;
+        }
+      }
+      @media (forced-colors: active) {
+        #card-view-oracle .portrait,#card-view-oracle
+        .spell,#card-view-oracle
+        .variants li,#card-view-oracle
+        .omens li {
+          border-color: CanvasText;
+        }
+        #card-view-oracle .diagram i.active {
+          background: Highlight;
+          forced-color-adjust: none;
+        }
+      }
+      @media print {
+        #card-view-oracle nav,#card-view-oracle
+        .skip,#card-view-oracle
+        .deck,#card-view-oracle
+        .status {
+          display: none;
+        }
+        #card-view-oracle .wrap {
+          width: 100%;
+        }
+        #card-view-oracle,#card-view-oracle
+        .dark,#card-view-oracle
+        .verdict {
+          background: white;
+          color: black;
+        }
+        #card-view-oracle .dark .eyebrow,#card-view-oracle
+        .omens strong,#card-view-oracle
+        .omens li::before,#card-view-oracle
+        .dilemma h2 em {
+          color: black;
+        }
+        #card-view-oracle .hero,#card-view-oracle
+        .deck-section,#card-view-oracle
+        .dilemma,#card-view-oracle
+        .lore,#card-view-oracle
+        .verdict,#card-view-oracle
+        .receipts {
+          padding-block: 15px;
+        }
+        #card-view-oracle .reading {
+          margin-top: 0;
+        }
+        #card-view-oracle .spell,#card-view-oracle
+        .reading,#card-view-oracle
+        .verdict {
+          break-inside: avoid;
+        }
+      }
+    `;
+
+export const Oracle = () => {
+    return (
+        <div id="card-view-oracle" className="sb-unstyled">
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" />
+            <style>{oracleStyles}</style>
+            {" "}
+<a className="skip" href="#oracle-main">{"Skip to the reading"}</a>
+{" "}
+<header className="masthead">{" "}
+<div className="wrap">{" "}
+<div className="imprint">{" "}
+<span aria-hidden="true">{"✦"}</span>
+{" The component reading room "}</div>
+{" "}
+<nav aria-label="Sections">{" "}
+<a href="#oracle-dilemma">{"The bad omens"}</a>
+{" "}
+<a href="#oracle-deck">{"The deck"}</a>
+{" "}
+<a href="#oracle-verdict">{"The verdict"}</a>
+{" "}
+<a href="#oracle-lore">{"Arrow lore"}</a>
+{" "}</nav>
+{" "}</div>
+{" "}</header>
+{" "}
+<main id="oracle-main">{" "}
+<img className="border-artwork wrap" src={borderArtwork} alt="" width="1456" height="176" />
+<section className="hero" aria-labelledby="oracle-title">{" "}
+<div className="wrap">{" "}
+<p className="eyebrow">{" A little divination. A lot of keyboard navigation. "}</p>
+{" "}
+<h1 id="oracle-title">{" The card view "}
+<em>{"oracle"}</em>
+{" "}</h1>
+{" "}
+<p className="lede">{" One recommended semantic row. Nine keyboard experiments. "}
+<br />
+{" One question: can everyone find their way through the cards? "}</p>
+{" "}
+<div className="ornament" aria-hidden="true">{" ✧ I · VI ✧ "}</div>
+{" "}</div>
+{" "}</section>
+{" "}
+<section className="dilemma dark" id="oracle-dilemma" aria-labelledby="oracle-dilemma-title">{" "}
+<div className="wrap">{" "}
+<div>{" "}
+<p className="eyebrow">{"Three bad omens"}</p>
+{" "}
+<h2 id="oracle-dilemma-title">{" The visuals say grid. "}
+<br />
+{" The voices say "}
+<em>{"what?"}</em>
+{" "}</h2>
+{" "}
+<p>{" Pretty cards are not the problem. "}
+<br />
+{" A confusing map is. "}</p>
+{" "}</div>
+{" "}
+<ol className="omens">{" "}
+<li>{" "}
+<div>{" "}
+<strong>{"The unreliable prophecy"}</strong>
+{" "}
+<p>{" Users need the current position and total: “7 of 50,” not “1 of 1.” We recommend a single-row grid for that feedback, while verifying actual speech in real screen readers. "}</p>
+{" "}</div>
+{" "}</li>
+{" "}
+<li>{" "}
+<div>{" "}
+<strong>{"One sequence. Two dimensions."}</strong>
+{" "}
+<p>{" Users relying on semantics know one ordered sequence. Sighted keyboard users see a two-dimensional grid. A route must be understandable from both perspectives, not just whichever map its designer sees. "}</p>
+<p>A single-column semantic grid with row-first visual placement can make the axes counterintuitive: a screen reader user following the displayed sequence may expect horizontal arrows to advance one item, while the semantic column suggests vertical progression. Filling a visual column first makes that column model more coherent, but sighted users commonly expect a uniform grid to fill rows first. Test both expectations rather than assuming either audience has one universal mental model.</p>
+{" "}</div>
+{" "}</li>
+{" "}
+<li>{" "}
+<div>{" "}
+<strong>{"The shifting floor"}</strong>
+{" "}
+<p>{" The adaptive masonry layout aligns cards in visual rows, with equal heights within each row and widths based on image aspect ratios. Vertical edges need not align between rows. Which card should Up or Down reach, and what happens at an edge? That is a navigation question, not another semantic choice. "}</p>
+{" "}</div>
+{" "}</li>
+{" "}</ol>
+{" "}</div>
+{" "}</section>
+{" "}
+<section className="deck-section wrap" id="oracle-deck" aria-labelledby="oracle-deck-title">{" "}
+<div className="section-line">{" "}
+<h2 id="oracle-deck-title">{"The semantic reading is in."}</h2>
+{" "}
+<span className="small">{" Recommend a single-row grid for “x of y.” Test the keyboard paths. "}</span>
+{" "}</div>
+{" "}
+<div className="deck">{" "}
+<figure className="tarot">{" "}
+<span className="portrait">{" "}
+<img src={artwork0} alt="" width="300" height="520" />
+{" "}</span>
+{" "}
+<figcaption><span className="card-number">{"I · Reference"}</span>
+{" "}
+<span className="card-title">{"The illusionist"}</span>
+{" "}
+<span className="card-role">{"The single-column grid"}</span>
+{" "}</figcaption></figure>
+{" "}
+<figure className="tarot">{" "}
+<span className="portrait">{" "}
+<img src={artwork1} alt="" width="300" height="520" />
+{" "}</span>
+{" "}
+<figcaption><span className="card-number">{"II · Recommended"}</span>
+{" "}
+<span className="card-title">{"The long revelation"}</span>
+{" "}
+<span className="card-role">{"The single-row grid"}</span>
+{" "}</figcaption></figure>
+{" "}
+<figure className="tarot">{" "}
+<span className="portrait">{" "}
+<img src={artwork2} alt="" width="300" height="520" />
+{" "}</span>
+{" "}
+<figcaption><span className="card-number">{"III · List"}</span>
+{" "}
+<span className="card-title">{"The familiar path"}</span>
+{" "}
+<span className="card-role">{"The native list"}</span>
+{" "}</figcaption></figure>
+{" "}
+<figure className="tarot">{" "}
+<span className="portrait">{" "}
+<img src={artwork3} alt="" width="300" height="520" />
+{" "}</span>
+{" "}
+<figcaption><span className="card-number">{"IV · Feed"}</span>
+{" "}
+<span className="card-title">{"The endless story"}</span>
+{" "}
+<span className="card-role">{"The feed"}</span>
+{" "}</figcaption></figure>
+{" "}
+<figure className="tarot">{" "}
+<span className="portrait">{" "}
+<img src={artwork4} alt="" width="300" height="520" />
+{" "}</span>
+{" "}
+<figcaption><span className="card-number">{"V · Toolbar"}</span>
+{" "}
+<span className="card-title">{"The commander"}</span>
+{" "}
+<span className="card-role">{"The toolbar"}</span>
+{" "}</figcaption></figure>
+{" "}
+<figure className="tarot">{" "}
+<span className="portrait">{" "}
+<img src={artwork5} alt="" width="300" height="520" />
+{" "}</span>
+{" "}
+<figcaption><span className="card-number">{"VI · Fieldset"}</span>
+{" "}
+<span className="card-title">{"The gathering"}</span>
+{" "}
+<span className="card-role">{"The native fieldset"}</span>
+{" "}</figcaption></figure>
+{" "}</div>
+{" "}
+<section className="reading" aria-labelledby="oracle-other-variations-title">
+  <div>
+    <h3 id="oracle-other-variations-title">The reference shelf</h3>
+    <p>
+      Six named references preserve the semantic research. They are not another
+      set of options: the keyboard experiments all use the recommended
+      single-row grid.
+    </p>
+  </div>
+  <ul className="variants">
+    {[
+      [
+        'single-row-grid',
+        'Single-row grid.',
+        'Recommended for collection-position feedback such as “x of y.”',
+      ],
+      [
+        'single-column-grid',
+        'Single-column grid.',
+        'A contrast for positional-feedback testing, not the current recommendation.',
+      ],
+      [
+        'list',
+        'Native list.',
+        'Keep as the baseline: familiar semantics, but more tab stops.',
+      ],
+      [
+        'feed',
+        'Feed.',
+        'Poor fit for asset selection: feeds describe reading streams.',
+      ],
+      [
+        'toolbar',
+        'Toolbar.',
+        'Poor fit: toolbars group commands, not content cards.',
+      ],
+      [
+        'fieldset',
+        'Fieldset.',
+        'Lower priority: native grouping does not establish arrow navigation or position announcements.',
+      ],
+    ].map(([identifier, title, summary]) => (
+      <li key={identifier}>
+        <strong>
+          <a
+            className="variant-id"
+            href={`./?path=/docs/components-card-view-${identifier}--docs`}
+            target="_top"
+            aria-label={`${title} documentation`}
+          >
+            {title}
+          </a>
+        </strong>{' '}{summary}
+      </li>
+    ))}
+  </ul>
+</section>
+
+{" "}</section>
+{" "}
+
+<section className="verdict" id="oracle-verdict" aria-labelledby="oracle-verdict-title">{" "}
+<div className="wrap">{" "}
+<div>{" "}
+<p className="eyebrow">{"The semantics are recommended. The keyboard route is still open."}</p>
+{" "}
+<h2 id="oracle-verdict-title">{" The winning card? "}
+<br />
+{" Ask the people. "}</h2>
+{" "}
+<p>{" A passing axe scan is not a blessing from the accessibility universe. Neither is “Google does it.” The winner must work for keyboard and screen reader users. "}</p>
+{" "}
+<p>{" "}
+<strong>{" Use a single-row grid for “x of y” feedback. "}</strong>
+{" Hold those semantics and horizontal collection-order cycling fixed while users compare vertical policies: four in grid and four in masonry. Waterfall follows its visual columns vertically, advancing between columns at their edges. Keep reported verbosity problems visible as evidence against the recommendation. Row-focused semantics remain a meaningful reference, not a dismissed concern. "}</p>
+{" "}</div>
+{" "}
+<ol className="plan">{" "}
+<li>{" "}
+<strong>{"First, a fair reading."}</strong>
+{" Compare nine examples with identical single-row semantics, 50 cards, content, and actions. Verify positional speech. "}</li>
+{" "}
+<li>{" "}
+<strong>{"Make the task real."}</strong>
+{" Select the 7th, 23rd, 24th, and 46th cards, then deselect the 23rd card. Confirm that only the 7th, 24th, and 46th cards remain selected. "}</li>
+{" "}
+<li>{" "}
+<strong>{"Keep the spells separate."}</strong>
+{" Selecting a card, opening it, and using its child controls must not trigger one another. "}</li>
+{" "}</ol>
+{" "}</div>
+{" "}</section>
+{" "}
+<div className="deck-section wrap">
+<section className="lore" id="oracle-lore" aria-labelledby="oracle-lore-title">{" "}
+<div className="lore-intro">{" "}
+<p className="eyebrow">{"Know your navigation spells"}</p>
+{" "}
+<h2 id="oracle-lore-title">{"One horizontal route. Four vertical policies."}</h2>
+{" "}
+<p>All nine named grid, masonry, and waterfall examples share one horizontal rule: <kbd>ArrowRight</kbd> moves to the next enabled collection item; <kbd>ArrowLeft</kbd> moves to the previous. Wrap from the last item to the first, or the first to the last. Right stays next and Left stays previous in RTL, regardless of visual placement. The single-column grid and other semantic reference examples keep their existing navigation.</p>
+<p>NoWrap, Loop, Advance, and Semantic distinguish Up/Down behavior in grid and masonry. Waterfall Advance follows each visual column vertically and advances to the next or previous column at its edge. Compare these routes without changing the horizontal rule or the cards' semantics.</p>
+{" "}</div>
+{" "}
+<div className="spells">{" "}
+<article className="spell">{" "}
+<div className="diagram" aria-hidden="true">{" "}
+<i></i>
+{" "}
+<i></i>
+{" "}
+<i className="active"></i>
+{" "}
+<i></i>
+{" "}
+<i></i>
+{" "}
+<i></i>
+{" "}</div>
+{" "}
+<h3 id="oracle-nowrap">{"NoWrap"}</h3>
+{" "}
+<p><kbd>ArrowUp</kbd>/<kbd>ArrowDown</kbd> moves to an enabled spatial vertical neighbor whose bounds overlap horizontally. If none exists, focus stays put. A repeated vertical arrow need not visit every card. Left/Right still follows collection order and wraps.</p>
+{" "}
+<span className="pair">{"Grid + masonry · NoWrap"}</span>
+{" "}</article>
+{" "}
+<article className="spell">{" "}
+<div className="diagram" aria-hidden="true">{" "}
+<i className="exit"></i>
+{" "}
+<i></i>
+{" "}
+<i className="active"></i>
+{" "}
+<i></i>
+{" "}
+<i></i>
+{" "}
+<i></i>
+{" "}</div>
+{" "}
+<h3 id="oracle-loop">{"Loop"}</h3>
+{" "}
+<p>Move vertically like NoWrap. At an edge, loop to the opposite vertical end of the same overlapping column, not another column. A repeated Up/Down arrow can stay in a local loop; Left/Right provides a complete collection-order route.</p>
+{" "}
+<span className="pair">{"Grid + masonry · Loop"}</span>
+{" "}</article>
+{" "}
+<article className="spell">{" "}
+<div className="diagram" aria-hidden="true">{" "}
+<i></i>
+{" "}
+<i></i>
+{" "}
+<i className="active"></i>
+{" "}
+<i className="exit"></i>
+{" "}
+<i></i>
+{" "}
+<i></i>
+{" "}</div>
+{" "}
+<h3 id="oracle-advance">{"Advance"}</h3>
+{" "}
+<p>Up/Down moves spatially until a vertical edge, then continues into the next or previous column. Unlike Loop, movement leaves the current column. At the outer collection boundary, cycle to the opposite end. Left/Right uses collection order instead of this spatial route.</p>
+{" "}
+<span className="pair">{"Grid + masonry + waterfall · Advance"}</span>
+{" "}</article>
+{" "}
+<article className="spell">{" "}
+<div className="diagram" aria-hidden="true">{" "}
+<i className="exit"></i>
+{" "}
+<i></i>
+{" "}
+<i></i>
+{" "}
+<i></i>
+{" "}
+<i></i>
+{" "}
+<i className="active"></i>
+{" "}</div>
+{" "}
+<h3 id="oracle-semantic">{"Semantic"}</h3>
+{" "}
+<p>{" Right/Down moves to the next enabled item in semantic collection order; Left/Up moves to the previous one, including in RTL. Geometry does not decide the destination. Cycle between the last and first enabled items at the collection boundary. Repeating an arrow visits every enabled item. The adaptive masonry version places consecutive cards across each visual row before starting the next. "}</p>
+{" "}
+<span className="pair">{"Grid + masonry · Semantic"}</span>
+{" "}</article>
+{" "}</div>
+{" "}
+<p className="note">{" Spatial vertical movement uses horizontal overlap. Visual rows and bands do not create semantic rows. Left/Right cycles through collection order in every named variant; only Up/Down differs by policy. All nine playgrounds contain 50 Picsum photos with collection-position image IDs. "}</p>
+{" "}</section>
+{" "}
+{" "}</div>
+<section className="layout-explainer" aria-labelledby="oracle-layouts-title">
+  <div className="wrap">
+    <p className="eyebrow">The shape of the collection</p>
+    <h2 id="oracle-layouts-title">Three layouts. The same collection.</h2>
+    <p className="layout-intro">Grid aligns rows and columns. Masonry adapts card widths within rows. Waterfall stacks cards in independent columns. These are visual placements, not semantic structures. The numbers identify collection items; compare the shapes to see how placement changes.</p>
+    <div className="layout-diagrams">
+      <figure>
+        <div className="layout-diagram uniform-layout" role="img" aria-label="Uniform grid: cards 1 through 9 run left to right across three aligned rows of three equal-height cards.">
+          {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((position) => (
+            <span className="layout-card" key={position}>{position}</span>
+          ))}
+        </div>
+        <figcaption>
+          <h3 id="oracle-uniform-layout">Grid</h3>
+          <p>Equal-width, equal-height cards form aligned rows and columns. Consecutive items fill each row before starting the next.</p>
+          <p><strong>Navigation question:</strong> Which Up/Down policy best complements the shared Left/Right collection-order route?</p>
+        </figcaption>
+      </figure>
+      <figure>
+        <div className="layout-diagram masonry-layout" role="img" aria-label="Adaptive masonry: cards have equal heights within each visual row and variable widths. Collection order runs left to right: 1, 2, 3 in the first row; 4, 5, 6 in the second; and 7, 8, 9 in the third. Vertical edges differ between rows.">
+          {[
+            [[1, 3], [2, 2], [3, 4]],
+            [[4, 2], [5, 4], [6, 3]],
+            [[7, 4], [8, 3], [9, 2]],
+          ].map((row, rowIndex) => (
+            <div className="layout-visual-row" key={rowIndex} style={{ gridTemplateColumns: row.map(([, width]) => `minmax(0, ${width}fr)`).join(' ') }}>
+              {row.map(([position]) => (
+                <span className="layout-card" key={position}>{position}</span>
+              ))}
+            </div>
+          ))}
+        </div>
+        <figcaption>
+          <h3 id="oracle-masonry-layout">Masonry</h3>
+          <p>Equal-height cards form adaptive rows, with widths based on image aspect ratios. Full rows fill the width; an incomplete final row need not stretch. Vertical edges can differ between rows.</p>
+          <p><strong>Navigation question:</strong> Which card should Up or Down reach when several cards overlap horizontally?</p>
+        </figcaption>
+      </figure>
+      <figure>
+        <div className="layout-diagram waterfall-layout" role="img" aria-label="Waterfall: consecutive cards are assigned left to right across three equal-width columns, then return to the first column. The first column contains cards 1, 4, 7; the second 2, 5, 8; and the third 3, 6, 9. Variable-height cards stack independently, so later card tops can stagger.">
+          {[
+            [[1, 64], [4, 92], [7, 72]],
+            [[2, 94], [5, 64], [8, 70]],
+            [[3, 78], [6, 72], [9, 78]],
+          ].map((column, columnIndex) => (
+            <div className="layout-visual-column" key={columnIndex}>
+              {column.map(([position, height]) => (
+                <span className="layout-card" key={position} style={{ height }}>{position}</span>
+              ))}
+            </div>
+          ))}
+        </div>
+        <figcaption>
+          <h3 id="oracle-waterfall-layout">Waterfall</h3>
+          <p>Equal-width, variable-height cards are assigned left to right: 1, 2, 3, then 4, 5, 6, then 7, 8, 9. Each column stacks independently, so later card tops can stagger rather than align in rows. <a href="./?path=/docs/components-card-view-waterfall-advance--docs" target="_top">Waterfall advance</a> uses this placement, not shortest-column or column-first placement. RTL mirrors the placement without changing collection order.</p>
+          <p><strong>Navigation question:</strong> Is moving down each visual column and advancing between columns predictable alongside horizontal collection-order navigation?</p>
+        </figcaption>
+      </figure>
+    </div>
+    <p className="layout-context"><strong>Same semantics, separate vertical policies.</strong> The grid, masonry, and waterfall examples expose one semantic row, without explicit ARIA row/column indices or counts. Cell names use "x of y, title." Left/Right cycles in collection order, including in RTL. Up/Down follows each variant's policy: Semantic uses collection order; NoWrap, Loop, and Advance use spatial navigation. Waterfall Advance follows the visual columns and advances between them at their edges.</p>
+  </div>
+</section>
+<div className="deck-section wrap">
+{['grid', 'masonry', 'waterfall'].map((family) => {
+  const reading = readings[family];
+  return (
+    <section className="reading" key={family} aria-labelledby={`oracle-reading-title-${family}`}>
+      <div>
+        <p className="eyebrow">{reading.label}</p>
+        <h3 id={`oracle-reading-title-${family}`}>{reading.title}</h3>
+        <p>{reading.summary}</p>
+        <p className="caution">{reading.caution}</p>
+      </div>
+      <ul className="variants policy-variants">
+        {reading.variants.map(([identifier, title, summary]) => (
+          <li key={identifier}>
+            <strong><a className="variant-id" href={`./?path=/docs/components-card-view-${family}-${identifier}--docs`} target="_top" aria-label={`${family} ${identifier} documentation`}>{title}</a></strong>{' '}{summary}
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+})}
+{" "}
+{" "}</div>
+{" "}
+<section className="receipts dark" aria-labelledby="oracle-receipts-title">{" "}
+<div className="wrap">{" "}
+<div className="receipts-column">{" "}
+<section aria-labelledby="oracle-receipts-title">{" "}
+<p className="eyebrow">{"Read the leaves, then the receipts"}</p>
+{" "}
+<h2 id="oracle-receipts-title">{"Guidance, not gospel."}</h2>
+{" "}
+<p>{" APG permits layout grids and optional wrapping. RSP and Piyush's PR informed the earlier research. Reported single-row positional feedback supports today's recommendation, not a guarantee of speech or a final keyboard policy. "}</p>
+{" "}
+<p>{" Higley and Roselli caution against choosing a grid just because it looks like one or saves tab stops. A feed suits reading; a toolbar suits commands. The role should match the task. "}</p>
+<div className="source-links">
+  <a href="https://www.w3.org/WAI/ARIA/apg/patterns/grid/">APG grid pattern</a>
+  <a href="https://sarahmhigley.com/writing/grids-part1/">Higley on grids</a>
+  <a href="https://adrianroselli.com/2020/07/aria-grid-as-an-anti-pattern.html">Roselli's caution</a>
+</div>
+</section>
+<section aria-labelledby="oracle-speech-title">
+<p className="eyebrow">What the voices reveal</p>
+<h2 id="oracle-speech-title">Less speech. No lost detail.</h2>
+<p>React Spectrum's feedback identifies a real cost of cell focus: screen readers can string together the entire cell, including selection-checkbox and action labels, instead of reading only its accessible name. <a href="https://github.com/adobe/react-spectrum/issues/2946">The ListView verbosity report</a> led to <a href="https://github.com/adobe/react-spectrum/pull/3000">focusing the row instead</a>; the team cites this as the reason for its single-column approach. Adding a cell label alone did not solve that report.</p>
+<p>Google Drive uses a single semantic row. The reported implementation hides cell contents beyond the title with <code>aria-hidden</code>; this is a product observation, not independently verified guidance. Reading additional cell content can be necessary to distinguish cards with identical titles, so reducing speech must not remove access to that information.</p>
+<p>VoiceOver reads an entire row in the reported tests, which can mean every card here. Users can pause speech or navigate without automatically interacting with a webpage group: <kbd>VO</kbd> + <kbd>Shift</kbd> + <kbd>Left Arrow</kbd> or <kbd>Right Arrow</kbd>; with Quick Nav on, <kbd>Shift</kbd> + <kbd>Right Arrow</kbd> or <kbd>Left Arrow</kbd>. <a href="https://support.apple.com/guide/voiceover/interaction-commands-cpvokys07/mac">Apple documents these interaction commands</a>, not a guarantee that they suppress row speech. They do not turn Quick Nav on. Test them separately from ordinary component arrows; repeated full-row speech remains a usability concern.</p>
+<p>The prototypes now have a visually hidden ARIA live region for selection feedback, following <a href="https://github.com/adobe/react-spectrum/blob/main/packages/react-aria/src/grid/useGridSelectionAnnouncement.ts">React Aria's selection-announcement hook</a>: announce an individually selected or deselected title and the selected count when appropriate, while keeping unfocused changes silent. The current region is assertive; test interruptions as well as message content. Selection messages address missing selection feedback, not verbose cell or row announcements.</p>
+</section>
+</div>
+<div className="receipts-column">
+<section aria-labelledby="oracle-disclosure-title">
+<p className="eyebrow">The card-detail experiment</p>
+<h2 id="oracle-disclosure-title">Reveal details on entry.</h2>
+<p>We are implementing Google Drive's reported <code>aria-hidden</code> strategy for cards in all nine named grid and masonry navigation examples. Each <code>swc-card</code> starts with <code>aria-hidden="true"</code> and <code>aria-live="polite"</code>. Its containing gridcell stays exposed and focusable, with an accessible name. The updated interaction specifies the visually hidden description "press tab for more info" on every operating system. The six semantic references, including the single-column grid, remain unchanged. This is a Google-inspired experiment, not a claim of identical behavior.</p>
+<p>With focus on a gridcell, <kbd>Tab</kbd> must expose its card with <code>aria-hidden="false"</code> before moving focus to the first enabled focusable element inside it, without selecting the card or activating an action. Subsequent <kbd>Tab</kbd> presses follow the card's control order and then leave the collection; <kbd>Shift</kbd> + <kbd>Tab</kbd> reverses the path. Hidden controls remain outside the sequential tab order until revealed. This replaces the modifier-key toggle with ordinary <kbd>Tab</kbd> entry, not a More info button. The cell's accessible name preserves the title while its card is hidden. Tab-to-reveal is the implementation target; runtime validation remains pending.</p>
+<p>Focus safety is not yet complete: the regression for pointer or programmatic focus entering a hidden card control currently fails. No focused control may remain inside an <code>aria-hidden="true"</code> subtree. Test discovery of the <kbd>Tab</kbd> hint, focus on the first enabled control, forward and reverse exit, touch access, duplicate-title disambiguation, and actual VoiceOver output before approving this approach. Focusing a control should announce that control, not necessarily every detail in the card. Unhiding existing content in a polite live region does not guarantee an announcement.</p>
+</section>
+<section aria-labelledby="oracle-requirements-title">{" "}
+<p className="eyebrow">{"The non-negotiables"}</p>
+{" "}
+<h2 id="oracle-requirements-title">{"Good fortune is usable."}</h2>
+{" "}
+<ul>{" "}
+<li>{"Every enabled card and child control is reachable."}</li>
+{" "}
+<li>{"Focus stays visible, stable, and clear of action bars."}</li>
+{" "}
+<li>{" Position, total, and selected state are tested in real speech. "}</li>
+{" "}
+<li>{"Keyboard users can enter, leave, and reverse their route."}</li>
+{" "}</ul>
+{" "}
+<p className="small">{" Test NVDA, JAWS, VoiceOver, Narrator, mobile screen readers, and keyboard-only use. Reports are not independently verified findings. Automated tests do not establish usability or WCAG conformance. "}</p>
+{" "}</section>
+{" "}</div>
+{" "}</div>
+{" "}</section>
+<aside className="strategy-callout wrap" aria-label="Full strategy">
+  <p>
+    <strong>The full strategy.</strong>{' '}Explore the requirements, tradeoffs, and evaluation plan in{' '}
+    <a href="./?path=/docs/contributor-docs-project-planning-strategies-card-view-strategy--docs" target="_top">the card view strategy</a>.
+  </p>
+</aside>
+{" "}</main>
+{" "}
+<footer>{" "}
+<div className="wrap">{" "}
+<span>{" ✦ The card view oracle · A strategy reading, not a prediction. "}</span>
+{" "}
+<span className="credit">{" A tarot-inspired field guide to card-view accessibility. "}</span>
+{" "}</div>
+{" "}</footer>
+{" "}
+
+{" "}
+
+</div>
+);
+};
+
+<Oracle />
