@@ -1,5 +1,14 @@
 # @adobe/spectrum-wc-icons
 
+## 2.0.0-beta.8
+
+### Minor Changes
+
+- **icons**:
+  - [#6921](https://github.com/adobe/spectrum-web-components/pull/6921) [`cc19eb9`](https://github.com/adobe/spectrum-web-components/commit/cc19eb990c9e76a642d3c002ac26f673c1e84ded) Thanks [@rubencarvalho](https://github.com/rubencarvalho)! - **feat(icons):** Update workflow icons to S2 Icon Global Set Open Source 7.6.0.
+
+    Add `AIChatConversation`, `AIExpand`, `AIFill`, `AIImageGenerate`, `AIImage`, `AILayer`, and `AISearch` as custom elements and SVG-string functions. All seven icons are included in the workflow icon gallery.
+
 ## 2.0.0-beta.7
 
 ### Minor Changes
