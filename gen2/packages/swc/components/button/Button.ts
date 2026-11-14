@@ -40,6 +40,8 @@ import baseStyles from './button-base.css';
  * @slot - Visible button label.
  * @slot icon - Leading icon displayed before the label.
  *
+ * @fires click - Dispatched when the button is activated by pointer, Enter, or Space. Bubbles and crosses shadow boundaries. Suppressed while `disabled` or `pending`.
+ *
  * @cssprop --swc-button-min-block-size - Minimum block size of the button.
  * @cssprop --swc-button-max-inline-size - Maximum inline size of the button. Defaults to `inherit` to support truncation.
  * @cssprop --swc-button-border-radius - Corner radius. Defaults to half the height (pill shape).
