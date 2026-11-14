@@ -4,7 +4,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 # Menu migration guide
 
-Replace `<sp-menu>` with `<swc-menu>`, update the import, and author a real trigger element for `swc-menu` to reference. Command rows migrate too, as `swc-menu-item`; see the [Menu item migration guide](?path=/docs/components-menu-menu-item-migration-guide--docs) for the row API. `sp-menu-group` and `sp-menu-divider` have not migrated yet.
+Replace `<sp-menu>` with `<swc-menu>` and `<sp-menu-item>` with `<swc-menu-item>`, update the imports, author a real trigger element for `swc-menu` to reference, and move each item's content into its named slots. `sp-menu-group` and `sp-menu-divider` have not migrated yet.
 
 ## Installation
 
@@ -33,12 +33,17 @@ import '@adobe/spectrum-wc/components/menu/swc-menu-item.js';
 
 ### Renamed
 
-| Area           | Spectrum 1 (`sp-menu`)                 | Spectrum 2 (`swc-menu`)                                                                     |
-| -------------- | -------------------------------------- | ------------------------------------------------------------------------------------------- |
-| Tag            | `sp-menu`                              | `swc-menu`                                                                                  |
-| Import path    | `@spectrum-web-components/menu`        | `@adobe/spectrum-wc/components/menu/swc-menu.js`                                            |
-| `close` event  | `close`                                | `swc-close` / `swc-after-close` (see [step 3](#3-listen-for-the-new-open-and-close-events)) |
-| Default `size` | No reflected default (`noDefaultSize`) | `'m'`                                                                                       |
+| Area                | Spectrum 1                             | Spectrum 2                                                                                  |
+| ------------------- | -------------------------------------- | ------------------------------------------------------------------------------------------- |
+| Tag                 | `sp-menu`                              | `swc-menu`                                                                                  |
+| Item tag            | `sp-menu-item`                         | `swc-menu-item`                                                                             |
+| Import path         | `@spectrum-web-components/menu`        | `@adobe/spectrum-wc/components/menu/swc-menu.js`                                            |
+| `close` event       | `close`                                | `swc-close` / `swc-after-close` (see [step 5](#5-listen-for-the-new-open-and-close-events)) |
+| Default `size`      | No reflected default (`noDefaultSize`) | `'m'`, set on the menu (see [step 4](#4-set-size-on-the-menu))                              |
+| Item label          | Default slot                           | `label` slot, required (see [step 3](#3-move-item-content-into-the-named-slots))            |
+| Item leading visual | `icon` slot                            | `visual` slot, which also accepts `swc-thumbnail`                                           |
+| Item trailing text  | `value` slot                           | `secondary` slot                                                                            |
+| Item custom props   | `--mod-menu-item-*`                    | `--swc-menu-item-*` (see [Styling](#styling))                                               |
 
 ### Added in Spectrum 2
 
@@ -50,6 +55,10 @@ import '@adobe/spectrum-wc/components/menu/swc-menu-item.js';
 | `open`                               | Reflected boolean controlling visibility                                                             |
 | `xl` size                            | Joins `s` / `m` / `l`                                                                                |
 | `swc-open` / `swc-after-open` events | Fire as the menu opens                                                                               |
+| Item `description` slot              | Supporting text below the label, announced as the item's description                                 |
+| Item `secondary` slot                | Trailing text such as a keyboard shortcut, announced after the description                           |
+| `swc-thumbnail` in `visual`          | Thumbnails are sized separately from icons, so an item keeps its proportions at every size           |
+| `--swc-menu-item-*`                  | Public theming hooks for items, including per-state background colors                                |
 
 ### Removed in Spectrum 2
 
@@ -64,6 +73,11 @@ import '@adobe/spectrum-wc/components/menu/swc-menu-item.js';
 | `selects` / `value` / `selectedItems` / `selectOrToggleItem()` / `change` event (selection) | Not yet available in Spectrum 2.                                                                                                            |
 | Link items (`href`, `target`, `download`, `rel`, `referrerpolicy` on menu items)            | Not yet available. A dedicated link-row component is planned but has not shipped.                                                           |
 | `--mod-menu-*` custom properties                                                            | No replacement; `<swc-menu>` currently exposes no public CSS custom properties (see [Styling](#styling)).                                   |
+| `active` / `focused` on menu items                                                          | No replacement. The menu tracks focus with a roving tabindex.                                                                               |
+| `no-wrap` on menu items                                                                     | No replacement. Long items wrap within the menu's maximum width.                                                                            |
+| `has-submenu` / `open` / `submenu` slot on menu items                                       | Not yet available. Submenus have not shipped.                                                                                               |
+| `sp-menu-item-added` event                                                                  | No replacement. `swc-menu` discovers its items itself.                                                                                      |
+| `--mod-menu-item-*` custom properties                                                       | `--swc-menu-item-*` (see [Styling](#styling)).                                                                                              |
 
 ## Update your code
 
@@ -102,7 +116,43 @@ import '@adobe/spectrum-wc/components/menu/swc-menu-item.js';
 
 The trigger's own accessible name (visible text, `aria-label`, or an equivalent attribute) is now the menu's accessible name. `swc-menu` has no `label` property of its own.
 
-### 3. Listen for the new open and close events
+### 3. Move item content into the named slots
+
+An item's text goes in a required `label` slot, so it stays distinct from the description and each part has a handle in the item layout. The `icon` slot is now `visual`, and the `value` slot is now `secondary`. An item without a `label` has no accessible name and logs a warning in development.
+
+```html
+<!-- Before -->
+<sp-menu-item>
+  <sp-icon-copy slot="icon"></sp-icon-copy>
+  Copy
+  <kbd slot="value">⌘C</kbd>
+</sp-menu-item>
+
+<!-- After -->
+<swc-menu-item>
+  <swc-icon-copy slot="visual"></swc-icon-copy>
+  <span slot="label">Copy</span>
+  <kbd slot="secondary">⌘C</kbd>
+</swc-menu-item>
+```
+
+### 4. Set size on the menu
+
+`swc-menu` propagates its own `size` onto every item it slots, so set it once on the menu rather than per item.
+
+```html
+<!-- Before -->
+<sp-menu size="l">
+  <sp-menu-item size="l">Cut</sp-menu-item>
+</sp-menu>
+
+<!-- After -->
+<swc-menu for="menu-trigger" size="l">
+  <swc-menu-item><span slot="label">Cut</span></swc-menu-item>
+</swc-menu>
+```
+
+### 5. Listen for the new open and close events
 
 `close` is replaced by four lifecycle events: `swc-open`, `swc-after-open`, `swc-close`, `swc-after-close`.
 
@@ -122,7 +172,10 @@ menu.addEventListener('swc-close', () => {
 
 - The menu's accessible name comes from the trigger you author, not a `label` property. See [step 2](#2-author-and-reference-a-trigger).
 - `<swc-menu>` does not carry `role="menu"` on its host element; it is set on the shadow-internal surface instead.
-- Remove any `role` attribute you set on a menu item. A row is always `role="menuitem"`, set each time it connects to the DOM, so an authored value is overwritten.
+- Remove any `role` attribute you set on a menu item. An item is always `role="menuitem"`, set each time it connects to the DOM, so an authored value is overwritten.
+- An item is named from its `label` slot and described from its `description` and `secondary` slots, in that order. See [step 3](#3-move-item-content-into-the-named-slots).
+- `disabled` on an item maps to `aria-disabled="true"`, not the native attribute. Disabled items stay focusable and keep their place in arrow-key navigation, so do not rely on them being skipped.
+- Do not slot buttons, links, or other focusable elements into an item. They break the roving tabindex the menu uses.
 
 ## Styling
 
@@ -158,12 +211,28 @@ menu.addEventListener('swc-close', () => {
   warning on minor releases.
 </div>
 
+Menu items do expose public properties, replacing the `--mod-menu-item-*` set:
+
+| Property                                                                                                                   | Controls                          |
+| -------------------------------------------------------------------------------------------------------------------------- | --------------------------------- |
+| `--swc-menu-item-min-block-size`, `--swc-menu-item-padding-block`, `--swc-menu-item-padding-inline`, `--swc-menu-item-gap` | Item size and spacing             |
+| `--swc-menu-item-corner-radius`                                                                                            | Corner radius                     |
+| `--swc-menu-item-background-color` and its `-hover`, `-focus`, and `-down` variants                                        | Item fill per state               |
+| `--swc-menu-item-label-color`, `--swc-menu-item-label-font-size`, `--swc-menu-item-label-line-height`                      | Label text                        |
+| `--swc-menu-item-description-color`, `--swc-menu-item-description-font-size`, `--swc-menu-item-description-line-height`    | Description text                  |
+| `--swc-menu-item-text-gap`                                                                                                 | Gap between label and description |
+| `--swc-menu-item-secondary-color`                                                                                          | Trailing text                     |
+| `--swc-menu-item-icon-size`, `--swc-menu-item-thumbnail-size`                                                              | Slotted visual, inline and block  |
+
 ## Checklist
 
 - [ ] Update imports
-- [ ] Rename all `<sp-menu>` to `<swc-menu>`
+- [ ] Rename all `<sp-menu>` to `<swc-menu>` and `<sp-menu-item>` to `<swc-menu-item>`
 - [ ] Author a real trigger element and reference it via `for` or `triggerElement`
 - [ ] Move the accessible name from `label` to the trigger element
+- [ ] Move each item's text into a `label` slot, and rename `icon` slots to `visual` and `value` slots to `secondary`
+- [ ] Move `size` from items onto the owning menu
 - [ ] Replace `close` event listeners with `swc-close`
-- [ ] Remove any `--mod-menu-*` overrides
+- [ ] Remove `active`, `focused`, `no-wrap`, `has-submenu`, `open`, and `submenu` usage on items, and any `sp-menu-item-added` listeners
+- [ ] Remove any `--mod-menu-*` overrides, and replace `--mod-menu-item-*` with `--swc-menu-item-*`
 - [ ] Hold off migrating menus that use selection, link items, or the mobile drilldown tray; none of these have shipped in Spectrum 2 yet

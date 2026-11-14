@@ -7,7 +7,7 @@ import * as MenuStories from './stories/menu.stories';
 
 <DocsHeader />
 
-Migrating from `<sp-menu>`? See the [Menu migration guide](?path=/docs/components-menu-migration-guide--docs) and the [Menu item migration guide](?path=/docs/components-menu-menu-item-migration-guide--docs).
+Migrating from `<sp-menu>`? See the [Menu migration guide](?path=/docs/components-menu-migration-guide--docs).
 
 ## Anatomy
 
@@ -35,7 +35,7 @@ The menu's `PlacementController` handles pixel positioning automatically. When t
 
 `size` accepts `s`, `m`, `l`, and `xl` (default `m`). Set it on `swc-menu`, which propagates its own size onto every `swc-menu-item` it slots. A `size` set on an item directly is not rejected: it holds until the next propagation, which runs when the menu's size changes or when its slotted items change. Set the size on the menu rather than per item.
 
-> **Note**: In Spectrum 1, `size` could be set on each `sp-menu-item`; in Spectrum 2 the menu owns it. See the [Menu item migration guide](?path=/docs/components-menu-menu-item-migration-guide--docs).
+> **Note**: In Spectrum 1, `size` could be set on each `sp-menu-item`; in Spectrum 2 the menu owns it. See the [migration guide](?path=/docs/components-menu-migration-guide--docs).
 
 <Canvas of={MenuStories.Sizes} />
 
@@ -45,7 +45,7 @@ A menu item is composed from four named slots: `label` for its text, `visual` fo
 
 A menu item is named from its `label` slot and described from its `description` slot followed by its `secondary` slot, so both are announced as a description rather than folded into the item's name. Keep descriptions short, and do not repeat the label in them.
 
-> **Note**: In Spectrum 1, an item's text went in the default slot, its leading icon in `icon`, and its trailing text in `value`. Those are now `label`, `visual`, and `secondary`, and `label` is required. See the [Menu item migration guide](?path=/docs/components-menu-menu-item-migration-guide--docs).
+> **Note**: In Spectrum 1, an item's text went in the default slot, its leading icon in `icon`, and its trailing text in `value`. Those are now `label`, `visual`, and `secondary`, and `label` is required. See the [migration guide](?path=/docs/components-menu-migration-guide--docs).
 
 <Canvas of={MenuStories.ItemContent} />
 
@@ -59,7 +59,7 @@ Because `<swc-menu>` uses `popover="auto"`, opening it dismisses any other open 
 
 ### Item states
 
-A menu item is either default or `disabled`. A disabled item is exposed with `aria-disabled="true"` rather than removed from the tab order, so arrow keys still reach it and a screen reader can announce that the option exists but is unavailable. It does not activate on click, <kbd>Enter</kbd>, or <kbd>Space</kbd>, and it does not close the menu. `disabled` maps to `aria-disabled`, not the native attribute, so do not rely on disabled items being skipped; see the [Menu item migration guide](?path=/docs/components-menu-menu-item-migration-guide--docs).
+A menu item is either default or `disabled`. A disabled item is exposed with `aria-disabled="true"` rather than removed from the tab order, so arrow keys still reach it and a screen reader can announce that the option exists but is unavailable. It does not activate on click, <kbd>Enter</kbd>, or <kbd>Space</kbd>, and it does not close the menu. `disabled` maps to `aria-disabled`, not the native attribute, so do not rely on disabled items being skipped; see the [migration guide](?path=/docs/components-menu-migration-guide--docs).
 
 <Canvas of={MenuStories.ItemStates} />
 
