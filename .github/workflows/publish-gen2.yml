@@ -194,6 +194,12 @@ jobs:
           yarn install --refresh-lockfile
           yarn build:gen2
 
+      # Pre-release checks against the exact build being published. CSS errors block
+      # the publish; publint and attw findings are report-only for now.
+      - name: Validate packages
+        id: validate
+        run: node scripts/validate-packages.js --gen=gen2 --report-only
+
       - name: Publish gen2 packages (snapshot)
         id: publish
         if: steps.npm-auth.outcome == 'success'
@@ -213,8 +219,22 @@ jobs:
           # The actual publish result, not just the auth check - so a failed publish
           # doesn't get reported as a success.
           PUBLISH_OUTCOME: ${{ steps.publish.outcome }}
+          VALIDATE_OUTCOME: ${{ steps.validate.outcome }}
+          VALIDATE_CHECKED: ${{ steps.validate.outputs.checked }}
+          VALIDATE_FAILING: ${{ steps.validate.outputs.failing }}
+          VALIDATE_BLOCKING: ${{ steps.validate.outputs.blocking }}
         run: |
           echo "## Snapshot summary (gen2)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ "${VALIDATE_BLOCKING:-0}" -gt 0 ]; then
+            echo "❌ **Package validation:** ${VALIDATE_BLOCKING} of ${VALIDATE_CHECKED} packages ship CSS that doesn't parse or couldn't be checked, so nothing was published. See the Package validation report above." >> $GITHUB_STEP_SUMMARY
+          elif [ "$VALIDATE_OUTCOME" != "success" ]; then
+            echo "❌ **Package validation:** the check did not complete (\`${VALIDATE_OUTCOME:-skipped}\`), so nothing was published. Check the job logs." >> $GITHUB_STEP_SUMMARY
+          elif [ "${VALIDATE_FAILING:-0}" -gt 0 ]; then
+            echo "⚠️ **Package validation:** ${VALIDATE_FAILING} of ${VALIDATE_CHECKED} packages have \`publint\` or \`attw\` findings. They didn't block this snapshot, but they will block releases once the check is required. See the Package validation report above." >> $GITHUB_STEP_SUMMARY
+          else
+            echo "✅ **Package validation:** all ${VALIDATE_CHECKED} packages passed." >> $GITHUB_STEP_SUMMARY
+          fi
           echo "" >> $GITHUB_STEP_SUMMARY
 
           if [ "$PUBLISH_OUTCOME" == "success" ]; then
@@ -342,6 +362,9 @@ jobs:
           fi
           yarn install --refresh-lockfile
           yarn build:gen2
+          # CSS errors and tool crashes block the release; publint and attw
+          # findings are report-only for now. See scripts/validate-packages.js.
+          node scripts/validate-packages.js --gen=gen2 --report-only
           # No --tag here: changesets forbids a custom dist-tag while in pre mode
           # (throws "Releasing under custom tag is not allowed in pre mode", exit 1),
           # so `changeset publish` ships to the pre tag (beta).
@@ -367,10 +390,13 @@ jobs:
         env:
           AUTH_OUTCOME: ${{ steps.npm-auth.outcome }}
           PUBLISHED: ${{ steps.publish.outputs.published }}
+          PUBLISH_OUTCOME: ${{ steps.publish.outcome }}
         run: |
           echo "## Publish summary (gen2)" >> $GITHUB_STEP_SUMMARY
           if [ "$PUBLISHED" == "false" ]; then
             echo "ℹ️ Current version already published - nothing new to ship" >> $GITHUB_STEP_SUMMARY
+          elif [ "$PUBLISH_OUTCOME" == "failure" ]; then
+            echo "❌ Publish failed. If Package validation reported errors above, nothing was published. Otherwise check the job logs." >> $GITHUB_STEP_SUMMARY
           elif [ "$AUTH_OUTCOME" == "success" ]; then
             echo "✅ Publish step ran - check the changeset publish output above for what shipped" >> $GITHUB_STEP_SUMMARY
           else
