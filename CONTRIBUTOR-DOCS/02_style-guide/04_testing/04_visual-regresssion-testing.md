@@ -107,6 +107,8 @@ Because this uses the same `data-forced-<state>` attribute the shared helper app
 
 Pseudo-state rules with nested rules — such as an `::after` focus ring or a nested `&:hover` — are mirrored in full, so their nested appearance renders correctly in the forced snapshot with no extra authoring.
 
+A pseudo-state rule inside a media query that only asks for a hover-capable, fine pointer, such as `@media (hover: hover) and (pointer: fine)`, is mirrored without that query. A forced state stands in for a mouse user, and headless CI browsers can report `hover: none`, which would otherwise drop the forced rule from the snapshot. Other media queries, such as `forced-colors`, stay in place.
+
 ### Positioned overlay components
 
 Components that position a surface with `PlacementController` use Floating UI's `shift` middleware. The controller does not expose a custom overflow boundary, so `shift` uses clipping ancestors capped by the visual viewport, and `autoUpdate` recomputes on scroll. That is correct production behavior (a popover pinned near a screen edge should slide rather than clip off-screen), but a trigger outside the viewport at open time gets clamped to the current viewport, not to its off-screen position.
