@@ -68,7 +68,9 @@ const meta: Meta = {
       type: 'figma',
       url: 'https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=37252-553',
     },
-    // Pending a real Stackblitz project for swc-menu.
+    // Pending a real Stackblitz project for swc-menu. The one linked from the
+    // migration ticket builds against 1st-gen, so it would send consumers to
+    // the API this component replaces.
     // stackblitz: { url: '' },
     // swc-menu-item is a second element of this component; surface its API
     // table alongside swc-menu's on the docs page.
