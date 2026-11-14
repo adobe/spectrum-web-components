@@ -65,6 +65,7 @@ function renderPromptField(
       loader=${storyArgs.loader ?? 'aiLogo'}
       ?disabled=${storyArgs.disabled ?? false}
       ?generating=${storyArgs.generating ?? false}
+      ?collapsed=${storyArgs.collapsed ?? false}
       ?animate-loader=${storyArgs['animate-loader'] ?? false}
       accessible-label=${ifDefined(storyArgs['accessible-label'] || undefined)}
       send-accessible-label=${ifDefined(
@@ -260,7 +261,7 @@ export const Layout: Story = {
           ${legalDisclaimerSlot}
         </swc-prompt-field>
         <span class="swc-Detail swc-Detail--sizeS">
-          Expanded (default) — action bar with upload button on its own row
+          Expanded (default): action bar with upload button on its own row
         </span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
@@ -268,11 +269,12 @@ export const Layout: Story = {
           ${legalDisclaimerSlot}
         </swc-prompt-field>
         <span class="swc-Detail swc-Detail--sizeS">
-          collapsed — single-line row with the send button inline
+          collapsed: single-row pill with the send button inline
         </span>
       </div>
     </div>
   `,
+  tags: ['options'],
 };
 
 export const Attachment: Story = {

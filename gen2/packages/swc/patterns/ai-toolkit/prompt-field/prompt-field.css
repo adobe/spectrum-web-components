@@ -87,12 +87,23 @@
     --_swc-prompt-field-bg-stop-2 var(--_swc-prompt-field-transition),
     --_swc-prompt-field-bg-stop-3 var(--_swc-prompt-field-transition),
     --_swc-prompt-field-bg-stop-4 var(--_swc-prompt-field-transition),
-    box-shadow var(--_swc-prompt-field-transition);
+    box-shadow var(--_swc-prompt-field-transition),
+    padding token("animation-duration-200") token("animation-ease-in-out"),
+    border-radius token("animation-duration-200") token("animation-ease-in-out");
 }
 
 /* Small size uses a tighter corner radius to match its dropped outer ring (see .swc-PromptField-outer-border). */
 :host([size="s"]) .swc-PromptField-box {
   --_swc-prompt-field-box-corner-radius: token("corner-radius-extra-large-default");
+}
+
+/* Collapsed is a pill: the radius is half the single-row height (button height plus block padding), so a one-line field has fully round ends. */
+:host([collapsed]) .swc-PromptField {
+  --_swc-prompt-field-collapsed-radius: calc(token("component-height-100") / 2 + token("spacing-200"));
+}
+
+:host([collapsed][size="s"]) .swc-PromptField {
+  --_swc-prompt-field-collapsed-radius: calc(token("component-height-75") / 2 + token("spacing-200"));
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -103,6 +114,17 @@
 
 .swc-PromptField-box:has(.swc-PromptField-input-area.has-attachment) {
   padding-block-start: token("spacing-100");
+}
+
+/* Placed after the has-attachment rule above so the pill's 12px block padding wins over it; the attachment case below then trims only the top. The inline-end padding stays at the expanded value so the send button doesn't shift when the field collapses. */
+:host([collapsed]) .swc-PromptField-box {
+  padding-block: token("spacing-200");
+  border-radius: var(--_swc-prompt-field-collapsed-radius);
+}
+
+/* With attachments, the strip's badge clearance supplies most of the top space, so the card's own top padding drops to put the tiles 18px from the edge. */
+:host([collapsed]) .swc-PromptField-box:has(.swc-PromptField-input-area.has-attachment) {
+  padding-block-start: token("spacing-85");
 }
 
 /* Inert when disabled: default cursor, and the card ignores pointer input so hover treatments don't fire. */
@@ -147,7 +169,8 @@
     --_swc-prompt-field-outer-stop-1 var(--_swc-prompt-field-transition),
     --_swc-prompt-field-outer-stop-2 var(--_swc-prompt-field-transition),
     --_swc-prompt-field-outer-stop-3 var(--_swc-prompt-field-transition),
-    box-shadow var(--_swc-prompt-field-transition);
+    box-shadow var(--_swc-prompt-field-transition),
+    border-radius token("animation-duration-200") token("animation-ease-in-out");
 
   /* Small size drops the ring entirely: the card's own border and shadow (.swc-PromptField-box) are the whole treatment. */
   :host([size="s"]) & {
@@ -155,6 +178,15 @@
     --_swc-prompt-field-outer-background: none;
     --_swc-prompt-field-outer-corner-radius: token("corner-radius-extra-large-default");
     --_swc-prompt-field-outer-box-shadow: none;
+  }
+
+  /* Ring follows the collapsed card's pill shape, offset by its own padding. */
+  :host([collapsed]) & {
+    border-radius: calc(var(--_swc-prompt-field-collapsed-radius) + token("spacing-85"));
+  }
+
+  :host([collapsed][size="s"]) & {
+    border-radius: var(--_swc-prompt-field-collapsed-radius);
   }
 
   :host([variant="subtle"]) & {
@@ -562,7 +594,9 @@
 .swc-PromptField-text-group {
   display: flex;
   gap: var(--_swc-prompt-field-text-group-gap, token("spacing-200"));
-  align-items: center;
+
+  /* Top-aligned so the padding-block-start below alone centers one line of text in the row; centering would add the leftover row height on top of it. */
+  align-items: flex-start;
   min-inline-size: 0;
 
   /* One button height in both states, so the collapse only removes the action bar below — the row never changes height, and the bottom-anchored send button reads centered on it when collapsed. */
@@ -580,6 +614,15 @@
   --_swc-prompt-field-text-group-padding-block-start: calc((token("component-height-75") - (token("font-size-100") * token("line-height-100"))) / 2);
   --_swc-prompt-field-text-group-padding-inline-start: 2px;
   --_swc-prompt-field-text-group-padding-inline-end: calc(token("component-height-75") + token("spacing-300"));
+}
+
+/* Collapsed tightens the gap between the text and the inline send button. */
+:host([collapsed]) .swc-PromptField-text-group {
+  padding-inline-end: calc(token("component-height-100") + token("spacing-85"));
+}
+
+:host([collapsed][size="s"]) .swc-PromptField-text-group {
+  padding-inline-end: calc(token("component-height-75") + token("spacing-85"));
 }
 
 .swc-PromptField-status-icon {
@@ -600,6 +643,11 @@
 .swc-PromptField-status-icon swc-pixel-loader {
   /* 21px to match the reference loader, centered in the 24px status slot. Color inherits via its currentcolor default. */
   --swc-pixel-loader-size: 21px;
+}
+
+/* Small size's row is as tall as the icon (24px), so the row's text-centering top padding would push the icon down and grow the row. Pull the icon back up to keep it, the text, and the send button centered in a 24px row. */
+:host([size="s"]) .swc-PromptField-status-icon {
+  margin-block-start: calc((token("component-height-75") - token("spacing-400")) / 2 - var(--_swc-prompt-field-text-group-padding-block-start));
 }
 
 /* ─────────────────────────────────────
@@ -990,6 +1038,14 @@
 :host([size="s"]) .swc-PromptField-textarea {
   --_swc-prompt-field-textarea-font-size: token("font-size-100");
   --_swc-prompt-field-textarea-line-height: token("line-height-100");
+}
+
+/* Collapsed keeps the placeholder on one truncated line, like the single-row design; typed text still wraps and grows. The textarea itself ignores text-overflow, so the ellipsis is set on ::placeholder too. */
+:host([collapsed]) .swc-PromptField-textarea:placeholder-shown,
+:host([collapsed]) .swc-PromptField-textarea:placeholder-shown::placeholder {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* Own single-row grid animates 0fr <-> 1fr; overflow/min-block-size live on the row wrapper below, not here, since 0fr only resolves to a true 0 on the grid item, not the container. */

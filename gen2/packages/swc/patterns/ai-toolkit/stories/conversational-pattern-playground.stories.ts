@@ -265,6 +265,10 @@ class ConversationFullPatternDemo extends LitElement {
   @state()
   private isGenerating = false;
 
+  // The composer starts collapsed and expands while it's in use.
+  @state()
+  private promptExpanded = false;
+
   private readonly fileInputId = `conv-demo-upload-${crypto.randomUUID()}`;
   private responseTimer: number | null = null;
   private stepTimer: number | null = null;
@@ -405,6 +409,7 @@ class ConversationFullPatternDemo extends LitElement {
     this.responseTimer = null;
     this.clearStepTimer();
     this.isGenerating = false;
+    this.collapsePromptIfIdle();
   }
 
   private stopGeneration = (): void => {
@@ -433,12 +438,43 @@ class ConversationFullPatternDemo extends LitElement {
 
     this.responseTargetId = null;
     this.isGenerating = false;
+    this.collapsePromptIfIdle();
   };
 
   private handlePromptInput = (event: Event): void => {
     const inputEvent = event as CustomEvent<{ value?: string }>;
     this.promptValue = inputEvent.detail?.value ?? '';
   };
+
+  // Only the textarea expands the field: the legal link, attachment tiles, and
+  // strip chevrons stay usable in the collapsed pill without changing layout.
+  private handlePromptFocusIn = (event: FocusEvent): void => {
+    if (event.composedPath()[0] instanceof HTMLTextAreaElement) {
+      this.promptExpanded = true;
+    }
+  };
+
+  // Checked once focus has landed: focus moving inside the shadow root, or the
+  // window blurring to open the native file picker, keeps the field active.
+  private handlePromptFocusOut = (): void => {
+    window.setTimeout(() => this.collapsePromptIfIdle());
+  };
+
+  private collapsePromptIfIdle(): void {
+    const promptField = this.querySelector('swc-prompt-field');
+    const active = document.activeElement;
+    if (
+      promptField &&
+      active &&
+      (active === promptField || promptField.contains(active))
+    ) {
+      return;
+    }
+    if (this.promptValue || this.isGenerating) {
+      return;
+    }
+    this.promptExpanded = false;
+  }
 
   private handlePromptSubmit = (event: Event): void => {
     const submitEvent = event as CustomEvent<{ value?: string }>;
@@ -688,6 +724,7 @@ class ConversationFullPatternDemo extends LitElement {
           <swc-prompt-field
             .value=${this.promptValue}
             ?generating=${this.isGenerating}
+            ?collapsed=${!this.promptExpanded}
             variant=${this.config.variant}
             size=${this.config.size}
             loader=${this.config.loader}
@@ -699,6 +736,8 @@ class ConversationFullPatternDemo extends LitElement {
             @swc-prompt-field-stop=${this.stopGeneration}
             @swc-prompt-field-upload-click=${this.handleUploadClick}
             @swc-prompt-field-drop=${this.handleDrop}
+            @focusin=${this.handlePromptFocusIn}
+            @focusout=${this.handlePromptFocusOut}
           >
             ${this.renderAttachments()}
             <p slot="legal" class="swc-Typography--links">

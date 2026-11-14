@@ -13,7 +13,7 @@ A prompt field consists of:
 
 1. **Box**: white card container with shadow, starting as a taller multiline card by default.
 2. **Input area**: AI status indicator + textarea. The indicator also supplies the textarea's accessible name.
-3. **Action bar**: upload trigger (left) and a single send/stop action button (right), shown on its own row.
+3. **Action bar**: upload trigger (left) and a single send/stop action button (right), shown on its own row. When `collapsed`, the upload trigger is hidden and send/stop moves inline with the input.
 4. **Footer**: legal disclaimer rendered below the prompt surface. Required in product implementations.
 
 <Canvas of={PromptFieldStories.Anatomy} />
@@ -40,6 +40,17 @@ A prompt field consists of:
 Every layer derives from a single hue, so overriding `--swc-prompt-field-brand-color` rethemes all three variants at once.
 
 <Canvas of={PromptFieldStories.Variant} />
+
+### Layout
+
+`collapsed` switches the prompt field from the default card to a compact, single-row pill:
+
+- **Expanded** (default): the upload button sits on its own action bar below the input, with send/stop at its end
+- **`collapsed`**: send/stop sits inline at the end of the input row, and the upload button is hidden and removed from the tab order and the accessibility tree. The placeholder truncates to one line, but typed text still wraps and grows the field
+
+Use `collapsed` where the prompt field should take minimal space until the user engages with it, for example a docked composer. Toggling the attribute animates between the two layouts, so you can expand the field on focus or when the user needs to attach files. Dropping files on a collapsed field still fires `swc-prompt-field-drop`.
+
+<Canvas of={PromptFieldStories.Layout} />
 
 ### Status indicator
 

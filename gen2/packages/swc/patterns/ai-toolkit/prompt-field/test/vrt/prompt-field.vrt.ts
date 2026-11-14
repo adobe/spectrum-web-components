@@ -50,6 +50,12 @@ const SHORT_PROMPT = 'Summarize the API changes in this branch.';
 const LONG_PROMPT =
   'Draft a detailed launch plan covering positioning, target segments, channel strategy, budget allocation, and a week-by-week rollout timeline for the next two quarters, then list the key risks and open questions to review.';
 
+// Long enough to truncate in a narrow collapsed field; the Japanese copy checks CJK glyph metrics against the ellipsis.
+const PLACEHOLDERS = {
+  en: 'Ready to get started? Ask a question, share an idea, or add a task.',
+  ja: '始めましょうか？質問したり、アイデアを共有したり、タスクを追加したりしてください。',
+} as const;
+
 type AttachmentKind =
   | 'none'
   | 'card'
@@ -166,11 +172,13 @@ type FieldCase = {
   buttonState?: ButtonState;
   fieldHover?: boolean;
   fieldFocus?: boolean;
+  narrow?: boolean;
+  lang?: keyof typeof PLACEHOLDERS;
 };
 
-// Fields render at a roomy composer width by default. Long prompts and the
-// overflowing attachment strip get a narrow width instead, so wrapping and the
-// scroll state actually trigger.
+// Fields render at a roomy composer width by default. Long prompts, the
+// overflowing attachment strip, and `narrow` cases get a narrow width instead,
+// so wrapping, truncation, and the scroll state actually trigger.
 const renderField = ({
   variant = 'balanced',
   size = 'm',
@@ -183,8 +191,11 @@ const renderField = ({
   buttonState,
   fieldHover = false,
   fieldFocus = false,
+  narrow = false,
+  lang,
 }: FieldCase) => {
   const constrained =
+    narrow ||
     value === LONG_PROMPT ||
     attachment === 'manyMedia' ||
     attachment === 'manyCards';
@@ -192,10 +203,12 @@ const renderField = ({
     ? 'inline-size: 380px;'
     : 'inline-size: 800px; max-inline-size: 90vw;';
   return html`
-    <div style=${width}>
+    <div style=${width} lang=${lang ?? nothing}>
       <swc-prompt-field
         label="Prompt"
-        placeholder="Ask a question, share an idea, or add a task."
+        placeholder=${lang
+          ? PLACEHOLDERS[lang]
+          : 'Ask a question, share an idea, or add a task.'}
         variant=${variant}
         size=${size}
         ?generating=${generating}
@@ -322,6 +335,99 @@ const SIZE_PERMUTATIONS = createPermutations([
   },
 ]);
 
+// Collapsed swaps the card for a single-row pill: tighter padding, a pill
+// radius on the card and the ring, send/stop inline, a one-line truncated
+// placeholder, and less badge clearance above the attachment strip. Covered
+// across the same variant, state, attachment, and size axes as expanded.
+const COLLAPSED_PERMUTATIONS = createPermutations([
+  {
+    group: ['Collapsed — variants'],
+    collapsed: [true],
+    variant: VARIANTS,
+    generating: [false, true],
+    value: [SHORT_PROMPT],
+  },
+  {
+    group: ['Collapsed — placeholder truncation'],
+    collapsed: [true],
+    narrow: [true],
+    lang: ['en', 'ja'],
+  },
+  {
+    group: ['Collapsed — attachments'],
+    collapsed: [true],
+    value: [SHORT_PROMPT],
+    attachment: [
+      'card',
+      'cards',
+      'media',
+      'mediaBadge',
+      'manyMedia',
+      'manyCards',
+    ],
+  },
+  {
+    group: ['Collapsed — attachments'],
+    collapsed: [true],
+    attachment: ['mediaBadge'],
+  },
+  {
+    group: ['Collapsed — hover'],
+    collapsed: [true],
+    variant: VARIANTS,
+    value: [SHORT_PROMPT],
+    fieldHover: [true],
+  },
+  {
+    group: ['Collapsed — focus'],
+    collapsed: [true],
+    variant: VARIANTS,
+    value: [SHORT_PROMPT],
+    fieldFocus: [true],
+  },
+  {
+    group: ['Collapsed — disabled'],
+    collapsed: [true],
+    disabled: [true],
+    value: ['', SHORT_PROMPT],
+  },
+  {
+    group: ['Collapsed — dragged'],
+    collapsed: [true],
+    dragged: [true],
+    value: [SHORT_PROMPT],
+  },
+  {
+    group: ['Collapsed — buttons focus'],
+    collapsed: [true],
+    value: [SHORT_PROMPT],
+    attachment: ['manyMedia'],
+    buttonState: ['focus-visible'],
+  },
+  {
+    group: ['Collapsed — small size'],
+    size: ['s'],
+    collapsed: [true],
+    variant: VARIANTS,
+    generating: [false, true],
+    value: [SHORT_PROMPT],
+  },
+  {
+    group: ['Collapsed — small size attachments'],
+    size: ['s'],
+    collapsed: [true],
+    value: [SHORT_PROMPT],
+    attachment: ['card', 'media', 'manyMedia', 'manyCards'],
+  },
+  {
+    group: ['Collapsed — small size focus'],
+    size: ['s'],
+    collapsed: [true],
+    value: [SHORT_PROMPT],
+    fieldFocus: [true],
+  },
+]);
+
 // Resolves once `selector` exists in the host's shadow root, or after a few
 // frames. The scroll chevrons only render once the overflowing strip is
 // measured (a frame after first paint), so wait before forcing them.
@@ -365,6 +471,16 @@ const forceButtonStates = async ({
           forcePseudoState(button, state, '.swc-ActionButton');
         }
       }
+      // Attachment dismiss buttons float above each tile, so their focus ring
+      // shows whether the strip's badge clearance leaves room for it.
+      field.querySelectorAll('swc-upload-attachment').forEach((attachment) => {
+        const dismiss = attachment.shadowRoot?.querySelector<HTMLElement>(
+          '.swc-UploadAttachment-dismiss'
+        );
+        if (dismiss) {
+          forcePseudoState(dismiss, state, '.swc-ActionButton');
+        }
+      });
     })
   );
 };
@@ -468,6 +584,11 @@ const permutationContent = () => [
   ...sizeRows(),
 ];
 
+const collapsedRows = () =>
+  groupPermutationsBy(COLLAPSED_PERMUTATIONS, 'group').map(([group, cases]) =>
+    row(stack(cases as FieldCase[]), group)
+  );
+
 const forcePermutationStates = async (context: {
   canvasElement: HTMLElement;
 }) => {
@@ -496,11 +617,43 @@ export const PermutationsRtl: Story = {
 };
 PermutationsRtl.storyName = 'Permutations RTL';
 
+// Collapsed gets its own snapshots, per theme like Permutations, so the pill
+// layout is easy to review on its own.
+export const Collapsed: Story = {
+  render: () => theme(collapsedRows(), 'light', 'ltr'),
+  parameters: vrtParameters,
+  play: forcePermutationStates,
+};
+
+export const CollapsedRtl: Story = {
+  render: () => theme(collapsedRows(), 'dark', 'rtl'),
+  parameters: vrtParameters,
+  play: forcePermutationStates,
+};
+CollapsedRtl.storyName = 'Collapsed RTL';
+
 // Forced-colors replaces the whole palette, so it gets its own story:
 // checks the opaque card boundary the treatment falls back to when the
-// gradients are dropped.
+// gradients are dropped, on both the card and the collapsed pill.
 export const ForcedColors: Story = {
-  render: () => theme(variantRows(), 'light', 'ltr'),
+  render: () =>
+    theme(
+      [
+        ...variantRows(),
+        row(
+          stack(
+            VARIANTS.map((variant) => ({
+              variant,
+              collapsed: true,
+              value: SHORT_PROMPT,
+            }))
+          ),
+          'collapsed'
+        ),
+      ],
+      'light',
+      'ltr'
+    ),
   parameters: forcedColorsVrtParameters,
   play: pauseLoaders,
 };

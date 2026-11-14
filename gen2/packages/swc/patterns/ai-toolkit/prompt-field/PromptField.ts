@@ -133,11 +133,10 @@ export class PromptField extends SpectrumElement {
   public generating = false;
 
   /**
-   * Starts as a single-line layout with send/stop inline instead of the default
-   * layout with a separate action bar; the textarea still wraps and grows with
-   * content either way.
-   *
-   * @internal
+   * Renders a single-row pill with send/stop inline and the upload button
+   * hidden, instead of the default card with a separate action bar. The
+   * placeholder truncates to one line; typed text still wraps and grows.
+   * Toggling it animates between the two layouts.
    */
   @property({ type: Boolean, reflect: true })
   public collapsed = false;
@@ -343,7 +342,20 @@ export class PromptField extends SpectrumElement {
 
   public override disconnectedCallback(): void {
     this._attachmentScrollFallbackGeneration++;
+    if (this._autosizeFrame !== undefined) {
+      cancelAnimationFrame(this._autosizeFrame);
+      this._autosizeFrame = undefined;
+    }
     super.disconnectedCallback();
+  }
+
+  protected override firstUpdated(
+    changedProperties: PropertyValues<this>
+  ): void {
+    super.firstUpdated(changedProperties);
+    if (this._textarea) {
+      this._textareaResizeObserver?.observe(this._textarea);
+    }
   }
 
   protected override updated(changedProperties: PropertyValues<this>): void {
@@ -351,15 +363,49 @@ export class PromptField extends SpectrumElement {
     if (changedProperties.has('accessibleLabel')) {
       this._warnIfMissingAccessibleLabel();
     }
-    if (changedProperties.has('value')) {
+    // `collapsed` and `size` change the textarea's width, font metrics, and
+    // placeholder wrapping, so the fallback height has to be recomputed too.
+    if (
+      changedProperties.has('value') ||
+      changedProperties.has('collapsed') ||
+      changedProperties.has('size')
+    ) {
       this._autosizeTextarea();
     }
   }
 
+  private _autosizeInlineSize = 0;
+
+  private _autosizeFrame?: number;
+
+  // Fallback only: the collapse animates the card's padding, so the textarea's
+  // width keeps changing after `updated()`. Re-measure on width changes alone,
+  // one frame later, so the height write happens outside the ResizeObserver
+  // delivery (writing during it logs a "loop completed" error in WebKit).
+  private readonly _textareaResizeObserver = SUPPORTS_FIELD_SIZING
+    ? undefined
+    : new ResizeController(this, {
+        target: null,
+        callback: () => {
+          const inlineSize = this._textarea?.clientWidth ?? 0;
+          if (
+            inlineSize === this._autosizeInlineSize ||
+            this._autosizeFrame !== undefined
+          ) {
+            return;
+          }
+          this._autosizeFrame = requestAnimationFrame(() => {
+            this._autosizeFrame = undefined;
+            this._autosizeInlineSize = this._textarea?.clientWidth ?? 0;
+            this._autosizeTextarea();
+          });
+        },
+      });
+
   // Fallback for browsers without field-sizing: content, which is not yet
   // widely supported. Grows the textarea to fit content, up to the CSS
-  // max-block-size clamp (past which overflow-y scrolls). Gated to value
-  // changes so unrelated re-renders don't force a layout reflow.
+  // max-block-size clamp (past which overflow-y scrolls). Gated to value,
+  // layout, and width changes so unrelated re-renders don't force a reflow.
   private _autosizeTextarea(): void {
     if (SUPPORTS_FIELD_SIZING) {
       return;
