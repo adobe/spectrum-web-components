@@ -13,6 +13,11 @@
 import { html } from 'lit';
 import { expect, userEvent, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import {
+  getComponent,
+  getComponents,
+  withWarningSpy,
+} from '@swc-test-helpers/dom';
 
 import type { Button } from '@adobe/spectrum-wc/button';
 import type { Popover } from '@adobe/spectrum-wc/popover';
@@ -26,11 +31,6 @@ import {
   TOOLTIP_PLACEMENTS,
   TOOLTIP_VARIANTS,
 } from '../../../../core/components/tooltip/Tooltip.types.js';
-import {
-  getComponent,
-  getComponents,
-  withWarningSpy,
-} from '../../../utils/test-utils.js';
 import meta, {
   Overview,
   Placements,

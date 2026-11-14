@@ -40,10 +40,11 @@ Index of shared, reusable resources in gen2: controllers, mixins, utilities, and
 | --- | --- | --- |
 | `PlacementController` | Floating UI-based positioning (flip, shift, arrow, size) for anchored surfaces | `tooltip`, `popover`, `menu` |
 | `HoverController` | Hover and keyboard-focus wiring for native-Popover-API triggers | `tooltip` |
-| `FocusgroupNavigationController` | Roving-tabindex arrow key navigation for composite widgets ([Open UI `focusgroup`](https://open-ui.org/components/focusgroup.explainer/)-aligned). See [Focus management](14_focus-management.md) | `tabs`, `action-group`, `message-feedback`, `conversation-thread`, `prompt-field`, `menu` |
-| `SlotAttributePropagationController` | Propagates a host attribute (e.g. `size`) to slotted children | `card`, `dropzone`, `illustrated-message`, `button-group` |
-| `SlotPresenceController` | Observes whether slotted content matching a selector is present | `button`, `action-button`, `badge`, `accordion`; also `progress-bar`, `meter` (via `LinearProgressMixin`) |
+| `FocusgroupNavigationController` | Roving-tabindex arrow key navigation for composite widgets ([Open UI `focusgroup`](https://open-ui.org/components/focusgroup.explainer/)-aligned). See [Focus management](14_focus-management.md) | `tabs`, `action-group`, `message-feedback`, `conversation-thread`, `prompt-field`, `menu`, `radio-group` |
+| `SlotAttributePropagationController` | Propagates a host attribute (e.g. `size`) to slotted children | `card`, `dropzone`, `illustrated-message`, `button-group`, `radio-group` |
+| `SlotPresenceController` | Observes whether slotted content matching a selector is present | `button`, `action-button`, `badge`, `accordion`, `radio` (in `radio-group`); also `progress-bar`, `meter` (via `LinearProgressMixin`) |
 | `SlotTextController` | Observes whether a slot has meaningful text/element content | `card`, `button`, `action-button`, `illustrated-message`, `badge` |
+| `FieldAssociationController` | Wraps `ElementInternals` form participation: form value, `<fieldset disabled>` cascade, reset delegation, and validity reads | `text-field`, `radio-group` |
 | `LiveSelectionController` | Coordinates single/multiple selection across event-dispatching children | `accordion` |
 | `PageScrollLockController` | Reference-counted page scroll lock for stacked blocking surfaces | `popover` |
 | `TriggerPressController` | Click-to-toggle for a trigger of a native light-dismissible surface, without the surface reopening on the click that closed it | `popover` |
@@ -55,10 +56,10 @@ Index of shared, reusable resources in gen2: controllers, mixins, utilities, and
 
 | Mixin | What it does | Used by |
 | --- | --- | --- |
-| `SizedMixin` | Reactive `size` property with per-component valid-size enforcement | `button`, `button-group`, `badge`, `card`, `accordion`, `status-light`, `divider`, `dropzone`, `icon`, `infield-button`, `meter`, `progress-bar`, `progress-circle`, `action-group`, `menu` |
+| `SizedMixin` | Reactive `size` property with per-component valid-size enforcement | `button`, `button-group`, `badge`, `card`, `accordion`, `status-light`, `divider`, `dropzone`, `icon`, `infield-button`, `meter`, `progress-bar`, `progress-circle`, `action-group`, `menu`, `radio-group` |
 | `LinearProgressMixin` | Shared value/label/percent-format logic for linear-progress components | `progress-bar`, `meter` |
-| `LabellingMixin` | Renders and associates visible or programmatic field labels | `text-field` |
-| `FieldDescriptionMixin` | Renders and associates field descriptions and invalid-state error text | `text-field` |
+| `LabellingMixin` | Renders and associates visible or programmatic field labels | `text-field`, `radio-group` |
+| `FieldDescriptionMixin` | Renders and associates field descriptions and invalid-state error text | `text-field`, `radio-group` |
 | `PendingMixin` | `pending`/`pending-label` properties, click suppression, built on `PendingController` | `button`, `action-button` |
 | `DisabledMixin` | Reactive `disabled` with `aria-disabled` (not native `disabled`), tabindex/blur handling. See [Focus management](14_focus-management.md#disabledmixin) | none (`button` still hand-rolls `disabled`) |
 
@@ -87,8 +88,8 @@ Index of shared, reusable resources in gen2: controllers, mixins, utilities, and
 | Directive | What it does | Used by |
 |---|---|---|
 | `renderPendingSpinner` | Renders the busy-state spinner; called via `PendingController.renderPendingState()` | `button`, `action-button` |
-| `renderFieldLabel` | Renders a form field's visible label and necessity indicator | `text-field` (via `LabellingMixin`) |
-| `renderFieldDescription` | Renders a form field's description or invalid-state error text | `text-field` (via `FieldDescriptionMixin`) |
+| `renderFieldLabel` | Renders a form field's visible label and necessity indicator | `text-field`, `radio-group` (via `LabellingMixin`) |
+| `renderFieldDescription` | Renders a form field's description or invalid-state error text | `text-field`, `radio-group` (via `FieldDescriptionMixin`) |
 
 ## Base class and dev-mode warnings
 

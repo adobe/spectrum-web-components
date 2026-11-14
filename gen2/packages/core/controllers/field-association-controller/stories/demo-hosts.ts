@@ -20,6 +20,7 @@ import {
 import { customElement, property, state } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
+import type { FieldStatus } from '../../../types/index.js';
 import { FieldAssociationController, type FieldFormValue } from '../index.js';
 
 declare global {
@@ -27,6 +28,7 @@ declare global {
     'demo-field-text': DemoFieldText;
     'demo-field-radio': DemoFieldRadio;
     'demo-field-combobox': DemoFieldCombobox;
+    'demo-field-status': DemoFieldStatus;
     'demo-field-bench': DemoFieldBench;
     'demo-form-readout': DemoFormReadout;
   }
@@ -329,6 +331,88 @@ export class DemoFieldCombobox extends DemoFieldHostBase {
           `
         )}
       </select>
+    `;
+  }
+}
+
+// ────────────────────────────────────────
+//     FIELD-STATUS HARNESS
+// ────────────────────────────────────────
+
+/**
+ * @internal
+ *
+ * Text harness driven by `field-status` instead of a `disabled` attribute. It
+ * passes `getStatus` and `host` so the controller supplies the disabled state,
+ * validation barring, and click suppression.
+ */
+@customElement('demo-field-status')
+export class DemoFieldStatus extends LitElement {
+  static formAssociated = true;
+
+  @property({ type: String, reflect: true })
+  public name?: string;
+
+  @property({ type: String })
+  public value = '';
+
+  @property({ type: String })
+  public label = '';
+
+  @property({ type: Boolean })
+  public required = false;
+
+  @property({ type: String, attribute: 'field-status', reflect: true })
+  public fieldStatus?: FieldStatus;
+
+  protected internals = this.attachInternals();
+
+  protected fieldAssoc = new FieldAssociationController(this.internals, {
+    getStatus: () => this.fieldStatus,
+    host: this,
+    onDisabledChange: () => this.requestUpdate(),
+  });
+
+  public get barred(): boolean {
+    return this.fieldAssoc.barred;
+  }
+
+  public get willValidate(): boolean {
+    return this.fieldAssoc.willValidate;
+  }
+
+  public formDisabledCallback(disabled: boolean): void {
+    this.fieldAssoc.formDisabledCallback(disabled);
+  }
+
+  protected override update(changed: PropertyValues): void {
+    super.update(changed);
+    this.fieldAssoc.syncDisabledState();
+    this.fieldAssoc.setValue(this.fieldAssoc.disabled ? null : this.value);
+  }
+
+  protected override updated(changed: PropertyValues): void {
+    super.updated(changed);
+    const control = this.renderRoot.querySelector('input');
+    if (control) {
+      this.internals.setValidity(
+        this.fieldAssoc.barred ? {} : control.validity,
+        this.fieldAssoc.barred ? '' : control.validationMessage,
+        control
+      );
+    }
+  }
+
+  protected override render(): TemplateResult {
+    return html`
+      <input
+        type="text"
+        aria-label=${ifDefined(this.label || undefined)}
+        .value=${this.value}
+        ?required=${this.required}
+        ?disabled=${this.fieldAssoc.disabled}
+        ?readonly=${this.fieldStatus === 'readonly'}
+      />
     `;
   }
 }

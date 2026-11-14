@@ -13,13 +13,13 @@
 import { html } from 'lit';
 import { expect, userEvent, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import { getComponent } from '@swc-test-helpers/dom';
 
 import type { Button } from '@adobe/spectrum-wc/button';
 
 import '../../suggestion/swc-suggestion-group.js';
 import '../swc-suggestion-item.js';
 
-import { getComponent } from '../../../../utils/test-utils.js';
 import { SuggestionGroup } from '../../suggestion/SuggestionGroup.js';
 import meta, { Overview } from '../stories/suggestion-item.stories.js';
 import { SuggestionItem } from '../SuggestionItem.js';

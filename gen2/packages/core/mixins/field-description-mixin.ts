@@ -9,7 +9,7 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { PropertyValues, ReactiveElement } from 'lit';
+import { PropertyValues, ReactiveElement, type TemplateResult } from 'lit';
 import { property } from 'lit/decorators.js';
 
 import { SlotPresenceController } from '../controllers/slot-presence-controller/index.js';
@@ -52,9 +52,14 @@ export interface FieldDescriptionInterface {
    */
   readonly describedByInternals: ElementInternals | null;
 
-  /** @internal Renders the description/error-text markup for the current state. */
+  /**
+   * @internal Renders the description/error-text markup for the current state.
+   * `errorIcon` prepends a decorative icon to the error message, for controls
+   * with no invalid icon of their own (e.g. a radio group).
+   */
   renderFieldDescription(options?: {
     invalid?: boolean;
+    errorIcon?: TemplateResult;
   }): RenderFieldDescriptionResult;
 }
 
@@ -169,6 +174,7 @@ export function FieldDescriptionMixin<T extends Constructor<ReactiveElement>>(
     /** @internal */
     public renderFieldDescription(options?: {
       invalid?: boolean;
+      errorIcon?: TemplateResult;
     }): RenderFieldDescriptionResult {
       return renderFieldDescription({
         hasDescriptionSlotContent: this.hasDescriptionSlotContent,
@@ -176,6 +182,7 @@ export function FieldDescriptionMixin<T extends Constructor<ReactiveElement>>(
         invalid: options?.invalid ?? this._isInvalid,
         onDescriptionElement: this._captureDescriptionElement,
         onErrorTextElement: this._captureErrorTextElement,
+        errorIcon: options?.errorIcon,
       });
     }
 

@@ -12,18 +12,18 @@
 import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import {
+  fixture,
+  getComponent,
+  getComponents,
+  withWarningSpy,
+} from '@swc-test-helpers/dom';
 
 import { Avatar } from '@adobe/spectrum-wc/avatar';
 import { AVATAR_VALID_SIZES } from '@adobe/spectrum-wc-core/components/avatar/index.js';
 
 import '@adobe/spectrum-wc/components/avatar/swc-avatar.js';
 
-import {
-  fixture,
-  getComponent,
-  getComponents,
-  withWarningSpy,
-} from '../../../utils/test-utils.js';
 import meta, {
   Decorative,
   Disabled,
