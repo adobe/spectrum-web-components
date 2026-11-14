@@ -1,5 +1,98 @@
 # @adobe/spectrum-wc
 
+## 2.0.0-beta.8
+
+### Major Changes
+
+- [#6894](https://github.com/adobe/spectrum-web-components/pull/6894) [`04d38e5`](https://github.com/adobe/spectrum-web-components/commit/04d38e59bb587b21f457558e1e5119d8f793c372) Thanks [@aramos-adobe](https://github.com/aramos-adobe)! - `User message`: BREAKING: Added grouped card and media attachment layouts with wrapping and native scrolling. Removed the message-level `title` and `subtitle` slots while preserving `type="copy"` as the default. Consumer action: move attachment titles and subtitles into nested `<swc-upload-attachment>` tiles, and render prompt text in a separate `<swc-user-message>` within the same `<swc-conversation-turn type="user">`.
+
+### Minor Changes
+
+- **radio-group, text-field**:
+  - [#6914](https://github.com/adobe/spectrum-web-components/pull/6914) [`78a0cdb`](https://github.com/adobe/spectrum-web-components/commit/78a0cdb1d79020dc21bb4eae367d07b1ca420268) Thanks [@5t3ph](https://github.com/5t3ph)! - **feat(radio-group, text-field):** Added `<swc-radio-group>` and `<swc-radio>`, and aligned `<swc-text-field>` with the shared form-field behavior.
+    - **Radio group**: Added `<swc-radio-group>` and `<swc-radio>`, the Spectrum 2 successors to `<sp-radio-group>` and `<sp-radio>`, with keyboard navigation and native form participation. Consumer action: see the radio group migration guide.
+    - **Text field**:
+      - Stopped reflecting `disabled` and `readonly` attributes onto its host. Consumer action: style with `:state(disabled)` or `[field-status]` instead.
+      - Removed native `required` and the necessity indicator while `field-status="readonly"`, because a read-only field is barred from validation.
+      - Corrected label spacing to the Spectrum 2 tokens: the necessity indicator and side-label gaps are smaller, and a side label now spans the description row.
+
+- **upload-attachment**:
+  - [#6883](https://github.com/adobe/spectrum-web-components/pull/6883) [`9cecb7f`](https://github.com/adobe/spectrum-web-components/commit/9cecb7f48358dc8d9f9e1405e484a2df48f0d1ef) Thanks [@rubencarvalho](https://github.com/rubencarvalho)! - **feat(upload-attachment):** Added `filesToAttachments()`, `revokeAttachment()`, and `revokeAttachments()` helpers that turn dropped or picked files into plain attachment data (id, file, name, localized size label, image thumbnail URL, and file-type badge label) for `swc-upload-attachment` and `swc-user-message`, and release the thumbnail object URLs. Import them from `@adobe/spectrum-wc/patterns/ai-toolkit/upload-attachment/files-to-attachments.js`.
+
+### Patch Changes
+
+- **accordion**:
+  - [#6926](https://github.com/adobe/spectrum-web-components/pull/6926) [`36bb30c`](https://github.com/adobe/spectrum-web-components/commit/36bb30ca52fc6f2d2ce7add3f0b52aca6fea5170) Thanks [@cdransf](https://github.com/cdransf)! - `Accordion` — Stopped writing a clamped `level` back to the DOM. The value you set stays on the attribute and property, and a development warning names it. Item headings render the nearest valid level for any other number, rounded and then clamped (`1` renders `h2` and `7` renders `h6`, as before; `4.6` renders `h5`), and the default `h3` for anything else, which previously rendered a broken heading such as `<hNaN>`. A numeric string such as `"4"`, as set by frameworks, renders `h4` without a warning. Removing `level` or `density` resets it to its default without a warning. `swc-accordion-item` now warns on an invalid `size` and renders its chevron at the default size.
+
+- **action-group**:
+  - [#6926](https://github.com/adobe/spectrum-web-components/pull/6926) [`36bb30c`](https://github.com/adobe/spectrum-web-components/commit/36bb30ca52fc6f2d2ce7add3f0b52aca6fea5170) Thanks [@cdransf](https://github.com/cdransf)! - `Action Group` — Fixed arrow-key navigation for an invalid `orientation`: it now uses the default horizontal direction. An invalid `static-color` is no longer passed to child buttons, so they render their default. Both now warn through the standard development warning.
+
+- **ai-toolkit**:
+  - [#6831](https://github.com/adobe/spectrum-web-components/pull/6831) [`5b9a9be`](https://github.com/adobe/spectrum-web-components/commit/5b9a9be577c8e2b85517fd7b1815581a9a1f920f) Thanks [@aramos-adobe](https://github.com/aramos-adobe)! - **fix(ai-toolkit):** Make the response-status width scale with its conversation thread, and fix several detail-panel issues surfaced while testing it.
+    - `swc-response-status` no longer fills the full width of its parent; it now scales as a percentage of its parent conversation thread's width (90% in narrow containers down to 65% in wide ones, interpolating smoothly in between).
+    - Settled status labels now default to 1 line (truncating with an ellipsis) instead of wrapping to 2; a status with no steps (no disclosure panel to open into) shows its label in full instead. Override with `--swc-response-status-label-max-lines`.
+    - A `<pre>` slotted into a step's `description` (e.g. a pasted code sample) never wraps and scrolls horizontally instead, renders at a size closer to the surrounding prose, and no longer gets clipped before reaching the end of its scroll range in a narrow host.
+    - The detail panel's scroll fade no longer dims its scrollbar; the fade and the scrollbar now render independently, and the fade stays pinned to the panel edges instead of scrolling away with horizontally-scrolling code content.
+    - The detail panel's scroll region is now keyboard-focusable when a short-but-wide `<pre>` overflows horizontally, not just when it overflows vertically; the fade overlays only render while the panel overflows vertically (a horizontally-scrolling single line no longer gets a washed-out fade), and they stay in sync if the description grows while the panel is already open.
+    - A slotted `<pre>` now stays left-to-right regardless of document direction, since code content is always LTR.
+    - Long non-code content (e.g. a URL or path) in a narrow host no longer gets its trailing edge (and scrollbar) clipped by the detail panel's own box model.
+    - `swc-conversation-turn`'s full-width stretch rule for system turns is now scoped to `swc-system-message` instead of any slotted content, so a `swc-response-status` slotted directly into a system turn keeps its own width clamp instead of being stretched to fill the column.
+
+- **avatar**:
+  - [#6926](https://github.com/adobe/spectrum-web-components/pull/6926) [`36bb30c`](https://github.com/adobe/spectrum-web-components/commit/36bb30ca52fc6f2d2ce7add3f0b52aca6fea5170) Thanks [@cdransf](https://github.com/cdransf)! - `Avatar` — Stopped rewriting an invalid `size` to `100`. The value you set stays on the attribute and property, a development warning names it, and the avatar renders at the default size. Invalid markup such as `size="banana"` is no longer rewritten to `size="NaN"`. A numeric string such as `"200"`, as set by frameworks, no longer warns; the property returns it as set.
+
+- **badge**:
+  - [#6926](https://github.com/adobe/spectrum-web-components/pull/6926) [`36bb30c`](https://github.com/adobe/spectrum-web-components/commit/36bb30ca52fc6f2d2ce7add3f0b52aca6fea5170) Thanks [@cdransf](https://github.com/cdransf)! - `Badge` — Added a development warning for an invalid `fixed` value. The badge renders unfixed.
+
+- **button**:
+  - [#6926](https://github.com/adobe/spectrum-web-components/pull/6926) [`36bb30c`](https://github.com/adobe/spectrum-web-components/commit/36bb30ca52fc6f2d2ce7add3f0b52aca6fea5170) Thanks [@cdransf](https://github.com/cdransf)! - `Button` — Added a development warning for an invalid `static-color` value. The button renders its default colors.
+
+- **dev-validation**:
+  - [#6910](https://github.com/adobe/spectrum-web-components/pull/6910) [`755fdbc`](https://github.com/adobe/spectrum-web-components/commit/755fdbc05a01a342e7d7e6b178d3074808bf6816) Thanks [@rubencarvalho](https://github.com/rubencarvalho)! - **fix(dev-validation):** Fixed two problems with dev mode warnings. No consumer action required.
+    - Setting `window.__swc = { ...window.__swc, DEBUG: false }` before the first component loads now turns dev mode off, as the [dev mode warnings guide](https://spectrum-web-components.adobe.com/?path=/docs/guides-dev-mode-warnings--docs) says. The "in dev mode" notice is not logged in that case either.
+    - Warnings now link to a docs page that exists, for the element that warned. Warnings from `<swc-progress-bar>` linked to the meter docs; warnings from `<swc-action-button>`, `<swc-close-button>`, and `<swc-infield-button>` linked to the button docs; and warnings from `<swc-action-group>`, `<swc-dropzone>`, `<swc-status-light>`, and `<swc-prompt-field>`, the dev mode notice, and the duplicate element warning linked to pages that do not exist.
+
+- **dropzone**:
+  - [#6926](https://github.com/adobe/spectrum-web-components/pull/6926) [`36bb30c`](https://github.com/adobe/spectrum-web-components/commit/36bb30ca52fc6f2d2ce7add3f0b52aca6fea5170) Thanks [@cdransf](https://github.com/cdransf)! - `Dropzone` — Stopped ignoring an invalid `drop-effect`. `dropEffect` now returns the value you set, a development warning names it, and the browser receives the default `copy`.
+
+- **menu, popover**:
+  - [#6912](https://github.com/adobe/spectrum-web-components/pull/6912) [`3d0c43d`](https://github.com/adobe/spectrum-web-components/commit/3d0c43da10723c68b7b112928005fbb606a8db2b) Thanks [@rubencarvalho](https://github.com/rubencarvalho)! - **fix(popover, menu):** Fixed `<swc-popover>` and `<swc-menu>` keeping their inline position styles after they closed, and dispatching `swc-after-close` before the exit fade finished when they were closed during their entrance animation. No consumer action required.
+
+    The inline `top`, `left`, and `translate` and the `--swc-placement-available-*` custom properties (and the popover tip's inline `top`, `left`, and `translate`) stayed on the closed surface until the next open overwrote them. They're now removed once the close transition finishes, the same as `<swc-tooltip>`. Closing during the entrance cancelled the entrance transition, and that cancel was treated as the end of the close.
+
+- **meter**:
+  - [#6926](https://github.com/adobe/spectrum-web-components/pull/6926) [`36bb30c`](https://github.com/adobe/spectrum-web-components/commit/36bb30ca52fc6f2d2ce7add3f0b52aca6fea5170) Thanks [@cdransf](https://github.com/cdransf)! - `Meter` — Stopped rewriting an invalid `variant` to `informative`. The value you set stays on the attribute and property, a development warning names it, and the fill renders in the default informative color.
+
+- **progress-circle**:
+  - [#6926](https://github.com/adobe/spectrum-web-components/pull/6926) [`36bb30c`](https://github.com/adobe/spectrum-web-components/commit/36bb30ca52fc6f2d2ce7add3f0b52aca6fea5170) Thanks [@cdransf](https://github.com/cdransf)! - `Progress Circle` — Stopped writing a clamped `progress` back to the attribute and property. The value you set is kept, a development warning names an out-of-range value, and the circle and `aria-valuenow` render it clamped to 0–100. Non-numeric markup such as `progress="banana"` is kept instead of being rewritten to `progress="NaN"`, warns, and renders 0%. Fixed a numeric string such as `"50"`, as set by frameworks, rendering as 0%. Removing `static-color` no longer warns.
+
+  - [#6911](https://github.com/adobe/spectrum-web-components/pull/6911) [`1612540`](https://github.com/adobe/spectrum-web-components/commit/1612540401dfbbbe25ecaf7438944a3df3b9fc6d) Thanks [@rubencarvalho](https://github.com/rubencarvalho)! - **fix(progress-circle):** Fixed the `<swc-progress-circle>` rings so their outer edge always meets the edge of the circle. The ring radius now comes from the same thickness that draws the stroke. Before, the radius came from a fixed value per size, so `size="m"` and `size="l"` rings sat up to 1px inside the edge, and a `--swc-progress-circle-thickness` override changed the stroke but not the radius, so thicker rings were clipped. Thicker rings now grow inward, so the circle keeps its size. Set `--swc-progress-circle-thickness` to a length, such as `4px`. A unitless number, which the stroke accepted before, now hides the rings.
+
+- **prompt-field**:
+  - [#6932](https://github.com/adobe/spectrum-web-components/pull/6932) [`c5c840f`](https://github.com/adobe/spectrum-web-components/commit/c5c840f98496d15cb6c4da56d3c50f1adf85f1df) Thanks [@rubencarvalho](https://github.com/rubencarvalho)! - **fix(prompt-field):** `swc.css` no longer ships an incomplete `@property --swc-prompt-field-brand-color` rule without `syntax` and `inherits` inside `@media (color-gamut: p3)`, which strict CSS minifiers reject. The display-p3 override is now a complete registration.
+
+- **prompt-field, text-field**:
+  - [#6910](https://github.com/adobe/spectrum-web-components/pull/6910) [`755fdbc`](https://github.com/adobe/spectrum-web-components/commit/755fdbc05a01a342e7d7e6b178d3074808bf6816) Thanks [@rubencarvalho](https://github.com/rubencarvalho)! - **fix(text-field, prompt-field):** `@adobe/spectrum-wc` no longer bundles its own copy of workflow icons. `<swc-text-field>` and `<swc-prompt-field>` now import them from `@adobe/spectrum-wc-icons`, which is now a dependency of `@adobe/spectrum-wc`. Before, a page that also loaded `@adobe/spectrum-wc-icons/swc-icon-alert-triangle.js` threw an error, because `swc-icon-alert-triangle` was defined twice. No consumer action required.
+
+- **response-status**:
+  - [#6926](https://github.com/adobe/spectrum-web-components/pull/6926) [`36bb30c`](https://github.com/adobe/spectrum-web-components/commit/36bb30ca52fc6f2d2ce7add3f0b52aca6fea5170) Thanks [@cdransf](https://github.com/cdransf)! - `Response Status` — Added development warnings for an invalid `loader` or `status` on `swc-response-status` and an invalid `status` on `swc-response-status-step`. The values stay as set, and the component renders the `mega` loader and `active` status. Removing `loader` or `status` resets it to its default without a warning.
+
+- **tabs**:
+  - [#6926](https://github.com/adobe/spectrum-web-components/pull/6926) [`36bb30c`](https://github.com/adobe/spectrum-web-components/commit/36bb30ca52fc6f2d2ce7add3f0b52aca6fea5170) Thanks [@cdransf](https://github.com/cdransf)! - `Tabs` — Stopped rewriting an invalid `direction`, `density`, or `keyboard-activation` to its default. The value you set stays on the attribute and property, a development warning names it, and the tabs render with the default. An invalid `direction` no longer hides the selection indicator.
+
+- **thumbnail**:
+  - [#6926](https://github.com/adobe/spectrum-web-components/pull/6926) [`36bb30c`](https://github.com/adobe/spectrum-web-components/commit/36bb30ca52fc6f2d2ce7add3f0b52aca6fea5170) Thanks [@cdransf](https://github.com/cdransf)! - `Thumbnail` — Stopped rewriting an invalid `size` or `fit` to its default. The value you set stays on the attribute and property, a development warning names it, and the thumbnail renders at the default size and fit. Invalid markup such as `size="banana"` is no longer rewritten to `size="NaN"`. A numeric string such as `"200"`, as set by frameworks, no longer warns; the property returns it as set.
+
+- **tooltip**:
+  - [#6926](https://github.com/adobe/spectrum-web-components/pull/6926) [`36bb30c`](https://github.com/adobe/spectrum-web-components/commit/36bb30ca52fc6f2d2ce7add3f0b52aca6fea5170) Thanks [@cdransf](https://github.com/cdransf)! - `Tooltip` — Fixed removing the `variant` or `placement` attribute emitting a development warning. Removing either now resets it to its default (`neutral` or `top`).
+
+- [#6926](https://github.com/adobe/spectrum-web-components/pull/6926) [`36bb30c`](https://github.com/adobe/spectrum-web-components/commit/36bb30ca52fc6f2d2ce7add3f0b52aca6fea5170) Thanks [@cdransf](https://github.com/cdransf)! - `Meter`, `Progress Bar` — Added a development warning when `min-value` is greater than `max-value`, when either bound is not a number, or when `value` is not a number. The values stay as set, and the bar renders the corrected range and value. Non-numeric markup such as `value="banana"` is no longer rewritten to `value="NaN"`. Fixed numeric strings such as `"50"`, as set by frameworks, rendering as 0. Removing `value`, `min-value`, `max-value`, `label-position`, or `static-color` now resets it to its default without a warning.
+
+- [#6894](https://github.com/adobe/spectrum-web-components/pull/6894) [`04d38e5`](https://github.com/adobe/spectrum-web-components/commit/04d38e59bb587b21f457558e1e5119d8f793c372) Thanks [@aramos-adobe](https://github.com/aramos-adobe)! - `Upload attachment`: Fixed image previews to remain square and card thumbnails to fit their preview containers. Included media badge text in generated remove-button labels, kept those labels synchronized with title and badge changes, and preserved explicit `dismiss-label` overrides.
+
+- Updated dependencies [[`cc19eb9`](https://github.com/adobe/spectrum-web-components/commit/cc19eb990c9e76a642d3c002ac26f673c1e84ded)]:
+  - @adobe/spectrum-wc-icons@2.0.0-beta.8
+
 ## 2.0.0-beta.7
 
 ### Minor Changes
