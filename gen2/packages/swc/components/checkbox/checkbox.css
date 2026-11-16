@@ -54,6 +54,7 @@
   --_swc-checkbox-control-offset: calc((1lh - var(--_swc-checkbox-control-size)) / 2);
 
   display: grid;
+  position: relative;
   grid-area: input;
   grid-template-areas: "box label";
   grid-template-columns: auto 1fr;
@@ -67,16 +68,16 @@
   --_swc-checkbox-control-offset: 0px;
 }
 
-/* The native input stays in the box's grid cell at the box's size, so touch
-   and pointer input land on it; it is transparent so the box shows through. */
+/* As in Spectrum CSS, the transparent native input covers the whole row, so
+   the box, the gap, and the label are one pointer target. */
 .swc-Checkbox-input {
+  position: absolute;
+  inset: 0;
   z-index: 1;
-  grid-area: box;
-  inline-size: var(--_swc-checkbox-control-size);
-  block-size: var(--_swc-checkbox-control-size);
+  inline-size: 100%;
+  block-size: 100%;
   padding: 0;
   margin: 0;
-  margin-block-start: var(--_swc-checkbox-control-offset);
   font: inherit;
   opacity: 0;
 }
@@ -91,6 +92,7 @@
   block-size: var(--_swc-checkbox-control-size);
   margin-block-start: var(--_swc-checkbox-control-offset);
   border-radius: var(--swc-checkbox-corner-radius, token("corner-radius-small-size-medium"));
+  transition-timing-function: token("animation-ease-in-out");
   transition-duration: token("animation-duration-100");
   transition-property: transform;
 
@@ -102,6 +104,7 @@
     border: token("border-width-200") solid var(--_swc-checkbox-border-color);
     border-radius: inherit;
     content: "";
+    transition-timing-function: token("animation-ease-in-out");
     transition-duration: token("animation-duration-100");
     transition-property: border-color, border-width;
   }
@@ -114,7 +117,7 @@
   position: absolute;
   opacity: 0;
   transform: scale(0);
-  transition-timing-function: ease-in-out;
+  transition-timing-function: token("animation-ease-in-out");
   transition-duration: token("animation-duration-100");
   transition-property: opacity, transform;
 }
@@ -125,8 +128,10 @@
   grid-area: label;
   margin-block-end: 0;
   margin-inline-start: var(--swc-checkbox-text-to-control, token("form-item-gap-medium"));
+  font-style: token("default-font-style");
   color: inherit;
   text-align: start;
+  transition-timing-function: token("animation-ease-in-out");
   transition-duration: token("animation-duration-100");
   transition-property: color;
 }

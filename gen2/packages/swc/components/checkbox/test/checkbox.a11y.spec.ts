@@ -378,13 +378,35 @@ test.describe('Checkbox - Pointer input', () => {
     const checkbox = root.locator('swc-checkbox');
     const label = checkbox.locator('[slot="label"]');
 
-    await label.click();
+    // The transparent input covers the label, so a click at the label's
+    // position lands on the input; force skips the actionability check that
+    // reports it as covered.
+    await label.click({ force: true });
     await expect(checkbox).toHaveJSProperty('checked', true);
     await expect(root).toMatchAriaSnapshot(`
       - checkbox "Send me product updates" [checked]
     `);
-    await label.click();
+    await label.click({ force: true });
     await expect(checkbox).toHaveJSProperty('checked', false);
+  });
+
+  test('clicking the gap between the box and the label toggles the checkbox', async ({
+    page,
+  }) => {
+    const root = await gotoStory(page, PLAYGROUND, 'swc-checkbox');
+    const checkbox = root.locator('swc-checkbox');
+    const box = await checkbox.locator('.swc-Checkbox-box').boundingBox();
+    const label = await checkbox.locator('[slot="label"]').boundingBox();
+    if (!box || !label) {
+      throw new Error('checkbox box or label has no layout');
+    }
+
+    await page.mouse.click(
+      (box.x + box.width + label.x) / 2,
+      box.y + box.height / 2
+    );
+
+    await expect(checkbox).toHaveJSProperty('checked', true);
   });
 
   test('clicking the label of a read-only checkbox does not toggle it', async ({
@@ -397,7 +419,7 @@ test.describe('Checkbox - Pointer input', () => {
       await element.updateComplete;
     });
 
-    await checkbox.locator('[slot="label"]').click();
+    await checkbox.locator('[slot="label"]').click({ force: true });
 
     await expect(checkbox).toHaveJSProperty('checked', false);
     await expect(checkbox.locator('input')).not.toBeChecked();

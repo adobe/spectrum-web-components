@@ -757,12 +757,18 @@ export const BoxLayoutTest: Story = {
       }
     );
 
-    await step('the input covers only the box when the label wraps', () => {
-      const box = boxOf(wrapped);
-      const input = inputOf(wrapped).getBoundingClientRect();
-      expect(input.height).toBe(box.height);
-      expect(input.top).toBe(box.top);
-    });
+    await step(
+      'the input covers the box, the gap, and the wrapped label',
+      () => {
+        // As in Spectrum CSS, the whole row is one pointer target.
+        const row = wrapped.shadowRoot
+          ?.querySelector('.swc-Checkbox-control')
+          ?.getBoundingClientRect();
+        const input = inputOf(wrapped).getBoundingClientRect();
+        expect(input.toJSON()).toEqual(row?.toJSON());
+        expect(input.height).toBeGreaterThan(boxOf(wrapped).height);
+      }
+    );
 
     await step('without a visible label, the box has no offset', () => {
       const box = boxOf(unlabeled);
