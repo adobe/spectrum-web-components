@@ -58,6 +58,7 @@
     "content"
     "footer";
   grid-template-rows: var(--_swc-card-base-grid-template-rows);
+  grid-template-columns: minmax(0, 1fr);
   align-items: start;
   font-size: var(--_swc-card-base-title-font-size);
   line-height: var(--_swc-card-base-title-line-height);

@@ -1,0 +1,44 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
+import * as Stories from './stories/card-view-waterfall-advance.stories';
+
+<Meta of={Stories} />
+
+<DocsHeader />
+
+## Anatomy
+
+`swc-card-view-waterfall-advance` places equal-width, variable-height cards left to right across the available columns before returning to the first column. In a three-column LTR layout, the sequence is 1, 2, 3, then 4, 5, 6, then 7, 8, 9. Each card contains a photo, selection checkbox, title action, description, and Share action. The Playground contains 50 cards.
+
+Unlike masonry's adaptive rows, waterfall columns stack independently: each card sits below the previous card in its assigned column, so the tops of cards in later groups need not align. In the example above, the first column contains 1, 4, 7; the second 2, 5, 8; and the third 3, 6, 9. Placement does not choose the shortest column or fill an entire column before moving across. RTL mirrors placement from the inline start, while DOM collection order stays unchanged through direction and viewport changes. One semantic row contains every gridcell.
+
+## Behaviors
+
+### Playground
+
+<kbd>ArrowRight</kbd> moves to the next enabled collection item;
+<kbd>ArrowLeft</kbd> moves to the previous, wrapping at both ends, including in
+RTL. <kbd>ArrowDown</kbd> moves down the current visual column. At its bottom,
+it advances to the first enabled card in the next column. <kbd>ArrowUp</kbd>
+moves up the column; at its top, it retreats to the last enabled card in the
+previous column. Vertical navigation skips disabled cards and empty columns, and
+wraps between the last and first columns at the collection boundary. RTL mirrors
+the columns while preserving their layout order. <kbd>Home</kbd> and
+<kbd>End</kbd> reach the first and last enabled cards in collection order.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## Accessibility
+
+Cell names use "x of y, title." Explicit ARIA row/column indices and counts are omitted. These labels do not establish native positional announcements; verify spoken output with real screen readers and browsers.
+
+With direct gridcell focus, the visually hidden instruction "tab for more info" is exposed. <kbd>Tab</kbd> reveals the card's contents before focusing its first enabled control. Further <kbd>Tab</kbd> and <kbd>Shift</kbd> + <kbd>Tab</kbd> presses follow normal control order. Leaving the card's descendants hides its contents again. Pointer or programmatic focus on a control also exposes its card.
+
+<kbd>Space</kbd> toggles selection and <kbd>Enter</kbd> opens the active card.
+Selection, disclosure, and activation remain separate. Test horizontal
+collection-order cycling, vertical column traversal and transitions, disabled
+cards and columns, reverse traversal, RTL, resizing, and access to details on
+touch devices. This prototype does not establish accessibility conformance.
+
+<DocsFooter />

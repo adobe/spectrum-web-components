@@ -42,7 +42,7 @@
 
 This doc describes how **`swc-grid`** should behave for **accessibility** in gen2, targeting **WCAG 2.2 Level AA**. **`swc-grid`** is a **virtualized layout grid** host (successor to 1st-gen **`sp-grid`** in [`1st-gen/tools/grid`](../../../../1st-gen/tools/grid/)) used to present **many focusable items** in rows and columns with **arrow-key** navigation. The primary product consumer is planned **`swc-card-view`**, modeled on [React Spectrum CardView](https://react-spectrum.adobe.com/CardView) (collections of cards, selection, async **loading**, bulk actions). There is **no** Spectrum 2 Figma file for **`swc-grid`** at planning time—semantics follow the [APG Grid pattern](https://www.w3.org/WAI/ARIA/apg/patterns/grid/) and [Data Grid Examples](https://www.w3.org/WAI/ARIA/apg/patterns/grid/examples/data-grids/).
 
-**gen2 direction:** Prescribed host **`role="grid"`** with **roving** **`tabindex`** on **cells** (or **rows**, per layout contract), implemented with **`FocusgroupNavigationController`** and **`direction: 'grid'`** ([Focus management](../../../01_contributor-guides/14_focus-management.md))—**not** 1st-gen **`RovingTabindexController`**. **Virtualization** must keep **logical** row/column position and **focus** stable when items mount and unmount. **Layout** styling (**gap**, **item size**, **grid** vs **waterfall**) is visual only and must not replace grid **roles** or **keyboard** contracts.
+**gen2 direction:** Prescribed host **`role="grid"`** with **roving** **`tabindex`** on **cells** (or **rows**, per layout contract), implemented with **`FocusgroupNavigationController`** and **`direction: 'grid'`** ([Focus management](../../../01_contributor-guides/14_focus-management.md))—**not** 1st-gen **`RovingTabindexController`**. **Virtualization** must keep **logical** row/column position and **focus** stable when items mount and unmount. **Layout** styling (**gap**, **item size**, **grid** vs **masonry**) is visual only and must not replace grid **roles** or **keyboard** contracts.
 
 ### Also read
 
@@ -82,7 +82,7 @@ Add **`gen2`** program tickets here when filed (**`swc-grid`**, **`swc-card-view
 
 - [Grid pattern](https://www.w3.org/WAI/ARIA/apg/patterns/grid/) — composite **2D** navigation; host uses **roving** **`tabindex`**; **grid** container is typically **not** focused—focus is on **cells** ([Managing focus with roving tabindex](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_roving_tabindex)).
 - [Data Grid Examples](https://www.w3.org/WAI/ARIA/apg/patterns/grid/examples/data-grids/) — target **keyboard** contract for **`swc-grid`** (**arrows**, **Home** / **End**, **Ctrl+Home** / **Ctrl+End**, **Page Up** / **Page Down** when virtualized scrolling applies).
-- [Layout Grid Examples](https://www.w3.org/WAI/ARIA/apg/patterns/grid/examples/layout-grids/) — secondary reference when **CardView** presents **widgets** in a **masonry** / **waterfall** layout rather than uniform **data** columns.
+- [Layout Grid Examples](https://www.w3.org/WAI/ARIA/apg/patterns/grid/examples/layout-grids/) — secondary reference when **CardView** presents **widgets** in a **masonry** / **masonry** layout rather than uniform **data** columns.
 - [React Spectrum CardView](https://react-spectrum.adobe.com/CardView) — product API reference (**`aria-label`**, **`selectionMode`**, **`loadingState`**, **`onLoadMore`**, **`renderEmptyState`**, **`renderActionBar`**); map behaviors onto **`swc-grid`** + sibling components.
 
 ### Guidelines that apply
@@ -136,7 +136,7 @@ No **`sp-grid`** / **Grid** component accessibility rows were available in the m
 | **Selection** | **`aria-multiselectable="true"`** when multiple selection is allowed; **`aria-selected`** on **rows** or **cells**; sync with **`selectedKeys`** / CardView selection API. |
 | **Disabled items** | **`disabledKeys`** / **`isDisabled`** on items → **`skipDisabled: true`** on **`FocusgroupNavigationController`**; expose **disabled** on the **cell** focus target. |
 | **Item naming** | Document that **`renderItem`** / **`swc-card`** must expose a **discernible name** (**`textValue`**, title text, **`aria-label`**)—decorative images **`alt=""`** when the name is elsewhere. |
-| **Layout props** | **`gap`**, **`itemSize`**, **`layout`** (**grid** / **waterfall**) are **visual** only—no ARIA **`orientation`** on the host unless product adds a documented **`aria-orientation`**. |
+| **Layout props** | **`gap`**, **`itemSize`**, **`layout`** (**grid** / **masonry**) are **visual** only—no ARIA **`orientation`** on the host unless product adds a documented **`aria-orientation`**. |
 | **Docs** | Storybook: labeled grid, **2D** arrows, **selection**, **virtualized** long list, **loading more**, **empty state**—link [Keyboard testing](../../../../gen2/packages/swc/.storybook/guides/accessibility-guides/keyboard_testing.mdx) and [Screen reader testing](../../../../gen2/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx). |
 
 ### Shadow DOM and cross-root ARIA Issues

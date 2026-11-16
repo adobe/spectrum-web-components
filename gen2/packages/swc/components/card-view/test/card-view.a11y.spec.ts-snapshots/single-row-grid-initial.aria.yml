@@ -1,0 +1,503 @@
+- grid "Photo library":
+    - row /\d+ items/:
+        - gridcell "Select Coastal light Coastal light Share Coastal light Coast collection · JPG":
+            - checkbox "Select Coastal light"
+            - button "Coastal light"
+            - button "Share Coastal light"
+            - text: ''
+        - gridcell "Select Afternoon portrait Afternoon portrait Share Afternoon portrait Portrait collection · JPG":
+            - checkbox "Select Afternoon portrait"
+            - button "Afternoon portrait"
+            - button "Share Afternoon portrait"
+            - text: ''
+        - gridcell "Select Mountain study Mountain study Share Mountain study Landscape collection · JPG":
+            - checkbox "Select Mountain study"
+            - button "Mountain study"
+            - button "Share Mountain study"
+            - text: ''
+        - gridcell "Select Along the shore Along the shore Share Along the shore Coast collection · JPG":
+            - checkbox "Select Along the shore"
+            - button "Along the shore"
+            - button "Share Along the shore"
+            - text: ''
+        - gridcell "Select Studio session Studio session Share Studio session Portrait collection · JPG":
+            - checkbox "Select Studio session"
+            - button "Studio session"
+            - button "Share Studio session"
+            - text: ''
+        - gridcell "Select Open horizon Open horizon Share Open horizon Landscape collection · JPG":
+            - checkbox "Select Open horizon"
+            - button "Open horizon"
+            - button "Share Open horizon"
+            - text: ''
+        - gridcell "Select Evening landscape Evening landscape Share Evening landscape Landscape collection · JPG":
+            - checkbox "Select Evening landscape"
+            - button "Evening landscape"
+            - button "Share Evening landscape"
+            - text: ''
+        - gridcell "Select Profile in daylight Profile in daylight Share Profile in daylight Portrait collection · JPG":
+            - checkbox "Select Profile in daylight"
+            - button "Profile in daylight"
+            - button "Share Profile in daylight"
+            - text: ''
+        - gridcell "Select Valley view Valley view Share Valley view Landscape collection · JPG":
+            - checkbox "Select Valley view"
+            - button "Valley view"
+            - button "Share Valley view"
+            - text: ''
+        - gridcell "Select Tideline Tideline Share Tideline Coast collection · JPG":
+            - checkbox "Select Tideline"
+            - button "Tideline"
+            - button "Share Tideline"
+            - text: ''
+        - gridcell "Select Portrait archive Portrait archive Share Portrait archive Portrait collection · JPG":
+            - checkbox "Select Portrait archive"
+            - button "Portrait archive"
+            - button "Share Portrait archive"
+            - text: ''
+        - gridcell "Select Summit Summit Share Summit Landscape collection · JPG":
+            - checkbox "Select Summit"
+            - button "Summit"
+            - button "Share Summit"
+            - text: ''
+        - gridcell "Select Coastal light 2 Coastal light 2 Share Coastal light 2 Coast collection · JPG":
+            - checkbox "Select Coastal light 2"
+            - button "Coastal light 2"
+            - button "Share Coastal light 2"
+            - text: ''
+        - gridcell "Select Afternoon portrait 2 Afternoon portrait 2 Share Afternoon portrait 2 Portrait collection · JPG":
+            - checkbox "Select Afternoon portrait 2"
+            - button "Afternoon portrait 2"
+            - button "Share Afternoon portrait 2"
+            - text: ''
+        - gridcell "Select Mountain study 2 Mountain study 2 Share Mountain study 2 Landscape collection · JPG":
+            - checkbox "Select Mountain study 2"
+            - button "Mountain study 2"
+            - button "Share Mountain study 2"
+            - text: ''
+        - gridcell "Select Along the shore 2 Along the shore 2 Share Along the shore 2 Coast collection · JPG":
+            - checkbox "Select Along the shore 2"
+            - button "Along the shore 2"
+            - button "Share Along the shore 2"
+            - text: ''
+        - gridcell "Select Studio session 2 Studio session 2 Share Studio session 2 Portrait collection · JPG":
+            - checkbox "Select Studio session 2"
+            - button "Studio session 2"
+            - button "Share Studio session 2"
+            - text: ''
+        - gridcell "Select Open horizon 2 Open horizon 2 Share Open horizon 2 Landscape collection · JPG":
+            - checkbox "Select Open horizon 2"
+            - button "Open horizon 2"
+            - button "Share Open horizon 2"
+            - text: ''
+        - gridcell "Select Evening landscape 2 Evening landscape 2 Share Evening landscape 2 Landscape collection · JPG":
+            - checkbox "Select Evening landscape 2"
+            - button "Evening landscape 2"
+            - button "Share Evening landscape 2"
+            - text: ''
+        - gridcell "Select Profile in daylight 2 Profile in daylight 2 Share Profile in daylight 2 Portrait collection · JPG":
+            - checkbox "Select Profile in daylight 2"
+            - button "Profile in daylight 2"
+            - button "Share Profile in daylight 2"
+            - text: ''
+        - gridcell "Select Valley view 2 Valley view 2 Share Valley view 2 Landscape collection · JPG":
+            - checkbox "Select Valley view 2"
+            - button "Valley view 2"
+            - button "Share Valley view 2"
+            - text: ''
+        - gridcell "Select Tideline 2 Tideline 2 Share Tideline 2 Coast collection · JPG":
+            - checkbox "Select Tideline 2"
+            - button "Tideline 2"
+            - button "Share Tideline 2"
+            - text: ''
+        - gridcell "Select Portrait archive 2 Portrait archive 2 Share Portrait archive 2 Portrait collection · JPG":
+            - checkbox "Select Portrait archive 2"
+            - button "Portrait archive 2"
+            - button "Share Portrait archive 2"
+            - text: ''
+        - gridcell "Select Summit 2 Summit 2 Share Summit 2 Landscape collection · JPG":
+            - checkbox "Select Summit 2"
+            - button "Summit 2"
+            - button "Share Summit 2"
+            - text: ''
+        - gridcell "Select Coastal light 3 Coastal light 3 Share Coastal light 3 Coast collection · JPG":
+            - checkbox "Select Coastal light 3"
+            - button "Coastal light 3"
+            - button "Share Coastal light 3"
+            - text: ''
+        - gridcell "Select Afternoon portrait 3 Afternoon portrait 3 Share Afternoon portrait 3 Portrait collection · JPG":
+            - checkbox "Select Afternoon portrait 3"
+            - button "Afternoon portrait 3"
+            - button "Share Afternoon portrait 3"
+            - text: ''
+        - gridcell "Select Mountain study 3 Mountain study 3 Share Mountain study 3 Landscape collection · JPG":
+            - checkbox "Select Mountain study 3"
+            - button "Mountain study 3"
+            - button "Share Mountain study 3"
+            - text: ''
+        - gridcell "Select Along the shore 3 Along the shore 3 Share Along the shore 3 Coast collection · JPG":
+            - checkbox "Select Along the shore 3"
+            - button "Along the shore 3"
+            - button "Share Along the shore 3"
+            - text: ''
+        - gridcell "Select Studio session 3 Studio session 3 Share Studio session 3 Portrait collection · JPG":
+            - checkbox "Select Studio session 3"
+            - button "Studio session 3"
+            - button "Share Studio session 3"
+            - text: ''
+        - gridcell "Select Open horizon 3 Open horizon 3 Share Open horizon 3 Landscape collection · JPG":
+            - checkbox "Select Open horizon 3"
+            - button "Open horizon 3"
+            - button "Share Open horizon 3"
+            - text: ''
+        - gridcell "Select Evening landscape 3 Evening landscape 3 Share Evening landscape 3 Landscape collection · JPG":
+            - checkbox "Select Evening landscape 3"
+            - button "Evening landscape 3"
+            - button "Share Evening landscape 3"
+            - text: ''
+        - gridcell "Select Profile in daylight 3 Profile in daylight 3 Share Profile in daylight 3 Portrait collection · JPG":
+            - checkbox "Select Profile in daylight 3"
+            - button "Profile in daylight 3"
+            - button "Share Profile in daylight 3"
+            - text: ''
+        - gridcell "Select Valley view 3 Valley view 3 Share Valley view 3 Landscape collection · JPG":
+            - checkbox "Select Valley view 3"
+            - button "Valley view 3"
+            - button "Share Valley view 3"
+            - text: ''
+        - gridcell "Select Tideline 3 Tideline 3 Share Tideline 3 Coast collection · JPG":
+            - checkbox "Select Tideline 3"
+            - button "Tideline 3"
+            - button "Share Tideline 3"
+            - text: ''
+        - gridcell "Select Portrait archive 3 Portrait archive 3 Share Portrait archive 3 Portrait collection · JPG":
+            - checkbox "Select Portrait archive 3"
+            - button "Portrait archive 3"
+            - button "Share Portrait archive 3"
+            - text: ''
+        - gridcell "Select Summit 3 Summit 3 Share Summit 3 Landscape collection · JPG":
+            - checkbox "Select Summit 3"
+            - button "Summit 3"
+            - button "Share Summit 3"
+            - text: ''
+        - gridcell "Select Coastal light 4 Coastal light 4 Share Coastal light 4 Coast collection · JPG":
+            - checkbox "Select Coastal light 4"
+            - button "Coastal light 4"
+            - button "Share Coastal light 4"
+            - text: ''
+        - gridcell "Select Afternoon portrait 4 Afternoon portrait 4 Share Afternoon portrait 4 Portrait collection · JPG":
+            - checkbox "Select Afternoon portrait 4"
+            - button "Afternoon portrait 4"
+            - button "Share Afternoon portrait 4"
+            - text: ''
+        - gridcell "Select Mountain study 4 Mountain study 4 Share Mountain study 4 Landscape collection · JPG":
+            - checkbox "Select Mountain study 4"
+            - button "Mountain study 4"
+            - button "Share Mountain study 4"
+            - text: ''
+        - gridcell "Select Along the shore 4 Along the shore 4 Share Along the shore 4 Coast collection · JPG":
+            - checkbox "Select Along the shore 4"
+            - button "Along the shore 4"
+            - button "Share Along the shore 4"
+            - text: ''
+        - gridcell "Select Studio session 4 Studio session 4 Share Studio session 4 Portrait collection · JPG":
+            - checkbox "Select Studio session 4"
+            - button "Studio session 4"
+            - button "Share Studio session 4"
+            - text: ''
+        - gridcell "Select Open horizon 4 Open horizon 4 Share Open horizon 4 Landscape collection · JPG":
+            - checkbox "Select Open horizon 4"
+            - button "Open horizon 4"
+            - button "Share Open horizon 4"
+            - text: ''
+        - gridcell "Select Evening landscape 4 Evening landscape 4 Share Evening landscape 4 Landscape collection · JPG":
+            - checkbox "Select Evening landscape 4"
+            - button "Evening landscape 4"
+            - button "Share Evening landscape 4"
+            - text: ''
+        - gridcell "Select Profile in daylight 4 Profile in daylight 4 Share Profile in daylight 4 Portrait collection · JPG":
+            - checkbox "Select Profile in daylight 4"
+            - button "Profile in daylight 4"
+            - button "Share Profile in daylight 4"
+            - text: ''
+        - gridcell "Select Valley view 4 Valley view 4 Share Valley view 4 Landscape collection · JPG":
+            - checkbox "Select Valley view 4"
+            - button "Valley view 4"
+            - button "Share Valley view 4"
+            - text: ''
+        - gridcell "Select Tideline 4 Tideline 4 Share Tideline 4 Coast collection · JPG":
+            - checkbox "Select Tideline 4"
+            - button "Tideline 4"
+            - button "Share Tideline 4"
+            - text: ''
+        - gridcell "Select Portrait archive 4 Portrait archive 4 Share Portrait archive 4 Portrait collection · JPG":
+            - checkbox "Select Portrait archive 4"
+            - button "Portrait archive 4"
+            - button "Share Portrait archive 4"
+            - text: ''
+        - gridcell "Select Summit 4 Summit 4 Share Summit 4 Landscape collection · JPG":
+            - checkbox "Select Summit 4"
+            - button "Summit 4"
+            - button "Share Summit 4"
+            - text: ''
+        - gridcell "Select Coastal light 5 Coastal light 5 Share Coastal light 5 Coast collection · JPG":
+            - checkbox "Select Coastal light 5"
+            - button "Coastal light 5"
+            - button "Share Coastal light 5"
+            - text: ''
+        - gridcell "Select Afternoon portrait 5 Afternoon portrait 5 Share Afternoon portrait 5 Portrait collection · JPG":
+            - checkbox "Select Afternoon portrait 5"
+            - button "Afternoon portrait 5"
+            - button "Share Afternoon portrait 5"
+            - text: ''
+        - gridcell "Select Mountain study 5 Mountain study 5 Share Mountain study 5 Landscape collection · JPG":
+            - checkbox "Select Mountain study 5"
+            - button "Mountain study 5"
+            - button "Share Mountain study 5"
+            - text: ''
+        - gridcell "Select Along the shore 5 Along the shore 5 Share Along the shore 5 Coast collection · JPG":
+            - checkbox "Select Along the shore 5"
+            - button "Along the shore 5"
+            - button "Share Along the shore 5"
+            - text: ''
+        - gridcell "Select Studio session 5 Studio session 5 Share Studio session 5 Portrait collection · JPG":
+            - checkbox "Select Studio session 5"
+            - button "Studio session 5"
+            - button "Share Studio session 5"
+            - text: ''
+        - gridcell "Select Open horizon 5 Open horizon 5 Share Open horizon 5 Landscape collection · JPG":
+            - checkbox "Select Open horizon 5"
+            - button "Open horizon 5"
+            - button "Share Open horizon 5"
+            - text: ''
+        - gridcell "Select Evening landscape 5 Evening landscape 5 Share Evening landscape 5 Landscape collection · JPG":
+            - checkbox "Select Evening landscape 5"
+            - button "Evening landscape 5"
+            - button "Share Evening landscape 5"
+            - text: ''
+        - gridcell "Select Profile in daylight 5 Profile in daylight 5 Share Profile in daylight 5 Portrait collection · JPG":
+            - checkbox "Select Profile in daylight 5"
+            - button "Profile in daylight 5"
+            - button "Share Profile in daylight 5"
+            - text: ''
+        - gridcell "Select Valley view 5 Valley view 5 Share Valley view 5 Landscape collection · JPG":
+            - checkbox "Select Valley view 5"
+            - button "Valley view 5"
+            - button "Share Valley view 5"
+            - text: ''
+        - gridcell "Select Tideline 5 Tideline 5 Share Tideline 5 Coast collection · JPG":
+            - checkbox "Select Tideline 5"
+            - button "Tideline 5"
+            - button "Share Tideline 5"
+            - text: ''
+        - gridcell "Select Portrait archive 5 Portrait archive 5 Share Portrait archive 5 Portrait collection · JPG":
+            - checkbox "Select Portrait archive 5"
+            - button "Portrait archive 5"
+            - button "Share Portrait archive 5"
+            - text: ''
+        - gridcell "Select Summit 5 Summit 5 Share Summit 5 Landscape collection · JPG":
+            - checkbox "Select Summit 5"
+            - button "Summit 5"
+            - button "Share Summit 5"
+            - text: ''
+        - gridcell "Select Coastal light 6 Coastal light 6 Share Coastal light 6 Coast collection · JPG":
+            - checkbox "Select Coastal light 6"
+            - button "Coastal light 6"
+            - button "Share Coastal light 6"
+            - text: ''
+        - gridcell "Select Afternoon portrait 6 Afternoon portrait 6 Share Afternoon portrait 6 Portrait collection · JPG":
+            - checkbox "Select Afternoon portrait 6"
+            - button "Afternoon portrait 6"
+            - button "Share Afternoon portrait 6"
+            - text: ''
+        - gridcell "Select Mountain study 6 Mountain study 6 Share Mountain study 6 Landscape collection · JPG":
+            - checkbox "Select Mountain study 6"
+            - button "Mountain study 6"
+            - button "Share Mountain study 6"
+            - text: ''
+        - gridcell "Select Along the shore 6 Along the shore 6 Share Along the shore 6 Coast collection · JPG":
+            - checkbox "Select Along the shore 6"
+            - button "Along the shore 6"
+            - button "Share Along the shore 6"
+            - text: ''
+        - gridcell "Select Studio session 6 Studio session 6 Share Studio session 6 Portrait collection · JPG":
+            - checkbox "Select Studio session 6"
+            - button "Studio session 6"
+            - button "Share Studio session 6"
+            - text: ''
+        - gridcell "Select Open horizon 6 Open horizon 6 Share Open horizon 6 Landscape collection · JPG":
+            - checkbox "Select Open horizon 6"
+            - button "Open horizon 6"
+            - button "Share Open horizon 6"
+            - text: ''
+        - gridcell "Select Evening landscape 6 Evening landscape 6 Share Evening landscape 6 Landscape collection · JPG":
+            - checkbox "Select Evening landscape 6"
+            - button "Evening landscape 6"
+            - button "Share Evening landscape 6"
+            - text: ''
+        - gridcell "Select Profile in daylight 6 Profile in daylight 6 Share Profile in daylight 6 Portrait collection · JPG":
+            - checkbox "Select Profile in daylight 6"
+            - button "Profile in daylight 6"
+            - button "Share Profile in daylight 6"
+            - text: ''
+        - gridcell "Select Valley view 6 Valley view 6 Share Valley view 6 Landscape collection · JPG":
+            - checkbox "Select Valley view 6"
+            - button "Valley view 6"
+            - button "Share Valley view 6"
+            - text: ''
+        - gridcell "Select Tideline 6 Tideline 6 Share Tideline 6 Coast collection · JPG":
+            - checkbox "Select Tideline 6"
+            - button "Tideline 6"
+            - button "Share Tideline 6"
+            - text: ''
+        - gridcell "Select Portrait archive 6 Portrait archive 6 Share Portrait archive 6 Portrait collection · JPG":
+            - checkbox "Select Portrait archive 6"
+            - button "Portrait archive 6"
+            - button "Share Portrait archive 6"
+            - text: ''
+        - gridcell "Select Summit 6 Summit 6 Share Summit 6 Landscape collection · JPG":
+            - checkbox "Select Summit 6"
+            - button "Summit 6"
+            - button "Share Summit 6"
+            - text: ''
+        - gridcell "Select Coastal light 7 Coastal light 7 Share Coastal light 7 Coast collection · JPG":
+            - checkbox "Select Coastal light 7"
+            - button "Coastal light 7"
+            - button "Share Coastal light 7"
+            - text: ''
+        - gridcell "Select Afternoon portrait 7 Afternoon portrait 7 Share Afternoon portrait 7 Portrait collection · JPG":
+            - checkbox "Select Afternoon portrait 7"
+            - button "Afternoon portrait 7"
+            - button "Share Afternoon portrait 7"
+            - text: ''
+        - gridcell "Select Mountain study 7 Mountain study 7 Share Mountain study 7 Landscape collection · JPG":
+            - checkbox "Select Mountain study 7"
+            - button "Mountain study 7"
+            - button "Share Mountain study 7"
+            - text: ''
+        - gridcell "Select Along the shore 7 Along the shore 7 Share Along the shore 7 Coast collection · JPG":
+            - checkbox "Select Along the shore 7"
+            - button "Along the shore 7"
+            - button "Share Along the shore 7"
+            - text: ''
+        - gridcell "Select Studio session 7 Studio session 7 Share Studio session 7 Portrait collection · JPG":
+            - checkbox "Select Studio session 7"
+            - button "Studio session 7"
+            - button "Share Studio session 7"
+            - text: ''
+        - gridcell "Select Open horizon 7 Open horizon 7 Share Open horizon 7 Landscape collection · JPG":
+            - checkbox "Select Open horizon 7"
+            - button "Open horizon 7"
+            - button "Share Open horizon 7"
+            - text: ''
+        - gridcell "Select Evening landscape 7 Evening landscape 7 Share Evening landscape 7 Landscape collection · JPG":
+            - checkbox "Select Evening landscape 7"
+            - button "Evening landscape 7"
+            - button "Share Evening landscape 7"
+            - text: ''
+        - gridcell "Select Profile in daylight 7 Profile in daylight 7 Share Profile in daylight 7 Portrait collection · JPG":
+            - checkbox "Select Profile in daylight 7"
+            - button "Profile in daylight 7"
+            - button "Share Profile in daylight 7"
+            - text: ''
+        - gridcell "Select Valley view 7 Valley view 7 Share Valley view 7 Landscape collection · JPG":
+            - checkbox "Select Valley view 7"
+            - button "Valley view 7"
+            - button "Share Valley view 7"
+            - text: ''
+        - gridcell "Select Tideline 7 Tideline 7 Share Tideline 7 Coast collection · JPG":
+            - checkbox "Select Tideline 7"
+            - button "Tideline 7"
+            - button "Share Tideline 7"
+            - text: ''
+        - gridcell "Select Portrait archive 7 Portrait archive 7 Share Portrait archive 7 Portrait collection · JPG":
+            - checkbox "Select Portrait archive 7"
+            - button "Portrait archive 7"
+            - button "Share Portrait archive 7"
+            - text: ''
+        - gridcell "Select Summit 7 Summit 7 Share Summit 7 Landscape collection · JPG":
+            - checkbox "Select Summit 7"
+            - button "Summit 7"
+            - button "Share Summit 7"
+            - text: ''
+        - gridcell "Select Coastal light 8 Coastal light 8 Share Coastal light 8 Coast collection · JPG":
+            - checkbox "Select Coastal light 8"
+            - button "Coastal light 8"
+            - button "Share Coastal light 8"
+            - text: ''
+        - gridcell "Select Afternoon portrait 8 Afternoon portrait 8 Share Afternoon portrait 8 Portrait collection · JPG":
+            - checkbox "Select Afternoon portrait 8"
+            - button "Afternoon portrait 8"
+            - button "Share Afternoon portrait 8"
+            - text: ''
+        - gridcell "Select Mountain study 8 Mountain study 8 Share Mountain study 8 Landscape collection · JPG":
+            - checkbox "Select Mountain study 8"
+            - button "Mountain study 8"
+            - button "Share Mountain study 8"
+            - text: ''
+        - gridcell "Select Along the shore 8 Along the shore 8 Share Along the shore 8 Coast collection · JPG":
+            - checkbox "Select Along the shore 8"
+            - button "Along the shore 8"
+            - button "Share Along the shore 8"
+            - text: ''
+        - gridcell "Select Studio session 8 Studio session 8 Share Studio session 8 Portrait collection · JPG":
+            - checkbox "Select Studio session 8"
+            - button "Studio session 8"
+            - button "Share Studio session 8"
+            - text: ''
+        - gridcell "Select Open horizon 8 Open horizon 8 Share Open horizon 8 Landscape collection · JPG":
+            - checkbox "Select Open horizon 8"
+            - button "Open horizon 8"
+            - button "Share Open horizon 8"
+            - text: ''
+        - gridcell "Select Evening landscape 8 Evening landscape 8 Share Evening landscape 8 Landscape collection · JPG":
+            - checkbox "Select Evening landscape 8"
+            - button "Evening landscape 8"
+            - button "Share Evening landscape 8"
+            - text: ''
+        - gridcell "Select Profile in daylight 8 Profile in daylight 8 Share Profile in daylight 8 Portrait collection · JPG":
+            - checkbox "Select Profile in daylight 8"
+            - button "Profile in daylight 8"
+            - button "Share Profile in daylight 8"
+            - text: ''
+        - gridcell "Select Valley view 8 Valley view 8 Share Valley view 8 Landscape collection · JPG":
+            - checkbox "Select Valley view 8"
+            - button "Valley view 8"
+            - button "Share Valley view 8"
+            - text: ''
+        - gridcell "Select Tideline 8 Tideline 8 Share Tideline 8 Coast collection · JPG":
+            - checkbox "Select Tideline 8"
+            - button "Tideline 8"
+            - button "Share Tideline 8"
+            - text: ''
+        - gridcell "Select Portrait archive 8 Portrait archive 8 Share Portrait archive 8 Portrait collection · JPG":
+            - checkbox "Select Portrait archive 8"
+            - button "Portrait archive 8"
+            - button "Share Portrait archive 8"
+            - text: ''
+        - gridcell "Select Summit 8 Summit 8 Share Summit 8 Landscape collection · JPG":
+            - checkbox "Select Summit 8"
+            - button "Summit 8"
+            - button "Share Summit 8"
+            - text: ''
+        - gridcell "Select Coastal light 9 Coastal light 9 Share Coastal light 9 Coast collection · JPG":
+            - checkbox "Select Coastal light 9"
+            - button "Coastal light 9"
+            - button "Share Coastal light 9"
+            - text: ''
+        - gridcell "Select Afternoon portrait 9 Afternoon portrait 9 Share Afternoon portrait 9 Portrait collection · JPG":
+            - checkbox "Select Afternoon portrait 9"
+            - button "Afternoon portrait 9"
+            - button "Share Afternoon portrait 9"
+            - text: ''
+        - gridcell "Select Mountain study 9 Mountain study 9 Share Mountain study 9 Landscape collection · JPG":
+            - checkbox "Select Mountain study 9"
+            - button "Mountain study 9"
+            - button "Share Mountain study 9"
+            - text: ''
+        - gridcell "Select Along the shore 9 Along the shore 9 Share Along the shore 9 Coast collection · JPG":
+            - checkbox "Select Along the shore 9"
+            - button "Along the shore 9"
+            - button "Share Along the shore 9"
+            - text: ''
+- status

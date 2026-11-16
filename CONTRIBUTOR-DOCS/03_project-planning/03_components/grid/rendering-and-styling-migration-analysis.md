@@ -33,7 +33,7 @@ This doc will capture **rendering**, **layout**, **virtualization**, and **styli
 
 | Area | Direction |
 | --- | --- |
-| **Layout** | Configurable **gap**, **padding**, **item size**, and layout modes (for example fixed **grid** vs **waterfall** for CardView). |
+| **Layout** | Configurable **gap**, **padding**, **item size**, and layout modes (for example fixed **grid** vs **masonry** for CardView). |
 | **Virtualization** | **`lit-virtualizer`** (or successor) so only visible items (+ buffer) mount in the DOM. |
 | **Keyboard** | **`FocusgroupNavigationController`** on the host—**not** 1st-gen **`RovingTabindexController`** ([Focus management](../../../01_contributor-guides/14_focus-management.md)). |
 | **1st-gen API** | **`items`**, **`renderItem`**, **`selected`**, **`focusableSelector`**, **`itemSize`**, **`gap`**—reshape for gen2 collections and **`swc-card`** slotted content. |

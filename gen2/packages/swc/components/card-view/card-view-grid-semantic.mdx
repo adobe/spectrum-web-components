@@ -1,0 +1,31 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
+import * as Stories from './stories/card-view-grid-semantic.stories';
+
+<Meta of={Stories} />
+
+<DocsHeader />
+
+## Anatomy
+
+`swc-card-view-grid-semantic` places 50 cards in uniform visual rows. Each card contains a Picsum photo, selection checkbox, primary action, and Share action. The collection exposes one semantic row and 50 gridcells, each with a stable collection-order column index.
+
+## Behaviors
+
+### Playground
+
+<kbd>ArrowRight</kbd> and <kbd>ArrowDown</kbd> move to the next enabled semantic
+item. <kbd>ArrowLeft</kbd> and <kbd>ArrowUp</kbd> move to the previous enabled
+semantic item. This mapping is independent of geometry and directionality.
+Traversal cycles through the whole collection at either end.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## Accessibility
+
+We recommend a single-row grid for collection-position feedback such as "x of y." The row count, column count, and one-based column indices describe the semantic collection, not the responsive visual grid. Spoken announcements still require screen reader and browser testing.
+
+Sequential traversal visits every enabled item and follows the one-dimensional semantic model. The open question is whether sighted users expect vertical arrows to move to the card visually above or below instead. Compare that experience with the three spatial policies. <kbd>Home</kbd> and <kbd>End</kbd> reach collection boundaries; <kbd>Space</kbd> toggles selection and <kbd>Enter</kbd> opens the active card.
+
+<DocsFooter />
