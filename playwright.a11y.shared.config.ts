@@ -50,8 +50,10 @@ export const gen2A11yProject: PlaywrightTestProject = {
   testDir: './gen2/',
   testMatch: [
     '**/packages/swc/components/*/test/**/*.a11y.spec.ts',
+    // Ungrouped patterns, such as Forms.
     '**/packages/swc/patterns/*/test/**/*.a11y.spec.ts',
-    '**/packages/swc/patterns/**/test/**/*.a11y.spec.ts',
+    // Grouped patterns, such as AI Toolkit.
+    '**/packages/swc/patterns/*/*/test/**/*.a11y.spec.ts',
     '**/packages/icons/test/**/*.a11y.spec.ts',
   ],
   use: {
