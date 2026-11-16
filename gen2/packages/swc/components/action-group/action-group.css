@@ -13,7 +13,8 @@
 /* ── Host ─────────────────────────────────────────── */
 
 :host {
-  display: inline-flex;
+  display: block;
+  block-size: fit-content;
 }
 
 * {
