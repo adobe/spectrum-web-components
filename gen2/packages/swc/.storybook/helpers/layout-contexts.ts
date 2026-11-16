@@ -15,6 +15,7 @@ import { html, nothing, type TemplateResult } from 'lit';
 import { row } from './vrt.js';
 
 export type LayoutContextId =
+  | 'block-flow'
   | 'flex-row-center'
   | 'flex-column-center'
   | 'grid-place-items'
@@ -45,6 +46,12 @@ const SIBLING_TALL_FIXED = `${SIBLING_TALL} flex: none;`;
 // SWC-2723 for why overlapping cases (fixed-height parent vs. taller sibling,
 // align-self: stretch vs. the default) are not listed separately.
 export const LAYOUT_CONTEXTS: readonly LayoutContext[] = [
+  {
+    id: 'block-flow',
+    label: 'Block flow (reference)',
+    description: 'Plain block parent, for comparison with the other contexts.',
+    containerStyle: 'inline-size: 200px;',
+  },
   {
     id: 'flex-row-center',
     label: 'Flex row, centered',

@@ -43,6 +43,11 @@
   min-inline-size: 100%;
 }
 
+/* Vertical groups stretch their buttons to a common width. */
+:host([orientation="vertical"]) ::slotted(*) {
+  inline-size: unset;
+}
+
 /* ── Sizes ────────────────────────────────────────── */
 
 :host([size="xs"]) {
