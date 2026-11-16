@@ -75,6 +75,7 @@ export abstract class ToastContainerBase extends SpectrumElement {
   private _closingToast?: ToastBase;
   private _focusWithin = false;
   private _lastFocused?: HTMLElement;
+  // True when the last input in the region was a pointer, which decides where focus goes when the front changes.
   private _pointerInput = false;
   private _focusFrontOnOpen = false;
 
@@ -261,8 +262,10 @@ export abstract class ToastContainerBase extends SpectrumElement {
 
   private readonly handleQueueChange = (): void => {
     const key = this.frontEntry?.key;
+    // An add always lands at the front, so every add changes the front key. Only removing a non-front entry skips this block.
     if (key !== this._frontKey) {
       const active = getActiveElement(this.ownerDocument);
+      // The queue emptied while focus was in the region (or fell to body when its toast left the DOM): return focus to where it was before the region.
       if (
         !key &&
         this._focusWithin &&
@@ -271,8 +274,10 @@ export abstract class ToastContainerBase extends SpectrumElement {
       ) {
         this._lastFocused.focus({ preventScroll: true });
       }
+      // The old toast's timer never carries over; openToast() starts the new one.
       this.countdown.stop();
       if (!key) {
+        // Clear all focus and pause state so none of it leaks into the next toast.
         this._focusWithin = false;
         this._pointerInput = false;
         this._focusFrontOnOpen = false;
@@ -283,8 +288,10 @@ export abstract class ToastContainerBase extends SpectrumElement {
         this._focusWithin &&
         (deepContains(this, active) || active === this.ownerDocument.body)
       ) {
+        // The focused toast was replaced at the front, so keep focus in the region.
         this.moveFocusForNewFront();
       }
+      // The new front toast registers itself in updated().
       this._unregisterToast?.();
       this._unregisterToast = undefined;
       this._frontKey = key;

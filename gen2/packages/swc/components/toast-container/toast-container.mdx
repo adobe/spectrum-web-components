@@ -97,6 +97,8 @@ When the focused toast closes and others remain, focus depends on how the user c
 - With the keyboard, focus moves to the toast that takes its place.
 - With a pointer, focus returns to the element that was focused before the user entered the region, so the new front toast's timer is not left paused.
 
+The same rules apply when a new toast is added in front of the focused one.
+
 ### Restoring toasts
 
 The queue lives in memory, so it is empty after a page load. If your app reloads, navigates to another page, or signs a user in, rebuild the toasts you still want to show.
@@ -153,7 +155,7 @@ Long messages wrap within the toast's maximum width. When the toast has an actio
 
 ### Focus
 
-Opening a toast does not move focus. When the last toast closes while focus is inside the region, focus returns to the element that had it before the user entered the region. If focus has already moved elsewhere, it stays where it is.
+Opening a toast does not move focus, unless focus is already inside the region and the new toast takes the place of the one that had it (see the Stack section). When the last toast closes while focus is inside the region, focus returns to the element that had it before the user entered the region. If focus has already moved elsewhere, it stays where it is.
 
 ## Accessibility
 

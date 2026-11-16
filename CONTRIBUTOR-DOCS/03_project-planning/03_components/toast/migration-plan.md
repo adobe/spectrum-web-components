@@ -528,6 +528,7 @@ Checklist items for the full migration; Q9 settles naming. The initial container
 - [x] Storybook stories for each variant, with/without action; icon-label overrides are available through Playground controls
 - [x] Storybook story demonstrating text wrapping with a long message
 - [ ] Storybook story demonstrating the container: multiple queued toasts, the peek stack, expand/collapse, and clear-all
+- [ ] Container focus docs: cover the full set of focus rules in one pass. Adding a toast (`add()` or `addAll()`) while focus is inside the region moves keyboard focus to the new front toast, and a pointer user returns to the element focused before the region. Before the collapsed stack work, focus dropped to the page instead. `toast-container.mdx` has a short note on this, to expand in the docs pass
 
 #### Breaking changes
 
