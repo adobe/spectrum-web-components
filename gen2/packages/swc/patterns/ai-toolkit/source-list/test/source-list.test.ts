@@ -60,6 +60,14 @@ const listElement = (list: SourceList): HTMLElement =>
 const part = (item: SourceListItem, selector: string): HTMLElement | null =>
   item.shadowRoot!.querySelector<HTMLElement>(selector);
 
+const numbers = async (items: SourceListItem[]): Promise<string[]> => {
+  await Promise.all(items.map((item) => item.updateComplete));
+  return items.map(
+    (item) =>
+      part(item, '.swc-SourceListItem-marker')?.textContent?.trim() ?? ''
+  );
+};
+
 const sourceList = (
   items = html`
     <swc-source-list-item
@@ -115,6 +123,21 @@ export const OverviewTest: Story = {
         }
       }
     );
+
+    await step('numbers items from start and value', async () => {
+      expect(await numbers(items)).toEqual(['1', '2', '3']);
+      list.start = 5;
+      await list.updateComplete;
+      expect(await numbers(items)).toEqual(['5', '6', '7']);
+      items[1].value = 9;
+      await items[1].updateComplete;
+      expect(await numbers(items)).toEqual(['5', '9', '10']);
+      items[1].value = undefined;
+      list.start = 1;
+      await items[1].updateComplete;
+      await list.updateComplete;
+      expect(await numbers(items)).toEqual(['1', '2', '3']);
+    });
 
     await step(
       'renders a hidden number box and every verbose part',
@@ -320,19 +343,6 @@ export const ItemBehaviorTest: Story = {
       'swc-source-list'
     );
     const [item] = await settle(list);
-
-    await step('value is applied to the list-item counter', async () => {
-      item.value = 7;
-      await item.updateComplete;
-      expect(item.style.getPropertyValue('--_swc-source-list-item-value')).toBe(
-        '7'
-      );
-      item.value = undefined;
-      await item.updateComplete;
-      expect(item.style.getPropertyValue('--_swc-source-list-item-value')).toBe(
-        ''
-      );
-    });
 
     await step('heading-level exposes the title as a heading', async () => {
       item.headingLevel = 3;

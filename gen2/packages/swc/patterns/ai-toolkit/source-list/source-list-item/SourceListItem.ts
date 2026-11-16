@@ -29,6 +29,7 @@ import {
   warnIf,
 } from '@adobe/spectrum-wc-core/utils/index.js';
 
+import '@adobe/spectrum-wc/components/badge/swc-badge.js';
 import '@adobe/spectrum-wc/components/thumbnail/swc-thumbnail.js';
 
 import {
@@ -137,6 +138,16 @@ export class SourceListItem extends SizedMixin(SpectrumElement, {
   @property({ type: Boolean, reflect: true })
   public ordered = false;
 
+  /**
+   * @internal
+   *
+   * Number shown in the number box. Set by `<swc-source-list>` from its
+   * `start` and each item's `value`, because CSS counters don't reach into
+   * the item's shadow DOM in every browser.
+   */
+  @property({ attribute: false })
+  public position?: number;
+
   // ──────────────────────
   //     IMPLEMENTATION
   // ──────────────────────
@@ -190,16 +201,10 @@ export class SourceListItem extends SizedMixin(SpectrumElement, {
   protected override updated(changes: PropertyValues): void {
     super.updated(changes);
     if (changes.has('value')) {
-      // Applied as a custom property so the host's `counter-set` can read it;
-      // the HTML `value` attribute only works on `<li>`.
-      if (this.value === undefined || Number.isNaN(this.value)) {
-        this.style.removeProperty('--_swc-source-list-item-value');
-      } else {
-        this.style.setProperty(
-          '--_swc-source-list-item-value',
-          String(Math.trunc(this.value))
-        );
-      }
+      // Asks the parent list to renumber its items.
+      this.dispatchEvent(
+        new Event('swc-source-list-item-value-change', { bubbles: true })
+      );
     }
     if (
       changes.has('source') ||
@@ -344,7 +349,14 @@ export class SourceListItem extends SizedMixin(SpectrumElement, {
       >
         ${this.ordered
           ? html`
-              <span class="swc-SourceListItem-marker" aria-hidden="true"></span>
+              <swc-badge
+                class="swc-SourceListItem-marker"
+                variant="neutral"
+                subtle
+                aria-hidden="true"
+              >
+                ${this.position ?? nothing}
+              </swc-badge>
             `
           : nothing}
         <div class="swc-SourceListItem-body">

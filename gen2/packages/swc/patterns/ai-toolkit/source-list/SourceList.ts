@@ -36,6 +36,8 @@ import styles from './source-list.css';
 
 const ITEM_SELECTOR = 'swc-source-list-item';
 
+type NumberedItem = Element & { position?: number; value?: number };
+
 /**
  * A list of the sources behind an AI response. Renders a native `<ol>` or
  * `<ul>` and passes `size` and `verbosity` to every `<swc-source-list-item>`,
@@ -142,6 +144,22 @@ export class SourceList extends SizedMixin(SpectrumElement, {
     return [styles];
   }
 
+  public override connectedCallback(): void {
+    super.connectedCallback();
+    this.addEventListener(
+      'swc-source-list-item-value-change',
+      this._renumberItems
+    );
+  }
+
+  public override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.removeEventListener(
+      'swc-source-list-item-value-change',
+      this._renumberItems
+    );
+  }
+
   private get _isOrdered(): boolean {
     return this.type !== 'unordered';
   }
@@ -183,7 +201,31 @@ export class SourceList extends SizedMixin(SpectrumElement, {
     ) {
       this._syncLabelledBy();
     }
+    if (changes.has('start')) {
+      this._renumberItems();
+    }
   }
+
+  /**
+   * Gives each item its number, like a native `<ol>`: counting starts at
+   * `start`, and an item's `value` resets the count from that item on.
+   */
+  private readonly _renumberItems = (): void => {
+    let next = Number.isFinite(this.start) ? Math.trunc(this.start) : 1;
+    for (const element of this.children) {
+      if (element.localName !== ITEM_SELECTOR) {
+        continue;
+      }
+      const item = element as NumberedItem;
+      // Reads the attribute when the item isn't upgraded yet.
+      const value = Number(item.value ?? (item.getAttribute('value') || NaN));
+      if (Number.isFinite(value)) {
+        next = Math.trunc(value);
+      }
+      item.position = next;
+      next += 1;
+    }
+  };
 
   /**
    * Names the list from the slotted heading or `labelElement` through ARIA
@@ -217,6 +259,7 @@ export class SourceList extends SizedMixin(SpectrumElement, {
     this._sizePropagation.propagate();
     this._verbosityPropagation.propagate();
     this._orderedPropagation.propagate();
+    this._renumberItems();
     if (isDebug()) {
       const slot = event.target as HTMLSlotElement;
       const others = slot

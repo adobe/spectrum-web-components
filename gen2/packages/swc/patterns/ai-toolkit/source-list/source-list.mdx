@@ -13,7 +13,7 @@ A source list shows the sources behind an AI response. `<swc-source-list>` rende
 
 - **Heading** (optional): a visible heading in the list's `heading` slot that names the list.
 - **List**: a native `<ol>` or `<ul>` that the list renders for its items.
-- **Number box**: a box with the item's position, shown in ordered lists. It's hidden from assistive technology, which gets the position from the list.
+- **Number box**: a subtle neutral `<swc-badge>` with the item's number, shown in ordered lists. The list numbers its items from `start` and each item's `value`. The badge is hidden from assistive technology, which gets the position from the list.
 - **Thumbnail**: a decorative favicon or logo from the item's `thumbnail-src` attribute.
 - **Source**: the item's `source` attribute, or the hostname of its link.
 - **Title link**: an `<a href>` with the title text in the item's `link` slot. It's the item's only focusable element.
@@ -27,7 +27,7 @@ A source list shows the sources behind an AI response. `<swc-source-list>` rende
 
 `verbosity` sets which parts every item renders. Set it on the list; the list applies it to every item, so all items in a list match. Consumers write the same item markup at every level.
 
-- `verbose` (default): thumbnail and source, title link, and description. Use it when there are few sources and room to read the quotes, such as in a drawer or dialog.
+- `verbose` (default): thumbnail and source, title link, and description. Use it when there are few sources and room to read the quotes, such as in a side panel drawer.
 - `regular`: thumbnail and source, and title link.
 - `concise`: title link only. Use it in tight spaces, such as a popover with many sources.
 
@@ -79,7 +79,7 @@ The `<swc-source-list>` element implements:
 
 - **Native list semantics:** a native `<ol>` or `<ul>` with no added role.
 - **List item semantics:** each `<swc-source-list-item>` gets `role="listitem"`, because custom elements have no native role. A role you set on the item is kept.
-- **List name:** the slotted heading names the list, as does the element in `labelElement`. Otherwise, `accessible-label` sets the name. Inside a titled dialog or drawer, the container's name is usually enough.
+- **List name:** the slotted heading names the list, as does the element in `labelElement`. Otherwise, `accessible-label` sets the name. Inside a popover, the popover's name is usually enough.
 - **One focusable element per item:** the title link. Its hit area covers the card, and the focus indicator is drawn around the whole card.
 - **Hidden decoration:** the thumbnail and number box are hidden from assistive technology.
 - **Quoted description:** the snippet is in a `<blockquote>` whose `cite` is the link's URL.
@@ -93,23 +93,33 @@ The `<swc-source-list>` element implements:
 - Pass a localized `accessible-label` when nothing else names the list. The list has no built-in default.
 - If a link opens a new tab, say so in the link text or with visually hidden text.
 - Don't put other interactive elements in an item. The link's hit area covers them.
-- The source list doesn't manage focus, trap focus, or close on Escape. The popover, drawer, or dialog it's placed in owns that behavior. See the full pattern examples.
+- The source list doesn't manage focus, trap focus, or close on Escape. The popover or panel it's placed in owns that behavior. See the full pattern examples.
 
 <Canvas of={SourceListStories.Accessibility} />
 
 ## Full pattern
 
-### In a popover
+A source list is the list of sources in the in-line sources pattern, where citations sit next to the statements they support. It's a sibling of `<swc-message-sources>`, not a replacement: message sources lists every source once below a response, while in-line sources ties sources to specific statements. Use one source type per experience; don't show both.
 
-An action button opens a non-modal popover. `<swc-popover>` sets `aria-expanded` on the trigger, moves focus to its surface (a dialog named by its `accessible-label`), and closes on Escape or an outside click. If focus was inside, it returns to the trigger. The popover's name labels the sources, so the list doesn't need its own label.
+### Citation in a popover
 
-<Canvas of={SourceListStories.InPopover} />
+An inline citation, an extra-small action button such as "Wikipedia.com +1", opens a non-modal popover with the sources it cites. `<swc-popover>` sets `aria-expanded` on the trigger, moves focus to its surface (a dialog named by its `accessible-label`), and closes on Escape or an outside click. If focus was inside, it returns to the trigger. The popover's name labels the sources, so the list doesn't need its own label.
 
-### In a modal dialog
+<Canvas of={SourceListStories.CitationInPopover} />
 
-When the sources cover the conversation, as on small screens, set `modal` on the popover. It opens with `showModal()`, which traps focus and makes the page inert until it closes. It needs a visible close button, and closing it returns focus to the trigger.
+### In a side panel
 
-<Canvas of={SourceListStories.InModalDialog} />
+When the conversational AI pattern is docked in a side panel, set `size="s"` on the list to match the panel. A "Sources" action button in the response's feedback row expands the list downward, below the response, in the `<swc-system-message>` `sources` slot. The button toggles the list and sets `aria-expanded`. The list follows the button in reading order, so focus moves into it with Tab, and it doesn't need a close button.
+
+<Canvas of={SourceListStories.InSidePanel} />
+
+### In a side panel drawer
+
+A side panel is too narrow for a popover, so source triggers in the response open a drawer instead. An inline citation opens the sources it cites, numbered as they are in the full list. The "Sources" button beside the feedback opens every source. The drawer slides in from the right and fills the side panel. Closing it returns to the conversation.
+
+The drawer is a non-modal `<dialog>` opened with `show()`, so the page outside the side panel stays scrollable and usable. The drawer is named by its heading, takes focus when it opens, and closes with its close button or Escape. Closing returns focus to the trigger that opened it. While it's open, the panel content it covers is `inert`, so Tab can't reach hidden controls. Each trigger sets `aria-haspopup="dialog"` and `aria-expanded`.
+
+<Canvas of={SourceListStories.InSidePanelDrawer} />
 
 ## Upcoming features
 

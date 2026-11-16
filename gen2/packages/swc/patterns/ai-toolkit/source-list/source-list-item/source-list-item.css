@@ -11,15 +11,10 @@
  */
 
 /* Renders like a native `<li>`. The native marker is replaced by the number
-   box, and `list-item` is incremented explicitly because Chromium skips the
-   implicit increment on slotted custom elements. `counter-set` applies the
-   `value` property; it falls back to `none` while the custom property is
-   unset. */
+   box, which shows the number the parent list assigns. */
 :host {
   display: list-item;
   list-style: none;
-  counter-set: list-item var(--_swc-source-list-item-value);
-  counter-increment: list-item;
 }
 
 * {
@@ -53,7 +48,7 @@
 }
 
 .swc-SourceListItem--ordered {
-  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-columns: minmax(var(--_swc-source-list-item-marker-size), auto) minmax(0, 1fr);
 }
 
 :host(:hover) .swc-SourceListItem {
@@ -83,22 +78,11 @@
    ───────────────────────────────────────────────────────────────────────────── */
 
 .swc-SourceListItem-marker {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-inline-size: var(--_swc-source-list-item-marker-size);
-  block-size: var(--_swc-source-list-item-marker-size);
-  padding-inline: token("spacing-75");
-  font-size: var(--_swc-source-list-item-marker-font-size);
-  font-weight: token("medium-font-weight");
-  line-height: token("line-height-100");
-  color: token("neutral-subdued-content-color-default");
-  background-color: token("gray-200");
-  border-radius: token("corner-radius-100");
-}
+  --swc-badge-height: var(--_swc-source-list-item-marker-size);
+  --swc-badge-font-size: var(--_swc-source-list-item-marker-font-size);
 
-.swc-SourceListItem-marker::before {
-  content: counter(list-item);
+  justify-self: center;
+  font-variant-numeric: tabular-nums;
 }
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -127,6 +111,12 @@
   font-size: var(--_swc-source-list-item-source-font-size);
   line-height: var(--_swc-source-list-item-source-line-height);
   overflow-wrap: anywhere;
+}
+
+/* Without a lockup, the title's first line sits beside the number box.
+   Centers that line on the box, which is taller than one line of text. */
+.swc-SourceListItem--ordered .swc-SourceListItem-content:first-child .swc-SourceListItem-title {
+  padding-block-start: max(0px, (var(--_swc-source-list-item-marker-size) - 1lh) / 2);
 }
 
 .swc-SourceListItem-content {
