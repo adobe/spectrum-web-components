@@ -177,11 +177,13 @@ for (const prototype of prototypes) {
           await expect(grid).not.toHaveAttribute('aria-rowcount');
           await expect(grid).not.toHaveAttribute('aria-colcount');
           await expect(grid.getByRole('row')).toHaveCount(1);
+          await expect(grid.getByRole('row')).toHaveAccessibleName('100 items');
           const entries = grid.getByRole('gridcell');
           await expect(entries).toHaveCount(100);
           await expect(entries.last()).not.toHaveAttribute('aria-colindex');
+          await expect(entries.last()).not.toHaveAttribute('aria-label');
           await expect(entries.last()).toHaveAccessibleName(
-            '100 of 100, Along the shore 9'
+            'Select Along the shore 9 Along the shore 9 Share Along the shore 9 Coast collection · JPG'
           );
           const positions = await entries.evaluateAll((elements) =>
             elements.map((element) => {
@@ -290,8 +292,7 @@ for (const prototype of prototypes) {
           const checkbox = entries.nth(1).getByRole('checkbox');
           const open = entries.nth(1).locator('[data-action="open"]');
           const share = entries.nth(1).locator('[data-action="share"]');
-          await expect(checkbox).toBeFocused();
-          await page.keyboard.press('Tab');
+          await expect(checkbox).toHaveAttribute('tabindex', '-1');
           await expect(open).toBeFocused();
           await page.keyboard.press('Tab');
           await expect(share).toBeFocused();
@@ -303,8 +304,6 @@ for (const prototype of prototypes) {
           await expect(share).toBeFocused();
           await page.keyboard.press('Shift+Tab');
           await expect(open).toBeFocused();
-          await page.keyboard.press('Shift+Tab');
-          await expect(checkbox).toBeFocused();
           await page.keyboard.press('Shift+Tab');
           await expect(entries.nth(1)).toBeFocused();
         });
