@@ -652,6 +652,60 @@ export const HoverTest: Story = {
   },
 };
 
+export const NestedHoverTest: Story = {
+  render: () => html`
+    <div data-nested-hover-test></div>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const host = canvasElement.querySelector<HTMLElement>(
+      '[data-nested-hover-test]'
+    )!;
+    const root = host.attachShadow({ mode: 'open' });
+    const sheet = new CSSStyleSheet();
+    sheet.replaceSync(`
+      .button {
+        color: rgb(0, 0, 0);
+        @media (hover: hover) and (pointer: fine) {
+          &:hover {
+            color: rgb(255, 0, 0);
+            &::after { content: "hover"; }
+          }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          &:hover { opacity: 0.5; }
+        }
+      }
+      .button:hover {
+        @media (hover: hover) {
+          &::before { content: "nested"; }
+        }
+        background-color: rgb(1, 2, 3);
+      }
+    `);
+    root.adoptedStyleSheets = [sheet];
+    root.innerHTML = '<button class="button">Ask AI</button>';
+    forcePseudoState(host, 'hover', '.button');
+
+    await step('unwraps pointer queries nested inside selectors', async () => {
+      const mirrored = [...root.adoptedStyleSheets[1].cssRules]
+        .map((rule) => rule.cssText)
+        .join('\n');
+      expect(mirrored).not.toContain('(hover: hover)');
+      expect(mirrored).not.toContain('(pointer: fine)');
+      expect(mirrored).toContain('(prefers-reduced-motion: reduce)');
+      expect(getComputedStyle(root.querySelector('button')!).color).toBe(
+        'rgb(255, 0, 0)'
+      );
+      expect(
+        getComputedStyle(root.querySelector('button')!, '::after').content
+      ).toBe('"hover"');
+      expect(
+        getComputedStyle(root.querySelector('button')!).backgroundColor
+      ).toBe('rgb(1, 2, 3)');
+    });
+  },
+};
+
 export const ColorSchemeTest: Story = {
   render: () => html`
     ${(['light', 'dark'] as const).map((mode) =>
@@ -746,6 +800,9 @@ export const AccessibleNameTest: Story = {
           iconOnly.accessibleLabel = undefined;
           await iconOnly.updateComplete;
           expect(warnCalls.length).toBeGreaterThan(0);
+          expect(warnCalls[0]?.[2]).toBe(
+            'https://spectrum-web-components.adobe.com/?path=/docs/patterns-ai-toolkit-ai-button--docs'
+          );
         });
       }
     );

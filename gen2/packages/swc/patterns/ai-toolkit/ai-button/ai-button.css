@@ -84,6 +84,7 @@
   --_swc-ai-button-overlay-hue-start: light-dark(token("magenta-200"), token("transparent-static-black-150"));
   --_swc-ai-button-overlay-hue-end: light-dark(token("magenta-500"), token("fuchsia-400"));
   --_swc-ai-button-overlay: linear-gradient(to bottom, color-mix(in srgb, var(--_swc-ai-button-overlay-hue-start) 10%, transparent), color-mix(in srgb, var(--_swc-ai-button-overlay-hue-end) 10%, transparent) 80%), linear-gradient(var(--_swc-ai-button-overlay-fill) 0 0), linear-gradient(to bottom, var(--_swc-ai-button-overlay-start), var(--_swc-ai-button-overlay-end));
+  --_swc-ai-button-contrast-floor: light-dark(token("transparent-static-white-500"), token("transparent-static-black-300"));
 
   /* The design's top light is a 10% color-dodge layer with a 3% white inner
      shadow. On light glass, it adds a 10% white wash and the full shadow. On
@@ -175,6 +176,7 @@
   --_swc-ai-button-stroke: inset 0 0.5px 0 0 var(--_swc-ai-button-quiet-edge), inset 0.5px 0 0 0 var(--_swc-ai-button-quiet-edge), inset -0.5px 0 0 0 var(--_swc-ai-button-quiet-edge), inset 0 0 0 0.5px light-dark(token("transparent-static-black-100"), token("transparent-static-white-100"));
   --_swc-ai-button-glow-opacity: 0;
   --_swc-ai-button-overlay: none;
+  --_swc-ai-button-contrast-floor: transparent;
   --_swc-ai-button-top-light-dodge: transparent;
   --_swc-ai-button-highlight-opacity: token("opacity-500");
 
@@ -231,7 +233,9 @@
 .swc-AiButton-surface {
   position: absolute;
   inset: 0;
-  background: linear-gradient(var(--_swc-ai-button-top-light) 0 0), var(--_swc-ai-button-overlay);
+
+  /* Keep content legible over black and white without making the glass opaque. */
+  background: linear-gradient(var(--_swc-ai-button-top-light) 0 0), var(--_swc-ai-button-overlay), linear-gradient(var(--_swc-ai-button-contrast-floor) 0 0);
   border-radius: inherit;
   box-shadow: inset 0 21px 27px var(--_swc-ai-button-top-light-shadow);
   pointer-events: none;
@@ -292,6 +296,10 @@ slot[name="icon"]::slotted(*) {
   inline-size: 100%;
   block-size: 100%;
   fill: currentcolor;
+}
+
+:host([disabled]) slot[name="icon"]::slotted(*) {
+  pointer-events: none;
 }
 
 .swc-AiButton-label {

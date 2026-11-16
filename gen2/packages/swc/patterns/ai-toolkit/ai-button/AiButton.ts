@@ -146,6 +146,11 @@ export class AiButton extends ButtonBase {
     return true;
   }
 
+  /** @internal */
+  protected override get docsHref(): string {
+    return DOCS_URL;
+  }
+
   /** The SVG of the icon. Unknown or missing names show the AI mark. */
   private get _iconSvg(): string {
     const icon = (AI_BUTTON_ICONS as readonly string[]).includes(this.icon)
