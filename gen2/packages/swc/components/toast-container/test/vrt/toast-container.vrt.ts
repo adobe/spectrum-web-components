@@ -135,7 +135,7 @@ export const NeutralStack: Story = stackStory({
   variants: ['neutral', 'neutral', 'negative'],
 });
 
-// Layers beyond the third position stay in the DOM but are invisible.
+// Only the two layers behind the front toast render, however many are queued.
 export const StackBeyondThree: Story = stackStory({
   variants: ['neutral', 'info', 'positive', 'negative', 'info'],
 });

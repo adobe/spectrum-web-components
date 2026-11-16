@@ -1014,36 +1014,44 @@ export const StackLayersTest: Story = {
       });
 
       await step(
-        'layers beyond the third position stay in the DOM at opacity 0',
+        'only the two nearest layers render, however many toasts are queued',
         async () => {
           ToastQueue.add('Fourth notification');
           ToastQueue.add('Fifth notification');
           await getFront(container);
-          const opacities = getLayers(container).map(
-            (layer) => getComputedStyle(layer).opacity
-          );
-          expect(opacities, 'layer opacities').toEqual(['1', '1', '0', '0']);
+          const layers = getLayers(container);
+          expect(layers, 'layers').toHaveLength(2);
           expect(
-            getLayers(container).map((layer) =>
-              layer.classList.contains('swc-ToastContainer-layer--hidden')
+            layers.map((layer) =>
+              layer.style.getPropertyValue('--_swc-toast-container-layer-index')
             ),
-            'layers marked hidden by depth'
-          ).toEqual([false, false, true, true]);
+            'layer depth indexes'
+          ).toEqual(['1', '2']);
+          expect(
+            layers.map((layer) => getComputedStyle(layer).opacity),
+            'layer opacities'
+          ).toEqual(['1', '1']);
           expect(getRegion(container).getAttribute('aria-label')).toBe(
             '5 notifications.'
           );
         }
       );
 
-      await step('closing a queued toast removes its layer', async () => {
-        const queued = ToastQueue.entries[2].key;
-        ToastQueue.close(queued);
-        await container.updateComplete;
-        expect(getLayers(container), 'layers').toHaveLength(3);
-        expect(getRegion(container).getAttribute('aria-label')).toBe(
-          '4 notifications.'
-        );
-      });
+      await step(
+        'layers follow the queue as toasts behind the front one close',
+        async () => {
+          ToastQueue.close(ToastQueue.entries[2].key);
+          await container.updateComplete;
+          expect(getLayers(container), 'layers with 4 queued').toHaveLength(2);
+          expect(getRegion(container).getAttribute('aria-label')).toBe(
+            '4 notifications.'
+          );
+          ToastQueue.close(ToastQueue.entries[2].key);
+          ToastQueue.close(ToastQueue.entries[1].key);
+          await container.updateComplete;
+          expect(getLayers(container), 'layers with 2 queued').toHaveLength(1);
+        }
+      );
 
       await step('layers include their border in their size', () => {
         for (const layer of getLayers(container)) {

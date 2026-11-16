@@ -31,7 +31,7 @@ import type { Toast } from './Toast.js';
 
 import styles from './toast-container.css';
 
-// Layers deeper than this stay in the DOM at `opacity: 0`.
+// Only the layers nearest the front toast render, however many are queued.
 const VISIBLE_LAYER_COUNT = 2;
 
 /**
@@ -112,7 +112,7 @@ export class ToastContainer extends ToastContainerBase {
       return nothing;
     }
     const count = ToastQueue.entries.length;
-    const layers = this.layerEntries;
+    const layers = this.layerEntries.slice(0, VISIBLE_LAYER_COUNT);
     return html`
       <div
         class=${classMap({
@@ -142,8 +142,6 @@ export class ToastContainer extends ToastContainerBase {
                 ['swc-ToastContainer-layer']: true,
                 [`swc-ToastContainer-layer--${entry.variant}`]:
                   entry.variant != null && entry.variant !== 'neutral',
-                ['swc-ToastContainer-layer--hidden']:
-                  depth > VISIBLE_LAYER_COUNT,
               })}
               role="presentation"
               style=${styleMap({

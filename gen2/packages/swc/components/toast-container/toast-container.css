@@ -83,11 +83,6 @@
   translate: 0 0 calc(-1 * token("spacing-200") * var(--_swc-toast-container-layer-index));
 }
 
-/* Only the nearest layers show, but every layer stays in the DOM. */
-.swc-ToastContainer-layer--hidden {
-  opacity: 0;
-}
-
 .swc-ToastContainer-layer--info {
   --_swc-toast-container-layer-background-color: token("informative-background-color-default");
 }

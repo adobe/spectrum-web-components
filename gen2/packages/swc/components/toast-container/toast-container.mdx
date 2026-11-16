@@ -86,7 +86,7 @@ Connect only one `<swc-toast-container>` per page. A second container logs a war
 
 ### Stack
 
-When more than one toast is queued, empty layers appear behind the front toast to show that more are waiting. The newest toast is closest to the edge where the container is anchored, and the layers peek out on the opposite side. Each layer takes the color of its toast's variant. The stack shows three toasts at most: the front toast and the two layers behind it. Layers beyond them stay in the DOM at `opacity: 0`.
+When more than one toast is queued, empty layers appear behind the front toast to show that more are waiting. The newest toast is closest to the edge where the container is anchored, and the layers peek out on the opposite side. Each layer takes the color of its toast's variant. The stack shows three toasts at most: the front toast and the two layers behind it. Layers beyond them are not rendered, and the region label still reports the full count.
 
 The layers are decorative. They use `role="presentation"`, contain no content, and cannot receive focus, so <kbd>Tab</kbd> never reaches a toast that is behind the front one.
 
