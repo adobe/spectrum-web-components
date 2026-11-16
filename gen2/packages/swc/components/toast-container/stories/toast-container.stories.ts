@@ -51,6 +51,9 @@ const { argTypes: toastArgTypes } = getStorybookHelpers('swc-toast');
 
 const hiddenControl = { table: { disable: true }, control: false } as const;
 
+// A function can't be edited in a control, and the MDX documents it.
+const functionPropertyArgTypes = { getRegionLabel: hiddenControl };
+
 // These options are read when a toast is added to the queue, so changing them leaves already-queued toasts as they were.
 const queueOptions = {
   category: 'queue options (apply to newly added toasts)',
@@ -77,6 +80,7 @@ const meta: Meta<ToastContainerArgs> = {
   },
   argTypes: {
     ...containerArgTypes,
+    ...functionPropertyArgTypes,
     placement: {
       ...containerArgTypes?.placement,
       control: 'select',
@@ -84,13 +88,15 @@ const meta: Meta<ToastContainerArgs> = {
     },
     message: {
       control: 'text',
-      description: 'The notification text passed to `ToastQueue.add()`.',
+      description:
+        'The notification text passed to `ToastQueue.add()`. In the Playground, only "Show custom toast" uses it; the other buttons add their own demo message.',
       table: queueOptions,
     },
     variant: {
       control: 'select',
       options: TOAST_VARIANTS,
-      description: 'The semantic variant of the toast.',
+      description:
+        'The semantic variant of the toast. In the Playground, the "Show ... toast" variant buttons use their own variant; the other buttons use this one.',
       table: { ...queueOptions, defaultValue: { summary: 'neutral' } },
     },
     iconLabel: {
@@ -102,12 +108,14 @@ const meta: Meta<ToastContainerArgs> = {
     timeout: {
       control: 'number',
       description:
-        'Auto-dismiss delay in milliseconds. Leave unset (or use 0) to keep the toast until it is closed. Positive values are raised to a 6000 minimum. Ignored when the toast has an action.',
+        'Auto-dismiss delay in milliseconds. Leave unset (or use 0) to keep the toast until it is closed. Positive values are raised to a 6000 minimum. Ignored when the toast has an action, so this control is hidden while an action label is set.',
+      if: { arg: 'actionLabel', truthy: false },
       table: { ...queueOptions, defaultValue: { summary: 'none' } },
     },
     actionLabel: {
       control: 'text',
-      description: 'The label for the optional action button.',
+      description:
+        'The label for the optional action button. When set, the toast renders an action button with this label. A toast with an action never auto-dismisses, so `timeout` is ignored.',
       table: queueOptions,
     },
     shouldCloseOnAction: {
@@ -247,22 +255,35 @@ export const Playground: Story<ToastContainerArgs> = {
     const addVariant = (event: Event): void => {
       const variant = (event.currentTarget as HTMLElement).dataset
         .variant as ToastVariant;
-      ToastQueue.add(`${variantMessages[variant]}${nextMessageSuffix()}`, {
-        variant,
-      });
+      addToast(
+        { ...args, variant, message: variantMessages[variant] },
+        nextMessageSuffix()
+      );
     };
+    // A positive timeout is raised to 6000, so the message matches what the toast does. An action would cancel the timeout, so it is cleared.
     const addTimeout = (): void => {
-      ToastQueue.add(`Closes after 6 seconds${nextMessageSuffix()}`, {
-        variant: 'info',
-        timeout: 6000,
-      });
+      const timeout = Math.max(args.timeout ?? 0, 6000);
+      addToast(
+        {
+          ...args,
+          timeout,
+          actionLabel: '',
+          message: `Closes after ${timeout / 1000} seconds`,
+        },
+        nextMessageSuffix()
+      );
     };
+    // A toast with an action never auto-dismisses, so the timeout is cleared.
     const addAction = (): void => {
-      ToastQueue.add(`Message archived${nextMessageSuffix()}`, {
-        variant: 'neutral',
-        actionLabel: 'Undo',
-        onAction: args.onAction,
-      });
+      addToast(
+        {
+          ...args,
+          timeout: null,
+          actionLabel: args.actionLabel || 'Undo',
+          message: 'Message archived',
+        },
+        nextMessageSuffix()
+      );
     };
     return html`
       ${playgroundVariantButtons.map(
