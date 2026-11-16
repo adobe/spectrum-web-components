@@ -29,7 +29,8 @@
   --swc-icon-block-size: token("workflow-icon-medium");
 
   box-sizing: border-box;
-  display: block;
+  display: inline-block;
+  flex-shrink: 0;
   inline-size: var(--swc-icon-inline-size);
   block-size: var(--swc-icon-block-size);
   color: var(--swc-icon-color, currentColor);

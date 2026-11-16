@@ -12,7 +12,8 @@
 
 :host {
   display: inline-flex;
-  vertical-align: top;
+  inline-size: fit-content;
+  block-size: fit-content;
 }
 
 * {

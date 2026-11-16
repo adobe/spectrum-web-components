@@ -13,10 +13,13 @@
 /* ── Host (outer container) ───────────────────────── */
 
 /* No fixed sizing here; the button self-sizes from padding + icon. The
-   consuming field controls the outer dimensions and any additional spacing. */
+   consuming field controls any additional spacing. fit-content keeps the host
+   the same size as the rendered button. */
 
 :host {
   display: inline-flex;
+  inline-size: fit-content;
+  block-size: fit-content;
 }
 
 :host([size="s"]) {

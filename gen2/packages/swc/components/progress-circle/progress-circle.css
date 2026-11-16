@@ -32,7 +32,7 @@
 }
 
 :host {
-  display: inline-block;
+  display: inline-flex;
   place-self: center;
 }
 
