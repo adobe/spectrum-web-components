@@ -14,7 +14,6 @@ import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import { RadioGroup } from '@adobe/spectrum-wc/radio-group';
 import { RADIO_GROUP_STATUSES } from '@adobe/spectrum-wc-core/components/radio-group/index.js';
 
 import '@adobe/spectrum-wc/components/radio-group/swc-radio-group.js';
@@ -121,54 +120,6 @@ const group = (
     'default-slot': ITEMS,
     ...overrides,
   });
-
-const validateFormField = async (field: RadioGroup): Promise<boolean> => {
-  if (!field.willValidate) {
-    return true;
-  }
-  if (field.fieldStatus === 'invalid') {
-    field.fieldStatus = undefined;
-  }
-  await field.updateComplete;
-  if (field.checkValidity()) {
-    return true;
-  }
-  field.fieldStatus = 'invalid';
-  await field.updateComplete;
-  return false;
-};
-
-const handleFormFieldChange = async (event: Event): Promise<void> => {
-  const field = event.currentTarget;
-  if (!(field instanceof RadioGroup)) {
-    throw new Error('Radio group example requires a radio group.');
-  }
-  if (field.fieldStatus === 'invalid') {
-    await validateFormField(field);
-  }
-};
-
-const handleFormSubmit = async (event: SubmitEvent): Promise<void> => {
-  event.preventDefault();
-  const form = event.currentTarget;
-  if (!(form instanceof HTMLFormElement)) {
-    throw new Error('Radio group example requires a form.');
-  }
-  const output = form.querySelector('output');
-  if (!output) {
-    throw new Error('Radio group example requires a result output.');
-  }
-  const field = form.querySelector('swc-radio-group');
-  if (!field) {
-    throw new Error('Radio group example requires a radio group.');
-  }
-  output.value = output.defaultValue;
-  if (!(await validateFormField(field))) {
-    field.focus();
-    return;
-  }
-  output.value = JSON.stringify([...new FormData(form, event.submitter)]);
-};
 
 // ────────────────────
 //    PLAYGROUND STORY
@@ -456,51 +407,6 @@ export const ReadOnly: Story = {
   tags: ['states'],
 };
 ReadOnly.storyName = 'Read-only';
-
-// ──────────────────────────────
-//    BEHAVIORS STORIES
-// ──────────────────────────────
-
-export const FormParticipation: Story = {
-  render: () => html`
-    <form
-      novalidate
-      aria-label="Shipping preferences"
-      style="display: grid; gap: 16px;"
-      @submit=${handleFormSubmit}
-    >
-      <swc-radio-group
-        name="shipping"
-        required
-        @change=${handleFormFieldChange}
-      >
-        <span slot="label">Shipping options</span>
-        <span slot="error-text">Select a shipping option.</span>
-        <swc-radio value="standard">
-          <span slot="label">Standard</span>
-        </swc-radio>
-        <swc-radio value="expedited">
-          <span slot="label">Expedited</span>
-        </swc-radio>
-      </swc-radio-group>
-      <div style="display: flex; gap: 12px;">
-        <button type="submit" class="swc-Button">
-          <span class="swc-Button-label">Submit</span>
-        </button>
-        <button type="reset" class="swc-Button swc-Button--secondary">
-          <span class="swc-Button-label">Reset</span>
-        </button>
-      </div>
-      <output
-        aria-label="Form results"
-        .defaultValue=${'Submit to view results.'}
-      ></output>
-    </form>
-  `,
-  parameters: { controls: { disable: true } },
-  tags: ['behaviors'],
-};
-FormParticipation.storyName = 'Form participation';
 
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES

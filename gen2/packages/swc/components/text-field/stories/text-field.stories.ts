@@ -14,7 +14,6 @@ import { html, type TemplateResult } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import { TextField } from '@adobe/spectrum-wc/text-field';
 import {
   TEXT_FIELD_LABEL_POSITIONS,
   TEXT_FIELD_NECESSITY_INDICATORS,
@@ -95,54 +94,6 @@ export default meta;
 // ────────────────────
 //    HELPERS
 // ────────────────────
-
-const validateFormField = async (field: TextField): Promise<boolean> => {
-  if (!field.willValidate) {
-    return true;
-  }
-  if (field.fieldStatus === 'invalid') {
-    field.fieldStatus = undefined;
-  }
-  await field.updateComplete;
-  if (field.checkValidity()) {
-    return true;
-  }
-  field.fieldStatus = 'invalid';
-  await field.updateComplete;
-  return false;
-};
-
-const handleFormFieldChange = async (event: Event): Promise<void> => {
-  const field = event.currentTarget;
-  if (!(field instanceof TextField)) {
-    throw new Error('Text field example requires a text field.');
-  }
-  if (field.fieldStatus === 'invalid') {
-    await validateFormField(field);
-  }
-};
-
-const handleFormSubmit = async (event: SubmitEvent): Promise<void> => {
-  event.preventDefault();
-  const form = event.currentTarget;
-  if (!(form instanceof HTMLFormElement)) {
-    throw new Error('Text field example requires a form.');
-  }
-  const output = form.querySelector('output');
-  if (!output) {
-    throw new Error('Text field example requires a result output.');
-  }
-  const field = form.querySelector('swc-text-field');
-  if (!field) {
-    throw new Error('Text field example requires a text field.');
-  }
-  output.value = output.defaultValue;
-  if (!(await validateFormField(field))) {
-    field.focus();
-    return;
-  }
-  output.value = JSON.stringify([...new FormData(form, event.submitter)]);
-};
 
 function captioned(
   caption: TemplateResult,
@@ -652,42 +603,6 @@ export const LabelOverflow: Story = {
   },
 };
 LabelOverflow.storyName = 'Label overflow';
-
-export const FormBehavior: Story = {
-  render: () => html`
-    <form
-      novalidate
-      aria-label="Email subscription"
-      style="display: grid; gap: 16px;"
-      @submit=${handleFormSubmit}
-    >
-      <swc-text-field
-        name="email"
-        type="email"
-        required
-        @change=${handleFormFieldChange}
-      >
-        <span slot="label">Email address</span>
-        <span slot="error-text">Enter a valid email address.</span>
-      </swc-text-field>
-      <div style="display: flex; gap: 12px;">
-        <button type="submit" class="swc-Button">
-          <span class="swc-Button-label">Submit</span>
-        </button>
-        <button type="reset" class="swc-Button swc-Button--secondary">
-          <span class="swc-Button-label">Reset</span>
-        </button>
-      </div>
-      <output
-        aria-label="Form results"
-        .defaultValue=${'Submit to view results.'}
-      ></output>
-    </form>
-  `,
-  parameters: { controls: { disable: true } },
-  tags: ['behaviors'],
-};
-FormBehavior.storyName = 'Form participation';
 
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES

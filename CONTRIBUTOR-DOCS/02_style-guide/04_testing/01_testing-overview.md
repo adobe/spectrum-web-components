@@ -46,8 +46,9 @@ Test things that users and developers depend on:
 
 When adding a form component:
 
-1. Test its own behavior locally and add it to relevant shared scenarios without duplicating local checks.
-2. Add a focused scenario for new interactions between controls. Preserve specific assertions when moving tests.
+1. Add it to the shared [Forms playground](../../../gen2/packages/swc/patterns/forms/test/forms-playground.test.ts) so contributors can manually exercise it alongside other controls.
+2. Test its own behavior locally and add it to relevant shared scenarios without duplicating local checks.
+3. Add a focused scenario for new interactions between controls. Preserve specific assertions when moving tests.
 
 Keep test fixtures independent of the pattern's example and its handlers. Native placeholders do not prove that future custom components work. Reuse existing DOM helpers and keep form operations and assertions visible.
 

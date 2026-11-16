@@ -131,10 +131,6 @@ The group's `:invalid` match follows live validity, including before your applic
 
 See the [Forms pattern](?path=/docs/patterns-forms--docs) for shared validation, submission, and reset guidance, including an example with Text field and Radio group.
 
-<Canvas of={RadioGroupStories.FormParticipation} />
-
-Submit without selecting an option to see an inline error. Selecting an option clears the error; a valid submission displays the data locally. Reset clears the selection and error. See the [Forms pattern](?path=/docs/patterns-forms--docs#handling-invalid-submissions) for the validation pattern.
-
 #### Focus
 
 `group.focus()` moves focus to the selected item, or to the first enabled item when nothing is selected, so your handler can focus the group it found. A blocked native submit and `reportValidity()` focus the same item. Disabled and read-only groups do not block validation.

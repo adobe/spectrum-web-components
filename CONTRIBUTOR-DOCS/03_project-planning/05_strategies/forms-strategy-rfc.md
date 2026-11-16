@@ -27,7 +27,7 @@
     - [3.6 Validation timing and submit behavior](#36-validation-timing-and-submit-behavior)
     - [3.7 Field status and validation sources](#37-field-status-and-validation-sources)
     - [3.8 Shared and per-component responsibilities](#38-shared-and-per-component-responsibilities)
-    - [3.9 Form documentation until a Forms page exists](#39-form-documentation-until-a-forms-page-exists)
+    - [3.9 Form documentation](#39-form-documentation)
 - [4. Naming table](#4-naming-table)
 - [5. Migration path](#5-migration-path)
 - [6. Open questions](#6-open-questions)
@@ -143,11 +143,13 @@ Browsers currently lack a standardized path for axe-core to read ARIA relationsh
 
 ### 3.5 Testing form participation
 
-Every form-associated component (text field, checkbox, checkbox group, radio group, picker, combobox, and any future field) must **prove** its form participation, not just its ARIA. Because the whole point of FACE is behaving like a native control inside a real form, both the stories and the automated tests must exercise the component **inside a native `<form>`** (use a native `<form>` for now; move to a dedicated form component once one exists). This is a requirement for all such components, not a per-component choice.
+Every form-associated component (text field, checkbox, checkbox group, radio group, picker, combobox, and any future field) must prove its form participation, not just its ARIA. Automated component tests must exercise it inside a native `<form>` (use a native `<form>` for now; move to a dedicated form component once one exists). These can be dev-only test stories; a separate consumer-facing form demo on each component page is not required.
 
-See [Testing forms](../../02_style-guide/04_testing/01_testing-overview.md#testing-forms) for the distinction between local component guarantees and shared integration coverage. Each new component keeps its own form tests and joins the relevant shared Forms scenarios alongside other controls. Integration fixtures are independent of the Forms pattern's example and handlers.
+See [Testing forms](../../02_style-guide/04_testing/01_testing-overview.md#testing-forms) for the distinction between local component guarantees and shared integration coverage. Each new component keeps its own form tests and joins the relevant shared Forms scenarios alongside other controls. Integration fixtures are independent of the Forms pattern's example and handlers. Shared consumer-facing examples live in the [Forms pattern](../../../gen2/packages/swc/patterns/forms/forms.mdx), and component pages link there rather than duplicating submission and validation handlers. Test those examples' handlers separately from the native form integration tests.
 
-Every form-associated component's story set and test suite must cover the full form lifecycle:
+Add each new form-associated component to the shared [Forms playground](../../../gen2/packages/swc/patterns/forms/test/forms-playground.test.ts) so contributors can manually exercise it alongside other controls. Keep its component-level tests and add it to relevant shared integration scenarios.
+
+Every form-associated component's automated tests must cover the full form lifecycle:
 
 - **Value on submit:** submitting the form yields the expected `FormData`. An enabled, named text field contributes its value, including an empty string. An unchecked checkbox or a radio group with no selected enabled item contributes nothing. Disabled controls and controls without a name contribute nothing. Grouped multi-select controls (checkbox group) contribute one entry per selected item under the shared `name`; single-value selection controls (radio group, picker) contribute one entry when a value is selected.
 - **Validation:** a `required` (or otherwise constrained) control blocks submission and reports validity (`:invalid` on the host, `checkValidity()`/`reportValidity()`), and the invalid state clears once the constraint is satisfied. Validate at the level the constraint lives (per item for a standalone required checkbox; at the group for "select at least one" or "choose exactly one"). Tests also cover:
@@ -297,23 +299,25 @@ Shared code owns the behavior that is the same for every field. Each component o
 
 **Reference implementations.** Read the existing fields before writing a new one, and match their structure and names unless this RFC says otherwise:
 
-- **Text field** (`gen2/packages/core/components/text-field/TextField.base.ts`): a field with a native inner control. Its page, `text-field.mdx`, is the model for consumer documentation ([§3.9](#39-form-documentation-until-a-forms-page-exists)).
+- **Text field** (`gen2/packages/core/components/text-field/TextField.base.ts`): a field with a native inner control. Its page, `text-field.mdx`, is the model for component-specific consumer documentation ([§3.9](#39-form-documentation)).
 - **Radio group** (the radio group base and render files, which land with the radio migration): a field with a wrapper and no native control.
 - **Barring and the `disabled` state:** `FieldAssociationController` and its documentation, `field-association-controller.mdx`. The status-aware API arrives with the field-status reconciliation work.
 
-### 3.9 Form documentation until a Forms page exists
+<a id="39-form-documentation-until-a-forms-page-exists"></a>
 
-Until a shared Forms pattern page exists ([§6](#6-open-questions)), each form field's component page carries the consumer-facing form guidance. The text field documentation (`text-field.mdx`, "Form participation") is the reference. Its "Showing and clearing errors", "Validating a form", "Reset", and validation-methods sections are the model for structure and wording. A form-associated component's page covers each point below, in its form participation section, its field status states, and its best practices.
+### 3.9 Form documentation
 
-- **Errors are set by the application.** The application sets `field-status="invalid"` and supplies `error-text`. Nothing sets them automatically, and `error-text` alone does not make the field invalid. Clear the status explicitly. Await `updateComplete` before checking validity. Always pair `invalid` with error text.
-- **Validation timing.** Errors display on commit or submit, not on each keystroke. Realtime validation is opt-in through the application's own `input` listener, and a field never switches to realtime after a failed submit ([§3.6](#36-validation-timing-and-submit-behavior)).
-- **Form setup and submit handler.** Use `novalidate`. The handler calls `event.preventDefault()` synchronously, clears the `invalid` statuses from the previous submit, recomputes the application's own rules, calls `form.checkValidity()`, sets status and error text, moves focus, and submits explicitly on success. It finds the first invalid field with `form.elements` and `willValidate`, not `:invalid` selectors or `reportValidity()`. Keep the submit button enabled and submit with `requestSubmit()` or a button, not `form.submit()`.
-- **Focus.** Say that `host.focus()` reaches the field's focus target, so the handler can focus the field it found.
-- **Status and barring.** Status values are mutually exclusive, and consumers set `field-status`, not native `disabled` or `readonly` attributes on the host. Disabled and read-only fields do not block validation. A disabled field is excluded from `FormData`, and its value cannot be selected or copied, so recommend `readonly` when users need to review or copy it. A `<fieldset disabled>` does not change `fieldStatus`, and an authored invalid status returns when the field is re-enabled.
-- **Reset and methods.** Reset restores the default value and clears `valid` and `invalid` status. Explain `checkValidity()` versus `reportValidity()`, the `invalid` event, and that authored `invalid` sets `validity.customError`.
-- **Styling hooks.** Style the invalid state from `field-status`, and the disabled state from `:state(disabled)`. Do not use `:user-invalid`, and note that `:invalid` follows live validity.
+The [Forms pattern](../../../gen2/packages/swc/patterns/forms/forms.mdx) is the source of truth for shared consumer-facing form guidance: validation timing, application-controlled errors, form setup, submission handlers, focus management, reset, and validation methods. Keep working examples there instead of repeating their handlers on each component page.
 
-The points that are the same for every field (timing, form setup, the submit handler, and focus management) move to the Forms page when it exists. Component pages then keep only what is specific to the component: its native constraints, its focus target, its reset target, and its value formatting. When copying these points to a new component page, link to the Forms page once it is available instead of repeating the handler. Once the Forms page exists, it becomes the source of truth for consumer-facing form guidance. This RFC stays the source for the implementation details behind it, such as validation anchors, barring, and naming.
+Each form-associated component's page keeps a short Form participation section linking to the Forms pattern. Keep component-specific behavior on the component page, in the relevant behavior, state, or accessibility section:
+
+- **Submitted value.** Explain how `name`, value formatting, and selection affect the entries in `FormData`.
+- **Constraints.** Document the native constraints the component supports.
+- **Focus.** Identify the field's focus target and explain where `host.focus()` moves focus.
+- **Reset and restoration.** Explain the initial value or selection restored by reset, which statuses it clears, and any browser restoration behavior.
+- **States and styling.** Document the supported `field-status` values, their validation and submission effects, and the component's styling hooks.
+
+A separate consumer-facing form demo is optional, not a requirement. Add one only when it demonstrates component-specific behavior that the shared Forms examples do not cover. This does not replace the required component tests and shared integration coverage in [§3.5](#35-testing-form-participation). This RFC remains the source for implementation details such as validation anchors, barring, and naming.
 
 ---
 
@@ -365,8 +369,8 @@ Contributors migrating a form field follow the washing machine workflow with the
 
 - **Phase 3 (API):** wire form participation, name the API from the [naming table](#4-naming-table), and replace status booleans with `field-status` per [§3.7](#37-field-status-and-validation-sources). See [Washing machine workflow, Phase 3](../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-3-api-migration).
 - **Phase 4 (accessibility):** wire label, help text, and errors per [§3.3](#33-idref-strategy-label-help-text-and-errors), satisfy the axe policy in [§3.4](#34-axe-core-policy), follow the validation timing, `novalidate`, and focus behavior in [§3.6](#36-validation-timing-and-submit-behavior), and supply a focusable validation anchor that `host.focus()` reaches. See [Washing machine workflow, Phase 4](../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-4-accessibility).
-- **Phase 6 (testing):** add stories and tests that exercise the component inside a native `<form>` and cover the full form lifecycle (value on submit, validation, reset, getting the value) per [§3.5](#35-testing-form-participation). See [Washing machine workflow, Phase 6](../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-6-testing).
-- **Phase 7 (documentation):** cover the form documentation points in [§3.9](#39-form-documentation-until-a-forms-page-exists) on the component page. See [Washing machine workflow, Phase 7](../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-7-documentation).
+- **Phase 6 (testing):** add component tests inside a native `<form>` and include the component in relevant shared Forms scenarios per [§3.5](#35-testing-form-participation). Cover the full form lifecycle (value on submit, validation, reset, getting the value). Dev-only test stories satisfy the component test requirement; a consumer-facing form demo is not required. See [Washing machine workflow, Phase 6](../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-6-testing).
+- **Phase 7 (documentation):** link to the shared Forms pattern and document component-specific form behavior per [§3.9](#39-form-documentation). See [Washing machine workflow, Phase 7](../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md#phase-7-documentation).
 
 ---
 
@@ -387,7 +391,6 @@ These questions come from the text field and radio group migrations. They do not
 - **Shared `error-text` validity message:** whether the wiring that turns `error-text` content into the `setValidity()` message (observing text changes, applying pre-render content, and the generic fallback) moves into a shared controller or mixin, so each field does not re-implement it.
 - **Native validation bubbles:** whether fields should do more than rely on `novalidate` in the application ([§3.6](#36-validation-timing-and-submit-behavior)).
 - **Necessity indicator text:** whether consumers can override the `(required)` and `(optional)` text, for example for localization.
-- **Form documentation:** whether form behavior that is the same for every field (`novalidate`, the submit handler, focus management, and reset) moves from each component page to a shared Forms pattern page, as React Spectrum does with its Form page. Component pages would keep only component-specific behavior.
 - **Shared test helpers:** whether to add shared helpers or assertions for the form lifecycle tests in [§3.5](#35-testing-form-participation), so each field does not write the same tests again.
 
 ---

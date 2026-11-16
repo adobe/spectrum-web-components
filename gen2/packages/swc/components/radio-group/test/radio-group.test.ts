@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 import { html } from 'lit';
-import { expect, fn, userEvent, waitFor, within } from '@storybook/test';
+import { expect, fn, userEvent, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import {
   fixture,
@@ -24,7 +24,6 @@ import { Radio, RadioGroup } from '@adobe/spectrum-wc/radio-group';
 import '@adobe/spectrum-wc/components/radio-group/swc-radio-group.js';
 import '@adobe/spectrum-wc/components/radio-group/swc-radio.js';
 
-import * as RadioGroupStories from '../stories/radio-group.stories.js';
 import meta, {
   Invalid,
   NecessityIndicator,
@@ -52,54 +51,6 @@ export default {
   },
   tags: ['!autodocs', 'dev'],
 } as Meta;
-
-// ──────────────────────────────────────────────────────────────
-// TEST: Consumer form example
-// ──────────────────────────────────────────────────────────────
-
-export const FormExampleTest: Story = {
-  ...RadioGroupStories.FormParticipation,
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    const group = await getComponent<RadioGroup>(
-      canvasElement,
-      'swc-radio-group'
-    );
-    const expedited = await getComponent<Radio>(
-      group,
-      'swc-radio[value="expedited"]'
-    );
-    const submit = canvas.getByRole('button', { name: 'Submit' });
-    const output = canvas.getByLabelText('Form results');
-
-    await userEvent.click(submit);
-    await waitFor(() => {
-      expect(group.fieldStatus).toBe('invalid');
-      expect(group.roleElement?.getAttribute('aria-invalid')).toBe('true');
-    });
-    expect(group.validity.valueMissing).toBe(true);
-    expect(within(group).getByText('Select a shipping option.')).toBeVisible();
-    expect(group.querySelector('[tabindex="0"]')?.matches(':focus')).toBe(true);
-    expect(output.textContent).toBe('Submit to view results.');
-
-    await userEvent.click(expedited);
-    await waitFor(() => expect(group.fieldStatus).toBeUndefined());
-    await userEvent.click(submit);
-    await waitFor(() =>
-      expect(output.textContent).toBe('[["shipping","expedited"]]')
-    );
-    await userEvent.click(canvas.getByRole('button', { name: 'Reset' }));
-    await waitFor(() => {
-      expect(group.selected).toBe('');
-      expect(output.textContent).toBe('Submit to view results.');
-    });
-    await userEvent.click(submit);
-    await waitFor(() => expect(group.fieldStatus).toBe('invalid'));
-    await userEvent.click(canvas.getByRole('button', { name: 'Reset' }));
-    await waitFor(() => expect(group.fieldStatus).toBeUndefined());
-  },
-};
-FormExampleTest.storyName = 'Consumer form example';
 
 // ──────────────────────────────────────────────────────────────
 // TEST: Defaults

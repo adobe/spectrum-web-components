@@ -48,63 +48,6 @@ export default {
 } as Meta;
 
 // ──────────────────────────────────────────────────────────────
-// TEST: Consumer form example
-// ──────────────────────────────────────────────────────────────
-
-export const FormExampleTest: Story = {
-  ...TextFieldStories.FormBehavior,
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    const field = await getComponent<TextField>(
-      canvasElement,
-      'swc-text-field'
-    );
-    const input = field.roleElement;
-    if (!input) {
-      throw new Error('Text field form example requires a native input.');
-    }
-    const submit = canvas.getByRole('button', { name: 'Submit' });
-    const output = canvas.getByLabelText('Form results');
-
-    await userEvent.click(submit);
-    await waitFor(() => {
-      expect(field.fieldStatus).toBe('invalid');
-      expect(input.getAttribute('aria-invalid')).toBe('true');
-    });
-    expect(field.validity.valueMissing).toBe(true);
-    expect(
-      within(field).getByText('Enter a valid email address.')
-    ).toBeVisible();
-    expect(input.matches(':focus')).toBe(true);
-    expect(output.textContent).toBe('Submit to view results.');
-
-    await userEvent.type(input, 'river');
-    expect(field.fieldStatus).toBe('invalid');
-    await userEvent.click(submit);
-    await waitFor(() => expect(field.validity.typeMismatch).toBe(true));
-    expect(field.fieldStatus).toBe('invalid');
-    await userEvent.type(input, '@example.com');
-    expect(field.fieldStatus).toBe('invalid');
-    input.dispatchEvent(new Event('change'));
-    await waitFor(() => expect(field.fieldStatus).toBeUndefined());
-    await userEvent.click(submit);
-    await waitFor(() =>
-      expect(output.textContent).toBe('[["email","river@example.com"]]')
-    );
-    await userEvent.click(canvas.getByRole('button', { name: 'Reset' }));
-    await waitFor(() => {
-      expect(field.value).toBe('');
-      expect(output.textContent).toBe('Submit to view results.');
-    });
-    await userEvent.click(submit);
-    await waitFor(() => expect(field.fieldStatus).toBe('invalid'));
-    await userEvent.click(canvas.getByRole('button', { name: 'Reset' }));
-    await waitFor(() => expect(field.fieldStatus).toBeUndefined());
-  },
-};
-FormExampleTest.storyName = 'Consumer form example';
-
-// ──────────────────────────────────────────────────────────────
 // TEST: Playground option controls
 // ──────────────────────────────────────────────────────────────
 

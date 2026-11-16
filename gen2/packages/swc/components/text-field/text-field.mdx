@@ -133,10 +133,6 @@ Set `field-status="valid"` to record that your application has validated the val
 
 Give the text field a `name` to include its value when submitting a form. Use `required`, `minlength`, `maxlength`, `pattern`, and `type` to define valid input. Your application controls custom validation and inline error messages. See the [Forms pattern](?path=/docs/patterns-forms--docs) for validation, submission, reset, and a working example.
 
-<Canvas of={TextFieldStories.FormBehavior} />
-
-Submit an empty or malformed email address to see an inline error. After an error, the field rechecks on completed edits, not keystrokes. Valid submission displays the data locally; reset restores the empty value and clears the error. See the [Forms pattern](?path=/docs/patterns-forms--docs#handling-invalid-submissions) for the validation pattern.
-
 ### Label overflow
 
 A long visible label wraps onto multiple lines instead of clipping. The top-label example constrains one field inside a `180px` container. The side-label examples each use a `260px` host and their labels wrap within a column capped at `50%` of the host width by default, or at the value of `--swc-field-label-max-inline-size`.
