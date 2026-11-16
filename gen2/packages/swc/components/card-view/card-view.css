@@ -103,8 +103,7 @@ input {
   border-radius: 4px;
 }
 
-.status,
-.more-info-hint {
+.status {
   position: absolute;
   inline-size: 1px;
   block-size: 1px;

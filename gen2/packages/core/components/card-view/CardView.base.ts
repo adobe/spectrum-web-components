@@ -460,6 +460,36 @@ export abstract class CardViewBase extends SpectrumElement {
     return order[position + direction] ?? index;
   }
 
+  protected pageStep(index: number, direction: number): number {
+    if (!this.positions[index]) {
+      return index;
+    }
+    const columns = this.positions.reduce(
+      (count, position) => Math.max(count, position.column + 1),
+      1
+    );
+    const totalVisualRows = Math.ceil(this.items.length / columns);
+    const interval = Math.max(
+      1,
+      Math.floor(totalVisualRows / (totalVisualRows < 20 ? 2 : 5))
+    );
+    const checkpointSize = interval * columns;
+    const destination =
+      direction > 0
+        ? (Math.floor(index / checkpointSize) + 1) * checkpointSize
+        : (Math.ceil(index / checkpointSize) - 1) * checkpointSize;
+    for (
+      let checkpoint = destination;
+      checkpoint >= 0 && checkpoint < this.items.length;
+      checkpoint += direction * checkpointSize
+    ) {
+      if (!this.items[checkpoint].disabled) {
+        return checkpoint;
+      }
+    }
+    return index;
+  }
+
   protected handleKeydown(event: KeyboardEvent): void {
     const target = event.composedPath()[0] as HTMLElement;
     const wrapper = (event.composedPath() as HTMLElement[]).find(
@@ -469,6 +499,15 @@ export abstract class CardViewBase extends SpectrumElement {
       return;
     }
     const index = Number(wrapper.dataset.index);
+    if (
+      this.composite &&
+      !this.groupedControls &&
+      event.key === ' ' &&
+      target !== this.focusTargets[index]
+    ) {
+      event.stopPropagation();
+      return;
+    }
     if (
       this.moreInfoEnabled &&
       target === this.focusTargets[index] &&
@@ -515,12 +554,21 @@ export abstract class CardViewBase extends SpectrumElement {
       }
       return;
     }
-    const gridArrow =
+    const gridNavigationKey =
       this.composite &&
-      ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key);
+      [
+        'ArrowLeft',
+        'ArrowRight',
+        'ArrowUp',
+        'ArrowDown',
+        'Home',
+        'End',
+        'PageUp',
+        'PageDown',
+      ].includes(event.key);
     if (
       (!this.composite && this.model !== 'list') ||
-      (!target.hasAttribute('data-focus') && !gridArrow)
+      (!target.hasAttribute('data-focus') && !gridNavigationKey)
     ) {
       return;
     }
@@ -552,6 +600,8 @@ export abstract class CardViewBase extends SpectrumElement {
       next = this.items.findIndex((item) => !item.disabled);
     } else if (event.key === 'End') {
       next = this.items.map((item) => !item.disabled).lastIndexOf(true);
+    } else if (event.key === 'PageDown' || event.key === 'PageUp') {
+      next = this.pageStep(index, event.key === 'PageDown' ? 1 : -1);
     } else if (
       this.model === 'single-row' &&
       this.navigation !== 'legacy' &&

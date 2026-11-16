@@ -113,11 +113,7 @@ export const WaterfallAdvance: StoryObj = {
     const cells = [...root.querySelectorAll<HTMLElement>('[role="gridcell"]')];
     const cards = [...root.querySelectorAll<HTMLElement>('swc-card')];
     expect(root.querySelectorAll('[role="row"]')).toHaveLength(1);
-    expect(cells.map((cell) => cell.getAttribute('aria-label'))).toEqual(
-      items.map(
-        (item, index) => `${index + 1} of ${items.length}, ${item.title}`
-      )
-    );
+    expect(cells.every((cell) => !cell.hasAttribute('aria-label'))).toBe(true);
     await waitFor(() => {
       const bounds = cards.map((card) => card.getBoundingClientRect());
       const columnBottoms = [bounds[0].top, bounds[0].top, bounds[0].top];
@@ -215,11 +211,11 @@ export const WaterfallAdvance: StoryObj = {
       })
     );
     await view.updateComplete;
-    expect(root.activeElement).toBe(cards[0].querySelector('input'));
+    expect(root.activeElement).toBe(cards[0].querySelector('.title'));
     expect(cards[0].hasAttribute('aria-hidden')).toBe(false);
     cells[1].focus();
     await view.updateComplete;
-    expect(cards[0].getAttribute('aria-hidden')).toBe('true');
+    expect(cards[0].hasAttribute('aria-hidden')).toBe(false);
     view.dir = 'rtl';
     await waitFor(() => {
       expect(cells[0].getBoundingClientRect().left).toBeGreaterThan(
@@ -388,14 +384,10 @@ export const NamedLayoutNavigation: StoryObj = {
           layout
         );
         expect(
-          [...view.shadowRoot!.querySelectorAll('[role="gridcell"]')].map(
-            (cell) => cell.getAttribute('aria-label')
+          [...view.shadowRoot!.querySelectorAll('[role="gridcell"]')].every(
+            (cell) => !cell.hasAttribute('aria-label')
           )
-        ).toEqual(
-          items.map(
-            (item, index) => `${index + 1} of ${items.length}, ${item.title}`
-          )
-        );
+        ).toBe(true);
         await waitFor(() => {
           const bounds = [
             ...view.shadowRoot!.querySelectorAll<HTMLElement>('swc-card'),
@@ -524,7 +516,39 @@ export const NamedLayoutNavigation: StoryObj = {
   },
 };
 
-export const MoreInfoTabFocus: StoryObj = {
+export const RowSelectionLabel: StoryObj = {
+  render: () => html`
+    <div></div>
+  `,
+  play: async ({ canvasElement }) => {
+    for (const tag of [
+      'swc-card-view-single-column-grid',
+      'swc-card-view-grid-nowrap',
+      'swc-card-view-grid-loop',
+      'swc-card-view-grid-advance',
+      'swc-card-view-grid-semantic',
+      'swc-card-view-masonry-advance',
+      'swc-card-view-waterfall-advance',
+    ]) {
+      const view = await mount(canvasElement, tag);
+      const root = view.shadowRoot!;
+      const verify = (count: number) => {
+        for (const row of root.querySelectorAll('[role="row"]')) {
+          expect(row.getAttribute('aria-label')).toBe(`${count} items`);
+        }
+        expect(root.querySelector('[role="gridcell"][aria-label]')).toBeNull();
+        expect(root.querySelector('[aria-hidden]')).toBeNull();
+        expect(root.querySelector('.more-info-hint')).toBeNull();
+      };
+      verify(items.length);
+      view.items = items.slice(0, 3);
+      await view.updateComplete;
+      verify(3);
+    }
+  },
+};
+
+export const GridcellTabSkipsCheckbox: StoryObj = {
   render: () => html`
     <div></div>
   `,
@@ -533,14 +557,17 @@ export const MoreInfoTabFocus: StoryObj = {
     const root = view.shadowRoot!;
     const cell = root.querySelector<HTMLElement>('[role="gridcell"]')!;
     const card = cell.querySelector('swc-card')!;
-    const hint = cell.querySelector('.more-info-hint')!;
-    expect(hint.textContent?.trim()).toBe('tab for more info');
-    expect(hint.getAttribute('aria-hidden')).toBe('true');
+    expect(
+      [...root.querySelectorAll('input[type="checkbox"]')].map((checkbox) =>
+        checkbox.getAttribute('aria-label')
+      )
+    ).toEqual(items.map((item) => `Select ${item.title}`));
+    expect(cell.querySelector('.more-info-hint')).toBeNull();
+    expect(card.hasAttribute('aria-hidden')).toBe(false);
     expect(cell.hasAttribute('aria-keyshortcuts')).toBe(false);
     expect(cell.hasAttribute('aria-describedby')).toBe(false);
     cell.focus();
     await view.updateComplete;
-    expect(hint.getAttribute('aria-hidden')).toBe('false');
     const tab = new KeyboardEvent('keydown', {
       key: 'Tab',
       bubbles: true,
@@ -551,15 +578,14 @@ export const MoreInfoTabFocus: StoryObj = {
     await view.updateComplete;
     expect(tab.defaultPrevented).toBe(true);
     expect(card.hasAttribute('aria-hidden')).toBe(false);
-    expect(root.activeElement).toBe(card.querySelector('input'));
-    await view.updateComplete;
-    expect(hint.getAttribute('aria-hidden')).toBe('true');
+    expect(root.activeElement).toBe(card.querySelector('.title'));
+    expect(card.querySelector<HTMLInputElement>('input')!.tabIndex).toBe(-1);
     card.querySelector<HTMLElement>('.title')!.focus();
     await view.updateComplete;
     expect(card.hasAttribute('aria-hidden')).toBe(false);
     cell.focus();
-    await waitFor(() => expect(card.getAttribute('aria-hidden')).toBe('true'));
-    expect(hint.getAttribute('aria-hidden')).toBe('false');
+    await view.updateComplete;
+    expect(card.hasAttribute('aria-hidden')).toBe(false);
     expect(view.selected).toEqual([]);
     view.selectionMode = 'none';
     await view.updateComplete;
@@ -576,23 +602,80 @@ export const MoreInfoTabFocus: StoryObj = {
     const outside = document.createElement('button');
     canvasElement.append(outside);
     outside.focus();
-    await waitFor(() => expect(card.getAttribute('aria-hidden')).toBe('true'));
-    expect(hint.getAttribute('aria-hidden')).toBe('true');
+    await view.updateComplete;
+    expect(card.hasAttribute('aria-hidden')).toBe(false);
     cell.focus();
     await view.updateComplete;
     const nextCell = root.querySelectorAll<HTMLElement>('[role="gridcell"]')[1];
     nextCell.focus();
     await view.updateComplete;
-    expect(hint.getAttribute('aria-hidden')).toBe('true');
-    expect(
-      nextCell.querySelector('.more-info-hint')!.getAttribute('aria-hidden')
-    ).toBe('false');
+    expect(nextCell.querySelector('.more-info-hint')).toBeNull();
     outside.focus();
     await view.updateComplete;
-    expect(
-      nextCell.querySelector('.more-info-hint')!.getAttribute('aria-hidden')
-    ).toBe('true');
+    expect(root.querySelector('[aria-hidden]')).toBeNull();
     outside.remove();
+  },
+};
+
+export const ArrowKeysFocusGridcells: StoryObj = {
+  render: () => html`
+    <div></div>
+  `,
+  play: async ({ canvasElement }) => {
+    for (const tag of [
+      'swc-card-view-single-column-grid',
+      'swc-card-view-single-row-grid',
+      'swc-card-view-grid-nowrap',
+      'swc-card-view-grid-loop',
+      'swc-card-view-grid-advance',
+      'swc-card-view-grid-semantic',
+      'swc-card-view-masonry-nowrap',
+      'swc-card-view-masonry-loop',
+      'swc-card-view-masonry-advance',
+      'swc-card-view-masonry-semantic',
+      'swc-card-view-waterfall-advance',
+    ]) {
+      const layout = tag.includes('masonry')
+        ? 'masonry'
+        : tag.includes('waterfall')
+          ? 'waterfall'
+          : 'grid';
+      const view = await mount(canvasElement, tag, layout);
+      const root = view.shadowRoot!;
+      const cell = root.querySelectorAll<HTMLElement>('[role="gridcell"]')[4];
+      const controls = [...cell.querySelectorAll<HTMLElement>('input, button')];
+      const press = async (target: HTMLElement, key: string) => {
+        target.focus();
+        await view.updateComplete;
+        const event = new KeyboardEvent('keydown', {
+          key,
+          bubbles: true,
+          composed: true,
+          cancelable: true,
+        });
+        target.dispatchEvent(event);
+        await view.updateComplete;
+        expect(event.defaultPrevented).toBe(true);
+        expect(root.activeElement?.getAttribute('role')).toBe('gridcell');
+        return root.activeElement;
+      };
+      for (const direction of ['ltr', 'rtl']) {
+        view.dir = direction;
+        await waitFor(() => {
+          const cells = root.querySelectorAll<HTMLElement>('[role="gridcell"]');
+          const first = cells[0].getBoundingClientRect();
+          const second = cells[1].getBoundingClientRect();
+          expect(first.left < second.left).toBe(direction === 'ltr');
+        });
+        for (const key of ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown']) {
+          const expected = await press(cell, key);
+          for (const control of controls) {
+            expect(await press(control, key)).toBe(expected);
+          }
+        }
+      }
+      expect(view.selected).toEqual([]);
+    }
   },
 };
 
@@ -626,7 +709,7 @@ export const FocusStyling: StoryObj = {
       })
     );
     await view.updateComplete;
-    expect(view.shadowRoot!.activeElement).toBe(card.querySelector('input'));
+    expect(view.shadowRoot!.activeElement).toBe(card.querySelector('.title'));
     expect(getComputedStyle(cell).outlineStyle).toBe('solid');
     card.querySelector<HTMLElement>('.title')!.focus();
     expect(getComputedStyle(cell).outlineStyle).toBe('solid');
@@ -660,15 +743,11 @@ export const MoreInfo: StoryObj = {
         ];
         const cards = [...root.querySelectorAll<HTMLElement>('swc-card')];
         for (const [index, cell] of cells.entries()) {
-          expect(cards[index].getAttribute('aria-hidden')).toBe('true');
-          expect(cards[index].getAttribute('aria-live')).toBe('polite');
+          expect(cards[index].hasAttribute('aria-hidden')).toBe(false);
+          expect(cards[index].hasAttribute('aria-live')).toBe(false);
           expect(cell.hasAttribute('aria-describedby')).toBe(false);
-          const hint = cell.querySelector<HTMLElement>('.more-info-hint')!;
-          expect(hint.parentElement).toBe(cell);
-          expect(hint.textContent?.trim()).toBe('tab for more info');
-          expect(hint.getAttribute('aria-hidden')).toBe('true');
+          expect(cell.querySelector('.more-info-hint')).toBeNull();
           expect(cell.hasAttribute('aria-keyshortcuts')).toBe(false);
-          expect(getComputedStyle(hint).clipPath).toBe('inset(50%)');
           expect(
             [
               ...cards[index].querySelectorAll<HTMLElement>('input, button'),
@@ -695,13 +774,16 @@ export const MoreInfo: StoryObj = {
         expect(await press(cells[0], { ctrlKey: true })).toBe(false);
         expect(await press(cells[0], { metaKey: true })).toBe(false);
         expect(await press(cells[0], { altKey: true })).toBe(false);
-        expect(cards[0].getAttribute('aria-hidden')).toBe('true');
+        expect(cards[0].hasAttribute('aria-hidden')).toBe(false);
         expect(await press(cells[0])).toBe(true);
         expect(cards[0].hasAttribute('aria-hidden')).toBe(false);
-        expect(root.activeElement).toBe(cards[0].querySelector('input'));
-        expect(cards[1].getAttribute('aria-hidden')).toBe('true');
+        expect(root.activeElement).toBe(cards[0].querySelector('.title'));
+        expect(cards[1].hasAttribute('aria-hidden')).toBe(false);
         expect(
-          [...cards[0].querySelectorAll<HTMLElement>('input, button')].every(
+          cards[0].querySelector<HTMLInputElement>('input')!.tabIndex
+        ).toBe(-1);
+        expect(
+          [...cards[0].querySelectorAll<HTMLElement>('button')].every(
             (control) => control.tabIndex === 0
           )
         ).toBe(true);
@@ -717,19 +799,19 @@ export const MoreInfo: StoryObj = {
         expect(view.selected).toEqual([]);
         cells[1].focus();
         await view.updateComplete;
-        expect(cards[0].getAttribute('aria-hidden')).toBe('true');
+        expect(cards[0].hasAttribute('aria-hidden')).toBe(false);
         await press(cells[1]);
         expect(cards[1].hasAttribute('aria-hidden')).toBe(false);
-        expect(root.activeElement).toBe(cards[1].querySelector('input'));
-        const hiddenControl = cards[0].querySelector<HTMLElement>('.title')!;
-        hiddenControl.focus();
+        expect(root.activeElement).toBe(cards[1].querySelector('.title'));
+        const previousControl = cards[0].querySelector<HTMLElement>('.title')!;
+        previousControl.focus();
         await view.updateComplete;
         expect(cards[0].hasAttribute('aria-hidden')).toBe(false);
-        expect(cards[1].getAttribute('aria-hidden')).toBe('true');
-        expect(root.activeElement).toBe(hiddenControl);
+        expect(cards[1].hasAttribute('aria-hidden')).toBe(false);
+        expect(root.activeElement).toBe(previousControl);
         cells[0].focus();
         await view.updateComplete;
-        expect(cards[0].getAttribute('aria-hidden')).toBe('true');
+        expect(cards[0].hasAttribute('aria-hidden')).toBe(false);
       }
     }
     for (const tag of tags) {
@@ -1309,6 +1391,166 @@ export const SelectionModesAndGuards: StoryObj = {
   },
 };
 
+export const SpaceSelectionAndControlActivation: StoryObj = {
+  render: () => html`
+    <div></div>
+  `,
+  play: async ({ canvasElement }) => {
+    for (const tag of [
+      'swc-card-view-single-column-grid',
+      'swc-card-view-single-row-grid',
+      'swc-card-view-grid-advance',
+      'swc-card-view-masonry-advance',
+      'swc-card-view-waterfall-advance',
+    ]) {
+      const view = await mount(canvasElement, tag);
+      const cell =
+        view.shadowRoot!.querySelector<HTMLElement>('[role="gridcell"]')!;
+      let bubbled = 0;
+      let selectionChanges = 0;
+      const actions: string[] = [];
+      view.addEventListener('keydown', (event) => {
+        if (event.key === ' ') {
+          bubbled++;
+        }
+      });
+      view.addEventListener('swc-card-view-selection-change', () => {
+        selectionChanges++;
+      });
+      view.addEventListener('swc-card-view-action', (event) => {
+        actions.push((event as CustomEvent<{ action: string }>).detail.action);
+      });
+      cell.focus();
+      await userEvent.keyboard(' ');
+      await view.updateComplete;
+      expect(view.selected).toEqual([items[0].id]);
+      expect(selectionChanges).toBe(1);
+      bubbled = 0;
+      for (const selector of ['input', '.title', '.share']) {
+        const control = cell.querySelector<HTMLElement>(selector)!;
+        control.focus();
+        await view.updateComplete;
+        const event = new KeyboardEvent('keydown', {
+          key: ' ',
+          bubbles: true,
+          composed: true,
+          cancelable: true,
+        });
+        control.dispatchEvent(event);
+        expect(event.defaultPrevented).toBe(false);
+        expect(bubbled).toBe(0);
+        await userEvent.keyboard(' ');
+        await view.updateComplete;
+        expect(view.selected).toEqual([]);
+        expect(selectionChanges).toBe(2);
+        expect(bubbled).toBe(0);
+      }
+      expect(actions).toEqual(['open', 'share']);
+    }
+  },
+};
+
+export const GridBoundaryAndPageNavigation: StoryObj = {
+  render: () => html`
+    <div></div>
+  `,
+  play: async ({ canvasElement }) => {
+    for (const tag of [
+      'swc-card-view-single-column-grid',
+      'swc-card-view-single-row-grid',
+      'swc-card-view-grid-advance',
+      'swc-card-view-masonry-advance',
+      'swc-card-view-waterfall-advance',
+    ]) {
+      const view = await mount(canvasElement, tag);
+      const pageItems = Array.from({ length: 63 }, (_, index) => ({
+        ...items[index % items.length],
+        id: `page-${index}`,
+      }));
+      view.items = pageItems.slice(0, 50);
+      const geometry = pageItems.map((_, index) => ({
+        left: (index % 3) * 120,
+        top:
+          Math.floor(index / 3) * 120 +
+          (tag.includes('waterfall') ? (index % 3) * 20 : 0),
+        width: 100,
+        height: 100,
+        column: index % 3,
+      }));
+      Object.defineProperty(view, 'positions', { get: () => geometry });
+      await view.updateComplete;
+      const root = view.shadowRoot!;
+      const cells = [
+        ...root.querySelectorAll<HTMLElement>('[role="gridcell"]'),
+      ];
+      const press = async (index: number, key: string, selector?: string) => {
+        const target = selector
+          ? cells[index].querySelector<HTMLElement>(selector)!
+          : cells[index];
+        target.focus();
+        await view.updateComplete;
+        const event = new KeyboardEvent('keydown', {
+          key,
+          bubbles: true,
+          composed: true,
+          cancelable: true,
+        });
+        target.dispatchEvent(event);
+        await view.updateComplete;
+        expect(event.defaultPrevented).toBe(true);
+        expect(root.activeElement?.getAttribute('role')).toBe('gridcell');
+        return root.activeElement;
+      };
+      for (const selector of [undefined, 'input', '.title', '.share']) {
+        expect(await press(22, 'Home', selector)).toBe(cells[0]);
+        expect(await press(22, 'End', selector)).toBe(cells[49]);
+        expect(await press(4, 'PageDown', selector)).toBe(cells[24]);
+        expect(await press(31, 'PageUp', selector)).toBe(cells[24]);
+        expect(await press(24, 'PageDown', selector)).toBe(cells[48]);
+        expect(await press(24, 'PageUp', selector)).toBe(cells[0]);
+        expect(await press(25, 'PageUp', selector)).toBe(cells[24]);
+        expect(await press(46, 'PageDown', selector)).toBe(cells[48]);
+        expect(await press(47, 'PageDown', selector)).toBe(cells[48]);
+        expect(await press(4, 'PageUp', selector)).toBe(cells[0]);
+        expect(await press(49, 'PageDown', selector)).toBe(cells[49]);
+        expect(await press(49, 'PageUp', selector)).toBe(cells[48]);
+        expect(await press(48, 'PageDown', selector)).toBe(cells[48]);
+        expect(await press(0, 'PageUp', selector)).toBe(cells[0]);
+        expect(await press(1, 'PageUp', selector)).toBe(cells[0]);
+      }
+      view.items = pageItems.slice(0, 50).map((item, index) => ({
+        ...item,
+        disabled: [0, 24, 49].includes(index),
+      }));
+      await view.updateComplete;
+      expect(await press(22, 'Home', '.title')).toBe(cells[1]);
+      expect(await press(22, 'End', '.share')).toBe(cells[48]);
+      expect(await press(4, 'PageDown')).toBe(cells[48]);
+      expect(await press(31, 'PageUp')).toBe(cells[31]);
+      for (const [count, current, previous, next] of [
+        [2, 1, 0, 1],
+        [8, 4, 3, 6],
+        [57, 28, 27, 54],
+        [60, 28, 24, 36],
+        [63, 49, 48, 60],
+      ]) {
+        view.items = pageItems.slice(0, count);
+        await view.updateComplete;
+        const currentCells = [
+          ...root.querySelectorAll<HTMLElement>('[role="gridcell"]'),
+        ];
+        cells.splice(0, cells.length, ...currentCells);
+        for (const direction of ['ltr', 'rtl']) {
+          view.dir = direction;
+          expect(await press(current, 'PageDown')).toBe(cells[next]);
+          expect(await press(current, 'PageUp')).toBe(cells[previous]);
+        }
+      }
+      expect(view.selected).toEqual([]);
+    }
+  },
+};
+
 export const NavigationPolicyBoundaries: StoryObj = {
   render: () => html`
     <div></div>
@@ -1540,14 +1782,10 @@ export const SemanticsAndNavigation: StoryObj = {
           tag === 'swc-card-view-single-row-grid' ? 1 : items.length
         );
         expect(
-          [...root.querySelectorAll('[role="gridcell"]')].map((cell) =>
-            cell.getAttribute('aria-label')
+          [...root.querySelectorAll('[role="gridcell"]')].every(
+            (cell) => !cell.hasAttribute('aria-label')
           )
-        ).toEqual(
-          items.map(
-            (item, index) => `${index + 1} of ${items.length}, ${item.title}`
-          )
-        );
+        ).toBe(true);
         expect(root.querySelectorAll('[role="rowheader"]')).toHaveLength(0);
         const first = root.querySelector<HTMLElement>('[data-focus]')!;
         first.focus();
@@ -1731,9 +1969,11 @@ export const SingleRowSemanticsAndNavigation: StoryObj = {
       const activeControls = [
         ...activeCell.querySelectorAll<HTMLElement>('input, button'),
       ];
-      expect(activeControls.every((control) => control.tabIndex === 0)).toBe(
-        true
-      );
+      expect(
+        activeControls.every(
+          (control) => control.tabIndex === (control.matches('input') ? -1 : 0)
+        )
+      ).toBe(true);
       expect(
         [...cells[0].querySelectorAll<HTMLElement>('input, button')].every(
           (control) => control.tabIndex === -1

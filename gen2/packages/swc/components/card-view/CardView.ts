@@ -265,12 +265,6 @@ export class CardView extends CardViewBase {
               : undefined,
         })}
         data-selected=${selected}
-        aria-hidden=${ifDefined(
-          this.moreInfoEnabled && !this.expandedInfo.has(item.id)
-            ? 'true'
-            : undefined
-        )}
-        aria-live=${ifDefined(this.moreInfoEnabled ? 'polite' : undefined)}
       >
         <img
           slot="preview"
@@ -294,7 +288,9 @@ export class CardView extends CardViewBase {
                   aria-label=${`Select ${item.title}`}
                   .checked=${selected}
                   ?disabled=${item.disabled}
-                  tabindex=${this.childTabIndex(index)}
+                  tabindex=${this.composite && !this.groupedControls
+                    ? -1
+                    : this.childTabIndex(index)}
                   @change=${this.handleSelection}
                 />
               </label>
@@ -390,7 +386,6 @@ export class CardView extends CardViewBase {
         </div>
       `;
     }
-    const label = `${index + 1} of ${this.items.length}, ${item.title}`;
     if (this.singleRow) {
       return html`
         <div
@@ -398,7 +393,6 @@ export class CardView extends CardViewBase {
           data-focus
           data-index=${index}
           role="gridcell"
-          aria-label=${label}
           aria-selected=${ifDefined(
             this.selectionMode === 'none'
               ? undefined
@@ -410,19 +404,6 @@ export class CardView extends CardViewBase {
           tabindex=${!item.disabled && index === this.activeIndex ? 0 : -1}
           style=${style}
         >
-          ${this.moreInfoEnabled
-            ? html`
-                <div
-                  id=${`more-info-${index}`}
-                  class="more-info-hint"
-                  aria-hidden=${this.focusedCellId === item.id
-                    ? 'false'
-                    : 'true'}
-                >
-                  tab for more info
-                </div>
-              `
-            : ''}
           ${this.renderCard(item, index)}
         </div>
       `;
@@ -432,6 +413,7 @@ export class CardView extends CardViewBase {
         class="item"
         data-index=${index}
         role="row"
+        aria-label=${`${this.items.length} items`}
         aria-selected=${ifDefined(
           this.selectionMode === 'none'
             ? undefined
@@ -443,7 +425,6 @@ export class CardView extends CardViewBase {
           data-focus
           data-index=${index}
           role="gridcell"
-          aria-label=${label}
           aria-selected=${ifDefined(
             this.selectionMode === 'none'
               ? undefined
@@ -523,7 +504,12 @@ export class CardView extends CardViewBase {
               >
                 ${this.singleRow
                   ? html`
-                      <div role="row">${content}</div>
+                      <div
+                        role="row"
+                        aria-label=${`${this.items.length} items`}
+                      >
+                        ${content}
+                      </div>
                     `
                   : content}
               </div>
