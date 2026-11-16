@@ -41,6 +41,20 @@ const VISIBLE_LAYER_COUNT = 2;
  * @since 2.0.0
  */
 export class ToastContainer extends ToastContainerBase {
+  // ────────────────────
+  //     API OVERRIDES
+  // ────────────────────
+
+  protected override get currentToast(): Toast | undefined {
+    return this._toast;
+  }
+
+  protected override get region(): HTMLElement | undefined {
+    return (
+      this.renderRoot.querySelector<HTMLElement>('[role="region"]') ?? undefined
+    );
+  }
+
   // ──────────────────────────────
   //     RENDERING & STYLING
   // ──────────────────────────────
@@ -51,16 +65,6 @@ export class ToastContainer extends ToastContainerBase {
 
   public static override get styles(): CSSResultArray {
     return [styles];
-  }
-
-  protected override get currentToast(): Toast | undefined {
-    return this._toast;
-  }
-
-  protected override get region(): HTMLElement | undefined {
-    return (
-      this.renderRoot.querySelector<HTMLElement>('[role="region"]') ?? undefined
-    );
   }
 
   protected override willUpdate(changes: PropertyValues): void {
