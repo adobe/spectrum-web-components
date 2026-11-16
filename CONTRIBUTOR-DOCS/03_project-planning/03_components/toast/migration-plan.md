@@ -529,6 +529,7 @@ Checklist items for the full migration; Q9 settles naming. The initial container
 - [x] Storybook story demonstrating text wrapping with a long message
 - [ ] Storybook story demonstrating the container: multiple queued toasts, the peek stack, expand/collapse, and clear-all
 - [ ] Container focus docs: cover the full set of focus rules in one pass. Adding a toast (`add()` or `addAll()`) while focus is inside the region moves keyboard focus to the new front toast, and a pointer user returns to the element focused before the region. Before the collapsed stack work, focus dropped to the page instead. `toast-container.mdx` has a short note on this, to expand in the docs pass
+- [ ] Restore demo for the container docs: a story with buttons that add several toasts, save `ToastQueue.entries` (data only), clear the queue, and restore it with `ToastQueue.addAll()`, reattaching `onAction` and `onClose`. A canvas cannot reload the page, so the buttons stand in for the reload, and the story shows the restored stack coming back in the same order. It backs the "Restoring toasts" section in `toast-container.mdx`
 
 #### Breaking changes
 
