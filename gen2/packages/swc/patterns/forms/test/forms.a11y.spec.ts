@@ -15,6 +15,7 @@ import { gotoStory } from '@swc-test-helpers/playwright';
 
 test.describe('Forms - Trusted keyboard interactions', () => {
   test('other text fields control buttonless submission', async ({ page }) => {
+    await page.clock.install({ time: new Date('2026-01-01T00:00:00Z') });
     const root = await gotoStory(
       page,
       'components-text-field--overview',
@@ -47,9 +48,12 @@ test.describe('Forms - Trusted keyboard interactions', () => {
     const form = root.locator('form');
     const first = form.locator('swc-text-field[name="first"]');
     await first.locator('input').focus();
+    // Freeze after setup, then explicitly run each deferred Enter handler.
+    await page.clock.pauseAt(new Date('2026-01-01T01:00:00Z'));
 
     await test.step('one field submits without a button', async () => {
       await page.keyboard.press('Enter');
+      await page.clock.runFor(0);
       await expect(first).toHaveAttribute('data-trusted-enter', 'true');
       await expect(form).toHaveAttribute(
         'data-submitters',
@@ -66,10 +70,7 @@ test.describe('Forms - Trusted keyboard interactions', () => {
         await second.updateComplete;
       });
       await page.keyboard.press('Enter');
-      // Queue behind deferred Enter handling before asserting no submission.
-      await form.evaluate(
-        () => new Promise<void>((resolve) => setTimeout(resolve, 0))
-      );
+      await page.clock.runFor(0);
       await expect(form).toHaveAttribute(
         'data-submitters',
         JSON.stringify([null])
@@ -81,6 +82,7 @@ test.describe('Forms - Trusted keyboard interactions', () => {
         .locator('swc-text-field[name="second"]')
         .evaluate((second) => second.remove());
       await page.keyboard.press('Enter');
+      await page.clock.runFor(0);
       await expect(form).toHaveAttribute(
         'data-submitters',
         JSON.stringify([null, null])
