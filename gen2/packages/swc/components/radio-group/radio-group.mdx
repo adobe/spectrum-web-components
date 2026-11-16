@@ -105,7 +105,7 @@ To disable a single option, set `disabled` on that `swc-radio`. Arrow keys skip 
 
 Always pair `field-status="invalid"` with `error-text`. Explain what happened, why (if known), and how to fix it.
 
-Native validation, such as `required`, does not set `field-status="invalid"` automatically. Error text alone does not make the group invalid. See [Error messages](../?path=/docs/patterns-forms--docs#error-messages) in the Forms pattern for showing and clearing errors.
+Native validation, such as `required`, does not set `field-status="invalid"` automatically. Error text alone does not make the group invalid. See [Error messages](?path=/docs/patterns-forms--docs#error-messages) in the Forms pattern for showing and clearing errors.
 
 While invalid, the plain text of `error-text` becomes `validationMessage` and updates when the content changes. Without it, the message is "Select an option." This fallback is not shown inline automatically.
 
@@ -129,24 +129,11 @@ The group's `:invalid` match follows live validity, including before your applic
 
 `swc-radio-group` works with native forms, including validation, reset, and `FormData`. The group submits one entry under its `name`, holding the selected item's `value`. Like a native radio, when no enabled item matches `selected` it submits nothing, and a `required` group fails validation. Individual `swc-radio` items do not participate in the form separately.
 
-See the [Forms pattern](../?path=/docs/patterns-forms--docs) for shared validation, submission, and reset guidance, including an example with Text field and Radio group.
+See the [Forms pattern](?path=/docs/patterns-forms--docs) for shared validation, submission, and reset guidance, including an example with Text field and Radio group.
 
-```html
-<form>
-  <swc-radio-group name="shipping" required>
-    <span slot="label">Shipping options</span>
-    <swc-radio value="standard">
-      <span slot="label">Standard</span>
-    </swc-radio>
-    <swc-radio value="expedited">
-      <span slot="label">Expedited</span>
-    </swc-radio>
-  </swc-radio-group>
-  <button type="submit">Submit</button>
-</form>
-```
+<Canvas of={RadioGroupStories.FormParticipation} />
 
-This form uses browser validation. For inline errors, follow the [Forms pattern](../?path=/docs/patterns-forms--docs#handling-invalid-submissions).
+Submit without selecting an option to see an inline error. Selecting an option clears the error; a valid submission displays the data locally. Reset clears the selection and error. See the [Forms pattern](?path=/docs/patterns-forms--docs#handling-invalid-submissions) for the validation pattern.
 
 #### Focus
 

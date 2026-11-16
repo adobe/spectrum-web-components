@@ -11,7 +11,12 @@
  */
 
 import { html } from 'lit';
+import { expect, userEvent, waitFor, within } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import { getComponent } from '@swc-test-helpers/dom';
+
+import type { Radio, RadioGroup } from '@adobe/spectrum-wc/radio-group';
+import type { TextField } from '@adobe/spectrum-wc/text-field';
 
 import { FormBehavior } from '../stories/forms.stories.js';
 
@@ -27,6 +32,35 @@ export default {
   },
   tags: ['!autodocs', 'dev'],
 } satisfies Meta;
+
+const getExample = async (canvasElement: HTMLElement) => {
+  const canvas = within(canvasElement);
+  const email = await getComponent<TextField>(canvasElement, 'swc-text-field');
+  const accountType = await getComponent<RadioGroup>(
+    canvasElement,
+    'swc-radio-group'
+  );
+  const work = await getComponent<Radio>(
+    accountType,
+    'swc-radio[value="work"]'
+  );
+  const input = email.roleElement;
+  const fieldset = canvasElement.querySelector('fieldset');
+  if (!input || !fieldset) {
+    throw new Error('Forms example is missing its input or fieldset.');
+  }
+  return {
+    canvas,
+    email,
+    input,
+    accountType,
+    work,
+    fieldset,
+    submit: canvas.getByRole('button', { name: 'Submit' }),
+    reset: canvas.getByRole('button', { name: 'Reset' }),
+    output: canvas.getByLabelText('Form results'),
+  };
+};
 
 // ────────────────────
 //    PLAYGROUND STORY
@@ -49,4 +83,150 @@ export const Playground: Story = {
       </div>
     `,
   ],
+  play: async ({ canvasElement, step }) => {
+    const { email, input, accountType, work, submit, output } =
+      await getExample(canvasElement);
+
+    await step('empty submission shows errors and focuses email', async () => {
+      await userEvent.click(submit);
+      await waitFor(() => {
+        expect(email.fieldStatus).toBe('invalid');
+        expect(accountType.fieldStatus).toBe('invalid');
+        expect(input.matches(':focus')).toBe(true);
+        expect(JSON.parse(output.textContent ?? '')).toEqual({
+          valid: false,
+          data: [
+            ['email', ''],
+            ['action', 'inspect'],
+          ],
+        });
+      });
+    });
+
+    await step('errors clear on completed edits, not keystrokes', async () => {
+      await userEvent.type(input, 'river@example.com');
+      expect(email.fieldStatus).toBe('invalid');
+      input.dispatchEvent(new Event('change'));
+      await waitFor(() => expect(email.fieldStatus).toBeUndefined());
+      await userEvent.click(work);
+      await waitFor(() => expect(accountType.fieldStatus).toBeUndefined());
+    });
+
+    await step(
+      'valid submission displays both values and the submitter',
+      async () => {
+        await userEvent.click(submit);
+        await waitFor(() =>
+          expect(JSON.parse(output.textContent ?? '')).toEqual({
+            valid: true,
+            data: [
+              ['email', 'river@example.com'],
+              ['account-type', 'work'],
+              ['action', 'inspect'],
+            ],
+          })
+        );
+      }
+    );
+  },
 };
+
+export const DisabledSubmissionTest: Story = {
+  render: FormBehavior.render,
+  play: async ({ canvasElement }) => {
+    const { canvas, email, accountType, fieldset, submit, output } =
+      await getExample(canvasElement);
+
+    await userEvent.click(submit);
+    await waitFor(() => {
+      expect(email.fieldStatus).toBe('invalid');
+      expect(accountType.fieldStatus).toBe('invalid');
+      expect(output.textContent).toContain('"valid": false');
+    });
+    await userEvent.click(
+      canvas.getByRole('button', { name: 'Disable fields' })
+    );
+    await waitFor(() => {
+      expect(fieldset.disabled).toBe(true);
+      expect(email.willValidate).toBe(false);
+      expect(accountType.willValidate).toBe(false);
+    });
+
+    await userEvent.click(submit);
+    await waitFor(() =>
+      expect(JSON.parse(output.textContent ?? '')).toEqual({
+        valid: true,
+        data: [['action', 'inspect']],
+      })
+    );
+    expect(email.fieldStatus).toBe('invalid');
+    expect(accountType.fieldStatus).toBe('invalid');
+
+    await userEvent.click(
+      canvas.getByRole('button', { name: 'Enable fields' })
+    );
+    await waitFor(() => {
+      expect(fieldset.disabled).toBe(false);
+      expect(email.willValidate).toBe(true);
+      expect(accountType.willValidate).toBe(true);
+      expect(email.fieldStatus).toBe('invalid');
+      expect(accountType.fieldStatus).toBe('invalid');
+    });
+  },
+};
+DisabledSubmissionTest.storyName = 'Disabled submission preserves errors';
+
+export const ResetTest: Story = {
+  render: FormBehavior.render,
+  play: async ({ canvasElement }) => {
+    const {
+      canvas,
+      email,
+      input,
+      accountType,
+      work,
+      fieldset,
+      submit,
+      reset,
+      output,
+    } = await getExample(canvasElement);
+
+    await userEvent.type(input, 'river@example.com');
+    await userEvent.click(work);
+    await userEvent.click(submit);
+    await waitFor(() => expect(output.textContent).toContain('"valid": true'));
+    await userEvent.click(reset);
+    await waitFor(() => {
+      expect(email.value).toBe('');
+      expect(accountType.selected).toBe('');
+      expect(output.textContent).toBe('Submit to view results.');
+    });
+
+    await userEvent.click(submit);
+    await waitFor(() => {
+      expect(email.fieldStatus).toBe('invalid');
+      expect(accountType.fieldStatus).toBe('invalid');
+    });
+    await userEvent.click(
+      canvas.getByRole('button', { name: 'Disable fields' })
+    );
+    await userEvent.click(reset);
+    await waitFor(() => {
+      expect(email.fieldStatus).toBeUndefined();
+      expect(accountType.fieldStatus).toBeUndefined();
+      expect(fieldset.disabled).toBe(true);
+      expect(email.willValidate).toBe(false);
+      expect(accountType.willValidate).toBe(false);
+      expect(output.textContent).toBe('Submit to view results.');
+    });
+    await userEvent.click(
+      canvas.getByRole('button', { name: 'Enable fields' })
+    );
+    await waitFor(() => {
+      expect(email.willValidate).toBe(true);
+      expect(accountType.willValidate).toBe(true);
+      expect(input.disabled).toBe(false);
+    });
+  },
+};
+ResetTest.storyName = 'Reset restores the example without enabling fields';

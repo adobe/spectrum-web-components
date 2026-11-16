@@ -8,7 +8,7 @@ import * as FormsStories from './stories/forms.stories';
 
 Combine Spectrum Web Components with native HTML forms to collect and submit data, validate input, and display helpful error messages.
 
-The full example combines [Text field](/docs/components-text-field--docs) and [Radio group](/docs/components-radio-group--docs) with native form actions.
+The full example combines [Text field](?path=/docs/components-text-field--docs) and [Radio group](?path=/docs/components-radio-group--docs) with native form actions.
 
 ## Labels and help text
 
@@ -23,7 +23,7 @@ A clear label tells people what to enter. Help text explains requirements before
 
 Screen readers announce the label and description when the field receives focus. A placeholder does not replace a label. If a visible label is not possible, use `accessible-label` or `accessible-labelledby`.
 
-Add `required` when a value is needed. See [Text field](/docs/components-text-field--docs) and [Radio group](/docs/components-radio-group--docs) for their label and required-indicator options.
+Add `required` when a value is needed. See [Text field](?path=/docs/components-text-field--docs) and [Radio group](?path=/docs/components-radio-group--docs) for their label and required-indicator options.
 
 ## Submitting data
 
@@ -105,6 +105,10 @@ Some rules depend on your application, such as whether a username is reserved. T
 
 ```js
 async function validateUsername(field) {
+  if (!field.willValidate) {
+    return true;
+  }
+
   if (field.fieldStatus === 'invalid') {
     field.fieldStatus = undefined;
   }
@@ -180,14 +184,19 @@ form.addEventListener('submit', async (event) => {
     return;
   }
 
-  if (field.fieldStatus === 'invalid') {
-    field.fieldStatus = undefined;
+  if (field.willValidate) {
+    if (field.fieldStatus === 'invalid') {
+      field.fieldStatus = undefined;
+    }
+    await field.updateComplete;
+
+    if (!field.checkValidity()) {
+      field.fieldStatus = 'invalid';
+      await field.updateComplete;
+    }
   }
-  await field.updateComplete;
 
   if (!form.checkValidity()) {
-    field.fieldStatus = 'invalid';
-    await field.updateComplete;
     field.focus();
     return;
   }
@@ -201,6 +210,8 @@ Call `preventDefault()` before any `await`; the browser does not wait for an asy
 
 For several fields, use `form.elements` to find them in order, including fields outside the form linked by a `form` attribute. Show each error, then focus the first field with `willValidate` set to `true` and `validity.valid` set to `false`. Include every field type, including native controls.
 
+Skip fields with `willValidate` set to `false` before clearing or rechecking errors. Disabling a fieldset preserves authored errors; they apply again when fields are enabled. A barred field's `checkValidity()` returns `true`, so the form can pass validation while those errors remain stored.
+
 ## Saving a draft
 
 Saving a draft lets people keep their progress without completing every field. Mark a draft submit button with `formnovalidate`:
@@ -213,7 +224,7 @@ If the form uses `novalidate`, the browser already skips validation for every su
 
 ## Resetting a form
 
-Use a reset button or `form.reset()` to restore initial values. Reset does not necessarily mean empty: a text field returns to its initial `value` attribute, and a radio group returns to its pre-checked item or initial `selected` attribute. See [Radio group reset](/docs/components-radio-group--docs#reset) for selection defaults.
+Use a reset button or `form.reset()` to restore initial values. Reset does not necessarily mean empty: a text field returns to its initial `value` attribute, and a radio group returns to its pre-checked item or initial `selected` attribute. See [Radio group reset](?path=/docs/components-radio-group--docs#reset) for selection defaults.
 
 ```html
 <form id="profile-form">
@@ -258,4 +269,8 @@ Explore validation, form data, and reset with Email address and Account type. Th
 
 </details>
 
-See [Text field](/docs/components-text-field--docs) and [Radio group](/docs/components-radio-group--docs) for component-specific behavior. To check your form, use the [keyboard](/docs/guides-accessibility-keyboard-testing--docs) and [screen reader](/docs/guides-accessibility-screen-reader-testing--docs) testing guides.
+See [Text field](?path=/docs/components-text-field--docs) and [Radio group](?path=/docs/components-radio-group--docs) for component-specific behavior. Verify labels and errors with the [screen reader testing guide](?path=/docs/guides-accessibility-screen-reader-testing--docs).
+
+## Next step
+
+Check your form's keyboard interactions with the [keyboard testing guide](?path=/docs/guides-accessibility-keyboard-testing--docs).

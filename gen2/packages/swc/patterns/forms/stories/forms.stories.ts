@@ -47,6 +47,9 @@ export default meta;
 type FormField = TextField | RadioGroup;
 
 const validateField = async (field: FormField): Promise<void> => {
+  if (!field.willValidate) {
+    return;
+  }
   if (field.fieldStatus === 'invalid') {
     field.fieldStatus = undefined;
   }
