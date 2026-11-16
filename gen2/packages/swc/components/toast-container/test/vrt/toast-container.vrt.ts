@@ -54,6 +54,8 @@ type StackSpec = {
   mode?: 'light' | 'dark';
   dir?: 'ltr' | 'rtl';
   focusFront?: boolean;
+  // Replaces the front toast's message, and gives it an action when `actionLabel` is set.
+  frontToast?: { message: string; actionLabel?: string };
   parameters?: Story['parameters'];
 };
 
@@ -67,6 +69,7 @@ const stackStory = ({
   mode,
   dir,
   focusFront = false,
+  frontToast,
   parameters = vrtParameters,
 }: StackSpec = {}): Story => ({
   render: () => {
@@ -90,6 +93,14 @@ const stackStory = ({
   parameters,
   play: async ({ canvasElement }) => {
     variants.forEach((variant, index) => {
+      if (frontToast && index === variants.length - 1) {
+        ToastQueue.add(frontToast.message, {
+          variant,
+          actionLabel: frontToast.actionLabel,
+          onAction: frontToast.actionLabel ? () => {} : undefined,
+        });
+        return;
+      }
       ToastQueue.add(`Notification ${index + 1}`, { variant });
     });
     const container = canvasElement.querySelector('swc-toast-container')!;
@@ -134,6 +145,15 @@ export const DarkRtlStack: Story = stackStory({
   placement: 'bottom-end',
   mode: 'dark',
   dir: 'rtl',
+});
+
+// The layers take the front toast's size, so a tall toast must peek by the same amount as a one-line one.
+export const TallFrontToastStack: Story = stackStory({
+  frontToast: {
+    message:
+      'Your changes to the quarterly report were saved, and a copy was sent to everyone who has access to the shared folder.',
+    actionLabel: 'Undo this change',
+  },
 });
 
 // The focus ring and the stacked shadow filter share the front toast.
