@@ -12,6 +12,7 @@
 
 import { html, LitElement } from 'lit';
 import { property, state } from 'lit/decorators.js';
+import { classMap } from 'lit/directives/class-map.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import '../conversation-thread/swc-conversation-thread.js';
@@ -43,7 +44,10 @@ import { renderAttachmentPreview } from './attachment-preview.js';
 //    METADATA
 // ────────────────
 
+type PlaygroundLayout = 'full-width' | 'side-panel';
+
 type PlaygroundArgs = {
+  layout: PlaygroundLayout;
   variant: 'subtle' | 'balanced' | 'prominent';
   size: 's' | 'm';
   loader: string;
@@ -58,6 +62,7 @@ type PlaygroundArgs = {
 };
 
 const DEFAULT_PLAYGROUND_ARGS: PlaygroundArgs = {
+  layout: 'full-width',
   variant: 'balanced',
   size: 'm',
   loader: 'aiLogo',
@@ -80,12 +85,21 @@ const meta: Meta<PlaygroundArgs> = {
   title: 'AI Toolkit/Conversational pattern playground',
   args: DEFAULT_PLAYGROUND_ARGS,
   argTypes: {
+    layout: {
+      description:
+        'Where the conversation sits. `side-panel` docks it in a full-height panel beside mock page content.',
+      control: { type: 'select' },
+      options: ['full-width', 'side-panel'],
+      table: { category: 'Layout' },
+    },
     variant: {
       control: { type: 'select' },
       options: ['subtle', 'balanced', 'prominent'],
       table: { category: 'Prompt field' },
     },
     size: {
+      description:
+        'Prompt field size in the full-width layout. The side panel always uses `s`.',
       control: { type: 'select' },
       options: ['s', 'm'],
       table: { category: 'Prompt field' },
@@ -167,6 +181,31 @@ const DEMO_SUGGESTIONS = [
   'Create year-over-year growth chart',
   'Generate congratulatory poster',
   'Summarize development pipeline',
+] as const;
+
+// Stand-in for the host product's own content beside the side panel. Long
+// enough to scroll independently of the panel at the docs height.
+const DEMO_PAGE_SECTIONS = [
+  {
+    heading: 'Campaign overview',
+    body: 'The spring launch reached new audiences across web, social, and retail channels. Engagement grew steadily through the quarter, with the strongest results in the final four weeks.',
+  },
+  {
+    heading: 'Audience growth',
+    body: 'New subscribers rose 18% quarter over quarter. Most of the growth came from short-form video, while returning visitors held steady on the product pages.',
+  },
+  {
+    heading: 'Channel performance',
+    body: 'Paid social delivered the lowest cost per acquisition. Email remained the highest-converting channel, and retail displays drove a measurable lift in branded search.',
+  },
+  {
+    heading: 'Creative highlights',
+    body: 'The hero campaign assets were reused across 40 regional variants. Localized headlines outperformed the global version in every market where both ran.',
+  },
+  {
+    heading: 'Next quarter priorities',
+    body: 'Expand the video program, test a loyalty offer with returning customers, and consolidate reporting so regional teams share one source of truth.',
+  },
 ] as const;
 
 // The last step only appears once the response is complete; the others
@@ -266,6 +305,8 @@ class ConversationFullPatternDemo extends LitElement {
   private isGenerating = false;
 
   private readonly fileInputId = `conv-demo-upload-${crypto.randomUUID()}`;
+  private readonly pageHeadingId = `conv-demo-page-heading-${crypto.randomUUID()}`;
+  private readonly panelHeadingId = `conv-demo-panel-heading-${crypto.randomUUID()}`;
   private responseTimer: number | null = null;
   private stepTimer: number | null = null;
   private responseTargetId: string | null = null;
@@ -307,6 +348,12 @@ class ConversationFullPatternDemo extends LitElement {
       window.clearInterval(this.stepTimer);
       this.stepTimer = null;
     }
+  }
+
+  // A side panel is space-constrained, so it always uses size `s` per the
+  // prompt field size guidance; the `size` control applies at full width.
+  private get effectiveSize(): PlaygroundArgs['size'] {
+    return this.config.layout === 'side-panel' ? 's' : this.config.size;
   }
 
   protected override createRenderRoot(): HTMLElement {
@@ -532,6 +579,28 @@ class ConversationFullPatternDemo extends LitElement {
     );
   };
 
+  /**
+   * Renders a system turn's sources. Every layout uses message sources today.
+   * In-line sources (citations plus a source list in a popover at full width,
+   * or in a drawer that fills the side panel) branch here on `layout`, so turn
+   * rendering doesn't change when they're added.
+   */
+  private renderSources(turn: DemoTurn, _layout: PlaygroundLayout) {
+    if (turn.loading || !this.config['show-sources']) {
+      return '';
+    }
+    return html`
+      <swc-message-sources
+        slot="sources"
+        data-sources-id=${turn.id}
+        ?open=${!!turn.sourcesOpen}
+      >
+        <a href="#">Brand brief Q1 2026</a>
+        <a href="#">Market research summary</a>
+      </swc-message-sources>
+    `;
+  }
+
   private renderTurns() {
     const lastTurnId = this.turns[this.turns.length - 1]?.id;
     return this.turns.map((turn) => {
@@ -592,18 +661,7 @@ class ConversationFullPatternDemo extends LitElement {
                     status=${turn.feedbackStatus ?? ''}
                   ></swc-message-feedback>
                 `}
-            ${turn.loading || !this.config['show-sources']
-              ? ''
-              : html`
-                  <swc-message-sources
-                    slot="sources"
-                    data-sources-id=${turn.id}
-                    ?open=${!!turn.sourcesOpen}
-                  >
-                    <a href="#">Brand brief Q1 2026</a>
-                    <a href="#">Market research summary</a>
-                  </swc-message-sources>
-                `}
+            ${this.renderSources(turn, this.config.layout)}
             ${turn.loading ||
             turn.id !== lastTurnId ||
             !this.config['show-suggestions']
@@ -632,9 +690,100 @@ class ConversationFullPatternDemo extends LitElement {
     );
   }
 
+  private renderConversation() {
+    return html`
+      <div
+        class=${classMap({
+          'swc-ConversationFullPatternDemo-shell': true,
+          'swc-ConversationFullPatternDemo-shell--sidePanel':
+            this.config.layout === 'side-panel',
+        })}
+        @swc-message-feedback-change=${this.handleFeedback}
+        @swc-suggestion=${this.handleSuggestion}
+        @swc-upload-attachment-dismiss=${this.handleDismiss}
+        @swc-message-sources-toggle=${this.handleSourcesToggle}
+      >
+        <div class="swc-ConversationFullPatternDemo-scroll">
+          <swc-conversation-thread>
+            ${this.renderTurns()}
+          </swc-conversation-thread>
+        </div>
+        <div class="swc-ConversationFullPatternDemo-composer">
+          <swc-prompt-field
+            .value=${this.promptValue}
+            ?generating=${this.isGenerating}
+            variant=${this.config.variant}
+            size=${this.effectiveSize}
+            loader=${this.config.loader}
+            ?animate-loader=${this.config['animate-loader']}
+            placeholder=${this.config.placeholder}
+            ?disabled=${this.config.disabled}
+            @swc-prompt-field-input=${this.handlePromptInput}
+            @swc-prompt-field-submit=${this.handlePromptSubmit}
+            @swc-prompt-field-stop=${this.stopGeneration}
+            @swc-prompt-field-upload-click=${this.handleUploadClick}
+            @swc-prompt-field-drop=${this.handleDrop}
+          >
+            ${this.renderAttachments()}
+            <p slot="legal" class="swc-Typography--links">
+              Responses are generated using AI, and may be inaccurate. Check
+              before using.
+              <a
+                href="https://www.adobe.com/legal/licenses-terms/adobe-gen-ai-user-guidelines.html"
+              >
+                AI User Guidelines
+              </a>
+            </p>
+          </swc-prompt-field>
+          <input
+            id=${this.fileInputId}
+            type="file"
+            multiple
+            hidden
+            @change=${this.handleExternalInput}
+          />
+        </div>
+      </div>
+    `;
+  }
+
+  private renderSidePanelLayout() {
+    return html`
+      <main
+        class="swc-ConversationFullPatternDemo-page swc-Typography--prose"
+        tabindex="0"
+        aria-labelledby=${this.pageHeadingId}
+      >
+        <h1 id=${this.pageHeadingId}>Q3 campaign report</h1>
+        ${DEMO_PAGE_SECTIONS.map(
+          (section) => html`
+            <h2>${section.heading}</h2>
+            <p>${section.body}</p>
+          `
+        )}
+      </main>
+      <aside
+        class="swc-ConversationFullPatternDemo-panel"
+        aria-labelledby=${this.panelHeadingId}
+      >
+        <div class="swc-ConversationFullPatternDemo-panelHeader">
+          <h2 id=${this.panelHeadingId} class="swc-Heading swc-Heading--sizeXS">
+            AI Assistant
+          </h2>
+        </div>
+        ${this.renderConversation()}
+      </aside>
+    `;
+  }
+
   protected override render() {
-    this.style.cssText =
-      'display:flex;flex-direction:column;block-size:90vb;max-block-size:100vh;overflow:hidden;box-sizing:border-box;';
+    const isSidePanel = this.config.layout === 'side-panel';
+
+    // The side panel host clips rather than hides overflow so it can't become
+    // a scroll container that `focus()` scrolls sideways (see `-panel`).
+    this.style.cssText = isSidePanel
+      ? 'display:flex;block-size:100vb;overflow:clip;box-sizing:border-box;'
+      : 'display:flex;flex-direction:column;block-size:90vb;max-block-size:100vh;overflow:hidden;box-sizing:border-box;';
 
     return html`
       <style>
@@ -671,55 +820,60 @@ class ConversationFullPatternDemo extends LitElement {
           flex-shrink: 0;
           padding-block-start: 8px;
         }
+
+        .swc-ConversationFullPatternDemo-page {
+          flex: 1;
+          min-inline-size: 0;
+          overflow-y: auto;
+          padding: 32px 40px;
+          box-sizing: border-box;
+          background-color: var(--swc-background-layer-1-color);
+        }
+
+        .swc-ConversationFullPatternDemo-page:focus-visible {
+          outline: var(--swc-focus-indicator-thickness) solid
+            var(--swc-focus-indicator-color);
+          outline-offset: calc(-1 * var(--swc-focus-indicator-thickness));
+        }
+
+        /*
+         * Positioned shell for a future overlay (such as a source list drawer)
+         * that fills the panel. overflow: clip, not hidden, so focus() can't
+         * scroll the panel sideways while the overlay slides in.
+         */
+        .swc-ConversationFullPatternDemo-panel {
+          position: relative;
+          overflow: clip;
+          flex: 0 0 360px;
+          inline-size: 360px;
+          block-size: 100%;
+          box-sizing: border-box;
+          display: flex;
+          flex-direction: column;
+          border-inline-start: var(--swc-border-width-100) solid
+            var(--swc-gray-200);
+          background-color: var(--swc-background-layer-2-color);
+        }
+
+        .swc-ConversationFullPatternDemo-panelHeader {
+          flex-shrink: 0;
+          padding: 16px 16px 8px;
+        }
+
+        .swc-ConversationFullPatternDemo-panelHeader h2 {
+          margin: 0;
+        }
+
+        .swc-ConversationFullPatternDemo-shell--sidePanel {
+          flex: 1;
+          min-block-size: 0;
+          block-size: auto;
+          max-inline-size: none;
+          margin: 0;
+          padding: 0 12px 12px;
+        }
       </style>
-      <div
-        class="swc-ConversationFullPatternDemo-shell"
-        @swc-message-feedback-change=${this.handleFeedback}
-        @swc-suggestion=${this.handleSuggestion}
-        @swc-upload-attachment-dismiss=${this.handleDismiss}
-        @swc-message-sources-toggle=${this.handleSourcesToggle}
-      >
-        <div class="swc-ConversationFullPatternDemo-scroll">
-          <swc-conversation-thread>
-            ${this.renderTurns()}
-          </swc-conversation-thread>
-        </div>
-        <div class="swc-ConversationFullPatternDemo-composer">
-          <swc-prompt-field
-            .value=${this.promptValue}
-            ?generating=${this.isGenerating}
-            variant=${this.config.variant}
-            size=${this.config.size}
-            loader=${this.config.loader}
-            ?animate-loader=${this.config['animate-loader']}
-            placeholder=${this.config.placeholder}
-            ?disabled=${this.config.disabled}
-            @swc-prompt-field-input=${this.handlePromptInput}
-            @swc-prompt-field-submit=${this.handlePromptSubmit}
-            @swc-prompt-field-stop=${this.stopGeneration}
-            @swc-prompt-field-upload-click=${this.handleUploadClick}
-            @swc-prompt-field-drop=${this.handleDrop}
-          >
-            ${this.renderAttachments()}
-            <p slot="legal" class="swc-Typography--links">
-              Responses are generated using AI, and may be inaccurate. Check
-              before using.
-              <a
-                href="https://www.adobe.com/legal/licenses-terms/adobe-gen-ai-user-guidelines.html"
-              >
-                AI User Guidelines
-              </a>
-            </p>
-          </swc-prompt-field>
-          <input
-            id=${this.fileInputId}
-            type="file"
-            multiple
-            hidden
-            @change=${this.handleExternalInput}
-          />
-        </div>
-      </div>
+      ${isSidePanel ? this.renderSidePanelLayout() : this.renderConversation()}
     `;
   }
 }
@@ -795,7 +949,10 @@ export const Playground: Story<PlaygroundArgs> = {
   render: renderFullPattern,
   parameters: {
     docs: {
+      // An iframe keeps the side panel layout's full-height panel and
+      // independent scroll regions usable on the docs page.
       story: {
+        inline: false,
         height: '600px',
       },
       source: {
