@@ -25,7 +25,6 @@ import '../suggestion/swc-suggestion-group.js';
 import '../suggestion-item/swc-suggestion-item.js';
 import '../prompt-field/swc-prompt-field.js';
 import '../upload-attachment/swc-upload-attachment.js';
-import '@adobe/spectrum-wc/components/badge/swc-badge.js';
 
 import {
   PIXEL_LOADER_ICON_NAMES,
@@ -37,6 +36,8 @@ import {
   revokeAttachments,
   type UploadAttachmentData,
 } from '../upload-attachment/index.js';
+import type { UserMessageType } from '../user-message/index.js';
+import { renderAttachmentPreview } from './attachment-preview.js';
 
 // ────────────────
 //    METADATA
@@ -49,6 +50,7 @@ type PlaygroundArgs = {
   'animate-loader': boolean;
   placeholder: string;
   disabled: boolean;
+  'attachment-type': Exclude<UserMessageType, 'copy'>;
   'step-duration': number;
   'show-feedback': boolean;
   'show-sources': boolean;
@@ -63,6 +65,7 @@ const DEFAULT_PLAYGROUND_ARGS: PlaygroundArgs = {
   placeholder:
     'Ready to get started? Ask a question, share an idea, or add a task.',
   disabled: false,
+  'attachment-type': 'media',
   'step-duration': 2200,
   'show-feedback': true,
   'show-sources': true,
@@ -95,6 +98,13 @@ const meta: Meta<PlaygroundArgs> = {
     'animate-loader': { table: { category: 'Prompt field' } },
     placeholder: { table: { category: 'Prompt field' } },
     disabled: { table: { category: 'Prompt field' } },
+    'attachment-type': {
+      description:
+        'Presentation for newly uploaded files. Existing attachments keep their type after sending.',
+      control: { type: 'select' },
+      options: ['media', 'card'],
+      table: { category: 'Prompt field' },
+    },
     'step-duration': {
       description: 'Milliseconds each response status step stays active.',
       control: { type: 'range', min: 500, max: 5000, step: 100 },
@@ -114,32 +124,35 @@ const meta: Meta<PlaygroundArgs> = {
 export { meta };
 export default meta;
 
-const renderDemoAttachmentThumbnail = (
-  attachment: UploadAttachmentData
-): ReturnType<typeof html> =>
-  attachment.thumbnailUrl
-    ? html`
-        <img
-          slot="thumbnail"
-          src=${attachment.thumbnailUrl}
-          alt=${attachment.name}
-          style="inline-size:100%;block-size:100%;object-fit:cover;"
-        />
-      `
-    : html`
-        <div
-          slot="thumbnail"
-          role="img"
-          aria-label=${attachment.name}
-          style="inline-size:100%;block-size:100%;background:#f3f3f3;"
-        ></div>
-      `;
+type DemoAttachment = UploadAttachmentData & {
+  type: Exclude<UserMessageType, 'copy'>;
+};
+
+const renderDemoAttachment = (
+  attachment: DemoAttachment,
+  sent: boolean
+) => html`
+  <swc-upload-attachment
+    slot=${sent ? 'thumbnail' : 'attachment'}
+    type=${attachment.type}
+    ?dismissible=${!sent}
+    accessible-label=${`${attachment.name}, ${attachment.sizeLabel}`}
+    data-attachment-id=${attachment.id}
+  >
+    ${renderAttachmentPreview({
+      fileName: attachment.name,
+      src: attachment.thumbnailUrl,
+    })}
+    <span slot="title">${attachment.name}</span>
+    <span slot="subtitle">${attachment.sizeLabel}</span>
+  </swc-upload-attachment>
+`;
 
 type DemoTurn = {
   id: string;
   role: 'user' | 'system';
   text: string;
-  attachments?: UploadAttachmentData[];
+  attachments?: DemoAttachment[];
   loading?: boolean;
 
   /** Index of the step currently active while `loading`. Advances on a timer
@@ -244,7 +257,7 @@ class ConversationFullPatternDemo extends LitElement {
   ];
 
   @state()
-  private attachments: UploadAttachmentData[] = [];
+  private attachments: DemoAttachment[] = [];
 
   @state()
   private promptValue = '';
@@ -258,6 +271,22 @@ class ConversationFullPatternDemo extends LitElement {
   private responseTargetId: string | null = null;
   private lastPrompt = '';
 
+  public override connectedCallback(): void {
+    super.connectedCallback();
+    const restorePreview = (attachment: DemoAttachment): DemoAttachment => {
+      if (!attachment.thumbnailUrl) {
+        return attachment;
+      }
+      const [{ thumbnailUrl }] = filesToAttachments([attachment.file]);
+      return { ...attachment, thumbnailUrl };
+    };
+    this.attachments = this.attachments.map(restorePreview);
+    this.turns = this.turns.map((turn) => ({
+      ...turn,
+      attachments: turn.attachments?.map(restorePreview),
+    }));
+  }
+
   public override disconnectedCallback(): void {
     if (this.responseTimer !== null) {
       window.clearTimeout(this.responseTimer);
@@ -267,11 +296,9 @@ class ConversationFullPatternDemo extends LitElement {
     // Submitted attachments stay visible in the thread, so their thumbnails
     // are released here rather than on submit.
     revokeAttachments(this.attachments);
-    this.attachments = [];
     for (const turn of this.turns) {
       revokeAttachments(turn.attachments ?? []);
     }
-    this.turns = this.turns.map(({ attachments: _revoked, ...turn }) => turn);
     super.disconnectedCallback();
   }
 
@@ -422,7 +449,13 @@ class ConversationFullPatternDemo extends LitElement {
     if (!files.length) {
       return;
     }
-    this.attachments = [...this.attachments, ...filesToAttachments(files)];
+    this.attachments = [
+      ...this.attachments,
+      ...filesToAttachments(files).map((attachment) => ({
+        ...attachment,
+        type: this.config['attachment-type'],
+      })),
+    ];
   }
 
   private handleUploadClick = (event: Event): void => {
@@ -504,24 +537,27 @@ class ConversationFullPatternDemo extends LitElement {
     return this.turns.map((turn) => {
       if (turn.role === 'user') {
         return html`
-          ${(turn.attachments ?? []).map(
-            (attachment) => html`
-              <swc-conversation-turn type="user">
-                <swc-user-message type="media">
-                  ${renderDemoAttachmentThumbnail(attachment)}
-                  <span slot="title">${attachment.name}</span>
-                  <span slot="subtitle">${attachment.sizeLabel}</span>
-                </swc-user-message>
-              </swc-conversation-turn>
-            `
-          )}
-          ${turn.text
-            ? html`
-                <swc-conversation-turn type="user">
+          <swc-conversation-turn type="user">
+            ${(['media', 'card'] as const).map((type) => {
+              const attachments = (turn.attachments ?? []).filter(
+                (attachment) => attachment.type === type
+              );
+              return attachments.length
+                ? html`
+                    <swc-user-message type=${type}>
+                      ${attachments.map((attachment) =>
+                        renderDemoAttachment(attachment, true)
+                      )}
+                    </swc-user-message>
+                  `
+                : '';
+            })}
+            ${turn.text
+              ? html`
                   <swc-user-message>${turn.text}</swc-user-message>
-                </swc-conversation-turn>
-              `
-            : ''}
+                `
+              : ''}
+          </swc-conversation-turn>
         `;
       }
 
@@ -591,26 +627,8 @@ class ConversationFullPatternDemo extends LitElement {
   }
 
   private renderAttachments() {
-    return this.attachments.map(
-      (attachment) => html`
-        <swc-upload-attachment
-          slot="attachment"
-          type="media"
-          dismissible
-          accessible-label=${`${attachment.name}, ${attachment.sizeLabel}`}
-          dismiss-label=${`Remove ${attachment.name}`}
-          data-attachment-id=${attachment.id}
-        >
-          ${renderDemoAttachmentThumbnail(attachment)}
-          ${attachment.thumbnailUrl
-            ? ''
-            : html`
-                <swc-badge slot="badge" size="s" subtle>
-                  ${attachment.badgeLabel ?? 'FILE'}
-                </swc-badge>
-              `}
-        </swc-upload-attachment>
-      `
+    return this.attachments.map((attachment) =>
+      renderDemoAttachment(attachment, false)
     );
   }
 
@@ -750,7 +768,6 @@ const fullPatternSource = `<div style="max-width:800px; margin:auto; padding:24p
         aria-label="Hilton commercial assets"
         style="inline-size:100%;block-size:100%;background:#f3f3f3;"
       ></div>
-      <swc-badge slot="badge" size="s" subtle>PDF</swc-badge>
     </swc-upload-attachment>
     <p slot="legal" class="swc-Typography--links">
       Responses are generated using AI, and may be inaccurate. Check before
