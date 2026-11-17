@@ -79,7 +79,6 @@
   background-color: var(--_swc-toast-container-layer-background-color);
   border-radius: token("corner-radius-700");
   box-shadow: token("drop-shadow-elevated");
-  pointer-events: none;
   translate: 0 0 calc(-1 * token("spacing-200") * var(--_swc-toast-container-layer-index));
 }
 
@@ -93,6 +92,67 @@
 
 .swc-ToastContainer-layer--negative {
   --_swc-toast-container-layer-background-color: token("negative-background-color-default");
+}
+
+/*
+ * The expanded view is a modal dialog that lists every toast. It sits flush
+ * with the anchored edge, the newest toast nearest that edge, and the controls
+ * on the far side. The UA shows a closed dialog as `display: none`, so the
+ * layout applies only while it is modal.
+ */
+.swc-ToastContainer--expanded {
+  inset-block: auto 0;
+  flex-direction: column-reverse;
+  max-block-size: 100%;
+  overflow: visible;
+  perspective: none;
+}
+
+.swc-ToastContainer--expanded:where(.swc-ToastContainer--top, .swc-ToastContainer--top-end) {
+  inset-block: 0 auto;
+  flex-direction: column;
+}
+
+.swc-ToastContainer--expanded:where(:modal) {
+  display: flex;
+}
+
+.swc-ToastContainer--expanded::backdrop {
+  background-color: token("transparent-static-black-500");
+}
+
+/* The padding keeps focus rings inside the scrolling list; the negative margin keeps the toasts aligned with the region. */
+.swc-ToastContainer-list {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column-reverse;
+  gap: token("spacing-100");
+  min-block-size: 0;
+  padding: token("spacing-100");
+  padding-block-end: token("spacing-300");
+  margin-inline: calc(-1 * token("spacing-100"));
+  overflow: auto;
+}
+
+:where(.swc-ToastContainer--top, .swc-ToastContainer--top-end) .swc-ToastContainer-list {
+  flex-direction: column;
+  padding-block: token("spacing-300") token("spacing-100");
+}
+
+/* Every listed toast takes the width of the widest one. Focus rings are white for contrast against the scrim. */
+.swc-ToastContainer-list > :where(swc-toast) {
+  --swc-toast-focus-indicator-color: token("static-white-focus-indicator-color");
+
+  flex-shrink: 0;
+  align-self: stretch;
+}
+
+.swc-ToastContainer-controls {
+  --swc-action-button-focus-indicator-color: token("static-white-focus-indicator-color");
+
+  display: flex;
+  gap: token("spacing-100");
+  justify-content: flex-end;
 }
 
 @media (forced-colors: active) {

@@ -404,6 +404,13 @@ export const Action: Story<ToastContainerArgs> = {
   tags: ['behaviors'],
 };
 
+export const ExpandedView: Story<ToastContainerArgs> = {
+  ...Overview,
+  play: ({ args }) => addStack(args, 4),
+  parameters: { docs: { story: { inline: false, height: '480px' } } },
+  tags: ['behaviors'],
+};
+
 // ──────────────────────────
 //    ACCESSIBILITY STORY
 // ──────────────────────────

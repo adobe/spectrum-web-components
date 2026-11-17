@@ -17,13 +17,16 @@ import {
   TemplateResult,
 } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
+import { repeat } from 'lit/directives/repeat.js';
 import { styleMap } from 'lit/directives/style-map.js';
 
 import {
   ToastContainerBase,
   ToastQueue,
+  type ToastQueueEntry,
 } from '@adobe/spectrum-wc-core/components/toast-container/index.js';
 
+import '../action-button/swc-action-button.js';
 import './swc-toast.js';
 
 import { uniqueId } from '../../utils/id.js';
@@ -35,7 +38,8 @@ import styles from './toast-container.css';
 const VISIBLE_LAYER_COUNT = 2;
 
 /**
- * Renders the front queued notification in a named region.
+ * Renders queued notifications in a named region: the front toast with a
+ * stack behind it, or every toast in a modal list while expanded.
  *
  * @element swc-toast-container
  * @since 2.0.0
@@ -46,12 +50,18 @@ export class ToastContainer extends ToastContainerBase {
   // ────────────────────
 
   protected override get currentToast(): Toast | undefined {
-    return this._toast;
+    const key = this.frontEntry?.key;
+    return key ? this._toasts.get(key) : undefined;
+  }
+
+  protected override get renderedToasts(): ReadonlyMap<string, Toast> {
+    return this._toasts;
   }
 
   protected override get region(): HTMLElement | undefined {
     return (
-      this.renderRoot.querySelector<HTMLElement>('[role="region"]') ?? undefined
+      this.renderRoot.querySelector<HTMLElement>('.swc-ToastContainer') ??
+      undefined
     );
   }
 
@@ -59,8 +69,8 @@ export class ToastContainer extends ToastContainerBase {
   //     RENDERING & STYLING
   // ──────────────────────────────
 
-  private _toast?: Toast;
-  private _renderedKey?: string;
+  // The toast elements to render, by queue key, in queue order.
+  private _toasts = new Map<string, Toast>();
   private _shownKey?: string;
 
   public static override get styles(): CSSResultArray {
@@ -69,16 +79,63 @@ export class ToastContainer extends ToastContainerBase {
 
   protected override willUpdate(changes: PropertyValues): void {
     super.willUpdate(changes);
-    const entry = this.frontEntry;
-    if (!entry) {
-      this._toast = undefined;
-      this._renderedKey = undefined;
-      return;
+    const entries = ToastQueue.entries;
+    const front = entries[0];
+    // Collapsed, only the front entry is a real toast; the layers behind it are empty (Q14).
+    const shown = this.expanded ? entries : entries.slice(0, 1);
+    const toasts = new Map<string, Toast>();
+    for (const entry of shown) {
+      // Only the front toast announces. The others in the expanded list were announced when they were in front.
+      toasts.set(
+        entry.key,
+        this._toasts.get(entry.key) ?? this.createToast(entry, entry === front)
+      );
     }
-    if (entry.key === this._renderedKey) {
-      return;
+    this._toasts = toasts;
+    for (const [key, toast] of toasts) {
+      // A toast pushed back from the front stops being a live region. The reverse is never done:
+      // giving an existing toast `role="alert"` can make screen readers announce it again.
+      if (key !== front?.key && toast.announces) {
+        toast.announces = false;
+        toast.requestUpdate();
+      }
+      toast.showAllLabel =
+        !this.expanded && key === front?.key && entries.length > 1
+          ? this.showAllLabel
+          : undefined;
+      // The list opens away from the anchored edge.
+      toast.showAllDirection = this.placement.startsWith('top') ? 'down' : 'up';
     }
+  }
+
+  protected override updated(changes: PropertyValues): void {
+    const region = this.region;
+    const frontKey = this.frontEntry?.key;
+    // The expanded view is a modal dialog, which the base class shows.
+    if (region && !this.expanded) {
+      // Re-showing moves the region to the end of the top layer, above anything opened since.
+      if (region.matches(':popover-open') && this._shownKey !== frontKey) {
+        region.hidePopover();
+      }
+      if (!region.matches(':popover-open')) {
+        region.showPopover();
+      }
+    }
+    this._shownKey = region && !this.expanded ? frontKey : undefined;
+    // The base class opens the toasts, so the surface must be shown first (a hidden popover is display: none).
+    super.updated(changes);
+  }
+
+  protected override render(): TemplateResult | typeof nothing {
+    if (this._toasts.size === 0) {
+      return nothing;
+    }
+    return this.expanded ? this.renderExpanded() : this.renderCollapsed();
+  }
+
+  private createToast(entry: ToastQueueEntry, announces: boolean): Toast {
     const toast = this.ownerDocument.createElement('swc-toast');
+    toast.announces = announces;
     toast.variant = entry.variant ?? 'neutral';
     toast.iconLabel = entry.iconLabel;
     toast.closeLabel = entry.closeLabel;
@@ -88,34 +145,10 @@ export class ToastContainer extends ToastContainerBase {
     message.id = uniqueId('toast-message');
     message.textContent = entry.message;
     toast.append(message);
-    this._toast = toast;
-    this._renderedKey = entry.key;
+    return toast;
   }
 
-  protected override updated(changes: PropertyValues): void {
-    const region = this.region;
-    if (region) {
-      // Re-showing moves the region to the end of the top layer, above anything opened since.
-      if (
-        region.matches(':popover-open') &&
-        this._shownKey !== this._renderedKey
-      ) {
-        region.hidePopover();
-      }
-      if (!region.matches(':popover-open')) {
-        region.showPopover();
-      }
-    }
-    this._shownKey = region ? this._renderedKey : undefined;
-    // The base class opens the toast, so the region must be shown first (a hidden popover is display: none).
-    super.updated(changes);
-  }
-
-  protected override render(): TemplateResult | typeof nothing {
-    if (!this._toast) {
-      return nothing;
-    }
-    const count = ToastQueue.entries.length;
+  private renderCollapsed(): TemplateResult {
     const layers = this.layerEntries.slice(0, VISIBLE_LAYER_COUNT);
     return html`
       <div
@@ -127,7 +160,8 @@ export class ToastContainer extends ToastContainerBase {
         role="region"
         popover="manual"
         tabindex="-1"
-        aria-label=${this.getRegionLabel(count)}
+        aria-label=${this.getRegionLabel(ToastQueue.entries.length)}
+        @click=${this.handleRegionClick}
         @pointerenter=${this.handlePointerEnter}
         @pointerleave=${this.handlePointerLeave}
         @pointerdown=${this.handlePointerDown}
@@ -137,6 +171,7 @@ export class ToastContainer extends ToastContainerBase {
         @swc-close=${this.handleClose}
         @swc-after-close=${this.handleAfterClose}
         @swc-toast-action=${this.handleAction}
+        @swc-toast-expand=${this.handleExpand}
       >
         ${layers.map((entry, index) => {
           const depth = index + 1;
@@ -154,8 +189,46 @@ export class ToastContainer extends ToastContainerBase {
             ></div>
           `;
         })}
-        ${this._toast}
+        ${this.currentToast}
       </div>
+    `;
+  }
+
+  private renderExpanded(): TemplateResult {
+    return html`
+      <dialog
+        class=${classMap({
+          ['swc-ToastContainer']: true,
+          [`swc-ToastContainer--${this.placement}`]: true,
+          ['swc-ToastContainer--expanded']: true,
+        })}
+        aria-label=${this.getRegionLabel(ToastQueue.entries.length)}
+        @cancel=${this.handleCancel}
+        @close=${this.handleDialogClose}
+        @pointerdown=${this.handleDialogPointerDown}
+        @keydown=${this.handleKeyDown}
+        @focusin=${this.handleFocusIn}
+        @focusout=${this.handleFocusOut}
+        @swc-close=${this.handleClose}
+        @swc-after-close=${this.handleAfterClose}
+        @swc-toast-action=${this.handleAction}
+      >
+        <div class="swc-ToastContainer-list">
+          ${repeat(
+            this._toasts,
+            ([key]) => key,
+            ([, toast]) => toast
+          )}
+        </div>
+        <div class="swc-ToastContainer-controls">
+          <swc-action-button size="s" @click=${this.handleClearAllClick}>
+            ${this.clearAllLabel}
+          </swc-action-button>
+          <swc-action-button size="s" @click=${this.handleCollapseClick}>
+            ${this.collapseLabel}
+          </swc-action-button>
+        </div>
+      </dialog>
     `;
   }
 }

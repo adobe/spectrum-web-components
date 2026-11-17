@@ -13,6 +13,8 @@ import { html } from 'lit';
 import { expect, fn, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getComponent, withWarningSpy } from '@swc-test-helpers/dom';
+import { vi } from 'vitest';
+import { userEvent } from 'vitest/browser';
 
 import {
   ToastQueue,
@@ -21,10 +23,14 @@ import {
 import {
   deepContains,
   getActiveElement,
+  registerDismissible,
+  unregisterDismissible,
 } from '@adobe/spectrum-wc-core/utils/index.js';
 
 import '../swc-toast-container.js';
 import '@adobe/spectrum-wc/components/button/swc-button.js';
+import '@adobe/spectrum-wc/components/popover/swc-popover.js';
+import '@adobe/spectrum-wc/components/tooltip/swc-tooltip.js';
 
 import { ToastQueue as RenderingToastQueue } from '../index.js';
 import type { Toast } from '../Toast.js';
@@ -1666,5 +1672,679 @@ export const LayeringFixture: Story = {
       </dialog>
       <swc-toast-container .placement=${args.placement}></swc-toast-container>
     `;
+  },
+};
+
+// ──────────────────────────
+//     EXPANDED VIEW
+// ──────────────────────────
+
+const getDialog = (container: ToastContainer): HTMLDialogElement | null =>
+  container.shadowRoot!.querySelector<HTMLDialogElement>('dialog');
+
+const renderedToasts = (container: ToastContainer): Toast[] => [
+  ...container.shadowRoot!.querySelectorAll<Toast>('swc-toast'),
+];
+
+const showAllOf = (toast: Toast): HTMLElement | null =>
+  toast.shadowRoot!.querySelector<HTMLElement>('.swc-Toast-showAll');
+
+const controlOf = (container: ToastContainer, label: string): HTMLElement =>
+  [
+    ...container.shadowRoot!.querySelectorAll<HTMLElement>(
+      '.swc-ToastContainer-controls swc-action-button'
+    ),
+  ].find((button) => button.textContent?.trim() === label)!;
+
+const waitForExpanded = async (
+  container: ToastContainer,
+  expanded: boolean
+): Promise<void> => {
+  await waitFor(() =>
+    expect(Boolean(getDialog(container)?.open), 'expanded').toBe(expanded)
+  );
+  await container.updateComplete;
+};
+
+const addQueue = async (
+  container: ToastContainer,
+  messages: string[]
+): Promise<Toast> => {
+  for (const message of [...messages].reverse()) {
+    ToastQueue.add(message);
+  }
+  return getFront(container);
+};
+
+export const ExpandTriggersTest: Story = {
+  play: async ({ canvasElement, step }) => {
+    ToastQueue.clear();
+    const container = await getComponent<ToastContainer>(
+      canvasElement,
+      'swc-toast-container'
+    );
+    try {
+      await step('Show all appears only with two or more toasts', async () => {
+        ToastQueue.add('Only');
+        const single = await getFront(container);
+        expect(showAllOf(single), 'Show all with one toast').toBeNull();
+        ToastQueue.add('Newer');
+        const front = await getFront(container);
+        await front.updateComplete;
+        expect(showAllOf(front)?.textContent?.trim(), 'Show all label').toBe(
+          'Show all'
+        );
+      });
+
+      await step(
+        'Show all opens a modal list of real toasts and focuses the front toast',
+        async () => {
+          const front = await getFront(container);
+          showAllOf(front)!.click();
+          await waitForExpanded(container, true);
+          expect(getDialog(container)!.matches(':modal'), 'modal').toBe(true);
+          const toasts = renderedToasts(container);
+          expect(
+            toasts.map((toast) => toast.textContent),
+            'listed toasts'
+          ).toEqual(['Newer', 'Only']);
+          expect(
+            toasts.every(
+              (toast) => toast.getAttribute('role') === 'alertdialog'
+            ),
+            'every toast is an alertdialog'
+          ).toBe(true);
+          expect(toasts[0], 'front toast element is kept').toBe(front);
+          expect(getActiveElement(document), 'focus').toBe(front);
+          expect(showAllOf(front), 'Show all while expanded').toBeNull();
+        }
+      );
+
+      await step('Collapse returns to the stack', async () => {
+        controlOf(container, 'Collapse').click();
+        await waitForExpanded(container, false);
+        expect(renderedToasts(container).length, 'rendered toasts').toBe(1);
+      });
+
+      await step('clicking the stack expands it', async () => {
+        const front = await getFront(container);
+        front.click();
+        await waitForExpanded(container, true);
+        controlOf(container, 'Collapse').click();
+        await waitForExpanded(container, false);
+      });
+
+      await step(
+        'clicking a layer behind the front toast expands it',
+        async () => {
+          await getFront(container);
+          const layer = container.shadowRoot!.querySelector<HTMLElement>(
+            '.swc-ToastContainer-layer'
+          )!;
+          // A real press on the strip that peeks above the front toast, so the
+          // layer must receive pointer events (a scripted click would not check).
+          const { width } = layer.getBoundingClientRect();
+          await userEvent.click(layer, { position: { x: width / 2, y: 2 } });
+          await waitForExpanded(container, true);
+          controlOf(container, 'Collapse').click();
+          await waitForExpanded(container, false);
+        }
+      );
+
+      await step(
+        'clicking the close button or the action does not expand',
+        async () => {
+          ToastQueue.add('With action', {
+            actionLabel: 'Undo',
+            onAction: fn(),
+          });
+          const front = await getFront(container);
+          front
+            .shadowRoot!.querySelector<HTMLElement>('.swc-Toast-action')!
+            .click();
+          await container.updateComplete;
+          expect(getDialog(container), 'dialog after action').toBeNull();
+          closeButtonOf(front).click();
+          await container.updateComplete;
+          expect(getDialog(container), 'dialog after close').toBeNull();
+        }
+      );
+    } finally {
+      ToastQueue.clear();
+    }
+  },
+};
+
+export const CollapseTriggersTest: Story = {
+  play: async ({ canvasElement, step }) => {
+    ToastQueue.clear();
+    const container = await getComponent<ToastContainer>(
+      canvasElement,
+      'swc-toast-container'
+    );
+    const region = (): HTMLElement =>
+      container.shadowRoot!.querySelector<HTMLElement>('[role="region"]')!;
+    const expand = async (): Promise<void> => {
+      const front = await getFront(container);
+      showAllOf(front)!.click();
+      await waitForExpanded(container, true);
+    };
+    try {
+      await addQueue(container, ['A', 'B', 'C']);
+
+      await step('Escape collapses and focuses the region', async () => {
+        await expand();
+        await userEvent.keyboard('{Escape}');
+        await waitForExpanded(container, false);
+        await waitFor(() =>
+          expect(getActiveElement(document), 'focus').toBe(region())
+        );
+      });
+
+      await step(
+        'Escape waits for a surface opened above the view',
+        async () => {
+          await expand();
+          const above = {};
+          registerDismissible(above);
+          try {
+            await userEvent.keyboard('{Escape}');
+            await container.updateComplete;
+            expect(getDialog(container)?.open, 'still expanded').toBe(true);
+          } finally {
+            unregisterDismissible(above);
+          }
+          await userEvent.keyboard('{Escape}');
+          await waitForExpanded(container, false);
+        }
+      );
+
+      await step('a scrim press collapses and focuses the region', async () => {
+        await expand();
+        getDialog(container)!.dispatchEvent(
+          new PointerEvent('pointerdown', {
+            bubbles: true,
+            clientX: 1,
+            clientY: 1,
+          })
+        );
+        await waitForExpanded(container, false);
+        expect(getActiveElement(document), 'focus').toBe(region());
+      });
+
+      await step('Collapse collapses and focuses the region', async () => {
+        await expand();
+        controlOf(container, 'Collapse').click();
+        await waitForExpanded(container, false);
+        expect(getActiveElement(document), 'focus').toBe(region());
+      });
+
+      await step('Clear all empties the queue and collapses', async () => {
+        await expand();
+        controlOf(container, 'Clear all').click();
+        await waitFor(() =>
+          expect(ToastQueue.entries.length, 'queue size').toBe(0)
+        );
+        await waitForExpanded(container, false);
+      });
+
+      await step('the view collapses when the queue empties', async () => {
+        await addQueue(container, ['D', 'E']);
+        await expand();
+        for (const toast of renderedToasts(container)) {
+          toast.close();
+        }
+        await waitFor(() =>
+          expect(ToastQueue.entries.length, 'queue size').toBe(0)
+        );
+        await waitForExpanded(container, false);
+        expect(
+          getActiveElement(document),
+          'focus does not move to a region'
+        ).not.toBe(region());
+      });
+    } finally {
+      ToastQueue.clear();
+    }
+  },
+};
+
+export const ExpandedFocusTest: Story = {
+  render: () => html`
+    <button id="trigger">Add notification</button>
+    <swc-toast-container></swc-toast-container>
+    <button id="outside">Outside region</button>
+  `,
+  play: async ({ canvasElement, step }) => {
+    ToastQueue.clear();
+    const container = await getComponent<ToastContainer>(
+      canvasElement,
+      'swc-toast-container'
+    );
+    const outside = canvasElement.querySelector<HTMLElement>('#outside')!;
+    const describe = (element: Element | null): string => {
+      const toasts = renderedToasts(container);
+      const index = toasts.findIndex(
+        (toast) => toast === element || deepContains(toast, element)
+      );
+      if (index !== -1) {
+        return toasts[index] === element ? `toast ${index}` : `close ${index}`;
+      }
+      const control = [
+        ...container.shadowRoot!.querySelectorAll<HTMLElement>(
+          'swc-action-button'
+        ),
+      ].find((button) => button === element || deepContains(button, element));
+      return control?.textContent?.trim() ?? element?.localName ?? 'none';
+    };
+    try {
+      const front = await addQueue(container, ['A', 'B']);
+      showAllOf(front)!.click();
+      await waitForExpanded(container, true);
+
+      await step('the page behind the view is inert', () => {
+        outside.focus();
+        expect(getActiveElement(document), 'focus').not.toBe(outside);
+      });
+
+      await step('page scroll is locked', () => {
+        expect(document.documentElement.style.overflow, 'overflow').toBe(
+          'hidden'
+        );
+      });
+
+      await step(
+        'Tab moves through each toast, then the controls',
+        async () => {
+          front.focus();
+          const order = [describe(getActiveElement(document))];
+          for (let press = 0; press < 5; press++) {
+            await userEvent.keyboard('{Tab}');
+            order.push(describe(getActiveElement(document)));
+          }
+          expect(order, 'Tab order').toEqual([
+            'toast 0',
+            'close 0',
+            'toast 1',
+            'close 1',
+            'Clear all',
+            'Collapse',
+          ]);
+        }
+      );
+
+      await step('adding a toast keeps focus where it is', async () => {
+        const second = renderedToasts(container)[1];
+        second.focus();
+        ToastQueue.add('Newest');
+        await waitFor(() =>
+          expect(renderedToasts(container).length, 'rendered toasts').toBe(3)
+        );
+        await container.updateComplete;
+        expect(getActiveElement(document), 'focus').toBe(second);
+      });
+
+      await step(
+        'closing a focused toast focuses the nearest toast',
+        async () => {
+          const [newest, middle] = renderedToasts(container);
+          closeButtonOf(middle).focus();
+          closeButtonOf(middle).click();
+          await waitFor(() =>
+            expect(getActiveElement(document), 'focus').toBe(newest)
+          );
+        }
+      );
+
+      await step('scroll unlocks after collapsing', async () => {
+        controlOf(container, 'Collapse').click();
+        await waitForExpanded(container, false);
+        expect(document.documentElement.style.overflow, 'overflow').toBe('');
+      });
+    } finally {
+      ToastQueue.clear();
+    }
+  },
+};
+
+export const ExpandedAnnouncementTest: Story = {
+  play: async ({ canvasElement, step }) => {
+    ToastQueue.clear();
+    const container = await getComponent<ToastContainer>(
+      canvasElement,
+      'swc-toast-container'
+    );
+    const liveRegionOf = (toast: Toast): Element =>
+      toast.shadowRoot!.querySelector('.swc-Toast-body')!;
+    try {
+      const front = await addQueue(container, ['A', 'B', 'C']);
+      showAllOf(front)!.click();
+      await waitForExpanded(container, true);
+
+      await step(
+        'toasts shown only in the list are not announced again',
+        async () => {
+          const [, ...behind] = renderedToasts(container);
+          await Promise.all(behind.map((toast) => toast.updateComplete));
+          expect(liveRegionOf(front).getAttribute('role'), 'front').toBe(
+            'alert'
+          );
+          for (const toast of behind) {
+            expect(
+              liveRegionOf(toast).hasAttribute('role'),
+              `${toast.textContent} live region`
+            ).toBe(false);
+            expect(
+              liveRegionOf(toast).querySelector('slot'),
+              `${toast.textContent} content shown at once`
+            ).not.toBeNull();
+          }
+        }
+      );
+
+      await step(
+        'a toast added while expanded is the only live region',
+        async () => {
+          ToastQueue.add('Newest');
+          await waitFor(() =>
+            expect(renderedToasts(container).length, 'rendered toasts').toBe(4)
+          );
+          const toasts = renderedToasts(container);
+          await Promise.all(toasts.map((toast) => toast.updateComplete));
+          expect(
+            toasts.map((toast) => liveRegionOf(toast).getAttribute('role')),
+            'live regions'
+          ).toEqual(['alert', null, null, null]);
+        }
+      );
+    } finally {
+      ToastQueue.clear();
+    }
+  },
+};
+
+export const ExpandedTimeoutTest: Story = {
+  play: async ({ canvasElement, step }) => {
+    ToastQueue.clear();
+    const container = await getComponent<ToastContainer>(
+      canvasElement,
+      'swc-toast-container'
+    );
+    try {
+      ToastQueue.add('Older', { timeout: 6000 });
+      ToastQueue.add('Newer', { timeout: 6000 });
+      const front = await getFront(container);
+      vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout', 'Date'] });
+      showAllOf(front)!.click();
+      await waitForExpanded(container, true);
+
+      await step('no toast auto-dismisses while expanded', async () => {
+        vi.advanceTimersByTime(20000);
+        await container.updateComplete;
+        expect(ToastQueue.entries.length, 'queue size').toBe(2);
+      });
+
+      await step(
+        'the front toast gets a fresh timeout after collapsing',
+        async () => {
+          controlOf(container, 'Collapse').click();
+          await waitForExpanded(container, false);
+          // Focus on the region pauses the countdown, as it does for any focus in the region.
+          container.blur();
+          (getActiveElement(document) as HTMLElement | null)?.blur();
+          await container.updateComplete;
+          vi.advanceTimersByTime(5000);
+          expect(ToastQueue.entries.length, 'before the timeout').toBe(2);
+          vi.advanceTimersByTime(1500);
+          vi.useRealTimers();
+          await waitFor(() =>
+            expect(ToastQueue.entries.length, 'after the timeout').toBe(1)
+          );
+        }
+      );
+    } finally {
+      vi.useRealTimers();
+      ToastQueue.clear();
+    }
+  },
+};
+
+export const PeekHoverPauseTest: Story = {
+  render: () => html`
+    <button id="away">Away from the toasts</button>
+    <swc-toast-container></swc-toast-container>
+  `,
+  play: async ({ canvasElement, step }) => {
+    ToastQueue.clear();
+    const container = await getComponent<ToastContainer>(
+      canvasElement,
+      'swc-toast-container'
+    );
+    const away = canvasElement.querySelector<HTMLElement>('#away')!;
+    try {
+      vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout', 'Date'] });
+      ToastQueue.add('Older', { timeout: 6000 });
+      ToastQueue.add('Newer', { timeout: 6000 });
+      await getFront(container);
+
+      await step(
+        'a pointer on the peek behind the front toast pauses its countdown',
+        async () => {
+          const layer = container.shadowRoot!.querySelector<HTMLElement>(
+            '.swc-ToastContainer-layer'
+          )!;
+          const { width } = layer.getBoundingClientRect();
+          await userEvent.hover(layer, { position: { x: width / 2, y: 2 } });
+          vi.advanceTimersByTime(20000);
+          expect(ToastQueue.entries.length, 'queue size').toBe(2);
+        }
+      );
+
+      await step('leaving the peek resumes the countdown', async () => {
+        await userEvent.hover(away);
+        vi.advanceTimersByTime(6500);
+        vi.useRealTimers();
+        await waitFor(() =>
+          expect(ToastQueue.entries.length, 'queue size').toBe(1)
+        );
+      });
+    } finally {
+      vi.useRealTimers();
+      ToastQueue.clear();
+    }
+  },
+};
+
+export const ExpandedActionTest: Story = {
+  play: async ({ canvasElement, step }) => {
+    ToastQueue.clear();
+    const container = await getComponent<ToastContainer>(
+      canvasElement,
+      'swc-toast-container'
+    );
+    const onAction = fn();
+    try {
+      ToastQueue.add('Oldest');
+      ToastQueue.add('With action', {
+        actionLabel: 'Undo',
+        onAction,
+        shouldCloseOnAction: true,
+      });
+      const front = await addQueue(container, ['Newest']);
+      showAllOf(front)!.click();
+      await waitForExpanded(container, true);
+
+      await step(
+        'an action in the list calls onAction, closes that toast, and focuses the nearest toast',
+        async () => {
+          const [newest, withAction] = renderedToasts(container);
+          const action =
+            withAction.shadowRoot!.querySelector<HTMLElement>(
+              '.swc-Toast-action'
+            )!;
+          action.focus();
+          action.click();
+          expect(onAction, 'onAction').toHaveBeenCalledTimes(1);
+          await waitFor(() =>
+            expect(
+              ToastQueue.entries.map((entry) => entry.message),
+              'queue'
+            ).toEqual(['Newest', 'Oldest'])
+          );
+          expect(getActiveElement(document), 'focus').toBe(newest);
+          expect(getDialog(container)?.open, 'still expanded').toBe(true);
+        }
+      );
+    } finally {
+      ToastQueue.clear();
+    }
+  },
+};
+
+// Q16: how the expanded view behaves next to other open surfaces.
+export const ExpandedOverPopoverTest: Story = {
+  render: () => html`
+    <button id="popover-trigger">Open popover</button>
+    <swc-popover for="popover-trigger" accessible-label="Background popover">
+      <button id="in-popover">In popover</button>
+    </swc-popover>
+    <swc-toast-container></swc-toast-container>
+  `,
+  play: async ({ canvasElement, step }) => {
+    ToastQueue.clear();
+    const container = await getComponent<ToastContainer>(
+      canvasElement,
+      'swc-toast-container'
+    );
+    const popover = canvasElement.querySelector(
+      'swc-popover'
+    ) as HTMLElement & {
+      open: boolean;
+    };
+    try {
+      const front = await addQueue(container, ['A', 'B']);
+      await userEvent.click(
+        canvasElement.querySelector<HTMLElement>('#popover-trigger')!
+      );
+      await waitFor(() => expect(popover.open, 'popover open').toBe(true));
+      showAllOf(front)!.click();
+      await waitForExpanded(container, true);
+      // Chromium closes an open `popover="auto"` on `showModal()`; WebKit leaves it open under the scrim.
+      const openAfterExpand = popover.open;
+
+      await step('the popover cannot take focus behind the view', () => {
+        const inPopover =
+          canvasElement.querySelector<HTMLElement>('#in-popover')!;
+        inPopover.focus();
+        expect(getActiveElement(document), 'focus').not.toBe(inPopover);
+      });
+
+      await step(
+        'Escape collapses the view and leaves the popover as it was',
+        async () => {
+          await userEvent.keyboard('{Escape}');
+          await waitForExpanded(container, false);
+          expect(popover.open, 'popover open').toBe(openAfterExpand);
+        }
+      );
+    } finally {
+      popover.open = false;
+      ToastQueue.clear();
+    }
+  },
+};
+
+export const ExpandedOverTooltipTest: Story = {
+  render: () => html`
+    <swc-button id="tooltip-trigger">Tooltip trigger</swc-button>
+    <swc-tooltip for="tooltip-trigger" manual>Background tooltip</swc-tooltip>
+    <swc-toast-container></swc-toast-container>
+  `,
+  play: async ({ canvasElement, step }) => {
+    ToastQueue.clear();
+    const container = await getComponent<ToastContainer>(
+      canvasElement,
+      'swc-toast-container'
+    );
+    const tooltip = canvasElement.querySelector(
+      'swc-tooltip'
+    ) as HTMLElement & {
+      open: boolean;
+    };
+    try {
+      const front = await addQueue(container, ['A', 'B']);
+      tooltip.open = true;
+      await waitFor(() => expect(tooltip.open, 'tooltip open').toBe(true));
+      showAllOf(front)!.click();
+      await waitForExpanded(container, true);
+
+      await step(
+        'Escape collapses the view first, because it registered on the dismissible stack last',
+        async () => {
+          await userEvent.keyboard('{Escape}');
+          await waitForExpanded(container, false);
+          expect(tooltip.open, 'tooltip open').toBe(true);
+        }
+      );
+    } finally {
+      tooltip.open = false;
+      ToastQueue.clear();
+    }
+  },
+};
+
+export const ToastInsideModalTest: Story = {
+  render: () => html`
+    <dialog id="consumer-modal">
+      <button id="in-modal">Inside the modal</button>
+    </dialog>
+    <swc-toast-container></swc-toast-container>
+  `,
+  play: async ({ canvasElement, step }) => {
+    ToastQueue.clear();
+    const container = await getComponent<ToastContainer>(
+      canvasElement,
+      'swc-toast-container'
+    );
+    const modal =
+      canvasElement.querySelector<HTMLDialogElement>('#consumer-modal')!;
+    try {
+      modal.showModal();
+      const front = await addQueue(container, ['A', 'B']);
+
+      await step(
+        'a consumer modal makes the collapsed toast inert, so it cannot be expanded by keyboard',
+        () => {
+          front.focus();
+          expect(getActiveElement(document), 'toast focus').not.toBe(front);
+          showAllOf(front)!.focus();
+          expect(
+            deepContains(front, getActiveElement(document)),
+            'Show all focus'
+          ).toBe(false);
+        }
+      );
+
+      await step(
+        'a view opened from script, not by the user, stacks above the modal and Escape returns to it',
+        async () => {
+          // Chromium groups a modal opened without user activation with the one below it,
+          // so one Escape would close both. A real press inside the consumer modal first
+          // matches an app that expands the view in response to the user.
+          await userEvent.click(
+            canvasElement.querySelector<HTMLElement>('#in-modal')!
+          );
+          showAllOf(front)!.click();
+          await waitForExpanded(container, true);
+          expect(getDialog(container)!.matches(':modal'), 'modal').toBe(true);
+          await userEvent.keyboard('{Escape}');
+          await waitForExpanded(container, false);
+          expect(modal.open, 'consumer modal open').toBe(true);
+        }
+      );
+    } finally {
+      modal.close();
+      ToastQueue.clear();
+    }
   },
 };

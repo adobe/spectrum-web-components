@@ -32,6 +32,9 @@
   --_swc-toast-animation-distance: token("spacing-75");
   --_swc-toast-background-color: token("neutral-subdued-background-color-default");
 
+  /* Lines the Show all chevron up with the message: the content edge with no icon, the text after an icon. */
+  --_swc-toast-show-all-offset: calc(-1 * token("base-padding-horizontal-medium"));
+
   display: flex;
   gap: token("group-gap-medium");
   align-items: center;
@@ -94,20 +97,55 @@
   margin-inline-start: auto;
 }
 
+/* The Show all row sits below the message, with the action at its end. */
+.swc-Toast-footer {
+  display: flex;
+  flex: 1 0 100%;
+  gap: token("banner-gap-horizontal");
+  align-items: center;
+}
+
+/* Keeps the chevron at UI icon size; the action button sizes its icon slot for workflow icons. */
+.swc-Toast-showAll {
+  --swc-action-button-icon-size: token("ui-icon-medium");
+
+  margin-inline-start: var(--_swc-toast-show-all-offset);
+}
+
+/*
+ * `swc-ui-icon` draws the chevron pointing to the inline end and mirrors it in
+ * RTL, so each direction needs the opposite rotation there.
+ */
+.swc-Toast-showAllIcon {
+  rotate: -90deg;
+}
+
+.swc-Toast-showAllIcon:where(:dir(rtl)),
+.swc-Toast-showAllIcon--down {
+  rotate: 90deg;
+}
+
+.swc-Toast-showAllIcon--down:where(:dir(rtl)) {
+  rotate: -90deg;
+}
+
 .swc-Toast-close {
   align-self: flex-start;
 }
 
 :host([variant="info"]) .swc-Toast {
   --_swc-toast-background-color: token("informative-background-color-default");
+  --_swc-toast-show-all-offset: calc(token("workflow-icon-medium") + token("group-gap-medium") - token("base-padding-horizontal-medium"));
 }
 
 :host([variant="positive"]) .swc-Toast {
   --_swc-toast-background-color: token("positive-background-color-default");
+  --_swc-toast-show-all-offset: calc(token("workflow-icon-medium") + token("group-gap-medium") - token("base-padding-horizontal-medium"));
 }
 
 :host([variant="negative"]) .swc-Toast {
   --_swc-toast-background-color: token("negative-background-color-default");
+  --_swc-toast-show-all-offset: calc(token("workflow-icon-medium") + token("group-gap-medium") - token("base-padding-horizontal-medium"));
 }
 
 /* Closed state is the exit target; `@starting-style` below is the enter origin. */
@@ -129,7 +167,7 @@
 }
 
 :host(:focus-visible) .swc-Toast {
-  outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
+  outline: token("focus-indicator-thickness") solid var(--swc-toast-focus-indicator-color, token("focus-indicator-color"));
   outline-offset: token("focus-ring-gap");
 }
 
