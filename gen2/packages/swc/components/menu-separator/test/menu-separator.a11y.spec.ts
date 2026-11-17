@@ -29,7 +29,7 @@ test.describe('Menu separator - ARIA Snapshots', () => {
     }) => {
       await gotoStory(
         page,
-        `components-menu-separator--${story}`,
+        `components-menu-menu-separator--${story}`,
         'swc-button'
       );
       const menu = page.locator('swc-menu');
@@ -48,7 +48,7 @@ test.describe('Menu separator - ARIA Snapshots', () => {
   test('the separator is a direct child of the menu', async ({ page }) => {
     await gotoStory(
       page,
-      'components-menu-separator--overview',
+      'components-menu-menu-separator--overview',
       'swc-menu-separator'
     );
 

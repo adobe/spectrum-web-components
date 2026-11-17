@@ -352,9 +352,9 @@ Planned rendering shape:
 
 ### Review
 
-- [ ] `yarn lint:gen2` passes (ESLint, Stylelint, Prettier)
+- [x] `yarn lint:gen2` passes (ESLint, Stylelint, Prettier)
 - [ ] Status table in workstream doc updated
-- [ ] PR created with description referencing Epic SWC-2668
+- [x] PR created with description referencing Epic SWC-2668 (phases 2 to 7 merged in #6893; phase 8 in #6892)
 - [ ] Peer engineer sign-off
 
 ---

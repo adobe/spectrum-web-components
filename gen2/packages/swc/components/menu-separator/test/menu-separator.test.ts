@@ -24,7 +24,7 @@ import meta, { Anatomy, Overview } from '../stories/menu-separator.stories.js';
 // This file defines dev-only test stories that reuse the main story metadata.
 export default {
   ...meta,
-  title: 'Menu separator/Tests',
+  title: 'Menu/Menu separator/Tests',
   parameters: {
     ...meta.parameters,
     docs: { disable: true, page: null },
