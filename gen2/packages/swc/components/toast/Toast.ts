@@ -11,18 +11,22 @@
  */
 
 import { CSSResultArray, html, nothing, TemplateResult } from 'lit';
+import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 import {
   SWC_TOAST_ACTION_EVENT,
+  SWC_TOAST_EXPAND_EVENT,
   ToastBase,
 } from '@adobe/spectrum-wc-core/components/toast/index.js';
 
 import '@adobe/spectrum-wc-icons/swc-icon-alert-triangle.js';
 import '@adobe/spectrum-wc-icons/swc-icon-checkmark-circle.js';
 import '@adobe/spectrum-wc-icons/swc-icon-info-circle.js';
+import '../action-button/swc-action-button.js';
 import '../button/swc-button.js';
 import '../close-button/swc-close-button.js';
+import '../ui-icons/swc-ui-icon.js';
 
 import styles from './toast.css';
 
@@ -34,11 +38,14 @@ import styles from './toast.css';
  *
  * @slot - Toast message text.
  *
+ * @cssprop --swc-toast-focus-indicator-color - Color of the focus indicator. The container sets it to white in the expanded view, for contrast against the scrim.
+ *
  * @fires swc-open - Dispatched when the toast begins to open.
  * @fires swc-after-open - Dispatched after the toast finishes opening.
  * @fires swc-close - Cancelable event dispatched when the toast begins to close.
  * @fires swc-after-close - Dispatched after the toast finishes closing.
  * @fires swc-toast-action - Dispatched when the optional action button is activated.
+ * @fires swc-toast-expand - Dispatched when the Show all control is activated.
  */
 export class Toast extends ToastBase {
   public static override get styles(): CSSResultArray {
@@ -54,10 +61,28 @@ export class Toast extends ToastBase {
   }
 
   protected override render(): TemplateResult {
+    const action = this.actionLabel
+      ? html`
+          <swc-button
+            class="swc-Toast-action"
+            size="m"
+            variant="secondary"
+            fill-style="outline"
+            static-color="white"
+            @click=${this.requestAction}
+          >
+            ${this.actionLabel}
+          </swc-button>
+        `
+      : nothing;
     return html`
       <div class="swc-Toast">
         <div class="swc-Toast-main">
-          <div class="swc-Toast-body" role="alert" aria-atomic="true">
+          <div
+            class="swc-Toast-body"
+            role=${ifDefined(this.announces ? 'alert' : undefined)}
+            aria-atomic=${ifDefined(this.announces ? 'true' : undefined)}
+          >
             ${this.contentRevealed
               ? html`
                   ${this.renderIcon()}
@@ -65,20 +90,30 @@ export class Toast extends ToastBase {
                 `
               : nothing}
           </div>
-          ${this.actionLabel
+          ${this.showAllLabel
             ? html`
-                <swc-button
-                  class="swc-Toast-action"
-                  size="m"
-                  variant="secondary"
-                  fill-style="outline"
-                  static-color="white"
-                  @click=${this.requestAction}
-                >
-                  ${this.actionLabel}
-                </swc-button>
+                <div class="swc-Toast-footer">
+                  <swc-action-button
+                    class="swc-Toast-showAll"
+                    quiet
+                    static-color="white"
+                    @click=${this.requestExpand}
+                  >
+                    <swc-ui-icon
+                      slot="icon"
+                      class=${classMap({
+                        ['swc-Toast-showAllIcon']: true,
+                        ['swc-Toast-showAllIcon--down']:
+                          this.showAllDirection === 'down',
+                      })}
+                      icon="chevron"
+                    ></swc-ui-icon>
+                    ${this.showAllLabel}
+                  </swc-action-button>
+                  ${action}
+                </div>
               `
-            : nothing}
+            : action}
         </div>
         <swc-close-button
           class="swc-Toast-close"
@@ -94,6 +129,12 @@ export class Toast extends ToastBase {
   private readonly requestAction = (): void => {
     this.dispatchEvent(
       new Event(SWC_TOAST_ACTION_EVENT, { bubbles: true, composed: true })
+    );
+  };
+
+  private readonly requestExpand = (): void => {
+    this.dispatchEvent(
+      new Event(SWC_TOAST_EXPAND_EVENT, { bubbles: true, composed: true })
     );
   };
 

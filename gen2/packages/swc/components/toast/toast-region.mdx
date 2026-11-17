@@ -99,6 +99,20 @@ When the focused toast closes and others remain, focus depends on how the user c
 
 The same rules apply when a new toast is added in front of the focused one.
 
+### Expanded view
+
+When two or more toasts are queued, the front toast shows a Show all control. Selecting it, or clicking anywhere on the stack other than a button, opens the expanded view: a modal list of every queued toast over a scrim, with Clear all and Collapse controls. Each toast in the list is a full toast with its own close button and action.
+
+- Focus moves to the front toast when the view opens, and stays inside the view while it is open. <kbd>Tab</kbd> moves through each toast and its buttons, then Clear all and Collapse.
+- Collapse, <kbd>Escape</kbd>, or a click on the scrim closes the view and moves focus to the region. Clear all removes every toast, and the view closes on its own when the queue is empty.
+- No toast auto-dismisses while the view is open. When the view closes, the front toast's timeout starts again from the full duration.
+- The page does not scroll while the view is open.
+- Toasts that are shown only in the list are not announced again. A toast added while the view is open is announced as usual.
+
+To localize the control labels, set `show-all-label`, `collapse-label`, and `clear-all-label` on `<swc-toast-region>`.
+
+<Canvas of={ToastRegionStories.ExpandedView} />
+
 ### Restoring toasts
 
 The queue lives in memory, so it is empty after a page load. If your app reloads, navigates to another page, or signs a user in, rebuild the toasts you still want to show.
@@ -177,6 +191,6 @@ Each `<swc-toast>` has `role="alertdialog"`, `aria-modal="false"`, and `tabindex
 
 ## Upcoming features
 
-- An expanded view, and actions to show all or clear all toasts.
+- Motion between stack positions and for opening and closing the expanded view.
 
 <DocsFooter />

@@ -10,12 +10,16 @@
  * governing permissions and limitations under the License.
  */
 import { PropertyValues } from 'lit';
-import { property } from 'lit/decorators.js';
+import { property, state } from 'lit/decorators.js';
 
+import { PageScrollLockController } from '@adobe/spectrum-wc-core/controllers/index.js';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import {
   deepContains,
   getActiveElement,
+  isTopDismissible,
+  registerDismissible,
+  unregisterDismissible,
   validateEnum,
   warnIf,
 } from '@adobe/spectrum-wc-core/utils/index.js';
@@ -38,9 +42,16 @@ export abstract class ToastRegionBase extends SpectrumElement {
   //     API TO OVERRIDE
   // ─────────────────────────
 
+  /** The rendered toast for the front entry. */
   protected abstract get currentToast(): ToastBase | undefined;
 
-  /** The rendered `role="region"` wrapper, absent while the queue is empty. */
+  /** Every rendered toast, by queue entry key, in queue order. */
+  protected abstract get renderedToasts(): ReadonlyMap<string, ToastBase>;
+
+  /**
+   * The rendered surface, absent while the queue is empty: the
+   * `role="region"` popover while collapsed, or the modal `<dialog>` while expanded.
+   */
   protected abstract get region(): HTMLElement | undefined;
 
   // ──────────────────
@@ -63,21 +74,62 @@ export abstract class ToastRegionBase extends SpectrumElement {
   public getRegionLabel: (count: number) => string = (count) =>
     `${count} ${count === 1 ? 'notification' : 'notifications'}.`;
 
+  /**
+   * The label for the Show all control on the front toast. Set it to localize the label.
+   *
+   * @todo Localize the default via LanguageResolutionController once a runtime
+   * i18n system for static strings is available.
+   */
+  @property({ type: String, attribute: 'show-all-label' })
+  public showAllLabel = 'Show all';
+
+  /**
+   * The label for the control that collapses the expanded view. Set it to localize the label.
+   *
+   * @todo Localize the default via LanguageResolutionController once a runtime
+   * i18n system for static strings is available.
+   */
+  @property({ type: String, attribute: 'collapse-label' })
+  public collapseLabel = 'Collapse';
+
+  /**
+   * The label for the control that clears every notification in the expanded
+   * view. Set it to localize the label.
+   *
+   * @todo Localize the default via LanguageResolutionController once a runtime
+   * i18n system for static strings is available.
+   */
+  @property({ type: String, attribute: 'clear-all-label' })
+  public clearAllLabel = 'Clear all';
+
   // ──────────────────────
   //     IMPLEMENTATION
   // ──────────────────────
 
+  /**
+   * @internal
+   *
+   * Whether every queued toast is shown in the modal list.
+   */
+  @state()
+  protected expanded = false;
+
   protected readonly countdown = new ToastCountdown(this);
+  private readonly scrollLock = new PageScrollLockController(this);
+  // Each rendered toast's queue key and the function that ends its registration with the queue.
+  private readonly _registrations = new Map<
+    ToastBase,
+    { key: string; unregister: () => void }
+  >();
   private _unsubscribe?: () => void;
-  private _unregisterToast?: () => void;
   private _frontKey?: string;
-  private _activeToast?: ToastBase;
   private _closingToast?: ToastBase;
   private _focusWithin = false;
   private _lastFocused?: HTMLElement;
   // True when the last input in the region was a pointer, which decides where focus goes when the front changes.
   private _pointerInput = false;
   private _focusFrontOnOpen = false;
+  private _focusRegionOnCollapse = false;
 
   protected get frontEntry(): ToastQueueEntry | undefined {
     return ToastQueue.entries[0];
@@ -113,10 +165,21 @@ export abstract class ToastRegionBase extends SpectrumElement {
       { capture: true }
     );
     this._unsubscribe?.();
-    this._unregisterToast?.();
-    this._activeToast = undefined;
+    for (const { unregister } of this._registrations.values()) {
+      unregister();
+    }
+    this._registrations.clear();
+    unregisterDismissible(this);
+    this.expanded = false;
     connectedContainers.delete(this);
     super.disconnectedCallback();
+  }
+
+  // A disconnected container must not render: it would register its own toasts for the shared
+  // queue's entries, taking over their close lifecycle from the container that shows them.
+  // Connecting again requests an update (`handleQueueChange()`).
+  protected override shouldUpdate(changedProperties: PropertyValues): boolean {
+    return this.isConnected && super.shouldUpdate(changedProperties);
   }
 
   protected override update(changedProperties: PropertyValues): void {
@@ -131,62 +194,167 @@ export abstract class ToastRegionBase extends SpectrumElement {
 
   protected override updated(changedProperties: PropertyValues): void {
     super.updated(changedProperties);
-    const entry = this.frontEntry;
-    const toast = this.currentToast;
-    if (!entry || !toast || this._activeToast === toast) {
+    this.syncRenderedToasts();
+    // The initial value is not a change of state, so only real toggles run.
+    if (
+      changedProperties.has('expanded') &&
+      changedProperties.get('expanded') !== undefined
+    ) {
+      if (this.expanded) {
+        this.showExpanded();
+      } else {
+        this.finishCollapse();
+      }
+    }
+  }
+
+  /**
+   * Opens the expanded view, which shows every queued toast in a modal list.
+   * Needs two or more queued toasts.
+   */
+  protected expand(): void {
+    if (this.expanded || ToastQueue.entries.length < 2) {
       return;
     }
-    this._activeToast = toast;
-    // Removing a focused toast fires no focusout, so drop a pause its focus left behind.
-    if (
-      this._focusWithin &&
-      !deepContains(this, getActiveElement(this.ownerDocument))
-    ) {
-      this._focusWithin = false;
-      this.countdown.setPaused('focus', false);
+    // No toast auto-dismisses while expanded (Q12).
+    this.countdown.stop();
+    this.expanded = true;
+  }
+
+  /** Closes the expanded view. `focusRegion` moves focus to the collapsed region. */
+  protected collapse(focusRegion: boolean): void {
+    if (!this.expanded) {
+      return;
     }
-    this._unregisterToast = ToastQueue.setRendered(entry.key, () => {
-      toast.close();
-      return !toast.open;
-    });
-    void this.openToast(entry, toast);
+    this._focusRegionOnCollapse = focusRegion;
+    this.teardownExpanded();
+    this.expanded = false;
   }
 
   protected readonly handleAfterClose = (event: Event): void => {
-    if (event.target !== this.currentToast || !this.frontEntry) {
+    const registration = this.registrationOf(event.target);
+    if (!registration) {
       return;
     }
-    this.countdown.stop();
-    ToastQueue.remove(this.frontEntry.key);
+    if (event.target === this.currentToast) {
+      this.countdown.stop();
+    }
+    ToastQueue.remove(registration.key);
   };
 
   protected readonly handleClose = (event: Event): void => {
-    const toast = this.currentToast;
-    const key = this.frontEntry?.key;
-    if (event.target !== toast || !key) {
+    const registration = this.registrationOf(event.target);
+    if (!registration) {
       return;
     }
+    const toast = event.target as ToastBase;
+    const { key } = registration;
+    // Checked now, while the close button still has focus.
+    const hadFocus =
+      this.expanded &&
+      deepContains(toast, getActiveElement(this.ownerDocument));
     queueMicrotask(() => {
-      if (toast && !event.defaultPrevented && !toast.open) {
-        if (!this.isConnected || this.frontEntry?.key !== key) {
-          ToastQueue.remove(key);
-          return;
-        }
+      if (event.defaultPrevented || toast.open) {
+        return;
+      }
+      if (
+        !this.isConnected ||
+        !this._registrations.has(toast) ||
+        (!this.expanded && this.frontEntry?.key !== key)
+      ) {
+        ToastQueue.remove(key);
+        return;
+      }
+      if (toast === this.currentToast) {
         this._closingToast = toast;
         this.countdown.stop();
-        ToastQueue.close(key);
       }
+      if (hadFocus) {
+        this.focusNearestToast(key);
+      }
+      ToastQueue.close(key);
     });
   };
 
   protected readonly handleAction = (event: Event): void => {
-    const entry = this.frontEntry;
-    if (event.target !== this.currentToast || !entry) {
+    const registration = this.registrationOf(event.target);
+    const entry = ToastQueue.entries.find(
+      (entry) => entry.key === registration?.key
+    );
+    if (!entry) {
       return;
     }
     entry.onAction?.();
     if (entry.shouldCloseOnAction) {
       ToastQueue.close(entry.key);
+    }
+  };
+
+  protected readonly handleExpand = (): void => {
+    this.expand();
+  };
+
+  // Clicking anywhere on the collapsed stack expands it, except a click on a
+  // button, including a button component's host (for example `swc-close-button`).
+  protected readonly handleRegionClick = (event: MouseEvent): void => {
+    if (this.expanded) {
+      return;
+    }
+    const onButton = event
+      .composedPath()
+      .some(
+        (node) =>
+          node instanceof HTMLElement &&
+          (/(^|-)button$/.test(node.localName) ||
+            node.getAttribute('role') === 'button')
+      );
+    if (!onButton) {
+      this.expand();
+    }
+  };
+
+  protected readonly handleCollapseClick = (): void => {
+    this.collapse(true);
+  };
+
+  protected readonly handleClearAllClick = (): void => {
+    // The view collapses on its own once the queue empties.
+    ToastQueue.clear();
+  };
+
+  // Escape follows the dismissible stack, as `swc-popover` modal mode does: if
+  // another surface opened above the expanded view, it handles Escape first.
+  protected readonly handleCancel = (event: Event): void => {
+    if (!isTopDismissible(this)) {
+      event.preventDefault();
+    }
+  };
+
+  // Fires after Escape closes the dialog natively. The event is queued, so one
+  // from a dialog that a collapse already replaced is ignored.
+  protected readonly handleDialogClose = (event: Event): void => {
+    if (event.target !== this.region) {
+      return;
+    }
+    this.collapse(true);
+  };
+
+  // A pointerdown on the backdrop targets the dialog itself, as does its own
+  // box, so only a point outside the box counts as a scrim press.
+  protected readonly handleDialogPointerDown = (event: PointerEvent): void => {
+    this._pointerInput = true;
+    const dialog = this.region;
+    if (!dialog || event.target !== dialog) {
+      return;
+    }
+    const rect = dialog.getBoundingClientRect();
+    if (
+      event.clientX < rect.left ||
+      event.clientX > rect.right ||
+      event.clientY < rect.top ||
+      event.clientY > rect.bottom
+    ) {
+      this.collapse(true);
     }
   };
 
@@ -234,13 +402,15 @@ export abstract class ToastRegionBase extends SpectrumElement {
   };
 
   // F6 and Shift+F6 move focus into the region and back, as React Aria's toast region does.
+  // The expanded view is modal, so it keeps focus instead.
   private readonly handleLandmarkKeydown = (event: KeyboardEvent): void => {
     if (
       event.key !== 'F6' ||
       event.defaultPrevented ||
       event.altKey ||
       event.ctrlKey ||
-      event.metaKey
+      event.metaKey ||
+      this.expanded
     ) {
       return;
     }
@@ -262,6 +432,12 @@ export abstract class ToastRegionBase extends SpectrumElement {
 
   private readonly handleQueueChange = (): void => {
     const key = this.frontEntry?.key;
+    // The expanded view collapses on its own when the queue empties, with no focus redirect.
+    if (!key && this.expanded) {
+      this.teardownExpanded();
+      this._focusRegionOnCollapse = false;
+      this.expanded = false;
+    }
     // An add always lands at the front, so every add changes the front key. Only removing a non-front entry skips this block.
     if (key !== this._frontKey) {
       const active = getActiveElement(this.ownerDocument);
@@ -285,15 +461,14 @@ export abstract class ToastRegionBase extends SpectrumElement {
         this.countdown.setPaused('pointer', false);
         this.countdown.setPaused('focus', false);
       } else if (
+        !this.expanded &&
         this._focusWithin &&
         (deepContains(this, active) || active === this.ownerDocument.body)
       ) {
         // The focused toast was replaced at the front, so keep focus in the region.
+        // The expanded list keeps every toast, so focus stays where it is there.
         this.moveFocusForNewFront();
       }
-      // The new front toast registers itself in updated().
-      this._unregisterToast?.();
-      this._unregisterToast = undefined;
       this._frontKey = key;
       this._closingToast = undefined;
     }
@@ -320,12 +495,123 @@ export abstract class ToastRegionBase extends SpectrumElement {
     }
   }
 
+  /** Moves focus to the toast nearest a closing one: the newer one, otherwise the older one. */
+  private focusNearestToast(key: string): void {
+    const entries = ToastQueue.entries;
+    const index = entries.findIndex((entry) => entry.key === key);
+    const nearest = [entries[index - 1], entries[index + 1]].find(
+      (entry) => entry && !ToastQueue.isClosing(entry.key)
+    );
+    if (nearest) {
+      this.renderedToasts.get(nearest.key)?.focus({ preventScroll: true });
+    }
+  }
+
+  /** Registers newly rendered toasts with the queue and releases toasts that left the DOM. */
+  private syncRenderedToasts(): void {
+    const rendered = this.renderedToasts;
+    const departed: (() => void)[] = [];
+    for (const [toast, registration] of this._registrations) {
+      if (rendered.get(registration.key) !== toast) {
+        this._registrations.delete(toast);
+        departed.push(registration.unregister);
+      }
+    }
+    // Releasing a toast that left the DOM mid-close finishes its removal and changes the queue,
+    // so it runs after this update instead of scheduling another one from inside it.
+    if (departed.length > 0) {
+      queueMicrotask(() => {
+        for (const unregister of departed) {
+          unregister();
+        }
+      });
+    }
+    let added = false;
+    for (const [key, toast] of rendered) {
+      const entry = ToastQueue.entries.find((entry) => entry.key === key);
+      if (!entry || this._registrations.has(toast)) {
+        continue;
+      }
+      added = true;
+      this._registrations.set(toast, {
+        key,
+        unregister: ToastQueue.setRendered(key, () => {
+          toast.close();
+          return !toast.open;
+        }),
+      });
+      void this.openToast(entry, toast);
+    }
+    // Removing a focused toast fires no focusout, so drop a pause its focus left behind.
+    if (
+      added &&
+      this._focusWithin &&
+      !deepContains(this, getActiveElement(this.ownerDocument))
+    ) {
+      this._focusWithin = false;
+      this.countdown.setPaused('focus', false);
+    }
+  }
+
+  private registrationOf(
+    target: EventTarget | null
+  ): { key: string; unregister: () => void } | undefined {
+    return this._registrations.get(target as ToastBase);
+  }
+
+  private showExpanded(): void {
+    const dialog = this.region;
+    if (!(dialog instanceof HTMLDialogElement)) {
+      return;
+    }
+    if (!dialog.open) {
+      // `showModal()` scrolls to the focused element and has no `preventScroll`
+      // option, so restore the scroll position around it, as `swc-popover` does.
+      const { scrollX, scrollY } = window;
+      try {
+        dialog.showModal();
+      } catch {
+        this.expanded = false;
+        return;
+      }
+      window.scrollTo(scrollX, scrollY);
+    }
+    this.scrollLock.lock();
+    registerDismissible(this);
+    // The Show all control is gone once expanded, so focus its toast.
+    this.currentToast?.focus({ preventScroll: true });
+  }
+
+  private teardownExpanded(): void {
+    unregisterDismissible(this);
+    this.scrollLock.unlock();
+    const dialog = this.region;
+    if (dialog instanceof HTMLDialogElement && dialog.open) {
+      dialog.close();
+    }
+  }
+
+  private finishCollapse(): void {
+    // The region element replaced the dialog, so a pointer pause has no pointerleave to end it.
+    this.countdown.setPaused('pointer', false);
+    if (this._focusRegionOnCollapse) {
+      this._focusRegionOnCollapse = false;
+      this.region?.focus({ preventScroll: true });
+    }
+    const entry = this.frontEntry;
+    const toast = this.currentToast;
+    // The front toast gets a fresh timeout after the expanded view (Q12).
+    if (entry && toast?.open) {
+      this.startCountdown(entry, toast);
+    }
+  }
+
   private async openToast(
     entry: ToastQueueEntry,
     toast: ToastBase
   ): Promise<void> {
     await toast.updateComplete;
-    if (!this.isConnected || this.frontEntry?.key !== entry.key) {
+    if (!this.isConnected || !this._registrations.has(toast)) {
       return;
     }
     // A close requested before the toast was open had nothing to close, so finish it here.
@@ -335,14 +621,18 @@ export abstract class ToastRegionBase extends SpectrumElement {
     }
     toast.open = true;
     await toast.updateComplete;
-    if (!this.isConnected || this.frontEntry?.key !== entry.key) {
+    if (
+      !this.isConnected ||
+      !this._registrations.has(toast) ||
+      toast !== this.currentToast ||
+      this.frontEntry?.key !== entry.key
+    ) {
       return;
     }
     if (this._focusFrontOnOpen) {
       this._focusFrontOnOpen = false;
       toast.focus({ preventScroll: true });
     }
-    const hasAction = Boolean(entry.actionLabel && entry.onAction);
     warnIf(
       this,
       Boolean(entry.actionLabel) !== Boolean(entry.onAction),
@@ -351,10 +641,17 @@ export abstract class ToastRegionBase extends SpectrumElement {
     );
     warnIf(
       this,
-      hasAction && toast.timeout !== null,
+      Boolean(entry.actionLabel && entry.onAction) && toast.timeout !== null,
       'Toasts with an action cannot auto-dismiss; timeout is ignored.',
       docsUrl
     );
+    if (!this.expanded) {
+      this.startCountdown(entry, toast);
+    }
+  }
+
+  private startCountdown(entry: ToastQueueEntry, toast: ToastBase): void {
+    const hasAction = Boolean(entry.actionLabel && entry.onAction);
     this.countdown.start(hasAction ? null : toast.timeout, () =>
       ToastQueue.close(entry.key)
     );
