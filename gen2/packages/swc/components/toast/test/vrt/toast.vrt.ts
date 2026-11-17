@@ -30,8 +30,7 @@ import {
   vrtParameters,
 } from '../../../../.storybook/helpers/index.js';
 
-// TODO(SWC-2654): add Show all coverage.
-// TODO(SWC-2654): add expanded-view, scrim, and Clear all / Collapse coverage.
+// Show all and the expanded view are covered in toast-region.vrt.ts, where the container sets them up.
 
 // Metadata
 

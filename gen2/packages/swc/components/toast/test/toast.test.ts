@@ -30,7 +30,6 @@ import '../swc-toast.js';
 import { Toast } from '../Toast.js';
 
 // These tests cover standalone Toast only; queue and container behavior is tested in toast-region.
-// TODO(SWC-2654): add expanded-view tests: Show all, scrim, Escape, Collapse, Clear all, focus management.
 
 export default {
   title: 'Toast region/Tests/Toast',

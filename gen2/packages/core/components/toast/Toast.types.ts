@@ -19,4 +19,6 @@ export const TOAST_VARIANTS = [
 
 export const SWC_TOAST_ACTION_EVENT = 'swc-toast-action' as const;
 
+export const SWC_TOAST_EXPAND_EVENT = 'swc-toast-expand' as const;
+
 export type ToastVariant = (typeof TOAST_VARIANTS)[number];

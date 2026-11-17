@@ -139,6 +139,8 @@ test('closing the focused toast with the keyboard focuses the promoted toast, wh
   await expect(region).toHaveAttribute('aria-label', '2 notifications.');
   await page.waitForTimeout(1500);
   await add.focus();
+  // Clear, the toast host, Show all, then Close.
+  await page.keyboard.press('Tab');
   await page.keyboard.press('Tab');
   await page.keyboard.press('Tab');
   await page.keyboard.press('Tab');
@@ -188,10 +190,43 @@ test('the stack exposes one named toast; the layers behind it are not in the acc
         - alert:
           - img "Success"
           - text: File saved (3)
+        - button "Show all"
         - button "Close"
   `);
   await expect(page.getByRole('alertdialog')).toHaveCount(1);
   await expect(page.locator('.swc-ToastRegion-layer')).toHaveCount(2);
+});
+
+test('the expanded view is a modal dialog that lists every toast and only the front one is a live region', async ({
+  page,
+}) => {
+  await gotoStory(page, 'components-toast-region--overview', 'swc-button');
+  const add = page.getByRole('button', { name: 'Add toast', exact: true });
+  await add.click();
+  await add.click();
+  await add.click();
+  await page.getByRole('button', { name: 'Show all' }).click();
+  const dialog = page.getByRole('dialog', { name: '3 notifications.' });
+  // Toasts shown only in the list have no alert, so expanding does not announce them again.
+  await expect(dialog).toMatchAriaSnapshot(`
+    - dialog "3 notifications.":
+      - alertdialog:
+        - alert:
+          - img "Success"
+          - text: File saved (3)
+        - button "Close"
+      - alertdialog:
+        - img "Success"
+        - text: File saved (2)
+        - button "Close"
+      - alertdialog:
+        - img "Success"
+        - text: File saved
+        - button "Close"
+      - button "Clear all"
+      - button "Collapse"
+  `);
+  await expect(page.getByRole('region')).toHaveCount(0);
 });
 
 test('Tab only reaches the front toast, never a layer or a queued toast behind it', async ({
