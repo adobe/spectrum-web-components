@@ -13,7 +13,7 @@
 import { html, nothing, TemplateResult } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import '../../swc-alert.js';
+import '../../swc-thread-alert.js';
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc/components/close-button/swc-close-button.js';
 
@@ -30,8 +30,8 @@ import {
 // Metadata
 
 const meta: Meta = {
-  title: 'AI Toolkit/Alert/Alert VRT',
-  component: 'swc-alert',
+  title: 'AI Toolkit/Thread alert/Thread alert VRT',
+  component: 'swc-thread-alert',
   tags: ['dev'],
 };
 
@@ -62,7 +62,7 @@ const renderAlert = ({
   inlineSize = '300px',
   lang,
 }: AlertCase = {}) => html`
-  <swc-alert
+  <swc-thread-alert
     variant=${variant ?? nothing}
     lang=${lang ?? nothing}
     style="inline-size: ${inlineSize}; max-inline-size: 100%;"
@@ -78,7 +78,7 @@ const renderAlert = ({
       size="s"
       accessible-label="Dismiss message"
     ></swc-close-button>
-  </swc-alert>
+  </swc-thread-alert>
 `;
 
 const ALERT_PERMUTATIONS = createPermutations([

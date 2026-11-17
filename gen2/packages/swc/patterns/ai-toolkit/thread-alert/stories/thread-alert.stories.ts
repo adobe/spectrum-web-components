@@ -14,31 +14,31 @@ import { html, nothing, render } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import '../swc-alert.js';
+import '../swc-thread-alert.js';
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc/components/close-button/swc-close-button.js';
 
-import { alertTemplate } from '../alert.usage.js';
+import { threadAlertTemplate } from '../thread-alert.usage.js';
 
 // ────────────────
 //    METADATA
 // ────────────────
 
-const { args, argTypes, template } = getStorybookHelpers('swc-alert');
+const { args, argTypes, template } = getStorybookHelpers('swc-thread-alert');
 
 // Remove the obsolete slot even when Storybook caches the earlier manifest.
 delete args['heading-slot'];
 delete argTypes['heading-slot'];
 
 /**
- * An alert places a status message, required close button, and optional action in a conversation.
+ * A thread alert places a status message, required close button, and optional action in a conversation.
  * Compose actions with [Button](../?path=/docs/components-button--docs) and
  * [Close button](../?path=/docs/components-close-button--docs).
  * Applications own announcements, retry, dismissal, and focus restoration.
  */
 const meta: Meta = {
-  title: 'AI Toolkit/Alert',
-  component: 'swc-alert',
+  title: 'AI Toolkit/Thread alert',
+  component: 'swc-thread-alert',
   args: {
     ...args,
     'default-slot': '<span>Message text</span>',
@@ -56,7 +56,7 @@ const meta: Meta = {
   render: (args) => template(args),
   parameters: {
     docs: {
-      packagePath: 'patterns/ai-toolkit/alert',
+      packagePath: 'patterns/ai-toolkit/thread-alert',
       subtitle: 'A compact message with a close button and optional action.',
     },
     design: {
@@ -106,7 +106,7 @@ const insertMessage = async (event: Event): Promise<void> => {
   announcer.textContent = '';
   render(
     html`
-      <swc-alert>
+      <swc-thread-alert>
         <span>Your request is ready.</span>
         <swc-close-button
           slot="dismiss"
@@ -114,13 +114,13 @@ const insertMessage = async (event: Event): Promise<void> => {
           accessible-label="Dismiss message"
           @click=${dismissMessage}
         ></swc-close-button>
-      </swc-alert>
+      </swc-thread-alert>
     `,
     container
   );
-  const alert = container.querySelector('swc-alert');
+  const alert = container.querySelector('swc-thread-alert');
   if (!alert) {
-    throw new Error('Expected the inserted alert');
+    throw new Error('Expected the inserted thread alert');
   }
   await alert.updateComplete;
   announcer.textContent = 'Your request is ready.';
@@ -153,7 +153,7 @@ export const Playground: Story = {
 // ──────────────────────────
 
 export const Overview: Story = {
-  render: () => alertTemplate,
+  render: () => threadAlertTemplate,
   tags: ['overview'],
 };
 

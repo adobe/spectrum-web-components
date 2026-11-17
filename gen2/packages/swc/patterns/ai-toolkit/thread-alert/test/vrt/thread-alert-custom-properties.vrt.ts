@@ -13,7 +13,7 @@
 import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
-import '../../swc-alert.js';
+import '../../swc-thread-alert.js';
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc/components/close-button/swc-close-button.js';
 
@@ -30,8 +30,8 @@ import customElementsManifest from '../../../../../dist/custom-elements.json';
 // Metadata
 
 const meta: Meta = {
-  title: 'AI Toolkit/Alert/Alert VRT',
-  component: 'swc-alert',
+  title: 'AI Toolkit/Thread alert/Thread alert VRT',
+  component: 'swc-thread-alert',
   tags: ['dev'],
 };
 
@@ -39,30 +39,34 @@ export default meta;
 
 // Helpers
 
-type AlertPropertyCase = CustomPropertyCase<`--swc-alert-${string}`>;
+type ThreadAlertPropertyCase =
+  CustomPropertyCase<`--swc-thread-alert-${string}`>;
 
-const PROPERTY_CASES: readonly AlertPropertyCase[] = [
-  { property: '--swc-alert-background-color', value: '#ffe600' },
-  { property: '--swc-alert-border-color', value: 'magenta' },
-  { property: '--swc-alert-border-width', value: '5px' },
-  { property: '--swc-alert-border-radius', value: '0px' },
-  { property: '--swc-alert-content-color', value: 'rebeccapurple' },
-  { property: '--swc-alert-icon-color', value: 'rebeccapurple' },
-  { property: '--swc-alert-icon-size', value: '36px' },
-  { property: '--swc-alert-min-block-size', value: '64px' },
-  { property: '--swc-alert-gap', value: '48px' },
-  { property: '--swc-alert-padding-block', value: '24px' },
-  { property: '--swc-alert-padding-inline-start', value: '48px' },
-  { property: '--swc-alert-padding-inline-end', value: '48px' },
-  { property: '--swc-alert-trailing-gap', value: '56px' },
-  { property: '--swc-alert-font-family', value: 'monospace' },
-  { property: '--swc-alert-font-size', value: '24px' },
-  { property: '--swc-alert-font-weight', value: '900' },
-  { property: '--swc-alert-line-height', value: '48px' },
+const PROPERTY_CASES: readonly ThreadAlertPropertyCase[] = [
+  { property: '--swc-thread-alert-background-color', value: '#ffe600' },
+  { property: '--swc-thread-alert-border-color', value: 'magenta' },
+  { property: '--swc-thread-alert-border-width', value: '5px' },
+  { property: '--swc-thread-alert-border-radius', value: '0px' },
+  { property: '--swc-thread-alert-content-color', value: 'rebeccapurple' },
+  { property: '--swc-thread-alert-icon-color', value: 'rebeccapurple' },
+  { property: '--swc-thread-alert-icon-size', value: '36px' },
+  { property: '--swc-thread-alert-min-block-size', value: '64px' },
+  { property: '--swc-thread-alert-gap', value: '48px' },
+  { property: '--swc-thread-alert-padding-block', value: '24px' },
+  { property: '--swc-thread-alert-padding-inline-start', value: '48px' },
+  { property: '--swc-thread-alert-padding-inline-end', value: '48px' },
+  { property: '--swc-thread-alert-trailing-gap', value: '56px' },
+  { property: '--swc-thread-alert-font-family', value: 'monospace' },
+  { property: '--swc-thread-alert-font-size', value: '24px' },
+  { property: '--swc-thread-alert-font-weight', value: '900' },
+  { property: '--swc-thread-alert-line-height', value: '48px' },
 ];
 
-const renderPropertyCase = (_case: AlertPropertyCase, style?: string) => html`
-  <swc-alert variant="notice" style="inline-size: 280px; ${style ?? ''}">
+const renderPropertyCase = (
+  _case: ThreadAlertPropertyCase,
+  style?: string
+) => html`
+  <swc-thread-alert variant="notice" style="inline-size: 280px; ${style ?? ''}">
     <span>Message text</span>
     <swc-button slot="actions" size="s">Try again</swc-button>
     <swc-close-button
@@ -70,15 +74,15 @@ const renderPropertyCase = (_case: AlertPropertyCase, style?: string) => html`
       size="s"
       accessible-label="Dismiss message"
     ></swc-close-button>
-  </swc-alert>
+  </swc-thread-alert>
 `;
 
 const coveredProperties = coveredCustomProperties(PROPERTY_CASES);
 const verifyCoverage = async () => {
   await verifyCustomPropertyCoverage({
     customElementsManifest,
-    modulePath: 'patterns/ai-toolkit/alert/Alert.ts',
-    declarationName: 'Alert',
+    modulePath: 'patterns/ai-toolkit/thread-alert/ThreadAlert.ts',
+    declarationName: 'ThreadAlert',
     coveredProperties,
   });
 };

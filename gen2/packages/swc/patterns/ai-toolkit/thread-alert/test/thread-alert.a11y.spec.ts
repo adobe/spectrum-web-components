@@ -63,7 +63,7 @@ const contrastRatio = (foreground: string, background: string): number => {
   return (Math.max(...values) + 0.05) / (Math.min(...values) + 0.05);
 };
 
-test.describe('Alert', () => {
+test.describe('Thread alert', () => {
   test('calculates contrast for rgba colors returned by getComputedStyle', () => {
     const blackOnWhite = contrastRatio('rgb(0, 0, 0)', 'rgb(255, 255, 255)');
     expect(contrastRatio('rgba(0, 0, 0, 1)', 'rgb(255, 255, 255)')).toBeCloseTo(
@@ -80,8 +80,8 @@ test.describe('Alert', () => {
   }) => {
     const root = await gotoStory(
       page,
-      'patterns-ai-toolkit-alert--accessibility',
-      'swc-alert'
+      'patterns-ai-toolkit-thread-alert--accessibility',
+      'swc-thread-alert'
     );
     await expect(root).toMatchAriaSnapshot(`
       - text: Your response could not be completed.
@@ -92,7 +92,7 @@ test.describe('Alert', () => {
     await expect(
       root.locator('[role="alert"], [role="status"], [aria-live]')
     ).toHaveCount(0);
-    await expect(root.locator('swc-alert')).not.toHaveAttribute('role');
+    await expect(root.locator('swc-thread-alert')).not.toHaveAttribute('role');
   });
 
   test('keeps one close button with or without the optional action', async ({
@@ -100,10 +100,10 @@ test.describe('Alert', () => {
   }) => {
     const root = await gotoStory(
       page,
-      'patterns-ai-toolkit-alert--optional-controls',
-      'swc-alert'
+      'patterns-ai-toolkit-thread-alert--optional-controls',
+      'swc-thread-alert'
     );
-    for (const message of await root.locator('swc-alert').all()) {
+    for (const message of await root.locator('swc-thread-alert').all()) {
       await expect(message.locator('[slot="dismiss"]')).toHaveCount(1);
       await expect(
         message.getByRole('button', { name: 'Dismiss message' })
@@ -126,10 +126,10 @@ test.describe('Alert', () => {
     }) => {
       await gotoStory(
         page,
-        `patterns-ai-toolkit-alert--${theme === 'dark' ? 'dark-theme' : 'semantic-variants'}`,
-        'swc-alert'
+        `patterns-ai-toolkit-thread-alert--${theme === 'dark' ? 'dark-theme' : 'semantic-variants'}`,
+        'swc-thread-alert'
       );
-      await expect(page.locator('swc-alert')).toHaveCount(5);
+      await expect(page.locator('swc-thread-alert')).toHaveCount(5);
       if (backdrop === 'layer') {
         await page.locator('#storybook-root').evaluate((el) => {
           el.style.backgroundColor = 'var(--swc-background-layer-1-color)';
@@ -141,11 +141,11 @@ test.describe('Alert', () => {
         .analyze();
       expect(result.violations).toEqual([]);
 
-      for (const alert of await page.locator('swc-alert').all()) {
+      for (const alert of await page.locator('swc-thread-alert').all()) {
         const colors = await alert.evaluate((el) => {
-          const surface = el.shadowRoot?.querySelector('.swc-Alert');
+          const surface = el.shadowRoot?.querySelector('.swc-ThreadAlert');
           const icon = Array.from(
-            el.shadowRoot?.querySelectorAll('.swc-Alert-icon') ?? []
+            el.shadowRoot?.querySelectorAll('.swc-ThreadAlert-icon') ?? []
           ).find((element) => getComputedStyle(element).display !== 'none');
           if (!surface) {
             throw new Error('Expected the rendered message surface');
@@ -254,8 +254,8 @@ test.describe('Alert', () => {
   }) => {
     const root = await gotoStory(
       page,
-      'patterns-ai-toolkit-alert--accessibility',
-      'swc-alert'
+      'patterns-ai-toolkit-thread-alert--accessibility',
+      'swc-thread-alert'
     );
     const retry = root.getByRole('button', { name: 'Try again', exact: true });
     const dismiss = root.getByRole('button', { name: 'Dismiss message' });
@@ -276,7 +276,7 @@ test.describe('Alert', () => {
     await expect(dismiss).toBeFocused();
     await page.keyboard.press('Space');
     await expect(root).toHaveAttribute('data-clicks', '2');
-    await expect(root.locator('swc-alert')).toBeVisible();
+    await expect(root.locator('swc-thread-alert')).toBeVisible();
     await page.keyboard.press('Shift+Tab');
     await expect(retry).toBeFocused();
 
@@ -302,10 +302,10 @@ test.describe('Alert', () => {
     await page.setViewportSize({ width: 320, height: 900 });
     const root = await gotoStory(
       page,
-      'patterns-ai-toolkit-alert--text-wrapping',
-      'swc-alert'
+      'patterns-ai-toolkit-thread-alert--text-wrapping',
+      'swc-thread-alert'
     );
-    const alert = root.locator('swc-alert');
+    const alert = root.locator('swc-thread-alert');
     await alert.evaluate((el) => el.setAttribute('dir', 'rtl'));
     const dimensions = await alert.evaluate((el) => ({
       width: el.clientWidth,
@@ -327,10 +327,10 @@ test.describe('Alert', () => {
   }) => {
     const root = await gotoStory(
       page,
-      'patterns-ai-toolkit-alert--dynamic-insertion',
+      'patterns-ai-toolkit-thread-alert--dynamic-insertion',
       '[data-announcements]'
     );
-    await expect(root.locator('swc-alert')).toHaveCount(0);
+    await expect(root.locator('swc-thread-alert')).toHaveCount(0);
     await expect(root.getByRole('status')).toBeEmpty();
     const trigger = root.getByRole('button', { name: 'Announce message' });
     await trigger.focus();
@@ -338,7 +338,7 @@ test.describe('Alert', () => {
     await page.keyboard.press('Enter');
     await expect(trigger).toBeFocused();
     await expect(root.getByRole('status')).toHaveText('Your request is ready.');
-    const message = root.locator('swc-alert');
+    const message = root.locator('swc-thread-alert');
     await expect(
       message.getByRole('button', { name: 'Dismiss message' })
     ).toHaveCount(1);
@@ -362,8 +362,8 @@ test.describe('Alert', () => {
     await page.emulateMedia({ forcedColors: 'active' });
     const root = await gotoStory(
       page,
-      'patterns-ai-toolkit-alert--accessibility',
-      'swc-alert'
+      'patterns-ai-toolkit-thread-alert--accessibility',
+      'swc-thread-alert'
     );
     await expect(
       root.getByText('Your response could not be completed.', { exact: true })
