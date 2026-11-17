@@ -57,12 +57,13 @@ Use **camelCase** for all properties and methods.
 | Public property | `variant`, `staticColor`, `indeterminate` |
 | Protected getter | `hasIcon` |
 | Private backing field | `_fixed`, `_variant` |
+| Private state field | `_hasSteps`, `_ariaExpanded` |
 | Lifecycle method | `firstUpdated`, `connectedCallback` |
 | Event handler | `handleKeydown`, `handleSlotchange` |
 | Private helper | `formatProgress`, `isValidVariant` |
 | Controller | `languageResolver` |
 
-**Private backing fields** start with an underscore: `_fixed`, `_variant`, `_size`. No other properties use an underscore prefix.
+**Private fields that hold the component's own state** start with an underscore. This covers backing fields (`_fixed`, `_variant`, `_size`), private `@state()` fields (`_hasSteps`, `_ariaExpanded`), and other private fields such as cached values. Controller instances are named for what they do, without an underscore (`languageResolver`, `placementController`). Public and protected members never use an underscore, including `protected` `@state()` fields that a concrete class reads (see [Lit decorators](04_lit-decorators.md#state)).
 
 ```ts
 // ✅ Good
@@ -77,7 +78,7 @@ public static_color?: ProgressCircleStaticColor;
 public _isOpen = false; // should be: private _isOpen = false;
 ```
 
-The one exception for underscores is backing fields that pair with a custom getter/setter (see [Property patterns](05_property-patterns.md#backing-fields)).
+For backing fields that pair with a custom getter/setter, see [Property patterns](05_property-patterns.md#backing-fields).
 
 ## Type names
 
