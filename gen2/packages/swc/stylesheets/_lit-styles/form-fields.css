@@ -41,6 +41,14 @@
   --_swc-form-field-row-gap: var(--swc-form-field-row-gap, token("form-item-gap-medium"));
 }
 
+/* `:lang()` is tested on the host: in Firefox, `.swc-FormField:lang(ja)`
+   didn't match from a `lang` set on the host. */
+:host(:lang(ja)) .swc-FormField,
+:host(:lang(zh)) .swc-FormField,
+:host(:lang(ko)) .swc-FormField {
+  --_swc-form-field-line-height: token("cjk-line-height-100");
+}
+
 :host([size="s"]) {
   --swc-form-field-label-font-size: token("font-size-75");
   --swc-form-field-description-font-size: token("font-size-75");
