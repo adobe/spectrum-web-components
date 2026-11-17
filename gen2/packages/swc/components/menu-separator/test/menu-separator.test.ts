@@ -12,13 +12,13 @@
 
 import { expect, userEvent, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import { getComponent, withWarningSpy } from '@swc-test-helpers/dom';
 
 import type { Menu } from '@adobe/spectrum-wc/components/menu/Menu.js';
 import { MenuSeparator } from '@adobe/spectrum-wc/components/menu-separator/MenuSeparator.js';
 
 import '@adobe/spectrum-wc/components/menu-separator/swc-menu-separator.js';
 
-import { getComponent, withWarningSpy } from '../../../utils/test-utils.js';
 import meta, { Anatomy, Overview } from '../stories/menu-separator.stories.js';
 
 // This file defines dev-only test stories that reuse the main story metadata.
