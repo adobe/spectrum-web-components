@@ -14,6 +14,7 @@ on:
       - synchronize
       - reopened
       - ready_for_review
+      - auto_merge_enabled
 
 permissions:
   contents: read
@@ -22,13 +23,18 @@ concurrency:
   group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
   cancel-in-progress: true
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
   changeset_check:
     name: Check for changesets
-    runs-on: ubuntu-latest
+    if: ${{ !startsWith(github.head_ref, 'changeset-release/') }}
+    runs-on: ubuntu-26.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
@@ -42,11 +48,13 @@ jobs:
           added=$(git diff --name-only --diff-filter=A "$BASE_SHA...$HEAD_SHA")
 
           # Source changes that ship to consumers; tests, stories, and docs don't need a changeset.
-          ignore_pattern='(/test/|/tests/|/stories/|\.(test|stories|vrt)\.[jt]sx?$|\.mdx?$)'
+          ignore_pattern='(/test/|/tests/|/stories/|/\.storybook/|/public/|\.(test|stories|vrt)\.[jt]sx?$|\.mdx?$)'
+          config_pattern='/(\.npmrc|\.npmignore|\.gitignore|tsconfig[^/]*\.json|[^/]*\.config\.([cm]?[jt]s|json))$'
+          private_pattern='^gen2/packages/tools/'
 
           missing=0
           for gen in 1st-gen gen2; do
-            source_changes=$(echo "$changed" | grep -E "^${gen}/(packages|tools)/" | grep -Ev "$ignore_pattern" || true)
+            source_changes=$(echo "$changed" | grep -E "^${gen}/(packages|tools)/" | grep -Ev "$ignore_pattern|$config_pattern|$private_pattern" || true)
             if [ -z "$source_changes" ]; then
               continue
             fi
