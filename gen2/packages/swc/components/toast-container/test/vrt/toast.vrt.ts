@@ -30,7 +30,7 @@ import {
   vrtParameters,
 } from '../../../../.storybook/helpers/index.js';
 
-// TODO(SWC-2655): add peek-stack depth and Show all coverage.
+// TODO(SWC-2654): add Show all coverage.
 // TODO(SWC-2654): add expanded-view, scrim, and Clear all / Collapse coverage.
 
 // Metadata

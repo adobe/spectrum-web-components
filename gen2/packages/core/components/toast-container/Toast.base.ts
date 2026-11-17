@@ -292,14 +292,17 @@ export abstract class ToastBase extends SpectrumElement {
     this._cancelContentReveal?.();
     this._contentRevealed = true;
     this._closeEventDispatched = false;
-    this.dispatchAfterTransition(() => {
-      this.dispatchEvent(
-        new CustomEvent('swc-after-close', {
-          bubbles: true,
-          composed: true,
-        })
-      );
-    });
+    this.dispatchAfterTransition(
+      () => {
+        this.dispatchEvent(
+          new CustomEvent('swc-after-close', {
+            bubbles: true,
+            composed: true,
+          })
+        );
+      },
+      { skipWhenHidden: true }
+    );
   }
 
   /**
@@ -423,7 +426,13 @@ export abstract class ToastBase extends SpectrumElement {
     };
   }
 
-  private dispatchAfterTransition(callback: () => void): void {
+  // With `skipWhenHidden`, settles on the next task if the host is already
+  // `display: none`, as in engines that skip the discrete `display` transition
+  // (Firefox). Nothing is left to fade, so waiting only delays what follows.
+  private dispatchAfterTransition(
+    callback: () => void,
+    { skipWhenHidden = false }: { skipWhenHidden?: boolean } = {}
+  ): void {
     this._cancelAfterTransition?.();
     this._pendingAfterTransition = undefined;
     const element = this.internalElement;
@@ -431,10 +440,16 @@ export abstract class ToastBase extends SpectrumElement {
       return;
     }
     this._pendingAfterTransition = callback;
-    this._cancelAfterTransition = runAfterTransition(element, () => {
+    const settle = (): void => {
       this._cancelAfterTransition = undefined;
       this._pendingAfterTransition = undefined;
       callback();
-    });
+    };
+    if (skipWhenHidden && getComputedStyle(this).display === 'none') {
+      const timer = setTimeout(settle);
+      this._cancelAfterTransition = () => clearTimeout(timer);
+      return;
+    }
+    this._cancelAfterTransition = runAfterTransition(element, settle);
   }
 }

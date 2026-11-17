@@ -15,6 +15,7 @@ import { fn } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
+import type { ButtonVariant } from '@adobe/spectrum-wc-core/components/button';
 import {
   TOAST_CONTAINER_PLACEMENTS,
   TOAST_VARIANTS,
@@ -50,6 +51,9 @@ const { argTypes: toastArgTypes } = getStorybookHelpers('swc-toast');
 
 const hiddenControl = { table: { disable: true }, control: false } as const;
 
+// A function can't be edited in a control, and the MDX documents it.
+const functionPropertyArgTypes = { getRegionLabel: hiddenControl };
+
 // These options are read when a toast is added to the queue, so changing them leaves already-queued toasts as they were.
 const queueOptions = {
   category: 'queue options (apply to newly added toasts)',
@@ -76,6 +80,7 @@ const meta: Meta<ToastContainerArgs> = {
   },
   argTypes: {
     ...containerArgTypes,
+    ...functionPropertyArgTypes,
     placement: {
       ...containerArgTypes?.placement,
       control: 'select',
@@ -83,13 +88,15 @@ const meta: Meta<ToastContainerArgs> = {
     },
     message: {
       control: 'text',
-      description: 'The notification text passed to `ToastQueue.add()`.',
+      description:
+        'The notification text passed to `ToastQueue.add()`. In the Playground, only "Show custom toast" uses it; the other buttons add their own demo message.',
       table: queueOptions,
     },
     variant: {
       control: 'select',
       options: TOAST_VARIANTS,
-      description: 'The semantic variant of the toast.',
+      description:
+        'The semantic variant of the toast. In the Playground, the "Show ... toast" variant buttons use their own variant; the other buttons use this one.',
       table: { ...queueOptions, defaultValue: { summary: 'neutral' } },
     },
     iconLabel: {
@@ -101,12 +108,14 @@ const meta: Meta<ToastContainerArgs> = {
     timeout: {
       control: 'number',
       description:
-        'Auto-dismiss delay in milliseconds. Leave unset (or use 0) to keep the toast until it is closed. Positive values are raised to a 6000 minimum. Ignored when the toast has an action.',
+        'Auto-dismiss delay in milliseconds. Leave unset (or use 0) to keep the toast until it is closed. Positive values are raised to a 6000 minimum. Ignored when the toast has an action, so this control is hidden while an action label is set.',
+      if: { arg: 'actionLabel', truthy: false },
       table: { ...queueOptions, defaultValue: { summary: 'none' } },
     },
     actionLabel: {
       control: 'text',
-      description: 'The label for the optional action button.',
+      description:
+        'The label for the optional action button. When set, the toast renders an action button with this label. A toast with an action never auto-dismisses, so `timeout` is ignored.',
       table: queueOptions,
     },
     shouldCloseOnAction: {
@@ -171,6 +180,24 @@ const variantMessages = {
 const nextMessageSuffix = (): string =>
   ToastQueue.entries.length === 0 ? '' : ` (${ToastQueue.entries.length + 1})`;
 
+// Each Playground button's own variant mirrors the toast it adds.
+const playgroundVariantButtons = [
+  { variant: 'neutral', buttonVariant: 'secondary' },
+  { variant: 'positive', buttonVariant: 'primary' },
+  { variant: 'negative', buttonVariant: 'negative' },
+  { variant: 'info', buttonVariant: 'accent' },
+] as const satisfies readonly {
+  variant: ToastVariant;
+  buttonVariant: ButtonVariant;
+}[];
+
+// Adds `count` toasts, oldest first.
+const addStack = (args: ToastContainerArgs, count: number): void => {
+  for (let index = 0; index < count; index += 1) {
+    addToast(args, ` (${index + 1})`);
+  }
+};
+
 const addToast = (args: ToastContainerArgs, suffix = ''): string =>
   ToastQueue.add(`${args.message}${suffix}`, {
     variant: args.variant,
@@ -220,6 +247,69 @@ const staticStackParameters = {
 
 export const Playground: Story<ToastContainerArgs> = {
   tags: ['dev'],
+  render: (args) => {
+    const clear = (): void => ToastQueue.clear();
+    const addOne = (): void => {
+      addToast(args, nextMessageSuffix());
+    };
+    const addVariant = (event: Event): void => {
+      const variant = (event.currentTarget as HTMLElement).dataset
+        .variant as ToastVariant;
+      addToast(
+        { ...args, variant, message: variantMessages[variant] },
+        nextMessageSuffix()
+      );
+    };
+    // A positive timeout is raised to 6000, so the message matches what the toast does. An action would cancel the timeout, so it is cleared.
+    const addTimeout = (): void => {
+      const timeout = Math.max(args.timeout ?? 0, 6000);
+      addToast(
+        {
+          ...args,
+          timeout,
+          actionLabel: '',
+          message: `Closes after ${timeout / 1000} seconds`,
+        },
+        nextMessageSuffix()
+      );
+    };
+    // A toast with an action never auto-dismisses, so the timeout is cleared.
+    const addAction = (): void => {
+      addToast(
+        {
+          ...args,
+          timeout: null,
+          actionLabel: args.actionLabel || 'Undo',
+          message: 'Message archived',
+        },
+        nextMessageSuffix()
+      );
+    };
+    return html`
+      ${playgroundVariantButtons.map(
+        ({ variant, buttonVariant }) => html`
+          <swc-button
+            variant=${buttonVariant}
+            data-variant=${variant}
+            @click=${addVariant}
+          >
+            Show ${variant} toast
+          </swc-button>
+        `
+      )}
+      <swc-button variant="secondary" fill-style="outline" @click=${addTimeout}>
+        Show toast with timeout
+      </swc-button>
+      <swc-button variant="secondary" fill-style="outline" @click=${addAction}>
+        Show toast with action
+      </swc-button>
+      <swc-button variant="secondary" fill-style="outline" @click=${addOne}>
+        Show custom toast
+      </swc-button>
+      <swc-button variant="secondary" @click=${clear}>Clear</swc-button>
+      <swc-toast-container .placement=${args.placement}></swc-toast-container>
+    `;
+  },
 };
 
 // ──────────────────
@@ -275,24 +365,28 @@ export const Variants: Story<ToastContainerArgs> = {
 export const Top: Story<ToastContainerArgs> = {
   ...Overview,
   args: { ...Overview.args, placement: 'top' },
+  play: ({ args }) => addStack(args, 3),
   tags: ['options'],
 };
 
 export const TopEnd: Story<ToastContainerArgs> = {
   ...Overview,
   args: { ...Overview.args, placement: 'top-end' },
+  play: ({ args }) => addStack(args, 3),
   tags: ['options'],
 };
 
 export const Bottom: Story<ToastContainerArgs> = {
   ...Overview,
   args: { ...Overview.args, placement: 'bottom' },
+  play: ({ args }) => addStack(args, 3),
   tags: ['options'],
 };
 
 export const BottomEnd: Story<ToastContainerArgs> = {
   ...Overview,
   args: { ...Overview.args, placement: 'bottom-end' },
+  play: ({ args }) => addStack(args, 3),
   tags: ['options'],
 };
 

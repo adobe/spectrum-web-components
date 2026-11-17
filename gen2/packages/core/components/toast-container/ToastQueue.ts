@@ -11,6 +11,7 @@
  */
 import type {
   ToastQueueEntry,
+  ToastQueueItem,
   ToastQueueOptions,
 } from './ToastContainer.types.js';
 
@@ -36,6 +37,26 @@ class ToastQueueState {
     this._entries = [{ ...options, key, message }, ...this._entries];
     this.notify();
     return key;
+  }
+
+  /**
+   * Adds several notifications at the front of the queue in one change.
+   * The first item shows in front, matching the order of `entries`.
+   *
+   * @returns Keys to pass to `close()`, in the same order as `toasts`.
+   */
+  public addAll(toasts: readonly ToastQueueItem[]): string[] {
+    if (toasts.length === 0) {
+      return [];
+    }
+    const added = toasts.map(({ message, ...options }) => ({
+      ...options,
+      key: `toast-${++this._nextKey}`,
+      message,
+    }));
+    this._entries = [...added, ...this._entries];
+    this.notify();
+    return added.map(({ key }) => key);
   }
 
   /** Requests closure; a rendered toast is removed after its close transition. */
