@@ -203,6 +203,7 @@
   background: radial-gradient(59.4% 91.9% at 31.2% 99.6%, color-mix(in srgb, var(--_swc-ai-button-tint-1) 12%, transparent), transparent), radial-gradient(49.6% 89.8% at 46.2% 100%, color-mix(in srgb, var(--_swc-ai-button-tint-2) 6%, transparent), transparent), radial-gradient(50.4% 54.4% at 83.3% 100%, color-mix(in srgb, var(--_swc-ai-button-tint-3) 8%, transparent), transparent);
   pointer-events: none;
   opacity: var(--_swc-ai-button-glow-opacity);
+  clip-path: inset(0 round calc(var(--_swc-ai-button-min-block-size) / 2));
 }
 
 .swc-AiButton-glow::before,
@@ -381,6 +382,11 @@ slot[name="icon"]::slotted(*) {
 }
 
 @media (forced-colors: active) {
+  .swc-AiButton {
+    background-color: ButtonFace;
+    backdrop-filter: none;
+  }
+
   .swc-AiButton::after {
     border: token("border-width-100") solid ButtonText;
   }

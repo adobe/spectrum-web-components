@@ -15,6 +15,77 @@ import { gotoStory } from '@swc-test-helpers/playwright';
 
 import type { AiButton } from '../AiButton.js';
 
+for (const colorScheme of ['light', 'dark'] as const) {
+  test(`forced colors use an opaque face in ${colorScheme}`, async ({
+    page,
+  }) => {
+    await page.emulateMedia({ forcedColors: 'active', colorScheme });
+    await gotoStory(
+      page,
+      'patterns-ai-toolkit-ai-button--overview',
+      'swc-ai-button'
+    );
+    await page.evaluate(() => {
+      const fixture = document.createElement('div');
+      fixture.id = 'forced-colors-fixture';
+      for (const background of ['black', 'white']) {
+        const backdrop = document.createElement('div');
+        backdrop.style.background = background;
+        backdrop.style.forcedColorAdjust = 'none';
+        for (const disabled of [false, true]) {
+          for (const iconOnly of [false, true]) {
+            const button = document.createElement('swc-ai-button');
+            button.style.forcedColorAdjust = 'auto';
+            button.disabled = disabled;
+            button.textContent = iconOnly ? '' : 'Ask AI';
+            button.accessibleLabel = iconOnly ? 'Ask AI' : undefined;
+            backdrop.append(button);
+          }
+        }
+        fixture.append(backdrop);
+      }
+      const reference = document.createElement('span');
+      reference.id = 'button-face-reference';
+      reference.style.backgroundColor = 'ButtonFace';
+      fixture.append(reference);
+      document.body.prepend(fixture);
+    });
+
+    const faceColor = await page
+      .locator('#button-face-reference')
+      .evaluate((element) => getComputedStyle(element).backgroundColor);
+    const buttons = page.locator('#forced-colors-fixture swc-ai-button button');
+    await expect(buttons).toHaveCount(8);
+    for (const button of await buttons.all()) {
+      await expect(button).toHaveCSS('background-color', faceColor);
+      await expect(button).toHaveCSS('backdrop-filter', 'none');
+    }
+  });
+}
+
+test('clips the glow to the rounded face at every size', async ({ page }) => {
+  const root = await gotoStory(
+    page,
+    'patterns-ai-toolkit-ai-button--overview',
+    'swc-ai-button'
+  );
+  const host = root.locator('swc-ai-button').first();
+  for (const size of ['m', 'l', 'xl'] as const) {
+    await host.evaluate(async (element: AiButton, size) => {
+      element.size = size;
+      await element.updateComplete;
+    }, size);
+    const button = host.locator('button');
+    const radius = await button.evaluate(
+      (element) => getComputedStyle(element).borderTopLeftRadius
+    );
+    await expect(button.locator('.swc-AiButton-glow')).toHaveCSS(
+      'clip-path',
+      `inset(0px round ${radius})`
+    );
+  }
+});
+
 test('disabled custom icons do not dispatch ancestor capture clicks', async ({
   page,
 }) => {

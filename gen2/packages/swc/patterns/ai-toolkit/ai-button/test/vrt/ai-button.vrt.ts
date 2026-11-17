@@ -125,12 +125,38 @@ const BACKDROPS = [
 const DOCUMENT_TEXT =
   'The spring campaign launches in March with a hero video, three social cuts, and a new landing page. Review the brief and send your feedback by Friday.';
 
-/** A default and a disabled AI button over a backdrop. */
-const backdropTile = (background: string, behind: unknown = nothing) => html`
+/** Labeled and icon-only buttons stay fixed over the scrollable backdrop. */
+const backdropTile = (
+  background: string,
+  behind: unknown = nothing,
+  scrollable = false
+) => html`
   <div
-    style="position: relative; display: flex; gap: var(--swc-spacing-200); align-items: center; justify-content: center; box-sizing: border-box; inline-size: 240px; block-size: 96px; padding: var(--swc-spacing-300); overflow: hidden; border-radius: var(--swc-corner-radius-500); background: ${background};"
+    style="position: relative; inline-size: 240px; block-size: 144px; overflow: hidden; border-radius: var(--swc-corner-radius-500);"
   >
-    ${behind} ${renderAiButton({})} ${renderAiButton({ disabled: true })}
+    <div
+      role=${scrollable ? 'region' : nothing}
+      aria-label=${scrollable ? 'Scrollable button backdrop' : nothing}
+      tabindex=${scrollable ? '0' : nothing}
+      style="position: absolute; inset: 0; overflow: ${scrollable
+        ? 'auto'
+        : 'hidden'};"
+    >
+      <div
+        style="position: relative; min-block-size: ${scrollable
+          ? '300px'
+          : '100%'}; background: ${background};"
+      >
+        ${behind}
+      </div>
+    </div>
+    <div
+      style="position: absolute; inset: 0; display: grid; grid-template-columns: repeat(2, max-content); gap: var(--swc-spacing-100); align-content: center; justify-content: center; justify-items: center; pointer-events: none;"
+    >
+      ${renderAiButton({})} ${renderAiButton({ disabled: true })}
+      ${renderAiButton({ iconOnly: true })}
+      ${renderAiButton({ iconOnly: true, disabled: true })}
+    </div>
   </div>
 `;
 
@@ -194,19 +220,28 @@ const permutationContent = () => html`
   ${row(
     [
       ...BACKDROPS.map(([label, background]) =>
-        captioned(backdropTile(background), label)
+        captioned(
+          backdropTile(background, nothing, label === 'Painting'),
+          label
+        )
       ),
       captioned(
         backdropTile(
           'transparent',
           html`
-            <p
+            <div
               class="swc-Body swc-Body--sizeXS"
               style="position: absolute; inset: 0; margin: 0; padding: var(--swc-spacing-200);"
             >
-              ${DOCUMENT_TEXT}
-            </p>
-          `
+              ${Array.from(
+                { length: 4 },
+                () => html`
+                  <p>${DOCUMENT_TEXT}</p>
+                `
+              )}
+            </div>
+          `,
+          true
         ),
         'Text'
       ),
