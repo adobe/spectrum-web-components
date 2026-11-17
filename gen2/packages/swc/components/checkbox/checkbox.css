@@ -32,6 +32,8 @@
   --_swc-checkbox-background-color: token("gray-25");
   --_swc-checkbox-checkmark-color: var(--_swc-checkbox-background-color);
   --_swc-checkbox-focus-indicator-color: token("focus-indicator-color");
+  --_swc-checkbox-transition-duration: token("animation-duration-100");
+  --_swc-checkbox-transition-timing-function: token("animation-ease-in-out");
 
   -webkit-tap-highlight-color: transparent;
   cursor: default;
@@ -85,8 +87,8 @@
   block-size: var(--_swc-checkbox-control-size);
   margin-block-start: var(--_swc-checkbox-control-offset);
   border-radius: var(--swc-checkbox-corner-radius, token("corner-radius-small-size-medium"));
-  transition-timing-function: token("animation-ease-in-out");
-  transition-duration: token("animation-duration-100");
+  transition-timing-function: var(--_swc-checkbox-transition-timing-function);
+  transition-duration: var(--_swc-checkbox-transition-duration);
   transition-property: transform;
 
   /* The border fills the box while checked or indeterminate. */
@@ -97,8 +99,8 @@
     border: token("border-width-200") solid var(--_swc-checkbox-border-color);
     border-radius: inherit;
     content: "";
-    transition-timing-function: token("animation-ease-in-out");
-    transition-duration: token("animation-duration-100");
+    transition-timing-function: var(--_swc-checkbox-transition-timing-function);
+    transition-duration: var(--_swc-checkbox-transition-duration);
     transition-property: border-color, border-width;
   }
 }
@@ -110,8 +112,8 @@
   position: absolute;
   opacity: 0;
   transform: scale(0);
-  transition-timing-function: token("animation-ease-in-out");
-  transition-duration: token("animation-duration-100");
+  transition-timing-function: var(--_swc-checkbox-transition-timing-function);
+  transition-duration: var(--_swc-checkbox-transition-duration);
   transition-property: opacity, transform;
 }
 
@@ -124,8 +126,8 @@
   font-style: token("default-font-style");
   color: inherit;
   text-align: start;
-  transition-timing-function: token("animation-ease-in-out");
-  transition-duration: token("animation-duration-100");
+  transition-timing-function: var(--_swc-checkbox-transition-timing-function);
+  transition-duration: var(--_swc-checkbox-transition-duration);
   transition-property: color;
 }
 
@@ -230,12 +232,8 @@
    ───────────────────────────────────────────────────────────────────────────── */
 
 @media (prefers-reduced-motion: reduce) {
-  .swc-Checkbox-box,
-  .swc-Checkbox-box::before,
-  .swc-Checkbox-checkmark,
-  .swc-Checkbox-dash,
-  .swc-FormFieldLabel {
-    transition-duration: 0ms;
+  .swc-Checkbox {
+    --_swc-checkbox-transition-duration: 0ms;
   }
 }
 
