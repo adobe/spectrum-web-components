@@ -38,9 +38,30 @@ export interface FieldAssociationControllerOptions {
   /**
    * The host element. When provided, clicks are suppressed in the capture phase
    * while the field is disabled, which a reflected `disabled` attribute used to
-   * do for free.
+   * do for free. Clicks inside slotted `label`, `description`, or `error-text`
+   * content, such as a link, are not suppressed, matching a native
+   * `<fieldset disabled>`.
    */
   host?: HTMLElement;
+}
+
+/** Slots holding text content whose links stay clickable while disabled. */
+const TEXT_CONTENT_SLOTS = new Set(['label', 'description', 'error-text']);
+
+/**
+ * Whether a click started inside light-DOM content the host slots into a text
+ * slot. Other light-DOM children, such as a radio group's radios, are controls
+ * and are suppressed like the host itself.
+ */
+function isTextContentClick(event: Event, host: HTMLElement): boolean {
+  return event
+    .composedPath()
+    .some(
+      (node) =>
+        node instanceof Element &&
+        node.parentElement === host &&
+        TEXT_CONTENT_SLOTS.has(node.slot)
+    );
 }
 
 // ─────────────────────────
@@ -77,10 +98,11 @@ export class FieldAssociationController {
     this._internals = internals;
     this._onDisabledChange = options.onDisabledChange;
     this._getStatus = options.getStatus;
-    options.host?.addEventListener(
+    const host = options.host;
+    host?.addEventListener(
       'click',
       (event) => {
-        if (this.disabled) {
+        if (this.disabled && !isTextContentClick(event, host)) {
           event.preventDefault();
           event.stopImmediatePropagation();
         }

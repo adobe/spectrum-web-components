@@ -20,6 +20,9 @@ import '../ui-icons/swc-ui-icon.js';
 import formFieldStyles from '../../stylesheets/_lit-styles/form-fields.css';
 import styles from './radio-group.css';
 
+/** The id of the rendered group label, the slotted-label name fallback. */
+const LABEL_ID = 'swc-radio-group-label';
+
 const NECESSITY_INDICATOR_TEXT = {
   required: '(required)',
   optional: '(optional)',
@@ -29,24 +32,30 @@ const NECESSITY_INDICATOR_TEXT = {
  * Coordinates a set of `swc-radio` items as a single mutually-exclusive selection.
  *
  * @element swc-radio-group
- * @since 2.0.0-beta.5
+ * @since 2.0.0-beta.8
  *
  * @slot - The `swc-radio` items to manage.
  * @slot label - Visible group label.
  * @slot description - Group-level guidance text.
- * @slot error-text - Error message shown while `field-status="invalid"`.
+ * @slot error-text - Error message shown while `field-status="invalid"`; also the validation message.
  *
- * @cssprop --swc-radio-group-item-gap - Space between radio button items.
- * @cssprop --swc-radio-group-side-label-gap - Space between the radio items and the side label.
- * @cssprop --swc-radio-group-row-gap - Space between the labels and group of radio items.
+ * @fires change - User selection only, not `selected` changes in code. Cancelable; `preventDefault()` reverts it.
+ *
+ * @cssprop --swc-radio-group-item-gap - Space between items, or between wrapped rows when horizontal. Changes by size.
+ * @cssprop --swc-radio-group-side-label-gap - Space between a side label and the items. Changes by size.
+ * @cssprop --swc-radio-group-row-gap - Space between the label, items, and description. Changes by size.
  * @cssprop --swc-field-label-max-inline-size - `label-position="side"` only: max inline size of the label's grid column. Defaults to 25ch.
- * @cssprop --swc-form-field-label-font-size - Font size of the visible group label. Defaults to the group size typography scale.
- * @cssprop --swc-form-field-description-font-size - Font size of the description and error text. Defaults to the group size typography scale.
+ * @cssprop --swc-form-field-label-font-size - Font size of the visible group label. Changes by size.
+ * @cssprop --swc-form-field-description-font-size - Font size of the description and error text. Changes by size.
  * @cssprop --swc-form-field-necessity-gap - Space between the label text and the necessity indicator. Changes by size.
  * @cssprop --swc-form-field-invalid-icon-gap - Space between the error icon and the error message. Changes by size.
  *
  * @example
- * <swc-radio-group><swc-radio value="1"></swc-radio></swc-radio-group>
+ * <swc-radio-group name="shipping">
+ *   <span slot="label">Shipping method</span>
+ *   <swc-radio value="standard"><span slot="label">Standard</span></swc-radio>
+ *   <swc-radio value="express"><span slot="label">Express</span></swc-radio>
+ * </swc-radio-group>
  */
 export class RadioGroup extends RadioGroupBase {
   public static override get styles(): CSSResultArray {
@@ -60,7 +69,7 @@ export class RadioGroup extends RadioGroupBase {
   protected override willUpdate(changedProperties: PropertyValues): void {
     super.willUpdate(changedProperties);
     const target = this.roleElement;
-    if (target?.getAttribute('aria-labelledby') === 'swc-radio-group-label') {
+    if (target?.getAttribute('aria-labelledby') === LABEL_ID) {
       target.removeAttribute('aria-labelledby');
     }
   }
@@ -82,7 +91,7 @@ export class RadioGroup extends RadioGroupBase {
     }
     const label = this.renderRoot.querySelector('.swc-FormFieldLabel');
     if (label) {
-      label.id = 'swc-radio-group-label';
+      label.id = LABEL_ID;
       target.setAttribute('aria-labelledby', label.id);
     } else {
       target.removeAttribute('aria-labelledby');
@@ -95,23 +104,32 @@ export class RadioGroup extends RadioGroupBase {
     // combinations. A `div` can't use `<label for>`, so `updated()` wires the
     // slotted label.
     const invalid = this.fieldStatus === 'invalid';
+    // Read-only groups are barred from validation, so `required` has no effect
+    // and isn't exposed to assistive technology or shown as a necessity
+    // indicator.
+    const readOnly = this.fieldStatus === 'readonly';
     return html`
       <div
         class="swc-FormField swc-RadioGroup"
         role="radiogroup"
         tabindex="-1"
-        aria-required=${this.required ? 'true' : 'false'}
+        aria-required=${this.required && !readOnly ? 'true' : 'false'}
         aria-invalid=${invalid ? 'true' : 'false'}
-        aria-readonly=${this.fieldStatus === 'readonly' ? 'true' : 'false'}
+        aria-readonly=${readOnly ? 'true' : 'false'}
       >
-        ${this.renderLabel(undefined, {
-          required: this.required,
-          necessityIndicator: this.necessityIndicator,
-          necessityIndicatorText: NECESSITY_INDICATOR_TEXT,
-          necessityIcon: html`
-            <swc-ui-icon icon="asterisk" size=${this.size}></swc-ui-icon>
-          `,
-        })}
+        ${this.renderLabel(
+          undefined,
+          readOnly
+            ? undefined
+            : {
+                required: this.required,
+                necessityIndicator: this.necessityIndicator,
+                necessityIndicatorText: NECESSITY_INDICATOR_TEXT,
+                necessityIcon: html`
+                  <swc-ui-icon icon="asterisk" size=${this.size}></swc-ui-icon>
+                `,
+              }
+        )}
         <div class="swc-RadioGroup-items">
           <slot></slot>
         </div>

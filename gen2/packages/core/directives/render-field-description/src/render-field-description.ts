@@ -31,8 +31,9 @@ export interface RenderFieldDescriptionOptions {
   onErrorTextElement: (element: Element | undefined) => void;
 
   /**
-   * Decorative icon rendered before the error message. Supplied by the consumer
-   * because this `core` directive can't import a `swc` icon. Omit when the
+   * Decorative icon rendered before the error message, inside an `aria-hidden`
+   * wrapper. Supplied by the consumer because this `core` directive can't
+   * import a `swc` icon. Omit when the
    * control already shows its own invalid icon (e.g. a text field's input).
    * When supplied, an invalid field always shows it, even with no error text,
    * so the invalid state never relies on color alone: it appears beside the
@@ -70,7 +71,9 @@ export function renderFieldDescription({
   }
   const icon = errorIcon
     ? html`
-        <span class="swc-FormFieldErrorText-icon">${errorIcon}</span>
+        <span class="swc-FormFieldErrorText-icon" aria-hidden="true">
+          ${errorIcon}
+        </span>
       `
     : nothing;
   return html`

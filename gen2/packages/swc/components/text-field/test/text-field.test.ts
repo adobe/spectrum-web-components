@@ -525,7 +525,7 @@ export const NecessityIndicatorTest: Story = {
           '.swc-FormFieldLabel-requiredIndicator'
         ),
         'required icon mode renders the asterisk'
-      ).toBeTruthy();
+      ).toHaveAttribute('aria-hidden', 'true');
       expect(
         requiredIcon.shadowRoot?.querySelector(
           '.swc-FormFieldLabel-requiredIndicator swc-ui-icon'
@@ -578,6 +578,40 @@ export const NecessityIndicatorTest: Story = {
         field.parentElement?.remove();
       }
     );
+
+    await step('read-only hides the indicator in both modes', async () => {
+      const indicators = (field: TextField): Element[] =>
+        Array.from(
+          field.shadowRoot?.querySelectorAll(
+            '.swc-FormFieldLabel-requiredIndicator, .swc-FormFieldLabel-necessityLabel'
+          ) ?? []
+        );
+      for (const field of fields) {
+        field.fieldStatus = 'readonly';
+      }
+      await Promise.all(fields.map((field) => field.updateComplete));
+      for (const field of fields) {
+        expect(indicators(field)).toEqual([]);
+      }
+      expect(
+        requiredLabel.shadowRoot
+          ?.querySelector('.swc-FormFieldLabel')
+          ?.textContent?.includes('(required)'),
+        'the accessible name no longer includes "(required)"'
+      ).toBe(false);
+      expect(
+        requiredIcon.roleElement?.required,
+        'the input is not required while read-only'
+      ).toBe(false);
+
+      for (const field of fields) {
+        field.fieldStatus = undefined;
+      }
+      await Promise.all(fields.map((field) => field.updateComplete));
+      for (const field of fields) {
+        expect(indicators(field)).toHaveLength(1);
+      }
+    });
   },
 };
 
@@ -652,6 +686,34 @@ export const PrefixTest: Story = {
         nodes.indexOf(slot as Element),
         'prefix slot precedes the input in the control'
       ).toBeLessThan(nodes.indexOf(input as Element));
+    });
+
+    await step('pressing the prefix focuses the input', () => {
+      const avatar = field.querySelector('swc-avatar') as HTMLElement;
+      const input = field.shadowRoot?.querySelector('.swc-TextField-input');
+      const press = new PointerEvent('pointerdown', {
+        bubbles: true,
+        composed: true,
+        cancelable: true,
+      });
+      avatar.dispatchEvent(press);
+      expect(press.defaultPrevented, 'prefix press is prevented').toBe(true);
+      expect(field.shadowRoot?.activeElement, 'input is focused').toBe(input);
+    });
+
+    await step('pressing the input itself is not intercepted', () => {
+      const input = field.shadowRoot?.querySelector(
+        '.swc-TextField-input'
+      ) as HTMLInputElement;
+      const press = new PointerEvent('pointerdown', {
+        bubbles: true,
+        composed: true,
+        cancelable: true,
+      });
+      input.dispatchEvent(press);
+      expect(press.defaultPrevented, 'input press is not prevented').toBe(
+        false
+      );
     });
   },
 };
@@ -2161,7 +2223,13 @@ export const DisabledClickSuppressionTest: Story = {
         name="username"
         accessible-label="Username"
         field-status="disabled"
-      ></swc-text-field>
+      >
+        <span slot="description">
+          See the
+          <a href="#username-rules">username rules</a>
+          .
+        </span>
+      </swc-text-field>
     </fieldset>
   `,
   play: async ({ canvasElement, step }) => {
@@ -2192,6 +2260,20 @@ export const DisabledClickSuppressionTest: Story = {
       await field.updateComplete;
       clickEverywhere();
       expect(hostClick).not.toHaveBeenCalled();
+    });
+
+    await step('a slotted description link stays clickable', () => {
+      const link = field.querySelector('a')!;
+      const linkClick = fn();
+      link.addEventListener('click', linkClick);
+      link.addEventListener('click', (event) => event.preventDefault());
+      link.click();
+      expect(linkClick).toHaveBeenCalledTimes(1);
+      expect(
+        hostClick,
+        'the click still bubbles to the host'
+      ).toHaveBeenCalledTimes(1);
+      hostClick.mockClear();
     });
 
     await step('an enabled field still receives clicks', async () => {
