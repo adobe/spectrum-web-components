@@ -120,7 +120,7 @@ Use this doc for **what order** to do things and **what to check**; use the link
 | **1. Preparation** | Uses output of **Step 1: Analyze rendering and styling** (read the component analysis). Plan breaking changes and scope. |
 | **2. Setup** | **Steps 2–3** — study 1st-gen structure, create base class in core — then create gen2 core/SWC layout per Phase 2. |
 | **3. API migration** | **Step 4: Formalize Spectrum data model** + **Step 5: Add gen2 SWC** (API overrides/additions). |
-| **4. Accessibility** | Use the **accessibility migration analysis** (`03_components/<component>/accessibility-migration-analysis.md`). |
+| **4. Accessibility** | Use the **component accessibility specification** (`03_components/<component>/component-accessibility-specification.md`). |
 | **5. Styling** | **Step 6: Migrate rendering & styles from Spectrum CSS**. |
 | **6. Testing** | (Mentioned in steps as "confirm tests pass" — this guide makes it a full phase.) |
 | **7. Documentation** | **Step 7: Add stories for gen2 component** + per-component MDX docs page + public-API JSDoc on `Component.ts`. |
@@ -391,7 +391,8 @@ Adopt the shared [`FieldAssociationController`](../../../../../2nd-gen/packages/
 - Push the value with `setValue()`; pass `null` to exclude the field from `FormData` (unchecked, unselected, or disabled).
 - Restore `defaultValue` from the element's `formResetCallback`.
 - Forward the element's `formDisabledCallback` to the controller for the ancestor form / `<fieldset disabled>` cascade.
-- Compute effective disabled as the element's own `disabled` OR `fieldAssoc.formDisabled`, never the attribute alone.
+- Compute effective disabled from the authored status and the cascade: `fieldStatus === 'disabled' || fieldAssoc.formDisabled`, or `fieldAssoc.disabled` once the controller's status-aware API is available. Never read a host `disabled` attribute; fields do not reflect one ([forms strategy §3.7](../../../05_strategies/forms-strategy-rfc.md#37-field-status-and-validation-sources)).
+- Write validity from one private `syncValidity()` that calls `setValidity()`, per [forms strategy §3.7](../../../05_strategies/forms-strategy-rfc.md#37-field-status-and-validation-sources).
 
 `swc-text-field` is the reference adoption. Name the public API from its [naming table](../../../05_strategies/forms-strategy-rfc.md#4-naming-table) so property, slot, and event names match; do not invent per-component names, and align text-like fields and pickers to the same table.
 
@@ -404,7 +405,7 @@ Adopt the shared [`FieldAssociationController`](../../../../../2nd-gen/packages/
 - [ ] Invalid prop combinations emit `window.__swc.warn()` when debug is on (where the component has combination rules).
 - [ ] Every applicable dev-warning category is covered: enum values, required properties, conditionally required properties, mutually exclusive/no-effect combinations, required slots, allowed children.
 - [ ] Dev-warning checks use the shared helpers (`validateEnum`, `warnIf`, `validateRequiredSlot`, `validateAllowedChildren`) rather than hand-rolled `includes()` + `warn()` code.
-- [ ] **Form fields:** the field adopts `FieldAssociationController` for form participation (value with `null` exclusion, `defaultValue` reset, and the disabled cascade) rather than hand-wiring `ElementInternals`; `static formAssociated = true`, `attachInternals()`, and `setValidity()` stay on the element; effective disabled is `disabled || fieldAssoc.formDisabled`; and property, slot, and event names match the forms strategy naming table. (Populating validity via `setValidity()` is deferred to the labelling and render work; do not block on it.)
+- [ ] **Form fields:** the field adopts `FieldAssociationController` for form participation (value with `null` exclusion, `defaultValue` reset, and the disabled cascade) rather than hand-wiring `ElementInternals`; `static formAssociated = true`, `attachInternals()`, and `setValidity()` stay on the element; effective disabled is `fieldStatus === 'disabled' || fieldAssoc.formDisabled` (or `fieldAssoc.disabled` where the controller provides it); validity is written by a private `syncValidity()` per the forms strategy; and property, slot, and event names match the forms strategy naming table.
 
 ### Common problems and solutions
 
@@ -430,11 +431,11 @@ If you are renaming or removing a public prop or attribute, confirm with the tea
 
 ## Phase 4: Accessibility
 
-**Goal:** Implement the accessibility requirements defined in the component's **accessibility migration analysis** (`CONTRIBUTOR-DOCS/03_project-planning/03_components/<component>/accessibility-migration-analysis.md`). That document is the source of truth for this phase — implement exactly what it specifies, cross-referencing the repo’s [Accessibility testing](https://github.com/adobe/spectrum-web-components/blob/main/CONTRIBUTOR-DOCS/01_contributor-guides/09_accessibility-testing.md) guide and the PR template’s accessibility checklist.
+**Goal:** Implement the accessibility requirements defined in the **component accessibility specification** (`CONTRIBUTOR-DOCS/03_project-planning/03_components/<component>/component-accessibility-specification.md`). That document is the source of truth for this phase — implement exactly what it specifies, cross-referencing the repo’s [Accessibility testing](https://github.com/adobe/spectrum-web-components/blob/main/CONTRIBUTOR-DOCS/01_contributor-guides/09_accessibility-testing.md) guide and the PR template’s accessibility checklist.
 
 ### What to do
 
-1. **Read the component's accessibility migration analysis** — `CONTRIBUTOR-DOCS/03_project-planning/03_components/<component>/accessibility-migration-analysis.md`. The analysis defines the APG pattern (if any), required ARIA roles/states/properties, shadow DOM considerations, accessibility tree shape, keyboard and focus behavior, and the testing checklist. **Everything you implement in this phase flows from that document.**  
+1. **Read the component accessibility specification** — `CONTRIBUTOR-DOCS/03_project-planning/03_components/<component>/component-accessibility-specification.md`. The analysis defines the APG pattern (if any), required ARIA roles/states/properties, shadow DOM considerations, accessibility tree shape, keyboard and focus behavior, and the testing checklist. **Everything you implement in this phase flows from that document.**
 2. **Follow the [Accessibility testing](https://github.com/adobe/spectrum-web-components/blob/main/CONTRIBUTOR-DOCS/01_contributor-guides/09_accessibility-testing.md) guide** and the PR template checklist.
 3. **Use gen2 Storybook accessibility guides:** `gen2/packages/swc/.storybook/guides/accessibility-guides/` — codebase-specific a11y patterns and docs surfaced in Storybook (complement the contributor guide and APG).
 4. **Identify the APG pattern** for your component type (e.g. button, combobox) — [WCAG ARIA Authoring Practices Guide (APG)](https://www.w3.org/WAI/ARIA/apg/patterns/).
@@ -446,7 +447,7 @@ If you are renaming or removing a public prop or attribute, confirm with the tea
 
 ### What to check
 
-- [ ] The component's accessibility migration analysis doc exists and has been read in full.
+- [ ] The component accessibility specification doc exists and has been read in full.
 - [ ] All requirements in the analysis are implemented.
 - [ ] ARIA and semantics match the chosen APG pattern that the analysis identified.
 - [ ] Component behaves as expected with screen reader.
@@ -471,7 +472,7 @@ Prefer native events when they give the right semantics (e.g. `click`). Add cust
 
 ### Quality gate
 
-- [ ] Component's accessibility migration analysis doc exists and all its requirements are implemented.
+- [ ] The component accessibility specification doc exists and all its requirements are implemented.
 - [ ] Keyboard and ARIA implemented per the analysis.
 - [ ] APG pattern identified and linked
 - [ ] Keyboard and ARIA implemented
@@ -539,7 +540,7 @@ For troubleshooting and detailed patterns (e.g. 1st-gen Constructable Stylesheet
 3. **Storybook play functions:** Add play functions for defaults, variants, keyboard.
 4. **Visual regression stories:** Add dedicated `test/vrt/*.vrt.ts` stories for dense visual coverage. See [Visual regression testing](../../../../02_style-guide/04_testing/04_visual-regresssion-testing.md).
 5. **Coverage:** Main props, variants, user actions, visual states, global styles, and public custom properties when applicable.
-6. **Dev-warning tests:** For every dev-warning check added in Phase 3/4, add a pair of test cases (fires for the invalid/missing case, silent for the valid case) using `withWarningSpy` from `@spectrum-web-components/swc/utils/test-utils`. See the **Testing deprecation warnings** pattern in [Debug and validation](../../../../02_style-guide/02_typescript/17_debug-validation.md#testing-deprecation-warnings), which applies to all warning categories, not just deprecations.
+6. **Dev-warning tests:** For every dev-warning check added in Phase 3/4, add a pair of test cases (fires for the invalid/missing case, silent for the valid case) using `withWarningSpy` from `@swc-test-helpers/dom`. See the **Testing deprecation warnings** pattern in [Debug and validation](../../../../02_style-guide/02_typescript/17_debug-validation.md#testing-deprecation-warnings), which applies to all warning categories, not just deprecations.
 
 Follow the two-file layout (`test/<component>.test.ts`, `test/<component>.a11y.spec.ts`). See the [gen2 testing conventions](../../../../01_contributor-guides/11_gen2_testing.md) and reference implementations in `link/test/`, `checkbox/test/`, `badge/test/`, etc.
 
@@ -665,7 +666,8 @@ Use these when you are not sure how to structure the migration.
 
 - **Small, fixed set** (e.g. size: S/M/L): Use a **string attribute** and reflect it; use a const array for type and Storybook options.
 - Match the **primary role** of the component (button, listbox, combobox, dialog, etc.) to native HTML or an existing accessible [pattern](https://www.w3.org/WAI/ARIA/apg/patterns/).
-- **Boolean toggles** (e.g. disabled, readonly): Use **boolean attributes** and reflect.
+- **Boolean toggles** (e.g. pending, emphasized): Use **boolean attributes** and reflect.
+- **Form-field status** (`disabled`, `invalid`, `valid`, `readonly`): Use one mutually exclusive `field-status` attribute instead of separate booleans, per [forms strategy RFC §3.7](../../../05_strategies/forms-strategy-rfc.md#37-field-status-and-validation-sources).
 - **Stop and ask** when the 1st-gen uses a different pattern (e.g. only classes) and you want to change to attributes.
 
 ### What accessibility pattern applies?

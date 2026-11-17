@@ -1,5 +1,15 @@
 # Change Log
 
+## 1.12.6
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @spectrum-web-components/checkbox@1.12.6
+  - @spectrum-web-components/icon@1.12.6
+  - @spectrum-web-components/icons-ui@1.12.6
+  - @spectrum-web-components/base@1.12.6
+
 ## 1.12.5
 
 ### Patch Changes

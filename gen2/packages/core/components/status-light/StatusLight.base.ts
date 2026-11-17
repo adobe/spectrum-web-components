@@ -106,7 +106,7 @@ export abstract class StatusLightBase extends SizedMixin(SpectrumElement, {
         this,
         true,
         `<${this.localName}> does not support the "accent" variant in Spectrum 2. Use "neutral" or "info" depending on intent.`,
-        'https://spectrum-web-components.adobe.com/?path=/docs/status-light-migration-guide--docs',
+        'https://spectrum-web-components.adobe.com/?path=/docs/components-status-light-migration-guide--docs',
         { level: 'deprecation' }
       );
     } else {
@@ -121,7 +121,7 @@ export abstract class StatusLightBase extends SizedMixin(SpectrumElement, {
       this,
       this.hasAttribute('disabled'),
       `<${this.localName}> does not support the "disabled" attribute. It was deprecated in Spectrum 1 and has been removed in Spectrum 2.`,
-      'https://spectrum-web-components.adobe.com/?path=/docs/status-light-migration-guide--docs',
+      'https://spectrum-web-components.adobe.com/?path=/docs/components-status-light-migration-guide--docs',
       { level: 'deprecation' }
     );
 

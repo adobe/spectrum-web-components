@@ -61,23 +61,34 @@ let documentAugmented = false;
 // Recurses into grouping rules (@media, @layer, @supports, @container) so a
 // mirrored rule stays nested the same way as the original — needed for
 // global-button.css, which wraps everything in `@layer swc-global-elements`.
-function collectMirroredRules(rules: CSSRuleList, out: string[]): void {
+// The one exception is a media query that only asks for a hover-capable, fine
+// pointer, such as `@media (hover: hover) and (pointer: fine)`, which keeps a
+// hover style off touch screens. A forced state stands in for a mouse user, and
+// headless CI browsers can report `hover: none`, so those mirrored rules are
+// unwrapped to apply whatever pointer the capture browser reports.
+function collectMirroredRules(
+  rules: CSSRuleList,
+  out: string[],
+  includeAll = false
+): void {
   for (const rule of rules) {
     if (rule instanceof CSSStyleRule) {
-      // Mirror the rule's *entire* text (including any nested rules such as a
-      // `&::after` block), replacing every forced pseudo-class with its
-      // attribute equivalent — anywhere it appears, in the parent selector or a
-      // nested one. Using the full `cssText` rather than just this rule's own
-      // declarations is what preserves nested rules, whose appearance would
-      // otherwise be dropped (e.g. Card's quiet selectable focus ring, drawn
-      // by a nested `::after`).
       const { cssText } = rule;
       if (
+        includeAll ||
         Object.keys(PSEUDO_TO_FORCED_ATTRIBUTE).some((pseudo) =>
           cssText.includes(pseudo)
         )
       ) {
-        let mirrored = cssText;
+        const inner: string[] = [];
+        if (rule.cssRules.length) {
+          // Retain non-pseudo children too: a mirrored parent selector can
+          // supply their state, including nested pseudo-elements.
+          collectMirroredRules(rule.cssRules, inner, true);
+        }
+        let mirrored = rule.cssRules.length
+          ? `${rule.selectorText} { ${rule.style.cssText} ${inner.join(' ')} }`
+          : cssText;
         for (const [pseudo, forcedAttribute] of Object.entries(
           PSEUDO_TO_FORCED_ATTRIBUTE
         )) {
@@ -87,14 +98,40 @@ function collectMirroredRules(rules: CSSRuleList, out: string[]): void {
       }
     } else if ('cssRules' in rule) {
       const inner: string[] = [];
-      collectMirroredRules((rule as CSSGroupingRule).cssRules, inner);
-      if (inner.length) {
+      collectMirroredRules(
+        (rule as CSSGroupingRule).cssRules,
+        inner,
+        includeAll
+      );
+      if (inner.length && isPointerCapabilityQuery(rule)) {
+        out.push(...inner);
+      } else if (inner.length) {
         out.push(
           `${(rule as CSSRule).cssText.split('{')[0]}{ ${inner.join(' ')} }`
         );
       }
+    } else if (includeAll) {
+      out.push(rule.cssText);
     }
   }
+}
+
+/** A single query feature that a mouse or trackpad matches. */
+const MOUSE_POINTER_FEATURE = /^\((any-)?(hover: hover|pointer: fine)\)$/;
+
+/**
+ * Whether `rule` is a media rule whose every query only tests for a
+ * hover-capable, fine pointer, such as `(hover: hover) and (pointer: fine)`.
+ */
+function isPointerCapabilityQuery(rule: CSSRule): boolean {
+  if (!(rule instanceof CSSMediaRule) || rule.media.length === 0) {
+    return false;
+  }
+  return Array.from(rule.media).every((query) =>
+    query
+      .split(' and ')
+      .every((feature) => MOUSE_POINTER_FEATURE.test(feature.trim()))
+  );
 }
 
 function mirrorPseudoClassRules(sheet: CSSStyleSheet): CSSStyleSheet | null {

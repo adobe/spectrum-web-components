@@ -29,12 +29,6 @@ import '@adobe/spectrum-wc/components/ui-icons/swc-ui-icon.js';
 
 const { args, argTypes, template } = getStorybookHelpers('swc-infield-button');
 
-argTypes.size = {
-  ...argTypes.size,
-  control: { type: 'select' },
-  options: INFIELD_BUTTON_VALID_SIZES,
-};
-
 // ────────────────────
 //    HELPERS
 // ────────────────────
@@ -214,6 +208,7 @@ const meta: Meta = {
     docs: {
       subtitle: 'Icon button embedded inside a form field',
     },
+    missingDesignDocs: true,
     // TODO: add Figma and Stackblitz links
   },
   tags: ['migrated'],

@@ -15,8 +15,6 @@ import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import { IllustratedMessage } from '@adobe/spectrum-wc/illustrated-message';
-
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc/components/button-group/swc-button-group.js';
 import '@adobe/spectrum-wc/components/illustrated-message/swc-illustrated-message.js';
@@ -28,18 +26,6 @@ import '@adobe/spectrum-wc/components/illustrated-message/swc-illustrated-messag
 const { args, argTypes, template } = getStorybookHelpers(
   'swc-illustrated-message'
 );
-
-argTypes.size = {
-  ...argTypes.size,
-  control: { type: 'select' },
-  options: IllustratedMessage.VALID_SIZES,
-};
-
-argTypes.orientation = {
-  ...argTypes.orientation,
-  control: { type: 'select' },
-  options: IllustratedMessage.VALID_ORIENTATIONS,
-};
 
 /**
  * An illustrated message displays an illustration alongside a heading and

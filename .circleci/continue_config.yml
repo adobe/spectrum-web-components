@@ -307,6 +307,9 @@ jobs:
       - run:
           name: Generate Custom Elements Manifest
           command: yarn workspace @adobe/spectrum-wc analyze
+      - run:
+          name: Test Custom Elements Manifest plugins
+          command: yarn workspace @adobe/spectrum-wc test:cem
       - save-node-dependencies-cache
       - persist_to_workspace:
           root: .

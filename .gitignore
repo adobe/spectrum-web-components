@@ -134,6 +134,7 @@ test/*
 **/__screenshots__/
 
 # gen2 build artifacts
+gen2/test/helpers/dist/
 gen2/packages/*/dist/
 gen2/packages/*/custom-elements.json
 gen2/packages/*/storybook-static*

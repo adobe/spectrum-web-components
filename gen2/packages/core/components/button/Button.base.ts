@@ -17,7 +17,10 @@ import { SlotPresenceController } from '@adobe/spectrum-wc-core/controllers/slot
 import { SlotTextController } from '@adobe/spectrum-wc-core/controllers/slot-text-controller/index.js';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import { SizedMixin } from '@adobe/spectrum-wc-core/mixins/index.js';
-import { warnIf } from '@adobe/spectrum-wc-core/utils/index.js';
+import {
+  componentDocsHref,
+  warnIf,
+} from '@adobe/spectrum-wc-core/utils/index.js';
 
 import { BUTTON_VALID_SIZES, type ButtonSize } from './Button.types.js';
 
@@ -98,6 +101,11 @@ export abstract class ButtonBase extends SizedMixin(SpectrumElement, {
     return this.slotText.hasContent;
   }
 
+  /** @internal Docs URL for dev warnings, derived from the tag name. */
+  protected get docsHref(): string {
+    return componentDocsHref(this.localName);
+  }
+
   /**
    * Returns the set of attributes that should be forwarded to the internal
    * semantic `<button>` element, if not otherwise directly managed.
@@ -148,7 +156,7 @@ export abstract class ButtonBase extends SizedMixin(SpectrumElement, {
       this,
       this.hasIcon && !this.hasLabel && !this.accessibleLabel,
       `<${this.localName}> with an icon and no label must have an "accessible-label" attribute to be accessible.`,
-      'https://spectrum-web-components.adobe.com/?path=/docs/components-button--docs',
+      this.docsHref,
       { type: 'accessibility', issues: ['accessible-label'] }
     );
   }

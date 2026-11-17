@@ -182,6 +182,8 @@ export abstract class TextFieldBase extends SizedMixin(
 
   private fieldAssoc = new FieldAssociationController(this.internals, {
     onDisabledChange: () => this.requestUpdate(),
+    getStatus: () => this.fieldStatus,
+    host: this,
   });
 
   // Slot-presence tracking does not notify when only the message text changes.
@@ -225,7 +227,7 @@ export abstract class TextFieldBase extends SizedMixin(
    * The subclass render reads it to disable the inner control.
    */
   protected get effectiveDisabled(): boolean {
-    return this.fieldStatus === 'disabled' || this.fieldAssoc.formDisabled;
+    return this.fieldAssoc.disabled;
   }
 
   /** Associated form, or `null` when the field is not associated with a form. */
@@ -449,10 +451,7 @@ export abstract class TextFieldBase extends SizedMixin(
         url: DOCS_URL,
       });
     }
-    if (changedProperties.has('fieldStatus')) {
-      this.toggleAttribute('disabled', this.fieldStatus === 'disabled');
-      this.toggleAttribute('readonly', this.fieldStatus === 'readonly');
-    }
+    this.fieldAssoc.syncDisabledState();
     super.update(changedProperties);
     // Push the current value into the form; exclude it entirely when disabled.
     this.fieldAssoc.setValue(this.effectiveDisabled ? null : this.value);

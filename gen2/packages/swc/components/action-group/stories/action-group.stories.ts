@@ -32,48 +32,17 @@ import '@adobe/spectrum-wc-icons/swc-icon-edit.js';
 
 const { args, argTypes } = getStorybookHelpers('swc-action-group');
 
+// No default size: an unset group leaves each child at its own size. The manifest has
+// no default to show, so say so explicitly.
 argTypes.size = {
   ...argTypes.size,
-  control: { type: 'select' },
-  options: [...ACTION_GROUP_VALID_SIZES],
   table: {
-    category: 'attributes',
+    ...argTypes.size?.table,
     defaultValue: { summary: 'none' },
   },
 };
 
-argTypes.orientation = {
-  ...argTypes.orientation,
-  control: { type: 'select' },
-  options: [...ACTION_GROUP_ORIENTATIONS],
-  table: {
-    category: 'attributes',
-    defaultValue: { summary: 'horizontal' },
-  },
-};
-
-argTypes.disabled = {
-  ...argTypes.disabled,
-  table: {
-    category: 'attributes',
-    defaultValue: { summary: 'false' },
-  },
-};
-
-argTypes.compact = {
-  table: {
-    category: 'attributes',
-    defaultValue: { summary: 'false' },
-  },
-};
-
-argTypes.quiet = {
-  table: {
-    category: 'attributes',
-    defaultValue: { summary: 'false' },
-  },
-};
-
+// Extends the source description with when the attribute has a visible effect.
 argTypes.justified = {
   ...argTypes.justified,
   description:
@@ -81,10 +50,6 @@ argTypes.justified = {
     'inline width of the group. Has no visible effect unless the host has ' +
     'more available width than its content needs, e.g., an explicit ' +
     '`inline-size` set on the host, or a container that stretches it.',
-  table: {
-    category: 'attributes',
-    defaultValue: { summary: 'false' },
-  },
 };
 
 /**

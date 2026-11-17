@@ -10,11 +10,16 @@
  * governing permissions and limitations under the License.
  */
 
+import { PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 import { SizedMixin } from '@adobe/spectrum-wc-core/mixins/index.js';
-import { validateEnum } from '@adobe/spectrum-wc-core/utils/index.js';
+import {
+  resolveEnum,
+  stringAttribute,
+  validateEnum,
+} from '@adobe/spectrum-wc-core/utils/index.js';
 
 import { DragAndDropController } from '../../controllers/drag-and-drop-controller/index.js';
 import { SlotAttributePropagationController } from '../../controllers/slot-attribute-propagation-controller/index.js';
@@ -99,34 +104,27 @@ export abstract class DropzoneBase extends SizedMixin(SpectrumElement, {
    * @type {'copy' | 'move' | 'link' | 'none'}
    * @default 'copy'
    */
-  @property({ type: String, attribute: 'drop-effect' })
-  public get dropEffect(): DropEffect {
-    return this._dropEffect;
-  }
+  @property({
+    type: String,
+    attribute: 'drop-effect',
+    // A removed attribute resets to the default rather than `null`.
+    converter: stringAttribute(DROPZONE_DEFAULT_DROP_EFFECT),
+  })
+  public dropEffect: DropEffect = DROPZONE_DEFAULT_DROP_EFFECT;
 
-  public set dropEffect(value: DropEffect | null) {
-    // Lit passes `null` here when the `drop-effect` attribute is removed;
-    // treat that as "reset to the default" rather than an invalid value.
-    if (value === null) {
-      const oldValue = this._dropEffect;
-      this._dropEffect = DROPZONE_DEFAULT_DROP_EFFECT;
-      this.requestUpdate('dropEffect', oldValue);
-    } else if ((DROP_EFFECTS as readonly string[]).includes(value)) {
-      const oldValue = this._dropEffect;
-      this._dropEffect = value;
-      this.requestUpdate('dropEffect', oldValue);
-    } else {
-      validateEnum(this, {
-        prop: 'drop-effect',
-        value,
-        valid: DROP_EFFECTS,
-        url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-dropzone--docs',
-      });
-    }
+  /**
+   * @internal
+   *
+   * The drop effect handed to the browser. Invalid values are kept on
+   * `dropEffect` as set and resolve to the default here.
+   */
+  private get resolvedDropEffect(): DropEffect {
+    return resolveEnum(
+      this.dropEffect,
+      DROP_EFFECTS,
+      DROPZONE_DEFAULT_DROP_EFFECT
+    );
   }
-
-  /** @internal */
-  private _dropEffect: DropEffect = DROPZONE_DEFAULT_DROP_EFFECT;
 
   // ──────────────────────────
   //     IMPLEMENTATION
@@ -145,7 +143,7 @@ export abstract class DropzoneBase extends SizedMixin(SpectrumElement, {
             detail: event,
           })
         ),
-      dropEffect: () => this._dropEffect,
+      dropEffect: () => this.resolvedDropEffect,
       onDragEnter: (event) => {
         this.dragged = true;
         this.dispatchEvent(
@@ -196,5 +194,15 @@ export abstract class DropzoneBase extends SizedMixin(SpectrumElement, {
   /** @internal */
   protected handleDefaultSlotChange(): void {
     this._sizePropagation.propagate();
+  }
+
+  protected override update(changes: PropertyValues): void {
+    validateEnum(this, {
+      prop: 'drop-effect',
+      value: this.dropEffect,
+      valid: DROP_EFFECTS,
+      url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-drop-zone--docs',
+    });
+    super.update(changes);
   }
 }

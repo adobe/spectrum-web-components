@@ -22,19 +22,18 @@ import '@adobe/spectrum-wc/components/asset/swc-asset.js';
 import '@adobe/spectrum-wc/components/badge/swc-badge.js';
 import '../swc-prompt-field.js';
 
+import {
+  filesToAttachments,
+  revokeAttachment,
+  revokeAttachments,
+  type UploadAttachmentData,
+} from '../../upload-attachment/index.js';
+
 // ────────────────
 //    METADATA
 // ────────────────
 
 const { args, argTypes } = getStorybookHelpers('swc-prompt-field');
-
-argTypes.size = {
-  ...argTypes.size,
-  control: { type: 'select' },
-  options: ['s', 'm'],
-};
-
-args.size = 'm';
 
 const defaultPlaceholder =
   'Ready to get started? Ask a question, share an idea, or add a task.';
@@ -112,7 +111,6 @@ const meta: Meta = {
   render: (storyArgs) => renderPromptField(storyArgs),
   parameters: {
     docs: {
-      packagePath: 'patterns/ai-toolkit/prompt-field',
       subtitle:
         'Prompt entry surface for AI flows. Populate attachments by slotting one or more swc-upload-attachment nodes into attachment',
     },
@@ -323,6 +321,7 @@ export const Attachment: Story = {
             <swc-asset slot="thumbnail">
               <img src="images/landscape-asset.jpg" alt="Campaign still" />
             </swc-asset>
+            <span slot="title">campaign-still.png</span>
           </swc-upload-attachment>
           <swc-upload-attachment
             slot="attachment"
@@ -333,6 +332,7 @@ export const Attachment: Story = {
             <swc-asset slot="thumbnail">
               <img src="images/portrait-asset.jpg" alt="Storyboard frame" />
             </swc-asset>
+            <span slot="title">storyboard-frame.pdf</span>
             <swc-badge slot="badge" size="s" subtle>PDF</swc-badge>
           </swc-upload-attachment>
           ${legalDisclaimerSlot}
@@ -366,6 +366,7 @@ export const Attachment: Story = {
             <swc-asset slot="thumbnail">
               <img src="images/landscape-asset.jpg" alt="Attachment preview" />
             </swc-asset>
+            <span slot="title">attachment-preview.png</span>
           </swc-upload-attachment>
           ${legalDisclaimerSlot}
         </swc-prompt-field>
@@ -416,43 +417,80 @@ const multiAttachmentScrollBadges: Record<number, string> = {
   11: 'PDF',
 };
 
+const multiAttachmentScrollFileName = (index: number): string =>
+  `storyboard-frame-${index + 1}.${(
+    multiAttachmentScrollBadges[index] ?? 'png'
+  ).toLowerCase()}`;
+
+const multiAttachmentScrollCards = [
+  ['Brand guidelines', 'PDF'],
+  ['Q2 metrics draft', 'XLSX'],
+  ['Launch brief', 'DOCX'],
+  ['Campaign timeline', 'PDF'],
+  ['Audience research', 'PPTX'],
+  ['Budget overview', 'XLSX'],
+  ['Press kit', 'ZIP'],
+  ['Legal review notes', 'PDF'],
+] as const;
+
 export const MultiAttachmentScroll: Story = {
   render: () => html`
-    <div style="display:flex;flex-direction:column;gap:16px;inline-size:100%;">
+    <div style="display:flex;flex-direction:column;gap:32px;inline-size:100%;">
       <p class="swc-Detail swc-Detail--sizeS" style="margin:0;">
-        Full-width composer with twelve media tiles. Chevron controls flank the
-        strip when scrolling is possible; each click advances by one viewport
-        width and settles on a tile boundary. Edge fades signal overflow. An
-        overflowing strip uses the platform's native scrollbar.
+        Full-width composers that overflow with media tiles and with card tiles.
+        Chevron controls flank the strip when scrolling is possible; each click
+        moves the partly hidden tile to the opposite edge. Edge fades signal
+        overflow and grow in as the strip scrolls.
       </p>
-      <swc-prompt-field value="Review these storyboard frames.">
-        ${multiAttachmentScrollColors.map(
-          (colors, index) => html`
-            <swc-upload-attachment
-              slot="attachment"
-              type="media"
-              size="l"
-              dismissible
-            >
-              <swc-asset slot="thumbnail">
-                ${gradientSwatch(
-                  index,
-                  colors,
-                  `Storyboard frame ${index + 1}`
-                )}
-              </swc-asset>
-              ${multiAttachmentScrollBadges[index]
-                ? html`
-                    <swc-badge slot="badge" size="s" subtle>
-                      ${multiAttachmentScrollBadges[index]}
-                    </swc-badge>
-                  `
-                : nothing}
-            </swc-upload-attachment>
-          `
-        )}
-        ${legalDisclaimerSlot}
-      </swc-prompt-field>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <swc-prompt-field value="Review these storyboard frames.">
+          ${multiAttachmentScrollColors.map(
+            (colors, index) => html`
+              <swc-upload-attachment
+                slot="attachment"
+                type="media"
+                size="l"
+                dismissible
+              >
+                <swc-asset slot="thumbnail">
+                  ${gradientSwatch(
+                    index,
+                    colors,
+                    `Storyboard frame ${index + 1}`
+                  )}
+                </swc-asset>
+                <span slot="title">
+                  ${multiAttachmentScrollFileName(index)}
+                </span>
+                ${multiAttachmentScrollBadges[index]
+                  ? html`
+                      <swc-badge slot="badge" size="s" subtle>
+                        ${multiAttachmentScrollBadges[index]}
+                      </swc-badge>
+                    `
+                  : nothing}
+              </swc-upload-attachment>
+            `
+          )}
+          ${legalDisclaimerSlot}
+        </swc-prompt-field>
+        <span class="swc-Detail swc-Detail--sizeS">Media tiles</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <swc-prompt-field value="Use these files for the plan.">
+          ${multiAttachmentScrollCards.map(
+            ([title, type]) => html`
+              <swc-upload-attachment slot="attachment" type="card" dismissible>
+                <div slot="thumbnail" role="img" aria-label=${type}></div>
+                <span slot="title">${title}</span>
+                <span slot="subtitle">${type}</span>
+              </swc-upload-attachment>
+            `
+          )}
+          ${legalDisclaimerSlot}
+        </swc-prompt-field>
+        <span class="swc-Detail swc-Detail--sizeS">Card tiles</span>
+      </div>
     </div>
   `,
   tags: ['options'],
@@ -505,34 +543,6 @@ export const States: Story = {
 //    BEHAVIORS STORIES
 // ──────────────────────────
 
-interface PromptFieldBehaviorAttachment {
-  id: string;
-  fileName: string;
-  sizeLabel: string;
-  thumbnailUrl?: string;
-  badgeLabel?: string;
-}
-
-function fileBadgeLabel(fileName: string): string | undefined {
-  const extension = fileName.match(/\.([a-z0-9]+)$/i)?.[1];
-  return extension ? extension.toUpperCase() : undefined;
-}
-
-function filesToAttachments(files: File[]): PromptFieldBehaviorAttachment[] {
-  return files.map((file, index) => {
-    const isImage =
-      file.type.startsWith('image/') ||
-      /\.(png|jpe?g|gif|webp|bmp|svg|avif)$/i.test(file.name);
-    return {
-      id: `${crypto.randomUUID()}-${index}`,
-      fileName: file.name || 'Attachment',
-      sizeLabel: `${Math.max(1, Math.round(file.size / 1024))} KB`,
-      thumbnailUrl: isImage ? URL.createObjectURL(file) : undefined,
-      badgeLabel: isImage ? undefined : fileBadgeLabel(file.name),
-    } satisfies PromptFieldBehaviorAttachment;
-  });
-}
-
 @customElement('swc-prompt-field-behavior-demo')
 class PromptFieldBehaviorDemo extends LitElement {
   @property({ attribute: false })
@@ -542,7 +552,7 @@ class PromptFieldBehaviorDemo extends LitElement {
   private value = 'Summarize the API changes in this branch.';
 
   @state()
-  private attachments: PromptFieldBehaviorAttachment[] = [];
+  private attachments: UploadAttachmentData[] = [];
 
   protected override createRenderRoot(): this {
     return this;
@@ -562,11 +572,8 @@ class PromptFieldBehaviorDemo extends LitElement {
   }
 
   public override disconnectedCallback(): void {
-    for (const attachment of this.attachments) {
-      if (attachment.thumbnailUrl) {
-        URL.revokeObjectURL(attachment.thumbnailUrl);
-      }
-    }
+    revokeAttachments(this.attachments);
+    this.attachments = [];
     super.disconnectedCallback?.();
   }
 
@@ -576,11 +583,7 @@ class PromptFieldBehaviorDemo extends LitElement {
   }
 
   private _handleSubmit(): void {
-    for (const attachment of this.attachments) {
-      if (attachment.thumbnailUrl) {
-        URL.revokeObjectURL(attachment.thumbnailUrl);
-      }
-    }
+    revokeAttachments(this.attachments);
     this.value = '';
     this.attachments = [];
   }
@@ -598,8 +601,7 @@ class PromptFieldBehaviorDemo extends LitElement {
       return;
     }
 
-    const nextAttachments = filesToAttachments(files);
-    this.attachments = [...this.attachments, ...nextAttachments];
+    this.attachments = [...this.attachments, ...filesToAttachments(files)];
     input.value = '';
   }
 
@@ -616,8 +618,8 @@ class PromptFieldBehaviorDemo extends LitElement {
     }
 
     const removed = this.attachments.find((item) => item.id === attachmentId);
-    if (removed?.thumbnailUrl) {
-      URL.revokeObjectURL(removed.thumbnailUrl);
+    if (removed) {
+      revokeAttachment(removed);
     }
 
     this.attachments = this.attachments.filter(
@@ -638,8 +640,8 @@ class PromptFieldBehaviorDemo extends LitElement {
             type="media"
             size="l"
             dismissible
-            accessible-label=${`${attachment.fileName}, ${attachment.sizeLabel}`}
-            dismiss-label=${`Remove ${attachment.fileName}`}
+            accessible-label=${`${attachment.name}, ${attachment.sizeLabel}`}
+            dismiss-label=${`Remove ${attachment.name}`}
             data-attachment-id=${attachment.id}
           >
             ${attachment.thumbnailUrl
@@ -647,7 +649,7 @@ class PromptFieldBehaviorDemo extends LitElement {
                   <swc-asset slot="thumbnail">
                     <img
                       src=${attachment.thumbnailUrl}
-                      alt=${attachment.fileName}
+                      alt=${attachment.name}
                     />
                   </swc-asset>
                 `
@@ -655,7 +657,7 @@ class PromptFieldBehaviorDemo extends LitElement {
                   <swc-asset slot="thumbnail">
                     <svg
                       role="img"
-                      aria-label=${attachment.fileName}
+                      aria-label=${attachment.name}
                       viewBox="0 0 100 100"
                     >
                       <rect width="100" height="100" fill="#f3f3f3"></rect>

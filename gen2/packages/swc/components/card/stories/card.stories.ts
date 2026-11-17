@@ -39,24 +39,6 @@ import '../../avatar/swc-avatar';
 
 const { args, argTypes, template } = getStorybookHelpers('swc-card');
 
-argTypes.variant = {
-  ...argTypes.variant,
-  control: { type: 'select' },
-  options: CARD_VARIANTS,
-};
-
-argTypes.density = {
-  ...argTypes.density,
-  control: { type: 'select' },
-  options: CARD_DENSITIES,
-};
-
-argTypes.size = {
-  ...argTypes.size,
-  control: { type: 'select' },
-  options: CARD_VALID_SIZES,
-};
-
 /**
  * A `<swc-card>` is a flexible container that groups a preview image,
  * title, description, actions, and footer content. Its regular, collection,
@@ -73,6 +55,7 @@ const meta: Meta = {
     docs: {
       subtitle: 'Flexible container that summarizes an object.',
     },
+    designGuidanceSlug: 'cards',
     // design: { type: 'figma', url: 'https://www.figma.com/...' },
     stackblitz: { url: 'https://stackblitz.com/edit/vitejs-vite-wn1hrzqo' },
   },

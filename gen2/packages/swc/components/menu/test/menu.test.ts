@@ -13,6 +13,11 @@
 import { html } from 'lit';
 import { expect, userEvent, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import {
+  getComponent,
+  waitForEvent,
+  withWarningSpy,
+} from '@swc-test-helpers/dom';
 
 import { Menu } from '@adobe/spectrum-wc/menu';
 import {
@@ -24,11 +29,6 @@ import { isTopDismissible } from '@adobe/spectrum-wc-core/utils/index.js';
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc/components/menu/swc-menu.js';
 
-import {
-  getComponent,
-  waitForEvent,
-  withWarningSpy,
-} from '../../../utils/test-utils.js';
 import meta, { OpenAndClose } from '../stories/menu.stories.js';
 
 // This file defines dev-only test stories that reuse the main story metadata.
@@ -942,6 +942,66 @@ export const PlacementControllerIntegrationTest: Story = {
         { timeout: 2000 }
       );
     });
+
+    await step('clears the inline position styles once the menu closes', () => {
+      // Cleared in the same post-transition teardown as `actual-placement`.
+      for (const property of [
+        'top',
+        'left',
+        'translate',
+        '--swc-placement-available-width',
+        '--swc-placement-available-height',
+      ]) {
+        expect(
+          surface()?.style.getPropertyValue(property),
+          `surface ${property} is removed`
+        ).toBe('');
+      }
+    });
+  },
+};
+
+export const CloseDuringEntranceKeepsPositionTest: Story = {
+  render: () => html`
+    <div style="display: flex; justify-content: center; padding: 120px;">
+      <swc-button id="close-during-entrance-trigger">Edit</swc-button>
+    </div>
+    <swc-menu for="close-during-entrance-trigger">${defaultItems}</swc-menu>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const menu = await getComponent<Menu>(canvasElement, 'swc-menu');
+    const surface = menu.shadowRoot?.querySelector('.swc-Menu') as HTMLElement;
+    const nextFrame = (): Promise<void> =>
+      new Promise((resolve) => requestAnimationFrame(() => resolve()));
+
+    await step(
+      'a surface closed mid-entrance keeps its position until it fades out',
+      async () => {
+        menu.open = true;
+        // Close mid-entrance, once the fade-in is visibly under way.
+        for (
+          let frame = 0;
+          frame < 60 && parseFloat(getComputedStyle(surface).opacity) < 0.3;
+          frame++
+        ) {
+          await nextFrame();
+        }
+        menu.open = false;
+        for (let frame = 0; frame < 60; frame++) {
+          await nextFrame();
+          const opacity = parseFloat(getComputedStyle(surface).opacity);
+          if (opacity > 0) {
+            expect(
+              surface.style.translate,
+              `a visible surface (opacity ${opacity}) keeps its position`
+            ).not.toBe('');
+          } else if (surface.style.translate === '') {
+            break;
+          }
+        }
+        expect(surface.style.translate, 'cleared once faded out').toBe('');
+      }
+    );
   },
 };
 

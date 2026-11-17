@@ -91,7 +91,7 @@ The default state is editable and accepts keyboard input.
 
 ### Required
 
-`required` sets the native input's required state and prevents an empty field from passing constraint validation. With a visible label, the default [necessity indicator](#necessity-indicator) adds a decorative asterisk. The input uses native `required`.
+`required` sets the native input's required state and prevents an empty field from passing constraint validation. A read-only field is barred from validation, so while `field-status="readonly"`, `required` has no effect, the input isn't announced as required, and the label shows no necessity indicator. With a visible label, the default [necessity indicator](#necessity-indicator) adds a decorative asterisk. The input uses native `required`.
 
 <Canvas of={TextFieldStories.Required} />
 
@@ -107,7 +107,7 @@ The `field-status` attribute (`fieldStatus` property) accepts one status at a ti
 
 #### Disabled
 
-`field-status="disabled"` may retain the field's value but prevents editing and <kbd>Tab</kbd> access. The field does not block form validation and is excluded from `FormData`. Because it cannot receive focus, it is skipped during [focus-mode navigation](../?path=/docs/guides-accessibility-screen-reader-testing--docs#screen-reader-modes).
+`field-status="disabled"` may retain the field's value but prevents editing and <kbd>Tab</kbd> access. The field does not block form validation and is excluded from `FormData`. Because it cannot receive focus, it is skipped during [focus-mode navigation](../?path=/docs/guides-accessibility-screen-reader-testing--docs#screen-reader-modes). To style a disabled field from outside, select `:state(disabled)`, which also matches when a `<fieldset disabled>` ancestor disables the field.
 
 Use `field-status="readonly"` instead when users need to review or copy the value.
 

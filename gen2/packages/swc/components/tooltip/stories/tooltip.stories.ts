@@ -17,7 +17,6 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import {
-  TOOLTIP_PLACEMENTS,
   TOOLTIP_VARIANTS,
   type TooltipPlacement,
   type TooltipVariant,
@@ -33,18 +32,6 @@ import '@adobe/spectrum-wc-icons/swc-icon-add.js';
 // ────────────────
 
 const { args, argTypes, template } = getStorybookHelpers('swc-tooltip');
-
-argTypes.variant = {
-  ...argTypes.variant,
-  control: { type: 'select' },
-  options: TOOLTIP_VARIANTS,
-};
-
-argTypes.placement = {
-  ...argTypes.placement,
-  control: { type: 'select' },
-  options: TOOLTIP_PLACEMENTS,
-};
 
 // `actual-placement` is internal CSS-only state that `Tooltip` manages directly
 // via setAttribute (declared side before showPopover, then the flip-resolved

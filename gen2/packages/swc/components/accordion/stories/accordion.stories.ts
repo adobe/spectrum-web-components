@@ -61,17 +61,6 @@ const itemCssArgs = Object.fromEntries(
   Object.keys(itemCssArgTypes).map((name) => [name, ''])
 );
 
-argTypes.density = {
-  ...argTypes.density,
-  control: { type: 'select' },
-  options: [...ACCORDION_DENSITIES],
-  table: {
-    ...argTypes.density?.table,
-    category: 'attributes',
-    defaultValue: { summary: 'regular' },
-  },
-};
-
 argTypes.size = {
   ...argTypes.size,
   control: { type: 'select' },

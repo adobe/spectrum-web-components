@@ -13,6 +13,7 @@
 import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import { getComponent, withWarningSpy } from '@swc-test-helpers/dom';
 
 import type { Card } from '@adobe/spectrum-wc/card';
 import {
@@ -24,7 +25,6 @@ import {
 import '@adobe/spectrum-wc/components/card/swc-card.js';
 import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
 
-import { getComponent, withWarningSpy } from '../../../utils/test-utils.js';
 import { renderCardTemplate } from '../card-template.js';
 
 // Tests for the concrete swc-card. This is the sole automated coverage for

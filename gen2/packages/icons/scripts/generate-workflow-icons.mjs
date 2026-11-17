@@ -59,11 +59,8 @@ const outDir = path.join(packageRoot, 'src');
 // optical step. See icon-source/README.md.
 const SOURCE_NAME = /^S2_Icon_(?<name>.+?)_20_N\.svg$/;
 
-// The `@since` version for generated elements, read from this package.json so it
-// tracks the package version (bumped by changesets) rather than a hand-maintained
-// constant. All gen2 packages are version-locked, so this matches the core version
-// exported from core/element/version.ts too.
-const SINCE = JSON.parse(
+// Only new elements receive the current package version as their introduction version.
+const CURRENT_VERSION = JSON.parse(
   readFileSync(path.join(packageRoot, 'package.json'), 'utf8')
 ).version;
 
@@ -115,6 +112,19 @@ for (const name of names) {
   tags.set(tag, name);
 }
 
+// Preserve introduction versions before clearing the generated modules.
+const sinceVersions = new Map();
+for (const file of globSync('swc-icon-*.ts', { cwd: outDir })) {
+  const contents = readFileSync(path.join(outDir, file), 'utf8');
+  const since = /^[ \t]*\*[ \t]+@since[ \t]+(\S+)/m.exec(contents)?.[1];
+  if (!since) {
+    throw new Error(
+      `Missing @since in ${path.join(outDir, file)}. Restore the icon's introduction version before regenerating.`
+    );
+  }
+  sinceVersions.set(file, since);
+}
+
 // Ensure the output directory exists, then remove previously generated modules so
 // deletions in source propagate. Only the flat generated `.ts` files at src/ root are
 // cleared; src/stylesheets/ (the copied icon-base.css) is a subfolder and is untouched.
@@ -162,7 +172,7 @@ import styles from './stylesheets/icon-base.css';
  * The ${name} workflow icon as a custom element.
  *
  * @element ${tag}
- * @since ${SINCE}
+ * @since ${sinceVersions.get(`${tag}.ts`) ?? CURRENT_VERSION}
  *
  * @cssprop --swc-icon-color - Color of the icon.
  * @cssprop --swc-icon-inline-size - Inline size of the icon box.

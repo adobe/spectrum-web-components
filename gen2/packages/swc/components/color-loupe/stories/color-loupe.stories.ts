@@ -42,6 +42,7 @@ const meta: Meta = {
     docs: {
       subtitle: `Visual magnifier showing the picked color during color selection`,
     },
+    designGuidanceSlug: 'color-handle-and-loupe',
     styles: {
       position: 'relative',
       'min-block-size': '120px',

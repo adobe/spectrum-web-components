@@ -76,8 +76,11 @@ export class Tab extends FocusVisiblePolyfillMixin(
     `;
   }
 
-  protected override firstUpdated(changes: PropertyValues): void {
-    super.firstUpdated(changes);
+  public override connectedCallback(): void {
+    super.connectedCallback();
+    // Set the role and ID before the parent `sp-tabs` handles `slotchange`,
+    // so tabs added after the initial render are picked up and linked to
+    // their panels.
     this.setAttribute('role', 'tab');
     if (!this.hasAttribute('id')) {
       this.id = `sp-tab-${randomID()}`;
