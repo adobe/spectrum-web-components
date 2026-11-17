@@ -34,12 +34,6 @@ test.describe('Menu separator - ARIA Snapshots', () => {
       );
       const menu = page.locator('swc-menu');
 
-      // Play functions don't run on initial render outside Chromatic, so open
-      // the menu here; Overview is already open.
-      await menu.evaluate((el: HTMLElement & { open: boolean }) => {
-        el.open = true;
-      });
-
       await expect(menu.getByRole('separator')).toHaveCount(1);
       await expect(menu).toMatchAriaSnapshot(`
         - menu:

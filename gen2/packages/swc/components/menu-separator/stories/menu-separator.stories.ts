@@ -93,7 +93,7 @@ export const Playground: Story = {
 // ──────────────────────────
 
 const isolatedOpenDocs = {
-  docs: { story: { inline: false, height: '300px' } },
+  docs: { story: { inline: false, height: '340px' } },
 };
 
 export const Overview: Story = {
