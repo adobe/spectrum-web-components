@@ -780,6 +780,39 @@ export const BoxLayoutTest: Story = {
 };
 BoxLayoutTest.storyName = 'Box layout';
 
+export const CjkLineHeightTest: Story = {
+  render: () => html`
+    <swc-checkbox lang="ja">
+      <span slot="label">製品の最新情報を受け取る</span>
+      <span slot="description">月に一度メールでお届けします</span>
+    </swc-checkbox>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const checkbox = await getComponent<Checkbox>(
+      canvasElement,
+      'swc-checkbox'
+    );
+
+    await step('the label and description use the CJK line height', () => {
+      for (const selector of [
+        '.swc-FormFieldLabel',
+        '.swc-FormFieldDescription',
+      ]) {
+        const element = checkbox.shadowRoot?.querySelector(selector);
+        if (!element) {
+          throw new Error(`swc-checkbox rendered no ${selector}`);
+        }
+        const { fontSize, lineHeight } = getComputedStyle(element);
+        expect(parseFloat(lineHeight) / parseFloat(fontSize)).toBeCloseTo(
+          1.5,
+          2
+        );
+      }
+    });
+  },
+};
+CjkLineHeightTest.storyName = 'CJK line height';
+
 // ──────────────────────────────────────────────────────────────
 // TEST: description, error text, and error icon
 // ──────────────────────────────────────────────────────────────

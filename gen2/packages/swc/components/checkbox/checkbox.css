@@ -37,14 +37,6 @@
   cursor: default;
 }
 
-/* NOTE: the shared form-field fragment reads this line height for the label,
-   description, and error text, so the CJK override sets it here. */
-.swc-Checkbox:lang(ja),
-.swc-Checkbox:lang(zh),
-.swc-Checkbox:lang(ko) {
-  --_swc-form-field-line-height: token("cjk-line-height-100");
-}
-
 /* The box is centered on the label's first line, so there is no block
    padding. Without a visible label, the box has no offset. */
 .swc-Checkbox-control {

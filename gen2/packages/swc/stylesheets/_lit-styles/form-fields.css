@@ -39,6 +39,12 @@
   --_swc-form-field-font-weight: token("regular-font-weight");
   --_swc-form-field-line-height: token("line-height-100");
   --_swc-form-field-row-gap: var(--swc-form-field-row-gap, token("form-item-gap-medium"));
+
+  &:lang(ja),
+  &:lang(zh),
+  &:lang(ko) {
+    --_swc-form-field-line-height: token("cjk-line-height-100");
+  }
 }
 
 :host([size="s"]) {
