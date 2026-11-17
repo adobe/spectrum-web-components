@@ -132,7 +132,7 @@
     "playwright": "1.64.1",
     "playwright-core": "1.64.1",
     "postcss": "8.5.9",
-    "postcss-preset-env": "10.4.0",
+    "postcss-preset-env": "11.6.2",
     "prettier": "3.8.1",
     "query-selector-shadow-dom": "1.0.0",
     "react": "19.1.1",

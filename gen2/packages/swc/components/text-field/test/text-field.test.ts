@@ -10,20 +10,20 @@
  * governing permissions and limitations under the License.
  */
 import { html, type PropertyValues } from 'lit';
-import { expect, userEvent, waitFor, within } from '@storybook/test';
+import { expect, fn, userEvent, waitFor, within } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import {
+  fixture,
+  getComponent,
+  getComponents,
+  withWarningSpy,
+} from '@swc-test-helpers/dom';
 
 import { TextField } from '@adobe/spectrum-wc/text-field';
 
 import '@adobe/spectrum-wc/components/avatar/swc-avatar.js';
 import '@adobe/spectrum-wc/components/text-field/swc-text-field.js';
 
-import {
-  fixture,
-  getComponent,
-  getComponents,
-  withWarningSpy,
-} from '../../../utils/test-utils.js';
 import * as TextFieldStories from '../stories/text-field.stories.js';
 import meta from '../stories/text-field.stories.js';
 import {
@@ -499,7 +499,7 @@ export const RequiredStateTest: Story = {
       );
       expect(indicator, 'required label renders its asterisk').toBeTruthy();
       expect(
-        indicator?.getAttribute('aria-hidden'),
+        indicator?.querySelector('swc-ui-icon')?.getAttribute('aria-hidden'),
         'required asterisk is hidden from assistive technology'
       ).toBe('true');
     });
@@ -525,10 +525,10 @@ export const NecessityIndicatorTest: Story = {
           '.swc-FormFieldLabel-requiredIndicator'
         ),
         'required icon mode renders the asterisk'
-      ).toBeTruthy();
+      ).toHaveAttribute('aria-hidden', 'true');
       expect(
         requiredIcon.shadowRoot?.querySelector(
-          '.swc-FormFieldLabel-requiredIndicator'
+          '.swc-FormFieldLabel-requiredIndicator swc-ui-icon'
         )
       ).toHaveAttribute('aria-hidden', 'true');
     });
@@ -578,6 +578,40 @@ export const NecessityIndicatorTest: Story = {
         field.parentElement?.remove();
       }
     );
+
+    await step('read-only hides the indicator in both modes', async () => {
+      const indicators = (field: TextField): Element[] =>
+        Array.from(
+          field.shadowRoot?.querySelectorAll(
+            '.swc-FormFieldLabel-requiredIndicator, .swc-FormFieldLabel-necessityLabel'
+          ) ?? []
+        );
+      for (const field of fields) {
+        field.fieldStatus = 'readonly';
+      }
+      await Promise.all(fields.map((field) => field.updateComplete));
+      for (const field of fields) {
+        expect(indicators(field)).toEqual([]);
+      }
+      expect(
+        requiredLabel.shadowRoot
+          ?.querySelector('.swc-FormFieldLabel')
+          ?.textContent?.includes('(required)'),
+        'the accessible name no longer includes "(required)"'
+      ).toBe(false);
+      expect(
+        requiredIcon.roleElement?.required,
+        'the input is not required while read-only'
+      ).toBe(false);
+
+      for (const field of fields) {
+        field.fieldStatus = undefined;
+      }
+      await Promise.all(fields.map((field) => field.updateComplete));
+      for (const field of fields) {
+        expect(indicators(field)).toHaveLength(1);
+      }
+    });
   },
 };
 
@@ -652,6 +686,34 @@ export const PrefixTest: Story = {
         nodes.indexOf(slot as Element),
         'prefix slot precedes the input in the control'
       ).toBeLessThan(nodes.indexOf(input as Element));
+    });
+
+    await step('pressing the prefix focuses the input', () => {
+      const avatar = field.querySelector('swc-avatar') as HTMLElement;
+      const input = field.shadowRoot?.querySelector('.swc-TextField-input');
+      const press = new PointerEvent('pointerdown', {
+        bubbles: true,
+        composed: true,
+        cancelable: true,
+      });
+      avatar.dispatchEvent(press);
+      expect(press.defaultPrevented, 'prefix press is prevented').toBe(true);
+      expect(field.shadowRoot?.activeElement, 'input is focused').toBe(input);
+    });
+
+    await step('pressing the input itself is not intercepted', () => {
+      const input = field.shadowRoot?.querySelector(
+        '.swc-TextField-input'
+      ) as HTMLInputElement;
+      const press = new PointerEvent('pointerdown', {
+        bubbles: true,
+        composed: true,
+        cancelable: true,
+      });
+      input.dispatchEvent(press);
+      expect(press.defaultPrevented, 'input press is not prevented').toBe(
+        false
+      );
     });
   },
 };
@@ -2060,7 +2122,13 @@ export const DisabledStateTest: Story = {
       throw new Error('form or fieldset not found');
     }
 
+    const inputColor = (): string =>
+      getComputedStyle(field.shadowRoot!.querySelector('.swc-TextField-input')!)
+        .color;
+    let enabledColor = '';
+
     await step('enabled: not :disabled, value participates', () => {
+      enabledColor = inputColor();
       expect(field.matches(':disabled'), 'not :disabled').toBe(false);
       expect(
         new FormData(form).get('username'),
@@ -2068,11 +2136,19 @@ export const DisabledStateTest: Story = {
       ).toBe('Example');
     });
 
-    await step('own disabled matches native :disabled', async () => {
+    await step('own disabled status styles as disabled', async () => {
       field.fieldStatus = 'disabled';
       await field.updateComplete;
-      expect(field.matches(':disabled'), 'own disabled matches :disabled').toBe(
-        true
+      expect(
+        field.matches(':disabled'),
+        'the authored status does not mirror a host attribute'
+      ).toBe(false);
+      expect(
+        field.matches(':state(disabled)'),
+        'the authored status sets the disabled state'
+      ).toBe(true);
+      expect(inputColor(), 'the input takes the disabled color').not.toBe(
+        enabledColor
       );
       expect(
         new FormData(form).has('username'),
@@ -2091,6 +2167,10 @@ export const DisabledStateTest: Story = {
         expect(
           field.matches(':disabled'),
           'cascade matches :disabled without the host property'
+        ).toBe(true);
+        expect(
+          field.matches(':state(disabled)'),
+          'the cascade sets the disabled state'
         ).toBe(true);
         expect(
           field.fieldStatus,
@@ -2123,6 +2203,10 @@ export const DisabledStateTest: Story = {
           ':disabled clears when re-enabled'
         ).toBe(false);
         expect(
+          field.matches(':state(disabled)'),
+          'the disabled state clears when re-enabled'
+        ).toBe(false);
+        expect(
           new FormData(form).get('username'),
           'field value returns to FormData when fieldset is enabled'
         ).toBe('Example');
@@ -2131,6 +2215,75 @@ export const DisabledStateTest: Story = {
   },
 };
 DisabledStateTest.storyName = 'Disabled state';
+
+export const DisabledClickSuppressionTest: Story = {
+  render: () => html`
+    <fieldset>
+      <swc-text-field
+        name="username"
+        accessible-label="Username"
+        field-status="disabled"
+      >
+        <span slot="description">
+          See the
+          <a href="#username-rules">username rules</a>
+          .
+        </span>
+      </swc-text-field>
+    </fieldset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const field = await getComponent<TextField>(
+      canvasElement,
+      'swc-text-field'
+    );
+    const fieldset = canvasElement.querySelector('fieldset')!;
+    const control = field.shadowRoot!.querySelector<HTMLElement>(
+      '.swc-TextField-control'
+    )!;
+    const hostClick = fn();
+    field.addEventListener('click', hostClick);
+
+    const clickEverywhere = (): void => {
+      field.click();
+      control.click();
+    };
+
+    await step('the authored disabled status drops clicks', () => {
+      clickEverywhere();
+      expect(hostClick).not.toHaveBeenCalled();
+    });
+
+    await step('a disabled fieldset drops clicks', async () => {
+      field.fieldStatus = undefined;
+      fieldset.disabled = true;
+      await field.updateComplete;
+      clickEverywhere();
+      expect(hostClick).not.toHaveBeenCalled();
+    });
+
+    await step('a slotted description link stays clickable', () => {
+      const link = field.querySelector('a')!;
+      const linkClick = fn();
+      link.addEventListener('click', linkClick);
+      link.addEventListener('click', (event) => event.preventDefault());
+      link.click();
+      expect(linkClick).toHaveBeenCalledTimes(1);
+      expect(
+        hostClick,
+        'the click still bubbles to the host'
+      ).toHaveBeenCalledTimes(1);
+      hostClick.mockClear();
+    });
+
+    await step('an enabled field still receives clicks', async () => {
+      fieldset.disabled = false;
+      await field.updateComplete;
+      field.click();
+      expect(hostClick).toHaveBeenCalledTimes(1);
+    });
+  },
+};
 
 export const ChangeEventTest: Story = {
   render: () => html`

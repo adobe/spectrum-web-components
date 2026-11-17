@@ -111,6 +111,27 @@ protected override update(changedProperties: PropertyValues): void {
 }
 ```
 
+`validateEnum` also accepts numeric enums, such as a numeric `size` or a heading `level`.
+
+Give a reflected numeric property the `numberAttribute(whenRemoved)` converter from the same utils module. Lit's default `Number` converter parses `size="banana"` to `NaN`, and because a property with a default value has already queued a write to its attribute, the first update then writes `size="NaN"` over the consumer's markup. `numberAttribute` keeps non-numeric text as a string, so that write puts back what the consumer wrote, and it sets `whenRemoved` when the attribute is removed. Give a reflected string property with a default the `stringAttribute(whenRemoved)` converter, so removing its attribute resets it instead of leaving `null` for validation to warn about.
+
+A numeric property can also hold numeric text: frameworks such as React 19 and Vue set custom element properties directly, so `level="4"` in JSX assigns the string `"4"`. Read the property through `parseNumericText` before passing it to `validateEnum`, `resolveEnum`, or any math, so `"4"` behaves like `4`.
+
+#### Rendering the default for an invalid value
+
+A warning is the only thing an invalid value triggers. Keep the value the consumer set on the property and the attribute, and render the default instead:
+
+- **In CSS:** let the value match no `:host([attr="…"])` selector so the stylesheet's default applies.
+- **In TypeScript:** resolve the value at the point of use with `resolveEnum`, exported from the same utils module.
+
+```ts
+protected get resolvedDirection(): TabsDirection {
+  return resolveEnum(this.direction, TABS_DIRECTIONS, TABS_DEFAULT_DIRECTION);
+}
+```
+
+Don't reassign the property, call `setAttribute` or `removeAttribute` on it, or return a different value from its getter.
+
 ### warnIf(): Required, conditionally required, mutually exclusive, and one-off checks
 
 `warnIf(element, condition, message, url, options?)` is the general-purpose primitive: it warns when `condition` is `true`. It covers every validation shape that isn't an enum or a slot check.

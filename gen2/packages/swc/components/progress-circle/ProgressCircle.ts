@@ -83,13 +83,14 @@ export class ProgressCircle extends ProgressCircleBase {
    * - **1–100%**: returns `100 - progress`.
    */
   private computeDashOffset(): number | undefined {
-    if (this.progress === null) {
+    const progress = this.clampedProgress;
+    if (progress === null) {
       return undefined;
     }
-    if (this.progress === 0) {
+    if (progress === 0) {
       return 98;
     }
-    return 100 - this.progress;
+    return 100 - progress;
   }
 
   protected override render(): TemplateResult {
@@ -97,9 +98,9 @@ export class ProgressCircle extends ProgressCircleBase {
       <div
         class=${classMap({
           ['swc-ProgressCircle']: true,
-          ['swc-ProgressCircle--indeterminate']: this.progress === null,
+          ['swc-ProgressCircle--indeterminate']: this.clampedProgress === null,
           [`swc-ProgressCircle--static${capitalize(this.staticColor)}`]:
-            typeof this.staticColor !== 'undefined',
+            this.staticColor != null,
         })}
       >
         <svg aria-hidden="true" fill="none" width="100%" height="100%">

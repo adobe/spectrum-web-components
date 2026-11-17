@@ -293,7 +293,7 @@ The earlier `--swc-meter-min-width`, `--swc-meter-max-width`, `--swc-meter-descr
 - **Value clamping.** `value` is clamped into `[minValue, maxValue]` for both rendering (`fill` width as `(value − minValue) / (maxValue − minValue)`) and `aria-valuenow`. `minValue` defaults to `0`, `maxValue` to `100`; default behavior matches the 1st-gen 0–100 range.
 - **Locale-aware formatting.** When `value-label` is unset, format the visible value and `aria-valuetext` via `new Intl.NumberFormat(language, formatOptions ?? { style: 'percent' })`. The `language` argument comes from the shared `LanguageResolutionController` (subscribed in `LinearProgressMixin`); on `language-resolver-updated`, the formatted value + `aria-valuetext` are re-rendered. For percent style, feed the normalized fraction `(value − minValue) / (maxValue − minValue)`. Re-format on any of `value`, `minValue`, `maxValue`, `valueLabel`, `formatOptions` changing.
 - **`value-label` precedence.** Non-empty `value-label` attribute overrides auto-formatted text in both the visible value cell and `aria-valuetext`. String only — no slot version (matches React's `valueLabel` API).
-- **Variant validation.** `variant` is a typed enum; unknown values fall back to `'informative'`. Tracked in `Meter.types.ts` rather than via the 1st-gen string-coercing setter.
+- **Variant validation.** `variant` is a typed enum, tracked in `Meter.types.ts` rather than via the 1st-gen string-coercing setter. Unknown values are kept on the attribute and property, warn in dev mode, and render the default `'informative'` fill.
 - **No custom events.** No `dispatchEvent` calls; behavior parity with 1st-gen.
 
 ### Accessibility semantics notes (gen2)

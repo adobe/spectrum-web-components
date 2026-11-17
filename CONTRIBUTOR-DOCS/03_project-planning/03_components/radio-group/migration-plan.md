@@ -65,12 +65,12 @@
 
 ## TL;DR
 
-- **No native equivalent for the group's own role, unlike the item.** `swc-radio` has a real `<input type="radio">` to hang role/label/checked on; `swc-radio-group` has no native "radiogroup" element at all. `role="radiogroup"` and the group's own accessible name/description/error message all live on the **host** via `ElementInternals`, matching 1st-gen's own pattern (`FieldGroup` defaults to `role="group"`, `RadioGroup` overrides it to `radiogroup` in `willUpdate`).
-- **`LabellingMixin` is a confirmed dependency here, unlike for `swc-radio`.** The group has no native element to attach a label to, so the host-attachment mode `LabellingMixin` is being built to support is the only mechanism available. Why the item rejected it: [`radio/migration-plan.md`](../radio/migration-plan.md#decision-log) (Q5/B5). See [Decision log](#decision-log) for this component's own reasoning.
-- **Consumes `swc-text-field`'s shared `form-fields` `_lit-styles/` stylesheet and render template, per explicit direction.** `swc-radio-group` becomes the second confirmed consumer of the `.swc-FormFieldTemplate` grid (`label-position` `top`/`side`) and `.swc-FormFieldLabel`/`.swc-FormFieldDescription`/`.swc-FormFieldErrorIcon` classes proposed in [`text-field/migration-plan.md`](../text-field/migration-plan.md). Location of the render fragment will be determined through implementation of text field. `swc-radio` (the item) explicitly does **not** consume it (already decided in the item's plan); only the group does. See [Decision log](#decision-log).
+- **No native equivalent for the group's own role, unlike the item.** `swc-radio` has a real `<input type="radio">` to hang role/label/checked on; `swc-radio-group` has no native "radiogroup" element at all. `role="radiogroup"` lives on the rendered outer `.swc-RadioGroup` element (not the host; see the [Decision log](#decision-log)), and the group's accessible name/description/error message wire onto it via `ariaLabelledByElements`/`ariaDescribedByElements`. 1st-gen's `FieldGroup` defaults to `role="group"` and `RadioGroup` overrides it to `radiogroup` in `willUpdate`.
+- **`LabellingMixin` is a confirmed dependency here, unlike for `swc-radio`.** The group has no native element to attach a label to, so accessible-name relationships must be wired onto the rendered role element. Why the item rejected it: [`radio/migration-plan.md`](../radio/migration-plan.md#decision-log) (Q5/B5). See [Decision log](#decision-log) for this component's own reasoning.
+- **Consumes `swc-text-field`'s shared `form-fields` `_lit-styles/` stylesheet and render template, per explicit direction.** `swc-radio-group` becomes the second confirmed consumer of the `.swc-FormFieldTemplate` grid (`label-position` `top`/`side`) and `.swc-FormFieldLabel`/`.swc-FormFieldDescription`/`.swc-FormFieldErrorText` classes (plus an inline `.swc-FormFieldErrorText-icon`) proposed in [`text-field/migration-plan.md`](../text-field/migration-plan.md). The fragment now lives at `gen2/packages/swc/stylesheets/_lit-styles/form-fields.css` and the group consumes it. `swc-radio` (the item) explicitly does **not** consume it (already decided in the item's plan); only the group does. See [Decision log](#decision-log).
 - **`FieldAssociationController` now handles both value and validity, not a split.** The a11y doc originally proposed the group needing only a lighter validity-only `ElementInternals` wiring, with value handled per-item. Q12 (resolved) simplifies this: one `FieldAssociationController` instance on the group handles `setFormValue` (driven by its own `selected`) **and** validity (`setValidity`/`checkValidity`) together — no split, no lighter alternate wiring needed.
-- **Shared dependencies are sequenced with the unmerged `swc-text-field` work:** `FieldAssociationController`, `LabellingMixin`, `FieldDescriptionMixin`, and the shared `form-fields` stylesheet/render template. The mixin architecture is decided; confirm delivery before implementation. See [Migration sequencing and prerequisites](#migration-sequencing-and-prerequisites).
-- **`disabled`, `size`, and `emphasized` propagate from the group onto its slotted radios via the already-built `SlotAttributePropagationController`**, replacing 1st-gen's hand-rolled `slotchange` loop. `size`/`emphasized` propagation was already recommended in the item's own plan; this plan confirms `disabled` alongside it as one consistent mechanism. `name` does **not** propagate: per the item plan's own rationale, native radio-group scoping is per-tree, so cross-shadow-root `name` matching between item inputs never produces mutual exclusion, and `ElementInternals` fully provides form participation without it. See [Decision log](#decision-log).
+- **Three shared dependencies came from the `swc-text-field` work and are now built:** `FieldAssociationController` (SWC-2467), `LabellingMixin` (SWC-2466, shipped as `LabellingMixin`/`FieldDescriptionMixin`), and the shared `form-fields` stylesheet (`gen2/packages/swc/stylesheets/_lit-styles/form-fields.css`), which this component consumes. See [Migration sequencing and prerequisites](#migration-sequencing-and-prerequisites).
+- **`size` and `emphasized` propagate via `SlotAttributePropagationController`; disabled cascading is component-local.** The group disables every assigned radio while its own or its ancestor fieldset's disabled state is active, through a separate group-disabled state on each item; the item's own `disabled` is never changed, so it applies again when the cascade ends or the item leaves the slot. `name` does **not** propagate: native radio-group scoping is per-tree, and group-level `ElementInternals` provides form participation without item names. See [Decision log](#decision-log).
 - **Keyboard model ports behavior-for-behavior onto the already-built `FocusgroupNavigationController`** (`direction: 'both'`, `wrap: true`, `skipDisabled: true`), reacting only to `source: 'keyboard'` so Tab-entry never selects. 1st-gen's model is already APG-correct; this is a direct port, not a redesign.
 - **`RadioGroupController` (SWC-2470) stays an open, non-blocking architecture question**, tracked as a subticket of this plan's own ticket (SWC-2546). Whichever way it resolves doesn't change any decision in this plan.
 - **Two layout axes, not one:** `label-position` (`top`/`side`, the group's own label placement, newly confirmed via the shared template) and item-stacking `orientation` (`horizontal`/`vertical`) are independent. `orientation` is a new single enum property replacing 1st-gen's separate `horizontal`/`vertical` booleans, matching React Spectrum's identical `orientation` prop (**Q1**, resolved — see [Decision log](#decision-log)).
@@ -107,7 +107,7 @@ No 1st-gen `required` or `readonly` property exists on either class; both are Re
 | Method | Signature | Source | Notes |
 | ------ | --------- | ------ | ----- |
 | `focus` | `() => void` | `RadioGroup` (override) | Delegates to `rovingTabindexController.focus()`. |
-| `buttons` | `Radio[]` (readonly getter) | `RadioGroup` | **Public**, not implementation detail: `public get buttons(): Radio[]` filters `defaultNodes` to `Radio` instances. Exercised directly in 1st-gen's own tests (`group.buttons.length`), not just used internally. gen2 carry-forward is undecided — see **Q7**. |
+| `buttons` | `Radio[]` (readonly getter) | `RadioGroup` | **Public**, not implementation detail: `public get buttons(): Radio[]` filters `defaultNodes` to `Radio` instances. Exercised directly in 1st-gen's own tests (`group.buttons.length`), not just used internally. Dropped in gen2; consumers use `querySelectorAll('swc-radio')` (see **Q7** in the [Decision log](#decision-log)). |
 
 `_setSelected()`, `validateRadios()`, and `handleSlotchange()` are implementation detail (`private`/`protected`), not public API.
 
@@ -141,23 +141,23 @@ No `--mod-fieldgroup-*` (or equivalent) modifier surface exists at all. `spectru
 </sp-radio-group>
 ```
 
-gen2 (planned; host-role exception via `ElementInternals`, `LabellingMixin`-rendered label and `FieldDescriptionMixin`-rendered description/error using the shared `form-fields` template, `label-position` grid; see [Public API](#public-api) and [Decision log](#decision-log)):
+gen2 (planned; role on the rendered outer `.swc-RadioGroup` element, `LabellingMixin`-rendered label and `FieldDescriptionMixin`-rendered description/error using the shared `form-fields` template, `label-position` grid — see [Public API](#public-api) and [Decision log](#decision-log)):
 
 ```html
 <swc-radio-group>
   #shadow-root
-    <div class="swc-FormFieldTemplate">
+    <div class="swc-RadioGroup" role="radiogroup" aria-required="false" aria-invalid="false" aria-readonly="false">
       <span class="swc-FormFieldLabel"><slot name="label"></slot></span>
       <div class="swc-RadioGroup-items">
         <slot></slot> <!-- swc-radio items -->
       </div>
       <span class="swc-FormFieldDescription"><slot name="description"></slot></span>
-      <!-- swc-FormFieldErrorIcon + error text, only while invalid -->
+      <!-- swc-FormFieldErrorText: inline icon (aria-hidden) + error text, only while invalid -->
     </div>
 </swc-radio-group>
 ```
 
-`internals.role = 'radiogroup'`; `internals.ariaLabel`/`ariaLabelledByElements`, `ariaDescribedByElements`, and `ariaInvalid`/`ariaRequired`/`ariaReadOnly` are all set on the host, not an inner element — there is no inner control to delegate to.
+`role`, `aria-required`, `aria-invalid`, and `aria-readonly` are plain attributes on `.swc-RadioGroup` (always rendered, `"true"` or `"false"`). The accessible name and description wire onto that element through `ariaLabelledByElements`/`ariaDescribedByElements`. The host's `ElementInternals` is used only for form participation.
 
 ---
 
@@ -171,11 +171,10 @@ gen2 (planned; host-role exception via `ElementInternals`, `LabellingMixin`-rend
 | `@spectrum-web-components/shared` | workspace | `FocusVisiblePolyfillMixin`. **Dropped in gen2** — native `:focus-visible`, same rationale as the item's plan. |
 | `@spectrum-web-components/reactive-controllers` | workspace | `RovingTabindexController`. **Replaced by `FocusgroupNavigationController` (already built)** in gen2. |
 | `FocusgroupNavigationController` | already built | Roving tabindex + arrow navigation (`direction: 'both'`, `wrap: true`, `skipDisabled: true`). See [`gen2/packages/core/controllers/focusgroup-navigation-controller/`](../../../../gen2/packages/core/controllers/focusgroup-navigation-controller/focusgroup-navigation-controller.mdx). Already confirmed (in the item's plan) to correctly handle items whose real focus target is nested via `delegatesFocus`. |
-| `SlotAttributePropagationController` | already built | Propagates `disabled`, `size`, and `emphasized` from the group onto its slotted `swc-radio` items; not `name` (see [Decision log](#decision-log)). See [`gen2/packages/core/controllers/slot-attribute-propagation-controller/`](../../../../gen2/packages/core/controllers/slot-attribute-propagation-controller/slot-attribute-propagation-controller.mdx). |
-| `LabellingMixin` | **sequenced delivery** | Visible-label rendering and host-attached accessible-name wiring, shared with `swc-text-field`. Confirmed needed here (unlike `swc-radio`); see [Decision log](#decision-log). |
-| `FieldDescriptionMixin` | **sequenced delivery** | Description/error-text rendering and host-attached accessible-description wiring, shared with `swc-text-field`. |
-| `FieldAssociationController` (SWC-2467) | **not yet built** | `ElementInternals` form participation — now handles both value (`setFormValue`, driven by the group's own `selected`) and validity (`setValidity`/`checkValidity`), per Q12's resolution in the item's plan. **Sequenced implementation dependency**, shared with `swc-text-field`. |
-| Shared `form-fields` `_lit-styles/` stylesheet + render template | **not yet built** | Verified absent from `gen2/packages/swc/stylesheets/_lit-styles/`. Still only a proposal in [`text-field/migration-plan.md`](../text-field/migration-plan.md#related-components-and-ordering-notes). **Sequenced implementation dependency**; `swc-radio-group` is confirmed as its second consumer per direction for this plan. |
+| `SlotAttributePropagationController` | already built | Propagates `size` and `emphasized` from the group onto its slotted `swc-radio` items as styling attributes; not `name`. Disabled cascading is component-local and never changes an item's own `disabled` (see [Decision log](#decision-log)). See [`gen2/packages/core/controllers/slot-attribute-propagation-controller/`](../../../../gen2/packages/core/controllers/slot-attribute-propagation-controller/slot-attribute-propagation-controller.mdx). |
+| `LabellingMixin` and `FieldDescriptionMixin` (SWC-2466) | built | In-shadow visible-label, accessible-name, description, and error rendering on the rendered role element. Delivered through `swc-text-field` and now adopted here. Confirmed needed here (unlike `swc-radio`) — see [Decision log](#decision-log). |
+| `FieldAssociationController` (SWC-2467) | built | `ElementInternals` form participation — handles both value (`setFormValue`, driven by the group's own `selected`) and validity (`setValidity`/`checkValidity`), per Q12's resolution in the item's plan. Delivered through `swc-text-field` and now adopted here. |
+| Shared `form-fields` `_lit-styles/` stylesheet + render template | built | `gen2/packages/swc/stylesheets/_lit-styles/form-fields.css` plus the `renderLabel`/`renderFieldDescription` directives. Consumed by `swc-text-field` and `swc-radio-group` (confirmed second consumer per direction for this plan). |
 
 `RadioGroupController` (SWC-2470) is explicitly **not** a dependency decision this plan makes; see [Migration sequencing and prerequisites](#migration-sequencing-and-prerequisites).
 
@@ -193,13 +192,13 @@ gen2 (planned; host-role exception via `ElementInternals`, `LabellingMixin`-rend
 
 `swc-radio-group` does not extend another gen2 component. 1st-gen's `RadioGroup extends FieldGroup` inheritance is **not** carried forward as a shared-base relationship. In gen2, `LabellingMixin` owns labels/names and `FieldDescriptionMixin` owns descriptions/errors, rather than inheriting those responsibilities from a field-group component. If `swc-field-group` is migrated later, it should compose the same mixins and form-participation controller, not become a base class for `swc-radio-group`.
 
-Three not-yet-built shared resources gate implementation, all currently in progress on `swc-text-field`'s unmerged work (epic SWC-2323):
+Three shared resources gated implementation and were delivered through `swc-text-field`'s work (epic SWC-2323):
 
-1. **`FieldAssociationController` (SWC-2467).** Let `swc-text-field` finish proving it out first (already the designated first consumer); `swc-radio-group` adopts it once available. Unlike the item's plan (which dropped this dependency entirely per Q12), the group's use is confirmed and unaffected by that resolution — Q12 only decided *where* form-value participation lives (the group, not the item), not *whether* the group needs the controller.
-2. **`LabellingMixin` and `FieldDescriptionMixin`.** Same sequencing: wait for delivery with `swc-text-field`, then adopt the mixins for labels/names and descriptions/errors respectively. See [Decision log](#decision-log) for why this differs from the item's native-association approach.
-3. **Shared `form-fields` `_lit-styles/` stylesheet and render template.** Per explicit direction, `swc-radio-group` is confirmed as its second consumer. This does not yet exist in code on any branch (verified). No accommodation is needed for a non-field, host-role-exception consumer (**Q6**, resolved — see [Decision log](#decision-log)): the template only governs the render tree, independent of where ARIA role attaches. `swc-radio-group`'s own item-stacking axis (`orientation`) is independent of this template and does not affect its design.
+1. **`FieldAssociationController` (SWC-2467).** `swc-text-field` was the designated first consumer; `swc-radio-group` now adopts the proven controller. Unlike the item's plan (which dropped this dependency entirely per Q12), the group's use is confirmed and unaffected by that resolution — Q12 only decided *where* form-value participation lives (the group, not the item), not *whether* the group needs the controller.
+2. **`LabellingMixin` and `FieldDescriptionMixin` (SWC-2466).** These were delivered with `swc-text-field` and are adopted here for labels/names and descriptions/errors, respectively. See [Decision log](#decision-log) for why this differs from the item's rejection of them.
+3. **Shared `form-fields` `_lit-styles/` stylesheet and render template.** Per explicit direction, `swc-radio-group` is confirmed as its second consumer. It now exists and is consumed here. No accommodation is needed for a non-field, host-role-exception consumer (**Q6**, resolved — see [Decision log](#decision-log)): the template only governs the render tree, independent of where ARIA role attaches. `swc-radio-group`'s own item-stacking axis (`orientation`) is independent of this template and does not affect its design.
 
-Do not duplicate any of the three above inside `swc-radio-group` while waiting; coordinate scheduling instead.
+Do not duplicate any of the three shared resources inside `swc-radio-group`; use the versions delivered through `swc-text-field`.
 
 ### Related components and ordering notes
 
@@ -231,8 +230,8 @@ Do not duplicate any of the three above inside `swc-radio-group` while waiting; 
 | --- | ------------ | ---------------- | ---------------- | ----------------------- |
 | B1 | Rename `label` → slotted `label` content | Plain string `label` property, sets `aria-label` directly | Visible label via a named `label` slot, rendered by `LabellingMixin`; `accessible-label`/`accessible-labelledby` added for the no-visible-label / composed-name cases | Move slotted content from a plain attribute to `<span slot="label">…</span>`, or use `accessible-label` for the no-visible-label case. |
 | B2 | Rename `help-text`/`negative-help-text` slots → `description`/`error-text` | `ManageHelpText`-provided slots | Named slots matching `swc-text-field`'s renamed slots and the shared `form-fields` template's class names | Rename `slot="help-text"` → `slot="description"`, `slot="negative-help-text"` → `slot="error-text"`. |
-| B3 | Add `required` | No equivalent | New property, React Spectrum `isRequired` parity; sets `aria-required` via `ElementInternals` | Additive; no consumer action unless adopting. |
-| B4 | Add `accessible-label`/`accessible-labelledby`/`accessible-describedby` | No equivalent | `LabellingMixin` wires names onto the host's `ElementInternals` (`ariaLabel`/`ariaLabelledByElements`); `FieldDescriptionMixin` wires descriptions (`ariaDescribedByElements`). This is the host-attached counterpart to the item's native-association approach. | Additive; slotted-label usage is unaffected. |
+| B3 | Add `required` | No equivalent | New property, React Spectrum `isRequired` parity; sets `aria-required` on the role element, except while `field-status="readonly"`, when the group is barred from validation | Additive; no consumer action unless adopting. |
+| B4 | Add `accessible-label`/`accessible-labelledby`/`accessible-describedby` | No equivalent | New properties, wired by `LabellingMixin`/`FieldDescriptionMixin` onto the rendered role element (`aria-label`/`ariaLabelledByElements`/`ariaDescribedByElements`) — the counterpart to what the item's plan rejected for itself | Additive; slotted-label usage is unaffected. |
 | B13 | Rename `horizontal`/`vertical` boolean pair → `orientation` enum property | Two independent boolean attributes (`horizontal`, `vertical`) | Single `orientation: 'horizontal' \| 'vertical'` property (default `vertical`), matching React Spectrum's identical `orientation` prop | Replace `horizontal`/`vertical` attribute with `orientation="horizontal"`, or omit for the default `vertical`. |
 
 #### Styling and visuals
@@ -246,12 +245,12 @@ Do not duplicate any of the three above inside `swc-radio-group` while waiting; 
 
 | #   | What changes | 1st-gen behavior | gen2 behavior | Consumer migration path |
 | --- | ------------ | ---------------- | ---------------- | ----------------------- |
-| B7 | Add `aria-invalid` | Never set (real 1st-gen gap; `invalid` only swaps help-text slot and CSS) | Set via `ElementInternals` when `invalid` is `true` | None (additive AT fix). |
-| B8 | Add `aria-readonly` at the group level | No equivalent (item-level `readonly` existed on `sp-radio` but was unenforced; see item plan) | New `readonly` property on `swc-radio-group`, sets `aria-readonly`; blocks selection changes while keeping focus movement | Additive for consumers using the item-level `readonly` today: move to the group. |
-| B9 | Form value **and** validity, both on the group | Not applicable (no `ElementInternals` at all in 1st-gen) | Single `FieldAssociationController` instance handles `setFormValue` (driven by `selected`) and `setValidity`/`checkValidity` together (Q12-simplified; source: [Decision log](#decision-log)) | None for basic forms; gains real `FormData` participation and native constraint validation. |
-| B10 | `disabled` propagation via `SlotAttributePropagationController` | Ad hoc `slotchange` loop propagated `name`; no `disabled` propagation at all | `disabled` propagated automatically via the shared controller, alongside `size`/`emphasized` (already recommended in the item's plan); `name` is dropped (serves no purpose on items, see [Decision log](#decision-log)) | None; propagation is automatic. |
+| B7 | Add `aria-invalid` | Never set (real 1st-gen gap; `invalid` only swaps help-text slot and CSS) | Set on the role element, `"true"` when `field-status="invalid"` and `"false"` otherwise | None (additive AT fix). |
+| B8 | Add `aria-readonly` at the group level | No equivalent (item-level `readonly` existed on `sp-radio` but was unenforced; see item plan) | New `field-status="readonly"` value on `swc-radio-group`, sets `aria-readonly`; blocks selection changes while keeping focus movement | Additive for consumers using the item-level `readonly` today: move to the group as `field-status="readonly"`. |
+| B9 | Form value **and** validity, both on the group | Not applicable (no `ElementInternals` at all in 1st-gen) | Single `FieldAssociationController` instance handles form value and constraint validation; a missing required selection sets `valueMissing`, and `field-status="invalid"` sets `customError` independently (see [Decision log](#decision-log)) | Gains real `FormData` participation and native constraint validation. `field-status="invalid"` blocks native submission even when a selection exists; clear it when application validation succeeds. A native failure such as a missing selection never sets `field-status` automatically. |
+| B10 | Group-wide disabled cascade that leaves item state untouched | Ad hoc `slotchange` loop propagated `name`; no `disabled` propagation at all | A local cascade disables every assigned radio through a separate group-disabled state, without changing the item's own `disabled`; `size`/`emphasized` still use the shared controller, and `name` is dropped (see [Decision log](#decision-log)) | None; cascading is automatic and individually disabled radios remain disabled after group enablement. |
 | B11 | Keyboard model ports to `FocusgroupNavigationController` | `RovingTabindexController`, already APG-correct | Same behavior (`direction: 'both'`, `wrap: true`, `skipDisabled: true`, reacting only to `source: 'keyboard'`), different controller | None (internal implementation change; behavior-for-behavior port). |
-| B12 | Help/error container: no default `aria-live` | Defaults to `aria-live="assertive"` unconditionally | No default live region for the common case (already-associated `aria-describedby`/`aria-errormessage` covers it); `polite` only if a genuine focus-elsewhere case is found | None. |
+| B12 | Help/error container: no default `aria-live` | Defaults to `aria-live="assertive"` unconditionally | No default live region for the common case (already-associated `aria-describedby` covers it); `polite` only if a genuine focus-elsewhere case is found | None. |
 | B14 | Dev-mode warning for duplicate `value`s among slotted radios | No detection; selection matching by `value` (see [Behavioral semantics](#behavioral-semantics)) silently breaks mutual exclusion if two items share a `value` | Console warning, dev-mode only, when two or more slotted `swc-radio` items share the same `value` | None (dev-time only; no behavior change). |
 
 ### Additive — ships when ready, zero breakage for consumers already on gen2
@@ -278,12 +277,12 @@ These are derived from the 1st-gen implementation, `radio/migration-plan.md` (pr
 | -------- | ---- | ------- | --------- | ----- |
 | `name` | `string` | `''` | `name` (reflect) | **Confirmed.** Used only by the group's own `FieldAssociationController`-submitted value pair; **not** propagated onto items' inner inputs (see [Decision log](#decision-log) for why that would serve no purpose). |
 | `selected` | `string` | `''` | `selected` (reflect) | **Confirmed.** Consumer-settable (attribute or property), not internal-only state; ported as-is from 1st-gen. Single source of truth: on first update, a child's own declarative `checked` takes precedence and is read up into `selected`; afterward `selected` drives every child's `checked` back down (`validateRadios`-equivalent sync) and `setFormValue` (see the item plan's checked-state-flow section). |
-| `invalid` | `boolean` | `false` | `invalid` (reflect) | **Confirmed.** Now drives real `aria-invalid` (B7), not just CSS/slot-swapping. |
-| `required` | `boolean` | `false` | `required` (reflect) | **Confirmed (new).** React Spectrum `isRequired` parity; sets `aria-required`. Presentation of the required indicator itself (asterisk icon vs. `(required)` text — React Spectrum's `necessityIndicator`) is not this component's decision: it's rendered by the shared `LabellingMixin`/`form-fields` template and already tracked as open, cross-cutting work at [`text-field/migration-plan.md`](../text-field/migration-plan.md) Q4/A4 (there named `isRequiredWithoutAsterisk`, the same underlying capability). |
-| `readonly` | `boolean` | `false` | `readonly` (reflect) | **Confirmed (new, relocated from the item).** Blocks selection changes; keeps focus movement working. |
+| `fieldStatus` | `'disabled' \| 'invalid' \| 'readonly' \| undefined` | `undefined` | `field-status` (reflect) | **Confirmed (aligned with `swc-text-field`, B16).** One authored status replaces the separate `disabled`, `invalid`, and `readonly` booleans; the type is the shared `FieldStatus` minus `valid`, which has no radio-group meaning. `invalid` drives `aria-invalid` (B7), error presentation, and native `customError`; it blocks native form submission even with a selected value, and clearing it clears `customError`, independently of required-selection validity. `readonly` blocks selection changes and keeps focus movement working. `disabled` cascades to every item (B10). The host does not mirror `disabled` or `readonly` as separate attributes; styling selects on `[field-status]` and a `disabled` custom state (`:state(disabled)`, set from the authored status or the fieldset cascade), and `willValidate` and validity treat both as barred. A form reset clears `invalid`. |
+| `required` | `boolean` | `false` | `required` (reflect) | **Confirmed (new).** React Spectrum `isRequired` parity; sets `aria-required`, except while `field-status="readonly"`. Presentation of the indicator (asterisk icon vs. `(required)`/`(optional)` text) is controlled by `necessity-indicator`. |
+| `necessity-indicator` | `'icon' \| 'label'` | `'icon'` | `necessity-indicator` (reflect) | **Confirmed (new).** Matches `swc-text-field`. `icon` shows an asterisk only when `required`; `label` appends `(required)` when required and `(optional)` when not. Requires a visible label to show. |
 | `label-position` | `'top' \| 'side'` | `'top'` | `label-position` (reflect) | **Confirmed.** Matches the shared `form-fields` template's grid variant and `swc-text-field`'s identical property; confirmed present in the supplied Figma reference for every size. |
 | `orientation` | `'horizontal' \| 'vertical'` | `'vertical'` | `orientation` (reflect) | **Confirmed (renamed, B13).** Replaces 1st-gen's separate `horizontal`/`vertical` booleans with a single enum, matching React Spectrum's identical `orientation` prop; independent of `label-position`. |
-| `accessible-label` / `accessible-labelledby` / `accessible-describedby` | string / element refs / element refs | — | (reflect where applicable) | **Confirmed (new).** Names are wired by `LabellingMixin`, descriptions by `FieldDescriptionMixin`, onto the host's own `ElementInternals`; see [Decision log](#decision-log) for why this is warranted here but was rejected for the item. |
+| `accessible-label` / `accessible-labelledby` / `accessible-describedby` | string / element refs / element refs | — | (reflect where applicable) | **Confirmed (new).** Wired onto the rendered role element via element reflection; see [Decision log](#decision-log) for why this is warranted here but was rejected for the item. |
 | `label` (1st-gen plain string) | — | — | — | **Removed** (see B1); superseded by the `label` slot + `accessible-label`. |
 
 #### Visual matrix (gen2)
@@ -310,7 +309,7 @@ Additional Figma-confirmed presentation notes:
 | default | The `swc-radio` items to manage | **Confirmed.** Unchanged in kind from 1st-gen (default slot for items), though naming/rendering of label and description move to named slots (see below). |
 | `label` | Visible group label | **Confirmed.** Named slot, rendered by `LabellingMixin` via the shared `form-fields` template — see B1. |
 | `description` | Group-level guidance text | **Confirmed (renamed).** Was 1st-gen `help-text`; renamed to match `swc-text-field` and the shared template's class naming (see B2). |
-| `error-text` | Error message shown when `invalid` | **Confirmed (renamed).** Was 1st-gen `negative-help-text` (see B2). Also targeted by `aria-errormessage` when invalid. |
+| `error-text` | Error message shown while `field-status="invalid"` | **Confirmed (renamed).** Was 1st-gen `negative-help-text` (see B2). Associated via `aria-describedby` only — no `aria-errormessage` (see [Decision log](#decision-log)). |
 
 #### CSS custom properties (gen2)
 
@@ -318,21 +317,23 @@ No `--mod-*` properties will be exposed (1st-gen had none to remove). New `--swc
 
 Each exposed `--swc-*` property must be documented with a `@cssprop` JSDoc tag on the primary SWC component class.
 
-Initial expectation for Radio Group is a minimal set, likely limited to inter-item spacing overrides, since most visual weight lives in the shared `form-fields` template and in each item's own styling.
+The exposed set follows the custom property guidelines: size-driven spacing between items, rows, and the side label is exposed as `--swc-radio-group-*` properties, and the shared form-field properties (label and description font size, label column cap, necessity and error-icon gaps) pass through from the fragment. Notably, the group's `field-status="readonly"` state reaches items through the private `--_swc-radio-group-is-readonly`, which an item's container style query uses to suppress its press transform.
 
 ### Behavioral semantics
 
 - **Selection matching is by `value`, not identity or index.** `selected` holds a plain string that must match a slotted item's own `value` property (ported unchanged from 1st-gen `RadioGroup.ts`: `_setSelected` resolves the target via `sp-radio[value="..."]`, and the reconciliation pass sets `button.checked = this.selected === button.value` across every item). There is no id- or index-based addressing at all — `value` is the only identity `swc-radio-group` has for its items, exactly like a native `<input type="radio" value="...">` set. **Edge case carried forward unchanged:** nothing enforces `value` uniqueness among slotted items. Two items sharing the same `value` doesn't error; it silently breaks mutual exclusion, since the reconciliation pass checks *every* item whose `value` matches, not just one. 1st-gen ships with no detection for this. **Mitigation (new, B14):** a dev-mode-only console warning when two or more slotted `swc-radio` items share a `value`, following this repo's existing dev-warning pattern for misuse (e.g. the item plan's B15 standalone-usage warning).
 - **Sibling discovery and mutual exclusion:** a cache-authoritative selection primitive (the a11y doc's `SelectionController` concept), not `LiveSelectionController` (documented as the wrong fit for radio groups). The group is the single source of truth for which item is checked; items are passive and only propose changes. Whether this is composed via `RadioGroupController` or inline is SWC-2470's open, non-blocking question.
-- **Keyboard and focus:** `FocusgroupNavigationController` (`direction: 'both'`, `wrap: true`, `skipDisabled: true`) drives movement; the group reacts only to `focusgroupNavigationActiveChange` events with `source: 'keyboard'` to select, so Tab-entry and programmatic `.focus()` never select on their own (matches the item plan's checked-state-flow "imperative sync" direction).
-- **Form participation:** one `FieldAssociationController` instance handles both `setFormValue` (from `selected`) and constraint validity (`setValidity`/`checkValidity`), per Q12's resolution. Does not set `internals.role` — role comes from the separate `internals.role = 'radiogroup'` assignment.
+- **Keyboard and focus:** `FocusgroupNavigationController` (`direction: 'both'`, `wrap: true`, `skipDisabled: true`) drives movement; the group reacts only to `focusgroupNavigationActiveChange` events with `source: 'keyboard'` to select, so Tab-entry and programmatic `.focus()` never select on their own (matches the item plan's checked-state-flow "imperative sync" direction). `focus()`, a blocked submit, and `reportValidity()` focus the selected radio, or the first enabled one, as native radios do. Keys that don't move focus, such as Home on the first radio, still select it. With nothing checked, the tab stop is the first enabled radio unless focus is already in the group, and a cancelled keyboard `change` returns focus to the tab stop.
+- **Form participation:** one `FieldAssociationController` instance handles both `setFormValue` (from `selected`, but only while an assigned, enabled item has that value, matching native radios; `selected` itself is kept so a later-added item can adopt it) and constraint validity (`setValidity`/`checkValidity`), per Q12's resolution. Required without a selection sets `valueMissing`; `field-status="invalid"` independently sets `customError`, including when a selection exists. Both participate in native submit blocking and clear when their corresponding conditions clear. The host's `ElementInternals` carries no role or ARIA state; `role="radiogroup"` is rendered on `.swc-RadioGroup`. The validation message is the plain text of the slotted `error-text` while the group is invalid, or "Select an option." otherwise, and a private `syncValidity()` is the only writer of `setValidity()`; the group observes `error-text` so text-only edits keep `validationMessage` current, and exposes no `setCustomValidity()` ([forms strategy §3.7](../../05_strategies/forms-strategy-rfc.md#37-field-status-and-validation-sources)).
+- **Change timing:** item activation and keyboard selection sync checked state, validity, and the form value before dispatching `change`, so listeners read the new state; a cancelled `change` restores all three synchronously.
 - **Coordinated reset:** `formResetCallback()` restores the group's tracked default-checked item, not just an empty selection, then drives every item's `checked` back in sync (the item plan's "imperative sync" direction, triggered by reset instead of user interaction).
-- **Read-only:** every item stays focusable and reachable via Tab/arrows; only the "also checks it" half of `Space`, arrow movement, Home, and End is suppressed.
-- **Disabled cascade:** the group's own `disabled` propagates explicitly to every item via `SlotAttributePropagationController`; it does not rely on the native `fieldset[disabled]` cascade (each item is not independently form-associated after Q12, so there's no per-item `formDisabledCallback` to fire).
+- **Form state restore:** `formStateRestoreCallback()` adopts the browser-saved selection on back/forward navigation or autofill without dispatching `change`. A restore that arrives before the first update is held until the default selection has been captured, so it wins over a pre-checked item while reset still returns to the authored default.
+- **Read-only:** every item stays focusable and reachable via Tab/arrows; only the "also checks it" half of `Space`, arrow movement, Home, and End is suppressed. A pressed item doesn't animate in a read-only group (the press transform is suppressed through the private `--_swc-radio-group-is-readonly` signal).
+- **Disabled cascade:** the group's own `field-status="disabled"` or its ancestor fieldset's disabled state disables every assigned item through local synchronization. Each item tracks the group's disabled state separately from its own `disabled`; `aria-disabled`, activation, navigation, and styling use the combination. The item's own `disabled` is never changed, so changes the app makes while the group is disabled apply when the group is enabled again or the item leaves the slot. Each item is not independently form-associated after Q12, so the group's `formDisabledCallback` must handle the ancestor cascade.
 
 ### Accessibility semantics notes (gen2)
 
-Authoritative source: [component accessibility specification](./component-accessibility-specification.md), read together with `radio/migration-plan.md`'s Q12 resolution where the two differ (see banner). Key points: `role="radiogroup"` lives on the host via `ElementInternals`; `LabellingMixin` resolves the accessible name in precedence order `accessible-labelledby` > `accessible-label` > slotted label; `FieldDescriptionMixin` handles descriptions/errors. Both attach their relationships to the host. `aria-invalid`/`aria-required`/`aria-readonly` are new-or-fixed group-level states; form value **and** validity live on the group's single `FieldAssociationController`; keyboard behavior ports to `FocusgroupNavigationController`.
+Implementation reference: this migration plan and `radio/migration-plan.md`'s Q12 resolution; the [component accessibility specification](./component-accessibility-specification.md) provides background (see banner). Key points: `role="radiogroup"` is on the rendered outer `.swc-RadioGroup` element (the group has no native equivalent, and the host-`ElementInternals` placement broke item positioning/group labeling in the AT matrix); accessible name/description/error resolve in precedence order `accessible-labelledby` > `accessible-label` > slotted label, wired onto that element by the mixins plus a local slotted-label fallback; `aria-invalid`/`aria-required`/`aria-readonly` are all new-or-fixed group-level states; form value **and** validity both live on the group's single `FieldAssociationController` instance; keyboard model is a direct, behavior-preserving port to `FocusgroupNavigationController`.
 
 ---
 
@@ -366,43 +367,43 @@ Planned rendering shape:
 - [x] Dependencies identified
 - [x] Breaking changes documented
 - [x] gen2 API decisions drafted
-- [ ] Plan reviewed by at least one other engineer
+- [x] Plan reviewed by at least one other engineer
 
 ### Setup
 
-- [ ] Create `gen2/packages/core/components/radio-group/`
-- [ ] Create `gen2/packages/swc/components/radio-group/`
-- [ ] Wire exports in both `package.json` files
-- [ ] Confirm this component lands on the shared `swc-radio`/`swc-radio-group` feature branch (see [`radio/migration-plan.md`](../radio/migration-plan.md#related-components-and-ordering-notes))
-- [ ] Confirm `FieldAssociationController`, `LabellingMixin`, `FieldDescriptionMixin`, and the shared `form-fields` stylesheet/template are available, or coordinate delivery with `swc-text-field`
+- [x] Create `gen2/packages/core/components/radio-group/`
+- [x] Create `gen2/packages/swc/components/radio-group/`
+- [x] Wire exports in both `package.json` files
+- [x] Confirm this component lands on the shared `swc-radio`/`swc-radio-group` feature branch (see [`radio/migration-plan.md`](../radio/migration-plan.md#related-components-and-ordering-notes))
+- [x] Confirm `FieldAssociationController`, `LabellingMixin`, `FieldDescriptionMixin`, and the shared `form-fields` stylesheet/template are available to depend on, or coordinate scheduling with the `swc-text-field` work building them — `FieldAssociationController` is already merged onto this branch (proven out via `swc-text-field`'s work) and is now wired on `RadioGroupBase`; the labelling mixins are composed onto `RadioGroupBase` in role-element attachment mode; the shared `form-fields` stylesheet exists and the group consumes it (B5)
 
 ### API
 
 #### Naming and public surface
 
-- [ ] `RadioGroup.types.ts`: define the `label-position` union (`top`/`side`, default `top`); export public types
-- [ ] `RadioGroup.base.ts`: implement `name`, `selected`, `invalid`, `required`, `readonly`, `label-position`, `accessible-label`/`accessible-labelledby`/`accessible-describedby`
-- [ ] Rename `help-text`/`negative-help-text` slots to `description`/`error-text` (B2)
-- [ ] Implement the `orientation` enum property (`horizontal`/`vertical`, default `vertical`), replacing 1st-gen's boolean pair (B13)
-- [ ] Implement the dev-mode duplicate-`value` warning (B14)
+- [x] `RadioGroup.types.ts`: define the `label-position` union (`top`/`side`, default `top`); export public types
+- [x] `RadioGroup.base.ts`: implement `name`, `selected`, `fieldStatus`, `required`, `label-position`, `accessible-label`/`accessible-labelledby`/`accessible-describedby` — the `accessible-*` properties come from `LabellingMixin`/`FieldDescriptionMixin`, not hand-declared
+- [x] Rename `help-text`/`negative-help-text` slots to `description`/`error-text` (B2) — `FieldDescriptionMixin` already names them `description`/`error-text`; no `help-text` naming was ever introduced in gen2
+- [x] Implement the `orientation` enum property (`horizontal`/`vertical`, default `vertical`), replacing 1st-gen's boolean pair (B13)
+- [x] Implement the dev-mode duplicate-`value` warning (B14)
 
 #### Alignment checks
 
-- [ ] Verify property names and defaults against the Figma size/label-position/state matrix and [React Spectrum RadioGroup](https://react-spectrum.adobe.com/RadioGroup)
-- [ ] Confirm host-attached name wiring through `LabellingMixin` and description/error wiring through `FieldDescriptionMixin` with the accessibility reviewer
+- [x] Verify property names and defaults against the Figma size/label-position/state matrix and [React Spectrum RadioGroup](https://react-spectrum.adobe.com/RadioGroup)
+- [x] Confirm name wiring to the rendered role element through `LabellingMixin` and description/error wiring through `FieldDescriptionMixin` with the accessibility reviewer
 
 ### Styling
 
 > Follow the [CSS style guide](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/) as the source of truth for all styling work. Key references: [migration steps](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/04_spectrum-swc-migration.md), [custom properties](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md), [anti-patterns](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/05_anti-patterns.md).
 
-- [ ] Add `.swc-RadioGroup` to the internal semantic wrapper in `render()`; keep styling off `:host`
-- [ ] Copy S2 source from `spectrum-css` `spectrum-two` branch `components/fieldgroup/index.css` (not `/dist`) into `radio-group.css` as baseline for the item-stacking/label-position layout
-- [ ] Consume the shared `form-fields` `_lit-styles/` fragment and render template once available (B5); do not author a parallel implementation while waiting
+- [x] Add `.swc-RadioGroup` to the internal semantic wrapper in `render()`; keep styling off `:host`
+- [x] Copy S2 source from `spectrum-css` `spectrum-two` branch `components/fieldgroup/index.css` (not `/dist`) into `radio-group.css` as baseline for the item-stacking/label-position layout — item stacking only; label-position layout comes from the shared fragment
+- [x] Consume the shared `form-fields` `_lit-styles/` fragment and render template once available (B5); do not author a parallel implementation while waiting — fragment added to `static styles`, `swc-FormField` added to the render root, items placed in the `input` grid area
 
 #### Visual model and regressions
 
-- [ ] Add `@cssprop` JSDoc tag to the primary SWC component class for every exposed `--swc-*` property
-- [ ] Pass stylelint (property order, `no-descending-specificity`, token validation)
+- [x] Add `@cssprop` JSDoc tag to the primary SWC component class for every exposed `--swc-*` property
+- [x] Pass stylelint (property order, `no-descending-specificity`, token validation)
 
 ### Accessibility
 
@@ -410,36 +411,47 @@ Planned rendering shape:
 
 #### Naming and semantics
 
-- [ ] `role="radiogroup"` set via `ElementInternals` on the host, fixed and never author-overridable
-- [ ] Accessible names resolve through `LabellingMixin`; descriptions/errors resolve through `FieldDescriptionMixin`, attached to the host (not an inner control)
-- [ ] `aria-invalid` added when `invalid` (B7, real 1st-gen gap fix)
-- [ ] `aria-required`/`aria-readonly` implemented at the group level
+- [x] `role="radiogroup"` rendered on the outer `.swc-RadioGroup` element, fixed in the template and not author-overridable; the host carries no role
+- [x] Accessible name/description/error resolve via `LabellingMixin`/`FieldDescriptionMixin` composed onto `RadioGroupBase`, which wire `ariaLabelledByElements`/`ariaDescribedByElements` onto the overridden `roleElement`; the rendering class adds the slotted-label fallback in `updated()`
+- [x] Each item gets `posInSet`/`setSize` from the group on slot changes, for `aria-posinset`/`aria-setsize`
+- [x] `aria-invalid` added when `field-status="invalid"` (B7, real 1st-gen gap fix)
+- [x] `aria-required`/`aria-readonly` implemented at the group level — no `aria-errormessage`: dropped by the same decision `FieldDescriptionMixin` made while building `swc-text-field` (insufficient assistive-technology support), not an oversight here (see [Decision log](#decision-log))
 
 #### State verification
 
-- [ ] Exactly one item ever exposes `aria-checked="true"` after any selection change
-- [ ] `FieldAssociationController` handles both `setFormValue` and validity from one instance (B9); does not set `internals.role`
-- [ ] `disabled`/`size`/`emphasized` propagate to every slotted radio via `SlotAttributePropagationController`; `name` does not
-- [ ] Arrow/Home/End movement always selects; Tab-entry and programmatic `.focus()` never do (reacting only to `source: 'keyboard'`)
-- [ ] Disabled items are fully skipped by both Tab-entry and arrow movement
-- [ ] Coordinated reset restores the default-checked item, not just an empty selection
-- [ ] Help/error container does not default to `aria-live="assertive"` (B12)
-- [ ] Duplicate `value`s among slotted radios trigger the dev-mode console warning (B14)
+- [x] Exactly one item ever exposes `aria-checked="true"` after any selection change — `syncCheckedState` sets each item's `checked` from `selected`, so at most one item is ever checked
+- [x] `FieldAssociationController` handles both form value and validity from one instance (B9), with public validity passthroughs. Required without a selection sets `valueMissing`; `field-status="invalid"` sets `customError` independently. Native submission is blocked until both conditions clear; disabled groups are excluded from validation and submission. The validation message is the plain text of the slotted `error-text` while the group is invalid, or "Select an option." otherwise, and a private `syncValidity()` is the only writer of `setValidity()`; the group observes `error-text` so text-only edits keep `validationMessage` current, and exposes no `setCustomValidity()` ([forms strategy §3.7](../../05_strategies/forms-strategy-rfc.md#37-field-status-and-validation-sources)).
+- [x] Local disabled cascading leaves each item's own `disabled` untouched across group and fieldset enablement, late-added items, removal, and app changes made while the group is disabled. `size`/`emphasized` propagate via `SlotAttributePropagationController`; `name` does not.
+- [x] Arrow/Home/End movement always selects; Tab-entry and programmatic `.focus()` never do (reacting only to `source: 'keyboard'`) — `FocusgroupNavigationController` wired (`direction: 'both'`, `wrap: true`); `handleNavigationActiveChange` filters on `source === 'keyboard'`
+- [x] `focus()` and the validation anchor reach the selected or first enabled radio; Home/End and arrows select even when focus doesn't move; a cancelled keyboard change returns focus to the tab stop; the tab stop resets to the first enabled radio when nothing is checked — `FocusAndTabStopTest`
+- [x] Radios defined after the group renders are synced (position, checked, size, and group-disabled state), and a disabled group ignores selection from a radio that hasn't synced yet — `LateDefinedRadiosTest`
+- [x] Setting `checked` on an item directly, or appending a checked item whose value isn't `selected`, logs a dev-mode warning; the group's own writes don't — `ExternalCheckedWarningTest`
+- [x] Disabled items are fully skipped by both Tab-entry and arrow movement — `skipDisabled: true` on the controller
+- [x] Coordinated reset restores the initial selection adopted from the first checked radio, or authored `selected` when none is checked, and synchronizes item checked state.
+- [x] Browser form state restore (back/forward navigation, autofill) adopts the saved selection without `change`, including when it arrives before the first update — `FormStateRestoreTest`, `FormStateRestoreBeforeFirstUpdateTest`
+- [x] Help/error container does not default to `aria-live="assertive"` (B12); verified by `ErrorIconTest`
+- [x] Duplicate `value`s among slotted radios trigger the dev-mode console warning (B14)
 
 ### Testing
 
 <!-- Fill in comprehensive test cases -->
 
-- [ ] Port `1st-gen/packages/radio/test/radio-group.test.ts` coverage that still applies
-- [ ] Add Playwright `radio-group.a11y.spec.ts` with `toMatchAriaSnapshot`
+- [x] Port `1st-gen/packages/radio/test/radio-group.test.ts` coverage that still applies
+- [x] Add Playwright `radio-group.a11y.spec.ts` with `toMatchAriaSnapshot`
 
 #### Behavior
 
-- [ ] All four arrow keys move focus and select, with wraparound
-- [ ] `Space` checks a focused, unchecked item independent of arrow movement
-- [ ] Read-only keeps focus movement but blocks selection change
-- [ ] `change` event is cancelable; a cancelled change reverts `selected`
-- [ ] Two slotted radios sharing a `value` trigger the dev-mode console warning (B14); production build is silent
+- [x] All four arrow keys move focus and select, with wraparound
+- [x] `Space` checks a focused, unchecked item independent of arrow movement
+- [x] Read-only keeps focus movement but blocks selection change — `ReadOnlySelectionTest`
+- [x] `change` event is cancelable; a cancelled change reverts `selected`
+- [x] Two slotted radios sharing a `value` trigger the dev-mode console warning (B14); unique values do not warn
+- [x] Native form participation covers empty and selected `FormData`, required/custom validity, submission behavior, programmatic value reads, and reset to the authored default
+- [x] Only a `selected` value that an assigned, enabled item has is submitted or satisfies `required` (disabled, removed, renamed, unmatched, and restored cases) — `SubmittableSelectionTest`
+- [x] Checked state, validity, and the form value are current when `change` fires, and a cancelled `change` restores them synchronously — `ChangeStateTimingTest`
+- [x] The validation message is the plain text of `error-text` while invalid (content present before first render, text-only edits, and replacement elements), falls back to "Select an option.", and the host exposes no `setCustomValidity()` — `ValidationMessageTest`
+- [x] An unsupported `field-status` value, including `valid`, warns in dev mode and `undefined` does not — `StatusWarningsTest`
+- [x] Verify the duplicate-value warning is silent in a production build; the production-built warning helper emits no warning when `NODE_ENV` is `production`, even with debug enabled
 
 #### Visual regression
 
@@ -447,10 +459,11 @@ Planned rendering shape:
 Retain this section for any components with visual rendering, modifying as needed for the component's specs and variants. Replace the example bullets below with VRT items that match this component, and reference real bug tickets only when they apply to this component.
 -->
 
-- [ ] Add VRT coverage for the size × label-position × state matrix confirmed in [Visual matrix (gen2)](#visual-matrix-gen2)
-- [ ] Add VRT coverage for both `orientation` values (`horizontal`/`vertical`)
-- [ ] Add focus-visible regression coverage for the roving focus indicator as it moves between items
-- [ ] Add forced-colors (high-contrast) coverage for invalid/disabled/read-only states
+- [x] Add one labeled row covering all sizes; use the default medium size for the separately labeled state, description, and label-position cases rather than repeating every state at every size
+- [x] Add VRT coverage for both `orientation` values (`horizontal`/`vertical`)
+- [x] Add focus-visible regression coverage for the roving focus indicator as it moves between items
+- [x] Add forced-colors (high-contrast) coverage for invalid/disabled/read-only states
+- [x] Add labeled rows for group/item description combinations, invalid states with and without help/error text, and text-based required/optional necessity indicators
 
 ### Documentation
 
@@ -458,18 +471,19 @@ Retain this section for any components with visual rendering, modifying as neede
 
 #### General
 
-- [ ] JSDoc on all public props, slots, and CSS custom properties
-- [ ] Storybook stories cover both `swc-radio-group` and `swc-radio` together, since the item has no standalone docs page (per [`radio/migration-plan.md`](../radio/migration-plan.md))
+- [x] JSDoc on all public props, slots, and CSS custom properties
+- [x] The component page covers the form participation points in [forms strategy §3.9](../../05_strategies/forms-strategy-rfc.md#39-form-documentation-until-a-forms-page-exists): errors set by the application, validation timing, `novalidate` and the submit handler, focus, status barring, reset, and styling hooks
+- [x] Storybook stories cover both `swc-radio-group` and `swc-radio` together, since the item has no standalone docs page (per [`radio/migration-plan.md`](../radio/migration-plan.md))
 
 #### Breaking changes
 
-- [ ] Consumer migration guide entries for B1–B4 (label/slot renames, new `required`/`accessible-*` properties) and B8 (`readonly` moves from the item to the group)
+- [x] Consumer migration guide entries for B1–B4 (label/slot renames, new `required`/`accessible-*` properties) and B8 (`readonly` moves from the item to the group as `field-status="readonly"`)
 
 ### Review
 
-- [ ] `yarn lint:gen2` passes (ESLint, Stylelint, Prettier)
-- [ ] Status table in workstream doc updated
-- [ ] PR created against the shared `swc-radio`/`swc-radio-group` feature branch (not directly against `main`), with a description referencing Epic SWC-2348
+- [x] `yarn lint:gen2` passes (ESLint, Stylelint, Prettier)
+- [x] Status table in workstream doc updated
+- [x] PR created against the shared `swc-radio`/`swc-radio-group` feature branch (not directly against `main`), with a description referencing Epic SWC-2348
 - [ ] Peer engineer sign-off
 
 ---
@@ -489,8 +503,6 @@ During drafting, this section tracks active blockers and open questions. In the 
 | #   | Item | Blocking? | Status | Owner |
 | --- | ---- | --------- | ------ | ----- |
 | Q4 | `RadioGroupController` (SWC-2470) architecture decision. Genuinely unresolved; tracked as a subticket of this plan's own ticket (SWC-2546). Does not block this plan — see [Related components and ordering notes](#related-components-and-ordering-notes). | No | Tracked as a subticket of SWC-2546, not blocking here | Architecture |
-| Q5 | `FieldAssociationController`, `LabellingMixin`, and `FieldDescriptionMixin` are sequenced with `swc-text-field`. The mixin architecture is decided; delivery remains an implementation prerequisite, not a blocker to this plan. | No | Open: confirm form-controller and mixin delivery | Architecture |
-| Q7 | 1st-gen's public `buttons` getter (`Radio[]` over slotted children, exercised directly in 1st-gen's own tests) has no proposed gen2 equivalent in this plan. Decide whether to carry it forward, drop it as a documented breaking removal, or point consumers at standard DOM query instead. | No | Open | Architecture |
 
 ### Scope and prerequisites
 
@@ -509,14 +521,29 @@ Resolved decisions from planning, kept here as a historical record so [Blockers 
 | --- | -------- | -------------------- |
 | — | `radio/migration-plan.md`'s resolved decisions take priority over `radio-group/component-accessibility-specification.md` wherever they conflict. | Explicit direction. The a11y doc predates the item plan's Q12 resolution and describes a value/validity split Q12 supersedes (all form-value participation moves to the group; see the next entry). **Q12 is now officially signed off by the a11y SME.** `radio/component-accessibility-specification.md` (the item's own doc) has already been corrected to match, as precedent; this doc's own per-item-value language (see [Related recommendations: `<swc-radio-group>`](../radio-group/component-accessibility-specification.md#recommendations-swc-radio-group)) has been corrected to match as well. |
 | — | `FieldAssociationController` on `swc-radio-group` handles both form value (`setFormValue`, from `selected`) and constraint validity (`setValidity`/`checkValidity`) from one instance, not a split between per-item value and group-only validity. | Direct consequence of the item plan's Q12: since the item no longer participates in form value at all, the a11y doc's originally-proposed "lighter, validity-only" group wiring is no longer lighter than anything — it's the *only* wiring, so it may as well be the full controller. |
-| — | `LabellingMixin` and `FieldDescriptionMixin` are confirmed dependencies for `swc-radio-group`, unlike the item's native-association approach. | The group has no native "radiogroup" equivalent, so its accessible name attaches to the host through `LabellingMixin` and descriptions/errors through `FieldDescriptionMixin`. The item's reasoning in [`radio/migration-plan.md`](../radio/migration-plan.md#decision-log) (Q5/B5) depends on a native element the group does not have. |
+| — | `LabellingMixin` and `FieldDescriptionMixin` are confirmed dependencies for `swc-radio-group`, despite being rejected for `swc-radio` itself. | The group has no native "radiogroup" equivalent at all, so its accessible name/description/error must be wired onto the rendered role element via element reflection, which is exactly what the shared labelling mixins provide. Why the item rejected them: [`radio/migration-plan.md`](../radio/migration-plan.md#decision-log) (Q5/B5); that reasoning doesn't transfer here since it depended on a native element the group doesn't have. |
 | — | `swc-radio-group` is confirmed as the shared `form-fields` `_lit-styles/` stylesheet and render template's second consumer, resolving that fragment's ownership question by precedent. `swc-radio` (the item) explicitly remains a non-consumer. | Explicit direction for this plan. The `spectrum-css` `fieldgroup` component's own `--toplabel`/`--sidelabel` modifiers independently confirm the group's layout need matches the shared template's `label-position` axis, not a coincidence being forced onto the component. |
 | — | No dedicated rendering-and-styling migration analysis is needed for this component. | `swc-radio-group` reuses the shared `form-fields` styles and render template rather than authoring its own CSS mapping, so the usual per-component CSS-inventory doc doesn't apply here. |
 | Q6 | The shared `form-fields` stylesheet/render template generalizes to `swc-radio-group`, a host-role consumer with no inner control. | The template governs the render tree: a `.swc-FormFieldTemplate` wrapper containing the label rendered through `LabellingMixin`, description/error output through `FieldDescriptionMixin`, and control content. Role placement on the host versus an inner control is independent of that rendering. |
 | — | The [Open gen1 issues](#open-gen1-issues) table is empty. | Queried live: `project = SWC AND component = "Radio"` (no distinct "Radio Group" component exists). Every result carries an `a11y` or `gen2` label and is excluded by the documented exclusion rule; none qualify. |
 | — | `name` does not propagate from `swc-radio-group` onto its slotted items. | Same rationale as the item plan: native radio-button-group scoping is per-tree, so cross-shadow-root `name` matching between item inputs never produces native mutual exclusion, and `ElementInternals` fully provides form participation without it. Propagating it would be purely cosmetic with no functional benefit, so it's dropped rather than added for parity's sake alongside `disabled`/`size`/`emphasized`. |
 | B14 | Duplicate-`value` misuse is mitigated with a dev-mode console warning, not a runtime error or auto-dedup. | Matches this repo's existing dev-warning pattern for accessibility/correctness safety nets on misuse patterns (e.g. the item plan's B15 standalone-usage warning). The condition is a consumer authoring mistake, not a state a running app should ever hit in production; warning (rather than throwing or silently renaming/ignoring the duplicate) surfaces it during development without changing runtime behavior for anyone not hitting the bug. |
+| B10 | Keep the group's disabled state separate from each radio's own `disabled`. | Group or ancestor fieldset disablement must still disable every assigned item. Enabling the group must not enable an individually disabled radio. An earlier snapshot-and-restore design overwrote the item's `disabled` and lost app changes made while the group was disabled; a separate group-disabled state never touches it. Keep this behavior local rather than changing the shared attribute-propagation controller's overwrite semantics. |
+| B9 | `field-status="invalid"` is application-level constraint validation, not only error presentation. | A selected value can still fail a business rule, such as unavailable express shipping. Set `customError` from `field-status="invalid"`, independently of required-selection `valueMissing`; native submission stays blocked until application validation clears the status. The consumer remains responsible for supplying meaningful error text, which is also the validation message (fallback "Select an option."), per the forms strategy. |
+| B16 | Authored statuses consolidate into `field-status`, shared with `swc-text-field`. | A shared form-field API surface matters more than preserving the earlier boolean confirmation. The `FIELD_STATUSES` and `FieldStatus` definitions live in the shared core `types` directory; the group accepts `disabled`, `invalid`, and `readonly` (no `valid`, since no radio-group state needs it). Items still receive `disabled` through the cascade because it drives their styling hook; items have no `valid` or `invalid` expectation. |
+| — | Synchronize item checked state after every item-slot refresh. | After propagating item attributes, updating positions, and refreshing navigation, reapply `selected` to all assigned radios and place the roving tab stop on the checked item. A radio added after the initial render with a value matching `selected` must become checked without requiring another selection change. |
+| — | Initial checked-item discovery runs before the first render and considers only default-slotted radio children. Warn when multiple radios are initially checked; the first checked radio wins. | The item slot does not exist yet in `willUpdate()`, so `assignedItems()` cannot replace pre-render child discovery. Preserve attribute-based discovery for un-upgraded `swc-radio` elements, ignore labels and named-slot content, and retain the adopted selection as the form-reset default. |
 | Q1 | Horizontal item stacking remains supported, confirmed via React Spectrum's identical `orientation` prop even though the supplied Figma reference only shows vertical stacking. | 1st-gen's two independent `horizontal`/`vertical` booleans are merged into a single `orientation: 'horizontal' \| 'vertical'` property (default `vertical`), matching `label-position`'s enum pattern and React Spectrum's own naming (B13). |
+| — | RadioGroup VRT shows all sizes together in one labeled row and uses the default medium size for other cases. | The user confirmed that repeating every state across every size is unnecessary. Separately labeled medium-size rows cover default, selected, invalid and disabled states; label-position/orientation, focus, descriptions, necessity indicators, and forced-colors cases remain individually represented without duplicating Radio's item-level visual coverage. |
+| — | No `aria-errormessage` on `swc-radio-group`; `aria-describedby` alone associates the error text. | Decided while implementing `swc-text-field`: `FieldDescriptionMixin` does not wire `aria-errormessage` because assistive-technology support for it is still insufficiently consistent, while `aria-describedby` is universally read. `swc-radio-group` consumes that same mixin and inherits the same decision — not a gap specific to this component. |
+| — | **Supersedes the `ElementInternals` host-role decisions above.** `role="radiogroup"`, `aria-required`, `aria-invalid`, and `aria-readonly` live on the rendered outer `.swc-RadioGroup` element, which contains the label, the role-free `.swc-RadioGroup-items` layout wrapper, and the description. `labelInternals`/`describedByInternals` (host `ElementInternals`) are no longer overridden; `roleElement` is overridden instead, pointing at `.swc-RadioGroup`. Accessible name/description still resolve via `ariaLabelledByElements`/`ariaDescribedByElements`, now assigned directly to that element. The rendering class wires the slotted group label onto `roleElement.ariaLabelledByElements` in `updated()`, after the mixins synchronize naming and description. | A dedicated cross-browser/AT test matrix (VoiceOver with Chrome and Safari, NVDA, JAWS with Chrome and Firefox) found that placing `role="radiogroup"` on the host via `ElementInternals` can break item positioning or group labeling associations, or both, depending on the browser/AT combination. A rendered role element was the most compatible across combinations. JAWS with Firefox announced positioning but had a group-labeling gap; that gap was not independently root-caused. `ariaLabelledByElements`/`ariaDescribedByElements` element reflection is confirmed to work on connected elements without `ElementInternals` and to resolve across the shadow boundary (verified via Chromium's real accessibility tree, not just the JS property readback), so moving off `ElementInternals` retains accessible-name support. A `div` with `role="radiogroup"` cannot use native `<label for>` association, so the slotted-label fallback applies only when the mixin supplies neither resolved external label references nor an `accessible-label`; unresolved external IDs do not suppress a valid slotted label. |
+| — | `swc-radio` no longer sets `aria-describedby` on itself for its own slotted `description`. | The description renders as plain content inside the item's own accessible subtree (no shadow boundary to cross, unlike the group's label/description), so it already contributes to the item's accessible name computation alongside the label. Adding `aria-describedby` on top caused VoiceOver to re-announce the same text a second time as a "description". |
+| B5 | Phase 5: label, description, error text, and the `label-position` grid are reused from the shared `form-fields` fragment; `radio-group.css` only lays out the items. | Follows the planned style reuse: the render root now carries `swc-FormField` and the items wrapper sits in the `input` area, so label position, description, error text, and disabled label colors need no group-specific CSS. Disabled colors depend on the fragment's consumer contract: the group sets the `disabled` custom state (`:state(disabled)`) from its effective disabled state. |
+| — | The group renders a decorative error icon inline whenever it is `invalid` and not disabled, so the state never relies on color alone. Statuses are exclusive, so only a `<fieldset disabled>` ancestor can disable an invalid group; the icon then hides while `aria-invalid` and the error text stay, matching `swc-text-field`. | `renderFieldDescription` takes an `errorIcon` option; the icon sits in `.swc-FormFieldErrorText-icon` (`aria-hidden`) and the message in `.swc-FormFieldErrorText-text`. Spacing follows `--swc-form-field-invalid-icon-gap`. | The icon shows beside the error text, beside the description when there is no error text, and alone when there is neither. A radio group has no input with its own invalid icon, unlike `swc-text-field`. The `core` directive can't import an `swc` icon, so the consumer supplies it. |
+| — | `necessity-indicator` (`icon` \| `label`) is exposed on the group. | Same values and default (`icon`) as `swc-text-field`; the `label` text is `(required)` or `(optional)`. | Resolves the earlier note that indicator presentation was not this component's decision. |
+| — | `renderLabel`'s `forId` is optional; without it a `<span class="swc-FormFieldLabel">` renders instead of `<label for>`. | `LabellingMixin` and `renderFieldLabel` accept `string \| undefined`. | A radio group has no labelable control to point `for` at; its name is wired through `aria-labelledby` on the role element. |
+| Q5 | `FieldAssociationController`, `LabellingMixin`, and `FieldDescriptionMixin` are delivered, and `swc-radio-group` consumes all three. | Shipped with the `swc-text-field` work (SWC-2466, SWC-2467). No remaining prerequisite. |
+| Q7 | Drop 1st-gen's `buttons` getter; consumers use `group.querySelectorAll('swc-radio')`. | The slotted items are light DOM, so a standard query returns the same list. Documented as a removal in the consumer migration guide. |
 
 ---
 
@@ -526,7 +553,7 @@ Resolved decisions from planning, kept here as a historical record so [Blockers 
 - [gen2 migration status table](../../02_workstreams/02_gen2-component-migration/01_status.md)
 - [Component accessibility specification](./component-accessibility-specification.md) — authored before Q12; see banner and [Decision log](#decision-log) for where this plan supersedes it
 - [Radio migration plan](../radio/migration-plan.md) — the coordinated item's plan; priority source for this plan per the banner
-- [Text field migration plan](../text-field/migration-plan.md): source of `FieldAssociationController`, `LabellingMixin`, and `FieldDescriptionMixin` sequencing and the shared `form-fields` stylesheet/template this plan consumes (not yet merged at time of drafting)
+- [Text field migration plan](../text-field/migration-plan.md) — source of `FieldAssociationController`, `LabellingMixin`, and `FieldDescriptionMixin` sequencing and the shared `form-fields` stylesheet/template this plan consumes as second confirmed consumer (since built)
 - [`FocusgroupNavigationController`](../../../../gen2/packages/core/controllers/focusgroup-navigation-controller/focusgroup-navigation-controller.mdx) — already-built controller this plan uses for roving tabindex and arrow navigation
 - [`SlotAttributePropagationController`](../../../../gen2/packages/core/controllers/slot-attribute-propagation-controller/slot-attribute-propagation-controller.mdx) — already-built controller this plan uses to propagate `disabled`/`size`/`emphasized` onto items (not `name`, see [Decision log](#decision-log))
 - [Forms strategy RFC (SWC-1888)](../../05_strategies/forms-strategy-rfc.md)

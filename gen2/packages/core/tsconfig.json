@@ -5,7 +5,9 @@
     "noEmit": false,
     "outDir": "./dist",
     "paths": {
-      "@adobe/spectrum-wc-core/*": ["./*"]
+      "@adobe/spectrum-wc-core/*": ["./*"],
+      "@swc-test-helpers/dom": ["../../test/helpers/dom/index.ts"],
+      "@swc-test-helpers/playwright": ["../../test/helpers/playwright/index.ts"]
     },
     "rootDir": "./"
   },
