@@ -101,6 +101,11 @@ export abstract class ButtonBase extends SizedMixin(SpectrumElement, {
     return this.slotText.hasContent;
   }
 
+  /** @internal Docs URL for dev warnings, derived from the tag name. */
+  protected get docsHref(): string {
+    return componentDocsHref(this.localName);
+  }
+
   /**
    * Returns the set of attributes that should be forwarded to the internal
    * semantic `<button>` element, if not otherwise directly managed.
@@ -151,7 +156,7 @@ export abstract class ButtonBase extends SizedMixin(SpectrumElement, {
       this,
       this.hasIcon && !this.hasLabel && !this.accessibleLabel,
       `<${this.localName}> with an icon and no label must have an "accessible-label" attribute to be accessible.`,
-      componentDocsHref(this.localName),
+      this.docsHref,
       { type: 'accessibility', issues: ['accessible-label'] }
     );
   }
