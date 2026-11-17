@@ -31,7 +31,7 @@ const { args, argTypes } = getStorybookHelpers('swc-menu-separator');
  * A menu separator is a visual and semantic break between groups of items in a menu.
  */
 const meta: Meta = {
-  title: 'Menu separator',
+  title: 'Menu/Menu separator',
   component: 'swc-menu-separator',
   args,
   argTypes,
