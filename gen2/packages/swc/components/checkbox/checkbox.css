@@ -45,7 +45,6 @@
   --_swc-checkbox-control-offset: calc((1lh - var(--_swc-checkbox-control-size)) / 2);
 
   display: grid;
-  position: relative;
   grid-area: input;
   grid-template-areas: "box label";
   grid-template-columns: auto 1fr;
@@ -59,16 +58,19 @@
   --_swc-checkbox-control-offset: 0px;
 }
 
-/* As in Spectrum CSS, the transparent native input covers the whole row, so
-   the box, the gap, and the label are one pointer target. */
+/* The transparent native input shares the box's grid cell, so pointer input
+   on the box lands on it; the in-shadow <label for> toggles it from the label. */
 .swc-Checkbox-input {
-  position: absolute;
-  inset: 0;
   z-index: 1;
-  inline-size: 100%;
-  block-size: 100%;
+  grid-area: box;
+  inline-size: var(--_swc-checkbox-control-size);
+  block-size: var(--_swc-checkbox-control-size);
   padding: 0;
   margin: 0;
+  margin-block-start: var(--_swc-checkbox-control-offset);
+
+  /* The offset uses `1lh`, which resolves against the input's own font, and
+     browsers give inputs their own font size and line height. */
   font: inherit;
   opacity: 0;
 }
