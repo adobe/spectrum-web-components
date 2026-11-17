@@ -56,9 +56,11 @@ syntax (including the `square` keyword). Pairing `aspect-ratio` with only one of
 `height` derives the other dimension from the ratio; setting both `width` and `height` leaves
 `aspect-ratio` with no effect, since both dimensions are already fixed.
 
-If none of `aspect-ratio`, `width`, or `height` are set, the asset falls back to plain CSS sizing:
-it takes on the slotted content's natural dimensions, or whatever size an ancestor layout (e.g. a
-flex or grid container) provides. It never collapses to zero size.
+If none of `aspect-ratio`, `width`, or `height` are set, the asset sizes like responsive media: it takes on the slotted content's natural dimensions, scaled down to the width its container provides.
+
+An unsized asset in normal flow, or centered in a flex or grid container, doesn't collapse to zero. In a flex row where siblings take more space than the container has, it can, so set a size when that layout is possible.
+
+A slotted `<svg>` with only a `viewBox` has no natural size, so an unsized asset fills the available width and takes its height from the `viewBox` ratio. A square `viewBox` is as tall as it is wide, which can exceed a short container. Set `width`/`height` or `aspect-ratio` on the asset, or give the `<svg>` its own `width` and `height` attributes, to size it.
 
 <Canvas of={AssetStories.Sizing} />
 

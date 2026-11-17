@@ -38,7 +38,9 @@
 }
 
 /* Fills the container width. The minimum is capped at the container so it fits
- * small spaces, and fit-content keeps the host as thin as the bar. */
+ * small spaces; adjust it with the custom property, since overriding
+ * min-inline-size directly drops that cap. fit-content keeps the host as thin
+ * as the bar. */
 :host(:not([vertical])) {
   inline-size: 100%;
   min-inline-size: min(100%, var(--swc-divider-minimum-inline-size, token("divider-horizontal-minimum-width")));

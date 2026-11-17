@@ -81,6 +81,7 @@ const meta: Meta = {
     stackblitz: {
       url: 'https://stackblitz.com/edit/vitejs-vite-bccezzju?file=src%2Fmy-element.ts',
     },
+    styles: { minInlineSize: '250px' },
   },
   args,
   argTypes,

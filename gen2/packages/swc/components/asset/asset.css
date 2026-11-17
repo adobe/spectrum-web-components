@@ -12,6 +12,10 @@
 
 :host {
   display: flex;
+  inline-size: fit-content;
+  max-inline-size: 100%;
+  block-size: fit-content;
+  max-block-size: 100%;
 }
 
 * {
