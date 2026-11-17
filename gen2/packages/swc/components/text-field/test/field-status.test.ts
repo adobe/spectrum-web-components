@@ -12,16 +12,11 @@
 import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import { fixture, getComponent, withWarningSpy } from '@swc-test-helpers/dom';
 
 import type { TextField } from '@adobe/spectrum-wc/text-field';
 
 import '@adobe/spectrum-wc/components/text-field/swc-text-field.js';
-
-import {
-  fixture,
-  getComponent,
-  withWarningSpy,
-} from '../../../utils/test-utils.js';
 
 export default {
   title: 'Text field/Field status tests',
@@ -84,10 +79,12 @@ export const StatusTransitions: Story = {
           expect(input.disabled).toBe(status === 'disabled');
           expect(input.readOnly).toBe(status === 'readonly');
           expect(field.required).toBe(true);
-          expect(input.required).toBe(true);
-          expect(field.hasAttribute('disabled')).toBe(status === 'disabled');
-          expect(field.hasAttribute('readonly')).toBe(status === 'readonly');
-          expect(field.matches(':disabled')).toBe(status === 'disabled');
+          // Read-only fields are barred, so required isn't exposed.
+          expect(input.required).toBe(status !== 'readonly');
+          expect(field).not.toHaveAttribute('disabled');
+          expect(field).not.toHaveAttribute('readonly');
+          expect(field.matches(':disabled')).toBe(false);
+          expect(field.matches(':state(disabled)')).toBe(status === 'disabled');
           expect(field.willValidate).toBe(
             status !== 'disabled' && status !== 'readonly'
           );

@@ -12,6 +12,12 @@
 import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import {
+  fixture,
+  getComponent,
+  getComponents,
+  withWarningSpy,
+} from '@swc-test-helpers/dom';
 import { computeAccessibleName } from 'dom-accessibility-api';
 
 import { Thumbnail } from '@adobe/spectrum-wc/thumbnail';
@@ -23,12 +29,6 @@ import {
 
 import '@adobe/spectrum-wc/components/thumbnail/swc-thumbnail.js';
 
-import {
-  fixture,
-  getComponent,
-  getComponents,
-  withWarningSpy,
-} from '../../../utils/test-utils.js';
 import meta, {
   Fit,
   Overview,

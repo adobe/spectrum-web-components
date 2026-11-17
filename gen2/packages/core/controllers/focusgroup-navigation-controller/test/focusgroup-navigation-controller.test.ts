@@ -12,6 +12,7 @@
 import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import { getComponent } from '@swc-test-helpers/dom';
 
 import {
   focusgroupNavigationActiveChange,
@@ -20,7 +21,6 @@ import {
 
 import '../stories/demo-hosts.js';
 
-import { getComponent } from '../../../../swc/utils/test-utils.js';
 import type {
   DemoFocusgroupDisabledHost,
   DemoFocusgroupDynamic,

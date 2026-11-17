@@ -1,0 +1,268 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Radio group/Migration guide" />
+
+# Radio group migration guide
+
+Replace `<sp-radio-group>` and `<sp-radio>` with `<swc-radio-group>` and `<swc-radio>`, move labels and help text into named slots, and move `size`, `emphasized`, `invalid`, `readonly`, and group-wide `disabled` from the items to the group.
+
+## Installation
+
+```bash
+# Remove
+yarn remove @spectrum-web-components/radio
+
+# Add
+yarn add @adobe/spectrum-wc
+```
+
+Update your imports:
+
+```js
+// Before
+import '@spectrum-web-components/radio/sp-radio-group.js';
+import '@spectrum-web-components/radio/sp-radio.js';
+
+// After
+import '@adobe/spectrum-wc/components/radio-group/swc-radio-group.js';
+import '@adobe/spectrum-wc/components/radio-group/swc-radio.js';
+```
+
+> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g., `@adobe/spectrum-wc/components/radio-group/swc-radio-group.js`) registers and loads only that component's bundle. Both elements live in the `radio-group` directory.
+
+## What changed
+
+### Renamed
+
+| Area                  | Spectrum 1                                            | Spectrum 2                                                          |
+| --------------------- | ----------------------------------------------------- | ------------------------------------------------------------------- |
+| Tags                  | `sp-radio-group`, `sp-radio`                          | `swc-radio-group`, `swc-radio`                                      |
+| Import path           | `@spectrum-web-components/radio`                      | `@adobe/spectrum-wc/components/radio-group`                         |
+| Group label           | `label="…"` (sets `aria-label`) or `<sp-field-label>` | `<span slot="label">…</span>` or `accessible-label="…"`             |
+| Item label            | Default slot                                          | `label` slot                                                        |
+| Help text slot        | `slot="help-text"`                                    | `slot="description"`                                                |
+| Error text slot       | `slot="negative-help-text"` (shown by `invalid`)      | `slot="error-text"` (shown while `field-status="invalid"`)          |
+| Orientation           | `horizontal` / `vertical` booleans                    | `orientation="horizontal\|vertical"` (default `vertical`)           |
+| Invalid               | `invalid` on the group or item                        | `field-status="invalid"` on the group                               |
+| Read-only             | `readonly` on the item (not enforced)                 | `field-status="readonly"` on the group                              |
+| `size`, `emphasized`  | Set on each `sp-radio`                                | Set once on `swc-radio-group`; it applies them to every item        |
+| Unmatched `selected`  | Reset to `''` when no item has the value              | Kept as set; nothing is submitted until an item has that value      |
+| CSS custom properties | `--mod-radio-*`                                       | `--swc-radio-*` and `--swc-radio-group-*` (see [Styling](#styling)) |
+
+### Added in Spectrum 2
+
+| Addition                                            | Notes                                                                                                                                                                                                                         |
+| --------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `field-status="disabled"` on the group              | Disables every item without changing the item's own `disabled`, so each item returns to its own state when the group is enabled again.                                                                                        |
+| Item `description` slot                             | Secondary text under an item's label, read as part of the item's accessible name.                                                                                                                                             |
+| `required` attribute                                | A group with no selection fails validation.                                                                                                                                                                                   |
+| `necessity-indicator` attribute (`icon` \| `label`) | Asterisk (`icon`, default) or appended `(required)`/`(optional)` text (`label`).                                                                                                                                              |
+| `label-position` attribute (`top` \| `side`)        | Places the group label above (default) or beside the items.                                                                                                                                                                   |
+| `accessible-label`, `accessible-labelledby`         | Name the group without a visible label, or from elements it does not own.                                                                                                                                                     |
+| `accessible-describedby` attribute                  | Combined with the slotted `description` for external description sources.                                                                                                                                                     |
+| Native form association                             | The group submits its `selected` value under its `name`, resets with the form, follows `<fieldset disabled>`, and exposes `form`, `validity`, `validationMessage`, `willValidate`, `checkValidity()`, and `reportValidity()`. |
+
+`field-status="invalid"` makes the group fail validation, even with a selection, and uses the plain text of `error-text` as the validation message. Clear it with `fieldStatus = undefined` when the error is resolved; changing the selection does not clear it. See [Form participation](?path=/docs/components-radio-group--docs#form-participation).
+
+### Removed in Spectrum 2
+
+| Removed                                | Replacement                                                                                                     |
+| -------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| `invalid` and `readonly` on `sp-radio` | `field-status="invalid"` or `field-status="readonly"` on the group                                              |
+| `size` and `emphasized` on `sp-radio`  | `size` and `emphasized` on the group                                                                            |
+| `buttons` getter on the group          | `group.querySelectorAll('swc-radio')`                                                                           |
+| Standalone `sp-radio`                  | Always place `swc-radio` inside `swc-radio-group`. Standalone use is not supported and logs a dev-mode warning. |
+| `--mod-radio-*` custom properties      | The reduced `--swc-*` set in [Styling](#styling)                                                                |
+
+## Update your code
+
+### 1. Rename the tags and move item labels to the `label` slot
+
+```html
+<!-- Before -->
+<sp-radio-group name="shipping" selected="standard">
+  <sp-radio value="standard">Standard</sp-radio>
+  <sp-radio value="express">Express</sp-radio>
+</sp-radio-group>
+
+<!-- After -->
+<swc-radio-group name="shipping" selected="standard">
+  <swc-radio value="standard"><span slot="label">Standard</span></swc-radio>
+  <swc-radio value="express"><span slot="label">Express</span></swc-radio>
+</swc-radio-group>
+```
+
+### 2. Label the group
+
+Replace the `label` attribute or an external `<sp-field-label>` with a slotted label. Use `accessible-label` only when the group has no visible label.
+
+```html
+<!-- Before -->
+<sp-radio-group label="Shipping method" name="shipping">…</sp-radio-group>
+
+<sp-field-label for="shipping">Shipping method</sp-field-label>
+<sp-radio-group id="shipping" name="shipping">…</sp-radio-group>
+
+<!-- After: visible label -->
+<swc-radio-group name="shipping">
+  <span slot="label">Shipping method</span>
+  …
+</swc-radio-group>
+
+<!-- After: no visible label -->
+<swc-radio-group accessible-label="Shipping method" name="shipping">
+  …
+</swc-radio-group>
+```
+
+### 3. Rename the help text slots
+
+```html
+<!-- Before -->
+<sp-radio-group label="Shipping method" invalid>
+  <sp-help-text slot="help-text">Choose a delivery speed.</sp-help-text>
+  <sp-help-text slot="negative-help-text">
+    Select a shipping method.
+  </sp-help-text>
+  …
+</sp-radio-group>
+
+<!-- After -->
+<swc-radio-group field-status="invalid">
+  <span slot="label">Shipping method</span>
+  <span slot="description">Choose a delivery speed.</span>
+  <span slot="error-text">Select a shipping method.</span>
+  …
+</swc-radio-group>
+```
+
+### 4. Move item-level attributes to the group
+
+Set `size` and `emphasized` once on the group, and replace `horizontal` with `orientation`. Replace `invalid`, `readonly`, and per-item `disabled` used to disable the whole group with `field-status`. Keep `disabled` on an item only to disable that one option.
+
+```html
+<!-- Before -->
+<sp-radio-group label="Shipping method" horizontal>
+  <sp-radio value="standard" size="l" emphasized disabled>Standard</sp-radio>
+  <sp-radio value="express" size="l" emphasized disabled>Express</sp-radio>
+</sp-radio-group>
+
+<!-- After -->
+<swc-radio-group
+  size="l"
+  emphasized
+  orientation="horizontal"
+  field-status="disabled"
+>
+  <span slot="label">Shipping method</span>
+  <swc-radio value="standard"><span slot="label">Standard</span></swc-radio>
+  <swc-radio value="express"><span slot="label">Express</span></swc-radio>
+</swc-radio-group>
+```
+
+### 5. Replace `buttons` calls
+
+The `buttons` getter is gone. Query the items directly.
+
+```js
+// Before
+group.buttons.forEach((radio) => console.log(radio.value));
+
+// After
+group
+  .querySelectorAll('swc-radio')
+  .forEach((radio) => console.log(radio.value));
+```
+
+### 6. (Optional) Validate with the form
+
+Add `required` to block submission without a selection. Show errors by setting `field-status="invalid"` with `error-text`; native validation does not set it for you.
+
+```html
+<!-- Before -->
+<sp-radio-group label="Shipping method" name="shipping">…</sp-radio-group>
+
+<!-- After -->
+<swc-radio-group name="shipping" required>
+  <span slot="label">Shipping method</span>
+  <span slot="error-text">Select a shipping method.</span>
+  …
+</swc-radio-group>
+```
+
+## Accessibility
+
+- **Group label:** every group needs a name. See [step 2](#2-label-the-group). Groups with no name trigger a dev-mode warning.
+- **`aria-label` / `aria-labelledby` on the host are ignored.** They do not name the group and trigger a dev-mode warning. Use `accessible-label` or `accessible-labelledby` instead.
+- **Error text:** always pair `field-status="invalid"` with slotted `error-text`. See [step 3](#3-rename-the-help-text-slots).
+- **Item values:** give every item a unique `value`. Duplicate values trigger a dev-mode warning.
+
+## Styling
+
+Spectrum 2 exposes a reduced set of `--swc-*` custom properties on `<swc-radio-group>` and `<swc-radio>`. The Spectrum 1 `--mod-radio-*` surface is not carried forward.
+
+{/* @todo Replace the inline-styled callouts in this section with `<swc-inline-alert>` once it is migrated to Spectrum 2. */}
+
+<div
+  style={{
+    borderLeft: '4px solid #dba842',
+    background: 'rgba(219, 168, 66, 0.12)',
+    padding: '12px 16px',
+    margin: '16px 0',
+    borderRadius: '4px',
+  }}
+>
+  <strong>⚠️ Breaking change.</strong> Spectrum 1 <code>{'--mod-radio-*'}</code>{' '}
+  properties <strong>do not apply</strong> to <code>{'<swc-radio>'}</code>.
+  Remove every <code>{'--mod-radio-*'}</code> override. Most have no 1:1
+  replacement. Use the reduced <code>{'--swc-*'}</code> set below.
+</div>
+
+### Public custom properties
+
+{/* @todo Replace the Description column with the `@cssprop` JSDoc descriptions from `<swc-radio-group>`'s and `<swc-radio>`'s CEM entries once they are added in a follow-up PR. */}
+
+| Custom property                          | Description                                                                                                 |
+| ---------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| `--swc-radio-group-item-gap`             | Space between items, or between wrapped rows when horizontal. Changes by size.                              |
+| `--swc-radio-group-row-gap`              | Space between the label, items, and description. Changes by size.                                           |
+| `--swc-radio-group-side-label-gap`       | Space between a side label and the items. Changes by size.                                                  |
+| `--swc-field-label-max-inline-size`      | Max inline size of a side label's column. Defaults to `25ch`.                                               |
+| `--swc-form-field-label-font-size`       | Font size of the group label. Changes by size.                                                              |
+| `--swc-form-field-description-font-size` | Font size of the description and error text. Changes by size.                                               |
+| `--swc-form-field-necessity-gap`         | Space between the label text and the necessity indicator. Changes by size.                                  |
+| `--swc-form-field-invalid-icon-gap`      | Space between the error icon and the error message. Changes by size.                                        |
+| `--swc-radio-control-size`               | Diameter of the radio control. Changes by size.                                                             |
+| `--swc-radio-text-to-control`            | Space between the control and the text. Changes by size.                                                    |
+| `--swc-radio-font-size`                  | Font size of the item label. Changes by size.                                                               |
+| `--swc-radio-description-font-size`      | Font size of the item description. Changes by size.                                                         |
+| `--swc-radio-border-color-*`             | Control border color: `-default`, `-hover`, `-down`, `-focus`, and `-disabled`.                             |
+| `--swc-radio-content-color-*`            | Item label color: `-default`, `-hover`, `-down`, `-focus`, and `-disabled` (also the disabled description). |
+
+<div
+  style={{
+    borderLeft: '4px solid #e34850',
+    background: 'rgba(227, 72, 80, 0.10)',
+    padding: '12px 16px',
+    margin: '16px 0',
+    borderRadius: '4px',
+  }}
+>
+  <strong>🚫 Do not target internals.</strong> Internal classes,{' '}
+  <code>{'--_swc-radio-*'}</code> private properties, and shadow DOM are{' '}
+  <strong>not public API</strong>. Styling applied to them will break without
+  warning on minor releases.
+</div>
+
+## Checklist
+
+- [ ] Swap the imports to `@adobe/spectrum-wc/components/radio-group/swc-radio-group.js` and `swc-radio.js`.
+- [ ] Rename `<sp-radio-group>` and `<sp-radio>` to `<swc-radio-group>` and `<swc-radio>`.
+- [ ] Wrap each item's label in `<span slot="label">`.
+- [ ] Replace the group's `label` attribute or `<sp-field-label>` with a slotted `label` or `accessible-label`.
+- [ ] Rename `slot="help-text"` to `slot="description"` and `slot="negative-help-text"` to `slot="error-text"`.
+- [ ] Move `size` and `emphasized` from the items to the group, and replace `horizontal`/`vertical` with `orientation`.
+- [ ] Replace `invalid`, item `readonly`, and group-wide item `disabled` with `field-status` on the group.
+- [ ] Replace `buttons` with `querySelectorAll('swc-radio')`.
+- [ ] Update code that reads an empty `selected` to mean nothing is selected; check for a checked item with `group.querySelector('swc-radio[checked]')` instead.
+- [ ] Remove all `--mod-radio-*` overrides; adopt the `--swc-*` properties above where needed.

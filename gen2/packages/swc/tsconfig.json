@@ -8,7 +8,9 @@
       "@adobe/spectrum-wc-core/*": ["../core/*"],
       "@adobe/spectrum-wc-icons/*": ["../icons/src/*"],
       "@adobe/spectrum-wc/*": ["./components/*"],
-      "@adobe/vite-global-elements-css": ["../tools/vite-global-elements-css"]
+      "@adobe/vite-global-elements-css": ["../tools/vite-global-elements-css"],
+      "@swc-test-helpers/dom": ["../../test/helpers/dom/index.ts"],
+      "@swc-test-helpers/playwright": ["../../test/helpers/playwright/index.ts"]
     },
     "rootDir": "./",
     "types": ["@vitest/browser-playwright"]
@@ -34,6 +36,9 @@
     "dist/custom-elements.json"
   ],
   "references": [
+    {
+      "path": "../../test/helpers"
+    },
     {
       "path": "../core"
     },

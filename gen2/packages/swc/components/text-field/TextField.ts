@@ -60,6 +60,7 @@ const PREFIX_AVATAR_SIZE = {
  * @cssprop --swc-text-field-padding-inline - Inline-axis control padding. Varies with `size`.
  * @cssprop --swc-text-field-affix-gap - Spacing between prefix content and the input. Varies with `size`.
  * @cssprop --swc-form-field-row-gap - Block-axis spacing between the label, control, and help text. Varies with `size`.
+ * @cssprop --swc-form-field-side-label-gap - `label-position="side"` only: space between the label and the control. Varies with `size`.
  * @cssprop --swc-form-field-necessity-gap - Inline spacing between the label and its necessity marker. Varies with `size`.
  * @cssprop --swc-text-field-font-size - Input and prefix font size. Varies with `size`.
  * @cssprop --swc-text-field-line-height - Input and prefix line height. Defaults to `normal`.
@@ -133,15 +134,24 @@ export class TextField extends TextFieldBase {
   }
 
   protected override render(): TemplateResult {
+    // A read-only field is barred from validation, so `required` has no effect
+    // and isn't exposed to assistive technology or shown as a necessity
+    // indicator.
+    const readOnly = this.fieldStatus === 'readonly';
     return html`
       <div class="swc-FormField swc-TextField">
-        ${this.renderLabel(INPUT_ID, {
-          required: this.required,
-          necessityIndicator: this.necessityIndicator,
-          necessityIndicatorText: NECESSITY_INDICATOR_TEXT,
-          // prettier-ignore
-          necessityIcon: html`<swc-ui-icon icon="asterisk" size=${this.size}></swc-ui-icon>`,
-        })}
+        ${this.renderLabel(
+          INPUT_ID,
+          readOnly
+            ? undefined
+            : {
+                required: this.required,
+                necessityIndicator: this.necessityIndicator,
+                necessityIndicatorText: NECESSITY_INDICATOR_TEXT,
+                // prettier-ignore
+                necessityIcon: html`<swc-ui-icon icon="asterisk" size=${this.size}></swc-ui-icon>`,
+              }
+        )}
         <div
           class="swc-TextField-control"
           @pointerdown=${this.handleControlPointerDown}
@@ -158,8 +168,8 @@ export class TextField extends TextFieldBase {
             autocomplete=${ifDefined(this.autocomplete)}
             maxlength=${ifDefined(this.maxlength)}
             minlength=${ifDefined(this.minlength)}
-            ?readonly=${this.fieldStatus === 'readonly'}
-            ?required=${this.required}
+            ?readonly=${readOnly}
+            ?required=${this.required && !readOnly}
             ?disabled=${this.effectiveDisabled}
             aria-invalid=${ifDefined(
               this.fieldStatus === 'invalid' ? 'true' : undefined

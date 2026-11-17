@@ -12,6 +12,11 @@
 import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import {
+  getComponent,
+  getComponents,
+  withWarningSpy,
+} from '@swc-test-helpers/dom';
 
 import { Badge } from '@adobe/spectrum-wc/badge';
 import {
@@ -24,11 +29,6 @@ import {
 
 import '@adobe/spectrum-wc/components/badge/swc-badge.js';
 
-import {
-  getComponent,
-  getComponents,
-  withWarningSpy,
-} from '../../../utils/test-utils.js';
 import meta, {
   Anatomy,
   Fixed,
