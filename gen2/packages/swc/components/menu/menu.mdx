@@ -70,6 +70,8 @@ const menu = document.querySelector('swc-menu');
 menu.triggerElement = someElement; // replaces any `for` wiring
 ```
 
+Any focusable element can be the trigger. `swc-button` and `swc-action-button` are both supported, and an icon-only trigger needs its own accessible name.
+
 <Canvas of={MenuStories.TriggerElement} />
 
 ### Open and close
