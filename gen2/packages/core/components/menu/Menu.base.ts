@@ -65,8 +65,8 @@ const DOCS_URL =
  * The shadow-internal surface is a native `popover="auto"` element, so
  * Escape and outside clicks close it via the platform's own light-dismiss.
  *
- * @slot - `swc-menu-item` elements. `swc-menu-group` and `swc-divider` (as a
- *   separator) join in a later migration phase.
+ * @slot - `swc-menu-item` and `swc-menu-separator` elements. `swc-menu-group`
+ *   joins in a later migration phase.
  *
  * @fires swc-open - Dispatched when the menu begins opening.
  * @fires swc-after-open - Dispatched after the open transition completes.
@@ -380,7 +380,7 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
   }
 
   /**
-   * Validates that only `swc-menu-item` elements are slotted this phase. Wire
+   * Validates that only `swc-menu-item` and `swc-menu-separator` elements are slotted this phase. Wire
    * this to the default `<slot>`'s `slotchange` event in the SWC render().
    */
   protected handleDefaultSlotChange(event: Event): void {

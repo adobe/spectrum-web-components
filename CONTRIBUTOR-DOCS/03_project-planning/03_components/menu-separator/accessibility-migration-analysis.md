@@ -49,7 +49,7 @@ This page is for gen2 `swc-menu-separator` in Spectrum Web Components. It is a n
 - Place it as a **direct** list child of `swc-menu`, `swc-action-menu`, or `swc-menu-item` (submenu when the item’s `submenu` slot is in use). **Not** inside `swc-menu-group` ([Menu group](../menu-group/accessibility-migration-analysis.md#what-swc-menu-group-is-gen2)).
 - It is not a `menuitem`. [FocusgroupNavigationController](https://github.com/adobe/spectrum-web-components/pull/6129) should skip it for roving focus, like 1st-gen `sp-menu-separator` tests.
 
-1st-gen used [`sp-menu-separator` / `MenuDivider`](https://github.com/adobe/spectrum-web-components/blob/main/1st-gen/packages/menu/src/MenuDivider.ts) with `role="separator"` on the host. gen2 should match; confirm attribute timing in source before you lock this copy.
+1st-gen used [`sp-menu-separator` / `MenuDivider`](https://github.com/adobe/spectrum-web-components/blob/main/1st-gen/packages/menu/src/MenuDivider.ts) with `role="separator"` on the host. gen2 matches, and sets the role in `connectedCallback` so it is present before the first render.
 
 **Docs and examples:** avoid separators unless they sit next to [labelled `swc-menu-group`](../menu-group/accessibility-migration-analysis.md#what-swc-menu-group-is-gen2) blocks. Random lines between loose items can add screen reader noise; prefer real groups for structure.
 
