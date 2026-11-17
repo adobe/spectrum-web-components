@@ -17,6 +17,7 @@ import {
   TemplateResult,
 } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
+import { styleMap } from 'lit/directives/style-map.js';
 
 import {
   ToastContainerBase,
@@ -30,6 +31,9 @@ import type { Toast } from './Toast.js';
 
 import styles from './toast-container.css';
 
+// Only the layers nearest the front toast render, however many are queued.
+const VISIBLE_LAYER_COUNT = 2;
+
 /**
  * Renders the front queued notification in a named region.
  *
@@ -37,13 +41,9 @@ import styles from './toast-container.css';
  * @since 2.0.0
  */
 export class ToastContainer extends ToastContainerBase {
-  private _toast?: Toast;
-  private _renderedKey?: string;
-  private _shownKey?: string;
-
-  public static override get styles(): CSSResultArray {
-    return [styles];
-  }
+  // ────────────────────
+  //     API OVERRIDES
+  // ────────────────────
 
   protected override get currentToast(): Toast | undefined {
     return this._toast;
@@ -53,6 +53,18 @@ export class ToastContainer extends ToastContainerBase {
     return (
       this.renderRoot.querySelector<HTMLElement>('[role="region"]') ?? undefined
     );
+  }
+
+  // ──────────────────────────────
+  //     RENDERING & STYLING
+  // ──────────────────────────────
+
+  private _toast?: Toast;
+  private _renderedKey?: string;
+  private _shownKey?: string;
+
+  public static override get styles(): CSSResultArray {
+    return [styles];
   }
 
   protected override willUpdate(changes: PropertyValues): void {
@@ -104,11 +116,13 @@ export class ToastContainer extends ToastContainerBase {
       return nothing;
     }
     const count = ToastQueue.entries.length;
+    const layers = this.layerEntries.slice(0, VISIBLE_LAYER_COUNT);
     return html`
       <div
         class=${classMap({
           ['swc-ToastContainer']: true,
           [`swc-ToastContainer--${this.placement}`]: true,
+          ['swc-ToastContainer--stacked']: layers.length > 0,
         })}
         role="region"
         popover="manual"
@@ -116,12 +130,30 @@ export class ToastContainer extends ToastContainerBase {
         aria-label=${this.getRegionLabel(count)}
         @pointerenter=${this.handlePointerEnter}
         @pointerleave=${this.handlePointerLeave}
+        @pointerdown=${this.handlePointerDown}
+        @keydown=${this.handleKeyDown}
         @focusin=${this.handleFocusIn}
         @focusout=${this.handleFocusOut}
         @swc-close=${this.handleClose}
         @swc-after-close=${this.handleAfterClose}
         @swc-toast-action=${this.handleAction}
       >
+        ${layers.map((entry, index) => {
+          const depth = index + 1;
+          return html`
+            <div
+              class=${classMap({
+                ['swc-ToastContainer-layer']: true,
+                [`swc-ToastContainer-layer--${entry.variant}`]:
+                  entry.variant != null && entry.variant !== 'neutral',
+              })}
+              role="presentation"
+              style=${styleMap({
+                '--_swc-toast-container-layer-index': depth,
+              })}
+            ></div>
+          `;
+        })}
         ${this._toast}
       </div>
     `;

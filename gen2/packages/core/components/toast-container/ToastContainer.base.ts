@@ -75,9 +75,17 @@ export abstract class ToastContainerBase extends SpectrumElement {
   private _closingToast?: ToastBase;
   private _focusWithin = false;
   private _lastFocused?: HTMLElement;
+  // True when the last input in the region was a pointer, which decides where focus goes when the front changes.
+  private _pointerInput = false;
+  private _focusFrontOnOpen = false;
 
   protected get frontEntry(): ToastQueueEntry | undefined {
     return ToastQueue.entries[0];
+  }
+
+  /** The queued entries behind the front toast, newest first. */
+  protected get layerEntries(): readonly ToastQueueEntry[] {
+    return ToastQueue.entries.slice(1);
   }
 
   public override connectedCallback(): void {
@@ -190,6 +198,15 @@ export abstract class ToastContainerBase extends SpectrumElement {
     this.countdown.setPaused('pointer', false);
   };
 
+  // Tracks the last input device inside the region; it decides where focus goes when the front toast changes.
+  protected readonly handlePointerDown = (): void => {
+    this._pointerInput = true;
+  };
+
+  protected readonly handleKeyDown = (): void => {
+    this._pointerInput = false;
+  };
+
   protected readonly handleFocusIn = (event: FocusEvent): void => {
     if (!this._focusWithin && event.relatedTarget instanceof HTMLElement) {
       this._lastFocused = event.relatedTarget;
@@ -209,6 +226,9 @@ export abstract class ToastContainerBase extends SpectrumElement {
         return;
       }
       this._focusWithin = deepContains(this, active);
+      if (!this._focusWithin) {
+        this._pointerInput = false;
+      }
       this.countdown.setPaused('focus', this._focusWithin);
     });
   };
@@ -242,8 +262,10 @@ export abstract class ToastContainerBase extends SpectrumElement {
 
   private readonly handleQueueChange = (): void => {
     const key = this.frontEntry?.key;
+    // An add always lands at the front, so every add changes the front key. Only removing a non-front entry skips this block.
     if (key !== this._frontKey) {
       const active = getActiveElement(this.ownerDocument);
+      // The queue emptied while focus was in the region (or fell to body when its toast left the DOM): return focus to where it was before the region.
       if (
         !key &&
         this._focusWithin &&
@@ -252,13 +274,24 @@ export abstract class ToastContainerBase extends SpectrumElement {
       ) {
         this._lastFocused.focus({ preventScroll: true });
       }
+      // The old toast's timer never carries over; openToast() starts the new one.
       this.countdown.stop();
       if (!key) {
+        // Clear all focus and pause state so none of it leaks into the next toast.
         this._focusWithin = false;
+        this._pointerInput = false;
+        this._focusFrontOnOpen = false;
         this._lastFocused = undefined;
         this.countdown.setPaused('pointer', false);
         this.countdown.setPaused('focus', false);
+      } else if (
+        this._focusWithin &&
+        (deepContains(this, active) || active === this.ownerDocument.body)
+      ) {
+        // The focused toast was replaced at the front, so keep focus in the region.
+        this.moveFocusForNewFront();
       }
+      // The new front toast registers itself in updated().
       this._unregisterToast?.();
       this._unregisterToast = undefined;
       this._frontKey = key;
@@ -266,6 +299,26 @@ export abstract class ToastContainerBase extends SpectrumElement {
     }
     this.requestUpdate();
   };
+
+  /**
+   * Keeps focus from being lost when the focused toast is replaced at the front.
+   * Keyboard users land on the new front toast. Pointer users leave the region,
+   * so the new front toast's timer is not left paused by focus.
+   */
+  private moveFocusForNewFront(): void {
+    if (!this._pointerInput) {
+      this._focusFrontOnOpen = true;
+      return;
+    }
+    const target = this._lastFocused;
+    this._focusWithin = false;
+    this._pointerInput = false;
+    this._lastFocused = undefined;
+    this.countdown.setPaused('focus', false);
+    if (target?.isConnected) {
+      target.focus({ preventScroll: true });
+    }
+  }
 
   private async openToast(
     entry: ToastQueueEntry,
@@ -284,6 +337,10 @@ export abstract class ToastContainerBase extends SpectrumElement {
     await toast.updateComplete;
     if (!this.isConnected || this.frontEntry?.key !== entry.key) {
       return;
+    }
+    if (this._focusFrontOnOpen) {
+      this._focusFrontOnOpen = false;
+      toast.focus({ preventScroll: true });
     }
     const hasAction = Boolean(entry.actionLabel && entry.onAction);
     warnIf(

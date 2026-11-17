@@ -16,5 +16,6 @@ export {
   TOAST_CONTAINER_PLACEMENTS,
   type ToastContainerPlacement,
   type ToastQueueEntry,
+  type ToastQueueItem,
   type ToastQueueOptions,
 } from '@adobe/spectrum-wc-core/components/toast-container/index.js';

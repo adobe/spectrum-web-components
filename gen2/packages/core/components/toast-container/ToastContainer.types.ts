@@ -32,6 +32,10 @@ export interface ToastQueueOptions {
   onClose?: () => void;
 }
 
+export interface ToastQueueItem extends ToastQueueOptions {
+  message: string;
+}
+
 export interface ToastQueueEntry extends ToastQueueOptions {
   readonly key: string;
   readonly message: string;
