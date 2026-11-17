@@ -2,92 +2,104 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 <Meta title="Migrate from Gen1" />
 
+{/* page-type: how-to */}
+
 # Migrate from Gen1
 
-This page walks an application team through moving from SWC Gen1 (`@spectrum-web-components/*`) to SWC Gen2 (`@adobe/spectrum-wc`). You do not have to migrate everything at once — Gen1 and Gen2 are designed to coexist in the same app so you can move one component (or one screen) at a time.
+Move your app from SWC Gen1 (`@spectrum-web-components/*`) to Gen2 (`@adobe/spectrum-wc`) one component at a time, with both running side by side.
 
-For a high-level comparison of what changed, see [Gen1 vs Gen2](/docs/learn-about-swc-gen1-vs-gen2--docs).
+- **For:** application developers
+- **Time:** about 2 hours of setup across 8 steps, then about 30 minutes per component
+- **Before you start:** confirm that migrating fits your timeline with [Gen1 vs Gen2](/docs/learn-about-swc-gen1-vs-gen2--docs)
 
-## TL;DR
+## Plan your migration
 
-1. Install `@adobe/spectrum-wc` alongside `@spectrum-web-components/*`.
-2. Switch Gen1 to the `spectrum-two` theme so it better aligns with Gen2 visually.
-3. Add the Gen2 stylesheet and `swc-theme` classes to your application root.
-4. Load Adobe Clean Spectrum VF (the Spectrum 2 font family).
-5. Replace `<sp-*>` with `<swc-*>` one component at a time, following each component's **migration guide**. Remove deprecated `--mod-*` overrides and apply `--swc-*` overrides if necessary.
-6. Once no `<sp-*>` elements remain, remove the Gen1 package, the `spectrum-two` theme imports, and the `<sp-theme>` element.
+Gen1 and Gen2 run side by side, so you don't migrate everything at once. To learn why, see [How Gen1 and Gen2 coexist](/docs/learn-about-swc-gen1-vs-gen2--docs#how-gen1-and-gen2-coexist).
 
-## Gen1 and Gen2 can coexist
+- [ ] List the `@spectrum-web-components/*` packages in your `package.json`, and find each `<sp-theme>` element.
+- [ ] For each `<sp-*>` component, find its **Migration guide** page in the **Components** section of the sidebar. A component without one is still Gen1 only, so keep its package installed.
+- [ ] Check each component's docs page for an **Upcoming features** section, which lists Spectrum 2 features that haven't shipped yet.
+- [ ] If you're waiting on a Gen1 bug fix, check the [Gen1 bug policy](/docs/resources-support-and-compatibility--docs#gen1-bug-policy).
+- [ ] Pick a first route or feature area, so few pages load both generations at once.
 
-Four properties make a gradual migration possible:
+To have an AI coding agent run these steps, install the migration skill from [Build with AI](/docs/resources-build-with-ai--docs).
 
-- **Different package names**: `@spectrum-web-components` and `@adobe/spectrum-wc` install side by side without conflicting.
-- **Different tag prefixes**: `<sp-badge>` and `<swc-badge>` are independent custom elements. You can have both in the same tree.
-- **Shared visual language**: Gen1's `spectrum-two` theme serves as a bridge between Spectrum/Express and Spectrum 2, which Gen2 uses out of the box. Using this theme on Gen1 components creates visual consistency between both generations.
-- **Separate token namespace**: Design token custom properties use the `swc` namespace to prevent conflicts with Gen1 visuals.
+You should see a list of components to migrate now and components to keep on Gen1.
 
 ## Step 1: Install Gen2
 
-```bash
-yarn add @adobe/spectrum-wc
-```
+1. Add `@adobe/spectrum-wc` and keep your existing `@spectrum-web-components/*` packages:
 
-Gen2 ships as a single package; you import individual components from subpaths. You can keep your existing `@spectrum-web-components/*` packages.
+   ```bash
+   yarn add @adobe/spectrum-wc
+   ```
+
+Gen2 ships as one package, and you import each component from its own subpath. With npm or pnpm, use `npm install` or `pnpm add`.
+
+You should see `@adobe/spectrum-wc` in your `package.json` dependencies, next to your Gen1 packages.
 
 ## Step 2: Align Gen1 visually with Spectrum 2
 
-Switch your existing `<sp-theme>` to the `spectrum-two` system so any remaining Gen1 components align with Gen2 visually during the migration:
+1. Import the Gen1 Spectrum 2 theme next to `sp-theme`:
 
-```ts
-import '@spectrum-web-components/theme/sp-theme.js';
-import '@spectrum-web-components/theme/src/spectrum-two/themes.js';
-```
+   ```ts
+   import '@spectrum-web-components/theme/sp-theme.js';
+   import '@spectrum-web-components/theme/src/spectrum-two/themes.js';
+   ```
 
-```html
-<sp-theme system="spectrum-two" color="light" scale="medium">
-  <!-- existing sp-* components -->
-</sp-theme>
-```
+2. Set `system="spectrum-two"` on your existing `<sp-theme>`:
 
-Gen1 components inside this theme adopt Spectrum 2 tokens and use the same colors, border radii, and icons as their `<swc-*>` neighbors.
+   ```html
+   <sp-theme system="spectrum-two" color="light" scale="medium">
+     <!-- existing sp-* components -->
+   </sp-theme>
+   ```
+
+You should see your Gen1 components use the same colors, border radii, and icons as Gen2.
 
 ## Step 3: Add the Gen2 stylesheet and theme classes
 
-Gen2 does **not** use `<sp-theme>`. Theme and scale are controlled by CSS classes on your application root.
+Gen2 doesn't use `<sp-theme>`. CSS classes and standard HTML attributes on a root element set the theme, scale, language, and direction.
 
-```ts
-// Include this once, at your app entry
-import '@adobe/spectrum-wc/swc.css';
-```
+1. Import the stylesheet once, at your app entry:
 
-```html
-<html class="swc-theme swc-theme--light">
-  <body>
-    <!-- your app -->
-  </body>
-</html>
-```
+   ```ts
+   import '@adobe/spectrum-wc/swc.css';
+   ```
 
-Available classes:
+2. Add `swc-theme` and one color class to your root element:
 
-- `swc-theme--light` / `swc-theme--dark` / `swc-theme--adaptive` (follows OS preference)
+   ```html
+   <html class="swc-theme swc-theme--light"></html>
+   ```
 
-You can scope a theme to a region by applying these classes lower in the tree. See the [Theme and scales guide](/docs/guides-customization-theme-and-scales--docs) for the full list.
+3. Move each remaining `<sp-theme>` setting to the root element:
 
-> The Gen1 `<sp-theme>` element only affects its `<sp-*>` descendants. The Gen2 `swc-theme*` classes only affect `<swc-*>` descendants. The two systems do not interfere with each other.
+   | Gen1 (`<sp-theme>`)        | Gen2 (root element)                                       |
+   | -------------------------- | --------------------------------------------------------- |
+   | `color="light"` / `"dark"` | `class="swc-theme swc-theme--light"` / `swc-theme--dark`  |
+   | `scale="medium"` / `large` | `class="swc-theme swc-theme--sizeM"` / `swc-theme--sizeL` |
+   | `lang="ja"` (on element)   | `lang="ja"` on `<html>` or the scoping element            |
+   | `dir="rtl"`                | `dir="rtl"` on `<html>` or the scoping element            |
+
+Keep `<sp-theme>` around your remaining `<sp-*>` components until step 8. For other color classes or a theme scoped to one region, see [Theme and scales](/docs/guides-customization-theme-and-scales--docs).
+
+You should see `color-scheme: light` on `<html>` in your browser's **Computed** styles.
 
 ## Step 4: Load Adobe Clean Spectrum VF
 
-Gen2 uses Adobe Clean Spectrum VF, the Spectrum 2 font family. It looks visually identical to Adobe Clean (the Gen1 font) but ships updated metrics for better vertical alignment inside components.
+Gen2 uses Adobe Clean Spectrum VF, the Spectrum 2 font family. It looks the same as Adobe Clean, the Gen1 font, but has updated metrics for vertical alignment inside components.
 
-How you load it depends on your environment — for Adobe Fonts (Typekit), CDN, or self-hosted setups, see the [Fonts guide](/docs/guides-customization-fonts--docs).
+1. Load the font with the Adobe Fonts, CDN, or self-hosted setup in the [Fonts guide](/docs/guides-customization-fonts--docs).
+
+You should see Adobe Clean Spectrum VF listed as the rendered font when you inspect `<swc-*>` text in your browser's dev tools.
 
 ## Step 5: Replace components one at a time
 
-For each migrated Gen2 component:
+Repeat this step for each `<sp-*>` component that has a Gen2 version.
 
-1. Open the component's **migration guide** (e.g., [Badge](/docs/components-badge-migration-guide--docs)) for breaking changes to attribute, slot, event, and default-values. Additionally, certain components have an "Upcoming features" section which details any Spectrum 2 coverage gaps.
-2. Update the import to the per-element side-effect path:
+1. Open the component's migration guide, such as the [Badge migration guide](/docs/components-badge-migration-guide--docs). It lists changes to attributes, slots, events, and default values.
+2. Update the import to the per-element path:
 
    ```ts
    // Before
@@ -97,79 +109,68 @@ For each migrated Gen2 component:
    import '@adobe/spectrum-wc/components/badge/swc-badge.js';
    ```
 
-3. Rename the tag (`<sp-badge>` → `<swc-badge>`) and apply any attribute renames called out in the migration guide.
-4. Remove deprecated `--mod-*` overrides and apply `--swc-*` overrides if necessary (covered below).
+3. Rename the tag, such as `<sp-badge>` to `<swc-badge>`, and apply the attribute changes from the migration guide.
+4. Remove the component's Gen1 import once its last `<sp-*>` usage is gone.
 
-The Components index on this site lists every Gen2 component that has shipped, with its migration guide and full API reference.
+> ⚠️ **Important:** Some defaults change between generations. For example, Badge's default `variant` changes from `informative` to `neutral`, and [Tabs](/docs/components-tabs-migration-guide--docs) now selects a tab on arrow-key focus by default.
+
+You should see the `<swc-*>` element render in place of the `<sp-*>` element, with no dev-mode warnings in the console.
 
 ## Step 6: Migrate styling
 
-Two things change for application CSS.
+Gen2 replaces the `--mod-*` custom property API with a smaller `--swc-*` API. It isn't a 1:1 replacement, because Spectrum 2 updates component styles.
 
-### `--mod-*` → `--swc-*`
+1. Review the migrated component in your app before you rewrite its `--mod-*` overrides.
+2. Delete the overrides you no longer need.
+3. Rename the rest with the mapping table in the component's migration guide:
 
-Gen2 deprecates the `--mod-*` custom property API into a smaller, namespaced `--swc-*` API that is not guaranteed to be a 1:1 replacement due to Spectrum 2 aligned style updates. We suggest holding off on rewriting previous `--mod-*` overrides until you examine the component's appearance in your application.
+   ```css
+   /* Before */
+   sp-badge {
+     --mod-badge-height: 24px;
+     --mod-badge-corner-radius: 4px;
+     --mod-badge-label-icon-color: var(--spectrum-gray-900);
+   }
 
-Example rewrites:
+   /* After */
+   swc-badge {
+     --swc-badge-height: 24px;
+     --swc-badge-corner-radius: 4px;
+     --swc-badge-label-icon-color: var(--swc-gray-900);
+   }
+   ```
 
-```css
-/* Before */
-sp-badge {
-  --mod-badge-height: 24px;
-  --mod-badge-corner-radius: 4px;
-  --mod-badge-label-icon-color: var(--spectrum-gray-900);
-}
+The general rule: `--mod-` becomes `--swc-`, and `--spectrum-` token references also become `--swc-`, because Gen2 republishes Spectrum 2 tokens under its own namespace. For more on overrides, see [Component styles](/docs/guides-customization-component-styles--docs).
 
-/* After */
-swc-badge {
-  --swc-badge-height: 24px;
-  --swc-badge-corner-radius: 4px;
-  --swc-badge-label-icon-color: var(--swc-gray-900);
-}
-```
+You should see the migrated component match your design, with no `--mod-*` or `--spectrum-*` references left in its CSS.
 
-Each per-component migration guide includes a mapping table for that component's properties. The general namespacing rule: `--mod-` becomes `--swc-`, and `--spectrum-` (token references) also become `--swc-` because Gen2 republishes Spectrum 2 tokens under its own namespace.
+## Step 7: Validate your app
 
-For deeper context on component-level customization, see [Component styles](/docs/guides-customization-component-styles--docs).
+1. Run your type check, such as `tsc --noEmit`.
+2. Run the tests that cover the migrated components.
+3. Build the app, and review each migrated page in the browser.
 
-### `<sp-theme>` → CSS classes
+You should see the type check, tests, and build pass, and each migrated page behave as before, apart from changes listed in the migration guides.
 
-Anything you were doing with `<sp-theme>` (theme, scale, language, direction) now lives on a root element via classes and standard HTML attributes:
+## Step 8: Decommission Gen1
 
-| Gen1 (`<sp-theme>`)        | Gen2 (root element)                                       |
-| -------------------------- | --------------------------------------------------------- |
-| `color="light"` / `"dark"` | `class="swc-theme swc-theme--light"` / `swc-theme--dark`  |
-| `scale="medium"` / `large` | `class="swc-theme swc-theme--sizeM"` / `swc-theme--sizeL` |
-| `lang="ja"` (on element)   | `lang="ja"` on `<html>` or the scoping element            |
-| `dir="rtl"`                | `dir="rtl"` on `<html>` or the scoping element            |
+Do this step once no `<sp-*>` element remains in your app.
 
-You can keep the Gen1 `<sp-theme>` wrapping any remaining `<sp-*>` components for as long as you need; the two systems do not conflict.
+1. Remove the `@spectrum-web-components/*` packages from your `package.json`.
+2. Remove the `<sp-theme>` element and its `@spectrum-web-components/theme/*` imports.
+3. Remove any remaining `--mod-*` overrides from your CSS.
 
-## Step 7: Decommission Gen1
+You should see no matches for `@spectrum-web-components` or `<sp-` when you search your source code.
 
-Once no `<sp-*>` element remains in your app:
+## Troubleshooting
 
-1. Remove `@spectrum-web-components/*` packages from your `package.json`.
-2. Remove the `<sp-theme>` element and its imports (`@spectrum-web-components/theme/*`).
-3. Remove any remaining `--mod-*` overrides in your CSS.
+| Symptom                                                  | Cause                                               | Fix                                                                                            |
+| -------------------------------------------------------- | --------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| Gen1 components look different from their Gen2 neighbors | `<sp-theme>` doesn't use the `spectrum-two` system. | Complete [step 2](#step-2-align-gen1-visually-with-spectrum-2).                                |
+| `<swc-*>` components render without Spectrum 2 styles    | `@adobe/spectrum-wc/swc.css` isn't imported.        | Complete [step 3](#step-3-add-the-gen2-stylesheet-and-theme-classes).                          |
+| Text renders in a system font                            | Adobe Clean Spectrum VF isn't loaded.               | Follow the [Fonts guide](/docs/guides-customization-fonts--docs).                              |
+| A migration guide doesn't cover your case                | The gap isn't documented yet.                       | [Open an issue on GitHub](https://github.com/adobe/spectrum-web-components/issues/new/choose). |
 
-## What's not migrated yet
+## Next step
 
-Gen2 is shipping components incrementally. The index of components on our docs site lists all components with a Gen2 implementation; anything not listed is still Gen1 only. Plan to keep the Gen1 package installed alongside Gen2 until your components of interest are migrated.
-
-Individual components may also ship without complete Spectrum 2 feature coverage. Each component's docs page calls out any such gaps under "Upcoming features", so you can review it.
-
-### Bundle size during the dual-import phase
-
-Running Gen1 and Gen2 together is expected during migration, but avoid keeping both versions of the same component on a page longer than necessary. This helps prevent shipping extra component code and loading unnecessary CSS custom properties.
-
-- Remove the corresponding `@spectrum-web-components/*` per-element import as soon as the last `<sp-*>` usage of that component is gone, so each migrated component drops out of the bundle.
-- Migrate one component at a time, by route or feature area if possible, so the dual-import window for any given page is short.
-
-For versioning policy, supported browsers, and severity classification, see [Support and compatibility](/docs/resources-support-and-compatibility--docs).
-
-## Get help
-
-- Each component documents its own breaking changes in `<Component>/Migration guide`.
-- The [customization guides](/docs/guides-customization-getting-started--docs) cover styling, theming, and fonts in depth.
-- [Open an issue on GitHub](https://github.com/adobe/spectrum-web-components/issues/new/choose) for migration questions or gaps.
+Fine-tune Gen2 styling with [Customization: Getting started](/docs/guides-customization-getting-started--docs).
