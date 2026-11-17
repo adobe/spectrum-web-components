@@ -17,6 +17,7 @@
 - [Component Custom Property Exposure](#component-custom-property-exposure)
     - [Internal vs. Exposed vs. Static](#internal-vs-exposed-vs-static)
     - [Decision Tree for Exposure](#decision-tree-for-exposure)
+    - [Nested component relationships](#nested-component-relationships)
     - [Exclusions for Custom Property Overrides](#exclusions-for-custom-property-overrides)
 - [Selector Conventions](#selector-conventions)
     - [Variant Selectors and Inheritance](#variant-selectors-and-inheritance)
@@ -177,6 +178,31 @@ flowchart TD
 ```
 
 > For **nested component relationships**, expose only if dependent on the base library and _not_ legacy consumer customization.
+
+### Nested component relationships
+
+A nested relationship is a component that places another component inside it and needs to change one of that component's styles. The nested component exposes the property, and the outer component sets it in its own stylesheet. The nested component does not need to know who sets it, so one exposed property can serve several unrelated components.
+
+**Example:** `swc-action-button` exposes its corner radius, with `--swc-action-button-border-radius` for every corner and one property per corner. Two components that are not otherwise related set it:
+
+```css
+/* action-group.css: a compact group squares off the corners where its slotted buttons meet */
+:host([compact]:not([quiet], [orientation="vertical"])) ::slotted(:first-child:not(:last-child)) {
+    --swc-action-button-border-start-end-radius: 0;
+    --swc-action-button-border-end-end-radius: 0;
+}
+
+/* prompt-field.css: the attachment scroll buttons it renders are round */
+.swc-PromptField-attachments-scroll-prev,
+.swc-PromptField-attachments-scroll-next {
+    --swc-action-button-border-radius: token("corner-radius-full");
+}
+```
+
+Action group sets the property on light DOM children through `::slotted()`. Prompt field sets it on action buttons in its own shadow root through a class. In both cases the property is set on the nested component itself, not inherited from the outer component's `:host`.
+
+- Document each exposed property with `@cssprop` on the nested component, including its default.
+- Before adding a property to the nested component, check whether it already exposes one that does the job. Prompt field also sets the existing `--swc-action-button-focus-indicator-color` for its themed focus ring instead of adding a new property.
 
 For examples of exposed vs internal properties applied via selectors, see:
 - [Selector Conventions](#selector-conventions)

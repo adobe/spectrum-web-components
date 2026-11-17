@@ -14,12 +14,12 @@
 - [Usage summary](#usage-summary)
 - [@property()](#property)
 - [@query()](#query)
+- [@state()](#state)
+- [@queryAll()](#queryall)
 - [@queryAssignedNodes()](#queryassignednodes)
+- [@queryAssignedElements()](#queryassignedelements)
 - [Decorators not yet used in gen2](#decorators-not-yet-used-in-gen2)
-    - [@state()](#state)
-    - [@queryAll()](#queryall)
     - [@queryAsync()](#queryasync)
-    - [@queryAssignedElements()](#queryassignedelements)
     - [@eventOptions()](#eventoptions)
 - [CEM and decorators](#cem-and-decorators)
 
@@ -35,14 +35,16 @@ For more on Lit decorators, see the [Lit decorators documentation](https://lit.d
 
 | Decorator | Used in gen2 | Files | Purpose |
 |-----------|-----------------|-------|---------|
-| `@property()` | Yes | 11 | Reactive properties that trigger re-renders |
-| `@query()` | Yes | 1 | Query a shadow root element |
+| `@property()` | Yes | 62 | Reactive properties that trigger re-renders |
+| `@state()` | Yes | 9 | Internal reactive state |
+| `@query()` | Yes | 2 | Query a shadow root element |
+| `@queryAll()` | Yes | 1 | Query all matching shadow root elements |
 | `@queryAssignedNodes()` | Yes | 1 | Query nodes assigned to a slot |
-| `@state()` | No | 0 | Internal reactive state |
-| `@queryAll()` | No | 0 | Query all matching shadow root elements |
+| `@queryAssignedElements()` | Yes | 6 | Query elements assigned to a slot |
 | `@queryAsync()` | No | 0 | Query with updateComplete promise |
-| `@queryAssignedElements()` | No | 0 | Query elements assigned to a slot |
 | `@eventOptions()` | No | 0 | Event listener options |
+
+File counts cover component, pattern, and controller source in `gen2/packages/core` and `gen2/packages/swc`, not tests or stories. They are approximate and change as components are added.
 
 ## @property()
 
@@ -158,6 +160,71 @@ private get slotEl(): HTMLSlotElement {
 }
 ```
 
+## @state()
+
+Marks a property as **internal reactive state**. Like `@property()`, changes trigger a re-render. Unlike `@property()`, `@state()` does not create an HTML attribute and is not part of the public API.
+
+**Import:**
+
+```ts
+import { property, state } from 'lit/decorators.js';
+```
+
+Use `@state()` for UI state that consumers do not set from HTML or script. For example, whether a view is expanded, or a style computed from the layout.
+
+**State that the concrete class renders:** when the base class in core owns the state and the concrete class in SWC reads it to render, make the member `protected` and mark it `@internal`. This is the most common pattern.
+
+**Example from Tabs.base.ts:**
+
+```ts
+/**
+ * @internal
+ *
+ * Inline style applied to the selection indicator element.
+ * Computed from the selected tab's position and dimensions.
+ */
+@state()
+protected selectionIndicatorStyle = '';
+```
+
+`AccordionItem.base.ts` (`headingLevel`, `parentDisabled`) and `ToastContainer.base.ts` (`expanded`) follow the same pattern.
+
+**State that only one class uses:** make the member `private` and start its name with an underscore, as for other private fields (see [Naming conventions](10_naming-conventions.md#property-and-method-names)). The conversational AI patterns use this throughout.
+
+**Example from ActionButton.ts:**
+
+```ts
+@state()
+private _ariaExpanded?: 'true' | 'false';
+```
+
+```ts
+// ✅ Good — internal, reactive, and visible to the class that renders it
+@state()
+protected expanded = false;
+
+// ❌ Bad — a public attribute for state that consumers should not set
+@property({ type: Boolean, reflect: true })
+public expanded = false;
+```
+
+## @queryAll()
+
+Like `@query()`, but returns all matching elements using `querySelectorAll`.
+
+**Import:**
+
+```ts
+import { queryAll } from 'lit/decorators.js';
+```
+
+**Example from MessageFeedback.ts:**
+
+```ts
+@queryAll('.swc-MessageFeedback-button')
+private _feedbackButtonNodes!: NodeListOf<HTMLButtonElement>;
+```
+
 ## @queryAssignedNodes()
 
 Queries the nodes assigned to a specific slot. This returns a `NodeList` of all nodes (including text nodes) assigned to the slot.
@@ -187,33 +254,26 @@ private [assignedNodesList]!: NodeListOf<HTMLElement>;
 
 This queries the nodes assigned to the specified slot and flattens nested slots. Use this when you need to observe or react to slotted content.
 
+## @queryAssignedElements()
+
+Like `@queryAssignedNodes()`, but only returns **elements** (not text nodes). Also supports a `selector` option to filter by CSS selector.
+
+**Import:**
+
+```ts
+import { queryAssignedElements } from 'lit/decorators.js';
+```
+
+**Example from ActionGroup.base.ts:**
+
+```ts
+@queryAssignedElements({ flatten: true })
+protected managedChildren!: HTMLElement[];
+```
+
 ## Decorators not yet used in gen2
 
 The following Lit decorators are available but not currently used in gen2 components. They are documented here so contributors know they exist.
-
-### @state()
-
-Marks a property as **internal reactive state**. Like `@property()`, changes trigger a re-render. Unlike `@property()`, `@state()` does not create an HTML attribute and is not part of the public API.
-
-```ts
-import { state } from 'lit/decorators.js';
-
-@state()
-private _isOpen = false;
-```
-
-Use `@state()` for UI state that does not need to be set from HTML or by consumers. For example, whether a dropdown is currently open or a loading animation is playing.
-
-### @queryAll()
-
-Like `@query()`, but returns all matching elements using `querySelectorAll`.
-
-```ts
-import { queryAll } from 'lit/decorators.js';
-
-@queryAll('.item')
-private items!: NodeListOf<HTMLElement>;
-```
 
 ### @queryAsync()
 
@@ -224,17 +284,6 @@ import { queryAsync } from 'lit/decorators.js';
 
 @queryAsync('#dialog')
 private dialog!: Promise<HTMLDialogElement>;
-```
-
-### @queryAssignedElements()
-
-Like `@queryAssignedNodes()`, but only returns **elements** (not text nodes). Also supports a `selector` option to filter by CSS selector.
-
-```ts
-import { queryAssignedElements } from 'lit/decorators.js';
-
-@queryAssignedElements({ slot: 'icon' })
-private icons!: Array<HTMLElement>;
 ```
 
 ### @eventOptions()
