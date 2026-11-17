@@ -98,10 +98,12 @@ export function renderFieldLabel({
 }
 
 /**
- * The necessity indicator span. The icon hides itself from assistive
- * technology as a decorative icon; text indicators contribute to the label. With no whitespace text node between the slot and
- * this span, the indicator stays on the same wrap line as the last word; its
- * gap from the label text is applied by CSS, not a literal space character.
+ * The necessity indicator span. The icon wrapper is `aria-hidden`, so any
+ * supplied icon stays decorative even if it doesn't hide itself; text
+ * indicators contribute to the label. With no whitespace text node between the
+ * slot and this span, the indicator stays on the same wrap line as the last
+ * word; its gap from the label text is applied by CSS, not a literal space
+ * character.
  */
 function renderNecessityIndicator({
   indicator,
@@ -122,5 +124,5 @@ function renderNecessityIndicator({
     return nothing;
   }
   // prettier-ignore
-  return html`<span class="swc-FormFieldLabel-requiredIndicator">${icon}</span>`;
+  return html`<span class="swc-FormFieldLabel-requiredIndicator" aria-hidden="true">${icon}</span>`;
 }

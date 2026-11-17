@@ -18,7 +18,7 @@
  * `new FormData(form)`, which includes form-associated custom elements.
  */
 
-import { expect } from '@storybook/test';
+import { expect, fn } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import './demo-hosts.js';
@@ -306,6 +306,28 @@ export const FieldStatusBarringTest: Story = {
       viewOnly.click();
       expect(lockedClicks, 'disabled click dropped').toBe(0);
       expect(viewOnlyClicks, 'readonly click delivered').toBe(1);
+    });
+
+    await step('clicks in slotted text content are not suppressed', () => {
+      const description = document.createElement('span');
+      description.slot = 'description';
+      const link = document.createElement('a');
+      description.append(link);
+      const control = document.createElement('span');
+      locked.append(description, control);
+      const linkClick = fn();
+      const controlClick = fn();
+      link.addEventListener('click', linkClick);
+      control.addEventListener('click', controlClick);
+      link.click();
+      control.click();
+      description.remove();
+      control.remove();
+      expect(linkClick, 'description link click delivered').toHaveBeenCalled();
+      expect(
+        controlClick,
+        'default-slot child click dropped'
+      ).not.toHaveBeenCalled();
     });
 
     await step('clearing the status restores everything', async () => {

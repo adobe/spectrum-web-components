@@ -134,15 +134,24 @@ export class TextField extends TextFieldBase {
   }
 
   protected override render(): TemplateResult {
+    // A read-only field is barred from validation, so `required` has no effect
+    // and isn't exposed to assistive technology or shown as a necessity
+    // indicator.
+    const readOnly = this.fieldStatus === 'readonly';
     return html`
       <div class="swc-FormField swc-TextField">
-        ${this.renderLabel(INPUT_ID, {
-          required: this.required,
-          necessityIndicator: this.necessityIndicator,
-          necessityIndicatorText: NECESSITY_INDICATOR_TEXT,
-          // prettier-ignore
-          necessityIcon: html`<swc-ui-icon icon="asterisk" size=${this.size}></swc-ui-icon>`,
-        })}
+        ${this.renderLabel(
+          INPUT_ID,
+          readOnly
+            ? undefined
+            : {
+                required: this.required,
+                necessityIndicator: this.necessityIndicator,
+                necessityIndicatorText: NECESSITY_INDICATOR_TEXT,
+                // prettier-ignore
+                necessityIcon: html`<swc-ui-icon icon="asterisk" size=${this.size}></swc-ui-icon>`,
+              }
+        )}
         <div
           class="swc-TextField-control"
           @pointerdown=${this.handleControlPointerDown}
@@ -159,8 +168,8 @@ export class TextField extends TextFieldBase {
             autocomplete=${ifDefined(this.autocomplete)}
             maxlength=${ifDefined(this.maxlength)}
             minlength=${ifDefined(this.minlength)}
-            ?readonly=${this.fieldStatus === 'readonly'}
-            ?required=${this.required}
+            ?readonly=${readOnly}
+            ?required=${this.required && !readOnly}
             ?disabled=${this.effectiveDisabled}
             aria-invalid=${ifDefined(
               this.fieldStatus === 'invalid' ? 'true' : undefined

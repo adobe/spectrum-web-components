@@ -44,6 +44,19 @@ import {
 const DOCS_URL =
   'https://spectrum-web-components.adobe.com/?path=/docs/components-radio-group--docs';
 
+/** The validation message when no `error-text` is supplied. */
+const FALLBACK_VALIDATION_MESSAGE = 'Select an option.';
+
+/** Keys that select the focused radio. */
+const NAVIGATION_KEYS = new Set([
+  'ArrowUp',
+  'ArrowDown',
+  'ArrowLeft',
+  'ArrowRight',
+  'Home',
+  'End',
+]);
+
 /**
  * Coordinates a set of `swc-radio` items as a single mutually-exclusive selection.
  * Rendering lives in `swc-radio-group`.
@@ -53,7 +66,7 @@ const DOCS_URL =
  * @slot - The `swc-radio` items to manage.
  * @slot label - Visible group label.
  * @slot description - Group-level guidance text.
- * @slot error-text - Error message shown while `field-status="invalid"`.
+ * @slot error-text - Error text shown while `field-status="invalid"`. Its plain text is also the validation message; supply translated text when needed. Without it the message is "Select an option."
  */
 export abstract class RadioGroupBase extends SizedMixin(
   FieldDescriptionMixin(LabellingMixin(SpectrumElement)),
@@ -62,14 +75,14 @@ export abstract class RadioGroupBase extends SizedMixin(
     defaultSize: 'm',
   }
 ) {
-  static readonly LABEL_POSITIONS: readonly RadioGroupLabelPosition[] =
+  public static readonly LABEL_POSITIONS: readonly RadioGroupLabelPosition[] =
     RADIO_GROUP_LABEL_POSITIONS;
 
-  static readonly ORIENTATIONS: readonly RadioGroupOrientation[] =
+  public static readonly ORIENTATIONS: readonly RadioGroupOrientation[] =
     RADIO_GROUP_ORIENTATIONS;
 
   /** Opts the element into native form participation. */
-  static formAssociated = true;
+  public static formAssociated = true;
 
   /**
    * Form participation only. Do not move `role="radiogroup"` or ARIA state
@@ -84,12 +97,6 @@ export abstract class RadioGroupBase extends SizedMixin(
     getStatus: () => this.fieldStatus,
     host: this,
   });
-
-  constructor() {
-    super();
-    // Items dispatch a composed `change` on activation.
-    this.addEventListener('change', this.handleItemChange);
-  }
 
   /**
    * Size applied to all items. Defaults to `m`.
@@ -169,14 +176,6 @@ export abstract class RadioGroupBase extends SizedMixin(
   //     IMPLEMENTATION
   // ──────────────────────
 
-  /**
-   * The authored `disabled` status OR the cascaded form / `<fieldset disabled>`
-   * state. Cascaded to every slotted item while preserving its own disabled state.
-   */
-  protected get effectiveDisabled(): boolean {
-    return this.fieldAssoc.disabled;
-  }
-
   /** The form the group participates in, or `null`. */
   public get form(): HTMLFormElement | null {
     return this.fieldAssoc.form;
@@ -207,18 +206,39 @@ export abstract class RadioGroupBase extends SizedMixin(
     return this.fieldAssoc.reportValidity();
   }
 
-  /** Focuses the group (the validation anchor), so `:invalid` hosts are focusable. */
+  /**
+   * Focuses the checked radio, or the first enabled one, like a native radio
+   * group. Falls back to the group element when no radio is enabled.
+   */
   public override focus(options?: FocusOptions): void {
-    const target = this.roleElement;
-    if (!this.effectiveDisabled && target instanceof HTMLElement) {
+    if (this.effectiveDisabled) {
+      return;
+    }
+    const target = this.focusTarget ?? this.roleElement;
+    if (target instanceof HTMLElement) {
       target.focus(options);
     }
+  }
+
+  /**
+   * The radio that takes focus and anchors validation: the enabled radio
+   * matching `selected`, otherwise the first enabled one. Matches on
+   * `selected` rather than `checked` so it's current before the next update.
+   */
+  private get focusTarget(): RadioBase | undefined {
+    const enabled = this.assignedItems().filter(
+      (item) => !item.effectiveDisabled
+    );
+    return (
+      enabled.find((item) => this.selected && item.value === this.selected) ??
+      enabled[0]
+    );
   }
 
   /** The initial selection (pre-checked item or `selected`), restored on form reset. */
   private defaultSelected = '';
 
-  /** Restores the initial selection and clears custom invalid state on reset. */
+  /** @internal Restores the initial selection and clears custom invalid state on reset. */
   public formResetCallback(): void {
     this.selected = this.defaultSelected;
     if (this.fieldStatus === 'invalid') {
@@ -226,19 +246,31 @@ export abstract class RadioGroupBase extends SizedMixin(
     }
   }
 
-  /** Delegates the ancestor form / fieldset disabled cascade to the controller. */
-  public formDisabledCallback(disabled: boolean): void {
-    this.fieldAssoc.formDisabledCallback(disabled);
+  /** A browser-restored selection received before the first update. */
+  private pendingRestoredSelection?: string;
+
+  /**
+   * @internal Restores the selection the browser saved for back/forward
+   * navigation or autofill. Does not dispatch `change`, matching native radios.
+   */
+  public formStateRestoreCallback(
+    state: string | File | FormData | null
+  ): void {
+    if (typeof state !== 'string') {
+      return;
+    }
+    // Before the first update, the pre-checked item would overwrite `selected`;
+    // apply the restored value after the authored default is captured.
+    if (this.hasUpdated) {
+      this.selected = state;
+    } else {
+      this.pendingRestoredSelection = state;
+    }
   }
 
-  private assignedItems(): RadioBase[] {
-    const slot = this.renderRoot?.querySelector('slot:not([name])');
-    if (!slot) {
-      return [];
-    }
-    return (slot as HTMLSlotElement)
-      .assignedElements({ flatten: true })
-      .filter((el): el is RadioBase => el instanceof RadioBase);
+  /** @internal Delegates the ancestor form / fieldset disabled cascade to the controller. */
+  public formDisabledCallback(disabled: boolean): void {
+    this.fieldAssoc.formDisabledCallback(disabled);
   }
 
   private readonly sizePropagation = new SlotAttributePropagationController(
@@ -255,60 +287,8 @@ export abstract class RadioGroupBase extends SizedMixin(
       getValue: () => (this.emphasized ? '' : null),
     });
 
-  private readonly disabledItemStates = new Map<RadioBase, boolean>();
-
-  private setItemDisabled(item: RadioBase, disabled: boolean): void {
-    item.disabled = disabled;
-    // Navigation refreshes before the child's Lit update can reflect this state.
-    if (disabled) {
-      item.setAttribute('aria-disabled', 'true');
-    } else {
-      item.removeAttribute('aria-disabled');
-    }
-  }
-
-  private syncDisabledState(): boolean {
-    const items = this.assignedItems();
-    const assigned = new Set(items);
-    let changed = false;
-    for (const [item, disabled] of this.disabledItemStates) {
-      if (!this.effectiveDisabled || !assigned.has(item)) {
-        changed ||= item.disabled !== disabled;
-        this.setItemDisabled(item, disabled);
-        this.disabledItemStates.delete(item);
-      }
-    }
-    if (!this.effectiveDisabled) {
-      return changed;
-    }
-    for (const item of items) {
-      if (!this.disabledItemStates.has(item)) {
-        this.disabledItemStates.set(item, item.disabled);
-      }
-      changed ||= !item.disabled;
-      this.setItemDisabled(item, true);
-    }
-    return changed;
-  }
-
-  /**
-   * Adopts `value` unless already selected, dispatching a cancelable `change`
-   * and reverting on `preventDefault()`. Shared by item activation and
-   * keyboard navigation.
-   */
-  private proposeSelection(value: string): void {
-    if (value === this.selected) {
-      return;
-    }
-    const previous = this.selected;
-    this.selected = value;
-    const applyDefault = this.dispatchEvent(
-      new Event('change', { cancelable: true, bubbles: true, composed: true })
-    );
-    if (!applyDefault) {
-      this.selected = previous;
-    }
-  }
+  /** Items currently disabled by this group, so removed items can be released. */
+  private readonly groupDisabledItems = new Set<RadioBase>();
 
   /**
    * Proposed selection changes from item activation. When `field-status="readonly"`, reverts
@@ -320,8 +300,13 @@ export abstract class RadioGroupBase extends SizedMixin(
       return;
     }
     event.stopPropagation();
+    // A radio upgraded after the group rendered may not know the group is
+    // disabled yet, so the group guards selection itself.
+    if (this.effectiveDisabled) {
+      return;
+    }
     if (this.fieldStatus === 'readonly') {
-      target.checked = target.value === this.selected;
+      this.setItemChecked(target, target.value === this.selected);
       return;
     }
     this.proposeSelection(target.value);
@@ -338,11 +323,19 @@ export abstract class RadioGroupBase extends SizedMixin(
     getItems: () => this.assignedItems(),
   });
 
-  private itemDisabledObserver: MutationObserver | null = null;
+  private itemStateObserver: MutationObserver | null = null;
+
+  // Slot-presence tracking does not notify when only the message text changes,
+  // and a change to the text sets no reactive property, so observe it directly.
+  private readonly errorTextObserver = new MutationObserver(() => {
+    this.syncValidity();
+  });
 
   /**
    * Only keyboard movement (arrows, Home, End) selects the active item;
-   * Tab-entry and `.focus()` do not.
+   * Tab-entry and `.focus()` do not. The controller dispatches this before it
+   * moves focus, so focus moves here first: `change` listeners then see the
+   * newly focused radio, as with native radios.
    */
   private readonly handleNavigationActiveChange = (event: Event): void => {
     const { activeElement, source } = (
@@ -351,29 +344,104 @@ export abstract class RadioGroupBase extends SizedMixin(
     if (
       source !== 'keyboard' ||
       this.fieldStatus === 'readonly' ||
+      this.effectiveDisabled ||
       !(activeElement instanceof RadioBase)
     ) {
       return;
     }
-    this.proposeSelection(activeElement.value);
+    activeElement.focus();
+    this.proposeKeyboardSelection(activeElement);
   };
+
+  /**
+   * Selects the focused radio for a navigation key the controller didn't act
+   * on because focus didn't move, such as Home on the first radio or an arrow
+   * key with only one enabled radio.
+   */
+  private readonly handleKeydown = (event: KeyboardEvent): void => {
+    if (
+      event.defaultPrevented ||
+      event.altKey ||
+      event.ctrlKey ||
+      event.metaKey ||
+      !NAVIGATION_KEYS.has(event.key) ||
+      this.fieldStatus === 'readonly' ||
+      this.effectiveDisabled
+    ) {
+      return;
+    }
+    const item = event
+      .composedPath()
+      .find((node): node is RadioBase => node instanceof RadioBase);
+    if (
+      !item ||
+      item.checked ||
+      item.effectiveDisabled ||
+      !this.assignedItems().includes(item)
+    ) {
+      return;
+    }
+    event.preventDefault();
+    this.proposeKeyboardSelection(item);
+  };
+
+  /**
+   * Proposes `item` as the selection. When a listener cancels the change,
+   * focus returns to the roving tab stop so it isn't left on a radio with
+   * `tabindex="-1"`. The refocus waits a microtask because the navigation
+   * controller focuses the item after its active-change event returns.
+   */
+  private proposeKeyboardSelection(item: RadioBase): void {
+    if (!this.proposeSelection(item.value)) {
+      queueMicrotask(() => this.navigation.getActiveItem()?.focus());
+    }
+  }
 
   public override connectedCallback(): void {
     super.connectedCallback();
-    this.itemDisabledObserver ??= new MutationObserver((records) => {
-      if (records.some(({ target }) => target instanceof RadioBase)) {
-        this.navigation.refresh();
+    // An item's `disabled` or `value` changes navigation, checked state, and
+    // whether `selected` is submittable. A `checked` change is only checked
+    // for having come from outside the group.
+    this.itemStateObserver ??= new MutationObserver((records) => {
+      const itemRecords = records.filter(
+        ({ target }) => target instanceof RadioBase
+      );
+      this.warnExternalChecked(
+        new Set(
+          itemRecords
+            .filter(({ attributeName }) => attributeName === 'checked')
+            .map(({ target }) => target as RadioBase)
+        )
+      );
+      const stateRecords = itemRecords.filter(
+        ({ attributeName }) => attributeName !== 'checked'
+      );
+      if (!stateRecords.length) {
+        return;
       }
+      this.navigation.refresh();
+      if (stateRecords.some(({ attributeName }) => attributeName === 'value')) {
+        this.syncCheckedState();
+      }
+      this.syncFormState();
     });
-    this.itemDisabledObserver.observe(this, {
+    this.itemStateObserver.observe(this, {
       attributes: true,
-      attributeFilter: ['disabled'],
+      attributeFilter: ['checked', 'disabled', 'value'],
       subtree: true,
+    });
+    this.errorTextObserver.observe(this, {
+      childList: true,
+      characterData: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ['slot'],
     });
     this.addEventListener(
       focusgroupNavigationActiveChange,
       this.handleNavigationActiveChange
     );
+    this.addEventListener('keydown', this.handleKeydown);
   }
 
   public override disconnectedCallback(): void {
@@ -381,70 +449,30 @@ export abstract class RadioGroupBase extends SizedMixin(
       focusgroupNavigationActiveChange,
       this.handleNavigationActiveChange
     );
-    this.itemDisabledObserver?.disconnect();
+    this.removeEventListener('keydown', this.handleKeydown);
+    this.itemStateObserver?.disconnect();
+    this.errorTextObserver.disconnect();
     super.disconnectedCallback();
-  }
-
-  /** Sets each item's `checked` from `selected` and keeps the roving tab stop on the checked item. */
-  private syncCheckedState(): void {
-    let checkedItem: RadioBase | undefined;
-    for (const item of this.assignedItems()) {
-      item.checked = this.selected !== '' && item.value === this.selected;
-      if (item.checked) {
-        checkedItem = item;
-      }
-    }
-    if (checkedItem) {
-      this.navigation.setActiveItem(checkedItem);
-    }
-  }
-
-  private warnDuplicateValues(): void {
-    const seen = new Set<string>();
-    for (const item of this.assignedItems()) {
-      if (!item.value) {
-        continue;
-      }
-      warnIf(
-        this,
-        seen.has(item.value),
-        `Multiple <swc-radio> items share the value "${item.value}". Selection matching by value will not distinguish between them.`,
-        DOCS_URL,
-        { type: 'api', issues: [`value="${item.value}"`] }
-      );
-      seen.add(item.value);
-    }
-  }
-
-  /**
-   * Sets each item's `posInSet`/`setSize`. Items have separate shadow roots,
-   * so the browser can't compute position; without this, some AT
-   * announces every item as "1 of 1".
-   */
-  private syncItemPositions(): void {
-    const items = this.assignedItems();
-    items.forEach((item, index) => {
-      item.posInSet = index + 1;
-      item.setSize = items.length;
-    });
   }
 
   private readonly handleSlotchange = (): void => {
     this.syncSlottedItems();
   };
 
-  private syncSlottedItems(): void {
-    this.sizePropagation.propagate();
-    this.emphasizedPropagation.propagate();
-    this.syncDisabledState();
-    this.warnDuplicateValues();
-    this.syncItemPositions();
-    this.navigation.refresh();
-    this.syncCheckedState();
+  /**
+   * The authored `disabled` status OR the cascaded form / `<fieldset disabled>`
+   * state. Applied to every slotted item without changing the item's own
+   * `disabled`.
+   */
+  protected get effectiveDisabled(): boolean {
+    return this.fieldAssoc.disabled;
   }
 
   protected override firstUpdated(changedProperties: PropertyValues): void {
     super.firstUpdated(changedProperties);
+    // A slotted item's `change` passes through this shadow root before the
+    // host, so stopping it here keeps it from every group listener.
+    this.renderRoot.addEventListener('change', this.handleItemChange);
     this.renderRoot
       ?.querySelector('slot:not([name])')
       ?.addEventListener('slotchange', this.handleSlotchange);
@@ -483,6 +511,10 @@ export abstract class RadioGroupBase extends SizedMixin(
             : preChecked.getAttribute('value')) ?? '';
       }
       this.defaultSelected = this.selected;
+      if (this.pendingRestoredSelection !== undefined) {
+        this.selected = this.pendingRestoredSelection;
+        this.pendingRestoredSelection = undefined;
+      }
     }
   }
 
@@ -522,25 +554,273 @@ export abstract class RadioGroupBase extends SizedMixin(
     if (disabledChanged || changedProperties.has('selected')) {
       this.syncCheckedState();
     }
-    // Constraint validity: a required group with nothing selected is
-    // `valueMissing`; an invalid selection is `customError`. The message is
-    // required by `setValidity` (it throws if empty); the UI is rendered elsewhere.
-    // The role element is the validation anchor, so a blocked submit focuses it.
-    // Disabled and read-only groups are barred from validation, as native
-    // controls are.
-    const barred = this.fieldAssoc.barred;
-    const valueMissing = !barred && this.required && !this.selected;
-    const anchor = this.roleElement;
+    this.syncFormState();
+  }
+
+  /**
+   * The value the group submits and validates against: `selected`, but only
+   * while an assigned, enabled item has that value. `selected` itself is kept
+   * as authored so an item added later can still adopt it.
+   */
+  private get submittedValue(): string | null {
+    if (this.effectiveDisabled || !this.selected) {
+      return null;
+    }
+    const match = this.assignedItems().some(
+      (item) => item.value === this.selected && !item.effectiveDisabled
+    );
+    return match ? this.selected : null;
+  }
+
+  /**
+   * Pushes validity and the form value. Excludes the value when no enabled
+   * item matches `selected`, matching an unchecked or disabled native radio.
+   */
+  private syncFormState(): void {
+    this.syncValidity();
+    this.fieldAssoc.setValue(this.submittedValue);
+  }
+
+  private assignedItems(): RadioBase[] {
+    const slot = this.renderRoot?.querySelector('slot:not([name])');
+    if (!slot) {
+      return [];
+    }
+    return (slot as HTMLSlotElement)
+      .assignedElements({ flatten: true })
+      .filter((el): el is RadioBase => el instanceof RadioBase);
+  }
+
+  private setItemGroupDisabled(item: RadioBase, disabled: boolean): void {
+    item.groupDisabled = disabled;
+    // Navigation refreshes before the child's Lit update can reflect this state.
+    if (item.effectiveDisabled) {
+      item.setAttribute('aria-disabled', 'true');
+    } else {
+      item.removeAttribute('aria-disabled');
+    }
+    if (disabled) {
+      this.groupDisabledItems.add(item);
+    } else {
+      this.groupDisabledItems.delete(item);
+    }
+  }
+
+  /**
+   * Applies the group's disabled state to every assigned item without
+   * touching the item's own `disabled`. Returns whether any item changed.
+   */
+  private syncDisabledState(): boolean {
+    const items = this.assignedItems();
+    const assigned = new Set(items);
+    let changed = false;
+    for (const item of this.groupDisabledItems) {
+      if (!assigned.has(item)) {
+        changed ||= !item.disabled;
+        this.setItemGroupDisabled(item, false);
+      }
+    }
+    for (const item of items) {
+      if (item.groupDisabled !== this.effectiveDisabled) {
+        changed ||= !item.disabled;
+        this.setItemGroupDisabled(item, this.effectiveDisabled);
+      }
+    }
+    return changed;
+  }
+
+  /**
+   * Adopts `value` unless already selected, dispatching a cancelable `change`
+   * and reverting on `preventDefault()`. Checked state, validity, and the form
+   * value are synced before dispatch so listeners read the new state, as with
+   * a native radio. Shared by item activation and keyboard navigation.
+   * Returns `false` when a listener cancelled the change.
+   */
+  private proposeSelection(value: string): boolean {
+    if (value === this.selected) {
+      return true;
+    }
+    const previous = this.selected;
+    this.selected = value;
+    this.syncCheckedState();
+    this.syncFormState();
+    const applyDefault = this.dispatchEvent(
+      new Event('change', { cancelable: true, bubbles: true, composed: true })
+    );
+    if (!applyDefault) {
+      this.selected = previous;
+      this.syncCheckedState();
+      this.syncFormState();
+    }
+    return applyDefault;
+  }
+
+  /**
+   * Sets each item's `checked` from `selected` and keeps the roving tab stop
+   * on the checked item. With nothing checked, the tab stop moves to the first
+   * enabled item, unless focus is already in the group.
+   */
+  private syncCheckedState(): void {
+    let checkedItem: RadioBase | undefined;
+    const items = this.assignedItems();
+    this.warnExternalChecked(items);
+    for (const item of items) {
+      this.setItemChecked(
+        item,
+        this.selected !== '' && item.value === this.selected
+      );
+      if (item.checked) {
+        checkedItem = item;
+      }
+    }
+    this.checkedSynced = true;
+    const tabStop =
+      checkedItem ??
+      (this.matches(':focus-within')
+        ? undefined
+        : items.find((item) => !item.effectiveDisabled));
+    if (tabStop) {
+      this.navigation.setActiveItem(tabStop);
+    }
+  }
+
+  /** The `checked` value the group last wrote to each item. */
+  private readonly groupChecked = new WeakMap<RadioBase, boolean>();
+
+  /** Whether the initial checked sync, which adopts pre-checked items, has run. */
+  private checkedSynced = false;
+
+  /** The only writer of an item's `checked`, so outside changes can be told apart. */
+  private setItemChecked(item: RadioBase, checked: boolean): void {
+    this.groupChecked.set(item, checked);
+    item.checked = checked;
+  }
+
+  /**
+   * Warns when an item's `checked` was changed outside the group: set directly
+   * on a radio, or on a radio added after the initial sync with a value other
+   * than `selected`. The group owns `checked` and overwrites it on its next sync.
+   */
+  private warnExternalChecked(items: Iterable<RadioBase>): void {
+    for (const item of items) {
+      const written = this.groupChecked.get(item);
+      const external =
+        written === undefined
+          ? this.checkedSynced && item.checked && item.value !== this.selected
+          : item.checked !== written;
+      warnIf(
+        this,
+        external,
+        `<${item.localName}> "checked" was changed directly. Set "selected" on <${this.localName}> instead; the group controls which radio is checked.`,
+        DOCS_URL,
+        { type: 'api', issues: [`value="${item.value}"`] }
+      );
+    }
+  }
+
+  private warnDuplicateValues(): void {
+    const seen = new Set<string>();
+    for (const item of this.assignedItems()) {
+      if (!item.value) {
+        continue;
+      }
+      warnIf(
+        this,
+        seen.has(item.value),
+        `Multiple <swc-radio> items share the value "${item.value}". Selection matching by value will not distinguish between them.`,
+        DOCS_URL,
+        { type: 'api', issues: [`value="${item.value}"`] }
+      );
+      seen.add(item.value);
+    }
+  }
+
+  /**
+   * Sets each item's `posInSet`/`setSize`. Items have separate shadow roots,
+   * so the browser can't compute position; without this, some AT
+   * announces every item as "1 of 1".
+   */
+  private syncItemPositions(): void {
+    const items = this.assignedItems();
+    items.forEach((item, index) => {
+      item.posInSet = index + 1;
+      item.setSize = items.length;
+    });
+  }
+
+  private syncSlottedItems(): void {
+    this.sizePropagation.propagate();
+    this.emphasizedPropagation.propagate();
+    this.syncDisabledState();
+    this.warnDuplicateValues();
+    this.syncItemPositions();
+    this.navigation.refresh();
+    this.syncCheckedState();
+    this.syncFormState();
+    this.resyncWhenDefined();
+  }
+
+  /** Tag names already being awaited by {@link resyncWhenDefined}. */
+  private readonly pendingDefinitions = new Set<string>();
+
+  /**
+   * Upgrading a slotted element fires no `slotchange`, so a radio defined
+   * after the group renders (a lazy chunk or separate bundle) would never be
+   * synced. Resync once each undefined slotted element's tag is defined.
+   */
+  private resyncWhenDefined(): void {
+    const slot =
+      this.renderRoot?.querySelector<HTMLSlotElement>('slot:not([name])');
+    for (const element of slot?.assignedElements({ flatten: true }) ?? []) {
+      const tagName = element.localName;
+      if (
+        !tagName.includes('-') ||
+        element.matches(':defined') ||
+        this.pendingDefinitions.has(tagName)
+      ) {
+        continue;
+      }
+      this.pendingDefinitions.add(tagName);
+      void customElements.whenDefined(tagName).then(() => {
+        this.pendingDefinitions.delete(tagName);
+        if (this.isConnected) {
+          this.syncSlottedItems();
+        }
+      });
+    }
+  }
+
+  /** The plain text of the slotted `error-text`, or `''` when there is none. */
+  private get errorTextMessage(): string {
+    return Array.from(
+      this.querySelectorAll(':scope > [slot="error-text"]'),
+      (element) => element.textContent ?? ''
+    )
+      .join(' ')
+      .trim();
+  }
+
+  /**
+   * The only writer of `setValidity()`. A required group with no submittable
+   * selection is `valueMissing`; `field-status="invalid"` is `customError`. While
+   * invalid, the plain text of `error-text` is the validation message,
+   * otherwise a standard fallback. `setValidity` throws on an empty message
+   * when a flag is set; the inline UI is rendered elsewhere. The checked or
+   * first enabled radio is the validation anchor, so a blocked submit focuses
+   * it, as with native radios. Disabled and
+   * read-only groups are barred from validation, as native controls are.
+   */
+  private syncValidity(): void {
+    const valueMissing =
+      !this.fieldAssoc.barred && this.required && this.submittedValue === null;
     const invalid = this.fieldStatus === 'invalid';
+    const anchor = this.focusTarget ?? this.roleElement;
     this.internals.setValidity(
       { valueMissing, customError: invalid },
-      valueMissing || invalid ? 'error' : '',
+      valueMissing || invalid
+        ? (invalid && this.errorTextMessage) || FALLBACK_VALIDATION_MESSAGE
+        : '',
       anchor instanceof HTMLElement ? anchor : undefined
-    );
-    // Push the current selection into the form; exclude it when nothing is
-    // selected or the group is disabled, matching an unchecked native radio set.
-    this.fieldAssoc.setValue(
-      this.effectiveDisabled || !this.selected ? null : this.selected
     );
   }
 }

@@ -165,7 +165,7 @@
      keeping the CP consumer override. `--swc-field-label-max-inline-size`
      overrides the 50% ceiling. */
   grid-template-columns: fit-content(var(--swc-field-label-max-inline-size, 50%)) 1fr;
-  align-items: var(--swc-form-field-side-label-alignment, baseline);
+  align-items: baseline;
   column-gap: var(--swc-form-field-side-label-gap, token("form-item-gap-medium"));
 }
 

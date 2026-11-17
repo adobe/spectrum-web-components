@@ -12,7 +12,12 @@
 import { html } from 'lit';
 import { expect, fn, userEvent, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
-import { fixture, getComponent, withWarningSpy } from '@swc-test-helpers/dom';
+import {
+  fixture,
+  getComponent,
+  getComponents,
+  withWarningSpy,
+} from '@swc-test-helpers/dom';
 
 import { Radio, RadioGroup } from '@adobe/spectrum-wc/radio-group';
 
@@ -32,6 +37,10 @@ type ReflectedAriaElement = Element & {
   ariaLabelledByElements: Element[] | null;
   ariaDescribedByElements: Element[] | null;
 };
+
+/** Whether an item is exposed as disabled, by itself or by its group. */
+const exposedDisabled = (item: Element): boolean =>
+  item.getAttribute('aria-disabled') === 'true';
 
 // This file defines dev-only test stories that reuse the main story metadata.
 export default {
@@ -245,7 +254,7 @@ export const GroupLabelLifecycleTest: Story = {
 
 export const NecessityIndicatorTest: Story = {
   ...NecessityIndicator,
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement, step }) => {
     const [requiredIcon, requiredLabel, optionalLabel] =
       canvasElement.querySelectorAll<RadioGroup>('swc-radio-group');
     await Promise.all(
@@ -257,6 +266,7 @@ export const NecessityIndicatorTest: Story = {
     const indicator = requiredIcon.shadowRoot?.querySelector(
       '.swc-FormFieldLabel-requiredIndicator'
     );
+    expect(indicator).toHaveAttribute('aria-hidden', 'true');
     expect(
       indicator?.querySelector('swc-ui-icon')?.getAttribute('aria-hidden')
     ).toBe('true');
@@ -280,6 +290,37 @@ export const NecessityIndicatorTest: Story = {
 
     // The label stays a non-`<label>` element wired by `aria-labelledby`.
     expect(requiredIcon.shadowRoot?.querySelector('label')).toBeNull();
+
+    await step('read-only hides the indicator in both modes', async () => {
+      const groups = [requiredIcon, requiredLabel, optionalLabel];
+      const indicators = (group: RadioGroup): Element[] =>
+        Array.from(
+          group.shadowRoot?.querySelectorAll(
+            '.swc-FormFieldLabel-requiredIndicator, .swc-FormFieldLabel-necessityLabel'
+          ) ?? []
+        );
+      for (const group of groups) {
+        group.fieldStatus = 'readonly';
+      }
+      await Promise.all(groups.map((group) => group.updateComplete));
+      for (const group of groups) {
+        expect(indicators(group)).toEqual([]);
+      }
+      expect(
+        requiredLabel.shadowRoot
+          ?.querySelector('.swc-FormFieldLabel')
+          ?.textContent?.includes('(required)'),
+        'the group name no longer includes "(required)"'
+      ).toBe(false);
+
+      for (const group of groups) {
+        group.fieldStatus = undefined;
+      }
+      await Promise.all(groups.map((group) => group.updateComplete));
+      for (const group of groups) {
+        expect(indicators(group)).toHaveLength(1);
+      }
+    });
   },
 };
 
@@ -293,7 +334,7 @@ export const ErrorIconTest: Story = {
     const icon = group.shadowRoot?.querySelector(
       '.swc-FormFieldErrorText-icon'
     );
-    expect(icon?.hasAttribute('aria-hidden')).toBe(false);
+    expect(icon).toHaveAttribute('aria-hidden', 'true');
     expect(
       icon
         ?.querySelector('swc-icon-alert-triangle')
@@ -380,7 +421,7 @@ export const ErrorIconWithoutErrorTextTest: Story = {
       icon(withDescription),
       'icon shows beside the description'
     ).toBeTruthy();
-    expect(icon(withDescription)?.hasAttribute('aria-hidden')).toBe(false);
+    expect(icon(withDescription)).toHaveAttribute('aria-hidden', 'true');
     expect(
       icon(withDescription)
         ?.querySelector('swc-icon-alert-triangle')
@@ -404,7 +445,7 @@ export const ErrorIconWithoutErrorTextTest: Story = {
       icon(bare),
       'icon shows with no description or error text'
     ).toBeTruthy();
-    expect(icon(bare)?.hasAttribute('aria-hidden')).toBe(false);
+    expect(icon(bare)).toHaveAttribute('aria-hidden', 'true');
     expect(
       icon(bare)
         ?.querySelector('swc-icon-alert-triangle')
@@ -453,9 +494,14 @@ export const GroupStateLifecycleTest: Story = {
 
     group.fieldStatus = 'readonly';
     await group.updateComplete;
+    expect(target?.getAttribute('aria-required')).toBe('false');
     expect(target?.getAttribute('aria-invalid')).toBe('false');
     expect(target?.getAttribute('aria-readonly')).toBe('true');
     expect(group.getAttribute('aria-readonly')).toBeNull();
+
+    group.fieldStatus = undefined;
+    await group.updateComplete;
+    expect(target?.getAttribute('aria-required')).toBe('true');
 
     group.required = false;
     group.fieldStatus = undefined;
@@ -474,21 +520,29 @@ export const DisabledCascadeTest: Story = {
       <swc-radio value="2"><span slot="label">Green</span></swc-radio>
     </swc-radio-group>
   `,
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement, step }) => {
     const group = await getComponent<RadioGroup>(
       canvasElement,
       'swc-radio-group'
     );
-    const items = Array.from(group.querySelectorAll<Radio>('swc-radio'));
+    const items = await getComponents<Radio>(group, 'swc-radio');
 
-    expect(
-      items.every((item) => item.disabled),
-      'group-level disabled cascades to every item'
-    ).toBe(true);
-    expect(
-      group.matches(':state(disabled)'),
-      'the authored status sets the disabled state'
-    ).toBe(true);
+    await step('a disabled group disables every item', async () => {
+      await waitFor(() =>
+        expect(
+          items.every(exposedDisabled),
+          'group-level disabled cascades to every item'
+        ).toBe(true)
+      );
+      expect(
+        items.some((item) => item.disabled),
+        "the cascade does not change an item's own disabled"
+      ).toBe(false);
+      expect(
+        group.matches(':state(disabled)'),
+        'the authored status sets the disabled state'
+      ).toBe(true);
+    });
   },
 };
 
@@ -497,6 +551,11 @@ export const DisabledClickSuppressionTest: Story = {
     <fieldset>
       <swc-radio-group name="color" field-status="disabled">
         <span slot="label">Favorite color</span>
+        <span slot="description">
+          See the
+          <a href="#color-guide">color guide</a>
+          .
+        </span>
         <swc-radio value="1"><span slot="label">Red</span></swc-radio>
         <swc-radio value="2"><span slot="label">Green</span></swc-radio>
       </swc-radio-group>
@@ -521,6 +580,16 @@ export const DisabledClickSuppressionTest: Story = {
       clickEverywhere();
       expect(hostClick).not.toHaveBeenCalled();
       expect(group.selected).toBe('');
+    });
+
+    await step('a slotted description link stays clickable', () => {
+      const link = group.querySelector('a')!;
+      const linkClick = fn();
+      link.addEventListener('click', linkClick);
+      link.addEventListener('click', (event) => event.preventDefault());
+      link.click();
+      expect(linkClick).toHaveBeenCalledTimes(1);
+      hostClick.mockClear();
     });
 
     await step('a disabled fieldset drops clicks', async () => {
@@ -559,58 +628,166 @@ export const DisabledStateLifecycleTest: Story = {
       </fieldset>
     </form>
   `,
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement, step }) => {
     const group = await getComponent<RadioGroup>(
       canvasElement,
       'swc-radio-group'
     );
-    const items = Array.from(group.querySelectorAll<Radio>('swc-radio'));
+    const items = await getComponents<Radio>(group, 'swc-radio');
     const fieldset = canvasElement.querySelector('fieldset')!;
-    await waitFor(() => {
-      expect(items.map((item) => item.disabled)).toEqual([false, true]);
-      expect(items.map((item) => item.tabIndex)).toEqual([0, -1]);
+
+    await step('only the authored item starts disabled', async () => {
+      await waitFor(() => {
+        expect(
+          items.map((item) => item.disabled),
+          'own disabled'
+        ).toEqual([false, true]);
+        expect(
+          items.map((item) => item.tabIndex),
+          'tab stops'
+        ).toEqual([0, -1]);
+      });
     });
 
-    group.fieldStatus = 'disabled';
-    await group.updateComplete;
-    await waitFor(() => {
-      expect(items.map((item) => item.disabled)).toEqual([true, true]);
-      expect(items.map((item) => item.tabIndex)).toEqual([-1, -1]);
+    await step('a disabled group disables every item', async () => {
+      group.fieldStatus = 'disabled';
+      await group.updateComplete;
+      await waitFor(() => {
+        expect(items.map(exposedDisabled), 'exposed disabled').toEqual([
+          true,
+          true,
+        ]);
+        expect(
+          items.map((item) => item.disabled),
+          'own disabled is unchanged'
+        ).toEqual([false, true]);
+        expect(
+          items.map((item) => item.tabIndex),
+          'tab stops'
+        ).toEqual([-1, -1]);
+      });
     });
 
-    const added = document.createElement('swc-radio') as Radio;
-    added.value = 'pickup';
-    const label = document.createElement('span');
-    label.slot = 'label';
-    label.textContent = 'Pickup';
-    added.append(label);
-    group.append(added);
-    await waitFor(() => expect(added.disabled).toBe(true));
-    added.remove();
-    await waitFor(() => expect(added.disabled).toBe(false));
+    await step(
+      'items added or removed while disabled follow the group',
+      async () => {
+        const added = document.createElement('swc-radio') as Radio;
+        added.value = 'pickup';
+        const label = document.createElement('span');
+        label.slot = 'label';
+        label.textContent = 'Pickup';
+        added.append(label);
+        group.append(added);
+        await waitFor(() =>
+          expect(exposedDisabled(added), 'added item is disabled').toBe(true)
+        );
+        added.remove();
+        await waitFor(() =>
+          expect(exposedDisabled(added), 'removed item is released').toBe(false)
+        );
+      }
+    );
 
-    fieldset.disabled = true;
-    group.fieldStatus = undefined;
-    await group.updateComplete;
-    await waitFor(() => {
-      expect(items.map((item) => item.disabled)).toEqual([true, true]);
-      expect(group.matches(':state(disabled)')).toBe(true);
+    await step('a disabled fieldset disables every item', async () => {
+      fieldset.disabled = true;
+      group.fieldStatus = undefined;
+      await group.updateComplete;
+      await waitFor(() => {
+        expect(items.map(exposedDisabled), 'exposed disabled').toEqual([
+          true,
+          true,
+        ]);
+        expect(
+          group.matches(':state(disabled)'),
+          'fieldset sets the disabled state'
+        ).toBe(true);
+      });
     });
 
-    fieldset.disabled = false;
-    await waitFor(() => {
-      expect(items.map((item) => item.disabled)).toEqual([false, true]);
-      expect(items.map((item) => item.tabIndex)).toEqual([0, -1]);
-      expect(group.matches(':state(disabled)')).toBe(false);
+    await step('enabling the fieldset restores own states', async () => {
+      fieldset.disabled = false;
+      await waitFor(() => {
+        expect(items.map(exposedDisabled), 'exposed disabled').toEqual([
+          false,
+          true,
+        ]);
+        expect(
+          items.map((item) => item.tabIndex),
+          'tab stops'
+        ).toEqual([0, -1]);
+        expect(
+          group.matches(':state(disabled)'),
+          'fieldset clears the disabled state'
+        ).toBe(false);
+      });
     });
 
-    group.fieldStatus = 'disabled';
-    await group.updateComplete;
-    group.fieldStatus = undefined;
-    await group.updateComplete;
-    await waitFor(() => {
-      expect(items.map((item) => item.disabled)).toEqual([false, true]);
-      expect(items.map((item) => item.tabIndex)).toEqual([0, -1]);
+    await step('toggling the group status restores own states', async () => {
+      group.fieldStatus = 'disabled';
+      await group.updateComplete;
+      group.fieldStatus = undefined;
+      await group.updateComplete;
+      await waitFor(() => {
+        expect(items.map(exposedDisabled), 'exposed disabled').toEqual([
+          false,
+          true,
+        ]);
+        expect(
+          items.map((item) => item.tabIndex),
+          'tab stops'
+        ).toEqual([0, -1]);
+      });
+    });
+  },
+};
+
+export const AuthoredDisabledWhileGroupDisabledTest: Story = {
+  render: () => html`
+    <swc-radio-group field-status="disabled">
+      <span slot="label">Shipping</span>
+      <swc-radio value="standard"><span slot="label">Standard</span></swc-radio>
+      <swc-radio value="express" disabled>
+        <span slot="label">Express</span>
+      </swc-radio>
+    </swc-radio-group>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const group = await getComponent<RadioGroup>(
+      canvasElement,
+      'swc-radio-group'
+    );
+    const [standard, express] = await getComponents<Radio>(group, 'swc-radio');
+
+    await step(
+      'app changes keep items disabled while the group is',
+      async () => {
+        await waitFor(() =>
+          expect(
+            [standard, express].map(exposedDisabled),
+            'every item starts disabled'
+          ).toEqual([true, true])
+        );
+        express.disabled = false;
+        standard.disabled = true;
+        await Promise.all([standard.updateComplete, express.updateComplete]);
+        expect(
+          [standard, express].map(exposedDisabled),
+          'the group keeps every item disabled'
+        ).toEqual([true, true]);
+        await userEvent.click(express);
+        expect(group.selected, 'a disabled group ignores clicks').toBe('');
+      }
+    );
+
+    await step('enabling the group applies the app changes', async () => {
+      group.fieldStatus = undefined;
+      await group.updateComplete;
+      await waitFor(() =>
+        expect(
+          [standard, express].map(exposedDisabled),
+          'each item follows its own disabled'
+        ).toEqual([true, false])
+      );
     });
   },
 };
@@ -774,13 +951,11 @@ export const InvalidSubmitFocusTest: Story = {
     );
 
     form.requestSubmit();
-    expect(document.activeElement, 'the group host is the focus target').toBe(
-      group
-    );
+    const [firstRadio] = Array.from(group.querySelectorAll<Radio>('swc-radio'));
     expect(
-      group.shadowRoot?.activeElement,
-      'focus lands on the radiogroup element'
-    ).toBe(group.roleElement);
+      document.activeElement,
+      'a blocked submit focuses the first radio when none is checked'
+    ).toBe(firstRadio);
 
     before.focus();
     group.fieldStatus = 'disabled';
@@ -836,24 +1011,382 @@ export const InvalidSubmitNoValidateTest: Story = {
       const [invalidEvent] = invalid.mock.calls[0] as [Event];
       expect(invalidEvent.target, 'invalid targets the host').toBe(group);
       expect(group.matches(':invalid'), 'the host matches :invalid').toBe(true);
-      group.focus();
-      expect(document.activeElement, 'host.focus() reaches the wrapper').toBe(
-        group
+      const [firstRadio] = Array.from(
+        group.querySelectorAll<Radio>('swc-radio')
       );
+      group.focus();
       expect(
-        group.shadowRoot?.activeElement,
-        'the inner wrapper has focus'
-      ).toBe(group.roleElement);
+        document.activeElement,
+        'host.focus() reaches the first radio'
+      ).toBe(firstRadio);
       before.focus();
 
       expect(form.reportValidity()).toBe(false);
-      expect(document.activeElement, 'reportValidity focuses the group').toBe(
-        group
-      );
+      expect(
+        document.activeElement,
+        'reportValidity focuses the first radio'
+      ).toBe(firstRadio);
     } finally {
       form.removeEventListener('submit', submit);
       group.removeEventListener('invalid', invalid);
     }
+  },
+};
+
+// With `error-text`, the validation message is its plain text while the group
+// is invalid; otherwise it is the standard fallback. There is no host
+// `setCustomValidity()`.
+export const ValidationMessageTest: Story = {
+  render: () => html`
+    <swc-radio-group name="shipping" required field-status="invalid">
+      <span slot="label">Shipping</span>
+      <span slot="error-text">Express is unavailable.</span>
+      <swc-radio value="express"><span slot="label">Express</span></swc-radio>
+      <swc-radio value="standard"><span slot="label">Standard</span></swc-radio>
+    </swc-radio-group>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const group = await getComponent<RadioGroup>(
+      canvasElement,
+      'swc-radio-group'
+    );
+    const error = group.querySelector<HTMLElement>('[slot="error-text"]')!;
+
+    await step('uses error-text present before the first render', () => {
+      expect(group.validationMessage).toBe('Express is unavailable.');
+      expect(group.validity.customError).toBe(true);
+      expect('setCustomValidity' in group).toBe(false);
+    });
+
+    await step('tracks text-only edits to error-text', async () => {
+      error.textContent = 'Choose another shipping method.';
+      await waitFor(() =>
+        expect(group.validationMessage).toBe('Choose another shipping method.')
+      );
+    });
+
+    await step('tracks a replacement error-text element', async () => {
+      const replacement = document.createElement('span');
+      replacement.slot = 'error-text';
+      replacement.textContent = 'Express needs an address.';
+      error.replaceWith(replacement);
+      await waitFor(() =>
+        expect(group.validationMessage).toBe('Express needs an address.')
+      );
+      replacement.remove();
+    });
+
+    await step('falls back when there is no error-text', async () => {
+      await waitFor(() =>
+        expect(group.validationMessage).toBe('Select an option.')
+      );
+    });
+
+    await step(
+      'error-text is not the message while the group is not invalid',
+      async () => {
+        const replacement = document.createElement('span');
+        replacement.slot = 'error-text';
+        replacement.textContent = 'Express needs an address.';
+        group.append(replacement);
+        group.fieldStatus = undefined;
+        await group.updateComplete;
+        expect(group.validity.customError).toBe(false);
+        expect(group.validity.valueMissing).toBe(true);
+        expect(group.validationMessage).toBe('Select an option.');
+      }
+    );
+
+    await step('is empty once the group is valid', async () => {
+      group.selected = 'standard';
+      await group.updateComplete;
+      expect(group.checkValidity()).toBe(true);
+      expect(group.validationMessage).toBe('');
+    });
+
+    await step('keeps tracking error-text after being moved', async () => {
+      group
+        .querySelectorAll('[slot="error-text"]')
+        .forEach((element) => element.remove());
+      group.fieldStatus = 'invalid';
+      const message = document.createElement('span');
+      message.slot = 'error-text';
+      message.textContent = 'First message.';
+      group.append(message);
+      await waitFor(() =>
+        expect(group.validationMessage).toBe('First message.')
+      );
+
+      const parent = group.parentElement!;
+      group.remove();
+      parent.append(group);
+      await group.updateComplete;
+      message.textContent = 'Second message.';
+      await waitFor(() =>
+        expect(group.validationMessage).toBe('Second message.')
+      );
+    });
+  },
+};
+
+// A native failure, selection changes, and `error-text` alone never set
+// `field-status` or show an error. The application does that.
+export const NoAutomaticErrorTest: Story = {
+  render: () => html`
+    <form novalidate>
+      <swc-radio-group name="shipping" required>
+        <span slot="label">Shipping</span>
+        <span slot="error-text">Choose a shipping method.</span>
+        <swc-radio value="express"><span slot="label">Express</span></swc-radio>
+        <swc-radio value="standard">
+          <span slot="label">Standard</span>
+        </swc-radio>
+      </swc-radio-group>
+    </form>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const group = await getComponent<RadioGroup>(
+      canvasElement,
+      'swc-radio-group'
+    );
+    const form = canvasElement.querySelector('form')!;
+    const items = Array.from(group.querySelectorAll<Radio>('swc-radio'));
+    const hasErrorUi = (): boolean =>
+      group.shadowRoot?.querySelector('.swc-FormFieldErrorText') !== null;
+
+    await step('a native failure does not set field-status', async () => {
+      const cancel = (event: Event): void => event.preventDefault();
+      group.addEventListener('invalid', cancel);
+      try {
+        expect(group.checkValidity()).toBe(false);
+        expect(form.checkValidity()).toBe(false);
+        expect(group.reportValidity()).toBe(false);
+      } finally {
+        group.removeEventListener('invalid', cancel);
+      }
+      await group.updateComplete;
+      expect(group.fieldStatus).toBeUndefined();
+      expect(group.hasAttribute('field-status')).toBe(false);
+      expect(hasErrorUi()).toBe(false);
+      expect(group.roleElement?.getAttribute('aria-invalid')).toBe('false');
+    });
+
+    await step('error-text alone does not make the group invalid', async () => {
+      await userEvent.click(items[0]);
+      await group.updateComplete;
+      expect(group.selected).toBe('express');
+      expect(group.checkValidity()).toBe(true);
+      expect(group.validity.customError).toBe(false);
+      expect(group.fieldStatus).toBeUndefined();
+      expect(hasErrorUi()).toBe(false);
+    });
+  },
+};
+
+// Native constraints and authored `invalid` are separate sources. Clearing or
+// satisfying one never clears the other.
+export const IndependentValiditySourcesTest: Story = {
+  render: () => html`
+    <swc-radio-group name="shipping" required field-status="invalid">
+      <span slot="label">Shipping</span>
+      <span slot="error-text">Express is unavailable.</span>
+      <swc-radio value="express"><span slot="label">Express</span></swc-radio>
+      <swc-radio value="standard"><span slot="label">Standard</span></swc-radio>
+    </swc-radio-group>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const group = await getComponent<RadioGroup>(
+      canvasElement,
+      'swc-radio-group'
+    );
+
+    await step('both sources fail together', () => {
+      expect(group.validity.valueMissing).toBe(true);
+      expect(group.validity.customError).toBe(true);
+    });
+
+    await step('satisfying the native constraint keeps invalid', async () => {
+      group.selected = 'standard';
+      await group.updateComplete;
+      expect(group.validity.valueMissing).toBe(false);
+      expect(group.validity.customError).toBe(true);
+      expect(group.checkValidity()).toBe(false);
+    });
+
+    await step('clearing invalid keeps a native failure', async () => {
+      group.selected = '';
+      group.fieldStatus = undefined;
+      await group.updateComplete;
+      expect(group.validity.customError).toBe(false);
+      expect(group.validity.valueMissing).toBe(true);
+      expect(group.checkValidity()).toBe(false);
+    });
+  },
+};
+
+// Disabled and read-only groups are barred from constraint validation through
+// `field-status`, with no `disabled` or `readonly` attribute on the host.
+export const BarredStatusesValidityTest: Story = {
+  render: () => html`
+    <form>
+      <swc-radio-group name="shipping" required>
+        <span slot="label">Shipping</span>
+        <swc-radio value="express"><span slot="label">Express</span></swc-radio>
+      </swc-radio-group>
+    </form>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const group = await getComponent<RadioGroup>(
+      canvasElement,
+      'swc-radio-group'
+    );
+    const form = canvasElement.querySelector('form')!;
+
+    await step('a required empty group fails before any status', () => {
+      expect(group.willValidate).toBe(true);
+      expect(form.checkValidity()).toBe(false);
+    });
+
+    for (const status of ['disabled', 'readonly'] as const) {
+      await step(`${status} does not block validation`, async () => {
+        group.fieldStatus = status;
+        await group.updateComplete;
+        expect(group.hasAttribute(status)).toBe(false);
+        expect(group.willValidate).toBe(false);
+        expect(group.validity.valueMissing).toBe(false);
+        expect(group.checkValidity()).toBe(true);
+        expect(form.checkValidity()).toBe(true);
+      });
+    }
+
+    await step('clearing the status validates again', async () => {
+      group.fieldStatus = undefined;
+      await group.updateComplete;
+      expect(group.willValidate).toBe(true);
+      expect(group.validity.valueMissing).toBe(true);
+    });
+  },
+};
+
+// Reset clears `invalid`, and a resubmit clears only `invalid`, so `disabled`
+// and `readonly` are kept.
+export const StatusKeptOnResetAndResubmitTest: Story = {
+  ...FormParticipation,
+  play: async ({ canvasElement, step }) => {
+    const group = await getComponent<RadioGroup>(
+      canvasElement,
+      'swc-radio-group'
+    );
+    const form = canvasElement.querySelector('form')!;
+
+    for (const status of ['readonly', 'disabled'] as const) {
+      await step(`resubmitting keeps ${status}`, async () => {
+        group.fieldStatus = status;
+        await group.updateComplete;
+        form.requestSubmit();
+        await group.updateComplete;
+        expect(group.fieldStatus).toBe(status);
+      });
+
+      await step(`reset keeps ${status}`, async () => {
+        form.reset();
+        await group.updateComplete;
+        expect(group.fieldStatus).toBe(status);
+      });
+    }
+
+    await step('reset clears invalid', async () => {
+      group.fieldStatus = 'invalid';
+      await group.updateComplete;
+      form.reset();
+      await group.updateComplete;
+      expect(group.fieldStatus).toBeUndefined();
+    });
+  },
+};
+
+export const StatusWarningsTest: Story = {
+  play: async ({ step }) => {
+    const statusWarnings = (calls: unknown[][]): unknown[][] =>
+      calls.filter(([, message]) => String(message).includes('field-status'));
+
+    await step('undefined is accepted without a warning', () =>
+      withWarningSpy(async (calls) => {
+        const group = await fixture<RadioGroup>(html`
+          <swc-radio-group>
+            <span slot="label">Shipping</span>
+            <swc-radio value="express">
+              <span slot="label">Express</span>
+            </swc-radio>
+          </swc-radio-group>
+        `);
+        try {
+          expect(statusWarnings(calls)).toHaveLength(0);
+        } finally {
+          group.remove();
+        }
+      })
+    );
+
+    await step('valid is not accepted and produces a warning', () =>
+      withWarningSpy(async (calls) => {
+        const group = await fixture<RadioGroup>(html`
+          <swc-radio-group field-status="valid">
+            <span slot="label">Shipping</span>
+            <swc-radio value="express">
+              <span slot="label">Express</span>
+            </swc-radio>
+          </swc-radio-group>
+        `);
+        try {
+          expect(statusWarnings(calls).length).toBeGreaterThan(0);
+        } finally {
+          group.remove();
+        }
+      })
+    );
+
+    await step('an unsupported status produces a warning', () =>
+      withWarningSpy(async (calls) => {
+        const group = await fixture<RadioGroup>(html`
+          <!-- @ts-ignore: Intentionally unsupported status tests the enum warning. -->
+          <swc-radio-group field-status="unsupported">
+            <span slot="label">Shipping</span>
+            <swc-radio value="express">
+              <span slot="label">Express</span>
+            </swc-radio>
+          </swc-radio-group>
+        `);
+        try {
+          expect(statusWarnings(calls).length).toBeGreaterThan(0);
+        } finally {
+          group.remove();
+        }
+      })
+    );
+  },
+};
+StatusWarningsTest.storyName = 'Status validation warnings';
+
+export const SideLabelAlignmentTest: Story = {
+  render: () => html`
+    <swc-radio-group label-position="side">
+      <span slot="label">Shipping method</span>
+      <swc-radio value="1"><span slot="label">Standard</span></swc-radio>
+    </swc-radio-group>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const group = await getComponent<RadioGroup>(
+      canvasElement,
+      'swc-radio-group'
+    );
+    const alignment = (): string =>
+      getComputedStyle(group.shadowRoot!.querySelector('.swc-FormField')!)
+        .alignItems;
+
+    await step('side labels align to the start of the items', () => {
+      expect(alignment()).toBe('start');
+    });
   },
 };
 
@@ -897,6 +1430,63 @@ export const ItemStylingAttributesTest: Story = {
     for (const name of ['size', 'emphasized']) {
       expect(name in items[0], `${name} is not a radio property`).toBe(false);
     }
+  },
+};
+
+export const LateDefinedRadiosTest: Story = {
+  render: () => html`
+    <div></div>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const tagName = `late-radio-${Math.random().toString(36).slice(2, 8)}`;
+    const group = document.createElement('swc-radio-group') as RadioGroup;
+    group.fieldStatus = 'disabled';
+    group.selected = 'b';
+    group.setAttribute('size', 'l');
+    group.innerHTML = `
+      <span slot="label">Favorite letter</span>
+      <${tagName} value="a"><span slot="label">A</span></${tagName}>
+      <${tagName} value="b"><span slot="label">B</span></${tagName}>
+      <${tagName} value="c"><span slot="label">C</span></${tagName}>
+    `;
+    canvasElement.append(group);
+    await group.updateComplete;
+    customElements.define(tagName, class extends Radio {});
+    const items = Array.from(group.querySelectorAll<Radio>(tagName));
+
+    await step(
+      'radios defined after the group renders are synced',
+      async () => {
+        await waitFor(() =>
+          expect(items.map((item) => item.setSize)).toEqual([3, 3, 3])
+        );
+        expect(items.map((item) => item.posInSet)).toEqual([1, 2, 3]);
+        expect(items.map((item) => item.checked)).toEqual([false, true, false]);
+        expect(items.map((item) => item.effectiveDisabled)).toEqual([
+          true,
+          true,
+          true,
+        ]);
+        expect(items[0].getAttribute('size')).toBe('l');
+      }
+    );
+
+    await step('a disabled group ignores Space on a radio', () => {
+      // Simulate a radio that hasn't picked up the group's disabled state.
+      // Clicks are already suppressed on the disabled group; Space isn't.
+      items[2].groupDisabled = false;
+      items[2].dispatchEvent(
+        new KeyboardEvent('keyup', { key: ' ', bubbles: true, composed: true })
+      );
+      expect(group.selected).toBe('b');
+    });
+
+    await step('enabling the group allows selection', async () => {
+      group.fieldStatus = undefined;
+      await group.updateComplete;
+      items[2].click();
+      expect(group.selected).toBe('c');
+    });
   },
 };
 
@@ -958,6 +1548,80 @@ export const InitialCheckedRadioTest: Story = {
   },
 };
 
+export const FormStateRestoreTest: Story = {
+  render: () => html`
+    <form>
+      <swc-radio-group name="color">
+        <span slot="label">Favorite color</span>
+        <swc-radio value="1" checked><span slot="label">Red</span></swc-radio>
+        <swc-radio value="2"><span slot="label">Green</span></swc-radio>
+      </swc-radio-group>
+    </form>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const group = await getComponent<RadioGroup>(
+      canvasElement,
+      'swc-radio-group'
+    );
+    const form = canvasElement.querySelector('form') as HTMLFormElement;
+    const items = Array.from(group.querySelectorAll<Radio>('swc-radio'));
+    const changeSpy = fn();
+    group.addEventListener('change', changeSpy);
+
+    await step('restores the browser-supplied selection', async () => {
+      group.formStateRestoreCallback('2');
+      await group.updateComplete;
+      expect(group.selected).toBe('2');
+      expect(items.map((item) => item.checked)).toEqual([false, true]);
+      expect(items[1].tabIndex).toBe(0);
+      expect([...new FormData(form).entries()]).toEqual([['color', '2']]);
+      expect(changeSpy).not.toHaveBeenCalled();
+    });
+
+    await step('ignores state that is not a string', async () => {
+      group.formStateRestoreCallback(null);
+      await group.updateComplete;
+      expect(group.selected).toBe('2');
+    });
+
+    await step('reset still returns to the authored default', async () => {
+      form.reset();
+      await group.updateComplete;
+      expect(group.selected).toBe('1');
+    });
+  },
+};
+
+export const FormStateRestoreBeforeFirstUpdateTest: Story = {
+  render: () => html`
+    <form></form>
+  `,
+  play: async ({ canvasElement }) => {
+    const form = canvasElement.querySelector('form') as HTMLFormElement;
+    const group = document.createElement('swc-radio-group') as RadioGroup;
+    group.name = 'color';
+    group.innerHTML = `
+      <span slot="label">Favorite color</span>
+      <swc-radio value="1" checked><span slot="label">Red</span></swc-radio>
+      <swc-radio value="2"><span slot="label">Green</span></swc-radio>
+    `;
+    // The browser can restore state before the group's first update; the
+    // restored value must win over the pre-checked item.
+    group.formStateRestoreCallback('2');
+    form.append(group);
+    await group.updateComplete;
+
+    const items = Array.from(group.querySelectorAll<Radio>('swc-radio'));
+    expect(group.selected).toBe('2');
+    expect(items.map((item) => item.checked)).toEqual([false, true]);
+    expect([...new FormData(form).entries()]).toEqual([['color', '2']]);
+
+    form.reset();
+    await group.updateComplete;
+    expect(group.selected).toBe('1');
+  },
+};
+
 export const ReadOnlySelectionTest: Story = {
   ...ReadOnly,
   play: async ({ canvasElement }) => {
@@ -982,16 +1646,16 @@ export const ReadOnlySelectionTest: Story = {
     expect(document.activeElement, 'ArrowRight moves focus').toBe(items[2]);
     press(items[2], 'Home');
     expect(document.activeElement, 'Home moves focus').toBe(items[0]);
-    expect(group.selected).toBe('2');
+    expect(group.selected).toBe('baseball');
     expect(items.map((item) => item.checked)).toEqual([false, true, false]);
 
     group.fieldStatus = undefined;
     await group.updateComplete;
     press(items[0], 'ArrowRight');
     expect(document.activeElement).toBe(items[1]);
-    expect(group.selected).toBe('2');
+    expect(group.selected).toBe('baseball');
     press(items[1], 'ArrowRight');
-    expect(group.selected).toBe('3');
+    expect(group.selected).toBe('basketball');
   },
 };
 
@@ -1050,6 +1714,93 @@ export const KeyboardNavigationTest: Story = {
   },
 };
 
+export const FocusAndTabStopTest: Story = {
+  render: () => html`
+    <form @reset=${preventDefault}>
+      <swc-radio-group name="shipping">
+        <span slot="label">Shipping method</span>
+        <swc-radio value="1"><span slot="label">Standard</span></swc-radio>
+        <swc-radio value="2"><span slot="label">Priority</span></swc-radio>
+        <swc-radio value="3"><span slot="label">Express</span></swc-radio>
+      </swc-radio-group>
+      <button type="button" id="outside">Outside</button>
+    </form>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const group = await getComponent<RadioGroup>(
+      canvasElement,
+      'swc-radio-group'
+    );
+    const items = await getComponents<Radio>(group, 'swc-radio');
+    const outside = canvasElement.querySelector<HTMLElement>('#outside')!;
+    const press = (target: Radio, key: string) =>
+      target.dispatchEvent(
+        new KeyboardEvent('keydown', {
+          key,
+          bubbles: true,
+          composed: true,
+          cancelable: true,
+        })
+      );
+    const tabIndexes = (): number[] => items.map((item) => item.tabIndex);
+
+    await step('Home on the focused first radio selects it', () => {
+      items[0].focus();
+      press(items[0], 'Home');
+      expect(group.selected).toBe('1');
+    });
+
+    await step('focus() lands on the checked radio, where keys work', () => {
+      group.selected = '2';
+      outside.focus();
+      group.focus();
+      expect(document.activeElement).toBe(items[1]);
+      press(items[1], 'ArrowDown');
+      expect(document.activeElement).toBe(items[2]);
+      expect(group.selected).toBe('3');
+    });
+
+    await step('a cancelled keyboard change returns focus', async () => {
+      let focusedDuringChange: Element | null = null;
+      const cancel = (event: Event): void => {
+        if (event.target === group) {
+          focusedDuringChange = document.activeElement;
+          event.preventDefault();
+        }
+      };
+      group.addEventListener('change', cancel);
+      press(items[2], 'ArrowUp');
+      group.removeEventListener('change', cancel);
+      expect(
+        focusedDuringChange,
+        'change listeners see the newly focused radio'
+      ).toBe(items[1]);
+      await waitFor(() => expect(document.activeElement).toBe(items[2]));
+      expect(group.selected).toBe('3');
+      expect(tabIndexes()).toEqual([-1, -1, 0]);
+    });
+
+    await step(
+      'with nothing checked, the tab stop is the first radio',
+      async () => {
+        outside.focus();
+        group.selected = '';
+        await group.updateComplete;
+        expect(tabIndexes()).toEqual([0, -1, -1]);
+      }
+    );
+
+    await step('an arrow key with one enabled radio selects it', async () => {
+      items[0].disabled = true;
+      items[2].disabled = true;
+      await waitFor(() => expect(items[1].tabIndex).toBe(0));
+      items[1].focus();
+      press(items[1], 'ArrowDown');
+      expect(group.selected).toBe('2');
+    });
+  },
+};
+
 export const ChangeCancellationTest: Story = {
   render: () => html`
     <swc-radio-group selected="1">
@@ -1083,6 +1834,182 @@ export const ChangeCancellationTest: Story = {
       '1'
     );
     expect(items.map((item) => item.checked)).toEqual([true, false]);
+  },
+};
+
+export const SingleChangeEventTest: Story = {
+  render: () => html`
+    <swc-radio-group selected="1">
+      <span slot="label">Shipping method</span>
+      <swc-radio value="1"><span slot="label">Standard</span></swc-radio>
+      <swc-radio value="2"><span slot="label">Express</span></swc-radio>
+    </swc-radio-group>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const group = await getComponent<RadioGroup>(
+      canvasElement,
+      'swc-radio-group'
+    );
+    const items = await getComponents<Radio>(group, 'swc-radio');
+
+    await step(
+      'a group listener receives one change per selection',
+      async () => {
+        const changes: Event[] = [];
+        const record = (event: Event): void => {
+          changes.push(event);
+        };
+        group.addEventListener('change', record);
+        await userEvent.click(items[1]);
+        await group.updateComplete;
+        group.removeEventListener('change', record);
+
+        expect(changes, 'one change per selection').toHaveLength(1);
+        expect(changes[0].target, 'the group dispatches the change').toBe(
+          group
+        );
+        expect(changes[0].cancelable, 'the change is cancelable').toBe(true);
+      }
+    );
+  },
+};
+
+export const ChangeStateTimingTest: Story = {
+  render: () => html`
+    <form>
+      <swc-radio-group name="shipping" required>
+        <span slot="label">Shipping method</span>
+        <swc-radio value="1"><span slot="label">Standard</span></swc-radio>
+        <swc-radio value="2"><span slot="label">Express</span></swc-radio>
+      </swc-radio-group>
+    </form>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const group = await getComponent<RadioGroup>(
+      canvasElement,
+      'swc-radio-group'
+    );
+    const form = canvasElement.querySelector('form')!;
+    const items = await getComponents<Radio>(group, 'swc-radio');
+    const readState = (): unknown => ({
+      checked: items.map((item) => item.checked),
+      valueMissing: group.validity.valueMissing,
+      entries: [...new FormData(form).entries()],
+    });
+
+    await step('a change listener reads the new state', async () => {
+      let seen: unknown;
+      const record = (event: Event): void => {
+        if (event.target === group) {
+          seen = readState();
+        }
+      };
+      group.addEventListener('change', record);
+      await userEvent.click(items[1]);
+      group.removeEventListener('change', record);
+      expect(seen).toEqual({
+        checked: [false, true],
+        valueMissing: false,
+        entries: [['shipping', '2']],
+      });
+    });
+
+    await step('a cancelled change restores state synchronously', async () => {
+      const cancel = (event: Event): void => {
+        if (event.target === group) {
+          event.preventDefault();
+        }
+      };
+      group.addEventListener('change', cancel);
+      await userEvent.click(items[0]);
+      group.removeEventListener('change', cancel);
+      expect(group.selected).toBe('2');
+      expect(readState()).toEqual({
+        checked: [false, true],
+        valueMissing: false,
+        entries: [['shipping', '2']],
+      });
+    });
+  },
+};
+
+export const SubmittableSelectionTest: Story = {
+  render: () => html`
+    <form>
+      <swc-radio-group name="shipping" required>
+        <span slot="label">Shipping method</span>
+        <swc-radio value="1"><span slot="label">Standard</span></swc-radio>
+        <swc-radio value="2" checked disabled>
+          <span slot="label">Express</span>
+        </swc-radio>
+      </swc-radio-group>
+    </form>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const group = await getComponent<RadioGroup>(
+      canvasElement,
+      'swc-radio-group'
+    );
+    const form = canvasElement.querySelector('form')!;
+    const entries = (): [string, FormDataEntryValue][] => [
+      ...new FormData(form).entries(),
+    ];
+    const disabledItem = group.querySelector<Radio>('swc-radio[value="2"]')!;
+
+    await step('a checked, disabled radio is not submitted', () => {
+      expect(group.selected).toBe('2');
+      expect(disabledItem.checked).toBe(true);
+      expect(entries()).toEqual([]);
+      expect(group.validity.valueMissing).toBe(true);
+    });
+
+    await step('enabling the checked radio submits it', async () => {
+      disabledItem.disabled = false;
+      await waitFor(() => expect(entries()).toEqual([['shipping', '2']]));
+      expect(group.validity.valueMissing).toBe(false);
+    });
+
+    await step('removing the checked radio stops submitting it', async () => {
+      disabledItem.remove();
+      await waitFor(() => expect(entries()).toEqual([]));
+      expect(group.selected, 'selected is kept as authored').toBe('2');
+      expect(group.validity.valueMissing).toBe(true);
+    });
+
+    await step('a selected value no radio has is not submitted', async () => {
+      group.selected = 'missing';
+      await group.updateComplete;
+      expect(entries()).toEqual([]);
+      expect(group.validity.valueMissing).toBe(true);
+    });
+
+    await step('a radio added later with that value is submitted', async () => {
+      const item = document.createElement('swc-radio') as Radio;
+      item.value = 'missing';
+      item.textContent = 'Overnight';
+      group.append(item);
+      await waitFor(() => expect(entries()).toEqual([['shipping', 'missing']]));
+      expect(item.checked).toBe(true);
+      expect(group.validity.valueMissing).toBe(false);
+    });
+
+    await step(
+      'changing the matching radio value stops submitting it',
+      async () => {
+        group.querySelector<Radio>('swc-radio[value="missing"]')!.value =
+          'renamed';
+        await waitFor(() => expect(entries()).toEqual([]));
+        expect(group.validity.valueMissing).toBe(true);
+      }
+    );
+
+    await step('a restored value no radio has is not submitted', async () => {
+      group.formStateRestoreCallback('restored');
+      await group.updateComplete;
+      expect(group.selected).toBe('restored');
+      expect(entries()).toEqual([]);
+      expect(group.validity.valueMissing).toBe(true);
+    });
   },
 };
 
@@ -1244,5 +2171,81 @@ export const MultipleCheckedRadiosTest: Story = {
       group?.remove();
       window.__swc = originalSwc;
     }
+  },
+};
+
+export const ExternalCheckedWarningTest: Story = {
+  play: async ({ step }) => {
+    await withWarningSpy(async (warnCalls) => {
+      const group = await fixture<RadioGroup>(html`
+        <swc-radio-group>
+          <span slot="label">Favorite color</span>
+          <swc-radio value="1" checked><span slot="label">Red</span></swc-radio>
+          <swc-radio value="2"><span slot="label">Green</span></swc-radio>
+          <swc-radio value="3"><span slot="label">Blue</span></swc-radio>
+        </swc-radio-group>
+      `);
+      const items = Array.from(group.querySelectorAll<Radio>('swc-radio'));
+      const externalWarnings = (value?: string): unknown[][] =>
+        warnCalls.filter(
+          ([, message, , options]) =>
+            typeof message === 'string' &&
+            message.includes('"checked" was changed directly') &&
+            (value === undefined ||
+              (options as { issues?: string[] } | undefined)?.issues?.includes(
+                `value="${value}"`
+              ))
+        );
+
+      try {
+        await step('selection through the group does not warn', async () => {
+          items[1].click();
+          group.selected = '3';
+          await group.updateComplete;
+          // Each radio reflects `checked` during its update, and the group's
+          // observer runs before these awaits resume.
+          await Promise.all(items.map((item) => item.updateComplete));
+          expect(externalWarnings()).toEqual([]);
+        });
+
+        await step('setting checked on a radio directly warns', async () => {
+          items[0].checked = true;
+          await waitFor(() => expect(externalWarnings('1')).toHaveLength(1));
+        });
+
+        await step(
+          'appending a checked radio with another value warns',
+          async () => {
+            warnCalls.length = 0;
+            const late = document.createElement('swc-radio') as Radio;
+            late.value = '4';
+            late.setAttribute('checked', '');
+            group.append(late);
+            await waitFor(() => expect(externalWarnings('4')).toHaveLength(1));
+            expect(late.checked, 'the group still owns checked').toBe(false);
+          }
+        );
+
+        await step(
+          'appending the selected value checked does not warn',
+          async () => {
+            warnCalls.length = 0;
+            group.selected = '5';
+            await group.updateComplete;
+            const matching = document.createElement('swc-radio') as Radio;
+            matching.value = '5';
+            matching.setAttribute('checked', '');
+            group.append(matching);
+            // The slot sync checks for outside changes before it sets
+            // positions, and the radio's own update reflects `checked`.
+            await waitFor(() => expect(matching.posInSet).toBe(5));
+            await matching.updateComplete;
+            expect(externalWarnings()).toEqual([]);
+          }
+        );
+      } finally {
+        group.parentElement?.remove();
+      }
+    });
   },
 };
