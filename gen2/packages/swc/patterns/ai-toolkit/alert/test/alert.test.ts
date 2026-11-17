@@ -13,20 +13,17 @@
 import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import { getComponent } from '@swc-test-helpers/dom';
 
-import '../swc-thread-alert.js';
+import '../swc-alert.js';
 
-import { getComponent } from '../../../../utils/test-utils.js';
-import {
-  meta as threadAlertMeta,
-  Playground,
-} from '../stories/thread-alert.stories.js';
+import { meta as alertMeta, Playground } from '../stories/alert.stories.js';
 
 const meta: Meta = {
-  title: 'AI Toolkit/Thread alert/Tests',
-  component: 'swc-thread-alert',
+  title: 'AI Toolkit/Alert/Tests',
+  component: 'swc-alert',
   render: () => html`
-    <swc-thread-alert>
+    <swc-alert>
       <span>Your response could not be completed.</span>
       <swc-button slot="actions" size="s">Try again</swc-button>
       <swc-close-button
@@ -34,7 +31,7 @@ const meta: Meta = {
         size="s"
         accessible-label="Dismiss message"
       ></swc-close-button>
-    </swc-thread-alert>
+    </swc-alert>
   `,
   parameters: {
     docs: { disable: true, page: null },
@@ -46,14 +43,14 @@ export default meta;
 
 export const PlaygroundDefault: Story = {
   ...Playground,
-  args: { ...threadAlertMeta.args, ...Playground.args },
-  render: Playground.render ?? threadAlertMeta.render,
+  args: { ...alertMeta.args, ...Playground.args },
+  render: Playground.render ?? alertMeta.render,
   play: async ({ canvasElement }) => {
     expect(Playground.args?.showButton).toBe(false);
     expect(Playground.argTypes?.showButton?.control).toBe('boolean');
-    expect(threadAlertMeta.args).not.toHaveProperty('heading-slot');
-    expect(threadAlertMeta.argTypes).not.toHaveProperty('heading-slot');
-    const el = await getComponent(canvasElement, 'swc-thread-alert');
+    expect(alertMeta.args).not.toHaveProperty('heading-slot');
+    expect(alertMeta.argTypes).not.toHaveProperty('heading-slot');
+    const el = await getComponent(canvasElement, 'swc-alert');
     expect(el.querySelector('[slot="actions"]')).toBeNull();
     expect(el.querySelector('swc-close-button[slot="dismiss"]')).not.toBeNull();
     expect(el.hasAttribute('showButton')).toBe(false);
@@ -64,10 +61,10 @@ PlaygroundDefault.storyName = 'Playground default';
 
 export const PlaygroundWithButton: Story = {
   ...Playground,
-  args: { ...threadAlertMeta.args, ...Playground.args, showButton: true },
-  render: Playground.render ?? threadAlertMeta.render,
+  args: { ...alertMeta.args, ...Playground.args, showButton: true },
+  render: Playground.render ?? alertMeta.render,
   play: async ({ canvasElement }) => {
-    const el = await getComponent(canvasElement, 'swc-thread-alert');
+    const el = await getComponent(canvasElement, 'swc-alert');
     const action = el.querySelector('swc-button[slot="actions"]');
     expect(action).not.toBeNull();
     expect(action?.textContent).toBe('Try again');
@@ -80,16 +77,16 @@ PlaygroundWithButton.storyName = 'Playground with button';
 export const Rendering: Story = {
   play: async ({ canvasElement, step }) => {
     await step('registers the rendering-only pattern', async () => {
-      expect(customElements.get('swc-thread-alert')).toBeDefined();
+      expect(customElements.get('swc-alert')).toBeDefined();
     });
 
     await step(
       'renders one text span slot before inline controls',
       async () => {
-        const el = await getComponent(canvasElement, 'swc-thread-alert');
+        const el = await getComponent(canvasElement, 'swc-alert');
         const slots = el?.shadowRoot?.querySelectorAll('slot');
         if (!slots) {
-          throw new Error('Expected the thread alert shadow slots');
+          throw new Error('Expected the alert shadow slots');
         }
         expect([...slots].map((slot) => slot.name)).toEqual([
           '',
@@ -97,7 +94,7 @@ export const Rendering: Story = {
           'dismiss',
         ]);
         expect(
-          el.shadowRoot?.querySelector('.swc-ThreadAlert-content')?.tagName
+          el.shadowRoot?.querySelector('.swc-Alert-content')?.tagName
         ).toBe('SPAN');
       }
     );
@@ -105,7 +102,7 @@ export const Rendering: Story = {
     await step(
       'leaves semantics and interaction with the consumer',
       async () => {
-        const el = await getComponent(canvasElement, 'swc-thread-alert');
+        const el = await getComponent(canvasElement, 'swc-alert');
         expect(el.hasAttribute('role')).toBe(false);
         expect(el.hasAttribute('aria-live')).toBe(false);
         expect(el.hasAttribute('tabindex')).toBe(false);
@@ -134,22 +131,21 @@ export const Rendering: Story = {
 };
 
 export const VariantControl: Story = {
-  args: { ...threadAlertMeta.args, variant: 'negative' },
-  render: threadAlertMeta.render,
+  args: { ...alertMeta.args, variant: 'negative' },
+  render: alertMeta.render,
   play: async ({ canvasElement }) => {
-    expect(threadAlertMeta.argTypes?.variant?.control).toBe('select');
-    expect(threadAlertMeta.argTypes?.variant?.options).toEqual([
+    expect(alertMeta.argTypes?.variant?.control).toBe('select');
+    expect(alertMeta.argTypes?.variant?.options).toEqual([
       'informative',
       'positive',
       'notice',
       'negative',
       'neutral',
     ]);
-    const el = await getComponent(canvasElement, 'swc-thread-alert');
+    const el = await getComponent(canvasElement, 'swc-alert');
     expect(el.getAttribute('variant')).toBe('negative');
-    const icons = el.shadowRoot?.querySelectorAll<HTMLElement>(
-      '.swc-ThreadAlert-icon'
-    );
+    const icons =
+      el.shadowRoot?.querySelectorAll<HTMLElement>('.swc-Alert-icon');
     expect(
       [...(icons ?? [])]
         .filter((icon) => getComputedStyle(icon).display !== 'none')
@@ -161,20 +157,19 @@ VariantControl.storyName = 'Variant control';
 
 export const VariantIcons: Story = {
   render: () => html`
-    <swc-thread-alert>
+    <swc-alert>
       <span>Request status</span>
       <swc-close-button
         slot="dismiss"
         size="s"
         accessible-label="Dismiss message"
       ></swc-close-button>
-    </swc-thread-alert>
+    </swc-alert>
   `,
   play: async ({ canvasElement, step }) => {
-    const el = await getComponent(canvasElement, 'swc-thread-alert');
-    const icons = el.shadowRoot?.querySelectorAll<HTMLElement>(
-      '.swc-ThreadAlert-icon'
-    );
+    const el = await getComponent(canvasElement, 'swc-alert');
+    const icons =
+      el.shadowRoot?.querySelectorAll<HTMLElement>('.swc-Alert-icon');
     if (!icons) {
       throw new Error('Expected the status icons');
     }
@@ -215,20 +210,20 @@ VariantIcons.storyName = 'Variant icons';
 
 export const OptionalContent: Story = {
   render: () => html`
-    <swc-thread-alert>
+    <swc-alert>
       <span>Message text</span>
       <swc-close-button
         slot="dismiss"
         size="s"
         accessible-label="Dismiss message"
       ></swc-close-button>
-    </swc-thread-alert>
+    </swc-alert>
   `,
   play: async ({ canvasElement }) => {
-    const el = await getComponent(canvasElement, 'swc-thread-alert');
+    const el = await getComponent(canvasElement, 'swc-alert');
     const shadow = el.shadowRoot;
     if (!shadow) {
-      throw new Error('Expected a rendered thread alert');
+      throw new Error('Expected a rendered alert');
     }
     expect(shadow.querySelector('slot[name="heading"]')).toBeNull();
     const actions = shadow.querySelector<HTMLSlotElement>(
@@ -259,26 +254,26 @@ OptionalContent.storyName = 'Optional action';
 
 export const MinimumHeight: Story = {
   render: () => html`
-    <swc-thread-alert>
+    <swc-alert>
       <span>Message text</span>
       <swc-close-button
         slot="dismiss"
         size="s"
         accessible-label="Dismiss message"
       ></swc-close-button>
-    </swc-thread-alert>
+    </swc-alert>
   `,
   play: async ({ canvasElement }) => {
-    const el = await getComponent(canvasElement, 'swc-thread-alert');
-    const root = el.shadowRoot?.querySelector('.swc-ThreadAlert');
+    const el = await getComponent(canvasElement, 'swc-alert');
+    const root = el.shadowRoot?.querySelector('.swc-Alert');
     const text = el.querySelector('span');
     if (!root || !text) {
-      throw new Error('Expected the thread alert surface and message text');
+      throw new Error('Expected the alert surface and message text');
     }
     expect(getComputedStyle(root).minBlockSize).toBe('32px');
     expect(root.getBoundingClientRect().height).toBeGreaterThanOrEqual(32);
 
-    el.style.setProperty('--swc-thread-alert-min-block-size', '48px');
+    el.style.setProperty('--swc-alert-min-block-size', '48px');
     expect(getComputedStyle(root).minBlockSize).toBe('48px');
     expect(root.getBoundingClientRect().height).toBe(48);
 
@@ -291,34 +286,28 @@ MinimumHeight.storyName = 'Minimum height';
 
 export const Styling: Story = {
   render: () => html`
-    <swc-thread-alert>
+    <swc-alert>
       <span>Message text</span>
       <swc-close-button
         slot="dismiss"
         size="s"
         accessible-label="Dismiss message"
       ></swc-close-button>
-    </swc-thread-alert>
+    </swc-alert>
   `,
   play: async ({ canvasElement }) => {
-    const el = await getComponent(canvasElement, 'swc-thread-alert');
-    const root = el.shadowRoot?.querySelector<HTMLElement>('.swc-ThreadAlert');
+    const el = await getComponent(canvasElement, 'swc-alert');
+    const root = el.shadowRoot?.querySelector<HTMLElement>('.swc-Alert');
     if (!root) {
-      throw new Error('Expected the thread alert surface');
+      throw new Error('Expected the alert surface');
     }
-    el.style.setProperty(
-      '--swc-thread-alert-background-color',
-      'rgb(20, 30, 40)'
-    );
-    el.style.setProperty(
-      '--swc-thread-alert-content-color',
-      'rgb(240, 240, 240)'
-    );
-    el.style.setProperty('--swc-thread-alert-gap', '10px');
-    el.style.setProperty('--swc-thread-alert-padding-block', '12px');
-    el.style.setProperty('--swc-thread-alert-padding-inline-start', '14px');
-    el.style.setProperty('--swc-thread-alert-padding-inline-end', '16px');
-    el.style.setProperty('--swc-thread-alert-border-radius', '8px');
+    el.style.setProperty('--swc-alert-background-color', 'rgb(20, 30, 40)');
+    el.style.setProperty('--swc-alert-content-color', 'rgb(240, 240, 240)');
+    el.style.setProperty('--swc-alert-gap', '10px');
+    el.style.setProperty('--swc-alert-padding-block', '12px');
+    el.style.setProperty('--swc-alert-padding-inline-start', '14px');
+    el.style.setProperty('--swc-alert-padding-inline-end', '16px');
+    el.style.setProperty('--swc-alert-border-radius', '8px');
     const style = getComputedStyle(root);
     expect(style.backgroundColor).toBe('rgb(20, 30, 40)');
     expect(style.color).toBe('rgb(240, 240, 240)');
@@ -332,20 +321,20 @@ export const Styling: Story = {
 
 export const TranslucentSurface: Story = {
   render: () => html`
-    <swc-thread-alert>
+    <swc-alert>
       <span>Your response was saved.</span>
       <swc-close-button
         slot="dismiss"
         size="s"
         accessible-label="Dismiss message"
       ></swc-close-button>
-    </swc-thread-alert>
+    </swc-alert>
   `,
   play: async ({ canvasElement }) => {
-    const el = await getComponent(canvasElement, 'swc-thread-alert');
-    const root = el.shadowRoot?.querySelector('.swc-ThreadAlert');
+    const el = await getComponent(canvasElement, 'swc-alert');
+    const root = el.shadowRoot?.querySelector('.swc-Alert');
     if (!root) {
-      throw new Error('Expected the thread alert surface');
+      throw new Error('Expected the alert surface');
     }
     for (const [scheme, color] of [
       ['light', '0, 0, 0'],
@@ -362,16 +351,16 @@ TranslucentSurface.storyName = 'Translucent surface';
 
 export const ControlSpacing: Story = {
   play: async ({ canvasElement }) => {
-    const el = await getComponent(canvasElement, 'swc-thread-alert');
-    const content = el.shadowRoot?.querySelector('.swc-ThreadAlert-content');
+    const el = await getComponent(canvasElement, 'swc-alert');
+    const content = el.shadowRoot?.querySelector('.swc-Alert-content');
     const action = el.querySelector('[slot="actions"]');
     const dismiss = el.querySelector('[slot="dismiss"]');
-    const root = el.shadowRoot?.querySelector('.swc-ThreadAlert');
+    const root = el.shadowRoot?.querySelector('.swc-Alert');
     if (!content || !action || !dismiss || !root) {
       throw new Error('Expected message content and both inline controls');
     }
-    el.style.setProperty('--swc-thread-alert-gap', '10px');
-    el.style.setProperty('--swc-thread-alert-trailing-gap', '18px');
+    el.style.setProperty('--swc-alert-gap', '10px');
+    el.style.setProperty('--swc-alert-trailing-gap', '18px');
     expect(
       action.getBoundingClientRect().left -
         content.getBoundingClientRect().right

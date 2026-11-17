@@ -19,7 +19,7 @@ import '@adobe/spectrum-wc-icons/swc-icon-alert-triangle.js';
 import '@adobe/spectrum-wc-icons/swc-icon-checkmark-circle.js';
 import '@adobe/spectrum-wc-icons/swc-icon-info-circle.js';
 
-import styles from './thread-alert.css';
+import styles from './alert.css';
 
 /**
  * A rendering-only message with a status icon, required close button, and optional action.
@@ -28,66 +28,66 @@ import styles from './thread-alert.css';
  * Applications own announcements, retry, dismissal, and named slotted controls.
  * The CSS-only `variant` attribute has no corresponding JavaScript property.
  *
- * @element swc-thread-alert
+ * @element swc-alert
  * @attr {'informative' | 'positive' | 'notice' | 'negative' | 'neutral'} variant - Visual status. Defaults to informative when omitted.
  * @slot - Meaningful message text or inline HTML, including content links.
  * @slot actions - Optional single named action button.
  * @slot dismiss - Required single swc-close-button with a localized accessible-label.
- * @cssprop --swc-thread-alert-background-color - Message surface color.
- * @cssprop --swc-thread-alert-border-color - Decorative border color.
- * @cssprop --swc-thread-alert-border-width - Decorative border width.
- * @cssprop --swc-thread-alert-border-radius - Surface radius.
- * @cssprop --swc-thread-alert-content-color - Message text color.
- * @cssprop --swc-thread-alert-icon-color - Status icon color.
- * @cssprop --swc-thread-alert-icon-size - Status icon dimensions.
- * @cssprop --swc-thread-alert-min-block-size - Minimum message height.
- * @cssprop --swc-thread-alert-gap - Space between the icon, content, and controls.
- * @cssprop --swc-thread-alert-padding-block - Surface block padding.
- * @cssprop --swc-thread-alert-padding-inline-start - Surface inline-start padding.
- * @cssprop --swc-thread-alert-padding-inline-end - Surface inline-end padding.
- * @cssprop --swc-thread-alert-trailing-gap - Space before the inline dismiss control.
- * @cssprop --swc-thread-alert-font-family - Message font family.
- * @cssprop --swc-thread-alert-font-size - Message font size.
- * @cssprop --swc-thread-alert-font-weight - Message font weight.
- * @cssprop --swc-thread-alert-line-height - Message line height.
+ * @cssprop --swc-alert-background-color - Message surface color.
+ * @cssprop --swc-alert-border-color - Decorative border color.
+ * @cssprop --swc-alert-border-width - Decorative border width.
+ * @cssprop --swc-alert-border-radius - Surface radius.
+ * @cssprop --swc-alert-content-color - Message text color.
+ * @cssprop --swc-alert-icon-color - Status icon color.
+ * @cssprop --swc-alert-icon-size - Status icon dimensions.
+ * @cssprop --swc-alert-min-block-size - Minimum message height.
+ * @cssprop --swc-alert-gap - Space between the icon, content, and controls.
+ * @cssprop --swc-alert-padding-block - Surface block padding.
+ * @cssprop --swc-alert-padding-inline-start - Surface inline-start padding.
+ * @cssprop --swc-alert-padding-inline-end - Surface inline-end padding.
+ * @cssprop --swc-alert-trailing-gap - Space before the inline dismiss control.
+ * @cssprop --swc-alert-font-family - Message font family.
+ * @cssprop --swc-alert-font-size - Message font size.
+ * @cssprop --swc-alert-font-weight - Message font weight.
+ * @cssprop --swc-alert-line-height - Message line height.
  */
-export class ThreadAlert extends SpectrumElement {
+export class Alert extends SpectrumElement {
   public static override get styles(): CSSResultArray {
     return [styles];
   }
 
   protected override render(): TemplateResult {
     return html`
-      <div class="swc-ThreadAlert">
+      <div class="swc-Alert">
         <span
-          class="swc-ThreadAlert-icon swc-ThreadAlert-icon--informative"
+          class="swc-Alert-icon swc-Alert-icon--informative"
           data-variant="informative"
           aria-hidden="true"
         >
           <swc-icon-info-circle></swc-icon-info-circle>
         </span>
         <span
-          class="swc-ThreadAlert-icon swc-ThreadAlert-icon--positive"
+          class="swc-Alert-icon swc-Alert-icon--positive"
           data-variant="positive"
           aria-hidden="true"
         >
           <swc-icon-checkmark-circle></swc-icon-checkmark-circle>
         </span>
         <span
-          class="swc-ThreadAlert-icon swc-ThreadAlert-icon--notice"
+          class="swc-Alert-icon swc-Alert-icon--notice"
           data-variant="notice"
           aria-hidden="true"
         >
           <swc-icon-alert-diamond></swc-icon-alert-diamond>
         </span>
         <span
-          class="swc-ThreadAlert-icon swc-ThreadAlert-icon--negative"
+          class="swc-Alert-icon swc-Alert-icon--negative"
           data-variant="negative"
           aria-hidden="true"
         >
           <swc-icon-alert-triangle></swc-icon-alert-triangle>
         </span>
-        <span class="swc-ThreadAlert-content">
+        <span class="swc-Alert-content">
           <slot></slot>
         </span>
         <slot name="actions"></slot>

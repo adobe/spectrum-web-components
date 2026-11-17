@@ -1,7 +1,7 @@
 import { Canvas, Meta } from '@storybook/addon-docs/blocks';
 import { DocsFooter, DocsHeader } from '../../../.storybook/blocks';
 
-import * as Stories from './stories/thread-alert.stories';
+import * as Stories from './stories/alert.stories';
 
 <Meta of={Stories} />
 
@@ -40,7 +40,7 @@ Always provide one `swc-close-button` through `dismiss`. The `actions` slot acce
 
 Links belong in the message content's default slot, not in `actions`. Place them inline with the text, or use `<br>` to start a separate line within the same message span.
 
-The `--swc-thread-alert-*` properties in the generated API table provide token-backed overrides for the surface, border, typography, spacing, and status icon. Child controls retain their own styling APIs.
+The `--swc-alert-*` properties in the generated API table provide token-backed overrides for the surface, border, typography, spacing, and status icon. Child controls retain their own styling APIs.
 
 ## Behaviors
 
@@ -48,7 +48,7 @@ The `--swc-thread-alert-*` properties in the generated API table provide token-b
 
 The pattern fills its container and grows with its content. Message text wraps, including long request identifiers, instead of truncating. Controls stay in normal flow and can wrap when space is constrained. The 451px width in these examples belongs to the demo, not the component.
 
-The minimum height uses `component-height-100`: 32px at the default scale and 40px at the large scale. This is a minimum, not a fixed height; controls and wrapped text can make the message taller. Override it with `--swc-thread-alert-min-block-size`.
+The minimum height uses `component-height-100`: 32px at the default scale and 40px at the large scale. This is a minimum, not a fixed height; controls and wrapped text can make the message taller. Override it with `--swc-alert-min-block-size`.
 
 <Canvas of={Stories.TextWrapping} />
 
@@ -86,7 +86,7 @@ The layout uses logical spacing and preserves action order in right-to-left cont
 
 ### Dynamic insertion
 
-The app announces dynamically inserted content through a live region that exists before the change, without moving focus to the message. Do not add `role="alert"`, `role="status"`, or `aria-live` to the thread alert itself, or make its host focusable.
+The app announces dynamically inserted content through a live region that exists before the change, without moving focus to the message. Do not add `role="alert"`, `role="status"`, or `aria-live` to the alert itself, or make its host focusable.
 
 This application example exposes the pre-existing live region as visible announcement text so its updates can be inspected. It is not part of the component's shadow DOM.
 

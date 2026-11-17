@@ -10,14 +10,20 @@
  * governing permissions and limitations under the License.
  */
 
-import { defineElement } from '@adobe/spectrum-wc-core/element/index.js';
+import { html } from 'lit';
 
-import { ThreadAlert } from './ThreadAlert.js';
+import './swc-alert.js';
+import '@adobe/spectrum-wc/components/button/swc-button.js';
+import '@adobe/spectrum-wc/components/close-button/swc-close-button.js';
 
-declare global {
-  interface HTMLElementTagNameMap {
-    'swc-thread-alert': ThreadAlert;
-  }
-}
-
-defineElement('swc-thread-alert', ThreadAlert);
+export const alertTemplate = html`
+  <swc-alert variant="notice">
+    <span>Message text</span>
+    <swc-button slot="actions" size="s">Try again</swc-button>
+    <swc-close-button
+      slot="dismiss"
+      size="s"
+      accessible-label="Dismiss message"
+    ></swc-close-button>
+  </swc-alert>
+`;

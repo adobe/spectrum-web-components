@@ -12,8 +12,7 @@
 
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
-
-import { gotoStory } from '../../../../utils/a11y-helpers.js';
+import { gotoStory } from '@swc-test-helpers/playwright';
 
 const contrastRatio = (foreground: string, background: string): number => {
   const read = (color: string): [number, number, number, number] => {
@@ -64,7 +63,7 @@ const contrastRatio = (foreground: string, background: string): number => {
   return (Math.max(...values) + 0.05) / (Math.min(...values) + 0.05);
 };
 
-test.describe('Thread alert', () => {
+test.describe('Alert', () => {
   test('calculates contrast for rgba colors returned by getComputedStyle', () => {
     const blackOnWhite = contrastRatio('rgb(0, 0, 0)', 'rgb(255, 255, 255)');
     expect(contrastRatio('rgba(0, 0, 0, 1)', 'rgb(255, 255, 255)')).toBeCloseTo(
@@ -81,8 +80,8 @@ test.describe('Thread alert', () => {
   }) => {
     const root = await gotoStory(
       page,
-      'patterns-ai-toolkit-thread-alert--accessibility',
-      'swc-thread-alert'
+      'patterns-ai-toolkit-alert--accessibility',
+      'swc-alert'
     );
     await expect(root).toMatchAriaSnapshot(`
       - text: Your response could not be completed.
@@ -93,7 +92,7 @@ test.describe('Thread alert', () => {
     await expect(
       root.locator('[role="alert"], [role="status"], [aria-live]')
     ).toHaveCount(0);
-    await expect(root.locator('swc-thread-alert')).not.toHaveAttribute('role');
+    await expect(root.locator('swc-alert')).not.toHaveAttribute('role');
   });
 
   test('keeps one close button with or without the optional action', async ({
@@ -101,10 +100,10 @@ test.describe('Thread alert', () => {
   }) => {
     const root = await gotoStory(
       page,
-      'patterns-ai-toolkit-thread-alert--optional-controls',
-      'swc-thread-alert'
+      'patterns-ai-toolkit-alert--optional-controls',
+      'swc-alert'
     );
-    for (const message of await root.locator('swc-thread-alert').all()) {
+    for (const message of await root.locator('swc-alert').all()) {
       await expect(message.locator('[slot="dismiss"]')).toHaveCount(1);
       await expect(
         message.getByRole('button', { name: 'Dismiss message' })
@@ -127,10 +126,10 @@ test.describe('Thread alert', () => {
     }) => {
       await gotoStory(
         page,
-        `patterns-ai-toolkit-thread-alert--${theme === 'dark' ? 'dark-theme' : 'semantic-variants'}`,
-        'swc-thread-alert'
+        `patterns-ai-toolkit-alert--${theme === 'dark' ? 'dark-theme' : 'semantic-variants'}`,
+        'swc-alert'
       );
-      await expect(page.locator('swc-thread-alert')).toHaveCount(5);
+      await expect(page.locator('swc-alert')).toHaveCount(5);
       if (backdrop === 'layer') {
         await page.locator('#storybook-root').evaluate((el) => {
           el.style.backgroundColor = 'var(--swc-background-layer-1-color)';
@@ -142,11 +141,11 @@ test.describe('Thread alert', () => {
         .analyze();
       expect(result.violations).toEqual([]);
 
-      for (const alert of await page.locator('swc-thread-alert').all()) {
+      for (const alert of await page.locator('swc-alert').all()) {
         const colors = await alert.evaluate((el) => {
-          const surface = el.shadowRoot?.querySelector('.swc-ThreadAlert');
+          const surface = el.shadowRoot?.querySelector('.swc-Alert');
           const icon = Array.from(
-            el.shadowRoot?.querySelectorAll('.swc-ThreadAlert-icon') ?? []
+            el.shadowRoot?.querySelectorAll('.swc-Alert-icon') ?? []
           ).find((element) => getComputedStyle(element).display !== 'none');
           if (!surface) {
             throw new Error('Expected the rendered message surface');
@@ -255,8 +254,8 @@ test.describe('Thread alert', () => {
   }) => {
     const root = await gotoStory(
       page,
-      'patterns-ai-toolkit-thread-alert--accessibility',
-      'swc-thread-alert'
+      'patterns-ai-toolkit-alert--accessibility',
+      'swc-alert'
     );
     const retry = root.getByRole('button', { name: 'Try again', exact: true });
     const dismiss = root.getByRole('button', { name: 'Dismiss message' });
@@ -277,7 +276,7 @@ test.describe('Thread alert', () => {
     await expect(dismiss).toBeFocused();
     await page.keyboard.press('Space');
     await expect(root).toHaveAttribute('data-clicks', '2');
-    await expect(root.locator('swc-thread-alert')).toBeVisible();
+    await expect(root.locator('swc-alert')).toBeVisible();
     await page.keyboard.press('Shift+Tab');
     await expect(retry).toBeFocused();
 
@@ -303,10 +302,10 @@ test.describe('Thread alert', () => {
     await page.setViewportSize({ width: 320, height: 900 });
     const root = await gotoStory(
       page,
-      'patterns-ai-toolkit-thread-alert--text-wrapping',
-      'swc-thread-alert'
+      'patterns-ai-toolkit-alert--text-wrapping',
+      'swc-alert'
     );
-    const alert = root.locator('swc-thread-alert');
+    const alert = root.locator('swc-alert');
     await alert.evaluate((el) => el.setAttribute('dir', 'rtl'));
     const dimensions = await alert.evaluate((el) => ({
       width: el.clientWidth,
@@ -328,10 +327,10 @@ test.describe('Thread alert', () => {
   }) => {
     const root = await gotoStory(
       page,
-      'patterns-ai-toolkit-thread-alert--dynamic-insertion',
+      'patterns-ai-toolkit-alert--dynamic-insertion',
       '[data-announcements]'
     );
-    await expect(root.locator('swc-thread-alert')).toHaveCount(0);
+    await expect(root.locator('swc-alert')).toHaveCount(0);
     await expect(root.getByRole('status')).toBeEmpty();
     const trigger = root.getByRole('button', { name: 'Announce message' });
     await trigger.focus();
@@ -339,7 +338,7 @@ test.describe('Thread alert', () => {
     await page.keyboard.press('Enter');
     await expect(trigger).toBeFocused();
     await expect(root.getByRole('status')).toHaveText('Your request is ready.');
-    const message = root.locator('swc-thread-alert');
+    const message = root.locator('swc-alert');
     await expect(
       message.getByRole('button', { name: 'Dismiss message' })
     ).toHaveCount(1);
@@ -363,8 +362,8 @@ test.describe('Thread alert', () => {
     await page.emulateMedia({ forcedColors: 'active' });
     const root = await gotoStory(
       page,
-      'patterns-ai-toolkit-thread-alert--accessibility',
-      'swc-thread-alert'
+      'patterns-ai-toolkit-alert--accessibility',
+      'swc-alert'
     );
     await expect(
       root.getByText('Your response could not be completed.', { exact: true })
