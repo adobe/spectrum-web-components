@@ -13,6 +13,7 @@
 import { html } from 'lit';
 import { expect, userEvent } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import { getComponent, withWarningSpy } from '@swc-test-helpers/dom';
 
 import { CloseButton } from '@adobe/spectrum-wc/components/close-button';
 import {
@@ -23,7 +24,6 @@ import {
 
 import '@adobe/spectrum-wc/components/close-button/swc-close-button.js';
 
-import { getComponent, withWarningSpy } from '../../../utils/test-utils.js';
 import meta, {
   Accessibility,
   Overview,
@@ -185,6 +185,29 @@ export const LightDomTextIgnoredTest: Story = {
           button?.hasAttribute('aria-label'),
           'light DOM text is not forwarded as aria-label'
         ).toBe(false);
+      }
+    );
+  },
+};
+
+export const InvalidSizeTest: Story = {
+  render: () => html`
+    <swc-close-button size="XL" accessible-label="Close"></swc-close-button>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const button = await getComponent<CloseButton>(
+      canvasElement,
+      'swc-close-button'
+    );
+
+    await step(
+      'keeps an invalid size and gives its icon the default size',
+      async () => {
+        const icon = button.shadowRoot!.querySelector('swc-ui-icon')!;
+        await (icon as HTMLElement & { updateComplete: Promise<unknown> })
+          .updateComplete;
+        expect(button.getAttribute('size')).toBe('XL');
+        expect(icon.getAttribute('size'), 'icon gets the default').toBe('m');
       }
     );
   },

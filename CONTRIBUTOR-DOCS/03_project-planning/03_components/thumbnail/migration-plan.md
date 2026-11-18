@@ -199,7 +199,7 @@ Migrate Thumbnail now, independently. It has no unmigrated prerequisite dependen
 | #   | What changes | 1st-gen behavior | gen2 behavior | Consumer migration path |
 | --- | ------------ | ----------------- | ----------------- | ------------------------ |
 | **B1** | Tag rename | `<sp-thumbnail>` | `<swc-thumbnail>` | Update tag name and import path to the gen2 package/entry point. |
-| **B2** | `size` becomes numeric-typed | `el.size` is a `string` (e.g. `'500'`); invalid values fall back silently | `el.size` is a `number` (e.g. `500`); invalid values fall back to `500` with a dev-mode `warnIf` warning (see [B2 rationale](#behavioral-semantics)) | Update JS that reads/sets `.size` programmatically to use numeric literals. The HTML attribute value is unaffected (attributes are always strings). |
+| **B2** | `size` becomes numeric-typed | `el.size` is a `string` (e.g. `'500'`); invalid values fall back silently | `el.size` is a `number` (e.g. `500`); invalid values are kept as set, warn in dev mode, and render at `500` (see [B2 rationale](#behavioral-semantics)) | Update JS that reads/sets `.size` programmatically to use numeric literals. The HTML attribute value is unaffected (attributes are always strings). |
 
 #### Styling and visuals
 
@@ -244,7 +244,7 @@ Use lightweight confidence labels where helpful:
 
 | Property | Type | Default | Attribute | Notes |
 | -------- | ---- | ------- | --------- | ----- |
-| `size` | `ThumbnailSize` (`50 \| 75 \| 100 \| 200 \| 300 \| 400 \| 500 \| 600 \| 700 \| 800 \| 900 \| 1000`, numeric) | `500` | Yes (reflected) | **Confirmed** (B2). Numeric-typed to match the `AvatarBase` precedent; validated with `warnIf` instead of 1st-gen's silent fallback. See [Decision log](#decision-log) Q2. |
+| `size` | `ThumbnailSize` (`50 \| 75 \| 100 \| 200 \| 300 \| 400 \| 500 \| 600 \| 700 \| 800 \| 900 \| 1000`, numeric) | `500` | Yes (reflected) | **Confirmed** (B2). Numeric-typed to match the `AvatarBase` precedent; validated with `validateEnum`; invalid values are kept as set and render at `500`, instead of 1st-gen's silent fallback. See [Decision log](#decision-log) Q2. |
 | `fit` | `ThumbnailFit` (`'cover' \| 'contain'`) | `'contain'` | Yes (reflected) | **Confirmed** (B10). Renamed and expanded from 1st-gen's `cover` boolean; matches Asset's `AssetFit` naming and DEBUG-warning pattern, with a Thumbnail-specific default. See [Decision log](#decision-log) C8. |
 | `decorative` | `boolean` | `false` | Yes (reflected) | **Confirmed** (a11y-required, B4). New. |
 
@@ -274,7 +274,7 @@ Thumbnail adds one public property, `--swc-thumbnail-size` (see A1). No `--mod-t
 
 ### Behavioral semantics
 
-**Size validation and fallback (Core-owned).** Mirror `AvatarBase`'s numeric getter/setter pattern: validate the incoming value against `THUMBNAIL_VALID_SIZES`, fall back to `THUMBNAIL_DEFAULT_SIZE` (`500`) on an invalid value, reflect the resolved value to the `size` attribute, and surface a `warnIf` dev-mode warning on invalid input (1st-gen falls back silently with no warning).
+**Size validation and fallback (Core-owned).** Mirror `AvatarBase`'s numeric property: validate the value against `THUMBNAIL_VALID_SIZES` with a `validateEnum` dev-mode warning, keep an invalid value on the property and the `size` attribute, and render at `THUMBNAIL_DEFAULT_SIZE` (`500`) because the value matches no `:host([size="…"])` selector (1st-gen falls back silently with no warning).
 
 **`decorative` / alt handling.** When `decorative` is set: apply `aria-hidden="true"` to the host if it has none, and remove it again when `decorative` is unset; a consumer's own `aria-hidden` is left alone. If the slotted `<img>` has no `alt`, set `alt=""` on it, and remove that `alt` again when `decorative` is unset unless the consumer has since replaced it. When `decorative` is not set and the image has no text alternative, emit a DEBUG-mode warning (see [Decision log](#decision-log) C10). Both halves live in core; see Q5.
 
@@ -302,7 +302,7 @@ Follow the [Badge migration reference](../../02_workstreams/02_gen2-component-mi
 
 | Layer    | Path                                            | Contains                                                                                                                                                                                                                                          |
 | -------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Core** | `gen2/packages/core/components/thumbnail/` | `Thumbnail.base.ts` (numeric `size` property with `warnIf` validation, `fit` property with `warnIf` validation on invalid values, `decorative` property, alt-fallback and DEBUG-warning logic), `Thumbnail.types.ts` (`ThumbnailSize`, `THUMBNAIL_VALID_SIZES`, `THUMBNAIL_DEFAULT_SIZE`, `ThumbnailFit`). No rendering. |
+| **Core** | `gen2/packages/core/components/thumbnail/` | `Thumbnail.base.ts` (numeric `size` property with `validateEnum` validation, `fit` property with `validateEnum` validation on invalid values, `decorative` property, alt-fallback and DEBUG-warning logic), `Thumbnail.types.ts` (`ThumbnailSize`, `THUMBNAIL_VALID_SIZES`, `THUMBNAIL_DEFAULT_SIZE`, `ThumbnailFit`). No rendering. |
 | **SWC**  | `gen2/packages/swc/components/thumbnail/`  | `Thumbnail.ts`, `thumbnail.css`, element registration, stories, tests, and the specific S2 rendering/styling for `swc-thumbnail`.                                                                                                            |
 
 Rendering shape (implemented in the API/accessibility phases):
@@ -344,7 +344,7 @@ Rendering shape (implemented in the API/accessibility phases):
 #### Naming and public surface
 
 - [x] `Thumbnail.types.ts`: define `ThumbnailSize`, `THUMBNAIL_VALID_SIZES`, `THUMBNAIL_DEFAULT_SIZE` (500), `ThumbnailFit` (`'cover' | 'contain'`)
-- [x] `Thumbnail.base.ts`: numeric `size` getter/setter with `validateEnum` validation (B2); `fit` getter/setter with `validateEnum` validation on invalid values, default `'contain'` (B10); `decorative` property with `aria-hidden` reflection (B4). The alt fallback and DEBUG warning (B4/B5) also live in core (see [Decision log](#decision-log) Q5). `background`/`layer` are not implemented, per B7/B8.
+- [x] `Thumbnail.base.ts`: numeric `size` property with `validateEnum` validation (B2); `fit` property with `validateEnum` validation on invalid values, default `'contain'` (B10); invalid values are kept as set and render the defaults; `decorative` property with `aria-hidden` reflection (B4). The alt fallback and DEBUG warning (B4/B5) also live in core (see [Decision log](#decision-log) Q5). `background`/`layer` are not implemented, per B7/B8.
 
 ### Styling
 

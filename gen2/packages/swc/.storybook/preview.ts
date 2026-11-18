@@ -251,6 +251,8 @@ const preview = {
           ],
           'Patterns',
           [
+            'Forms',
+            ['Docs', 'Account details', 'Playground', 'Tests', '*'],
             'AI Toolkit',
             // Implementation order: input, structure, turns, follow-ups, then
             // shared primitives. storySort is parsed statically, so each child
@@ -484,6 +486,7 @@ const preview = {
               'Focus management',
               'Changelog strategy',
               'Gen2 shared resources',
+              'Component status and since',
             ],
             'Style guide',
             [

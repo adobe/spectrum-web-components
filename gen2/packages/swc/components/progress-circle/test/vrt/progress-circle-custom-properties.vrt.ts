@@ -45,10 +45,9 @@ export default meta;
 // still works. Rendered determinate at 50% so both track and fill are
 // simultaneously visible, which the two color properties need.
 //
-// `thickness` is tested as a decrease: ProgressCircle.ts's SVG radius is
-// computed from a fixed per-size stroke-width, independent of this property,
-// so increasing thickness clips the stroke past that radius (a real
-// component bug, out of scope here). Decreasing has no such ceiling.
+// `thickness` is tested as an increase: the ring radius is derived from the
+// thickness so the ring grows inward, and a regression shows up as a clipped
+// outer edge.
 type ProgressCirclePropertyCase =
   CustomPropertyCase<`--swc-progress-circle-${string}`>;
 
@@ -56,7 +55,7 @@ const PROGRESS_CIRCLE_PROPERTY_CASES: readonly ProgressCirclePropertyCase[] = [
   { property: '--swc-progress-circle-size', value: '80px' },
   { property: '--swc-progress-circle-track-border-color', value: 'magenta' },
   { property: '--swc-progress-circle-fill-border-color', value: 'magenta' },
-  { property: '--swc-progress-circle-thickness', value: '1px' },
+  { property: '--swc-progress-circle-thickness', value: '8px' },
 ];
 
 const renderPropertyCase = (

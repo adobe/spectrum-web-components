@@ -10,3 +10,4 @@
  * governing permissions and limitations under the License.
  */
 export * from './UploadAttachment.js';
+export * from './files-to-attachments.js';

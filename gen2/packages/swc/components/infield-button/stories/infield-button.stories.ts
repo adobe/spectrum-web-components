@@ -208,6 +208,7 @@ const meta: Meta = {
     docs: {
       subtitle: 'Icon button embedded inside a form field',
     },
+    missingDesignDocs: true,
     // TODO: add Figma and Stackblitz links
   },
   tags: ['migrated'],

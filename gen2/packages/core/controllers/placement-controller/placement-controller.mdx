@@ -41,6 +41,7 @@ Order of the stack: `offset → shift → flip → size`.
 - ARIA (`aria-controls`, `aria-expanded`, focus trap, escape dismissal).
 - Placement styling: use `onPlacementChange` to apply CSS modifier classes; the
   controller does **not** write `placement` attributes on the floating element.
+- When to remove the inline styles: call `clearStyles()` once the surface is hidden, after any exit transition. The controller knows which styles it wrote and removes only those.
 
 ## Basic usage
 
@@ -49,7 +50,8 @@ Order of the stack: `offset → shift → flip → size`.
 2. When positioning starts, call `start(trigger, floating, options)`.
 3. When it closes or the host disconnects, call `stop()` (also runs from
    `hostDisconnected`).
-4. Call `recompute()` when floating content reflows without a layout event the
+4. Once the floating element is hidden, after any exit transition, call `clearStyles()` to remove the inline styles the controller wrote.
+5. Call `recompute()` when floating content reflows without a layout event the
    controller would observe.
 
 ```typescript
@@ -78,6 +80,8 @@ export class MyPicker extends LitElement {
   close(): void {
     this.placement.stop();
     this.listbox.hidden = true;
+    // No exit transition, so clear right away.
+    this.placement.clearStyles();
   }
 }
 ```
@@ -187,7 +191,7 @@ available block space, so consumers can react to "content is currently clamped" 
 e.g., enable scrolling or show a scrollbar hint.
 
 No option to opt out of the measurement. Only components positioned by the
-controller receive these properties.
+controller receive these properties. They stay on the floating element after `stop()` until `clearStyles()` removes them.
 
 <Canvas of={PlacementControllerStories.SizeExposesAvailableSpace} />
 
@@ -295,16 +299,18 @@ responsible for accessible open/close behavior.
   essential trigger labels when overflow occurs.
 - Call **`stop()`** when the floating surface closes so `autoUpdate` does not keep
   running for detached or hidden content.
+- Call **`clearStyles()`** once the floating surface is hidden so its last position does not linger as inline styles.
 
 ## API
 
 ### Methods
 
-| Member                               | Description                                                                                                                                                                                                                                                                                                                                |
-| ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `start(trigger, floating, options?)` | Begin positioning; tear down any prior session and subscribe to Floating UI `autoUpdate`. Skips compute when the floating element has zero dimensions until size is available.                                                                                                                                                             |
-| `stop()`                             | Tear down positioning, unsubscribe from `autoUpdate`, and clear `actualPlacement` and `isConstrained`. Inline styles (`translate`, `top`, `left`) and `--swc-placement-available-*` custom properties are left for the caller to remove after any exit transition completes. Called from `hostDisconnected` when the Lit host disconnects. |
-| `recompute()`                        | Force one `computePosition` pass outside `autoUpdate` — for example after floating content reflows or a virtual trigger moves without layout events. No-op if not started.                                                                                                                                                                 |
+| Member                               | Description                                                                                                                                                                                                                                                                                                                            |
+| ------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `start(trigger, floating, options?)` | Begin positioning; tear down any prior session and subscribe to Floating UI `autoUpdate`. Skips compute when the floating element has zero dimensions until size is available.                                                                                                                                                         |
+| `stop()`                             | Tear down positioning, unsubscribe from `autoUpdate`, and clear `actualPlacement` and `isConstrained`. The inline styles stay so an exit transition can finish where the element is; remove them with `clearStyles()`. Called from `hostDisconnected` when the Lit host disconnects.                                                   |
+| `clearStyles()`                      | Remove the inline `top`, `left`, and `translate` and the `--swc-placement-available-*` custom properties from the floating element, and the inline `top`, `left`, and `translate` from the tip element. Call after `stop()` once any exit transition completes. Does nothing while positioning is active. Safe to call more than once. |
+| `recompute()`                        | Force one `computePosition` pass outside `autoUpdate` — for example after floating content reflows or a virtual trigger moves without layout events. No-op if not started.                                                                                                                                                             |
 
 ### Readonly properties
 

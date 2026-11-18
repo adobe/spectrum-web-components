@@ -52,7 +52,6 @@ const meta: Meta = {
   render: (args) => template(args),
   parameters: {
     docs: {
-      packagePath: 'patterns/ai-toolkit/response-status',
       subtitle: 'AI response lifecycle status with optional execution steps.',
     },
     layout: 'padded',

@@ -178,6 +178,40 @@ export const MissingAccessibleNameTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
+// TEST: Label with no labelable control
+// ──────────────────────────────────────────────────────────────
+
+export const NoControlLabelTest: Story = {
+  render: () => html`
+    <demo-labelling-host id="with-control">
+      <span slot="label">Linked</span>
+    </demo-labelling-host>
+    <demo-labelling-host id="no-control" no-control>
+      <span slot="label">Unlinked</span>
+    </demo-labelling-host>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const get = (id: string) =>
+      canvasElement.querySelector<DemoLabellingHost>(`#${id}`)!;
+
+    await step('a forId renders a `<label for>`', () => {
+      const label = get('with-control').shadowRoot?.querySelector(
+        'label.swc-FormFieldLabel'
+      );
+      expect(label?.getAttribute('for')).toBe('demo-labelling-host-input');
+    });
+
+    await step('an undefined forId renders a `<span>` label', () => {
+      const root = get('no-control').shadowRoot;
+      expect(root?.querySelector('label')).toBeNull();
+      const label = root?.querySelector('span.swc-FormFieldLabel');
+      expect(label).toBeTruthy();
+      expect(label?.querySelector('slot[name="label"]')).toBeTruthy();
+    });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
 // TEST: Detached host resolves accessible-labelledby without throwing
 // ──────────────────────────────────────────────────────────────
 

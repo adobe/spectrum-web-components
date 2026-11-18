@@ -106,6 +106,16 @@ describe('cem.config.js', () => {
     );
   });
 
+  test('resolves fields initialized from a named constant', () => {
+    const tabs = element('swc-tabs');
+    assert.equal(field(tabs, 'direction')?.default, 'horizontal');
+    assert.equal(attribute(tabs, 'direction')?.default, 'horizontal');
+    assert.equal(field(element('swc-avatar'), 'size')?.default, '100');
+    assert.equal(field(element('swc-thumbnail'), 'fit')?.default, 'contain');
+    assert.equal(field(element('swc-accordion'), 'level')?.default, '3');
+    assert.equal(field(element('swc-dropzone'), 'dropEffect')?.default, 'copy');
+  });
+
   test('keeps no accessor default from the previous watch pass', () => {
     // `cem analyze --watch` calls `create()` again with the same plugins.
     const plugins = config.plugins.filter(
@@ -128,6 +138,27 @@ describe('cem.config.js', () => {
 
     assert.equal(densityDefault("_density = 'regular'"), 'regular');
     assert.equal(densityDefault('_density?: string'), undefined);
+  });
+
+  test('drops the events that the analyzer cannot name', () => {
+    for (const declaration of declarations()) {
+      for (const event of declaration.events ?? []) {
+        assert.ok(event.name, `${declaration.name} has an unnamed event`);
+      }
+    }
+    const eventNames = (tagName) =>
+      element(tagName).events?.map((event) => event.name);
+    assert.deepEqual(eventNames('swc-tooltip'), [
+      'swc-open',
+      'swc-close',
+      'swc-after-open',
+      'swc-after-close',
+    ]);
+    assert.ok(!eventNames('swc-response-status').includes('type'));
+    assert.ok(!eventNames('swc-response-status-step').includes('type'));
+    assert.ok(
+      eventNames('swc-accordion-item').includes('swc-accordion-item-toggle')
+    );
   });
 
   test('gives each attribute the parsedType of the field it reflects', () => {

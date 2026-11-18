@@ -11,11 +11,12 @@
  */
 
 import { html } from 'lit';
-import { expect } from '@storybook/test';
+import { expect, spyOn } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import {
   buildGroupedWarningArgs,
+  installDevMode,
   recordAffectedElement,
   warningId,
 } from '../spectrum-element.js';
@@ -30,8 +31,7 @@ export default {
 
 // `warningId` builds the dedup key `window.__swc.warn` uses to suppress repeat
 // warnings. Testing it directly guards the dedup-key fix (adding `message` to
-// the key) without depending on the `NODE_ENV`-gated `window.__swc` setup,
-// which the test harness (`NODE_ENV === 'test'`) never runs.
+// the key) without going through the batched console output.
 export const WarningIdTest: Story = {
   play: async ({ step }) => {
     await step('distinct messages produce distinct dedup keys', () => {
@@ -181,5 +181,67 @@ export const WarningCountDedupTest: Story = {
       expect(batch.count).toBe(1);
       expect(batch.elements.length).toBe(0);
     });
+  },
+};
+
+const DEV_MODE_NOTICE = 'Spectrum Web Components is in dev mode';
+
+// The dev-mode guide tells consumers to set `window.__swc` before the first
+// component loads, including `DEBUG: false` to turn dev mode off. Running
+// `installDevMode` again simulates that first load.
+export const InstallDevModeTest: Story = {
+  play: async ({ step }) => {
+    const original = window.__swc;
+    const consoleWarn = spyOn(console, 'warn').mockImplementation(() => {});
+    // The dev-mode notice is batched and logged on the next microtask.
+    const flushWarnings = (): Promise<void> => Promise.resolve();
+    const loggedNotice = (): boolean =>
+      consoleWarn.mock.calls.some((args) =>
+        String(args[0]).includes(DEV_MODE_NOTICE)
+      );
+
+    try {
+      await step(
+        'keeps DEBUG: false set before load and skips the dev-mode notice',
+        async () => {
+          window.__swc = { DEBUG: false } as Window['__swc'];
+          installDevMode();
+          await flushWarnings();
+
+          expect(window.__swc.DEBUG).toBe(false);
+          expect(typeof window.__swc.warn).toBe('function');
+          expect(loggedNotice()).toBe(false);
+        }
+      );
+
+      await step(
+        'turns DEBUG on and logs the dev-mode notice when nothing was set',
+        async () => {
+          consoleWarn.mockClear();
+          // @ts-expect-error - simulate a page that set nothing before load
+          window.__swc = undefined;
+          installDevMode();
+          await flushWarnings();
+
+          expect(window.__swc.DEBUG).toBe(true);
+          expect(loggedNotice()).toBe(true);
+        }
+      );
+
+      await step('keeps other settings set before load', async () => {
+        window.__swc = {
+          verbose: true,
+          ignoreWarningLocalNames: { 'swc-badge': true },
+        } as unknown as Window['__swc'];
+        installDevMode();
+        await flushWarnings();
+
+        expect(window.__swc.verbose).toBe(true);
+        expect(window.__swc.ignoreWarningLocalNames['swc-badge']).toBe(true);
+      });
+    } finally {
+      consoleWarn.mockRestore();
+      window.__swc = original;
+    }
   },
 };

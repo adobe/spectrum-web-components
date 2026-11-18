@@ -11,8 +11,13 @@
  */
 
 import { html } from 'lit';
-import { expect } from '@storybook/test';
+import { expect, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import {
+  getComponent,
+  getComponents,
+  withWarningSpy,
+} from '@swc-test-helpers/dom';
 
 import { Button } from '@adobe/spectrum-wc/button';
 import {
@@ -25,11 +30,6 @@ import {
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc-icons/swc-icon-add.js';
 
-import {
-  getComponent,
-  getComponents,
-  withWarningSpy,
-} from '../../../utils/test-utils.js';
 import meta, {
   Accessibility,
   Anatomy,
@@ -305,6 +305,60 @@ export const PendingAriaAttributesTest: Story = {
           'explicit pendingLabel overrides derived busy name'
         ).toBe('Processing your request');
       }
+    );
+  },
+};
+
+export const InvalidSizeTest: Story = {
+  render: () => html`
+    <swc-button size="M">Uppercase</swc-button>
+    <swc-button size="banana">Invalid</swc-button>
+    <swc-button>Default</swc-button>
+    <swc-button size="l">Large</swc-button>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const [upper, invalid, reference, large] = await getComponents<Button>(
+      canvasElement,
+      'swc-button'
+    );
+    const height = (button: Button): number =>
+      button.shadowRoot!.querySelector('button')!.getBoundingClientRect()
+        .height;
+
+    await step(
+      'keeps an uppercase or invalid size as written and renders medium',
+      () => {
+        expect(upper.getAttribute('size'), 'attribute stays "M"').toBe('M');
+        expect(invalid.getAttribute('size')).toBe('banana');
+        expect(height(upper), 'size="M" renders medium').toBe(
+          height(reference)
+        );
+        expect(height(invalid), 'invalid size renders medium').toBe(
+          height(reference)
+        );
+        expect(height(large), 'a valid size still differs').not.toBe(
+          height(reference)
+        );
+      }
+    );
+
+    await step('warns with the property and received value', () =>
+      withWarningSpy(async (warnCalls) => {
+        upper.size = 'XL' as Button['size'];
+        await upper.updateComplete;
+        expect(upper.getAttribute('size')).toBe('XL');
+        expect(String(warnCalls[0]?.[1] ?? '')).toMatch(/"size".*"XL"/);
+      })
+    );
+
+    await step('warns when an invalid size is set as an attribute', () =>
+      withWarningSpy(async (warnCalls) => {
+        upper.setAttribute('size', 'huge');
+        await upper.updateComplete;
+        expect(upper.getAttribute('size')).toBe('huge');
+        expect(upper.size).toBe('huge');
+        expect(String(warnCalls[0]?.[1] ?? '')).toMatch(/"size".*"huge"/);
+      })
     );
   },
 };
@@ -675,12 +729,15 @@ export const HostListenersTest: Story = {
     await step(
       'routes programmatic focus to internal button via delegatesFocus',
       async () => {
-        button.focus();
-        const activeElement = (button.renderRoot as ShadowRoot).activeElement;
-        expect(
-          activeElement?.tagName.toLowerCase(),
-          'delegatesFocus routes focus to internal <button>'
-        ).toBe('button');
+        // Retry focus while sibling test frames compete for it in Firefox.
+        await waitFor(() => {
+          button.focus();
+          const activeElement = (button.renderRoot as ShadowRoot).activeElement;
+          expect(
+            activeElement?.tagName.toLowerCase(),
+            'delegatesFocus routes focus to internal <button>'
+          ).toBe('button');
+        });
       }
     );
   },
@@ -756,6 +813,52 @@ export const InvalidFillStyleWarningTest: Story = {
           String(warnCalls[0]?.[1] || ''),
           'warning message mentions fill-style'
         ).toContain('fill-style');
+      })
+    );
+  },
+};
+
+export const InvalidStaticColorWarningTest: Story = {
+  render: () => html`
+    <swc-button>Label</swc-button>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const button = await getComponent<Button>(canvasElement, 'swc-button');
+    const inner = button.shadowRoot!.querySelector('button')!;
+    const defaultBackground = getComputedStyle(inner).backgroundColor;
+
+    await step(
+      'warns, keeps the value, and renders the default for an invalid static-color',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          button.staticColor = 'purple' as Button['staticColor'];
+          await button.updateComplete;
+
+          expect(
+            String(warnCalls[0]?.[1] || ''),
+            'warning names the property and received value'
+          ).toMatch(/"static-color".*"purple"/);
+          expect(
+            button.getAttribute('static-color'),
+            'attribute keeps the value set'
+          ).toBe('purple');
+          expect(
+            getComputedStyle(inner).backgroundColor,
+            'renders the default background'
+          ).toBe(defaultBackground);
+        })
+    );
+
+    await step('does not warn for valid static-color values', () =>
+      withWarningSpy(async (warnCalls) => {
+        for (const staticColor of BUTTON_STATIC_COLORS) {
+          button.staticColor = staticColor;
+          await button.updateComplete;
+        }
+        button.staticColor = undefined;
+        await button.updateComplete;
+
+        expect(warnCalls.length, 'no warnings for valid static-colors').toBe(0);
       })
     );
   },

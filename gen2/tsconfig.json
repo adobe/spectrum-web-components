@@ -2,26 +2,35 @@
   "compilerOptions": {
     "allowImportingTsExtensions": true,
 
-    // gen2 specific: Build configuration
+    // Source-only editor coverage; production packages use their own projects.
     "noEmit": true,
 
     // Additional strictness
     "noFallthroughCasesInSwitch": true,
     "outDir": "./dist",
+    "paths": {
+      "@adobe/spectrum-wc-core/*": ["./packages/core/*"],
+      "@adobe/spectrum-wc-icons/*": ["./packages/icons/src/*"],
+      "@adobe/spectrum-wc/*": ["./packages/swc/components/*"],
+      "@adobe/spectrum-wc/components/*": ["./packages/swc/components/*"],
+      "@adobe/spectrum-wc/patterns/*": ["./packages/swc/patterns/*"],
+      "@adobe/vite-global-elements-css": [
+        "./packages/tools/vite-global-elements-css"
+      ],
+      "@swc-test-helpers/dom": ["./test/helpers/dom/index.ts"],
+      "@swc-test-helpers/playwright": ["./test/helpers/playwright/index.ts"]
+    },
     "rootDir": "./"
   },
-  "exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.stories.ts"],
+  "exclude": [
+    "**/node_modules/**",
+    "**/dist/**",
+    "**/*.stories.ts",
+    "**/stories/**/*.test.ts",
+    "packages/icons/**/*.test.ts",
+    "packages/swc/**/*.test.ts",
+    "packages/tools/**/*.test.ts"
+  ],
   "extends": "../tsconfig.base.json",
-  "include": ["packages/**/*.ts", "**/*.d.ts"],
-  "references": [
-    {
-      "path": "./packages/core"
-    },
-    {
-      "path": "./packages/icons"
-    },
-    {
-      "path": "./packages/swc"
-    }
-  ]
+  "include": ["packages/**/*.ts", "**/*.d.ts", "test/helpers/**/*.ts"]
 }

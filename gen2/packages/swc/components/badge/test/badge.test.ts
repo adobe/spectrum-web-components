@@ -12,6 +12,11 @@
 import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import {
+  getComponent,
+  getComponents,
+  withWarningSpy,
+} from '@swc-test-helpers/dom';
 
 import { Badge } from '@adobe/spectrum-wc/badge';
 import {
@@ -24,11 +29,6 @@ import {
 
 import '@adobe/spectrum-wc/components/badge/swc-badge.js';
 
-import {
-  getComponent,
-  getComponents,
-  withWarningSpy,
-} from '../../../utils/test-utils.js';
 import meta, {
   Anatomy,
   Fixed,
@@ -142,6 +142,36 @@ export const FixedClearingTest: Story = {
         'fixed attribute is absent after clearing'
       ).toBe(false);
     });
+  },
+};
+
+export const InvalidSizeTest: Story = {
+  render: () => html`
+    <swc-badge size="M">Uppercase</swc-badge>
+    <swc-badge>Default</swc-badge>
+    <swc-badge size="m">Medium</swc-badge>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const [upper, reference, medium] = await getComponents<Badge>(
+      canvasElement,
+      'swc-badge'
+    );
+    const height = (badge: Badge): number =>
+      badge.shadowRoot!.querySelector('.swc-Badge')!.getBoundingClientRect()
+        .height;
+
+    await step(
+      'keeps an uppercase size and renders the default small size',
+      () => {
+        expect(upper.getAttribute('size'), 'attribute stays "M"').toBe('M');
+        expect(height(upper), 'renders like the default').toBe(
+          height(reference)
+        );
+        expect(height(medium), 'size="m" still renders medium').not.toBe(
+          height(reference)
+        );
+      }
+    );
   },
 };
 
@@ -353,6 +383,48 @@ export const InvalidVariantWarningTest: Story = {
           String(warnCalls[0]?.[1] || ''),
           'warning message references variant'
         ).toContain('variant');
+      })
+    );
+  },
+};
+
+export const InvalidFixedWarningTest: Story = {
+  render: () => html`
+    <swc-badge>Label</swc-badge>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const badge = await getComponent<Badge>(canvasElement, 'swc-badge');
+    const inner = badge.shadowRoot!.querySelector('.swc-Badge')!;
+    const defaultRadius = getComputedStyle(inner).borderRadius;
+
+    await step(
+      'warns, keeps the value, and renders unfixed for an invalid fixed',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          badge.fixed = 'middle' as Badge['fixed'];
+          await badge.updateComplete;
+
+          expect(
+            String(warnCalls[0]?.[1] || ''),
+            'warning names the property and received value'
+          ).toMatch(/"fixed".*"middle"/);
+          expect(badge.getAttribute('fixed'), 'attribute keeps the value').toBe(
+            'middle'
+          );
+          expect(
+            getComputedStyle(inner).borderRadius,
+            'renders the default (unfixed) corners'
+          ).toBe(defaultRadius);
+        })
+    );
+
+    await step('does not warn for valid fixed values', () =>
+      withWarningSpy(async (warnCalls) => {
+        for (const fixed of FIXED_VALUES) {
+          badge.fixed = fixed;
+          await badge.updateComplete;
+        }
+        expect(warnCalls.length, 'no warnings for valid fixed values').toBe(0);
       })
     );
   },
