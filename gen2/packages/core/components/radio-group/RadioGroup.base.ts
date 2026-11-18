@@ -103,6 +103,9 @@ export abstract class RadioGroupBase extends SizedMixin(
    */
   declare public size: RadioSize;
 
+  /** @internal */
+  declare public readonly resolvedSize: RadioSize;
+
   /**
    * Emphasis applied to all items' checked indicator.
    */
@@ -277,7 +280,7 @@ export abstract class RadioGroupBase extends SizedMixin(
     this,
     {
       attribute: 'size',
-      getValue: () => this.size,
+      getValue: () => this.resolvedSize,
     }
   );
 
