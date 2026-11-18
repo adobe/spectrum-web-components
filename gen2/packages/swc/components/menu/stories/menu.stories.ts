@@ -178,7 +178,6 @@ export const Sizes: Story = {
 
 export const ItemContent: Story = {
   args: {
-    open: true,
     for: 'item-content-trigger',
     'actual-placement': null,
   },

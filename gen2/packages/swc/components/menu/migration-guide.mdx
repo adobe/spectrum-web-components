@@ -47,18 +47,17 @@ import '@adobe/spectrum-wc/components/menu/swc-menu-item.js';
 
 ### Added in Spectrum 2
 
-| Addition                             | Notes                                                                                                |
-| ------------------------------------ | ---------------------------------------------------------------------------------------------------- |
-| `for` / `triggerElement`             | References an externally-authored trigger; required, see [step 2](#2-author-and-reference-a-trigger) |
-| `placement`                          | 12 values covering all six sides with two alignments each; default `'bottom-start'`                  |
-| `should-flip`                        | Reposition to the opposite side when the requested side doesn't fit; default `true`                  |
-| `open`                               | Reflected boolean controlling visibility                                                             |
-| `xl` size                            | Joins `s` / `m` / `l`                                                                                |
-| `swc-open` / `swc-after-open` events | Fire as the menu opens                                                                               |
-| Item `description` slot              | Supporting text below the label, announced as the item's description                                 |
-| Item `secondary` slot                | Trailing text such as a keyboard shortcut, announced after the description                           |
-| `swc-thumbnail` in `visual`          | Thumbnails are sized separately from icons, so an item keeps its proportions at every size           |
-| `--swc-menu-item-*`                  | Public theming hooks for items, including per-state background colors                                |
+| Addition                             | Notes                                                                                                                                                  |
+| ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `for` / `triggerElement`             | References an externally-authored trigger; required, see [step 2](#2-author-and-reference-a-trigger)                                                   |
+| `placement`                          | 12 values covering all six sides with two alignments each; default `'bottom-start'`                                                                    |
+| `should-flip`                        | Reposition to the opposite side when the requested side doesn't fit; default `true`                                                                    |
+| `open`                               | Reflected boolean controlling visibility                                                                                                               |
+| `xl` size                            | Joins `s` / `m` / `l`                                                                                                                                  |
+| `swc-open` / `swc-after-open` events | Fire as the menu opens                                                                                                                                 |
+| Item name and description wiring     | An item's `label` slot provides its accessible name, and its `description` and `secondary` slots its accessible description. Spectrum 1 wired neither. |
+| `swc-thumbnail` in `visual`          | Thumbnails are sized separately from icons, so an item keeps its proportions at every size                                                             |
+| `--swc-menu-item-*`                  | Public theming hooks for items, including per-state background colors                                                                                  |
 
 ### Removed in Spectrum 2
 
