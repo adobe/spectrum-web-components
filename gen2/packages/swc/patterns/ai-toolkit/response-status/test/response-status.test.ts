@@ -811,6 +811,13 @@ export const DetailOverflowVisibilityTest: Story = {
           },
           { timeout: 2000 }
         );
+
+        expect(overflowingRegion()?.classList).toContain(
+          'swc-ResponseStatusStep-detailScroll--overflows'
+        );
+        expect(getComputedStyle(overflowingRegion()!, '::before').content).toBe(
+          '""'
+        );
       }
     );
 
@@ -865,6 +872,248 @@ export const DetailOverflowVisibilityTest: Story = {
         );
 
         freshStep.remove();
+      }
+    );
+
+    await step(
+      'a short, non-overflowing description does not get a tabindex',
+      async () => {
+        // Regression: the sticky fade pseudo-elements (see .css) reserve
+        // their own negative-margined layout space inside the scroll
+        // region, which can inflate `scrollHeight` even when the content
+        // doesn't visually overflow. A short description must not be
+        // measured as overflowing because of that.
+        const shortStep = document.createElement(
+          'swc-response-status-step'
+        ) as ResponseStatusStep;
+        shortStep.setAttribute('status', 'complete');
+        shortStep.innerHTML = `
+          <span slot="label">Short step</span>
+          <span slot="description">A short one-line description.</span>
+        `;
+        canvasElement.appendChild(shortStep);
+        await shortStep.updateComplete;
+
+        shortStep.open = true;
+        await shortStep.updateComplete;
+        await new Promise((resolve) => requestAnimationFrame(resolve));
+
+        const shortRegion = shortStep.shadowRoot?.querySelector<HTMLElement>(
+          '.swc-ResponseStatusStep-detailScroll'
+        );
+        expect(shortRegion?.hasAttribute('tabindex')).toBe(false);
+
+        expect(shortRegion?.classList).not.toContain(
+          'swc-ResponseStatusStep-detailScroll--overflows'
+        );
+        expect(getComputedStyle(shortRegion!, '::before').content).toBe('none');
+
+        shortStep.remove();
+      }
+    );
+
+    await step(
+      'a short but wide code sample overflows horizontally and still gets a tabindex',
+      async () => {
+        const wideStep = document.createElement(
+          'swc-response-status-step'
+        ) as ResponseStatusStep;
+        wideStep.setAttribute('status', 'complete');
+        wideStep.innerHTML = `
+          <span slot="label">Wide step</span>
+          <pre>const veryLongVariableNameThatKeepsGoingAndGoingAndGoing = 'a value long enough to overflow the detail panel horizontally';</pre>
+        `;
+        canvasElement.appendChild(wideStep);
+        await wideStep.updateComplete;
+
+        wideStep.open = true;
+        await wideStep.updateComplete;
+
+        const wideRegion = (): HTMLElement | null | undefined =>
+          wideStep.shadowRoot?.querySelector<HTMLElement>(
+            '.swc-ResponseStatusStep-detailScroll'
+          );
+
+        await waitFor(
+          () => {
+            const region = wideRegion();
+            if (!region) {
+              throw new Error('Expected the description scroll region');
+            }
+
+            expect(
+              region.getAttribute('tabindex'),
+              'remains keyboard-focusable'
+            ).toBe('0');
+
+            expect(
+              region.clientHeight,
+              'the region is rendered'
+            ).toBeGreaterThan(0);
+
+            expect(
+              region.scrollWidth,
+              'wide code still scrolls horizontally'
+            ).toBeGreaterThan(region.clientWidth);
+
+            expect(
+              region.scrollHeight,
+              'a single code line must not acquire vertical overflow'
+            ).toBeLessThanOrEqual(region.clientHeight + 1);
+
+            expect(
+              getComputedStyle(region, '::before').content,
+              'horizontal-only overflow does not trigger the vertical fade'
+            ).toBe('none');
+          },
+          { timeout: 2000 }
+        );
+
+        wideStep.remove();
+      }
+    );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Growing a description while its step is already open updates the
+// overflow fade/focusability without requiring a close/reopen
+// ──────────────────────────────────────────────────────────────
+
+export const DescriptionOverflowUpdatesTest: Story = {
+  render: () => html`
+    <swc-response-status-step status="complete" open>
+      <span slot="label">Reviewing source documents</span>
+      <span slot="description">Review started.</span>
+    </swc-response-status-step>
+  `,
+  play: async ({ canvasElement, step }) => {
+    await step(
+      'updates overflow fades when an open description grows',
+      async () => {
+        const el = await getComponent<ResponseStatusStep>(
+          canvasElement,
+          'swc-response-status-step'
+        );
+        const region = el.shadowRoot?.querySelector<HTMLElement>(
+          '.swc-ResponseStatusStep-detailScroll'
+        );
+        const description = el.querySelector('[slot="description"]');
+
+        if (!region || !description) {
+          throw new Error('Expected the description and its scroll region');
+        }
+
+        await waitFor(() => {
+          expect(
+            region.clientHeight,
+            'the description is rendered'
+          ).toBeGreaterThan(0);
+
+          expect(
+            region.scrollHeight,
+            'the initial short description fits'
+          ).toBeLessThanOrEqual(region.clientHeight + 1);
+
+          expect(
+            getComputedStyle(region, '::after').content,
+            'short content has no fade overlay'
+          ).toBe('none');
+        });
+
+        description.textContent =
+          'Reviewing source documents and cross-checking the reported figures. '.repeat(
+            100
+          );
+        await el.updateComplete;
+
+        await waitFor(() => {
+          expect(el.open, 'the step remains open').toBe(true);
+
+          expect(
+            region.scrollHeight,
+            'the updated description overflows vertically'
+          ).toBeGreaterThan(region.clientHeight + 1);
+
+          expect(
+            getComputedStyle(region, '::after').content,
+            'the fade overlay appears without reopening the step'
+          ).toBe('""');
+        });
+      }
+    );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: A slotted `<pre>` toggles the step's code styling on and off
+// ──────────────────────────────────────────────────────────────
+
+export const StepCodeToggleTest: Story = {
+  render: () => html`
+    <swc-response-status-step status="complete">
+      <span slot="label">Reviewed the source material</span>
+      <span slot="description">A plain-text description.</span>
+    </swc-response-status-step>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const el = await getComponent<ResponseStatusStep>(
+      canvasElement,
+      'swc-response-status-step'
+    );
+    const scroll = (): HTMLElement | null | undefined =>
+      el.shadowRoot?.querySelector<HTMLElement>(
+        '.swc-ResponseStatusStep-detailScroll'
+      );
+
+    await step(
+      'does not get the code class with a plain-text description',
+      async () => {
+        await waitFor(() => {
+          expect(
+            scroll()?.classList.contains(
+              'swc-ResponseStatusStep-detailScroll--code'
+            )
+          ).toBe(false);
+        });
+      }
+    );
+
+    await step('adds the code class once a `<pre>` is slotted in', async () => {
+      const description = el.querySelector('[slot="description"]');
+      description?.remove();
+
+      const pre = document.createElement('pre');
+      pre.textContent = 'const value = 1;';
+      el.appendChild(pre);
+      await el.updateComplete;
+
+      await waitFor(() => {
+        expect(
+          scroll()?.classList.contains(
+            'swc-ResponseStatusStep-detailScroll--code'
+          )
+        ).toBe(true);
+      });
+    });
+
+    await step(
+      'removes the code class once the `<pre>` is removed again',
+      async () => {
+        el.querySelector('pre')?.remove();
+        const description = document.createElement('span');
+        description.setAttribute('slot', 'description');
+        description.textContent = 'Back to a plain-text description.';
+        el.appendChild(description);
+        await el.updateComplete;
+
+        await waitFor(() => {
+          expect(
+            scroll()?.classList.contains(
+              'swc-ResponseStatusStep-detailScroll--code'
+            )
+          ).toBe(false);
+        });
       }
     );
   },
@@ -946,6 +1195,98 @@ export const HeaderLabelWrapTest: Story = {
     });
   },
 };
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Completed disclosure labels truncate at one line
+// ──────────────────────────────────────────────────────────────
+
+export const CompletedDisclosureLabelTest: Story = {
+  render: () => html`
+    <div style="inline-size: 240px;">
+      <swc-response-status status="complete" open>
+        <span slot="label">
+          A deliberately long completed response status label that should be
+          clamped at the available width when the execution steps disclosure is
+          present
+        </span>
+        <swc-response-status-step status="complete">
+          <span slot="label">Reviewed the source material</span>
+        </swc-response-status-step>
+      </swc-response-status>
+    </div>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const el = await getComponent<TestResponseStatus>(
+      canvasElement,
+      'swc-response-status'
+    );
+
+    await step('clamps the disclosure label to one line', async () => {
+      const label = el.shadowRoot?.querySelector<HTMLElement>(
+        '.swc-ResponseStatus-headerTrailLine--settled .swc-ResponseStatus-label'
+      );
+      expect(label).toBeTruthy();
+
+      const lineHeight = parseFloat(getComputedStyle(label!).lineHeight);
+      await waitFor(() => {
+        expect(label!.getBoundingClientRect().height).toBeLessThanOrEqual(
+          lineHeight + 1
+        );
+        expect(label!.scrollHeight).toBeGreaterThan(label!.clientHeight);
+      });
+    });
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Agentic status width scales with its parent container
+// ──────────────────────────────────────────────────────────────
+
+export const AgenticWidthTest: Story = {
+  render: () => html`
+    <div
+      class="width-test-container"
+      style="display: flex; inline-size: 320px;"
+    >
+      <swc-response-status status="active"></swc-response-status>
+    </div>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const container = canvasElement.querySelector<HTMLElement>(
+      '.width-test-container'
+    );
+    const el = await getComponent<TestResponseStatus>(
+      canvasElement,
+      'swc-response-status'
+    );
+    const content = el.shadowRoot?.querySelector<HTMLElement>(
+      '.swc-ResponseStatus'
+    );
+
+    await step(
+      'caps at 90% of a narrow container and interpolates down to 65% in a wide one',
+      async () => {
+        expect(container).toBeTruthy();
+        expect(content).toBeTruthy();
+        // The clamp lives on `:host`, so the host's own box and its painted
+        // content clamp together instead of the host staying full-width
+        // while only the inner content is constrained. Assert the two
+        // boundary cases only (the 90% cap and the 65% floor), rather than
+        // every width the `calc()` interpolates through in between.
+        expect(el.getBoundingClientRect().width).toBe(288);
+        expect(content!.getBoundingClientRect().width).toBe(288);
+
+        container!.style.inlineSize = '1280px';
+        expect(el.getBoundingClientRect().width).toBeCloseTo(832, 0);
+        expect(content!.getBoundingClientRect().width).toBeCloseTo(832, 0);
+      }
+    );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Loader pauses on disconnect and resumes on reconnect
+// ──────────────────────────────────────────────────────────────
 
 export const LoaderReconnectTest: Story = {
   render: () => html`
