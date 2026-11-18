@@ -15,6 +15,7 @@ import { expect, type Locator, type Page, test } from '@playwright/test';
 import { gotoStory } from '@swc-test-helpers/playwright';
 
 import type { Checkbox } from '@adobe/spectrum-wc/checkbox';
+import type { CheckboxSize } from '@adobe/spectrum-wc-core/components/checkbox';
 
 /**
  * Accessibility tests for the gen2 Checkbox component.
@@ -28,6 +29,14 @@ import type { Checkbox } from '@adobe/spectrum-wc/checkbox';
 const PLAYGROUND = 'components-checkbox--playground';
 const NAME = 'Send me product updates';
 const WCAG_TAGS = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'];
+
+/** Every checkbox size, in Sizes story order; a missing size fails type-check. */
+const SIZES = Object.keys({
+  s: true,
+  m: true,
+  l: true,
+  xl: true,
+} satisfies Record<CheckboxSize, true>);
 
 /** Expected accessibility tree of each docs story, keyed by story ID suffix. */
 const STORY_SNAPSHOTS: Record<string, string> = {
@@ -106,6 +115,8 @@ const STORY_SNAPSHOTS: Record<string, string> = {
     - text: I agree to the terms of service
     - checkbox "Send me product updates" [checked=false]
     - text: Send me product updates We send one email a month.
+    - checkbox "Keep my current plan" [checked] [disabled]
+    - text: Keep my current plan Managed by your administrator.
     - group:
       - button "Submit"
       - button "Reset"
@@ -209,7 +220,8 @@ async function addControlForm(page: Page): Promise<void> {
     (window as TestWindow).__controlSubmits = 0;
     form.addEventListener('submit', (event) => {
       event.preventDefault();
-      (window as TestWindow).__controlSubmits! += 1;
+      const w = window as TestWindow;
+      w.__controlSubmits = (w.__controlSubmits ?? 0) + 1;
     });
     document.body.append(form);
   });
@@ -518,7 +530,7 @@ test.describe('Checkbox - ARIA snapshots', () => {
     );
     const checkboxes = root.locator('swc-checkbox');
 
-    for (const [index, size] of ['s', 'm', 'l', 'xl'].entries()) {
+    for (const [index, size] of SIZES.entries()) {
       await expect(
         checkboxes.nth(index),
         `checkbox ${index} has size ${size}`
@@ -611,7 +623,9 @@ test.describe('Checkbox - Keyboard interactions', () => {
       checkbox.locator('input'),
       'Tab focuses the inner input'
     ).toBeFocused();
-    expect(await ringOf(), 'box outline with keyboard focus').toBe('solid');
+    await expect
+      .poll(ringOf, { message: 'box outline with keyboard focus' })
+      .toBe('solid');
     // The label color transitions, so wait for it to settle.
     await expect
       .poll(
@@ -627,7 +641,9 @@ test.describe('Checkbox - Keyboard interactions', () => {
       checkbox.locator('input'),
       'a pointer click focuses the inner input'
     ).toBeFocused();
-    expect(await ringOf(), 'box outline after a pointer click').toBe('none');
+    await expect
+      .poll(ringOf, { message: 'box outline after a pointer click' })
+      .toBe('none');
   });
 
   test('should toggle on Space and not on Enter', async ({ page }) => {

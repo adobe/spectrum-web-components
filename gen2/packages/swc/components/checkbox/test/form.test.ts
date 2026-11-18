@@ -16,10 +16,15 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getComponent, getComponents } from '@swc-test-helpers/dom';
 
 import type { Checkbox } from '@adobe/spectrum-wc/checkbox';
+import {
+  CHECKBOX_STATUSES,
+  type CheckboxStatus,
+} from '@adobe/spectrum-wc-core/components/checkbox';
 
 import '@adobe/spectrum-wc/components/checkbox/swc-checkbox.js';
 
 import { FormParticipation } from '../stories/checkbox.stories.js';
+import { elementOf, inputOf, partOf } from './helpers/checkbox-test-helpers.js';
 
 export default {
   title: 'Checkbox/Form tests',
@@ -37,22 +42,6 @@ function formOf(
     throw new Error('Test requires a form');
   }
   return form;
-}
-
-function inputOf(checkbox: Checkbox): HTMLInputElement {
-  const input = checkbox.shadowRoot?.querySelector('input');
-  if (!input) {
-    throw new Error('swc-checkbox rendered no input');
-  }
-  return input;
-}
-
-function elementOf<T extends Element>(root: ParentNode, selector: string): T {
-  const element = root.querySelector<T>(selector);
-  if (!element) {
-    throw new Error(`Test requires ${selector}`);
-  }
-  return element;
 }
 
 /** Cancels each submit, so the page does not navigate, and records its submitter. */
@@ -385,6 +374,7 @@ export const RequiredTest: Story = {
     <form>
       <swc-checkbox name="terms" value="accepted" required>
         <span slot="label">I agree to the terms</span>
+        <span slot="error-text">Agree to the terms to continue.</span>
       </swc-checkbox>
     </form>
   `,
@@ -443,6 +433,29 @@ export const RequiredTest: Story = {
       expect(invalid, 'invalid events from a blocked submit').toBe(1);
     });
 
+    await step('does not set field-status on a native failure', async () => {
+      await checkbox.updateComplete;
+      expect(checkbox.fieldStatus, 'field-status after a native failure').toBe(
+        undefined
+      );
+      expect(
+        checkbox,
+        'field-status attribute after a native failure'
+      ).not.toHaveAttribute('field-status');
+      expect(
+        checkbox.validity.customError,
+        'customError after a native failure'
+      ).toBe(false);
+      expect(
+        partOf(checkbox, '.swc-FormFieldErrorText'),
+        'rendered error text after a native failure'
+      ).toBe(null);
+      expect(
+        inputOf(checkbox),
+        'input aria-invalid after a native failure'
+      ).not.toHaveAttribute('aria-invalid');
+    });
+
     await step('clears valueMissing and submits once checked', async () => {
       inputOf(checkbox).click();
       await checkbox.updateComplete;
@@ -456,6 +469,61 @@ export const RequiredTest: Story = {
       expect(invalid, 'invalid events once checked').toBe(0);
       form.requestSubmit();
       expect(submits, 'submits once checked').toBe(1);
+    });
+
+    await step(
+      'keeps field-status and the error UI unchanged on user toggles',
+      async () => {
+        for (const expected of [false, true]) {
+          inputOf(checkbox).click();
+          await checkbox.updateComplete;
+          expect(checkbox.checked, 'checked after a user toggle').toBe(
+            expected
+          );
+          expect(
+            checkbox.validity.valueMissing,
+            'valueMissing after a user toggle'
+          ).toBe(!expected);
+          expect(
+            checkbox,
+            'field-status attribute after a user toggle'
+          ).not.toHaveAttribute('field-status');
+          expect(
+            partOf(checkbox, '.swc-FormFieldErrorText'),
+            'rendered error text after a user toggle'
+          ).toBe(null);
+          expect(
+            inputOf(checkbox),
+            'input aria-invalid after a user toggle'
+          ).not.toHaveAttribute('aria-invalid');
+        }
+      }
+    );
+
+    await step('stays valid with error text but no invalid status', () => {
+      expect(
+        elementOf(checkbox, '[slot="error-text"]').textContent,
+        'slotted error text'
+      ).not.toBe('');
+      expect(checkbox.validity.valid, 'validity with only error text').toBe(
+        true
+      );
+      expect(
+        checkbox.validity.customError,
+        'customError with only error text'
+      ).toBe(false);
+      expect(
+        checkbox.validationMessage,
+        'validation message with only error text'
+      ).toBe('');
+      expect(
+        checkbox.fieldStatus,
+        'field-status with only error text'
+      ).toBeUndefined();
+      expect(
+        partOf(checkbox, '.swc-FormFieldErrorText'),
+        'rendered error text with only error text'
+      ).toBe(null);
     });
   },
 };
@@ -592,6 +660,142 @@ export const ImmediateSyncTest: Story = {
 ImmediateSyncTest.storyName = 'Script changes take effect immediately';
 
 // ──────────────────────────────────────────────────────────────
+// TEST: Slots
+// ──────────────────────────────────────────────────────────────
+
+// While invalid, the validation message is the plain text of `error-text`, or
+// the standard fallback. It follows text-only edits, replacements, and
+// content present before the first render.
+export const ValidationMessageTest: Story = {
+  // The message is the raw text of error-text, so keep the markup on one line.
+  // prettier-ignore
+  render: () => html`
+    <form>
+      <swc-checkbox name="terms" required field-status="invalid">
+        <span slot="label">I agree to the terms</span>
+        <span slot="error-text">Agree to <strong>the terms</strong> to continue.</span>
+      </swc-checkbox>
+    </form>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const checkbox = await getComponent<Checkbox>(
+      canvasElement,
+      'swc-checkbox'
+    );
+    const errorText = elementOf<HTMLElement>(checkbox, '[slot="error-text"]');
+
+    await step(
+      'uses the plain text of error-text present before the first render',
+      () => {
+        expect(
+          checkbox.validationMessage,
+          'validation message from markup in error-text'
+        ).toBe('Agree to the terms to continue.');
+        expect(
+          checkbox.validity.customError,
+          'customError from the authored status'
+        ).toBe(true);
+        expect(
+          'setCustomValidity' in checkbox,
+          'setCustomValidity on the host'
+        ).toBe(false);
+      }
+    );
+
+    await step('follows a text-only edit to error-text', async () => {
+      const text = elementOf(errorText, 'strong').firstChild as Text;
+      text.data = 'our terms';
+      await waitFor(() =>
+        expect(
+          checkbox.validationMessage,
+          'validation message after a text node edit'
+        ).toBe('Agree to our terms to continue.')
+      );
+    });
+
+    await step('follows a replacement error-text element', async () => {
+      const replacement = document.createElement('span');
+      replacement.slot = 'error-text';
+      replacement.textContent = 'Confirm the terms first.';
+      errorText.replaceWith(replacement);
+      await waitFor(() =>
+        expect(
+          checkbox.validationMessage,
+          'validation message from the replacement'
+        ).toBe('Confirm the terms first.')
+      );
+      replacement.remove();
+    });
+
+    await step(
+      'falls back to the standard message without error-text',
+      async () => {
+        await waitFor(() =>
+          expect(
+            checkbox.validationMessage,
+            'validation message without error-text'
+          ).toBe('Enter a valid value.')
+        );
+      }
+    );
+
+    await step(
+      'uses the native message instead of error-text while not invalid',
+      async () => {
+        const message = document.createElement('span');
+        message.slot = 'error-text';
+        message.textContent = 'Agree to the terms to continue.';
+        checkbox.append(message);
+        checkbox.fieldStatus = undefined;
+        await checkbox.updateComplete;
+        expect(
+          checkbox.validity.customError,
+          'customError while not invalid'
+        ).toBe(false);
+        expect(
+          checkbox.validity.valueMissing,
+          'valueMissing while required and unchecked'
+        ).toBe(true);
+        expect(
+          checkbox.validationMessage,
+          'native validation message while not invalid'
+        ).toBe(inputOf(checkbox).validationMessage);
+      }
+    );
+
+    await step('keeps tracking error-text after being moved', async () => {
+      checkbox.fieldStatus = 'invalid';
+      await checkbox.updateComplete;
+      const parent = checkbox.parentElement;
+      if (!parent) {
+        throw new Error('Test requires a parent element');
+      }
+      checkbox.remove();
+      parent.append(checkbox);
+      await checkbox.updateComplete;
+      elementOf(checkbox, '[slot="error-text"]').textContent = 'Moved message.';
+      await waitFor(() =>
+        expect(
+          checkbox.validationMessage,
+          'validation message after moving'
+        ).toBe('Moved message.')
+      );
+    });
+
+    await step('reports an empty message once valid', async () => {
+      checkbox.fieldStatus = undefined;
+      checkbox.checked = true;
+      await checkbox.updateComplete;
+      expect(checkbox.checkValidity(), 'checkValidity once valid').toBe(true);
+      expect(checkbox.validationMessage, 'validation message once valid').toBe(
+        ''
+      );
+    });
+  },
+};
+ValidationMessageTest.storyName = 'Validation message';
+
+// ──────────────────────────────────────────────────────────────
 // TEST: Variants / States
 // ──────────────────────────────────────────────────────────────
 
@@ -628,6 +832,10 @@ export const InvalidStatusTest: Story = {
           'validation message from error text'
         ).toBe('This plan is unavailable.');
         expect(form.checkValidity(), 'form validity while invalid').toBe(false);
+        expect(
+          'setCustomValidity' in checkbox,
+          'setCustomValidity on the host'
+        ).toBe(false);
       }
     );
 
@@ -686,6 +894,107 @@ export const InvalidStatusTest: Story = {
   },
 };
 InvalidStatusTest.storyName = 'field-status="invalid" validity';
+
+// Native constraints and an authored invalid status are separate sources.
+// Clearing or satisfying one never clears the other.
+export const IndependentValiditySourcesTest: Story = {
+  render: () => html`
+    <form>
+      <swc-checkbox name="terms" required field-status="invalid">
+        <span slot="label">I agree to the terms</span>
+        <span slot="error-text">These terms have expired.</span>
+      </swc-checkbox>
+    </form>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const checkbox = await getComponent<Checkbox>(
+      canvasElement,
+      'swc-checkbox'
+    );
+
+    await step('fails both sources together', () => {
+      expect(
+        checkbox.validity.valueMissing,
+        'valueMissing while required, unchecked, and invalid'
+      ).toBe(true);
+      expect(
+        checkbox.validity.customError,
+        'customError while required, unchecked, and invalid'
+      ).toBe(true);
+      expect(
+        checkbox.validationMessage,
+        'validation message while both sources fail'
+      ).toBe('These terms have expired.');
+      expect(
+        checkbox.checkValidity(),
+        'checkValidity while both sources fail'
+      ).toBe(false);
+    });
+
+    await step(
+      'keeps customError once the native constraint passes',
+      async () => {
+        // A user toggle, not a script, so it also shows that committing a
+        // value never clears the authored status.
+        inputOf(checkbox).click();
+        await checkbox.updateComplete;
+        expect(
+          checkbox.validity.valueMissing,
+          'valueMissing once checked'
+        ).toBe(false);
+        expect(checkbox.fieldStatus, 'field-status once checked').toBe(
+          'invalid'
+        );
+        expect(checkbox.validity.customError, 'customError once checked').toBe(
+          true
+        );
+        expect(checkbox.checkValidity(), 'checkValidity once checked').toBe(
+          false
+        );
+      }
+    );
+
+    await step('keeps valueMissing once invalid clears', async () => {
+      checkbox.checked = false;
+      checkbox.fieldStatus = undefined;
+      await checkbox.updateComplete;
+      expect(
+        checkbox.validity.customError,
+        'customError after clearing invalid'
+      ).toBe(false);
+      expect(
+        checkbox.validity.valueMissing,
+        'valueMissing after clearing invalid'
+      ).toBe(true);
+      expect(
+        checkbox.validationMessage,
+        'validation message after clearing invalid'
+      ).not.toBe('These terms have expired.');
+      expect(
+        checkbox.validationMessage,
+        'native message after clearing invalid'
+      ).toBe(inputOf(checkbox).validationMessage);
+      expect(
+        checkbox.validationMessage,
+        'native message is not empty'
+      ).not.toBe('');
+      expect(
+        checkbox.checkValidity(),
+        'checkValidity after clearing invalid'
+      ).toBe(false);
+    });
+
+    await step('turns valid once both sources pass', async () => {
+      checkbox.checked = true;
+      await checkbox.updateComplete;
+      expect(checkbox.validity.valid, 'validity once both pass').toBe(true);
+      expect(checkbox.checkValidity(), 'checkValidity once both pass').toBe(
+        true
+      );
+    });
+  },
+};
+IndependentValiditySourcesTest.storyName = 'Independent validity sources';
 
 export const BarredTest: Story = {
   render: () => html`
@@ -930,11 +1239,13 @@ export const ResetTest: Story = {
     await step(
       'clears invalid and keeps read-only and disabled on reset',
       async () => {
-        for (const [status, kept] of [
-          ['invalid', undefined],
-          ['readonly', 'readonly'],
-          ['disabled', 'disabled'],
-        ] as const) {
+        const keptAfterReset = {
+          disabled: 'disabled',
+          invalid: undefined,
+          readonly: 'readonly',
+        } as const satisfies Record<CheckboxStatus, CheckboxStatus | undefined>;
+        for (const status of CHECKBOX_STATUSES) {
+          const kept = keptAfterReset[status];
           a.fieldStatus = status;
           await a.updateComplete;
           form.reset();
@@ -1252,7 +1563,7 @@ export const FormParticipationTest: Story = {
   ...FormParticipation,
   play: async ({ canvasElement, step }) => {
     const form = formOf(canvasElement);
-    const [terms, updates] = await getComponents<Checkbox>(
+    const [terms, updates, plan] = await getComponents<Checkbox>(
       canvasElement,
       'swc-checkbox'
     );
@@ -1265,8 +1576,8 @@ export const FormParticipationTest: Story = {
       'button[type="reset"]'
     );
     const status = elementOf<HTMLElement>(form, '[role="status"]');
-    const errorTextOf = (checkbox: Checkbox): Element | null | undefined =>
-      checkbox.shadowRoot?.querySelector('.swc-FormFieldErrorText');
+    const errorTextOf = (checkbox: Checkbox): HTMLElement | null =>
+      partOf(checkbox, '.swc-FormFieldErrorText');
     const entries = (): [string, FormDataEntryValue][] => [
       ...new FormData(form).entries(),
     ];
@@ -1274,6 +1585,16 @@ export const FormParticipationTest: Story = {
     form.addEventListener('submit', () => submitted.push(entries()));
     const lastSubmitted = (): [string, FormDataEntryValue][] | undefined =>
       submitted[submitted.length - 1];
+    // The read-only field is barred from validation but still submits.
+    const expectPlanReadOnly = (when: string): void => {
+      expect(plan, `plan field-status ${when}`).toHaveAttribute(
+        'field-status',
+        'readonly'
+      );
+      expect(plan.willValidate, `plan willValidate ${when}`).toBe(false);
+      expect(plan.checked, `plan checked ${when}`).toBe(true);
+      expect(errorTextOf(plan), `plan error text ${when}`).toBe(null);
+    };
 
     await step(
       'blocks a submit with terms unchecked and marks it invalid',
@@ -1289,7 +1610,9 @@ export const FormParticipationTest: Story = {
         expect(status.textContent, 'status text after a failed submit').toBe(
           ''
         );
-        expect(submitted, 'entries at the failed submit').toEqual([[]]);
+        expect(submitted, 'entries at the failed submit').toEqual([
+          [['plan', 'basic']],
+        ]);
         expect(document.activeElement, 'focus after a failed submit').toBe(
           terms
         );
@@ -1302,6 +1625,7 @@ export const FormParticipationTest: Story = {
           'Agree to the terms to continue.'
         );
         expect(updates.fieldStatus, 'updates field-status').toBeUndefined();
+        expectPlanReadOnly('after a failed submit');
       }
     );
 
@@ -1318,29 +1642,31 @@ export const FormParticipationTest: Story = {
       expect(errorTextOf(terms), 'error text after checking').toBe(null);
     });
 
-    await step('submits terms=accepted after the error is fixed', async () => {
-      await userEvent.click(submitButton);
-      await waitFor(() =>
-        expect(status.textContent, 'status text after submit').toContain(
-          'Submitted'
-        )
-      );
-      expect(status.textContent, 'status text with only terms').toBe(
-        'Submitted: terms=accepted'
-      );
-      expect(status.textContent, 'status text without updates').not.toContain(
-        'updates='
-      );
-      expect(lastSubmitted(), 'entries at submit with terms').toEqual([
-        ['terms', 'accepted'],
-      ]);
-      expect(entries(), 'entries read after submit with terms').toEqual(
-        lastSubmitted()
-      );
-      expect(terms.fieldStatus, 'terms field-status after submit').toBe(
-        undefined
-      );
-    });
+    await step(
+      'submits terms=accepted and the read-only plan after the fix',
+      async () => {
+        await userEvent.click(submitButton);
+        await waitFor(() =>
+          expect(status.textContent, 'status text after submit').toContain(
+            'Submitted'
+          )
+        );
+        expect(status.textContent, 'status text without updates').toBe(
+          'Submitted: terms=accepted&plan=basic'
+        );
+        expect(lastSubmitted(), 'entries at submit with terms').toEqual([
+          ['terms', 'accepted'],
+          ['plan', 'basic'],
+        ]);
+        expect(entries(), 'entries read after submit with terms').toEqual(
+          lastSubmitted()
+        );
+        expect(terms.fieldStatus, 'terms field-status after submit').toBe(
+          undefined
+        );
+        expectPlanReadOnly('after a resubmit');
+      }
+    );
 
     await step('adds updates=monthly when updates is checked', async () => {
       updates.click();
@@ -1353,14 +1679,15 @@ export const FormParticipationTest: Story = {
           'status text after submitting updates'
         ).toContain('updates=monthly')
       );
-      expect(status.textContent, 'status text with both fields').toBe(
-        'Submitted: terms=accepted&updates=monthly'
+      expect(status.textContent, 'status text with every field').toBe(
+        'Submitted: terms=accepted&updates=monthly&plan=basic'
       );
-      expect(lastSubmitted(), 'entries at submit with both fields').toEqual([
+      expect(lastSubmitted(), 'entries at submit with every field').toEqual([
         ['terms', 'accepted'],
         ['updates', 'monthly'],
+        ['plan', 'basic'],
       ]);
-      expect(entries(), 'entries read after submit with both fields').toEqual(
+      expect(entries(), 'entries read after submit with every field').toEqual(
         lastSubmitted()
       );
     });
@@ -1371,15 +1698,19 @@ export const FormParticipationTest: Story = {
         await userEvent.click(resetButton);
         await terms.updateComplete;
         await updates.updateComplete;
+        await plan.updateComplete;
         expect(terms.checked, 'terms checked after reset').toBe(false);
         expect(updates.checked, 'updates checked after reset').toBe(false);
         expect(status.textContent, 'status text after reset').toBe('');
-        expect(entries(), 'entries read after reset').toEqual([]);
+        expect(entries(), 'entries read after reset').toEqual([
+          ['plan', 'basic'],
+        ]);
+        expectPlanReadOnly('after reset');
       }
     );
 
     await step(
-      'submits no entries after reset and marks terms invalid',
+      'submits only the read-only plan after reset and marks terms invalid',
       async () => {
         await userEvent.click(submitButton);
         await waitFor(() =>
@@ -1387,19 +1718,23 @@ export const FormParticipationTest: Story = {
             'invalid'
           )
         );
-        expect(lastSubmitted(), 'entries at submit after reset').toEqual([]);
+        expect(lastSubmitted(), 'entries at submit after reset').toEqual([
+          ['plan', 'basic'],
+        ]);
         expect(entries(), 'entries read at submit after reset').toEqual(
           lastSubmitted()
         );
         expect(document.activeElement, 'focus after a failed submit').toBe(
           terms
         );
+        expectPlanReadOnly('after a failed submit following reset');
       }
     );
 
     await step('clears the invalid status on reset', async () => {
       await userEvent.click(resetButton);
       await terms.updateComplete;
+      await plan.updateComplete;
       expect(terms, 'terms field-status after reset').not.toHaveAttribute(
         'field-status'
       );
@@ -1409,7 +1744,10 @@ export const FormParticipationTest: Story = {
         'terms valueMissing after reset'
       ).toBe(true);
       expect(status.textContent, 'status text after reset').toBe('');
-      expect(entries(), 'entries read after reset').toEqual([]);
+      expect(entries(), 'entries read after reset').toEqual([
+        ['plan', 'basic'],
+      ]);
+      expectPlanReadOnly('after the second reset');
     });
   },
 };

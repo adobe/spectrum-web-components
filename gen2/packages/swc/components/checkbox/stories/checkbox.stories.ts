@@ -92,9 +92,11 @@ const handleFormSubmit = async (event: SubmitEvent): Promise<void> => {
 
   if (form.checkValidity()) {
     if (status) {
-      status.textContent = `Submitted: ${new URLSearchParams(
-        new FormData(form) as unknown as Record<string, string>
-      )}`;
+      const entries = Array.from(
+        new FormData(form),
+        ([name, value]) => `${name}=${String(value)}`
+      );
+      status.textContent = `Submitted: ${entries.join('&')}`;
     }
     return;
   }
@@ -326,6 +328,10 @@ export const FormParticipation: Story = {
       <swc-checkbox name="updates" value="monthly">
         <span slot="label">Send me product updates</span>
         <span slot="description">We send one email a month.</span>
+      </swc-checkbox>
+      <swc-checkbox name="plan" value="basic" checked field-status="readonly">
+        <span slot="label">Keep my current plan</span>
+        <span slot="description">Managed by your administrator.</span>
       </swc-checkbox>
       <swc-button-group>
         <button class="swc-Button" type="submit">Submit</button>
