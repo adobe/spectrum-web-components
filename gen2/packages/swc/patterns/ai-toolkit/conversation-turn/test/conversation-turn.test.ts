@@ -14,6 +14,7 @@ import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import '../swc-conversation-turn.js';
+import '../../response-status/swc-response-status.js';
 
 import { ConversationTurn } from '../ConversationTurn.js';
 import { meta, Overview } from '../stories/conversation-turn.stories.js';
@@ -94,5 +95,33 @@ export const NarrowUserTurnTest: Story = {
       turn!.style.inlineSize = '1000px';
       expect(slot!.getBoundingClientRect().width).toBeLessThanOrEqual(536);
     });
+  },
+};
+
+export const SystemTurnDirectChildWidthTest: Story = {
+  ...Overview,
+  play: async ({ canvasElement, step }) => {
+    const turn = canvasElement.querySelector<ConversationTurn>(
+      'swc-conversation-turn[type="system"]'
+    );
+
+    await step(
+      'a response-status slotted directly (no system-message wrapper) still honors its own width clamp',
+      async () => {
+        expect(turn).toBeTruthy();
+
+        const status = document.createElement('swc-response-status');
+        turn!.appendChild(status);
+        turn!.style.inlineSize = '1000px';
+        await status.updateComplete;
+
+        // response-status's own `:host` clamp caps it at 90% of a
+        // 1000px container; the turn's system-message stretch rule is
+        // scoped to `swc-system-message` and must not touch it here.
+        expect(status.getBoundingClientRect().width).toBeLessThanOrEqual(900);
+
+        status.remove();
+      }
+    );
   },
 };

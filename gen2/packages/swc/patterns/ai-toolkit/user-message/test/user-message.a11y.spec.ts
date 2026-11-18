@@ -13,54 +13,121 @@
 import { expect, test } from '@playwright/test';
 import { gotoStory } from '@swc-test-helpers/playwright';
 
-/**
- * Accessibility tests for UserMessage pattern
- *
- * ARIA snapshot tests validate the accessibility tree structure.
- * aXe WCAG compliance and color contrast validation are run via
- * test-storybook (see .storybook/test-runner.ts). Both are included
- * in the `test:a11y` command.
- */
-
 test.describe('UserMessage - ARIA Snapshots', () => {
-  test('should have correct accessibility tree for default user message', async ({
+  test('exposes message copy without an attachment tab stop', async ({
     page,
   }) => {
     const root = await gotoStory(
       page,
-      'patterns-ai-toolkit-user-message--overview',
+      'patterns-ai-toolkit-user-message--playground',
       'swc-user-message'
     );
-    await expect(root).toMatchAriaSnapshot(`
-      - text: /Can you help me/
+    await expect(root.locator('swc-user-message')).toMatchAriaSnapshot(`
+      - text: Can you summarize these campaign references?
     `);
+    await expect(root.locator('swc-user-message [tabindex="0"]')).toHaveCount(
+      0
+    );
   });
 
-  test('should expose accessible card attachment content', async ({ page }) => {
-    const root = await gotoStory(
+  for (const type of ['media', 'card'] as const) {
+    test(`names ${type} collections and supports native keyboard scrolling`, async ({
       page,
-      'patterns-ai-toolkit-user-message--content',
-      'swc-user-message'
-    );
-    const cardMessage = root.locator('swc-user-message').nth(1);
-    await expect(cardMessage).toMatchAriaSnapshot(`
-      - img "File"
-      - text: Hilton commercial assets 2026
-    `);
-  });
+    }) => {
+      const root = await gotoStory(
+        page,
+        'patterns-ai-toolkit-user-message--accessibility',
+        'swc-user-message'
+      );
+      const message = root.locator('swc-user-message');
+      if (type === 'card') {
+        await message.evaluate((host) => {
+          const cardMessage = document.createElement('swc-user-message');
+          cardMessage.setAttribute('type', 'card');
+          cardMessage.innerHTML = Array.from(
+            { length: 6 },
+            (_, index) => `
+            <swc-upload-attachment slot="thumbnail" type="card">
+              <swc-thumbnail slot="thumbnail" decorative></swc-thumbnail>
+              <span slot="title">Campaign reference ${index + 1}.pdf</span>
+              <span slot="subtitle">1.2 MB</span>
+            </swc-upload-attachment>
+          `
+          ).join('');
+          host.replaceWith(cardMessage);
+        });
+      }
+      const name = 'Uploaded attachments';
+      const viewport = root.getByRole('group', { name, exact: true });
+      await expect(viewport).toMatchAriaSnapshot(
+        `- group "${name}":\n${Array.from(
+          { length: type === 'card' ? 6 : 24 },
+          (_, index) =>
+            type === 'card'
+              ? `  - group "Campaign reference ${index + 1}.pdf":\n    - text: 1.2 MB`
+              : `  - img "Photobook reference ${index + 1}"`
+        ).join('\n')}`
+      );
+      await expect(root.getByRole('button')).toHaveCount(0);
+      await page.keyboard.press('Tab');
+      await expect(viewport).toBeFocused();
+      await expect(message).toHaveCSS('outline-style', 'solid');
+      await expect
+        .poll(() =>
+          viewport.evaluate(
+            (element) => element.scrollHeight - element.clientHeight
+          )
+        )
+        .toBeGreaterThan(0);
+      await viewport.evaluate((element) => {
+        element.addEventListener(
+          'scrollend',
+          () => element.setAttribute('data-scroll-ended', ''),
+          { once: true }
+        );
+      });
+      await viewport.press('End');
+      await expect(viewport).toHaveAttribute('data-scroll-ended', '');
+      await expect
+        .poll(() =>
+          viewport.evaluate(
+            (element) =>
+              element.scrollHeight - element.clientHeight - element.scrollTop
+          )
+        )
+        .toBeLessThanOrEqual(1);
+      await viewport.press('Home');
+      await expect
+        .poll(() => viewport.evaluate((element) => element.scrollTop))
+        .toBe(0);
 
-  test('should expose accessible media attachment content', async ({
+      await message.evaluate((host) => {
+        [...host.children]
+          .slice(1)
+          .forEach((attachment) => attachment.remove());
+      });
+      await expect(viewport).toHaveAttribute('tabindex', '0');
+      await expect(viewport).toHaveCSS('mask-image', 'none');
+    });
+  }
+
+  test('keeps attachments and focus visible in forced colors', async ({
     page,
   }) => {
+    await page.emulateMedia({ forcedColors: 'active' });
     const root = await gotoStory(
       page,
-      'patterns-ai-toolkit-user-message--content',
+      'patterns-ai-toolkit-user-message--accessibility',
       'swc-user-message'
     );
-    const mediaMessage = root.locator('swc-user-message').nth(2);
-    await expect(mediaMessage).toMatchAriaSnapshot(`
-      - img "Campaign preview"
-      - text: Hilton commercial assets 2026
-    `);
+    const viewport = root.getByRole('group', { name: 'Uploaded attachments' });
+    await expect(viewport).toHaveCSS('mask-image', 'none');
+    await expect(viewport).toHaveCSS('animation-name', 'none');
+    await page.keyboard.press('Tab');
+    await expect(viewport).toBeFocused();
+    await expect(root.locator('swc-user-message')).toHaveCSS(
+      'outline-style',
+      'solid'
+    );
   });
 });
