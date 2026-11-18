@@ -87,8 +87,7 @@ export class StatusLight extends StatusLightBase {
       <div
         class=${classMap({
           ['swc-StatusLight']: true,
-          [`swc-StatusLight--size${this.size?.toUpperCase()}`]:
-            this.size != null,
+          [`swc-StatusLight--size${this.resolvedSize.toUpperCase()}`]: true,
           [`swc-StatusLight--${this.variant}`]:
             typeof this.variant !== 'undefined',
         })}

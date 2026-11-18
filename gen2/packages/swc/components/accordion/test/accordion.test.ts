@@ -292,6 +292,32 @@ export const AttributeRemovalResetsTest: Story = {
   },
 };
 
+export const InvalidSizeTest: Story = {
+  render: () => html`
+    <swc-accordion size="XL">
+      <swc-accordion-item>
+        <span slot="label">Item</span>
+        <p>Panel</p>
+      </swc-accordion-item>
+    </swc-accordion>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const accordion = await getComponent<Accordion>(
+      canvasElement,
+      'swc-accordion'
+    );
+    const item = await getComponent<AccordionItem>(
+      canvasElement,
+      'swc-accordion-item'
+    );
+
+    await step('keeps an invalid size and gives items the default', () => {
+      expect(accordion.getAttribute('size')).toBe('XL');
+      expect(item.size, 'item gets the default').toBe('m');
+    });
+  },
+};
+
 // ──────────────────────────────────────────────────────────────
 // TEST: Anatomy / Slots
 // ──────────────────────────────────────────────────────────────

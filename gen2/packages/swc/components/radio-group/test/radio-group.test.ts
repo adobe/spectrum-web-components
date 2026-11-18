@@ -324,6 +324,55 @@ export const NecessityIndicatorTest: Story = {
   },
 };
 
+// ──────────────────────────────────────────────────────────────
+// TEST: Invalid size
+// ──────────────────────────────────────────────────────────────
+
+export const InvalidSizeTest: Story = {
+  render: () => html`
+    <swc-radio-group required necessity-indicator="icon">
+      <span slot="label">Favorite sport</span>
+      <swc-radio value="soccer">Soccer</swc-radio>
+      <swc-radio value="tennis">Tennis</swc-radio>
+    </swc-radio-group>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const group = await getComponent<RadioGroup>(
+      canvasElement,
+      'swc-radio-group'
+    );
+    const radios = Array.from(
+      canvasElement.querySelectorAll<Radio>('swc-radio')
+    );
+
+    await step(
+      'keeps an invalid size, warns once, and passes radios and the icon the default',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          group.setAttribute('size', 'XL');
+          await group.updateComplete;
+          await Promise.all(radios.map((radio) => radio.updateComplete));
+          const icon = group.shadowRoot!.querySelector('swc-ui-icon')!;
+          await (icon as HTMLElement & { updateComplete: Promise<unknown> })
+            .updateComplete;
+
+          expect(group.getAttribute('size'), 'attribute is kept').toBe('XL');
+          for (const radio of radios) {
+            expect(radio.getAttribute('size'), 'radio gets the default').toBe(
+              'm'
+            );
+          }
+          expect(icon.getAttribute('size'), 'icon gets the default').toBe('m');
+          expect(
+            warnCalls.every((call) => call[0] === group),
+            'only the group warns'
+          ).toBe(true);
+          expect(String(warnCalls[0]?.[1] ?? '')).toMatch(/"size".*"XL"/);
+        })
+    );
+  },
+};
+
 export const ErrorIconTest: Story = {
   ...Invalid,
   play: async ({ canvasElement }) => {

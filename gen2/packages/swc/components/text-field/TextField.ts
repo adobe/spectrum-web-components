@@ -81,7 +81,7 @@ export class TextField extends TextFieldBase {
     this,
     {
       attribute: 'size',
-      getValue: () => PREFIX_AVATAR_SIZE[this.size],
+      getValue: () => PREFIX_AVATAR_SIZE[this.resolvedSize],
       selector: 'swc-avatar',
       slotName: 'prefix',
     }
@@ -149,7 +149,7 @@ export class TextField extends TextFieldBase {
                 necessityIndicator: this.necessityIndicator,
                 necessityIndicatorText: NECESSITY_INDICATOR_TEXT,
                 // prettier-ignore
-                necessityIcon: html`<swc-ui-icon icon="asterisk" size=${this.size}></swc-ui-icon>`,
+                necessityIcon: html`<swc-ui-icon icon="asterisk" size=${this.resolvedSize}></swc-ui-icon>`,
               }
         )}
         <div

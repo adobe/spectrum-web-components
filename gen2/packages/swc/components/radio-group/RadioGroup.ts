@@ -126,7 +126,10 @@ export class RadioGroup extends RadioGroupBase {
                 necessityIndicator: this.necessityIndicator,
                 necessityIndicatorText: NECESSITY_INDICATOR_TEXT,
                 necessityIcon: html`
-                  <swc-ui-icon icon="asterisk" size=${this.size}></swc-ui-icon>
+                  <swc-ui-icon
+                    icon="asterisk"
+                    size=${this.resolvedSize}
+                  ></swc-ui-icon>
                 `,
               }
         )}
