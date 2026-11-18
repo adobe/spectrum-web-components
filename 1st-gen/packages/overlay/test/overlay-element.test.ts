@@ -391,6 +391,53 @@ describe('sp-overlay', () => {
         expect(modal1.open).to.be.false;
         expect(modal2.open).to.be.false;
       });
+      it('keeps other modals open when first modal overlay closes from cancel event', async function () {
+        const fixture = await styledFixture<HTMLDivElement>(html`
+          <div>
+            <sp-overlay type="modal" class="modal-1">
+              <sp-tooltip>First Modal Content</sp-tooltip>
+            </sp-overlay>
+            <sp-overlay type="modal" class="modal-2">
+              <sp-tooltip>Second Modal Content</sp-tooltip>
+            </sp-overlay>
+          </div>
+        `);
+
+        const modal1 = fixture.querySelector('.modal-1') as Overlay;
+        const modal2 = fixture.querySelector('.modal-2') as Overlay;
+
+        expect(modal1.open).to.be.false;
+        expect(modal2.open).to.be.false;
+
+        // Open both modal overlays
+        let opened = oneEvent(modal1, 'sp-opened');
+        modal1.open = true;
+        await opened;
+
+        opened = oneEvent(modal2, 'sp-opened');
+        modal2.open = true;
+        await opened;
+
+        expect(modal1.open).to.be.true;
+        expect(modal2.open).to.be.true;
+
+        // Dispatch a cancel event from the one of the modal overlays
+        const closed2 = oneEvent(modal2, 'sp-closed');
+        const cancelEvent = new Event('cancel', {
+          bubbles: true,
+          composed: true,
+        });
+        (modal2.querySelector('sp-tooltip') ?? modal2).dispatchEvent(
+          cancelEvent
+        );
+        await closed2;
+
+        expect(
+          modal1.open,
+          'first modal should stay open when cancel originates from second modal'
+        ).to.be.true;
+        expect(modal2.open).to.be.false;
+      });
     });
   });
   describe('[type="page"]', () => {
