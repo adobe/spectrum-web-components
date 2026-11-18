@@ -96,6 +96,11 @@ export const StatusTransitions: Story = {
           );
           expect(field.validity.customError).toBe(status === 'invalid');
           expect(field.checkValidity()).toBe(status !== 'invalid');
+          if (field.willValidate) {
+            expect(field.validationMessage).toBe(
+              status === 'invalid' ? 'This username is unavailable.' : ''
+            );
+          }
           expect(
             field.shadowRoot?.querySelector('.swc-FormFieldErrorText') !== null
           ).toBe(status === 'invalid');
@@ -362,30 +367,6 @@ export const ValidationSources: Story = {
       canvasElement,
       'swc-text-field'
     );
-    await step('slotted messages apply only while invalid', async () => {
-      for (const status of [
-        'invalid',
-        'disabled',
-        'readonly',
-        'valid',
-        undefined,
-      ] as const) {
-        field.fieldStatus = status;
-        await field.updateComplete;
-        expect(field.validity.customError).toBe(status === 'invalid');
-        expect(field.checkValidity()).toBe(status !== 'invalid');
-        if (field.willValidate) {
-          expect(field.validationMessage).toBe(
-            status === 'invalid' ? 'This username is unavailable.' : ''
-          );
-        }
-        expect(field.roleElement?.getAttribute('aria-invalid')).toBe(
-          status === 'invalid' ? 'true' : null
-        );
-      }
-      expect(field.checkValidity()).toBe(true);
-    });
-
     await step(
       'authored valid does not bypass native required validation',
       async () => {

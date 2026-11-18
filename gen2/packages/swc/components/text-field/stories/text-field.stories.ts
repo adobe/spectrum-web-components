@@ -23,7 +23,6 @@ import {
 
 import '@adobe/spectrum-wc/components/text-field/swc-text-field.js';
 import '@adobe/spectrum-wc/components/avatar/swc-avatar.js';
-import '@adobe/spectrum-wc/components/button-group/swc-button-group.js';
 import '@adobe/spectrum-wc-icons/swc-icon-mention.js';
 
 // ────────────────
@@ -604,118 +603,6 @@ export const LabelOverflow: Story = {
   },
 };
 LabelOverflow.storyName = 'Label overflow';
-
-// `novalidate` on the form (below) suppresses the native validation bubble, so
-// submission no longer natively blocks on an invalid field either. Mirror that
-// blocking decision here and surface it through the field's own invalid
-// presentation (icon + error text) instead.
-const handleSubmit = async (event: SubmitEvent): Promise<void> => {
-  event.preventDefault();
-  const form = event.currentTarget as HTMLFormElement;
-  const field = form.querySelector('swc-text-field');
-  const output = form.querySelector<HTMLOutputElement>('[data-form-data]');
-  if (!field || !output) {
-    return;
-  }
-  // Clear the demo's previous error before checking the current constraints.
-  field.fieldStatus = undefined;
-  await field.updateComplete;
-  field.fieldStatus = field.checkValidity() ? undefined : 'invalid';
-  await field.updateComplete;
-  if (field.fieldStatus === 'invalid') {
-    output.value = 'Submission blocked: the field is invalid.';
-    return;
-  }
-  output.value = [...new FormData(form)]
-    .map(([name, value]) => `${name}: ${value}`)
-    .join('\n');
-};
-
-const toggleFieldsetDisabled = (event: Event): void => {
-  const button = event.currentTarget as HTMLButtonElement;
-  const fieldset = button.form?.querySelector('fieldset');
-  if (fieldset) {
-    fieldset.disabled = !fieldset.disabled;
-    button.setAttribute('aria-pressed', String(fieldset.disabled));
-  }
-};
-
-export const FormBehavior: Story = {
-  render: () => html`
-    <form
-      novalidate
-      aria-labelledby="form-participation-heading"
-      style="display: flex; flex-direction: column; gap: 24px; inline-size: 26rem; max-inline-size: 100%;"
-      @submit=${handleSubmit}
-    >
-      <h2
-        id="form-participation-heading"
-        class="swc-Heading swc-Heading--sizeM"
-        style="margin: 0;"
-      >
-        Form participation
-      </h2>
-      <fieldset
-        style="margin: 0; min-inline-size: 0; padding: 16px; border: 1px solid var(--swc-gray-300); border-radius: var(--swc-corner-radius-100);"
-      >
-        <legend class="swc-Heading swc-Heading--sizeXS">Account details</legend>
-        <swc-text-field name="username" required>
-          <span slot="label">Username</span>
-          <span slot="error-text">Enter a username.</span>
-        </swc-text-field>
-      </fieldset>
-      <section
-        aria-labelledby="form-actions-heading"
-        style="display: flex; flex-direction: column; align-items: flex-start; gap: 12px;"
-      >
-        <h3
-          id="form-actions-heading"
-          class="swc-Heading swc-Heading--sizeXS"
-          style="margin: 0;"
-        >
-          Form actions
-        </h3>
-        <swc-button-group aria-labelledby="form-actions-heading">
-          <button type="submit" class="swc-Button">
-            <span class="swc-Button-label">Submit</span>
-          </button>
-          <button type="reset" class="swc-Button swc-Button--secondary">
-            <span class="swc-Button-label">Reset</span>
-          </button>
-          <button
-            type="button"
-            class="swc-Button swc-Button--secondary"
-            data-toggle-fieldset
-            aria-pressed="false"
-            @click=${toggleFieldsetDisabled}
-          >
-            <span class="swc-Button-label">Disable</span>
-          </button>
-        </swc-button-group>
-      </section>
-      <section
-        aria-labelledby="submitted-form-data-label"
-        style="display: flex; flex-direction: column; gap: 12px;"
-      >
-        <h3
-          id="submitted-form-data-label"
-          class="swc-Heading swc-Heading--sizeXS"
-          style="margin: 0;"
-        >
-          Last submission
-        </h3>
-        <output
-          data-form-data
-          aria-live="polite"
-          style="display: block; min-block-size: 2lh; padding: 12px; border-radius: var(--swc-corner-radius-100); background: var(--swc-background-layer-1-color); font-family: monospace; font-size: 0.875rem; white-space: pre-wrap; overflow-wrap: anywhere;"
-          .defaultValue=${'Submit the form to see its data.'}
-        ></output>
-      </section>
-    </form>
-  `,
-  tags: ['behaviors'],
-};
-FormBehavior.storyName = 'Form participation';
 
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES
