@@ -13,7 +13,47 @@
 import { expect, test } from '@playwright/test';
 import { gotoStory } from '@swc-test-helpers/playwright';
 
+import type { TextField } from '@adobe/spectrum-wc/text-field';
+
 test.describe('Forms - Trusted keyboard interactions', () => {
+  test('the demo validates and focuses fields associated from outside the form', async ({
+    page,
+  }) => {
+    const root = await gotoStory(
+      page,
+      'patterns-forms--form-behavior',
+      'swc-text-field'
+    );
+    const form = root.locator('form');
+    const email = root.locator('swc-text-field');
+    await email.evaluate(async (email: TextField) => {
+      const form = email.closest('form');
+      if (!form) {
+        throw new Error('Forms demo is missing its form');
+      }
+      form.id = 'external-field-demo';
+      email.setAttribute('form', form.id);
+      form.before(email);
+      await email.updateComplete;
+    });
+    await form.getByRole('radio', { name: 'Personal', exact: true }).click();
+    const submit = form.getByRole('button', { name: 'Submit', exact: true });
+    await submit.click();
+
+    await expect(email).toHaveAttribute('field-status', 'invalid');
+    await expect(email.locator('input')).toBeFocused();
+    await expect(form.locator('output')).toContainText('"valid": false');
+
+    await email.evaluate(async (email: TextField) => {
+      email.value = 'river@example.com';
+      await email.updateComplete;
+    });
+    await submit.click();
+    await expect(email).not.toHaveAttribute('field-status');
+    await expect(form.locator('output')).toContainText('"valid": true');
+    await expect(form.locator('output')).toContainText('river@example.com');
+  });
+
   test('other text fields control buttonless submission', async ({ page }) => {
     await page.clock.install({ time: new Date('2026-01-01T00:00:00Z') });
     const root = await gotoStory(

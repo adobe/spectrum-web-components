@@ -69,7 +69,7 @@ firstInvalid?.focus();
 
 For this to work, the host must meet two requirements:
 
-- **Pass a focusable validation anchor** as the third argument of `internals.setValidity(flags, message, anchor)`. A native inner control, such as `<input>`, is already focusable. A wrapper without a native control, such as a radio group's `role="radiogroup"` element, needs `tabindex="-1"`. The browser focuses the anchor for `reportValidity()` and for forms without `novalidate`.
+- **Pass a focusable validation anchor** as the third argument of `internals.setValidity(flags, message, anchor)`. A native inner control, such as `<input>`, is already focusable. `swc-radio-group` uses the checked enabled radio or the first enabled radio, falling back to its `role="radiogroup"` wrapper with `tabindex="-1"` when no radio is enabled. The browser focuses the anchor for `reportValidity()` and for forms without `novalidate`.
 - **Make `host.focus()` reach the anchor**, with `delegatesFocus: true` for a native inner control, or a `focus()` override that forwards to the anchor.
 
 The demos below use three unstyled harnesses (`demo-field-text`, `demo-field-radio`, `demo-field-combobox`), not `swc-*` components.
@@ -90,7 +90,7 @@ A non-null value is submitted under the field's `name` and appears in `new FormD
 
 ### Excluding a field
 
-`setValue(null)` removes the field from `FormData` entirely (the key is absent), matching a native unselected control. Exclusion is independent of validity: an optional empty field is excluded but still valid. The combobox submits `null` while its empty option is selected.
+`setValue(null)` removes the field from `FormData` entirely (the key is absent), matching a native unselected control. Exclusion depends on the submitted value, not whether the field is empty or valid: an enabled, named text field submits an empty string, while an unselected radio group submits `null`. The combobox demo submits `null` while its empty option is selected.
 
 <Canvas of={Stories.Exclusion} />
 

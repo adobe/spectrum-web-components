@@ -82,8 +82,9 @@ const handleSubmit = async (event: SubmitEvent): Promise<void> => {
   if (!(form instanceof HTMLFormElement)) {
     throw new Error('Form submission requires a form.');
   }
-  const fields = Array.from(
-    form.querySelectorAll<FormField>('swc-text-field, swc-radio-group')
+  const fields = Array.from(form.elements).filter(
+    (field): field is FormField =>
+      field instanceof TextField || field instanceof RadioGroup
   );
   const output = form.querySelector<HTMLOutputElement>('[data-form-data]');
   if (!output) {
