@@ -1,0 +1,74 @@
+- grid "Photo library":
+    - row "Coastal light":
+        - rowheader "Coastal light":
+            - checkbox "Select Coastal light"
+            - button "Coastal light"
+            - button "Share Coastal light"
+            - text: Coast collection · JPG
+    - row "Afternoon portrait":
+        - rowheader "Afternoon portrait":
+            - checkbox "Select Afternoon portrait"
+            - button "Afternoon portrait"
+            - button "Share Afternoon portrait"
+            - text: Portrait collection · JPG
+    - row "Mountain study":
+        - rowheader "Mountain study":
+            - checkbox "Select Mountain study"
+            - button "Mountain study"
+            - button "Share Mountain study"
+            - text: Landscape collection · JPG
+    - row "Along the shore":
+        - rowheader "Along the shore":
+            - checkbox "Select Along the shore"
+            - button "Along the shore"
+            - button "Share Along the shore"
+            - text: Coast collection · JPG
+    - row "Studio session":
+        - rowheader "Studio session":
+            - checkbox "Select Studio session"
+            - button "Studio session"
+            - button "Share Studio session"
+            - text: Portrait collection · JPG
+    - row "Open horizon":
+        - rowheader "Open horizon":
+            - checkbox "Select Open horizon"
+            - button "Open horizon"
+            - button "Share Open horizon"
+            - text: Landscape collection · JPG
+    - row "Evening landscape":
+        - rowheader "Evening landscape":
+            - checkbox "Select Evening landscape"
+            - button "Evening landscape"
+            - button "Share Evening landscape"
+            - text: Landscape collection · JPG
+    - row "Profile in daylight":
+        - rowheader "Profile in daylight":
+            - checkbox "Select Profile in daylight"
+            - button "Profile in daylight"
+            - button "Share Profile in daylight"
+            - text: Portrait collection · JPG
+    - row "Valley view":
+        - rowheader "Valley view":
+            - checkbox "Select Valley view"
+            - button "Valley view"
+            - button "Share Valley view"
+            - text: Landscape collection · JPG
+    - row "Tideline":
+        - rowheader "Tideline":
+            - checkbox "Select Tideline"
+            - button "Tideline"
+            - button "Share Tideline"
+            - text: Coast collection · JPG
+    - row "Portrait archive":
+        - rowheader "Portrait archive":
+            - checkbox "Select Portrait archive"
+            - button "Portrait archive"
+            - button "Share Portrait archive"
+            - text: Portrait collection · JPG
+    - row "Summit":
+        - rowheader "Summit":
+            - checkbox "Select Summit"
+            - button "Summit"
+            - button "Share Summit"
+            - text: Landscape collection · JPG
+- status
