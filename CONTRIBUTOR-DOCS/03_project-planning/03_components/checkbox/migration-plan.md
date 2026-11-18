@@ -561,8 +561,8 @@ Rationale for using `LabellingMixin` and skipping `DisabledMixin`: C4 and C3 in 
 
 Use red/green test-driven development (TDD): write each test below first, confirm it fails against the empty scaffold, then implement until it passes. Group the work in this order so each layer is green before the next starts: unit state → form participation → accessibility → keyboard → visual.
 
-- [ ] Every row of the 1st-gen test mapping below is ported, rewritten, or dropped as its row says
-- [ ] Add Playwright `checkbox.a11y.spec.ts` with `toMatchAriaSnapshot`
+- [x] Every row of the 1st-gen test mapping below is ported, rewritten, or dropped as its row says
+- [x] Add Playwright `checkbox.a11y.spec.ts` with `toMatchAriaSnapshot`
 
 1st-gen test mapping:
 
@@ -575,7 +575,7 @@ Use red/green test-driven development (TDD): write each test below first, confir
 | "can have `change` events cancelled" | Rewrite: `preventDefault()` on `click` blocks the toggle; `change` is not cancelable (B10) |
 | "should recognize readonly property", "maintains its value when [readonly]" | Rewrite against `field-status="readonly"` (B22); add "is focusable and not disabled" |
 | "`indeterminate, checked` becomes `not checked` on click", "`indeterminate, not checked` becomes `checked` on click" | Port unchanged |
-| "updates checkmark icons in response to size", "updates partialCheckmark icons in response to size" | Rewrite for inline SVG sizes |
+| "updates checkmark icons in response to size", "updates partialCheckmark icons in response to size" | Rewrite for the `swc-ui-icon` checkmark and dash sizes (C15) |
 | "updates tabindex when no longer disabled" | Drop; replaced by tab-order tests |
 | `checkbox-memory.test.ts` (`testForMemoryLeaks`) | Drop; gen2 has no memory-leak harness |
 | `checkbox.test-vrt.ts`, `checkbox-sizes.test-vrt.ts` | Replace with the gen2 visual regression test (VRT) stories under **Visual regression** in [Testing](#testing) |
@@ -584,57 +584,57 @@ Use red/green test-driven development (TDD): write each test below first, confir
 
 Unit (`test/checkbox.test.ts`):
 
-- [ ] Shadow root contains one `<input type="checkbox">`; host has no `role`
-- [ ] `size` defaults to `m`; invalid sizes fall back per `SizedMixin`
-- [ ] `checked` is a declared, typed public property readable from a `change` handler's `currentTarget` (regression for SWC-1518)
-- [ ] `checked` property ↔ inner input `checked` stay in sync both ways
-- [ ] After a user toggle, changing the `checked` attribute does not change `checked`; `form.reset()` restores the attribute's value (B9)
-- [ ] `indeterminate` sets the inner input's `.indeterminate`; activation clears it and toggles correctly from both checked and unchecked
-- [ ] User toggle dispatches exactly one `change` on the host (bubbles, composed); programmatic `checked` changes dispatch none
-- [ ] `change` is not cancelable; `preventDefault()` on `click` blocks the toggle and no `change` fires
-- [ ] `click()` toggles when enabled; no-op when disabled
+- [x] Shadow root contains one `<input type="checkbox">`; host has no `role`
+- [x] `size` defaults to `m`; invalid sizes fall back per `SizedMixin`
+- [x] `checked` is a declared, typed public property readable from a `change` handler's `currentTarget` (regression for SWC-1518)
+- [x] `checked` property ↔ inner input `checked` stay in sync both ways
+- [x] After a user toggle, changing the `checked` attribute does not change `checked`; `form.reset()` restores the attribute's value (B9)
+- [x] `indeterminate` sets the inner input's `.indeterminate`; activation clears it and toggles correctly from both checked and unchecked
+- [x] User toggle dispatches exactly one `change` on the host (bubbles, composed); programmatic `checked` changes dispatch none
+- [x] `change` is not cancelable; `preventDefault()` on `click` blocks the toggle and no `change` fires
+- [x] `click()` toggles when enabled; no-op when disabled
 - [x] `field-status="readonly"`: click and <kbd>Space</kbd> do not toggle; no `change`; inner input not `disabled`; `aria-disabled="true"`; no `aria-readonly`
-- [ ] `field-status="disabled"`: inner input `disabled`; `click()` no-op
+- [x] `field-status="disabled"`: inner input `disabled`; `click()` no-op
 - [x] `field-status="invalid"`: `aria-invalid="true"`; removed for any other status
-- [ ] `field-status` accepts `disabled`, `invalid`, `readonly`, or no value; `valid` or any other value warns in dev; the host gets no `disabled` or `readonly` attribute from the status (B22)
-- [ ] The `disabled` custom state matches both `field-status="disabled"` and an ancestor `<fieldset disabled>`, and clears when either ends (B22)
-- [ ] `willValidate` is `false` for `field-status="disabled"` and `field-status="readonly"`, and `true` otherwise (B22)
-- [ ] A required, unchecked checkbox that is disabled, by `field-status="disabled"` or an ancestor `<fieldset disabled>`, does not report `valueMissing` (B17)
+- [x] `field-status` accepts `disabled`, `invalid`, `readonly`, or no value; `valid` or any other value warns in dev; the host gets no `disabled` or `readonly` attribute from the status (B22)
+- [x] The `disabled` custom state matches both `field-status="disabled"` and an ancestor `<fieldset disabled>`, and clears when either ends (B22)
+- [x] `willValidate` is `false` for `field-status="disabled"` and `field-status="readonly"`, and `true` otherwise (B22)
+- [x] A required, unchecked checkbox that is disabled, by `field-status="disabled"` or an ancestor `<fieldset disabled>`, does not report `valueMissing` (B17)
 - [x] `required`: inner input `required`
 - [x] Label slot content names the input; `accessible-label` names it without a label slot and wins over slotted label content; `accessible-labelledby` wins over both
-- [ ] `description` associated by default; while `field-status="invalid"` with error text, `error-text` replaces it in the rendering and the association; `description` returns when the status clears (Q7)
-- [ ] While `field-status="invalid"`, the `aria-hidden` error icon renders beside the error text, beside the description when there is no error text, and alone when there is neither; it is gone when the status clears (B14)
+- [x] `description` associated by default; while `field-status="invalid"` with error text, `error-text` replaces it in the rendering and the association; `description` returns when the status clears (Q7)
+- [x] While `field-status="invalid"`, the `aria-hidden` error icon renders beside the error text, beside the description when there is no error text, and alone when there is neither; it is gone when the status clears (B14)
 - [x] Inside `<fieldset disabled>`, a `field-status="invalid"` checkbox hides the error icon and keeps `aria-invalid="true"` and the error text; re-enabling restores the icon (B14)
 - [x] `accessible-describedby` adds the referenced elements to the inner input's description
 - [x] Dev warning fires with no name source
 
 Form participation (in a native `<form>` with native submit and reset buttons, per forms RFC §3.5):
 
-- [ ] Checked submits `name=value`; unchecked contributes nothing; default `value` is `on`
-- [ ] Checkboxes that share a `name` each submit their own `value` when checked, so `FormData.getAll(name)` returns one entry per checked box, in document order
-- [ ] `required` and unchecked: `checkValidity()` is `false` and the host matches `:invalid`; checking clears both
-- [ ] Without `novalidate`, a required, unchecked checkbox, or one with `field-status="invalid"`, blocks native submit
-- [ ] Following [forms RFC §3.6](../../05_strategies/forms-strategy-rfc.md#36-validation-timing-and-submit-behavior): a `novalidate` form story whose submit handler moves focus to the first invalid field, and a test that resubmitting after fixing the error succeeds
-- [ ] With `novalidate` (C7), submit proceeds; setting `field-status="invalid"` shows the error UI, and clearing it on `change` removes the error and the `customError`
-- [ ] `field-status="invalid"` makes `checkValidity()` `false` and `validity.customError` `true` even when checked; `validationMessage` is the `error-text` text, or "Enter a valid value." when that slot is empty, and follows edits to it. Clearing the status resets all three (B17)
-- [ ] A `field-status="disabled"` or `field-status="readonly"` checkbox is barred from validation: `willValidate` is `false`, and `required` does not block submit (B17)
-- [ ] `form.reset()` restores the default checked state and clears an `invalid` status, keeping a `disabled` or `readonly` status
-- [ ] `formStateRestoreCallback` with state `'true'` or `'false'` restores `checked`
-- [ ] `<fieldset disabled>` disables the checkbox and excludes it from `FormData` and validation
+- [x] Checked submits `name=value`; unchecked contributes nothing; default `value` is `on`
+- [x] Checkboxes that share a `name` each submit their own `value` when checked, so `FormData.getAll(name)` returns one entry per checked box, in document order
+- [x] `required` and unchecked: `checkValidity()` is `false` and the host matches `:invalid`; checking clears both
+- [x] Without `novalidate`, a required, unchecked checkbox, or one with `field-status="invalid"`, blocks native submit
+- [x] Following [forms RFC §3.6](../../05_strategies/forms-strategy-rfc.md#36-validation-timing-and-submit-behavior): a `novalidate` form story whose submit handler moves focus to the first invalid field, and a test that resubmitting after fixing the error succeeds
+- [x] With `novalidate` (C7), submit proceeds; setting `field-status="invalid"` shows the error UI, and clearing it on `change` removes the error and the `customError`
+- [x] `field-status="invalid"` makes `checkValidity()` `false` and `validity.customError` `true` even when checked; `validationMessage` is the `error-text` text, or "Enter a valid value." when that slot is empty, and follows edits to it. Clearing the status resets all three (B17)
+- [x] A `field-status="disabled"` or `field-status="readonly"` checkbox is barred from validation: `willValidate` is `false`, and `required` does not block submit (B17)
+- [x] `form.reset()` restores the default checked state and clears an `invalid` status, keeping a `disabled` or `readonly` status
+- [x] `formStateRestoreCallback` with state `'true'` or `'false'` restores `checked`
+- [x] `<fieldset disabled>` disables the checkbox and excludes it from `FormData` and validation
 - [x] A host `disabled` attribute disables the checkbox, excludes it from `FormData` and validation, and keeps its own `field-status` (C12)
-- [ ] Value read programmatically matches the submitted value across checked, unchecked, and post-reset states
+- [x] Value read programmatically matches the submitted value across checked, unchecked, and post-reset states
 
 Keyboard (Playwright):
 
 - [x] Standalone checkbox is one Tab stop; <kbd>Space</kbd> toggles; <kbd>Enter</kbd> does not toggle, and in a form with a submit button it submits the form (C11)
 - [x] Several checkboxes are each a Tab stop; arrow keys do not move focus
 - [x] Disabled is skipped by <kbd>Tab</kbd>; read-only is reached but does not toggle
-- [ ] <kbd>Tab</kbd> shows the focus ring on the box and the label focus color; a pointer click does not show the ring
+- [x] <kbd>Tab</kbd> shows the focus ring on the box and the label focus color; a pointer click does not show the ring
 
 Accessibility (`checkbox.a11y.spec.ts` plus Storybook axe):
 
-- [ ] ARIA snapshots for unchecked, checked, mixed, disabled, read-only, required, invalid, and no-visible-label stories, plus each size (`s`/`m`/`l`/`xl`) and default/emphasized to confirm neither changes role, name, or state (accessibility analysis)
-- [ ] axe passes on all stories with no exclusions; the host `label` false positive wasn't observed in the accessibility phase
+- [x] ARIA snapshots for unchecked, checked, mixed, disabled, read-only, required, invalid, and no-visible-label stories, plus each size (`s`/`m`/`l`/`xl`) and default/emphasized to confirm neither changes role, name, or state (accessibility analysis)
+- [x] axe passes on all stories with no exclusions; the host `label` false positive wasn't observed in the accessibility phase
 - [ ] Manual screen reader pass (VoiceOver, NVDA, JAWS, plus Firefox): `mixed` announced; read-only announced as read-only; error text announced
 
 #### Visual regression

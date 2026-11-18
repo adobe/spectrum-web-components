@@ -17,6 +17,7 @@ import {
   fixture,
   getComponent,
   getComponents,
+  setupSwcWarningSpy,
   withWarningSpy,
 } from '@swc-test-helpers/dom';
 
@@ -54,8 +55,16 @@ function recordEvents(target: EventTarget, types: string[]): Event[] {
   return events;
 }
 
+function boxOf(checkbox: Checkbox): DOMRect {
+  const box = checkbox.shadowRoot?.querySelector('.swc-Checkbox-box');
+  if (!box) {
+    throw new Error('swc-checkbox rendered no box');
+  }
+  return box.getBoundingClientRect();
+}
+
 // ──────────────────────────────────────────────────────────────
-// TEST: Registration and render
+// TEST: Defaults
 // ──────────────────────────────────────────────────────────────
 
 export const RegistrationTest: Story = {
@@ -67,55 +76,42 @@ export const RegistrationTest: Story = {
     );
 
     await step('swc-checkbox.js registers the Checkbox class', () => {
-      expect(customElements.get('swc-checkbox')).toBe(Checkbox);
-      expect(checkbox).toBeInstanceOf(Checkbox);
+      expect(
+        customElements.get('swc-checkbox'),
+        'registered swc-checkbox constructor'
+      ).toBe(Checkbox);
+      expect(checkbox, 'rendered element class').toBeInstanceOf(Checkbox);
     });
 
     await step('renders one native checkbox input', () => {
       const inputs =
         checkbox.shadowRoot?.querySelectorAll('input[type="checkbox"]') ?? [];
-      expect(inputs).toHaveLength(1);
-      expect(checkbox.roleElement).toBe(inputs[0]);
-    });
-
-    await step('size defaults to m and invalid sizes fall back', async () => {
-      expect(checkbox.size).toBe('m');
-      expect(checkbox).toHaveAttribute('size', 'm');
-      checkbox.setAttribute('size', 'xxl');
-      await checkbox.updateComplete;
-      expect(checkbox.size).toBe('m');
-      checkbox.size = 'xl';
-      await checkbox.updateComplete;
-      expect(checkbox).toHaveAttribute('size', 'xl');
-    });
-
-    await step('label slot content labels the input', () => {
-      const input = inputOf(checkbox);
-      const label = input.labels?.[0];
-      const slot = label?.querySelector<HTMLSlotElement>('slot[name="label"]');
-      const text = slot
-        ?.assignedNodes({ flatten: true })
-        .map((node) => node.textContent)
-        .join('')
-        .trim();
-      expect(input.labels).toHaveLength(1);
-      expect(text).toBe('Send me product updates');
+      expect(inputs, 'native checkbox inputs in shadow root').toHaveLength(1);
+      expect(checkbox.roleElement, 'role element is the input').toBe(inputs[0]);
     });
 
     await step('renders documented public defaults', () => {
-      expect(checkbox.checked).toBe(false);
-      expect(checkbox.indeterminate).toBe(false);
-      expect(checkbox.fieldStatus).toBeUndefined();
-      expect(checkbox.required).toBe(false);
-      expect(checkbox.emphasized).toBe(false);
-      expect(checkbox.name).toBeUndefined();
-      expect(checkbox.value).toBe('on');
+      expect(checkbox.size, 'default size').toBe('m');
+      expect(checkbox, 'default size attribute').toHaveAttribute('size', 'm');
+      expect(checkbox.checked, 'default checked').toBe(false);
+      expect(checkbox.indeterminate, 'default indeterminate').toBe(false);
+      expect(checkbox.fieldStatus, 'default field status').toBeUndefined();
+      expect(checkbox.required, 'default required').toBe(false);
+      expect(checkbox.emphasized, 'default emphasized').toBe(false);
+      expect(checkbox.name, 'default name').toBeUndefined();
+      expect(checkbox.value, 'default value').toBe('on');
     });
 
     await step('renders a decorative box after the input', () => {
       const box = checkbox.shadowRoot?.querySelector('.swc-Checkbox-box');
-      expect(box).toHaveAttribute('aria-hidden', 'true');
-      expect(inputOf(checkbox).nextElementSibling).toBe(box);
+      expect(box, 'box hidden from assistive technology').toHaveAttribute(
+        'aria-hidden',
+        'true'
+      );
+      expect(
+        inputOf(checkbox).nextElementSibling,
+        'element after the input'
+      ).toBe(box);
     });
   },
 };
@@ -125,22 +121,28 @@ export const OptionControlsTest: Story = {
   ...Playground,
   play: async ({ step }) => {
     await step('enum controls expose their supported values', () => {
-      expect(meta.argTypes?.size).toMatchObject({
+      expect(meta.argTypes?.size, 'size control').toMatchObject({
         control: { type: 'select' },
         options: [...CHECKBOX_VALID_SIZES],
       });
-      expect(meta.argTypes?.['field-status']).toMatchObject({
+      expect(
+        meta.argTypes?.['field-status'],
+        'field-status control'
+      ).toMatchObject({
         control: { type: 'select' },
         options: [undefined, 'disabled', 'invalid', 'readonly'],
       });
-      expect(meta.args?.['field-status']).toBeUndefined();
+      expect(
+        meta.args?.['field-status'],
+        'default field-status arg'
+      ).toBeUndefined();
     });
   },
 };
 OptionControlsTest.storyName = 'Playground option controls';
 
 // ──────────────────────────────────────────────────────────────
-// TEST: checked
+// TEST: Properties / Attributes
 // ──────────────────────────────────────────────────────────────
 
 export const CheckedTest: Story = {
@@ -155,23 +157,26 @@ export const CheckedTest: Story = {
     const input = inputOf(checkbox);
 
     await step('checked is a declared reactive property', () => {
-      expect(Checkbox.elementProperties.has('checked')).toBe(true);
-      expect(checkbox.checked).toBe(false);
+      expect(
+        Checkbox.elementProperties.has('checked'),
+        'checked declared as a reactive property'
+      ).toBe(true);
+      expect(checkbox.checked, 'initial checked').toBe(false);
     });
 
     await step('the property drives the inner input', async () => {
       checkbox.checked = true;
       await checkbox.updateComplete;
-      expect(input.checked).toBe(true);
+      expect(input.checked, 'input checked after setting true').toBe(true);
       checkbox.checked = false;
       await checkbox.updateComplete;
-      expect(input.checked).toBe(false);
+      expect(input.checked, 'input checked after setting false').toBe(false);
     });
 
     await step('user activation drives the property', async () => {
       input.click();
       await checkbox.updateComplete;
-      expect(checkbox.checked).toBe(true);
+      expect(checkbox.checked, 'checked after an input click').toBe(true);
     });
 
     await step('a change listener reads checked from currentTarget', () => {
@@ -184,13 +189,16 @@ export const CheckedTest: Story = {
         { once: true }
       );
       input.click();
-      expect(seen).toBe(false);
+      expect(seen, 'checked seen by the change listener').toBe(false);
     });
 
     await step('the checked property is not reflected', async () => {
       checkbox.checked = true;
       await checkbox.updateComplete;
-      expect(checkbox).not.toHaveAttribute('checked');
+      expect(
+        checkbox,
+        'checked attribute after property set'
+      ).not.toHaveAttribute('checked');
     });
   },
 };
@@ -214,17 +222,20 @@ export const CheckedAttributeTest: Story = {
     }
 
     await step('the checked attribute sets the initial state', () => {
-      expect(untouched.checked).toBe(true);
-      expect(inputOf(untouched).checked).toBe(true);
+      expect(untouched.checked, 'initial checked from attribute').toBe(true);
+      expect(
+        inputOf(untouched).checked,
+        'initial input checked from attribute'
+      ).toBe(true);
     });
 
     await step('before any change, the attribute moves the state', async () => {
       untouched.removeAttribute('checked');
       await untouched.updateComplete;
-      expect(untouched.checked).toBe(false);
+      expect(untouched.checked, 'checked after removing attribute').toBe(false);
       untouched.setAttribute('checked', '');
       await untouched.updateComplete;
-      expect(untouched.checked).toBe(true);
+      expect(untouched.checked, 'checked after adding attribute').toBe(true);
     });
 
     await step(
@@ -232,12 +243,18 @@ export const CheckedAttributeTest: Story = {
       async () => {
         inputOf(toggled).click();
         await toggled.updateComplete;
-        expect(toggled.checked).toBe(false);
-        expect(toggled).toHaveAttribute('checked');
+        expect(toggled.checked, 'checked after user toggle').toBe(false);
+        expect(
+          toggled,
+          'checked attribute kept after user toggle'
+        ).toHaveAttribute('checked');
         toggled.removeAttribute('checked');
         toggled.setAttribute('checked', '');
         await toggled.updateComplete;
-        expect(toggled.checked).toBe(false);
+        expect(
+          toggled.checked,
+          'checked after re-adding attribute post toggle'
+        ).toBe(false);
       }
     );
 
@@ -249,7 +266,10 @@ export const CheckedAttributeTest: Story = {
         untouched.removeAttribute('checked');
         untouched.setAttribute('checked', '');
         await untouched.updateComplete;
-        expect(untouched.checked).toBe(false);
+        expect(
+          untouched.checked,
+          'checked after re-adding attribute post script change'
+        ).toBe(false);
       }
     );
 
@@ -259,11 +279,14 @@ export const CheckedAttributeTest: Story = {
         form.reset();
         await toggled.updateComplete;
         await untouched.updateComplete;
-        expect(toggled.checked).toBe(true);
-        expect(untouched.checked).toBe(true);
+        expect(toggled.checked, 'toggled checked after reset').toBe(true);
+        expect(untouched.checked, 'untouched checked after reset').toBe(true);
         toggled.removeAttribute('checked');
         await toggled.updateComplete;
-        expect(toggled.checked).toBe(false);
+        expect(
+          toggled.checked,
+          'checked after removing attribute post reset'
+        ).toBe(false);
       }
     );
 
@@ -274,16 +297,19 @@ export const CheckedAttributeTest: Story = {
         untouched.checked = true;
         untouched.removeAttribute('checked');
         await untouched.updateComplete;
-        expect(untouched.checked).toBe(true);
+        expect(
+          untouched.checked,
+          'checked after same-value set and attribute removal'
+        ).toBe(true);
       }
     );
 
     await step('checked is always a boolean', async () => {
       const loose = untouched as unknown as { checked: unknown };
       loose.checked = 'yes';
-      expect(untouched.checked).toBe(true);
+      expect(untouched.checked, 'checked from a truthy string').toBe(true);
       loose.checked = 0;
-      expect(untouched.checked).toBe(false);
+      expect(untouched.checked, 'checked from zero').toBe(false);
       await untouched.updateComplete;
     });
 
@@ -297,314 +323,18 @@ export const CheckedAttributeTest: Story = {
         toggled.addEventListener('click', reset, { once: true });
         inputOf(toggled).click();
         await toggled.updateComplete;
-        expect(toggled.checked).toBe(true);
+        expect(toggled.checked, 'checked after reset during click').toBe(true);
         toggled.removeAttribute('checked');
         await toggled.updateComplete;
-        expect(toggled.checked).toBe(false);
+        expect(
+          toggled.checked,
+          'checked after removing attribute post click reset'
+        ).toBe(false);
       }
     );
   },
 };
 CheckedAttributeTest.storyName = 'checked attribute is the default';
-
-// ──────────────────────────────────────────────────────────────
-// TEST: indeterminate
-// ──────────────────────────────────────────────────────────────
-
-export const IndeterminateTest: Story = {
-  render: () => html`
-    <swc-checkbox indeterminate checked>
-      <span slot="label">Checked</span>
-    </swc-checkbox>
-    <swc-checkbox indeterminate>
-      <span slot="label">Unchecked</span>
-    </swc-checkbox>
-  `,
-  play: async ({ canvasElement, step }) => {
-    const [checked, unchecked] = await getComponents<Checkbox>(
-      canvasElement,
-      'swc-checkbox'
-    );
-
-    await step('indeterminate sets the inner input and reflects', () => {
-      expect(inputOf(checked).indeterminate).toBe(true);
-      expect(checked).toHaveAttribute('indeterminate');
-      expect(checked.checked).toBe(true);
-    });
-
-    await step('indeterminate and checked becomes not checked', async () => {
-      inputOf(checked).click();
-      await checked.updateComplete;
-      expect(checked.indeterminate).toBe(false);
-      expect(checked.checked).toBe(false);
-      expect(inputOf(checked).indeterminate).toBe(false);
-      expect(checked).not.toHaveAttribute('indeterminate');
-    });
-
-    await step('indeterminate and not checked becomes checked', async () => {
-      inputOf(unchecked).click();
-      await unchecked.updateComplete;
-      expect(unchecked.indeterminate).toBe(false);
-      expect(unchecked.checked).toBe(true);
-    });
-
-    await step('setting indeterminate leaves checked unchanged', async () => {
-      unchecked.indeterminate = true;
-      await unchecked.updateComplete;
-      expect(unchecked.checked).toBe(true);
-      expect(inputOf(unchecked).indeterminate).toBe(true);
-    });
-  },
-};
-IndeterminateTest.storyName = 'indeterminate';
-
-// ──────────────────────────────────────────────────────────────
-// TEST: change event
-// ──────────────────────────────────────────────────────────────
-
-export const ChangeEventTest: Story = {
-  render: () => html`
-    <swc-checkbox><span slot="label">Notify me</span></swc-checkbox>
-  `,
-  play: async ({ canvasElement, step }) => {
-    const checkbox = await getComponent<Checkbox>(
-      canvasElement,
-      'swc-checkbox'
-    );
-    const input = inputOf(checkbox);
-
-    await step('a user toggle fires one non-cancelable change', async () => {
-      const events = recordEvents(checkbox, ['change']);
-      input.click();
-      await checkbox.updateComplete;
-      expect(events).toHaveLength(1);
-      const [change] = events;
-      expect(change).not.toBeInstanceOf(CustomEvent);
-      expect(change.bubbles).toBe(true);
-      expect(change.composed).toBe(true);
-      expect(change.cancelable).toBe(false);
-    });
-
-    await step('input reaches the host after checked updates', async () => {
-      let seen: boolean | undefined;
-      checkbox.addEventListener(
-        'input',
-        () => {
-          seen = checkbox.checked;
-        },
-        { once: true }
-      );
-      input.click();
-      expect(seen).toBe(false);
-      await checkbox.updateComplete;
-    });
-
-    await step(
-      'an input listener that makes the checkbox read-only still gets change',
-      async () => {
-        const events = recordEvents(checkbox, ['change']);
-        const makeReadOnly = (): void => {
-          checkbox.fieldStatus = 'readonly';
-        };
-        checkbox.addEventListener('input', makeReadOnly, { once: true });
-        const before = checkbox.checked;
-        input.click();
-        expect(events).toHaveLength(1);
-        expect(checkbox.checked).toBe(!before);
-        checkbox.fieldStatus = undefined;
-        await checkbox.updateComplete;
-      }
-    );
-
-    await step('programmatic changes fire nothing', async () => {
-      const events = recordEvents(checkbox, ['change', 'input']);
-      checkbox.checked = !checkbox.checked;
-      checkbox.indeterminate = true;
-      await checkbox.updateComplete;
-      expect(events).toHaveLength(0);
-    });
-
-    await step('canceling click blocks the toggle and change', async () => {
-      const before = checkbox.checked;
-      const events = recordEvents(checkbox, ['change', 'input']);
-      const cancel = (event: Event): void => event.preventDefault();
-      checkbox.addEventListener('click', cancel);
-      checkbox.click();
-      input.click();
-      await checkbox.updateComplete;
-      checkbox.removeEventListener('click', cancel);
-      expect(checkbox.checked).toBe(before);
-      expect(input.checked).toBe(before);
-      expect(events).toHaveLength(0);
-    });
-  },
-};
-ChangeEventTest.storyName = 'change event';
-
-// ──────────────────────────────────────────────────────────────
-// TEST: click() and field status
-// ──────────────────────────────────────────────────────────────
-
-export const ClickTest: Story = {
-  render: () => html`
-    <fieldset>
-      <swc-checkbox><span slot="label">Remember me</span></swc-checkbox>
-    </fieldset>
-  `,
-  play: async ({ canvasElement, step }) => {
-    const checkbox = await getComponent<Checkbox>(
-      canvasElement,
-      'swc-checkbox'
-    );
-    const fieldset = canvasElement.querySelector('fieldset');
-    if (!fieldset) {
-      throw new Error('Test requires a fieldset');
-    }
-    const events = recordEvents(checkbox, ['change']);
-
-    await step('click() toggles an enabled checkbox', async () => {
-      checkbox.click();
-      await checkbox.updateComplete;
-      expect(checkbox.checked).toBe(true);
-      expect(events).toHaveLength(1);
-    });
-
-    await step(
-      'field-status="disabled" disables the input and click()',
-      async () => {
-        checkbox.fieldStatus = 'disabled';
-        await checkbox.updateComplete;
-        expect(inputOf(checkbox).disabled).toBe(true);
-        checkbox.click();
-        await checkbox.updateComplete;
-        expect(checkbox.checked).toBe(true);
-        expect(events).toHaveLength(1);
-        checkbox.fieldStatus = undefined;
-        await checkbox.updateComplete;
-      }
-    );
-
-    await step(
-      'click() right after disabling does nothing, before the input updates',
-      async () => {
-        checkbox.fieldStatus = 'disabled';
-        checkbox.click();
-        await checkbox.updateComplete;
-        expect(checkbox.checked).toBe(true);
-        expect(events).toHaveLength(1);
-        checkbox.fieldStatus = undefined;
-        await checkbox.updateComplete;
-      }
-    );
-
-    await step(
-      'a disabled fieldset disables the input and click()',
-      async () => {
-        fieldset.disabled = true;
-        await waitFor(() => expect(inputOf(checkbox).disabled).toBe(true));
-        checkbox.click();
-        await checkbox.updateComplete;
-        expect(checkbox.checked).toBe(true);
-        expect(events).toHaveLength(1);
-        fieldset.disabled = false;
-        await waitFor(() => expect(inputOf(checkbox).disabled).toBe(false));
-      }
-    );
-
-    await step(
-      'click() right after re-enabling toggles, before the input updates',
-      async () => {
-        checkbox.fieldStatus = 'disabled';
-        await checkbox.updateComplete;
-        checkbox.fieldStatus = undefined;
-        checkbox.click();
-        expect(checkbox.checked).toBe(false);
-        await checkbox.updateComplete;
-
-        fieldset.disabled = true;
-        await waitFor(() => expect(inputOf(checkbox).disabled).toBe(true));
-        fieldset.disabled = false;
-        checkbox.click();
-        expect(checkbox.checked).toBe(true);
-        await checkbox.updateComplete;
-      }
-    );
-  },
-};
-ClickTest.storyName = 'click() and disabled';
-
-export const ReadOnlyTest: Story = {
-  render: () => html`
-    <swc-checkbox field-status="readonly" checked>
-      <span slot="label">Terms accepted</span>
-    </swc-checkbox>
-  `,
-  play: async ({ canvasElement, step }) => {
-    const checkbox = await getComponent<Checkbox>(
-      canvasElement,
-      'swc-checkbox'
-    );
-    const input = inputOf(checkbox);
-    const events = recordEvents(checkbox, ['input', 'change']);
-    const clicks = recordEvents(checkbox, ['click']);
-
-    await step('read-only keeps the input enabled', () => {
-      expect(input.disabled).toBe(false);
-    });
-
-    await step(
-      'clicks on the input, label, and host do not toggle',
-      async () => {
-        input.click();
-        input.labels?.[0]?.click();
-        checkbox.click();
-        await checkbox.updateComplete;
-        expect(checkbox.checked).toBe(true);
-        expect(input.checked).toBe(true);
-        expect(events).toHaveLength(0);
-      }
-    );
-
-    await step('consumers still receive every click', () => {
-      // The input click, the label click and its input click, and click().
-      expect(clicks).toHaveLength(4);
-    });
-
-    await step('canceling also keeps the mixed state', async () => {
-      checkbox.indeterminate = true;
-      await checkbox.updateComplete;
-      input.click();
-      await checkbox.updateComplete;
-      expect(checkbox.indeterminate).toBe(true);
-      expect(input.indeterminate).toBe(true);
-      expect(checkbox.checked).toBe(true);
-      expect(events).toHaveLength(0);
-      checkbox.indeterminate = false;
-      await checkbox.updateComplete;
-    });
-
-    await step('a click stopped before the guard is still undone', async () => {
-      const stop = (event: Event): void => event.stopPropagation();
-      canvasElement.addEventListener('click', stop, { capture: true });
-      input.click();
-      canvasElement.removeEventListener('click', stop, { capture: true });
-      await checkbox.updateComplete;
-      expect(checkbox.checked).toBe(true);
-      expect(input.checked).toBe(true);
-      expect(events).toHaveLength(0);
-    });
-
-    await step('clearing the status restores toggling', async () => {
-      checkbox.fieldStatus = undefined;
-      await checkbox.updateComplete;
-      input.click();
-      await checkbox.updateComplete;
-      expect(checkbox.checked).toBe(false);
-      expect(events.map((event) => event.type)).toEqual(['input', 'change']);
-    });
-  },
-};
-ReadOnlyTest.storyName = 'field-status="readonly" blocks the toggle';
 
 export const FieldStatusTest: Story = {
   render: () => html`
@@ -617,34 +347,34 @@ export const FieldStatusTest: Story = {
     );
 
     await step(
-      'supported statuses do not warn or mirror host attributes',
+      'reflects supported statuses without mirroring host attributes',
       async () => {
-        await withWarningSpy(async (warnCalls) => {
-          for (const status of ['disabled', 'invalid', 'readonly'] as const) {
-            checkbox.fieldStatus = status;
-            await checkbox.updateComplete;
-            expect(checkbox.getAttribute('field-status')).toBe(status);
-            expect(checkbox).not.toHaveAttribute('disabled');
-            expect(checkbox).not.toHaveAttribute('readonly');
-          }
-          expect(warnCalls).toHaveLength(0);
-        });
+        for (const status of ['disabled', 'invalid', 'readonly'] as const) {
+          checkbox.fieldStatus = status;
+          await checkbox.updateComplete;
+          expect(
+            checkbox.getAttribute('field-status'),
+            `field-status attribute for "${status}"`
+          ).toBe(status);
+          expect(
+            checkbox,
+            `host disabled attribute for "${status}"`
+          ).not.toHaveAttribute('disabled');
+          expect(
+            checkbox,
+            `host readonly attribute for "${status}"`
+          ).not.toHaveAttribute('readonly');
+        }
       }
     );
-
-    await step('valid and unknown statuses warn in dev', async () => {
-      await withWarningSpy(async (warnCalls) => {
-        checkbox.setAttribute('field-status', 'valid');
-        await checkbox.updateComplete;
-        expect(warnCalls.length).toBeGreaterThan(0);
-        expect(String(warnCalls[0][1])).toContain('field-status');
-      });
-    });
 
     await step('removing the attribute clears the status', async () => {
       checkbox.removeAttribute('field-status');
       await checkbox.updateComplete;
-      expect(checkbox.fieldStatus).toBeUndefined();
+      expect(
+        checkbox.fieldStatus,
+        'field status after attribute removal'
+      ).toBeUndefined();
     });
 
     await step(
@@ -652,133 +382,128 @@ export const FieldStatusTest: Story = {
       async () => {
         checkbox.fieldStatus = 'disabled';
         await checkbox.updateComplete;
-        expect(checkbox.matches(':state(disabled)')).toBe(true);
+        expect(
+          checkbox.matches(':state(disabled)'),
+          'disabled custom state while disabled'
+        ).toBe(true);
         checkbox.fieldStatus = 'readonly';
         await checkbox.updateComplete;
-        expect(checkbox.matches(':state(disabled)')).toBe(false);
+        expect(
+          checkbox.matches(':state(disabled)'),
+          'disabled custom state while read-only'
+        ).toBe(false);
       }
     );
   },
 };
 FieldStatusTest.storyName = 'field-status values';
 
-// ──────────────────────────────────────────────────────────────
-// TEST: checkmark and dash icons
-// ──────────────────────────────────────────────────────────────
-
-export const BoxIconsTest: Story = {
+export const AriaStatesTest: Story = {
   render: () => html`
-    <swc-checkbox><span slot="label">Icons</span></swc-checkbox>
+    <swc-checkbox><span slot="label">Terms</span></swc-checkbox>
   `,
   play: async ({ canvasElement, step }) => {
     const checkbox = await getComponent<Checkbox>(
       canvasElement,
       'swc-checkbox'
     );
-    const icon = (name: string): Element | null | undefined =>
-      checkbox.shadowRoot?.querySelector(
-        `.swc-Checkbox-box swc-ui-icon[icon="${name}"]`
+    const input = inputOf(checkbox);
+
+    await step('the host has no role', () => {
+      expect(checkbox, 'host role attribute').not.toHaveAttribute('role');
+    });
+
+    await step('read-only sets aria-disabled on the input only', async () => {
+      // Native readonly and aria-readonly do not apply to checkboxes, so
+      // read-only is exposed as aria-disabled on a focusable input.
+      checkbox.fieldStatus = 'readonly';
+      await checkbox.updateComplete;
+      expect(input, 'input aria-disabled while read-only').toHaveAttribute(
+        'aria-disabled',
+        'true'
       );
-
-    await step('the box holds the checkmark and dash icons', () => {
-      expect(icon('checkmark')).toBeTruthy();
-      expect(icon('dash')).toBeTruthy();
+      expect(input, 'input aria-readonly while read-only').not.toHaveAttribute(
+        'aria-readonly'
+      );
+      expect(input.disabled, 'input disabled while read-only').toBe(false);
+      expect(
+        checkbox,
+        'host aria-disabled while read-only'
+      ).not.toHaveAttribute('aria-disabled');
+      checkbox.fieldStatus = undefined;
+      await checkbox.updateComplete;
+      expect(
+        input,
+        'input aria-disabled after clearing status'
+      ).not.toHaveAttribute('aria-disabled');
     });
 
-    await step('icons are one size smaller than the checkbox', async () => {
-      const expected = { s: 'xs', m: 's', l: 'm', xl: 'l' } as const;
-      for (const [size, iconSize] of Object.entries(expected)) {
-        checkbox.size = size as Checkbox['size'];
-        await checkbox.updateComplete;
-        expect(icon('checkmark')).toHaveAttribute('size', iconSize);
-        expect(icon('dash')).toHaveAttribute('size', iconSize);
-      }
+    await step('invalid sets aria-invalid on the input only', async () => {
+      checkbox.fieldStatus = 'invalid';
+      await checkbox.updateComplete;
+      expect(input, 'input aria-invalid while invalid').toHaveAttribute(
+        'aria-invalid',
+        'true'
+      );
+      checkbox.fieldStatus = 'readonly';
+      await checkbox.updateComplete;
+      expect(input, 'input aria-invalid while read-only').not.toHaveAttribute(
+        'aria-invalid'
+      );
+      checkbox.fieldStatus = undefined;
+      await checkbox.updateComplete;
     });
-  },
-};
-BoxIconsTest.storyName = 'Checkmark and dash icons';
 
-// ──────────────────────────────────────────────────────────────
-// TEST: box layout
-// ──────────────────────────────────────────────────────────────
-
-function boxOf(checkbox: Checkbox): DOMRect {
-  const box = checkbox.shadowRoot?.querySelector('.swc-Checkbox-box');
-  if (!box) {
-    throw new Error('swc-checkbox rendered no box');
-  }
-  return box.getBoundingClientRect();
-}
-
-export const BoxLayoutTest: Story = {
-  render: () => html`
-    <div style="inline-size: 160px">
-      <swc-checkbox>
-        <span slot="label">A long label that wraps across several lines</span>
-      </swc-checkbox>
-      <swc-checkbox accessible-label="No visible label"></swc-checkbox>
-    </div>
-  `,
-  play: async ({ canvasElement, step }) => {
-    const [wrapped, unlabeled] = await getComponents<Checkbox>(
-      canvasElement,
-      'swc-checkbox'
-    );
-
-    await step('the root is the form-field grid and the checkbox', () => {
-      const root = wrapped.shadowRoot?.firstElementChild;
-      expect(root).toHaveClass('swc-FormField', 'swc-Checkbox');
+    await step('required is native, not hand-written ARIA', async () => {
+      checkbox.required = true;
+      await checkbox.updateComplete;
+      expect(input.required, 'input required').toBe(true);
+      expect(input, 'input aria-required').not.toHaveAttribute('aria-required');
     });
 
     await step(
-      'icons keep the UI icon box for their step, without CSS resizing',
+      'a required read-only checkbox is neither required nor invalid',
       async () => {
-        // Desktop ui-icon tokens for the xs, s, m, and l icon sizes, in pixels.
-        // The per-icon checkmark and dash size tokens are deleted in gen2.
-        const expected = {
-          s: [8, 8],
-          m: [10, 10],
-          l: [10, 10],
-          xl: [12, 12],
-        } as const;
-        for (const [size, [checkmark, dash]] of Object.entries(expected)) {
-          wrapped.size = size as Checkbox['size'];
-          await wrapped.updateComplete;
-          // offsetWidth ignores the scale(0) that hides an unselected icon.
-          const width = (name: string): number | undefined =>
-            wrapped.shadowRoot?.querySelector<HTMLElement>(
-              `swc-ui-icon[icon="${name}"]`
-            )?.offsetWidth;
-          expect(width('checkmark'), `${size} checkmark`).toBe(checkmark);
-          expect(width('dash'), `${size} dash`).toBe(dash);
-        }
-        wrapped.size = 'm';
-        await wrapped.updateComplete;
+        checkbox.fieldStatus = 'readonly';
+        await checkbox.updateComplete;
+        // A read-only checkbox is barred from validation, so required does
+        // nothing and is not announced.
+        expect(checkbox.willValidate, 'willValidate while read-only').toBe(
+          false
+        );
+        expect(input.required, 'input required while read-only').toBe(false);
+        expect(
+          input,
+          'input aria-required while read-only'
+        ).not.toHaveAttribute('aria-required');
+        expect(
+          input,
+          'input aria-invalid while required and read-only'
+        ).not.toHaveAttribute('aria-invalid');
+        expect(input.validity.valid, 'input validity while read-only').toBe(
+          true
+        );
+        checkbox.fieldStatus = undefined;
+        await checkbox.updateComplete;
+        expect(input.required, 'input required after clearing status').toBe(
+          true
+        );
+        expect(
+          input,
+          'input aria-required after clearing status'
+        ).not.toHaveAttribute('aria-required');
       }
     );
-
-    await step('the input covers only the box when the label wraps', () => {
-      // The in-shadow <label for> makes the label toggle the input.
-      const box = boxOf(wrapped);
-      const input = inputOf(wrapped).getBoundingClientRect();
-      expect(input.toJSON()).toEqual(box.toJSON());
-    });
-
-    await step('without a visible label, the box has no offset', () => {
-      const box = boxOf(unlabeled);
-      const host = unlabeled.getBoundingClientRect();
-      expect(box.top).toBe(host.top);
-      expect(host.height).toBe(box.height);
-    });
   },
 };
-BoxLayoutTest.storyName = 'Box layout';
+AriaStatesTest.storyName = 'ARIA states on the inner input';
 
-export const CjkLineHeightTest: Story = {
+export const DescribedByTest: Story = {
   render: () => html`
-    <swc-checkbox lang="ja">
-      <span slot="label">製品の最新情報を受け取る</span>
-      <span slot="description">月に一度メールでお届けします</span>
+    <p id="checkbox-external-description">Applies to all mailing lists.</p>
+    <swc-checkbox accessible-describedby="checkbox-external-description">
+      <span slot="label">Unsubscribe</span>
+      <span slot="description">Takes effect within a day.</span>
     </swc-checkbox>
   `,
   play: async ({ canvasElement, step }) => {
@@ -787,29 +512,50 @@ export const CjkLineHeightTest: Story = {
       'swc-checkbox'
     );
 
-    await step('the label and description use the CJK line height', () => {
-      for (const selector of [
-        '.swc-FormFieldLabel',
-        '.swc-FormFieldDescription',
-      ]) {
-        const element = checkbox.shadowRoot?.querySelector(selector);
-        if (!element) {
-          throw new Error(`swc-checkbox rendered no ${selector}`);
-        }
-        const { fontSize, lineHeight } = getComputedStyle(element);
-        expect(parseFloat(lineHeight) / parseFloat(fontSize)).toBeCloseTo(
-          1.5,
-          2
+    await step(
+      'accessible-describedby adds the external element to the description',
+      () => {
+        const described = inputOf(checkbox).ariaDescribedByElements ?? [];
+        expect(described, 'input describedby element count').toHaveLength(2);
+        expect(described[0], 'first describedby element').toHaveClass(
+          'swc-FormFieldDescription'
+        );
+        expect(described[1]?.id, 'second describedby element id').toBe(
+          'checkbox-external-description'
         );
       }
+    );
+  },
+};
+DescribedByTest.storyName = 'accessible-describedby';
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Slots
+// ──────────────────────────────────────────────────────────────
+
+export const LabelSlotTest: Story = {
+  ...Playground,
+  play: async ({ canvasElement, step }) => {
+    const checkbox = await getComponent<Checkbox>(
+      canvasElement,
+      'swc-checkbox'
+    );
+
+    await step('label slot content labels the input', () => {
+      const input = inputOf(checkbox);
+      const label = input.labels?.[0];
+      const slot = label?.querySelector<HTMLSlotElement>('slot[name="label"]');
+      const text = slot
+        ?.assignedNodes({ flatten: true })
+        .map((node) => node.textContent)
+        .join('')
+        .trim();
+      expect(input.labels, 'labels of the input').toHaveLength(1);
+      expect(text, 'slotted label text').toBe('Send me product updates');
     });
   },
 };
-CjkLineHeightTest.storyName = 'CJK line height';
-
-// ──────────────────────────────────────────────────────────────
-// TEST: description, error text, and error icon
-// ──────────────────────────────────────────────────────────────
+LabelSlotTest.storyName = 'Label slot';
 
 export const DescriptionTest: Story = {
   render: () => html`
@@ -844,12 +590,16 @@ export const DescriptionTest: Story = {
       const description = both.shadowRoot?.querySelector(
         '.swc-FormFieldDescription'
       );
-      expect(description).toBeTruthy();
-      expect(both.shadowRoot?.querySelector('.swc-FormFieldErrorText')).toBe(
-        null
-      );
-      expect(inputOf(both).ariaDescribedByElements?.[0]).toBe(description);
-      expect(icon(both)).toBe(null);
+      expect(description, 'rendered description').toBeTruthy();
+      expect(
+        both.shadowRoot?.querySelector('.swc-FormFieldErrorText'),
+        'rendered error text while valid'
+      ).toBe(null);
+      expect(
+        inputOf(both).ariaDescribedByElements?.[0],
+        'input describedby element while valid'
+      ).toBe(description);
+      expect(icon(both), 'error icon while valid').toBe(null);
     });
 
     await step(
@@ -860,31 +610,52 @@ export const DescriptionTest: Story = {
         const errorText = both.shadowRoot?.querySelector(
           '.swc-FormFieldErrorText'
         );
-        expect(errorText).toBeTruthy();
+        expect(errorText, 'rendered error text while invalid').toBeTruthy();
         expect(
-          both.shadowRoot?.querySelector('.swc-FormFieldDescription')
+          both.shadowRoot?.querySelector('.swc-FormFieldDescription'),
+          'rendered description while invalid'
         ).toBe(null);
-        expect(inputOf(both).ariaDescribedByElements?.[0]).toBe(errorText);
-        expect(icon(both)).toBeTruthy();
+        expect(
+          inputOf(both).ariaDescribedByElements?.[0],
+          'input describedby element while invalid'
+        ).toBe(errorText);
+        expect(icon(both), 'error icon while invalid').toBeTruthy();
       }
     );
 
     await step('the error icon shows with only a description or alone', () => {
-      expect(icon(descriptionOnly)).toBeTruthy();
-      expect(icon(neither)).toBeTruthy();
+      expect(
+        icon(descriptionOnly),
+        'error icon with only a description'
+      ).toBeTruthy();
+      expect(
+        icon(neither),
+        'error icon without description or error text'
+      ).toBeTruthy();
     });
 
     await step(
       'a disabled fieldset hides the icon but keeps error text and aria-invalid',
       async () => {
         fieldset.disabled = true;
-        await waitFor(() => expect(icon(both)).toBe(null));
+        await waitFor(() =>
+          expect(icon(both), 'error icon in a disabled fieldset').toBe(null)
+        );
         expect(
-          both.shadowRoot?.querySelector('.swc-FormFieldErrorText')
+          both.shadowRoot?.querySelector('.swc-FormFieldErrorText'),
+          'error text in a disabled fieldset'
         ).toBeTruthy();
-        expect(inputOf(both)).toHaveAttribute('aria-invalid', 'true');
+        expect(
+          inputOf(both),
+          'input aria-invalid in a disabled fieldset'
+        ).toHaveAttribute('aria-invalid', 'true');
         fieldset.disabled = false;
-        await waitFor(() => expect(icon(both)).toBeTruthy());
+        await waitFor(() =>
+          expect(
+            icon(both),
+            'error icon after enabling the fieldset'
+          ).toBeTruthy()
+        );
       }
     );
 
@@ -892,40 +663,14 @@ export const DescriptionTest: Story = {
       both.fieldStatus = undefined;
       await both.updateComplete;
       expect(
-        both.shadowRoot?.querySelector('.swc-FormFieldDescription')
+        both.shadowRoot?.querySelector('.swc-FormFieldDescription'),
+        'rendered description after clearing status'
       ).toBeTruthy();
-      expect(icon(both)).toBe(null);
+      expect(icon(both), 'error icon after clearing status').toBe(null);
     });
   },
 };
 DescriptionTest.storyName = 'Description, error text, and error icon';
-
-export const DescribedByTest: Story = {
-  render: () => html`
-    <p id="checkbox-external-description">Applies to all mailing lists.</p>
-    <swc-checkbox accessible-describedby="checkbox-external-description">
-      <span slot="label">Unsubscribe</span>
-      <span slot="description">Takes effect within a day.</span>
-    </swc-checkbox>
-  `,
-  play: async ({ canvasElement, step }) => {
-    const checkbox = await getComponent<Checkbox>(
-      canvasElement,
-      'swc-checkbox'
-    );
-
-    await step(
-      'accessible-describedby adds the external element to the description',
-      () => {
-        const described = inputOf(checkbox).ariaDescribedByElements ?? [];
-        expect(described).toHaveLength(2);
-        expect(described[0]).toHaveClass('swc-FormFieldDescription');
-        expect(described[1]?.id).toBe('checkbox-external-description');
-      }
-    );
-  },
-};
-DescribedByTest.storyName = 'accessible-describedby';
 
 export const DescriptionClickTest: Story = {
   render: () => html`
@@ -945,8 +690,8 @@ export const DescriptionClickTest: Story = {
     await step('clicking the description does not toggle', async () => {
       checkbox.querySelector<HTMLElement>('[slot="description"]')?.click();
       await checkbox.updateComplete;
-      expect(checkbox.checked).toBe(false);
-      expect(events).toHaveLength(0);
+      expect(checkbox.checked, 'checked after a description click').toBe(false);
+      expect(events, 'events after a description click').toHaveLength(0);
     });
 
     await step('clicking the error text does not toggle', async () => {
@@ -954,20 +699,251 @@ export const DescriptionClickTest: Story = {
       await checkbox.updateComplete;
       checkbox.querySelector<HTMLElement>('[slot="error-text"]')?.click();
       await checkbox.updateComplete;
-      expect(checkbox.checked).toBe(false);
-      expect(events).toHaveLength(0);
+      expect(checkbox.checked, 'checked after an error text click').toBe(false);
+      expect(events, 'events after an error text click').toHaveLength(0);
     });
   },
 };
 DescriptionClickTest.storyName = 'Description and error text clicks';
 
 // ──────────────────────────────────────────────────────────────
-// TEST: Accessibility semantics
+// TEST: Variants / States
 // ──────────────────────────────────────────────────────────────
 
-export const AriaStatesTest: Story = {
+export const SizeTest: Story = {
+  ...Playground,
+  play: async ({ canvasElement, step }) => {
+    const checkbox = await getComponent<Checkbox>(
+      canvasElement,
+      'swc-checkbox'
+    );
+
+    await step('falls back to m for an invalid size attribute', async () => {
+      checkbox.setAttribute('size', 'xxl');
+      await checkbox.updateComplete;
+      expect(checkbox.size, 'size after an invalid attribute').toBe('m');
+    });
+
+    await step('reflects each valid size to the attribute', async () => {
+      for (const size of CHECKBOX_VALID_SIZES) {
+        checkbox.size = size;
+        await checkbox.updateComplete;
+        expect(checkbox, `size attribute for "${size}"`).toHaveAttribute(
+          'size',
+          size
+        );
+      }
+    });
+  },
+};
+SizeTest.storyName = 'Sizes';
+
+export const BoxIconsTest: Story = {
   render: () => html`
-    <swc-checkbox><span slot="label">Terms</span></swc-checkbox>
+    <swc-checkbox><span slot="label">Icons</span></swc-checkbox>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const checkbox = await getComponent<Checkbox>(
+      canvasElement,
+      'swc-checkbox'
+    );
+    const icon = (name: string): Element | null | undefined =>
+      checkbox.shadowRoot?.querySelector(
+        `.swc-Checkbox-box swc-ui-icon[icon="${name}"]`
+      );
+
+    await step('the box holds the checkmark and dash icons', () => {
+      expect(icon('checkmark'), 'checkmark icon in the box').toBeTruthy();
+      expect(icon('dash'), 'dash icon in the box').toBeTruthy();
+    });
+
+    await step('icons are one size smaller than the checkbox', async () => {
+      const expected = { s: 'xs', m: 's', l: 'm', xl: 'l' } as const;
+      for (const [size, iconSize] of Object.entries(expected)) {
+        checkbox.size = size as Checkbox['size'];
+        await checkbox.updateComplete;
+        expect(
+          icon('checkmark'),
+          `checkmark icon size for "${size}"`
+        ).toHaveAttribute('size', iconSize);
+        expect(icon('dash'), `dash icon size for "${size}"`).toHaveAttribute(
+          'size',
+          iconSize
+        );
+      }
+    });
+  },
+};
+BoxIconsTest.storyName = 'Checkmark and dash icons';
+
+export const BoxLayoutTest: Story = {
+  render: () => html`
+    <div style="inline-size: 160px">
+      <swc-checkbox>
+        <span slot="label">A long label that wraps across several lines</span>
+      </swc-checkbox>
+      <swc-checkbox accessible-label="No visible label"></swc-checkbox>
+    </div>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const [wrapped, unlabeled] = await getComponents<Checkbox>(
+      canvasElement,
+      'swc-checkbox'
+    );
+
+    await step('the root is the form-field grid and the checkbox', () => {
+      const root = wrapped.shadowRoot?.firstElementChild;
+      expect(root, 'shadow root first element classes').toHaveClass(
+        'swc-FormField',
+        'swc-Checkbox'
+      );
+    });
+
+    await step(
+      'icons keep the UI icon box for their step, without CSS resizing',
+      async () => {
+        // Desktop ui-icon tokens for the xs, s, m, and l icon sizes, in pixels.
+        // The per-icon checkmark and dash size tokens are deleted in gen2.
+        const expected = {
+          s: [8, 8],
+          m: [10, 10],
+          l: [10, 10],
+          xl: [12, 12],
+        } as const;
+        for (const [size, [checkmark, dash]] of Object.entries(expected)) {
+          wrapped.size = size as Checkbox['size'];
+          await wrapped.updateComplete;
+          // offsetWidth ignores the scale(0) that hides an unselected icon.
+          const width = (name: string): number | undefined =>
+            wrapped.shadowRoot?.querySelector<HTMLElement>(
+              `swc-ui-icon[icon="${name}"]`
+            )?.offsetWidth;
+          expect(width('checkmark'), `${size} checkmark`).toBe(checkmark);
+          expect(width('dash'), `${size} dash`).toBe(dash);
+        }
+        wrapped.size = 'm';
+        await wrapped.updateComplete;
+      }
+    );
+
+    await step('the input covers only the box when the label wraps', () => {
+      // The in-shadow <label for> makes the label toggle the input.
+      const box = boxOf(wrapped);
+      const input = inputOf(wrapped).getBoundingClientRect();
+      expect(input.toJSON(), 'input bounds match the box').toEqual(
+        box.toJSON()
+      );
+    });
+
+    await step('without a visible label, the box has no offset', () => {
+      const box = boxOf(unlabeled);
+      const host = unlabeled.getBoundingClientRect();
+      expect(box.top, 'box top matches host top').toBe(host.top);
+      expect(host.height, 'host height matches box height').toBe(box.height);
+    });
+  },
+};
+BoxLayoutTest.storyName = 'Box layout';
+
+export const CjkLineHeightTest: Story = {
+  render: () => html`
+    <swc-checkbox lang="ja">
+      <span slot="label">製品の最新情報を受け取る</span>
+      <span slot="description">月に一度メールでお届けします</span>
+    </swc-checkbox>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const checkbox = await getComponent<Checkbox>(
+      canvasElement,
+      'swc-checkbox'
+    );
+
+    await step('the label and description use the CJK line height', () => {
+      for (const selector of [
+        '.swc-FormFieldLabel',
+        '.swc-FormFieldDescription',
+      ]) {
+        const element = checkbox.shadowRoot?.querySelector(selector);
+        if (!element) {
+          throw new Error(`swc-checkbox rendered no ${selector}`);
+        }
+        const { fontSize, lineHeight } = getComputedStyle(element);
+        expect(
+          parseFloat(lineHeight) / parseFloat(fontSize),
+          `${selector} line-height ratio`
+        ).toBeCloseTo(1.5, 2);
+      }
+    });
+  },
+};
+CjkLineHeightTest.storyName = 'CJK line height';
+
+export const IndeterminateTest: Story = {
+  render: () => html`
+    <swc-checkbox indeterminate checked>
+      <span slot="label">Checked</span>
+    </swc-checkbox>
+    <swc-checkbox indeterminate>
+      <span slot="label">Unchecked</span>
+    </swc-checkbox>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const [checked, unchecked] = await getComponents<Checkbox>(
+      canvasElement,
+      'swc-checkbox'
+    );
+
+    await step('indeterminate sets the inner input and reflects', () => {
+      expect(
+        inputOf(checked).indeterminate,
+        'input indeterminate from attribute'
+      ).toBe(true);
+      expect(checked, 'indeterminate attribute').toHaveAttribute(
+        'indeterminate'
+      );
+      expect(checked.checked, 'checked alongside indeterminate').toBe(true);
+    });
+
+    await step('indeterminate and checked becomes not checked', async () => {
+      inputOf(checked).click();
+      await checked.updateComplete;
+      expect(checked.indeterminate, 'indeterminate after click').toBe(false);
+      expect(checked.checked, 'checked after click').toBe(false);
+      expect(
+        inputOf(checked).indeterminate,
+        'input indeterminate after click'
+      ).toBe(false);
+      expect(
+        checked,
+        'indeterminate attribute after click'
+      ).not.toHaveAttribute('indeterminate');
+    });
+
+    await step('indeterminate and not checked becomes checked', async () => {
+      inputOf(unchecked).click();
+      await unchecked.updateComplete;
+      expect(unchecked.indeterminate, 'indeterminate after click').toBe(false);
+      expect(unchecked.checked, 'checked after click').toBe(true);
+    });
+
+    await step('setting indeterminate leaves checked unchanged', async () => {
+      unchecked.indeterminate = true;
+      await unchecked.updateComplete;
+      expect(unchecked.checked, 'checked after setting indeterminate').toBe(
+        true
+      );
+      expect(
+        inputOf(unchecked).indeterminate,
+        'input indeterminate after setting indeterminate'
+      ).toBe(true);
+    });
+  },
+};
+IndeterminateTest.storyName = 'indeterminate';
+
+export const ChangeEventTest: Story = {
+  render: () => html`
+    <swc-checkbox><span slot="label">Notify me</span></swc-checkbox>
   `,
   play: async ({ canvasElement, step }) => {
     const checkbox = await getComponent<Checkbox>(
@@ -976,63 +952,380 @@ export const AriaStatesTest: Story = {
     );
     const input = inputOf(checkbox);
 
-    await step('the host has no role', () => {
-      expect(checkbox).not.toHaveAttribute('role');
+    await step('a user toggle fires one non-cancelable change', async () => {
+      const events = recordEvents(checkbox, ['change']);
+      input.click();
+      await checkbox.updateComplete;
+      expect(events, 'change events after a user toggle').toHaveLength(1);
+      const [change] = events;
+      expect(change, 'change event class').not.toBeInstanceOf(CustomEvent);
+      expect(change.bubbles, 'change bubbles').toBe(true);
+      expect(change.composed, 'change composed').toBe(true);
+      expect(change.cancelable, 'change cancelable').toBe(false);
     });
 
-    await step('read-only sets aria-disabled on the input only', async () => {
-      // Native readonly and aria-readonly do not apply to checkboxes, so
-      // read-only is exposed as aria-disabled on a focusable input.
-      checkbox.fieldStatus = 'readonly';
+    await step('input reaches the host after checked updates', async () => {
+      let seen: boolean | undefined;
+      checkbox.addEventListener(
+        'input',
+        () => {
+          seen = checkbox.checked;
+        },
+        { once: true }
+      );
+      input.click();
+      expect(seen, 'checked seen by the input listener').toBe(false);
       await checkbox.updateComplete;
-      expect(input).toHaveAttribute('aria-disabled', 'true');
-      expect(input).not.toHaveAttribute('aria-readonly');
-      expect(input.disabled).toBe(false);
-      expect(checkbox).not.toHaveAttribute('aria-disabled');
-      checkbox.fieldStatus = undefined;
-      await checkbox.updateComplete;
-      expect(input).not.toHaveAttribute('aria-disabled');
-    });
-
-    await step('invalid sets aria-invalid on the input only', async () => {
-      checkbox.fieldStatus = 'invalid';
-      await checkbox.updateComplete;
-      expect(input).toHaveAttribute('aria-invalid', 'true');
-      checkbox.fieldStatus = 'readonly';
-      await checkbox.updateComplete;
-      expect(input).not.toHaveAttribute('aria-invalid');
-      checkbox.fieldStatus = undefined;
-      await checkbox.updateComplete;
-    });
-
-    await step('required is native, not hand-written ARIA', async () => {
-      checkbox.required = true;
-      await checkbox.updateComplete;
-      expect(input.required).toBe(true);
-      expect(input).not.toHaveAttribute('aria-required');
     });
 
     await step(
-      'a required read-only checkbox is neither required nor invalid',
+      'an input listener that makes the checkbox read-only still gets change',
       async () => {
-        checkbox.fieldStatus = 'readonly';
-        await checkbox.updateComplete;
-        // A read-only checkbox is barred from validation, so required does
-        // nothing and is not announced.
-        expect(checkbox.willValidate).toBe(false);
-        expect(input.required).toBe(false);
-        expect(input).not.toHaveAttribute('aria-required');
-        expect(input).not.toHaveAttribute('aria-invalid');
-        expect(input.validity.valid).toBe(true);
+        const events = recordEvents(checkbox, ['change']);
+        const makeReadOnly = (): void => {
+          checkbox.fieldStatus = 'readonly';
+        };
+        checkbox.addEventListener('input', makeReadOnly, { once: true });
+        const before = checkbox.checked;
+        input.click();
+        expect(
+          events,
+          'change events after an input listener sets read-only'
+        ).toHaveLength(1);
+        expect(
+          checkbox.checked,
+          'checked after an input listener sets read-only'
+        ).toBe(!before);
         checkbox.fieldStatus = undefined;
         await checkbox.updateComplete;
-        expect(input.required).toBe(true);
-        expect(input).not.toHaveAttribute('aria-required');
+      }
+    );
+
+    await step('programmatic changes fire nothing', async () => {
+      const events = recordEvents(checkbox, ['change', 'input']);
+      checkbox.checked = !checkbox.checked;
+      checkbox.indeterminate = true;
+      await checkbox.updateComplete;
+      expect(events, 'events after programmatic changes').toHaveLength(0);
+    });
+
+    await step('canceling click blocks the toggle and change', async () => {
+      const before = checkbox.checked;
+      const events = recordEvents(checkbox, ['change', 'input']);
+      const cancel = (event: Event): void => event.preventDefault();
+      checkbox.addEventListener('click', cancel);
+      checkbox.click();
+      input.click();
+      await checkbox.updateComplete;
+      checkbox.removeEventListener('click', cancel);
+      expect(checkbox.checked, 'checked after canceled clicks').toBe(before);
+      expect(input.checked, 'input checked after canceled clicks').toBe(before);
+      expect(events, 'events after canceled clicks').toHaveLength(0);
+    });
+  },
+};
+ChangeEventTest.storyName = 'change event';
+
+export const ClickTest: Story = {
+  render: () => html`
+    <fieldset>
+      <swc-checkbox><span slot="label">Remember me</span></swc-checkbox>
+    </fieldset>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const checkbox = await getComponent<Checkbox>(
+      canvasElement,
+      'swc-checkbox'
+    );
+    const fieldset = canvasElement.querySelector('fieldset');
+    if (!fieldset) {
+      throw new Error('Test requires a fieldset');
+    }
+    const events = recordEvents(checkbox, ['change']);
+
+    await step('click() toggles an enabled checkbox', async () => {
+      checkbox.click();
+      await checkbox.updateComplete;
+      expect(checkbox.checked, 'checked after click()').toBe(true);
+      expect(events, 'change events after click()').toHaveLength(1);
+    });
+
+    await step(
+      'field-status="disabled" disables the input and click()',
+      async () => {
+        checkbox.fieldStatus = 'disabled';
+        await checkbox.updateComplete;
+        expect(inputOf(checkbox).disabled, 'input disabled').toBe(true);
+        checkbox.click();
+        await checkbox.updateComplete;
+        expect(checkbox.checked, 'checked after click() while disabled').toBe(
+          true
+        );
+        expect(
+          events,
+          'change events after click() while disabled'
+        ).toHaveLength(1);
+        checkbox.fieldStatus = undefined;
+        await checkbox.updateComplete;
+      }
+    );
+
+    await step(
+      'click() right after disabling does nothing, before the input updates',
+      async () => {
+        checkbox.fieldStatus = 'disabled';
+        checkbox.click();
+        await checkbox.updateComplete;
+        expect(
+          checkbox.checked,
+          'checked after click() right after disabling'
+        ).toBe(true);
+        expect(
+          events,
+          'change events after click() right after disabling'
+        ).toHaveLength(1);
+        checkbox.fieldStatus = undefined;
+        await checkbox.updateComplete;
+      }
+    );
+
+    await step(
+      'a disabled fieldset disables the input and click()',
+      async () => {
+        fieldset.disabled = true;
+        await waitFor(() =>
+          expect(
+            inputOf(checkbox).disabled,
+            'input disabled in a disabled fieldset'
+          ).toBe(true)
+        );
+        checkbox.click();
+        await checkbox.updateComplete;
+        expect(
+          checkbox.checked,
+          'checked after click() in a disabled fieldset'
+        ).toBe(true);
+        expect(
+          events,
+          'change events after click() in a disabled fieldset'
+        ).toHaveLength(1);
+        fieldset.disabled = false;
+        await waitFor(() =>
+          expect(
+            inputOf(checkbox).disabled,
+            'input disabled after enabling the fieldset'
+          ).toBe(false)
+        );
+      }
+    );
+
+    await step(
+      'click() right after re-enabling toggles, before the input updates',
+      async () => {
+        checkbox.fieldStatus = 'disabled';
+        await checkbox.updateComplete;
+        checkbox.fieldStatus = undefined;
+        checkbox.click();
+        expect(
+          checkbox.checked,
+          'checked after click() right after clearing disabled'
+        ).toBe(false);
+        await checkbox.updateComplete;
+
+        fieldset.disabled = true;
+        await waitFor(() =>
+          expect(
+            inputOf(checkbox).disabled,
+            'input disabled in a disabled fieldset'
+          ).toBe(true)
+        );
+        fieldset.disabled = false;
+        checkbox.click();
+        expect(
+          checkbox.checked,
+          'checked after click() right after enabling the fieldset'
+        ).toBe(true);
+        await checkbox.updateComplete;
       }
     );
   },
 };
-AriaStatesTest.storyName = 'ARIA states on the inner input';
+ClickTest.storyName = 'click() and disabled';
+
+export const ClickBeforeRenderTest: Story = {
+  ...Playground,
+  play: async ({ canvasElement, step }) => {
+    const checkbox = document.createElement('swc-checkbox') as Checkbox;
+    checkbox.accessibleLabel = 'Created in script';
+    const events = recordEvents(checkbox, ['input', 'change']);
+
+    await step('does nothing on click() before connecting', () => {
+      expect(checkbox.roleElement, 'input before connecting').toBe(null);
+      expect(() => checkbox.click(), 'click() before connecting').not.toThrow();
+      expect(checkbox.checked, 'checked after click() before connecting').toBe(
+        false
+      );
+      expect(events, 'events after click() before connecting').toHaveLength(0);
+    });
+
+    await step(
+      'does nothing on click() after connecting, before the first render',
+      async () => {
+        canvasElement.append(checkbox);
+        expect(checkbox.hasUpdated, 'first render done on connect').toBe(false);
+        expect(
+          () => checkbox.click(),
+          'click() before first render'
+        ).not.toThrow();
+        await checkbox.updateComplete;
+        expect(checkbox.checked, 'checked after click() before render').toBe(
+          false
+        );
+        expect(events, 'events after click() before render').toHaveLength(0);
+      }
+    );
+
+    await step('toggles on click() after the first render', async () => {
+      checkbox.click();
+      await checkbox.updateComplete;
+      expect(checkbox.checked, 'checked after click() post render').toBe(true);
+      expect(
+        events.map((event) => event.type),
+        'events after click() post render'
+      ).toEqual(['input', 'change']);
+      checkbox.remove();
+    });
+  },
+};
+ClickBeforeRenderTest.storyName = 'click() before the first render';
+
+export const ReadOnlyTest: Story = {
+  render: () => html`
+    <swc-checkbox field-status="readonly" checked>
+      <span slot="label">Terms accepted</span>
+    </swc-checkbox>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const checkbox = await getComponent<Checkbox>(
+      canvasElement,
+      'swc-checkbox'
+    );
+    const input = inputOf(checkbox);
+    const events = recordEvents(checkbox, ['input', 'change']);
+    const clicks = recordEvents(checkbox, ['click']);
+
+    await step('read-only keeps the input enabled', () => {
+      expect(input.disabled, 'input disabled while read-only').toBe(false);
+    });
+
+    await step(
+      'clicks on the input, label, and host do not toggle',
+      async () => {
+        input.click();
+        input.labels?.[0]?.click();
+        checkbox.click();
+        await checkbox.updateComplete;
+        expect(checkbox.checked, 'checked after read-only clicks').toBe(true);
+        expect(input.checked, 'input checked after read-only clicks').toBe(
+          true
+        );
+        expect(events, 'events after read-only clicks').toHaveLength(0);
+      }
+    );
+
+    await step('consumers still receive every click', () => {
+      // The input click, the label click and its input click, and click().
+      expect(clicks, 'click events seen by consumers').toHaveLength(4);
+    });
+
+    await step('canceling also keeps the mixed state', async () => {
+      checkbox.indeterminate = true;
+      await checkbox.updateComplete;
+      input.click();
+      await checkbox.updateComplete;
+      expect(
+        checkbox.indeterminate,
+        'indeterminate after a read-only click'
+      ).toBe(true);
+      expect(
+        input.indeterminate,
+        'input indeterminate after a read-only click'
+      ).toBe(true);
+      expect(checkbox.checked, 'checked after a read-only click').toBe(true);
+      expect(events, 'events after a read-only click').toHaveLength(0);
+      checkbox.indeterminate = false;
+      await checkbox.updateComplete;
+    });
+
+    await step('a click stopped before the guard is still undone', async () => {
+      const stop = (event: Event): void => event.stopPropagation();
+      canvasElement.addEventListener('click', stop, { capture: true });
+      input.click();
+      canvasElement.removeEventListener('click', stop, { capture: true });
+      await checkbox.updateComplete;
+      expect(checkbox.checked, 'checked after a stopped click').toBe(true);
+      expect(input.checked, 'input checked after a stopped click').toBe(true);
+      expect(events, 'events after a stopped click').toHaveLength(0);
+    });
+
+    await step('clearing the status restores toggling', async () => {
+      checkbox.fieldStatus = undefined;
+      await checkbox.updateComplete;
+      input.click();
+      await checkbox.updateComplete;
+      expect(checkbox.checked, 'checked after clearing read-only').toBe(false);
+      expect(
+        events.map((event) => event.type),
+        'events after clearing read-only'
+      ).toEqual(['input', 'change']);
+    });
+  },
+};
+ReadOnlyTest.storyName = 'field-status="readonly" blocks the toggle';
+
+// ──────────────────────────────────────────────────────────────
+// TEST: Dev mode warnings
+// ──────────────────────────────────────────────────────────────
+
+export const FieldStatusWarningTest: Story = {
+  render: () => html`
+    <swc-checkbox><span slot="label">Status</span></swc-checkbox>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const checkbox = await getComponent<Checkbox>(
+      canvasElement,
+      'swc-checkbox'
+    );
+
+    await step('does not warn for supported statuses', async () => {
+      await withWarningSpy(async (warnCalls) => {
+        for (const status of ['disabled', 'invalid', 'readonly'] as const) {
+          checkbox.fieldStatus = status;
+          await checkbox.updateComplete;
+        }
+        expect(warnCalls, 'warnings for supported statuses').toHaveLength(0);
+      });
+    });
+
+    await step('warns for valid and unknown statuses in dev', async () => {
+      await withWarningSpy(async (warnCalls) => {
+        checkbox.setAttribute('field-status', 'valid');
+        await checkbox.updateComplete;
+        expect(
+          warnCalls.length,
+          'warning count for field-status="valid"'
+        ).toBeGreaterThan(0);
+        expect(
+          String(warnCalls[0][1]),
+          'warning message for field-status="valid"'
+        ).toContain('field-status');
+      });
+      checkbox.removeAttribute('field-status');
+      await checkbox.updateComplete;
+    });
+  },
+};
+FieldStatusWarningTest.storyName = 'field-status warnings';
 
 export const LabellingWarningsTest: Story = {
   render: () => html`
@@ -1055,14 +1348,20 @@ export const LabellingWarningsTest: Story = {
       const warnings = await warningsFor(html`
         <swc-checkbox></swc-checkbox>
       `);
-      expect(warnings.some((m) => m.includes('accessible name'))).toBe(true);
+      expect(
+        warnings.some((m) => m.includes('accessible name')),
+        'missing accessible name warning'
+      ).toBe(true);
     });
 
     await step('warns about aria-label on the host', async () => {
       const warnings = await warningsFor(html`
         <swc-checkbox aria-label="Host name"></swc-checkbox>
       `);
-      expect(warnings.some((m) => m.includes('"aria-label"'))).toBe(true);
+      expect(
+        warnings.some((m) => m.includes('"aria-label"')),
+        'host aria-label warning'
+      ).toBe(true);
     });
 
     await step(
@@ -1082,7 +1381,8 @@ export const LabellingWarningsTest: Story = {
         expect(
           warnings.some((m) =>
             m.includes('both "accessible-labelledby" and "accessible-label"')
-          )
+          ),
+          'conflicting labelling attributes warning'
         ).toBe(true);
       }
     );
@@ -1096,7 +1396,10 @@ export const LabellingWarningsTest: Story = {
             accessible-labelledby="missing-id"
           ></swc-checkbox>
         `);
-        expect(warnings.some((m) => m.includes('"missing-id"'))).toBe(true);
+        expect(
+          warnings.some((m) => m.includes('"missing-id"')),
+          'unresolved accessible-labelledby warning'
+        ).toBe(true);
       }
     );
 
@@ -1118,9 +1421,10 @@ export const LabellingWarningsTest: Story = {
           const labelWarnings = warnCalls.filter((call) =>
             String(call?.[1] ?? '').includes('<label>')
           );
-          expect(labelWarnings.map((call) => call[0])).toEqual(
-            Array.from(checkboxes)
-          );
+          expect(
+            labelWarnings.map((call) => call[0]),
+            'elements warned about an external label'
+          ).toEqual(Array.from(checkboxes));
           wrapper.remove();
         });
       }
@@ -1136,12 +1440,14 @@ export const LabellingWarningsTest: Story = {
             accessible-label="Named"
           ></swc-checkbox>
         `);
-        expect(warnings.some((m) => m.includes('"readonly" attribute'))).toBe(
-          true
-        );
-        expect(warnings.some((m) => m.includes('"invalid" attribute'))).toBe(
-          true
-        );
+        expect(
+          warnings.some((m) => m.includes('"readonly" attribute')),
+          'leftover readonly attribute warning'
+        ).toBe(true);
+        expect(
+          warnings.some((m) => m.includes('"invalid" attribute')),
+          'leftover invalid attribute warning'
+        ).toBe(true);
       }
     );
 
@@ -1151,9 +1457,67 @@ export const LabellingWarningsTest: Story = {
         const warnings = await warningsFor(html`
           <swc-checkbox disabled><span slot="label">Named</span></swc-checkbox>
         `);
-        expect(warnings).toHaveLength(0);
+        expect(
+          warnings,
+          'warnings for a labelled checkbox with host disabled'
+        ).toHaveLength(0);
       }
     );
   },
 };
 LabellingWarningsTest.storyName = 'Accessibility dev warnings';
+
+export const DebugOffWarningsTest: Story = {
+  render: () => html`
+    <swc-checkbox><span slot="label">Quiet</span></swc-checkbox>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const checkbox = await getComponent<Checkbox>(
+      canvasElement,
+      'swc-checkbox'
+    );
+
+    await step(
+      'skips the markup checks and warnings when DEBUG is off',
+      async () => {
+        const { swcGlobals, warnCalls, restore } = setupSwcWarningSpy();
+        const checkedAttributes: string[] = [];
+        // Records which host attributes the markup checks read.
+        checkbox.hasAttribute = (name: string): boolean => {
+          checkedAttributes.push(name);
+          return Element.prototype.hasAttribute.call(checkbox, name);
+        };
+        try {
+          swcGlobals.DEBUG = false;
+          checkbox.setAttribute('readonly', '');
+          checkbox.setAttribute('invalid', '');
+          checkbox.requestUpdate();
+          await checkbox.updateComplete;
+          expect(warnCalls, 'warnings with DEBUG off').toHaveLength(0);
+          expect(
+            checkedAttributes,
+            'leftover attributes read with DEBUG off'
+          ).not.toContain('readonly');
+
+          swcGlobals.DEBUG = true;
+          checkbox.requestUpdate();
+          await checkbox.updateComplete;
+          expect(
+            checkedAttributes,
+            'leftover attributes read with DEBUG on'
+          ).toContain('readonly');
+          expect(
+            warnCalls.length,
+            'warning count with DEBUG on'
+          ).toBeGreaterThan(0);
+        } finally {
+          Reflect.deleteProperty(checkbox, 'hasAttribute');
+          checkbox.removeAttribute('readonly');
+          checkbox.removeAttribute('invalid');
+          restore();
+        }
+      }
+    );
+  },
+};
+DebugOffWarningsTest.storyName = 'No dev warnings when DEBUG is off';

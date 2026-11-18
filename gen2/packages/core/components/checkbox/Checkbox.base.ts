@@ -376,10 +376,7 @@ export abstract class CheckboxBase extends SizedMixin(
    * form value, and validity are current for both.
    */
   protected handleInput(event: Event): void {
-    const input = this.inputElement;
-    if (!input) {
-      return;
-    }
+    const input = event.currentTarget as HTMLInputElement;
     this.#toggleReverted = this.fieldStatus === 'readonly';
     if (this.#toggleReverted) {
       // Backup for a click the capture guard never saw, such as one an
@@ -430,10 +427,12 @@ export abstract class CheckboxBase extends SizedMixin(
       ) {
         return;
       }
-      const root = form.getRootNode();
-      const candidates = (
-        root instanceof Document || root instanceof ShadowRoot ? root : form
-      ).querySelectorAll<HTMLButtonElement | HTMLInputElement>('button, input');
+      // A connected form's root is its document or shadow root, which also
+      // holds any `form=` buttons that belong to it.
+      const root = form.getRootNode() as Document | ShadowRoot;
+      const candidates = root.querySelectorAll<
+        HTMLButtonElement | HTMLInputElement
+      >('button, input');
       Array.from(candidates)
         .find(
           (element) =>
@@ -513,7 +512,8 @@ export abstract class CheckboxBase extends SizedMixin(
   private get errorTextContent(): string {
     return Array.from(
       this.querySelectorAll(':scope > [slot="error-text"]'),
-      (element) => element.textContent ?? ''
+      // `join()` turns a null `textContent` into an empty string.
+      (element) => element.textContent
     )
       .join(' ')
       .trim();
