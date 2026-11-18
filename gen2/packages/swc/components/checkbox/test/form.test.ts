@@ -1749,6 +1749,56 @@ export const FormParticipationTest: Story = {
       ]);
       expectPlanReadOnly('after the second reset');
     });
+
+    // A script change fires no `change`, so the stale invalid status survives
+    // until the submit handler clears it before validating again.
+    await step(
+      'clears a stale invalid status on resubmit after a script fix',
+      async () => {
+        await userEvent.click(submitButton);
+        await waitFor(() =>
+          expect(terms.fieldStatus, 'terms field-status after submit').toBe(
+            'invalid'
+          )
+        );
+
+        let changes = 0;
+        const countChange = (): void => {
+          changes += 1;
+        };
+        form.addEventListener('change', countChange);
+        try {
+          terms.checked = true;
+          await terms.updateComplete;
+          expect(changes, 'change events from a script fix').toBe(0);
+        } finally {
+          form.removeEventListener('change', countChange);
+        }
+        expect(terms.fieldStatus, 'stale field-status before resubmit').toBe(
+          'invalid'
+        );
+        expect(
+          terms.validity.customError,
+          'stale customError before resubmit'
+        ).toBe(true);
+
+        await userEvent.click(submitButton);
+        await waitFor(() =>
+          expect(status.textContent, 'status text after the resubmit').toBe(
+            'Submitted: terms=accepted&plan=basic'
+          )
+        );
+        expect(terms.fieldStatus, 'terms field-status after resubmit').toBe(
+          undefined
+        );
+        expect(errorTextOf(terms), 'error text after resubmit').toBe(null);
+        expect(lastSubmitted(), 'entries at the resubmit').toEqual([
+          ['terms', 'accepted'],
+          ['plan', 'basic'],
+        ]);
+        expectPlanReadOnly('after a resubmit following a script fix');
+      }
+    );
   },
 };
 FormParticipationTest.storyName = 'Form participation';
