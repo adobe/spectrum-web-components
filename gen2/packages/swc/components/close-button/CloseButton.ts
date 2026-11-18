@@ -45,6 +45,8 @@ import styles from './close-button.css';
  * <swc-close-button static-color="white" accessible-label="Close"></swc-close-button>
  * ```
  *
+ * @fires click - Dispatched when the button is activated by pointer, Enter, or Space. Bubbles and crosses shadow boundaries. Suppressed while `disabled`.
+ *
  * @cssprop --swc-close-button-size - Inline and block size of the close button. Defaults to the medium component height token.
  * @cssprop --swc-close-button-icon-color-default - Cross icon color in the default state.
  * @cssprop --swc-close-button-icon-color-hover - Cross icon color when hovered.
