@@ -118,8 +118,8 @@ export function SizedMixin<T extends Constructor<ReactiveElement>>(
     static readonly NO_DEFAULT_SIZE: boolean = noDefaultSize ?? false;
 
     /**
-     * The size of the element. An invalid value is kept as set and warns in
-     * dev mode; rendering reads `resolvedSize`.
+     * The size of the element. An invalid value is kept as set, warns in dev
+     * mode, and renders at the default size.
      */
     @property({ type: String })
     public get size(): ElementSize {
