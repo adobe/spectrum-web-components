@@ -128,6 +128,20 @@ export const FocusTest: Story = {
       expect(popover.matches(':popover-open'), 'menu stays open').toBe(true);
     });
 
+    await step(
+      'the hidden attribute removes the separator from layout',
+      async () => {
+        separator.hidden = true;
+        await separator.updateComplete;
+        expect(
+          getComputedStyle(separator).display,
+          'hidden separator is display: none'
+        ).toBe('none');
+        expect(separator.getBoundingClientRect().height, 'no height').toBe(0);
+        separator.hidden = false;
+      }
+    );
+
     await step('slotting the separator logs no warning', async () => {
       await withWarningSpy(async (warnCalls) => {
         const extra = document.createElement('swc-menu-separator');
