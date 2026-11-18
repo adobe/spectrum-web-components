@@ -13,14 +13,10 @@
 import { html, nothing } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import { fixture, getComponent, withWarningSpy } from '@swc-test-helpers/dom';
 
 import '../swc-source-list.js';
 
-import {
-  fixture,
-  getComponent,
-  withWarningSpy,
-} from '../../../../utils/test-utils.js';
 import { SourceListItem } from '../source-list-item/SourceListItem.js';
 import { SourceList } from '../SourceList.js';
 import meta, { Overview } from '../stories/source-list.stories.js';
