@@ -55,7 +55,7 @@ layoutContexts(
 );
 ```
 
-The contexts are: a plain block parent as a reference, flex row and column centering, grid `place-items` and `place-content` centering, a taller sibling in a flex row and in a grid, shrink pressure, a narrow grid track, `flex: 1` on the host, and inline with text. Overlapping cases, such as a fixed-height parent and a taller sibling, are not listed separately. Pass `label` to name the row, `include` or `exclude` to limit the contexts, and `descriptions` to replace a cell's description when the outcome is specific to the component.
+The contexts are: a plain block parent as a reference, flex row and column centering, grid `place-items` and `place-content` centering, a taller sibling in a flex row and in a grid, shrink pressure, a narrow grid track, `flex: 1` on the host, and inline with text. Overlapping cases, such as a fixed-height parent and a taller sibling, are not listed separately. Pass `label` to name the row, `include` or `exclude` to limit the contexts, and `descriptions` to replace a cell's description when the outcome is specific to the component. Pass `blockSize` and `siblingBlockSize` for components taller than the defaults (96px cells, an 80px sibling); an overflowing cell or a sibling shorter than the component hides the behavior the cell is meant to show.
 
 ## Adding new helpers
 

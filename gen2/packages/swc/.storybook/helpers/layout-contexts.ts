@@ -176,6 +176,19 @@ export type LayoutContextOptions = {
   exclude?: readonly LayoutContextId[];
   /** Replaces a context's description, for outcomes specific to a component. */
   descriptions?: Partial<Record<LayoutContextId, string>>;
+
+  /**
+   * Block size of the centering and `flex: 1` cells, for components taller
+   * than the 96px default. Pass a CSS length, such as `'320px'`.
+   */
+  blockSize?: string;
+
+  /**
+   * Block size of the taller sibling beside the component, for components
+   * taller than the 80px default. It has to exceed the component's own height
+   * for stretch to show.
+   */
+  siblingBlockSize?: string;
 };
 
 /**
@@ -193,11 +206,28 @@ export const layoutContexts = (
     include,
     exclude = [],
     descriptions = {},
+    blockSize,
+    siblingBlockSize,
   }: LayoutContextOptions = {}
 ) => {
   const contexts = LAYOUT_CONTEXTS.filter(
     ({ id }) => (!include || include.includes(id)) && !exclude.includes(id)
-  );
+  ).map((context) => ({
+    ...context,
+    containerStyle: blockSize
+      ? context.containerStyle.replace(
+          'block-size: 96px;',
+          `block-size: ${blockSize};`
+        )
+      : context.containerStyle,
+    sibling:
+      siblingBlockSize && context.sibling
+        ? context.sibling.replace(
+            'block-size: 80px;',
+            `block-size: ${siblingBlockSize};`
+          )
+        : context.sibling,
+  }));
 
   return html`
     ${layoutContextStyles}

@@ -10,8 +10,11 @@
  * governing permissions and limitations under the License.
  */
 
+/* Fills the container instead of hugging its message. */
 :host {
   display: block;
+  inline-size: 100%;
+  block-size: fit-content;
 }
 
 * {

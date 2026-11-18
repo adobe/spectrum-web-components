@@ -12,7 +12,6 @@
 
 :host {
   display: inline-flex;
-  place-self: start;
   outline: none;
 }
 

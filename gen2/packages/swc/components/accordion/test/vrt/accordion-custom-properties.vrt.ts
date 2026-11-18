@@ -42,51 +42,11 @@ export default meta;
 
 // Helpers
 
-// swc-accordion and swc-accordion-item are two separate custom-elements-
-// manifest declarations, each with its own `cssProperties` list (Accordion:
-// 1, AccordionItem: 9). `tabs` (Tabs + Tab) has the identical two-declaration
-// shape and will need this same pattern once it gets VRT coverage: one
-// case list + render function per declaration, folded into a single story,
-// with the shared `play` function below calling `verifyCustomPropertyCoverage`
-// once per declaration.
+// Only swc-accordion-item exposes custom properties.
 
 const forceAccordionItemStates = forcePseudoStates(
   'swc-accordion-item[data-force-state]',
   '.swc-AccordionItem-header'
-);
-
-// ────────────────────────────────
-//    swc-accordion CUSTOM PROPERTIES
-// ────────────────────────────────
-
-type AccordionPropertyCase =
-  CustomPropertyCase<'--swc-accordion-min-inline-size'>;
-
-const ACCORDION_PROPERTY_CASES: readonly AccordionPropertyCase[] = [
-  { property: '--swc-accordion-min-inline-size', value: '600px' },
-];
-
-// Short labels keep the reference case's natural width well under the 600px
-// override, so the override cell visibly widens instead of collapsing back
-// to the same footprint.
-const modAccordionProperty = (
-  _case: AccordionPropertyCase,
-  style?: string
-) => html`
-  <swc-accordion style=${style ?? nothing}>
-    <swc-accordion-item open>
-      <span slot="label">Info</span>
-      <p>Panel content.</p>
-    </swc-accordion-item>
-    <swc-accordion-item>
-      <span slot="label">Files</span>
-      <p>Panel content.</p>
-    </swc-accordion-item>
-  </swc-accordion>
-`;
-
-const coveredAccordionProperties = coveredCustomProperties(
-  ACCORDION_PROPERTY_CASES
 );
 
 // ─────────────────────────────────────
@@ -150,24 +110,13 @@ const coveredAccordionItemProperties = coveredCustomProperties(
 //    PLAY FUNCTION
 // ────────────────────
 
-const modPropertiesContent = () => html`
-  ${customPropertyRows(ACCORDION_PROPERTY_CASES, modAccordionProperty)}
-  ${customPropertyRows(ACCORDION_ITEM_PROPERTY_CASES, modAccordionItemProperty)}
-`;
+const modPropertiesContent = () =>
+  customPropertyRows(ACCORDION_ITEM_PROPERTY_CASES, modAccordionItemProperty);
 
-// Copy both `verifyCustomPropertyCoverage` calls (with the module/declaration
-// names and covered-properties list swapped) when porting this file's pattern
-// to a future two-declaration component.
 const forceStatesAndVerifyCoverage = async (
   context: Parameters<ReturnType<typeof forcePseudoStates>>[0]
 ) => {
   await forceAccordionItemStates(context);
-  await verifyCustomPropertyCoverage({
-    customElementsManifest,
-    modulePath: 'components/accordion/Accordion.ts',
-    declarationName: 'Accordion',
-    coveredProperties: coveredAccordionProperties,
-  });
   await verifyCustomPropertyCoverage({
     customElementsManifest,
     modulePath: 'components/accordion/AccordionItem.ts',
