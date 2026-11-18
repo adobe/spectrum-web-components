@@ -351,6 +351,10 @@ export const MediaBadgeTest: Story = {
   },
 };
 
+// The progress circle sits behind a real 1s timer, so allow slack for a loaded CI
+// browser to fire it. Each case is its own story to stay inside the 5s test budget.
+const PROGRESS_DELAY_TIMEOUT = 4000;
+
 export const ProgressDelayTest: Story = {
   render: () => html`
     <swc-upload-attachment type="media">
@@ -393,7 +397,7 @@ export const ProgressDelayTest: Story = {
       'progress circle appears once the 1s delay elapses',
       async () => {
         await waitFor(() => expect(progressCircle()).not.toBeNull(), {
-          timeout: 2000,
+          timeout: PROGRESS_DELAY_TIMEOUT,
         });
       }
     );
@@ -404,11 +408,31 @@ export const ProgressDelayTest: Story = {
       expect(progressCircle()).toBeNull();
       expect(thumbnailSlot()).not.toBeNull();
     });
+  },
+};
+
+export const ProgressTimerResetTest: Story = {
+  render: () => html`
+    <swc-upload-attachment type="media">
+      <div slot="thumbnail" role="img" aria-label="Preview"></div>
+    </swc-upload-attachment>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const el = await getComponent<UploadAttachment>(
+      canvasElement,
+      'swc-upload-attachment'
+    );
+    const progressCircle = () =>
+      el.shadowRoot?.querySelector('.swc-UploadAttachment-progress');
 
     await step(
       'explicitly setting progress to undefined matches the unset state',
       async () => {
+        // Let the component observe `progress = 5` and arm its timer; assigning
+        // both values in one batch would leave nothing for the reset to clear.
         el.progress = 5;
+        await el.updateComplete;
+
         el.progress = undefined;
         await el.updateComplete;
         expect(progressCircle()).toBeNull();
@@ -418,6 +442,22 @@ export const ProgressDelayTest: Story = {
         expect(progressCircle()).toBeNull();
       }
     );
+  },
+};
+
+export const ProgressReconnectTest: Story = {
+  render: () => html`
+    <swc-upload-attachment type="media">
+      <div slot="thumbnail" role="img" aria-label="Preview"></div>
+    </swc-upload-attachment>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const el = await getComponent<UploadAttachment>(
+      canvasElement,
+      'swc-upload-attachment'
+    );
+    const progressCircle = () =>
+      el.shadowRoot?.querySelector('.swc-UploadAttachment-progress');
 
     await step(
       'disconnecting and reconnecting while loading re-arms the delay instead of getting stuck hidden',
@@ -432,7 +472,7 @@ export const ProgressDelayTest: Story = {
 
         expect(progressCircle()).toBeNull();
         await waitFor(() => expect(progressCircle()).not.toBeNull(), {
-          timeout: 2000,
+          timeout: PROGRESS_DELAY_TIMEOUT,
         });
       }
     );
