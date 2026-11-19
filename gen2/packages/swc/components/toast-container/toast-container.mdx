@@ -113,6 +113,12 @@ To localize the control labels, set `show-all-label`, `collapse-label`, and `cle
 
 <Canvas of={ToastContainerStories.ExpandedView} />
 
+### Motion
+
+Toasts move between their places in the stack and the expanded list. When the front toast closes, the next one comes forward while the closing toast fades out. Hovering the stack with a pointer lets the layers behind the front toast peek out further.
+
+When the user prefers reduced motion, nothing moves: the layers and the expanded list fade in place.
+
 ### Restoring toasts
 
 The queue lives in memory, so it is empty after a page load. If your app reloads, navigates to another page, or signs a user in, rebuild the toasts you still want to show.
@@ -188,9 +194,5 @@ Each `<swc-toast>` has `role="alertdialog"`, `aria-modal="false"`, and `tabindex
 - Provide a descriptive `actionLabel` for the action button.
 
 <Canvas of={ToastContainerStories.Accessibility} />
-
-## Upcoming features
-
-- Motion between stack positions and for opening and closing the expanded view.
 
 <DocsFooter />

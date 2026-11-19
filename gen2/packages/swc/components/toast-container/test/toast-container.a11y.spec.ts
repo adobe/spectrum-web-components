@@ -39,8 +39,9 @@ const openTimedStory = async (
   await page.clock.pauseAt(new Date('2026-01-01T00:00:01Z'));
 };
 
+// Inert toasts are old front toasts still shrinking into the stack, which are presentation only.
 const disableCloseTransition = async (page: Page): Promise<void> => {
-  const toast = page.locator('swc-toast');
+  const toast = page.locator('swc-toast:not([inert])');
   await expect(toast).toHaveAttribute('open', '');
   await toast.evaluate((element) => {
     const surface =
@@ -59,17 +60,17 @@ test('the region pauses until both pointer and focus leave, then resumes remaini
   const region = page.getByRole('region');
   await page.clock.runFor(2000);
   await region.dispatchEvent('pointerenter');
-  await page.locator('swc-toast').focus();
+  await page.locator('swc-toast:not([inert])').focus();
   await page.clock.runFor(10000);
-  await expect(page.locator('swc-toast')).toHaveCount(1);
+  await expect(page.locator('swc-toast:not([inert])')).toHaveCount(1);
   await region.dispatchEvent('pointerleave');
   await page.clock.runFor(10000);
-  await expect(page.locator('swc-toast')).toHaveCount(1);
+  await expect(page.locator('swc-toast:not([inert])')).toHaveCount(1);
   await add.focus();
   await page.clock.runFor(3999);
-  await expect(page.locator('swc-toast')).toHaveCount(1);
+  await expect(page.locator('swc-toast:not([inert])')).toHaveCount(1);
   await page.clock.runFor(1);
-  await expect(page.locator('swc-toast')).toHaveCount(0);
+  await expect(page.locator('swc-toast:not([inert])')).toHaveCount(0);
 });
 
 for (const source of ['pointer', 'focus'] as const) {
@@ -85,19 +86,19 @@ for (const source of ['pointer', 'focus'] as const) {
     if (source === 'pointer') {
       await region.dispatchEvent('pointerenter');
     } else {
-      await page.locator('swc-toast').focus();
+      await page.locator('swc-toast:not([inert])').focus();
     }
     await page.clock.runFor(10000);
-    await expect(page.locator('swc-toast')).toHaveCount(1);
+    await expect(page.locator('swc-toast:not([inert])')).toHaveCount(1);
     if (source === 'pointer') {
       await region.dispatchEvent('pointerleave');
     } else {
       await add.focus();
     }
     await page.clock.runFor(3999);
-    await expect(page.locator('swc-toast')).toHaveCount(1);
+    await expect(page.locator('swc-toast:not([inert])')).toHaveCount(1);
     await page.clock.runFor(1);
-    await expect(page.locator('swc-toast')).toHaveCount(0);
+    await expect(page.locator('swc-toast:not([inert])')).toHaveCount(0);
   });
 }
 
@@ -113,16 +114,16 @@ test('only the front counts down and promotion starts a full timeout', async ({
   await disableCloseTransition(page);
   const region = page.getByRole('region');
   await expect(region).toHaveAttribute('aria-label', '2 notifications.');
-  await expect(page.locator('swc-toast')).toHaveCount(1);
+  await expect(page.locator('swc-toast:not([inert])')).toHaveCount(1);
   await page.clock.runFor(5999);
   await expect(region).toHaveAttribute('aria-label', '2 notifications.');
   await page.clock.runFor(1);
   await expect(region).toHaveAttribute('aria-label', '1 notification.');
   await disableCloseTransition(page);
   await page.clock.runFor(5999);
-  await expect(page.locator('swc-toast')).toHaveCount(1);
+  await expect(page.locator('swc-toast:not([inert])')).toHaveCount(1);
   await page.clock.runFor(1);
-  await expect(page.locator('swc-toast')).toHaveCount(0);
+  await expect(page.locator('swc-toast:not([inert])')).toHaveCount(0);
 });
 
 // Runs on the real clock: Playwright's fake clock also stops requestAnimationFrame,
@@ -151,10 +152,12 @@ test('closing the focused toast with the keyboard focuses the promoted toast, wh
   await expect(page.getByRole('button', { name: 'Close' })).toBeFocused();
   await page.keyboard.press('Enter');
   await expect(region).toHaveAttribute('aria-label', '1 notification.');
-  await expect(page.locator('swc-toast')).toBeFocused();
+  await expect(page.locator('swc-toast:not([inert])')).toBeFocused();
   // Moving focus out of the region resumes the countdown, which then dismisses the promoted toast.
   await add.focus();
-  await expect(page.locator('swc-toast')).toHaveCount(0, { timeout: 10000 });
+  await expect(page.locator('swc-toast:not([inert])')).toHaveCount(0, {
+    timeout: 10000,
+  });
 });
 
 test('closing the focused toast with a pointer leaves the region and gives the promoted toast a full timeout', async ({
@@ -173,9 +176,9 @@ test('closing the focused toast with a pointer leaves the region and gives the p
   await page.mouse.move(0, 0);
   await disableCloseTransition(page);
   await page.clock.runFor(5999);
-  await expect(page.locator('swc-toast')).toHaveCount(1);
+  await expect(page.locator('swc-toast:not([inert])')).toHaveCount(1);
   await page.clock.runFor(1);
-  await expect(page.locator('swc-toast')).toHaveCount(0);
+  await expect(page.locator('swc-toast:not([inert])')).toHaveCount(0);
 });
 
 test('the stack exposes one named toast; the layers behind it are not in the accessibility tree', async ({
@@ -306,13 +309,13 @@ test('a pointer still inside the region keeps the promoted toast paused', async 
   await page.getByRole('button', { name: 'Close newest', exact: true }).click();
   await expect(region).toHaveAttribute('aria-label', '1 notification.');
   await page.clock.runFor(10000);
-  await expect(page.locator('swc-toast')).toHaveCount(1);
+  await expect(page.locator('swc-toast:not([inert])')).toHaveCount(1);
   await region.dispatchEvent('pointerleave');
   await disableCloseTransition(page);
   await page.clock.runFor(5999);
-  await expect(page.locator('swc-toast')).toHaveCount(1);
+  await expect(page.locator('swc-toast:not([inert])')).toHaveCount(1);
   await page.clock.runFor(1);
-  await expect(page.locator('swc-toast')).toHaveCount(0);
+  await expect(page.locator('swc-toast:not([inert])')).toHaveCount(0);
 });
 
 test('an emptied region does not retain a stale pointer pause', async ({
@@ -324,11 +327,11 @@ test('an emptied region does not retain a stale pointer pause', async ({
   await disableCloseTransition(page);
   await page.getByRole('region').dispatchEvent('pointerenter');
   await page.getByRole('button', { name: 'Clear', exact: true }).click();
-  await expect(page.locator('swc-toast')).toHaveCount(0);
+  await expect(page.locator('swc-toast:not([inert])')).toHaveCount(0);
   await add.click();
   await disableCloseTransition(page);
   await page.clock.runFor(6000);
-  await expect(page.locator('swc-toast')).toHaveCount(0);
+  await expect(page.locator('swc-toast:not([inert])')).toHaveCount(0);
 });
 
 test('a configured action never auto-dismisses', async ({ page }) => {
@@ -338,9 +341,15 @@ test('a configured action never auto-dismisses', async ({ page }) => {
     'components-toast-container--action&args=timeout:6000'
   );
   await page.getByRole('button', { name: 'Add toast', exact: true }).click();
-  await expect(page.locator('swc-toast')).toHaveAttribute('open', '');
+  await expect(page.locator('swc-toast:not([inert])')).toHaveAttribute(
+    'open',
+    ''
+  );
   await page.clock.runFor(20000);
-  await expect(page.locator('swc-toast')).toHaveAttribute('open', '');
+  await expect(page.locator('swc-toast:not([inert])')).toHaveAttribute(
+    'open',
+    ''
+  );
   await expect(
     page.getByRole('button', { name: 'Undo', exact: true })
   ).toBeVisible();
@@ -391,4 +400,55 @@ test('F6 keeps its browser behavior while no toast is showing', async ({
       () => (window as unknown as { f6Prevented: boolean }).f6Prevented
     )
   ).toBe(false);
+});
+
+test.describe('Toast container - Motion', () => {
+  const expandThree = async (page: Page): Promise<void> => {
+    await gotoStory(page, 'components-toast-container--overview', 'swc-button');
+    const add = page.getByRole('button', { name: 'Add toast', exact: true });
+    await add.click();
+    await add.click();
+    await add.click();
+    await page.getByRole('button', { name: 'Show all' }).click();
+    await expect(page.getByRole('dialog')).toBeVisible();
+  };
+
+  // Counts toasts with a script animation, which only the expand and collapse move runs.
+  // CSS transitions are subclasses of Animation, so they are left out by constructor.
+  const movingToasts = (page: Page): Promise<number> =>
+    page
+      .locator('swc-toast:not([inert])')
+      .evaluateAll(
+        (toasts) =>
+          toasts.filter((toast) =>
+            toast
+              .getAnimations()
+              .some((animation) => animation.constructor === Animation)
+          ).length
+      );
+
+  test('expanding moves the toasts out of the stack', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'no-preference' });
+    await expandThree(page);
+    await expect.poll(() => movingToasts(page)).toBeGreaterThan(0);
+  });
+
+  test('with reduced motion, nothing moves and the layers only fade', async ({
+    page,
+  }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await gotoStory(page, 'components-toast-container--overview', 'swc-button');
+    const add = page.getByRole('button', { name: 'Add toast', exact: true });
+    await add.click();
+    await add.click();
+    const layer = page.locator('.swc-ToastContainer-layer').first();
+    await expect(layer).toHaveCSS('transition-property', 'opacity');
+    await expect(page.locator('.swc-ToastContainer')).toHaveCSS(
+      'transition-duration',
+      '0s'
+    );
+    await page.getByRole('button', { name: 'Show all' }).click();
+    await expect(page.getByRole('dialog')).toBeVisible();
+    expect(await movingToasts(page)).toBe(0);
+  });
 });

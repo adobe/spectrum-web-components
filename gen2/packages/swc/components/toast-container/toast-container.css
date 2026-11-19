@@ -17,9 +17,31 @@
 /*
  * The stack depth is real 3D: layers sit at the front toast's position and are
  * pushed back along Z. The perspective origin lies beyond the edge away from
- * the anchor, so layers peek out on that side.
+ * the anchor, so layers peek out on that side. Hovering the stack moves the
+ * origin further out, so the layers peek out more.
+ *
+ * As in RSP S2, a closing toast slides out past the anchored edge by its own
+ * size and a gap. The toast reads the `--_swc-toast-exit-*` properties for its
+ * exit transition.
  */
 .swc-ToastContainer {
+  --_swc-toast-container-peek-origin: 55px;
+  --_swc-toast-exit-duration: token("animation-duration-800");
+
+  /*
+   * As in RSP S2, every move is one 400ms motion on the default `ease` curve,
+   * which no Spectrum easing token matches. A closing toast slides and fades on
+   * that one curve.
+   */
+  --_swc-toast-exit-easing: ease;
+  --_swc-toast-exit-fade-easing: ease;
+
+  /* The container moves its toasts itself, so it turns off the toast's own entrance. */
+  --_swc-toast-enter-opacity: 1;
+  --_swc-toast-enter-distance: 0;
+  --_swc-toast-exit-x: 0;
+  --_swc-toast-exit-y: calc(100% + token("spacing-200"));
+
   position: fixed;
   inset-block: auto token("spacing-300");
   inset-inline: token("spacing-300");
@@ -35,7 +57,8 @@
   overflow: visible;
   outline: none;
   perspective: 80px;
-  perspective-origin: center -55px;
+  perspective-origin: center calc(-1 * var(--_swc-toast-container-peek-origin));
+  transition: perspective-origin token("animation-duration-800") ease;
 }
 
 .swc-ToastContainer:focus-visible {
@@ -43,43 +66,124 @@
   outline-offset: token("focus-ring-gap");
 }
 
+.swc-ToastContainer--top {
+  --_swc-toast-exit-y: calc(-100% - token("spacing-200"));
+}
+
 .swc-ToastContainer--top,
 .swc-ToastContainer--top-end {
   inset-block: token("spacing-300") auto;
-  perspective-origin: center calc(100% + 55px);
+  perspective-origin: center calc(100% + var(--_swc-toast-container-peek-origin));
 }
 
+/* At an end placement, a closing toast slides out past the end edge instead. */
 .swc-ToastContainer--top-end,
 .swc-ToastContainer--bottom-end {
+  --_swc-toast-exit-x: calc(100% + token("spacing-200"));
+  --_swc-toast-exit-y: 0;
+
   margin-inline: auto 0;
 }
 
+:where(.swc-ToastContainer--top-end, .swc-ToastContainer--bottom-end):dir(rtl) {
+  --_swc-toast-exit-x: calc(-100% - token("spacing-200"));
+}
+
+/*
+ * The toast's own `display` transition is repeated here, because this rule's
+ * `transition` replaces the one the toast sets on its host. Without it, a
+ * closing toast would disappear before its exit transition. It lasts as long
+ * as the slide out.
+ */
 .swc-ToastContainer > :where(swc-toast) {
   position: relative;
   z-index: 1;
+
+  /* No descender space under the inline-block toast, so the stack is exactly the toast's box. */
+  vertical-align: top;
+  filter: drop-shadow(0 4px 12px transparent) drop-shadow(0 2px 6px transparent) drop-shadow(0 0 2px transparent);
+  transition:
+    display token("animation-duration-800") allow-discrete,
+    filter token("animation-duration-800") ease;
 }
 
 /*
  * The stacked state carries the elevated shadow on every toast. A filter
  * follows the toast's rounded shape and fades with it, which a shadow on the
- * host box would not. Same three layers as `--swc-drop-shadow-elevated`.
+ * host box would not. Same three layers as `--swc-drop-shadow-elevated`. The
+ * shadow fades in and out as the stack forms and empties.
  */
 .swc-ToastContainer--stacked > :where(swc-toast) {
   filter: drop-shadow(0 4px 12px token("drop-shadow-ambient-color")) drop-shadow(0 2px 6px token("drop-shadow-transition-color")) drop-shadow(0 0 2px token("drop-shadow-elevated-key-color"));
 }
 
+/*
+ * A closing toast stays over the new front toast until its exit transition
+ * ends, aligned with the anchored edge and out of the layout.
+ */
+.swc-ToastContainer > :where(swc-toast:not([open])) {
+  position: absolute;
+  inset-block: auto 0;
+  inset-inline: 0;
+  z-index: 2;
+  inline-size: fit-content;
+  margin-inline: auto;
+  pointer-events: none;
+}
+
+.swc-ToastContainer--top > :where(swc-toast:not([open])),
+.swc-ToastContainer--top-end > :where(swc-toast:not([open])) {
+  inset-block: 0 auto;
+}
+
+.swc-ToastContainer--top-end > :where(swc-toast:not([open])),
+.swc-ToastContainer--bottom-end > :where(swc-toast:not([open])) {
+  margin-inline: auto 0;
+}
+
 .swc-ToastContainer-layer {
   --_swc-toast-container-layer-background-color: token("neutral-subdued-background-color-default");
 
+  /*
+   * As in RSP S2, a layer is one toast high at the edge away from the anchor,
+   * not as tall as the front toast. A toast pushed back keeps its height while
+   * the taller front toast with Show all slides in over it.
+   */
   position: absolute;
-  inset: 0;
+  inset-block: 0 auto;
+  inset-inline: 0;
 
   /* Nearer layers paint above farther ones, and all stay behind the front toast. */
   z-index: calc(-1 * var(--_swc-toast-container-layer-index));
+  block-size: token("toast-height");
   background-color: var(--_swc-toast-container-layer-background-color);
   border-radius: token("corner-radius-700");
   box-shadow: token("drop-shadow-elevated");
+
+  /* Only the two nearest layers show; the third is rendered transparent so it can fade in or out. */
+  opacity: clamp(0, 3 - var(--_swc-toast-container-layer-index), 1);
   translate: 0 0 calc(-1 * token("spacing-200") * var(--_swc-toast-container-layer-index));
+  transition:
+    translate token("animation-duration-800") ease,
+    opacity token("animation-duration-800") ease;
+}
+
+/* A new layer starts where the front toast was, so a toast pushed back recedes into the stack. */
+@starting-style {
+  .swc-ToastContainer-layer {
+    translate: 0 0 0;
+  }
+}
+
+/* Right after the expanded view closes, the collapsing toasts already left off where the layers rest. */
+@starting-style {
+  :where(.swc-ToastContainer--settled) .swc-ToastContainer-layer {
+    translate: 0 0 calc(-1 * token("spacing-200") * var(--_swc-toast-container-layer-index));
+  }
+}
+
+:where(.swc-ToastContainer--top, .swc-ToastContainer--top-end) .swc-ToastContainer-layer {
+  inset-block: auto 0;
 }
 
 .swc-ToastContainer-layer--info {
@@ -119,6 +223,18 @@
 
 .swc-ToastContainer--expanded::backdrop {
   background-color: token("transparent-static-black-500");
+  transition: opacity token("animation-duration-800") ease;
+}
+
+@starting-style {
+  .swc-ToastContainer--expanded::backdrop {
+    opacity: 0;
+  }
+}
+
+/* Collapsing fades the scrim out before the dialog closes. */
+.swc-ToastContainer--collapsing::backdrop {
+  opacity: 0;
 }
 
 /* The padding keeps focus rings inside the scrolling list; the negative margin keeps the toasts aligned with the region. */
@@ -145,6 +261,17 @@
 
   flex-shrink: 0;
   align-self: stretch;
+  filter: drop-shadow(0 4px 12px transparent) drop-shadow(0 2px 6px transparent) drop-shadow(0 0 2px transparent);
+
+  /* Keeps a closing toast rendered for its slide out, as in the stack. */
+  transition:
+    display token("animation-duration-800") allow-discrete,
+    filter token("animation-duration-800") ease;
+}
+
+/* While collapsing, the front toast takes the stack's elevated shadow, so the stack that replaces the view looks the same. */
+.swc-ToastContainer-list > :where(swc-toast.swc-ToastContainer-front) {
+  filter: drop-shadow(0 4px 12px token("drop-shadow-ambient-color")) drop-shadow(0 2px 6px token("drop-shadow-transition-color")) drop-shadow(0 0 2px token("drop-shadow-elevated-key-color"));
 }
 
 .swc-ToastContainer-controls {
@@ -153,6 +280,60 @@
   display: flex;
   gap: token("spacing-100");
   justify-content: flex-end;
+  transition: opacity token("animation-duration-800") ease;
+}
+
+@starting-style {
+  .swc-ToastContainer-controls {
+    opacity: 0;
+  }
+}
+
+/* While collapsing, the view fades its controls and ignores the pointer. */
+:where(.swc-ToastContainer--collapsing) .swc-ToastContainer-controls {
+  opacity: 0;
+}
+
+:where(.swc-ToastContainer--collapsing) :where(.swc-ToastContainer-list, .swc-ToastContainer-controls) {
+  pointer-events: none;
+}
+
+/* Only for a real pointer hover, so a tap on a touch screen does not leave the layers peeking out. */
+@media (hover: hover) {
+  .swc-ToastContainer--stacked:where(:hover) {
+    --_swc-toast-container-peek-origin: 95px;
+  }
+}
+
+/*
+ * Reduced motion: nothing moves. The stack keeps its depth, layers cross-fade
+ * in place, and the expanded list fades in instead of moving out of the stack.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .swc-ToastContainer {
+    transition: none;
+  }
+
+  .swc-ToastContainer-layer {
+    transition-property: opacity;
+  }
+
+  /* Matches the toast's own reduced-motion rule, which this container's `transition` replaces. */
+  .swc-ToastContainer > :where(swc-toast),
+  .swc-ToastContainer-list > :where(swc-toast) {
+    transition-duration: 0ms;
+  }
+
+  .swc-ToastContainer-list {
+    transition: opacity token("animation-duration-800") ease;
+  }
+
+  @starting-style {
+    .swc-ToastContainer-layer,
+    .swc-ToastContainer-list {
+      opacity: 0;
+    }
+  }
 }
 
 @media (forced-colors: active) {

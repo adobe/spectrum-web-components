@@ -46,12 +46,17 @@ export default {
   `,
 } as Meta;
 
+// A closing toast stays rendered until its exit ends, so the front toast is the open one.
 const getFront = async (container: ToastContainer): Promise<Toast> => {
   await container.updateComplete;
-  const toast = container.shadowRoot?.querySelector<Toast>('swc-toast');
-  expect(toast, 'front toast').not.toBeNull();
-  await waitFor(() => expect(toast?.open, 'front toast open').toBe(true));
-  return toast!;
+  return waitFor(() => {
+    // An inert toast is an old front toast shrinking into the stack.
+    const toast = [
+      ...container.shadowRoot!.querySelectorAll<Toast>('swc-toast'),
+    ].find((candidate) => candidate.open && !candidate.inert);
+    expect(toast, 'open front toast').toBeDefined();
+    return toast!;
+  });
 };
 
 export const QueueOperationsTest: Story = {
@@ -844,10 +849,13 @@ export const InterruptedClosureTest: Story = {
           ToastQueue.close(key);
           const newerKey = ToastQueue.add('Newer notification');
           await getFront(container);
-          expect(
-            ToastQueue.entries.map((entry) => entry.key),
-            'queue keys after demotion'
-          ).toEqual([newerKey]);
+          // The closing toast slides out first (400ms), even if it closed before it finished entering.
+          await waitFor(() =>
+            expect(
+              ToastQueue.entries.map((entry) => entry.key),
+              'queue keys after demotion'
+            ).toEqual([newerKey])
+          );
           expect(onClose, 'onClose after demotion').toHaveBeenCalledTimes(1);
         }
       );
@@ -878,10 +886,13 @@ export const InterruptedClosureTest: Story = {
             .click();
           const newerKey = ToastQueue.add('Notification after dismissal');
           await getFront(container);
-          expect(
-            ToastQueue.entries.some((entry) => entry.key === key),
-            'dismissed entry still queued'
-          ).toBe(false);
+          // The dismissed toast slides out first (400ms).
+          await waitFor(() =>
+            expect(
+              ToastQueue.entries.some((entry) => entry.key === key),
+              'dismissed entry still queued'
+            ).toBe(false)
+          );
           expect(
             ToastQueue.entries[0]?.key,
             'front entry key after dismissal'
@@ -937,9 +948,13 @@ export const StackLayersTest: Story = {
         ToastQueue.add('First notification');
         const front = await getFront(container);
         expect(getLayers(container), 'layers').toHaveLength(0);
-        expect(getComputedStyle(front).filter, 'single toast filter').toBe(
-          'none'
-        );
+        // The shadow is kept fully transparent, so it can fade in when the stack forms.
+        const colors =
+          getComputedStyle(front).filter.match(/rgba?\([^)]*\)/g) ?? [];
+        expect(
+          colors.every((color) => color === 'rgba(0, 0, 0, 0)'),
+          'single toast shadow is transparent'
+        ).toBe(true);
       });
 
       await step(
@@ -1020,23 +1035,28 @@ export const StackLayersTest: Story = {
       });
 
       await step(
-        'only the two nearest layers render, however many toasts are queued',
+        'only the two nearest layers show, and one more renders transparent, however many toasts are queued',
         async () => {
           ToastQueue.add('Fourth notification');
           ToastQueue.add('Fifth notification');
           await getFront(container);
           const layers = getLayers(container);
-          expect(layers, 'layers').toHaveLength(2);
+          expect(layers, 'layers').toHaveLength(3);
           expect(
             layers.map((layer) =>
               layer.style.getPropertyValue('--_swc-toast-container-layer-index')
             ),
             'layer depth indexes'
-          ).toEqual(['1', '2']);
+          ).toEqual(['1', '2', '3']);
+          await Promise.all(
+            layers
+              .flatMap((layer) => layer.getAnimations())
+              .map((animation) => animation.finished)
+          );
           expect(
             layers.map((layer) => getComputedStyle(layer).opacity),
             'layer opacities'
-          ).toEqual(['1', '1']);
+          ).toEqual(['1', '1', '0']);
           expect(getRegion(container).getAttribute('aria-label')).toBe(
             '5 notifications.'
           );
@@ -1048,7 +1068,7 @@ export const StackLayersTest: Story = {
         async () => {
           ToastQueue.close(ToastQueue.entries[2].key);
           await container.updateComplete;
-          expect(getLayers(container), 'layers with 4 queued').toHaveLength(2);
+          expect(getLayers(container), 'layers with 4 queued').toHaveLength(3);
           expect(getRegion(container).getAttribute('aria-label')).toBe(
             '4 notifications.'
           );
@@ -1374,6 +1394,12 @@ export const StackPlacementTest: Story = {
             await container.updateComplete;
             const regionElement = getRegion(container);
             const layerElement = getLayers(container)[0];
+            // The perspective origin moves with a transition, so read it once it settles.
+            await Promise.all(
+              [regionElement, layerElement]
+                .flatMap((element) => element.getAnimations())
+                .map((animation) => animation.finished)
+            );
             const region = regionElement.getBoundingClientRect();
 
             // The CSS that decides the direction: the vanishing point sits beyond
@@ -1682,9 +1708,11 @@ export const LayeringFixture: Story = {
 const getDialog = (container: ToastContainer): HTMLDialogElement | null =>
   container.shadowRoot!.querySelector<HTMLDialogElement>('dialog');
 
-const renderedToasts = (container: ToastContainer): Toast[] => [
-  ...container.shadowRoot!.querySelectorAll<Toast>('swc-toast'),
-];
+// Leaves out old front toasts that are still shrinking into the stack, which are inert.
+const renderedToasts = (container: ToastContainer): Toast[] =>
+  [...container.shadowRoot!.querySelectorAll<Toast>('swc-toast')].filter(
+    (toast) => !toast.inert
+  );
 
 const showAllOf = (toast: Toast): HTMLElement | null =>
   toast.shadowRoot!.querySelector<HTMLElement>('.swc-Toast-showAll');
@@ -1756,7 +1784,10 @@ export const ExpandTriggersTest: Story = {
           ).toBe(true);
           expect(toasts[0], 'front toast element is kept').toBe(front);
           expect(getActiveElement(document), 'focus').toBe(front);
-          expect(showAllOf(front), 'Show all while expanded').toBeNull();
+          // Show all fades out in place (300ms), then goes.
+          await waitFor(() =>
+            expect(showAllOf(front), 'Show all while expanded').toBeNull()
+          );
         }
       );
 
@@ -2344,6 +2375,581 @@ export const ToastInsideModalTest: Story = {
       );
     } finally {
       modal.close();
+      ToastQueue.clear();
+    }
+  },
+};
+
+// ──────────────────────────
+//     MOTION
+// ──────────────────────────
+
+const settle = async (...elements: Element[]): Promise<void> => {
+  await Promise.all(
+    elements
+      .flatMap((element) => element.getAnimations({ subtree: true }))
+      .map((animation) => animation.finished.catch(() => undefined))
+  );
+};
+
+// A script animation, which only the expand and collapse move runs. CSS transitions
+// are subclasses of Animation, so they are left out by constructor.
+const isMoving = (element: Element): boolean =>
+  element
+    .getAnimations()
+    .some((animation) => animation.constructor === Animation);
+
+// The front toast's background changes size between the stack and the list, while its parts only move.
+const resizesBackground = (toast: Toast): boolean =>
+  toast
+    .shadowRoot!.querySelector('.swc-Toast')!
+    .getAnimations({ subtree: true })
+    .some(
+      (animation) =>
+        (animation.effect as KeyframeEffect | null)?.pseudoElement ===
+        '::before'
+    );
+
+// A part of the front toast that moves on its own.
+const movesPart = (toast: Toast, selector: string): boolean =>
+  (toast.shadowRoot!.querySelector(selector)?.getAnimations() ?? []).some(
+    (animation) =>
+      (animation.effect as KeyframeEffect | null)
+        ?.getKeyframes()
+        .some((keyframe) => String(keyframe.transform).includes('translate'))
+  );
+
+// A listed toast behind the front one scales instead of changing size.
+const zooms = (element: Element): boolean =>
+  element
+    .getAnimations()
+    .some((animation) =>
+      (animation.effect as KeyframeEffect | null)
+        ?.getKeyframes()
+        .some((keyframe) => String(keyframe.transform).includes('scale'))
+    );
+
+const slidesIn = (element: Element): boolean =>
+  element
+    .getAnimations()
+    .some((animation) =>
+      (animation.effect as KeyframeEffect | null)
+        ?.getKeyframes()
+        .some((keyframe) => 'translate' in keyframe)
+    );
+
+// `auto` stacks at level 0.
+const zLevel = (element: Element): number =>
+  Number.parseInt(getComputedStyle(element).zIndex, 10) || 0;
+
+const paintsBelow = (toast: Element, front: Element): boolean =>
+  zLevel(toast) < zLevel(front);
+
+export const PromotionMotionTest: Story = {
+  play: async ({ canvasElement, step }) => {
+    ToastQueue.clear();
+    const container = await getComponent<ToastContainer>(
+      canvasElement,
+      'swc-toast-container'
+    );
+    try {
+      ToastQueue.add(
+        'Older notification with a longer message that wraps onto a second line'
+      );
+      ToastQueue.add(
+        'Newer notification with a longer message that wraps onto a second line'
+      );
+      const leaving = await getFront(container);
+      await settle(getRegion(container));
+      const heldWidth = getRegion(container).getBoundingClientRect().width;
+
+      await step(
+        'the next toast takes the front as soon as the close starts',
+        async () => {
+          const widths: number[] = [];
+          let sampling = true;
+          const sample = (): void => {
+            if (!sampling) {
+              return;
+            }
+            widths.push(getRegion(container).getBoundingClientRect().width);
+            requestAnimationFrame(sample);
+          };
+          requestAnimationFrame(sample);
+          closeButtonOf(leaving).click();
+          await waitFor(() =>
+            expect(renderedToasts(container), 'rendered toasts').toHaveLength(2)
+          );
+          const toasts = renderedToasts(container);
+          expect(toasts, 'leaving toast keeps its place').toContain(leaving);
+          const front = toasts.find((toast) => toast !== leaving)!;
+          expect(front.textContent, 'new front toast').toContain('Older');
+          expect(
+            ToastQueue.entries.length,
+            'the leaving entry stays queued until its exit ends'
+          ).toBe(2);
+          await waitFor(() =>
+            expect(ToastQueue.entries.length, 'queue after exit').toBe(1)
+          );
+          await waitFor(() => expect(front.open, 'front open').toBe(true));
+          await settle(front, getRegion(container));
+          sampling = false;
+
+          // While the new front toast's message is still hidden, the toast is only as wide
+          // as its close button. The stack keeps its width until the message shows.
+          expect(
+            Math.min(...widths),
+            'narrowest stack width during the promotion'
+          ).toBeGreaterThan(heldWidth * 0.75);
+        }
+      );
+    } finally {
+      ToastQueue.clear();
+    }
+  },
+};
+
+export const PopoverReshowTest: Story = {
+  play: async ({ canvasElement, step }) => {
+    ToastQueue.clear();
+    const container = await getComponent<ToastContainer>(
+      canvasElement,
+      'swc-toast-container'
+    );
+    try {
+      ToastQueue.add('First notification');
+      await getFront(container);
+      const region = getRegion(container);
+      const hidePopover = vi.spyOn(region, 'hidePopover');
+
+      await step(
+        'adding a toast does not re-show an uncovered region',
+        async () => {
+          ToastQueue.add('Second notification');
+          await getFront(container);
+          expect(hidePopover, 'hidePopover').not.toHaveBeenCalled();
+        }
+      );
+    } finally {
+      ToastQueue.clear();
+    }
+  },
+};
+
+export const ExpandMotionTest: Story = {
+  play: async ({ canvasElement, step }) => {
+    ToastQueue.clear();
+    const container = await getComponent<ToastContainer>(
+      canvasElement,
+      'swc-toast-container'
+    );
+    const surfaceOf = (toast: Toast): HTMLElement =>
+      toast.shadowRoot!.querySelector<HTMLElement>('.swc-Toast')!;
+    try {
+      const front = await addQueue(container, ['A', 'B', 'C']);
+      // The move only skips the enter fade once the toast has finished entering.
+      await waitFor(() =>
+        expect(front.matches(':state(shown)'), 'front toast shown').toBe(true)
+      );
+      // Lets the slide-in finish, so only the expand moves the toast.
+      await settle(front);
+
+      await step(
+        'expanding moves the front toast from the stack without fading it in again',
+        async () => {
+          showAllOf(front)!.click();
+          await waitForExpanded(container, true);
+          await waitFor(() => {
+            expect(
+              resizesBackground(front),
+              'front background changes size'
+            ).toBe(true);
+            expect(
+              movesPart(front, '.swc-Toast-close'),
+              'close button moves on its own'
+            ).toBe(true);
+          });
+          // The toast takes its list size at once, so its text never rewraps mid-motion.
+          expect(
+            front
+              .getAnimations()
+              .some((animation) =>
+                (animation.effect as KeyframeEffect | null)
+                  ?.getKeyframes()
+                  .some((keyframe) => 'inlineSize' in keyframe)
+              ),
+            'host size animated'
+          ).toBe(false);
+          // Show all stays while it fades out, out of the layout.
+          expect(
+            front.shadowRoot!.querySelector(
+              '.swc-Toast-footer--leaving .swc-Toast-showAll'
+            ),
+            'Show all fading out'
+          ).toBeTruthy();
+          // The controls come from just past the stack, zoomed in, as in RSP S2.
+          const controls = getDialog(container)!.querySelector(
+            '.swc-ToastContainer-controls'
+          )!;
+          expect(zooms(controls), 'controls zoom').toBe(true);
+          expect(getComputedStyle(surfaceOf(front)).opacity, 'opacity').toBe(
+            '1'
+          );
+        }
+      );
+
+      await step(
+        'the toasts behind it move from the stack too, without fading in',
+        async () => {
+          await waitFor(() => {
+            const [, ...behind] = renderedToasts(container);
+            for (const toast of behind) {
+              expect(isMoving(toast), 'toast moves').toBe(true);
+              // Each zooms from its layer to its list size, so its text never rewraps.
+              expect(zooms(toast), 'toast zooms').toBe(true);
+              // The list is in queue order, so without this the oldest toast paints over the front.
+              expect(
+                paintsBelow(toast, front),
+                'listed toast paints below the front'
+              ).toBe(true);
+              expect(
+                getComputedStyle(surfaceOf(toast)).opacity,
+                'listed toast opacity'
+              ).toBe('1');
+            }
+          });
+        }
+      );
+
+      await step('Show all is gone once it has faded out', async () => {
+        await waitFor(() =>
+          expect(showAllOf(front), 'Show all after the fade').toBeNull()
+        );
+        await settle(...renderedToasts(container));
+      });
+
+      await step(
+        'collapsing moves the front toast back without fading it in again',
+        async () => {
+          const controls = getDialog(container)!.querySelector(
+            '.swc-ToastContainer-controls'
+          )!;
+          const controlsBefore = controls.getBoundingClientRect().top;
+          controlOf(container, 'Collapse').click();
+          // At the first frame, the controls have not moved away from the toasts.
+          await waitFor(() =>
+            expect(zooms(controls), 'controls zoom').toBe(true)
+          );
+          // Every move rewound to its first frame; they run on from there.
+          for (const animation of container.shadowRoot!.getAnimations()) {
+            animation.currentTime = 0;
+          }
+          expect(
+            Math.abs(controls.getBoundingClientRect().top - controlsBefore),
+            'controls start in place'
+          ).toBeLessThan(2);
+          await container.updateComplete;
+          // The view animates out (scrim, controls, toasts) before the dialog closes.
+          expect(
+            getDialog(container)?.open,
+            'still open while collapsing'
+          ).toBe(true);
+          expect(
+            getDialog(container)!.classList.contains(
+              'swc-ToastContainer--collapsing'
+            ),
+            'collapsing state'
+          ).toBe(true);
+          // As in RSP, the front toast takes its stack shape in the same motion.
+          await waitFor(() => {
+            expect(showAllOf(front), 'Show all while collapsing').toBeTruthy();
+            expect(
+              resizesBackground(front),
+              'front background changes size'
+            ).toBe(true);
+          });
+          const [, ...behind] = renderedToasts(container);
+          for (const toast of behind) {
+            expect(
+              paintsBelow(toast, front),
+              'listed toast paints below the front'
+            ).toBe(true);
+          }
+          const pinned = front.getBoundingClientRect();
+          await waitForExpanded(container, false);
+          // One motion: the stack that replaces the view puts the front toast where the collapse left it.
+          expect(isMoving(front), 'front toast moves again').toBe(false);
+          expect(
+            resizesBackground(front),
+            'front background still changing size'
+          ).toBe(false);
+          const rest = front.getBoundingClientRect();
+          expect(Math.abs(rest.top - pinned.top), 'top').toBeLessThan(2);
+          expect(Math.abs(rest.left - pinned.left), 'left').toBeLessThan(2);
+          expect(getComputedStyle(surfaceOf(front)).opacity, 'opacity').toBe(
+            '1'
+          );
+        }
+      );
+    } finally {
+      ToastQueue.clear();
+    }
+  },
+};
+
+export const SlideInTest: Story = {
+  play: async ({ canvasElement, step }) => {
+    ToastQueue.clear();
+    const container = await getComponent<ToastContainer>(
+      canvasElement,
+      'swc-toast-container'
+    );
+    const toastWith = (text: string): Promise<Toast> =>
+      waitFor(() => {
+        const toast = renderedToasts(container).find((candidate) =>
+          candidate.textContent?.includes(text)
+        );
+        expect(toast, text).toBeDefined();
+        return toast!;
+      });
+    try {
+      await step('a new toast slides in', async () => {
+        ToastQueue.add('First notification');
+        const first = await toastWith('First');
+        await waitFor(() => expect(slidesIn(first), 'slides in').toBe(true));
+        await settle(first);
+        ToastQueue.add('Second notification');
+        const second = await toastWith('Second');
+        await waitFor(() => expect(slidesIn(second), 'slides in').toBe(true));
+        // The toast it replaced shrinks into its layer from where it was, at the same time, as its content fades.
+        const ghost =
+          container.shadowRoot!.querySelector<Toast>('swc-toast[inert]');
+        expect(ghost?.textContent, 'old front toast').toContain('First');
+        expect(zooms(ghost!), 'shrinks into its layer').toBe(true);
+        await waitFor(() =>
+          expect(
+            container.shadowRoot!.querySelector('swc-toast[inert]'),
+            'gone once it reaches the layer'
+          ).toBeNull()
+        );
+      });
+
+      await step(
+        'the toast pushed back keeps one toast height, not the taller front toast with Show all',
+        async () => {
+          const front = await toastWith('Second');
+          await settle(front, getRegion(container));
+          const layer = getRegion(container).querySelector<HTMLElement>(
+            '.swc-ToastContainer-layer'
+          )!;
+          const surface = front.shadowRoot!.querySelector('.swc-Toast')!;
+          expect(layer.offsetHeight, 'layer height').toBe(
+            Math.round(parseFloat(getComputedStyle(surface).minBlockSize))
+          );
+          expect(layer.offsetHeight, 'layer height').toBeLessThan(
+            front.offsetHeight
+          );
+        }
+      );
+
+      await step(
+        'a toast promoted from the stack does not slide in',
+        async () => {
+          const second = await toastWith('Second');
+          await settle(second);
+          closeButtonOf(second).click();
+          expect(slidesIn(await toastWith('First')), 'slides in').toBe(false);
+        }
+      );
+    } finally {
+      ToastQueue.clear();
+    }
+  },
+};
+
+export const CloseSlideTest: Story = {
+  play: async ({ canvasElement, step }) => {
+    ToastQueue.clear();
+    const container = await getComponent<ToastContainer>(
+      canvasElement,
+      'swc-toast-container'
+    );
+    try {
+      ToastQueue.add('Only notification');
+      const toast = await getFront(container);
+      await settle(toast);
+
+      await step(
+        'a closing toast slides out past the anchored edge, as in RSP S2, instead of only fading',
+        async () => {
+          closeButtonOf(toast).click();
+          // Past the toast's own short exit (130ms), the slide is still running.
+          await new Promise((resolve) => setTimeout(resolve, 200));
+          expect(getComputedStyle(toast).display, 'still rendered').not.toBe(
+            'none'
+          );
+          const surface = toast.shadowRoot!.querySelector('.swc-Toast')!;
+          expect(
+            new DOMMatrix(getComputedStyle(surface).transform).m42,
+            'moved down'
+          ).toBeGreaterThan(8);
+          await waitFor(() =>
+            expect(ToastQueue.entries, 'queue after exit').toHaveLength(0)
+          );
+        }
+      );
+
+      await step(
+        'the toast promoted from the stack grows out of its layer, without fading in',
+        async () => {
+          await addQueue(container, ['Newer', 'Older']);
+          const newer = await getFront(container);
+          await settle(newer, getRegion(container));
+          closeButtonOf(newer).click();
+          const older = await waitFor(() => {
+            const toast = renderedToasts(container).find((candidate) =>
+              candidate.textContent?.includes('Older')
+            );
+            expect(toast?.open, 'promoted toast open').toBe(true);
+            return toast!;
+          });
+          await waitFor(() =>
+            expect(resizesBackground(older), 'grows from its layer').toBe(true)
+          );
+          expect(
+            getComputedStyle(older.shadowRoot!.querySelector('.swc-Toast')!)
+              .opacity,
+            'promoted toast opacity'
+          ).toBe('1');
+          // The closed toast keeps its width while it slides out.
+          expect(newer.style.inlineSize, 'leaving width').toMatch(/px$/);
+        }
+      );
+
+      await step(
+        'closing a toast in the expanded list moves the others into its place',
+        async () => {
+          ToastQueue.clear();
+          const front = await addQueue(container, ['A', 'B', 'C']);
+          await settle(front);
+          showAllOf(front)!.click();
+          await waitForExpanded(container, true);
+          await settle(...renderedToasts(container));
+          const [first, middle, last] = renderedToasts(container);
+          const before = middle.getBoundingClientRect();
+          closeButtonOf(middle).click();
+          await waitFor(() =>
+            expect(middle.style.position, 'closed toast out of the list').toBe(
+              'absolute'
+            )
+          );
+          // It starts sliding from where it was, even though the view shrinks around the list.
+          expect(
+            Math.abs(middle.getBoundingClientRect().top - before.top),
+            'closed toast stays in place'
+          ).toBeLessThan(2);
+          expect(isMoving(last), 'farther toast moves into place').toBe(true);
+          expect(isMoving(first), 'nearer toast stays').toBe(false);
+        }
+      );
+    } finally {
+      ToastQueue.clear();
+    }
+  },
+};
+
+export const HoverRevealTest: Story = {
+  render: () => html`
+    <button id="away">Away from the toasts</button>
+    <swc-toast-container></swc-toast-container>
+  `,
+  play: async ({ canvasElement, step }) => {
+    ToastQueue.clear();
+    const container = await getComponent<ToastContainer>(
+      canvasElement,
+      'swc-toast-container'
+    );
+    const originY = (): number =>
+      parseFloat(
+        getComputedStyle(getRegion(container)).perspectiveOrigin.split(' ')[1]
+      );
+    try {
+      const front = await addQueue(container, ['A', 'B']);
+      await settle(getRegion(container));
+      const resting = originY();
+
+      await step(
+        'hovering the stack lets the layers peek out further',
+        async () => {
+          await userEvent.hover(front);
+          await settle(getRegion(container));
+          expect(originY(), 'hovered origin').toBeLessThan(resting);
+          await userEvent.hover(canvasElement.querySelector('#away')!);
+          await settle(getRegion(container));
+          expect(originY(), 'origin after leaving').toBe(resting);
+        }
+      );
+    } finally {
+      ToastQueue.clear();
+    }
+  },
+};
+
+export const ShowAllWidthTest: Story = {
+  play: async ({ canvasElement, step }) => {
+    ToastQueue.clear();
+    const container = await getComponent<ToastContainer>(
+      canvasElement,
+      'swc-toast-container'
+    );
+    // Widths of the front toast with and without Show all, and of Show all itself.
+    const measure = async (
+      messages: string[]
+    ): Promise<{
+      withShowAll: number;
+      withoutShowAll: number;
+      showAll: number;
+    }> => {
+      ToastQueue.clear();
+      const front = await addQueue(container, messages);
+      await front.updateComplete;
+      const withShowAll = front.getBoundingClientRect().width;
+      const showAll = showAllOf(front)!.getBoundingClientRect().width;
+      front.showAllLabel = undefined;
+      await front.updateComplete;
+      return {
+        withShowAll,
+        withoutShowAll: front.getBoundingClientRect().width,
+        showAll,
+      };
+    };
+    try {
+      await step(
+        'with a short message, the Show all row widens the toast, as in RSP S2',
+        async () => {
+          const { withShowAll, withoutShowAll } = await measure([
+            'Saved',
+            'Older',
+          ]);
+          expect(withShowAll, 'toast width with Show all').toBeGreaterThan(
+            withoutShowAll
+          );
+        }
+      );
+
+      await step(
+        'with a long message, the rows stack instead of sitting side by side',
+        async () => {
+          const { withShowAll, withoutShowAll, showAll } = await measure([
+            'Your changes were saved and shared with the whole team',
+            'Older',
+          ]);
+          expect(withShowAll, 'toast width with Show all').toBeLessThan(
+            withoutShowAll + showAll
+          );
+        }
+      );
+    } finally {
       ToastQueue.clear();
     }
   },

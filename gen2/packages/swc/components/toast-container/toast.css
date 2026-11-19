@@ -36,6 +36,9 @@
   --_swc-toast-show-all-offset: calc(-1 * token("base-padding-horizontal-medium"));
 
   display: flex;
+
+  /* The background is the `::before` below, so the container can change its size without moving the content. */
+  position: relative;
   gap: token("group-gap-medium");
   align-items: center;
   min-block-size: token("toast-height");
@@ -45,8 +48,8 @@
   font-weight: token("regular-font-weight");
   line-height: token("line-height-font-size-100");
   color: token("transparent-static-white-1000");
-  background-color: var(--_swc-toast-background-color);
   border-radius: token("corner-radius-700");
+  isolation: isolate;
   opacity: 1;
   transition:
     opacity token("animation-duration-100") ease-in-out,
@@ -57,6 +60,15 @@
   &:lang(ko) {
     line-height: token("cjk-line-height-100");
   }
+}
+
+.swc-Toast::before {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-color: var(--_swc-toast-background-color);
+  border-radius: inherit;
+  content: "";
 }
 
 .swc-Toast-main {
@@ -97,19 +109,60 @@
   margin-inline-start: auto;
 }
 
-/* The Show all row sits below the message, with the action at its end. */
+/*
+ * With Show all, the message and the Show all row stack, so the toast is as
+ * wide as the wider of the two. A wrapping row would size the toast as if they
+ * sat side by side.
+ */
+.swc-Toast-main--showAll {
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: stretch;
+}
+
+/*
+ * The Show all row sits below the message, with the action at its end. As in
+ * RSP S2, it is a three-column grid whose gaps count even with no action, so a
+ * toast with Show all is wider than the same toast in the expanded list.
+ */
 .swc-Toast-footer {
-  display: flex;
-  flex: 1 0 100%;
-  gap: token("banner-gap-horizontal");
+  display: grid;
+  flex: none;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
+  column-gap: token("banner-gap-horizontal");
+}
+
+.swc-Toast-footer > .swc-Toast-action {
+  grid-column: 3;
+}
+
+/* Show all leaving the toast: out of the layout, so the toast takes its new shape while the container fades it out in place. */
+.swc-Toast-footer--leaving {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
 }
 
 /* Keeps the chevron at UI icon size; the action button sizes its icon slot for workflow icons. */
 .swc-Toast-showAll {
   --swc-action-button-icon-size: token("ui-icon-medium");
 
+  /*
+   * Full white for 4.5:1 contrast on the info, positive, and negative backgrounds; the
+   * action button's static-white default (80% white) falls short.
+   * @todo Remove once swc-action-button's static-white content colors match the fix
+   * made for swc-button and swc-close-button (#6846).
+   */
+  --swc-action-button-content-color-default: token("transparent-static-white-1000");
+  --swc-action-button-content-color-hover: token("transparent-static-white-1000");
+  --swc-action-button-content-color-down: token("transparent-static-white-1000");
+  --swc-action-button-content-color-focus: token("transparent-static-white-1000");
+
   margin-inline-start: var(--_swc-toast-show-all-offset);
+
+  /* The stack sizes the toast to fit this label; in the narrower list, while collapsing, it must not wrap. */
+  white-space: nowrap;
 }
 
 /*
@@ -148,10 +201,18 @@
   --_swc-toast-show-all-offset: calc(token("workflow-icon-medium") + token("group-gap-medium") - token("base-padding-horizontal-medium"));
 }
 
-/* Closed state is the exit target; `@starting-style` below is the enter origin. */
+/*
+ * Closed state is the exit target; `@starting-style` below is the enter origin.
+ * Only `swc-toast-container` sets the exit offsets and duration: in a stack,
+ * a closing toast slides out past the edge it is anchored to, as in RSP S2.
+ */
 :host(:not([open])) .swc-Toast {
   opacity: 0;
-  transform: translateY(var(--_swc-toast-animation-distance));
+  transform: translate(var(--_swc-toast-exit-x, 0), var(--_swc-toast-exit-y, var(--_swc-toast-animation-distance)));
+
+  /* In the order of `transition-property`: opacity, then transform. */
+  transition-timing-function: var(--_swc-toast-exit-fade-easing, ease-in-out), var(--_swc-toast-exit-easing, ease-in-out);
+  transition-duration: var(--_swc-toast-exit-duration, token("animation-duration-100"));
 }
 
 /* Two frames at 60Hz (34ms): keeps the toast transparent until its message renders, so the empty live region is never painted. */
@@ -159,10 +220,17 @@
   transition-delay: 34ms;
 }
 
+/* `swc-toast-container` turns this entrance off with the `--_swc-toast-enter-*` properties, because it moves its toasts itself. */
 @starting-style {
   :host([open]) .swc-Toast {
-    opacity: 0;
-    transform: translateY(var(--_swc-toast-animation-distance));
+    opacity: var(--_swc-toast-enter-opacity, 0);
+    transform: translateY(var(--_swc-toast-enter-distance, var(--_swc-toast-animation-distance)));
+  }
+
+  /* A toast that already finished entering (for example, one the container moves between its stack and its list) does not enter again. Engines without `:state()` drop only this rule. */
+  :host(:state(shown)) .swc-Toast {
+    opacity: 1;
+    transform: none;
   }
 }
 
@@ -173,7 +241,8 @@
 
 @media (prefers-reduced-motion: reduce) {
   :host,
-  .swc-Toast {
+  .swc-Toast,
+  :host(:not([open])) .swc-Toast {
     transition-duration: 0ms;
   }
 }

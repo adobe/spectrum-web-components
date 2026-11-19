@@ -123,7 +123,8 @@ export abstract class ToastBase extends SpectrumElement {
    *
    * Whether the message is announced when the toast opens. The container
    * turns this off for toasts it shows only in the expanded list, because each
-   * one was announced when it came to the front. Set it before the toast connects.
+   * one was announced when it came to the front. Such a toast also opens
+   * without its enter transition. Set it before the toast connects.
    */
   public announces = true;
 
@@ -305,8 +306,14 @@ export abstract class ToastBase extends SpectrumElement {
       }
       if (this.announces) {
         this.scheduleContentReveal();
+      } else {
+        // A toast that does not announce is joining a list it was already part of, so it
+        // appears without its enter transition.
+        this.internals.states.add('shown');
       }
       this.dispatchAfterTransition(() => {
+        // Once the enter transition is done, moving the toast to a new parent must not play it again.
+        this.internals.states.add('shown');
         this.dispatchEvent(
           new CustomEvent('swc-after-open', {
             bubbles: true,
@@ -320,6 +327,7 @@ export abstract class ToastBase extends SpectrumElement {
     this._cancelContentReveal?.();
     this._contentRevealed = true;
     this._closeEventDispatched = false;
+    this.internals.states.delete('shown');
     this.dispatchAfterTransition(
       () => {
         this.dispatchEvent(
