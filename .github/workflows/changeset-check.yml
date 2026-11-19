@@ -50,7 +50,7 @@ jobs:
 
           # Source changes that ship to consumers; tests, stories, and docs don't need a changeset.
           ignore_pattern='(/test/|/tests/|/stories/|/\.storybook/|/public/|\.(test|stories|vrt)\.[jt]sx?$|\.mdx?$)'
-          config_pattern='/(\.npmrc|\.npmignore|\.gitignore|tsconfig[^/]*\.json|[^/]*\.config\.([cm]?[jt]s|json))$'
+          config_pattern='/(\.gitignore|(vitest|playwright|chromatic)\.config\.([cm]?[jt]s|json))$'
           private_pattern='^gen2/packages/tools/'
 
           missing=0
