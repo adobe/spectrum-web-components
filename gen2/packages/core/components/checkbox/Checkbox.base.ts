@@ -143,7 +143,10 @@ export abstract class CheckboxBase extends SizedMixin(
   /**
    * Sets one interaction or validation status. `undefined` clears authored status.
    * `disabled` disables the checkbox; `readonly` keeps it focusable but blocks
-   * toggling; `invalid` fails validation and shows `error-text`.
+   * toggling; `invalid` fails validation and shows `error-text` with an error
+   * icon. `disabled` and `readonly` bar the checkbox from validation. The
+   * `disabled` custom state (`:state(disabled)`) matches `disabled` and a
+   * disabled ancestor `<fieldset>`.
    */
   @property({
     type: String,

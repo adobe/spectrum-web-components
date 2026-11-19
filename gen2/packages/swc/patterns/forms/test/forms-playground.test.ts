@@ -15,6 +15,7 @@ import { expect, userEvent, waitFor, within } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getComponent } from '@swc-test-helpers/dom';
 
+import type { Checkbox } from '@adobe/spectrum-wc/checkbox';
 import type { Radio, RadioGroup } from '@adobe/spectrum-wc/radio-group';
 import type { TextField } from '@adobe/spectrum-wc/text-field';
 
@@ -44,10 +45,12 @@ const getExample = async (canvasElement: HTMLElement) => {
     accountType,
     'swc-radio[value="work"]'
   );
+  const terms = await getComponent<Checkbox>(canvasElement, 'swc-checkbox');
   const input = email.roleElement;
+  const termsInput = terms.roleElement;
   const fieldset = canvasElement.querySelector('fieldset');
-  if (!input || !fieldset) {
-    throw new Error('Forms example is missing its input or fieldset.');
+  if (!input || !termsInput || !fieldset) {
+    throw new Error('Forms example is missing its inputs or fieldset.');
   }
   return {
     canvas,
@@ -55,6 +58,8 @@ const getExample = async (canvasElement: HTMLElement) => {
     input,
     accountType,
     work,
+    terms,
+    termsInput,
     fieldset,
     submit: canvas.getByRole('button', { name: 'Submit' }),
     reset: canvas.getByRole('button', { name: 'Reset' }),
@@ -84,14 +89,23 @@ export const Playground: Story = {
     `,
   ],
   play: async ({ canvasElement, step }) => {
-    const { email, input, accountType, work, submit, output } =
-      await getExample(canvasElement);
+    const {
+      email,
+      input,
+      accountType,
+      work,
+      terms,
+      termsInput,
+      submit,
+      output,
+    } = await getExample(canvasElement);
 
     await step('empty submission shows errors and focuses email', async () => {
       await userEvent.click(submit);
       await waitFor(() => {
         expect(email.fieldStatus).toBe('invalid');
         expect(accountType.fieldStatus).toBe('invalid');
+        expect(terms.fieldStatus).toBe('invalid');
         expect(input.matches(':focus')).toBe(true);
         expect(JSON.parse(output.textContent ?? '')).toEqual({
           valid: false,
@@ -113,7 +127,28 @@ export const Playground: Story = {
     });
 
     await step(
-      'valid submission displays both values and the submitter',
+      'an unchecked required checkbox receives focus after other fields pass',
+      async () => {
+        await userEvent.click(submit);
+        await waitFor(() => {
+          expect(terms.fieldStatus).toBe('invalid');
+          expect(termsInput.matches(':focus')).toBe(true);
+          expect(JSON.parse(output.textContent ?? '')).toEqual({
+            valid: false,
+            data: [
+              ['email', 'river@example.com'],
+              ['account-type', 'work'],
+              ['action', 'inspect'],
+            ],
+          });
+        });
+        await userEvent.click(termsInput);
+        await waitFor(() => expect(terms.fieldStatus).toBeUndefined());
+      }
+    );
+
+    await step(
+      'valid submission displays every value and the submitter',
       async () => {
         await userEvent.click(submit);
         await waitFor(() =>
@@ -122,6 +157,7 @@ export const Playground: Story = {
             data: [
               ['email', 'river@example.com'],
               ['account-type', 'work'],
+              ['terms', 'accepted'],
               ['action', 'inspect'],
             ],
           })
@@ -134,13 +170,14 @@ export const Playground: Story = {
 export const DisabledSubmissionTest: Story = {
   render: FormBehavior.render,
   play: async ({ canvasElement }) => {
-    const { canvas, email, accountType, fieldset, submit, output } =
+    const { canvas, email, accountType, terms, fieldset, submit, output } =
       await getExample(canvasElement);
 
     await userEvent.click(submit);
     await waitFor(() => {
       expect(email.fieldStatus).toBe('invalid');
       expect(accountType.fieldStatus).toBe('invalid');
+      expect(terms.fieldStatus).toBe('invalid');
       expect(output.textContent).toContain('"valid": false');
     });
     await userEvent.click(
@@ -150,6 +187,7 @@ export const DisabledSubmissionTest: Story = {
       expect(fieldset.disabled).toBe(true);
       expect(email.willValidate).toBe(false);
       expect(accountType.willValidate).toBe(false);
+      expect(terms.willValidate).toBe(false);
     });
 
     await userEvent.click(submit);
@@ -161,6 +199,7 @@ export const DisabledSubmissionTest: Story = {
     );
     expect(email.fieldStatus).toBe('invalid');
     expect(accountType.fieldStatus).toBe('invalid');
+    expect(terms.fieldStatus).toBe('invalid');
 
     await userEvent.click(
       canvas.getByRole('button', { name: 'Enable fields' })
@@ -169,8 +208,10 @@ export const DisabledSubmissionTest: Story = {
       expect(fieldset.disabled).toBe(false);
       expect(email.willValidate).toBe(true);
       expect(accountType.willValidate).toBe(true);
+      expect(terms.willValidate).toBe(true);
       expect(email.fieldStatus).toBe('invalid');
       expect(accountType.fieldStatus).toBe('invalid');
+      expect(terms.fieldStatus).toBe('invalid');
     });
   },
 };
@@ -185,6 +226,8 @@ export const ResetTest: Story = {
       input,
       accountType,
       work,
+      terms,
+      termsInput,
       fieldset,
       submit,
       reset,
@@ -193,12 +236,14 @@ export const ResetTest: Story = {
 
     await userEvent.type(input, 'river@example.com');
     await userEvent.click(work);
+    await userEvent.click(termsInput);
     await userEvent.click(submit);
     await waitFor(() => expect(output.textContent).toContain('"valid": true'));
     await userEvent.click(reset);
     await waitFor(() => {
       expect(email.value).toBe('');
       expect(accountType.selected).toBe('');
+      expect(terms.checked).toBe(false);
       expect(output.textContent).toBe('Submit to view results.');
     });
 
@@ -206,6 +251,7 @@ export const ResetTest: Story = {
     await waitFor(() => {
       expect(email.fieldStatus).toBe('invalid');
       expect(accountType.fieldStatus).toBe('invalid');
+      expect(terms.fieldStatus).toBe('invalid');
     });
     await userEvent.click(
       canvas.getByRole('button', { name: 'Disable fields' })
@@ -214,9 +260,11 @@ export const ResetTest: Story = {
     await waitFor(() => {
       expect(email.fieldStatus).toBeUndefined();
       expect(accountType.fieldStatus).toBeUndefined();
+      expect(terms.fieldStatus).toBeUndefined();
       expect(fieldset.disabled).toBe(true);
       expect(email.willValidate).toBe(false);
       expect(accountType.willValidate).toBe(false);
+      expect(terms.willValidate).toBe(false);
       expect(output.textContent).toBe('Submit to view results.');
     });
     await userEvent.click(
@@ -225,7 +273,9 @@ export const ResetTest: Story = {
     await waitFor(() => {
       expect(email.willValidate).toBe(true);
       expect(accountType.willValidate).toBe(true);
+      expect(terms.willValidate).toBe(true);
       expect(input.disabled).toBe(false);
+      expect(termsInput.disabled).toBe(false);
     });
   },
 };

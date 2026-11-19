@@ -651,10 +651,10 @@ Accessibility (`checkbox.a11y.spec.ts` plus Storybook axe):
 
 #### General
 
-- [ ] JSDoc on all public props, slots, events, CSS custom properties, and the `disabled` custom state
-- [ ] Storybook stories: Playground; Overview; Anatomy (label, description, error text); Options (sizes, emphasized); States (checked, indeterminate, disabled, read-only, required, invalid); Behaviors (form participation in a native `<form novalidate>` with a submit handler (C7), `change` event); Accessibility (no-visible-label with `accessible-label`, grouped checkboxes inside a labelled native `fieldset` until `swc-checkbox-group` exists)
-- [ ] `checkbox.mdx` docs page per the stories-documentation guide
-- [ ] Usage guidance: stack checkboxes with at least 24px between row centers, for WCAG 2.5.8
+- [x] JSDoc on all public props, slots, events, CSS custom properties, and the `disabled` custom state
+- [x] Storybook stories: Playground; Overview; Anatomy (label, description, error text); Options (sizes, emphasized); States (checked, indeterminate, disabled, read-only, required, invalid); Behaviors (form participation in a native `<form novalidate>` with a submit handler (C7), `change` event); Accessibility (no-visible-label with `accessible-label`, grouped checkboxes inside a labelled native `fieldset` until `swc-checkbox-group` exists)
+- [x] `checkbox.mdx` docs page per the stories-documentation guide
+- [x] Usage guidance: stack checkboxes with at least 24px between row centers, for WCAG 2.5.8
 
 #### Breaking changes
 

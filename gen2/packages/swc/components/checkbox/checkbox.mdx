@@ -1,0 +1,211 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
+
+import * as CheckboxStories from './stories/checkbox.stories';
+
+<Meta of={CheckboxStories} />
+
+<DocsHeader />
+
+> **Note**: `swc-checkbox` changes several things from Spectrum 1's `sp-checkbox`:
+>
+> - The label moves from the default slot to the `label` slot.
+> - The `disabled`, `readonly`, and `invalid` attributes become one `field-status` attribute.
+> - The `checked` attribute sets the default state and no longer reflects the live state.
+> - `change` isn't cancelable. Cancel `click` to block a toggle.
+> - Help text moves from `sp-field-group` into the checkbox's `description` and `error-text` slots.
+> - Read-only checkboxes stay in the <kbd>Tab</kbd> order, and checked checkboxes submit their value with a `<form>`.
+> - The `--mod-checkbox-*` custom properties are removed.
+>
+> See the [migration guide](?path=/docs/components-checkbox-migration-guide--docs).
+
+## Anatomy
+
+A checkbox consists of:
+
+- **Box**: shows a checkmark when checked and a dash when indeterminate
+- **Label** (optional), provided through the `label` slot: visible text beside the box. Clicking it toggles the checkbox.
+- **Description** (optional), provided through the `description` slot: help text below the box and label
+- **Error text** (optional), provided through the `error-text` slot: shown with an alert icon in place of the description while `field-status="invalid"`
+
+The box and label toggle the checkbox. The description and error text don't.
+
+<Canvas of={CheckboxStories.Anatomy} />
+
+## Options
+
+### Labelling
+
+Three sources can provide the checkbox's accessible name. When more than one is set, the browser's [accessible-name computation](https://www.w3.org/TR/accname-1.2/) decides which one is announced, in this order:
+
+1. **`accessible-labelledby`** (highest precedence): space-separated element `id`s, resolved against the checkbox's root node, for naming the checkbox with content it does not own.
+2. **`accessible-label`**: a string accessible name for a checkbox with no visible label, such as a row selection checkbox in a table.
+3. **A slotted `label`** (lowest precedence): the default, recommended path. Renders as a real `<label for>` inside the checkbox, so clicking the label toggles the checkbox.
+
+An external `<label for>` that targets `swc-checkbox` neither names nor toggles it. Put the visible label in the `label` slot, or reference it with `accessible-labelledby`. The [accessibility example](#accessibility) includes checkboxes named with `accessible-label`.
+
+### Sizes
+
+Checkboxes come in four sizes: small (`s`), medium (`m`), large (`l`), and extra-large (`xl`). Medium is the default. The size changes the box, the label and description font sizes, and the spacing.
+
+<Canvas of={CheckboxStories.Sizes} />
+
+### Emphasized
+
+The `emphasized` attribute draws the checked and indeterminate box in the accent color. It doesn't change an unchecked box or a disabled one.
+
+Standard checkboxes suit application panels where every visual element is monochrome, so attention stays on the content. Emphasized checkboxes stand out more, which suits forms, settings, and lists or grids of assets where the checkboxes need to be noticed.
+
+<Canvas of={CheckboxStories.Emphasized} />
+
+### With description
+
+A slotted `description` sits below the box and label, starting at the box's inline-start edge, at the label's text size. It's included in the checkbox's accessible description.
+
+<Canvas of={CheckboxStories.WithDescription} />
+
+## States
+
+### Selection
+
+A checkbox is unchecked, checked, or indeterminate.
+
+The `checked` attribute sets the default state, which form reset restores. The `checked` property holds the live state. Once the user or a script changes `checked`, later changes to the attribute don't change it until the next reset. The attribute doesn't reflect the live state, so read the `checked` property or listen for `change` instead of selecting `[checked]`.
+
+`indeterminate` shows the mixed state, for a checkbox that summarizes a partially selected set. It doesn't change `checked` or the submitted value. The next user activation clears it and toggles `checked` from its current value.
+
+<Canvas of={CheckboxStories.Selection} />
+
+### Required
+
+`required` prevents an unchecked checkbox from passing constraint validation, with the browser's native message, and sets the native input's required state. It doesn't set `field-status` or show an error. A required checkbox shows no asterisk or "(required)" text. If people need a visible cue, write it in the label. While `field-status="readonly"` or `"disabled"`, the checkbox is barred from validation, so `required` has no effect, and a read-only checkbox isn't announced as required.
+
+<Canvas of={CheckboxStories.Required} />
+
+### Field status
+
+The `field-status` attribute (`fieldStatus` property) accepts one status at a time: `disabled`, `invalid`, or `readonly`. The default is `undefined`. Assign `undefined` or remove the attribute to clear the status. A checkbox has no `valid` status. `checked`, `indeterminate`, `required`, and `emphasized` remain independent.
+
+#### Disabled
+
+`field-status="disabled"` prevents toggling and <kbd>Tab</kbd> access. The checkbox does not block form validation and is excluded from `FormData`. `click()` does nothing. To style a disabled checkbox from outside, select `:state(disabled)`, which also matches when a `<fieldset disabled>` ancestor disables the checkbox.
+
+Use `field-status="readonly"` instead when people need to reach the checkbox and review its state.
+
+<Canvas of={CheckboxStories.Disabled} />
+
+#### Read-only
+
+`field-status="readonly"` keeps the checkbox focusable and in the <kbd>Tab</kbd> order but blocks toggling by click, label click, <kbd>Space</kbd>, and `click()`. A blocked toggle fires neither `input` nor `change`. A read-only checkbox looks like an enabled one and is announced as unavailable through `aria-disabled="true"`. It stays in `FormData` and does not block validation.
+
+<Canvas of={CheckboxStories.ReadOnly} />
+
+#### Invalid
+
+`field-status="invalid"` shows supplied `error-text` instead of the description. Without `error-text` content, the description stays visible in the error color. An alert icon shows beside the error text or description, or on its own when there is neither, so the state never relies on color alone. The box colors don't change. Eligible checkboxes fail validation and block submission, even when checked. Checking the box doesn't clear this status.
+
+Always pair `field-status="invalid"` with `error-text`. Explain what happened, why (if known), and how to fix it.
+
+While invalid, the plain text of `error-text` becomes `validationMessage` and updates when the content changes. Without it, the message is "Enter a valid value." This fallback is not shown inline.
+
+The checkbox's `:invalid` match follows live validity, including before your application shows an error. Use `field-status="invalid"` to style its displayed error state.
+
+When a `<fieldset disabled>` ancestor disables an invalid checkbox, the alert icon hides, and the error text and invalid status stay.
+
+Native validation, such as `required`, does not set `field-status="invalid"` automatically. Error text alone does not make the checkbox invalid. See [Error messages](?path=/docs/patterns-forms--docs#error-messages) in the Forms pattern for showing and clearing errors.
+
+<Canvas of={CheckboxStories.Invalid} />
+
+## Behaviors
+
+### Form participation
+
+`swc-checkbox` works with native forms, including validation, reset, and `FormData`. See the [Forms pattern](?path=/docs/patterns-forms--docs) for shared validation, submission, and reset guidance.
+
+This example uses a `novalidate` form whose submit handler marks each failing checkbox invalid and focuses the first one, and clears an error when the checkbox changes.
+
+<Canvas of={CheckboxStories.FormParticipation} />
+
+#### Submitted value
+
+A checked checkbox submits one `name=value` entry. An unchecked checkbox submits nothing. `value` defaults to `on`, as on a native checkbox. Checkboxes that share a `name` each submit their own `value` when checked, so `FormData.getAll(name)` returns one entry per checked checkbox, in document order. Read-only checkboxes are included; disabled checkboxes are not.
+
+#### Focus
+
+`checkbox.focus()` and <kbd>Tab</kbd> move focus to the checkbox's native input. A blocked native submit and `reportValidity()` focus the same input. Disabled and read-only checkboxes do not block validation.
+
+#### Reset
+
+Reset restores the default state from the `checked` attribute and clears `invalid` status. Disabled and read-only status are preserved, and `indeterminate` is left unchanged. A `required` checkbox that starts unchecked fails validation again.
+
+#### Restore
+
+When the browser restores a form, for example after back/forward navigation, the checkbox restores its saved checked state. Reset still returns to the `checked` attribute.
+
+Setting `checked` in code, resetting the form, and browser form restoration do not fire `input` or `change`.
+
+### Submitting with the keyboard
+
+Pressing <kbd>Enter</kbd> doesn't toggle the checkbox. In a form, it activates the form's first associated submit button, including one outside the form linked by its `form` attribute. If that button is disabled, or the form has no submit button, <kbd>Enter</kbd> does nothing. Text composition does not trigger submission, and your application can cancel it with `preventDefault()` on the `keydown` event.
+
+### Events
+
+When the user toggles the checkbox, it fires `input` and then `change` from the host. Both bubble, cross shadow boundaries, and are not cancelable. Listeners see the updated `checked`, form value, and validity. To block a toggle, call `preventDefault()` on the `click` event instead.
+
+```js
+checkbox.addEventListener('change', (event) => {
+  console.log('Checked:', event.target.checked);
+});
+```
+
+### Label wrapping
+
+A long label wraps onto multiple lines within the available width, and the box stays aligned with the label's first line.
+
+<Canvas of={CheckboxStories.LabelWrapping} />
+
+## Accessibility
+
+### Features
+
+#### Keyboard navigation
+
+- <kbd>Tab</kbd>: moves focus to the checkbox. Each checkbox is its own
+  <kbd>Tab</kbd> stop. Disabled checkboxes are skipped; read-only checkboxes are
+  not.
+- <kbd>Space</kbd>: toggles the focused checkbox, unless it's read-only.
+- <kbd>Enter</kbd>: submits the form through its submit button, as described in
+  [Submitting with the keyboard](#submitting-with-the-keyboard).
+
+The focus ring draws around the box for keyboard focus only.
+
+#### ARIA implementation
+
+- **Native role and state**: the host sets no ARIA role. A native `<input type="checkbox">` inside the checkbox supplies the `checkbox` role and its checked, unchecked, or mixed state.
+- **Status**: `field-status="disabled"` sets native `disabled` on the input. `field-status="readonly"` sets `aria-disabled="true"` and keeps the input focusable. `field-status="invalid"` sets `aria-invalid="true"`.
+- **Required**: `required` sets native `required` on the input, which assistive technology announces as required. A read-only checkbox drops it.
+- **Name**: the browser announces one name, in the order `accessible-labelledby`, `accessible-label`, then the slotted label. See [Labelling](#labelling).
+- **Description**: the slotted `description`, or the `error-text` while invalid, is associated through `aria-describedby`. An `accessible-describedby` reference is combined with it rather than replacing it. Error text is not a live region.
+- **Decorative icons**: the checkmark, dash, and alert icon are hidden from assistive technology.
+- **Dev-mode warnings**: the console warns when a checkbox has no accessible name, sets both `accessible-label` and `accessible-labelledby`, references an `id` that does not exist, has `aria-label` or `aria-labelledby` set on the host, or is targeted by an external `<label>`. It also warns about leftover `readonly` and `invalid` attributes and unsupported `field-status` values.
+
+### Best practices
+
+- Give every checkbox a label that clearly describes its purpose. Prefer a slotted `label` so the name is visible. Use `accessible-label` or `accessible-labelledby` only when the checkbox has no visible label of its own, and do not set both.
+- Give a set of related checkboxes a label that describes what the set represents, because a screen reader announces it before each option. Until a checkbox group component is available, wrap the set in a native `<fieldset>` with a `<legend>`.
+- Stack checkboxes so that the centers of adjacent rows are at least 24px apart, to meet [WCAG 2.5.8](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html) target size. A checkbox row is shorter than 24px at most sizes.
+- Always pair `field-status="invalid"` with slotted `error-text` that explains how to fix the problem.
+- Prefer `field-status="readonly"` over `disabled` when people need to reach the checkbox and hear its state.
+
+<Canvas of={CheckboxStories.Accessibility} />
+
+## Upcoming features
+
+| Feature                                 | What it will do                                                                                                                                                                              |
+| --------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Checkbox group (`swc-checkbox-group`)   | Groups related checkboxes under one label, description, and error message, validates rules such as "select at least one", and applies `size`, `emphasized`, and disabled state to every item |
+| Additional custom properties            | Exposes more `--swc-checkbox-*` properties for customizing the checkbox's appearance                                                                                                         |
+| Custom validation                       | Lets you attach your own validation rules to a checkbox, and choose whether an invalid status also blocks form submission                                                                    |
+| Checked and indeterminate custom states | Lets you style checkboxes by their live state with `:state(checked)` and `:state(indeterminate)`                                                                                             |
+
+<DocsFooter />

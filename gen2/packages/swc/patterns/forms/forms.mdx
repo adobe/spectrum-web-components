@@ -8,7 +8,7 @@ import * as FormsStories from './stories/forms.stories';
 
 Combine Spectrum Web Components with native HTML forms to collect and submit data, validate input, and display helpful error messages.
 
-The full example combines [Text field](?path=/docs/components-text-field--docs) and [Radio group](?path=/docs/components-radio-group--docs) with native form actions.
+The full example combines [Text field](?path=/docs/components-text-field--docs), [Radio group](?path=/docs/components-radio-group--docs), and [Checkbox](?path=/docs/components-checkbox--docs) with native form actions.
 
 ## Labels and help text
 
@@ -23,7 +23,7 @@ A clear label tells people what to enter. Help text explains requirements before
 
 Screen readers announce the label and description when the field receives focus. A placeholder does not replace a label. If a visible label is not possible, use `accessible-label` or `accessible-labelledby`.
 
-Add `required` when a value is needed. See [Text field](?path=/docs/components-text-field--docs) and [Radio group](?path=/docs/components-radio-group--docs) for their label and required-indicator options.
+Add `required` when a value is needed. See [Text field](?path=/docs/components-text-field--docs) and [Radio group](?path=/docs/components-radio-group--docs) for their label and required-indicator options. A required [Checkbox](?path=/docs/components-checkbox--docs) shows no indicator; if people need a visible cue, write it in the label.
 
 ## Submitting data
 
@@ -54,6 +54,8 @@ This example displays data locally; it does not send a request. Without `novalid
 
 Disabled fields are excluded from `FormData`; read-only fields remain included. Passing `event.submitter` also includes the clicked button's name and value, if provided.
 
+A checked checkbox submits its `name` with its `value`, which defaults to `on`. An unchecked checkbox submits nothing, so read a missing entry as unchecked.
+
 ## Validation
 
 Helpful validation explains how to fix a problem without interrupting someone who is still entering a value. Prefer specific messages, such as "Use at least 8 characters," over "Invalid input."
@@ -73,6 +75,15 @@ Use supported attributes such as `required`, `type`, `minlength`, and `pattern` 
 ```
 
 `field.checkValidity()` checks a field; `form.checkValidity()` checks the whole form. Neither displays inline errors automatically. Each component documents the rules it supports.
+
+On a checkbox, `required` means the checkbox must be checked. Use it for agreements that block submission, such as accepting terms of service:
+
+```html
+<swc-checkbox name="terms" value="accepted" required>
+  <span slot="label">I agree to the terms of service</span>
+  <span slot="error-text">Accept the terms of service to continue.</span>
+</swc-checkbox>
+```
 
 ### Error messages
 
@@ -224,7 +235,7 @@ If the form uses `novalidate`, the browser already skips validation for every su
 
 ## Resetting a form
 
-Use a reset button or `form.reset()` to restore initial values. Reset does not necessarily mean empty: a text field returns to its initial `value` attribute, and a radio group returns to its pre-checked item or initial `selected` attribute. See [Radio group reset](?path=/docs/components-radio-group--docs#reset) for selection defaults.
+Use a reset button or `form.reset()` to restore initial values. Reset does not necessarily mean empty: a text field returns to its initial `value` attribute, a radio group returns to its pre-checked item or initial `selected` attribute, and a checkbox returns to its `checked` attribute. See [Radio group reset](?path=/docs/components-radio-group--docs#reset) for selection defaults.
 
 ```html
 <form id="profile-form">
@@ -252,7 +263,7 @@ Reset and programmatic value changes do not fire `input` or `change`. Await fiel
 
 ## Form example
 
-Explore validation, form data, and reset with Email address and Account type. The results panel shows validity and form data, even when invalid, so you can inspect them. No data is sent.
+Explore validation, form data, and reset with Email address, Account type, and a terms of service checkbox. The results panel shows validity and form data, even when invalid, so you can inspect them. No data is sent.
 
 <Canvas of={FormsStories.FormBehavior} />
 
@@ -266,7 +277,7 @@ Explore validation, form data, and reset with Email address and Account type. Th
 - Do not find fields with `:invalid` alone. It can match a fieldset and misses fields outside the form.
 - Use a submit button or `form.requestSubmit()` to trigger submission. `form.submit()` skips validation and your submit handler.
 
-See [Text field](?path=/docs/components-text-field--docs) and [Radio group](?path=/docs/components-radio-group--docs) for component-specific behavior. Verify labels and errors with the [screen reader testing guide](?path=/docs/guides-accessibility-screen-reader-testing--docs).
+See [Text field](?path=/docs/components-text-field--docs), [Radio group](?path=/docs/components-radio-group--docs), and [Checkbox](?path=/docs/components-checkbox--docs) for component-specific behavior. Verify labels and errors with the [screen reader testing guide](?path=/docs/guides-accessibility-screen-reader-testing--docs).
 
 ## Next step
 

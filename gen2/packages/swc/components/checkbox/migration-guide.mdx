@@ -1,0 +1,313 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Checkbox/Migration guide" />
+
+# Checkbox migration guide
+
+Replace `<sp-checkbox>` with `<swc-checkbox>`, move the label into the `label` slot, replace `disabled`, `readonly`, and `invalid` with one `field-status` attribute, and update code that relied on the reflected `checked` attribute or a cancelable `change` event.
+
+## Installation
+
+```bash
+# Remove
+yarn remove @spectrum-web-components/checkbox
+
+# Add
+yarn add @adobe/spectrum-wc
+```
+
+> `@adobe/spectrum-wc` is a monolithic package. Importing via subpath (e.g., `@adobe/spectrum-wc/components/checkbox/swc-checkbox.js`) registers and loads only that component's bundle.
+
+## What changed
+
+### Renamed
+
+| Area                  | Spectrum 1 (`sp-checkbox`)                                                | Spectrum 2 (`swc-checkbox`)                                                                       |
+| --------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| Tag                   | `sp-checkbox`                                                             | `swc-checkbox`                                                                                    |
+| Side-effect import    | `@spectrum-web-components/checkbox/sp-checkbox.js`                        | `@adobe/spectrum-wc/components/checkbox/swc-checkbox.js`                                          |
+| Class import          | `@spectrum-web-components/checkbox`                                       | `@adobe/spectrum-wc/checkbox`                                                                     |
+| Label                 | Default slot                                                              | `label` slot                                                                                      |
+| Status                | `disabled`, `readonly`, `invalid` booleans                                | `field-status="disabled\|readonly\|invalid"`; `fieldStatus` defaults to `undefined`               |
+| Help text             | `help-text` / `negative-help-text` slots on a wrapping `<sp-field-group>` | `description` / `error-text` slots on the checkbox                                                |
+| `checked` attribute   | Reflects the live state                                                   | Sets the default state, which form reset restores; the `checked` property is live                 |
+| `change` event        | Cancelable `CustomEvent`; `preventDefault()` reverts the toggle           | Non-cancelable `Event`; cancel the `click` event to block a toggle                                |
+| Read-only             | Removed from the Tab order and announced as disabled                      | Stays a Tab stop, exposed as `aria-disabled="true"`, and blocks toggling                          |
+| Invalid presentation  | Red box border                                                            | Box colors unchanged; an error icon shows beside the error text, beside the description, or alone |
+| CSS custom properties | `--mod-checkbox-*` and `--system-checkbox-*`                              | `--swc-checkbox-*` and `--swc-form-field-*` (see [Styling](#styling))                             |
+
+### Added in Spectrum 2
+
+| Addition                                                              | Notes                                                                                                                                                                                                                           |
+| --------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Native form association                                               | A checked checkbox submits `name=value` with its `<form>`, resets with the form, follows `<fieldset disabled>`, and exposes `form`, `validity`, `validationMessage`, `willValidate`, `checkValidity()`, and `reportValidity()`. |
+| `value` attribute                                                     | Submitted under `name` while checked. Defaults to `on`, as on a native checkbox.                                                                                                                                                |
+| `required` attribute                                                  | An unchecked required checkbox fails validation and blocks native form submission.                                                                                                                                              |
+| `description` and `error-text` slots                                  | Help text and error message on the checkbox itself. While `field-status="invalid"`, supplied `error-text` replaces the `description`.                                                                                           |
+| `accessible-label`, `accessible-labelledby`, `accessible-describedby` | Name a checkbox without visible text, name it from other elements, or add external descriptions.                                                                                                                                |
+| `disabled` custom state                                               | `swc-checkbox:state(disabled)` matches `field-status="disabled"` and checkboxes disabled by an ancestor `<fieldset disabled>`.                                                                                                  |
+| <kbd>Enter</kbd> submits the form                                     | As on a native checkbox, <kbd>Enter</kbd> on a focused checkbox clicks the form's default submit button. It does not toggle the checkbox.                                                                                       |
+
+### Removed in Spectrum 2
+
+| Removed                                                                     | Replacement                                                                                                   |
+| --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| `disabled`, `readonly`, and `invalid` attributes and properties             | `field-status` / `fieldStatus`. See [step 4](#4-replace-the-status-booleans-with-field-status).               |
+| Cancelable `change` event                                                   | Call `preventDefault()` on `click`. See [step 7](#7-cancel-click-instead-of-change).                          |
+| `tabIndex` override (host `tabindex="0"` by default, swapped when disabled) | Native `tabindex`. See [step 8](#8-remove-internal-members-and-tabindex).                                     |
+| `handleChange()` method and `inputElement` property                         | The `checked` property, the `change` event, `click()`, and `focus()`.                                         |
+| `CheckboxBase`, `CheckboxMixin`, and `CheckboxElement` subpath exports      | No public replacement: Spectrum 2 base classes aren't intended for direct use. Use `<swc-checkbox>` directly. |
+| `#checkmark` and `#partial-checkmark` elements in the shadow root           | Read the `checked` and `indeterminate` properties instead of querying the shadow root.                        |
+| `--mod-checkbox-*` and `--system-checkbox-*` custom properties              | The reduced `--swc-*` set in [Styling](#styling).                                                             |
+
+## Update your code
+
+### 1. Update the import
+
+```js
+// Before
+import '@spectrum-web-components/checkbox/sp-checkbox.js';
+import { Checkbox } from '@spectrum-web-components/checkbox';
+
+// After
+import '@adobe/spectrum-wc/components/checkbox/swc-checkbox.js';
+import { Checkbox } from '@adobe/spectrum-wc/checkbox';
+```
+
+### 2. Rename the tag
+
+Find and replace `sp-checkbox` with `swc-checkbox` in markup, CSS selectors, and `querySelector` calls.
+
+```html
+<!-- Before -->
+<sp-checkbox>Send me product updates</sp-checkbox>
+
+<!-- After (finish the label in step 3) -->
+<swc-checkbox>Send me product updates</swc-checkbox>
+```
+
+### 3. Move the label into the `label` slot
+
+The default slot is no longer rendered. Wrap the label content in `<span slot="label">`. For a checkbox with no visible text, such as a table row selector, use `accessible-label` instead of `aria-label`. To name it from other elements, use `accessible-labelledby`.
+
+```html
+<!-- Before -->
+<sp-checkbox>Send me product updates</sp-checkbox>
+<sp-checkbox aria-label="Select row"></sp-checkbox>
+
+<!-- After -->
+<swc-checkbox>
+  <span slot="label">Send me product updates</span>
+</swc-checkbox>
+<swc-checkbox accessible-label="Select row"></swc-checkbox>
+```
+
+An external `<label for>` that points at the checkbox neither names nor toggles it, and logs a dev-mode warning. Move that text into the `label` slot or reference it with `accessible-labelledby`.
+
+### 4. Replace the status booleans with `field-status`
+
+Replace `disabled`, `readonly`, or `invalid` with one `field-status` value. Only one status applies at a time. Keep `checked`, `indeterminate`, `required`, and `emphasized` as they are. Clear the status by removing the attribute or setting `fieldStatus = undefined`.
+
+```html
+<!-- Before -->
+<sp-checkbox disabled>Email</sp-checkbox>
+<sp-checkbox readonly checked>Keep my current plan</sp-checkbox>
+<sp-checkbox invalid>I agree to the terms</sp-checkbox>
+
+<!-- After -->
+<swc-checkbox field-status="disabled">
+  <span slot="label">Email</span>
+</swc-checkbox>
+<swc-checkbox field-status="readonly" checked>
+  <span slot="label">Keep my current plan</span>
+</swc-checkbox>
+<swc-checkbox field-status="invalid">
+  <span slot="label">I agree to the terms</span>
+  <span slot="error-text">Agree to the terms to continue.</span>
+</swc-checkbox>
+```
+
+```js
+// Before
+checkbox.disabled = true;
+checkbox.invalid = false;
+
+// After
+checkbox.fieldStatus = 'disabled';
+checkbox.fieldStatus = undefined;
+```
+
+Update style selectors too: use `swc-checkbox:state(disabled)` (which also matches checkboxes in a disabled `<fieldset>`) or `swc-checkbox[field-status="invalid"]` instead of `sp-checkbox[disabled]` or `sp-checkbox[invalid]`.
+
+Remove leftover Spectrum 1 attributes. Without `field-status`, they behave differently from before:
+
+- A leftover `disabled` attribute still disables the checkbox.
+- A leftover `readonly` attribute only bars the checkbox from validation. The box still toggles and is not exposed as read-only. It logs a dev-mode warning.
+- A leftover `invalid` attribute is ignored and logs a dev-mode warning.
+- The `disabled`, `readonly`, and `invalid` properties no longer exist, so assigning them has no effect.
+
+### 5. Move help text onto the checkbox
+
+A single checkbox no longer needs a wrapping `<sp-field-group>` for help text. Rename the slots and put them on the checkbox. You no longer need to set `invalid` on both a group and the checkbox.
+
+```html
+<!-- Before -->
+<sp-field-group vertical label="Agreement" invalid>
+  <sp-checkbox invalid>I accept the terms of service</sp-checkbox>
+  <sp-help-text slot="help-text">Required to create an account.</sp-help-text>
+  <sp-help-text slot="negative-help-text" icon>
+    You must accept the terms of service to continue.
+  </sp-help-text>
+</sp-field-group>
+
+<!-- After -->
+<swc-checkbox field-status="invalid">
+  <span slot="label">I accept the terms of service</span>
+  <span slot="description">Required to create an account.</span>
+  <span slot="error-text">
+    You must accept the terms of service to continue.
+  </span>
+</swc-checkbox>
+```
+
+The checkbox renders the error icon itself; do not add one to the error text.
+
+### 6. Read `checked` from the property
+
+The `checked` attribute no longer reflects the live state. It sets the default state, which `form.reset()` restores. Once the user or a script changes `checked`, later changes to the attribute are ignored until the next reset. Read the `checked` property or listen for `change` instead of matching the attribute.
+
+```js
+// Before
+const selected = document.querySelectorAll('sp-checkbox[checked]');
+
+// After
+const selected = [...document.querySelectorAll('swc-checkbox')].filter(
+  (checkbox) => checkbox.checked
+);
+```
+
+### 7. Cancel `click` instead of `change`
+
+`change` is not cancelable, and calling `preventDefault()` on it no longer reverts the toggle. Cancel the `click` event instead; no `change` fires.
+
+```js
+// Before
+checkbox.addEventListener('change', (event) => {
+  if (!canToggle()) event.preventDefault();
+});
+
+// After
+checkbox.addEventListener('click', (event) => {
+  if (!canToggle()) event.preventDefault();
+});
+```
+
+### 8. Remove internal members and `tabindex`
+
+Remove explicit `tabindex="0"`; the checkbox is a Tab stop by default and a disabled checkbox leaves the Tab order on its own. `tabindex="-1"` still removes the checkbox from the Tab order. Replace `handleChange()` and `inputElement` with public API.
+
+```js
+// Before
+checkbox.inputElement.checked = true;
+checkbox.handleChange();
+checkbox.inputElement.focus();
+
+// After
+checkbox.checked = true;
+checkbox.focus();
+```
+
+Setting `checked` from a script does not dispatch `change`. Use `checkbox.click()` to toggle as a user would, including the `input` and `change` events.
+
+### 9. Let the form collect the value
+
+The checkbox now takes part in native forms. A checked checkbox adds `name=value` to the form data (`value` defaults to `on`); an unchecked one adds nothing. Remove code that collected checkbox state by hand, or it will be submitted twice.
+
+```js
+// Before
+const data = new FormData(form);
+form.querySelectorAll('sp-checkbox[name]').forEach((checkbox) => {
+  if (checkbox.checked) data.append(checkbox.name, 'on');
+});
+
+// After
+const data = new FormData(form);
+```
+
+`required` and `field-status="invalid"` both make the checkbox fail validation, which blocks native submission in a form without `novalidate`. Checking the box does not clear `field-status="invalid"`; set `fieldStatus = undefined` when the error is resolved. `form.reset()` clears an `invalid` status and keeps `disabled` or `readonly`. See the [Forms pattern](?path=/docs/patterns-forms--docs) for validation timing, inline errors, submission, and reset.
+
+## Accessibility
+
+- **Label:** every checkbox needs a name from the `label` slot, `accessible-label`, or `accessible-labelledby`. See [step 3](#3-move-the-label-into-the-label-slot). Checkboxes with no name trigger a dev-mode warning.
+- **`aria-label` / `aria-labelledby` on the host are ignored.** They do not name the checkbox and trigger a dev-mode warning. Use `accessible-label` or `accessible-labelledby`.
+- **Read-only is now a Tab stop.** A `field-status="readonly"` checkbox is reached by <kbd>Tab</kbd>, exposed as `aria-disabled="true"`, and does not toggle on click or <kbd>Space</kbd>. Check that your focus order still makes sense. See [step 4](#4-replace-the-status-booleans-with-field-status).
+- **Error text:** pair `field-status="invalid"` with slotted `error-text` so the error is described, not shown by an icon alone. See [step 5](#5-move-help-text-onto-the-checkbox).
+- **Required:** `required` is announced by assistive technology but has no visible marker. If users need a visible cue, write it in the label text.
+- **Groups:** label a set of related checkboxes with a native `<fieldset>` and `<legend>`.
+
+## Styling
+
+Spectrum 2 exposes a reduced set of `--swc-*` custom properties on `<swc-checkbox>`. The Spectrum 1 `--mod-checkbox-*` and `--system-checkbox-*` surfaces are not carried forward. Use `swc-checkbox:state(disabled)` to style disabled checkboxes.
+
+{/* @todo Replace the inline-styled callouts in this section with `<swc-inline-alert>` once it is migrated to Spectrum 2. */}
+
+<div
+  style={{
+    borderLeft: '4px solid #dba842',
+    background: 'rgba(219, 168, 66, 0.12)',
+    padding: '12px 16px',
+    margin: '16px 0',
+    borderRadius: '4px',
+  }}
+>
+  <strong>⚠️ Breaking change.</strong> Spectrum 1{' '}
+  <code>{'--mod-checkbox-*'}</code> and <code>{'--system-checkbox-*'}</code>{' '}
+  properties <strong>do not apply</strong> to <code>{'<swc-checkbox>'}</code>.
+  Remove every override. Most have no 1:1 replacement. Use the reduced{' '}
+  <code>{'--swc-*'}</code> set below.
+</div>
+
+### Public custom properties
+
+{/* @todo Replace the Description column with the `@cssprop` JSDoc descriptions from `<swc-checkbox>`'s CEM entry once they are added in a follow-up PR. */}
+
+| Custom property                          | Description                                                                                                       |
+| ---------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `--swc-checkbox-control-size`            | Inline and block size of the box. Changes by size.                                                                |
+| `--swc-checkbox-corner-radius`           | Corner radius of the box. Changes by size.                                                                        |
+| `--swc-checkbox-text-to-control`         | Space between the box and the label. Changes by size.                                                             |
+| `--swc-checkbox-border-color-*`          | Border color of the unchecked box: `-default`, `-hover`, `-down`, and `-focus`. `-disabled` also sets the fill.   |
+| `--swc-checkbox-selected-color-*`        | Fill of the checked or indeterminate box: `-default`, `-hover`, `-down`, and `-focus`. Changes with `emphasized`. |
+| `--swc-checkbox-content-color-*`         | Label text color: `-default`, `-hover`, `-down`, `-focus`, and `-disabled`.                                       |
+| `--swc-form-field-label-font-size`       | Font size of the label. Changes by size.                                                                          |
+| `--swc-form-field-description-font-size` | Font size of the description and error text. Changes by size.                                                     |
+| `--swc-form-field-row-gap`               | Space between the checkbox row and the description or error text. Changes by size.                                |
+| `--swc-form-field-invalid-icon-gap`      | Space between the error icon and the error message. Changes by size.                                              |
+
+<div
+  style={{
+    borderLeft: '4px solid #e34850',
+    background: 'rgba(227, 72, 80, 0.10)',
+    padding: '12px 16px',
+    margin: '16px 0',
+    borderRadius: '4px',
+  }}
+>
+  <strong>🚫 Do not target internals.</strong> Internal classes,{' '}
+  <code>{'--_swc-checkbox-*'}</code> private properties, and shadow DOM are{' '}
+  <strong>not public API</strong>. Styling applied to them will break without
+  warning on minor releases.
+</div>
+
+## Checklist
+
+- [ ] Swap the imports to `@adobe/spectrum-wc/components/checkbox/swc-checkbox.js` and `@adobe/spectrum-wc/checkbox`.
+- [ ] Rename `sp-checkbox` to `swc-checkbox` in markup, CSS, and scripts.
+- [ ] Wrap each label in `<span slot="label">`; replace host `aria-label` and external `<label for>` with `accessible-label` or `accessible-labelledby`.
+- [ ] Replace `disabled`, `readonly`, and `invalid` with `field-status`, and update `[disabled]` and `[invalid]` style selectors.
+- [ ] Move single-checkbox help text from `<sp-field-group>` into the `description` and `error-text` slots.
+- [ ] Read the `checked` property instead of matching the `checked` attribute.
+- [ ] Move `preventDefault()` from `change` to `click`.
+- [ ] Remove `tabindex="0"`, and replace `handleChange()`, `inputElement`, `CheckboxBase`, and `CheckboxMixin` with public API.
+- [ ] Remove code that adds checkbox values to form data by hand, and clear `field-status="invalid"` when the error is resolved.
+- [ ] Remove all `--mod-checkbox-*` and `--system-checkbox-*` overrides; adopt the `--swc-*` properties above where needed.
