@@ -208,7 +208,7 @@ Row chrome belongs here, not in `swc-menu`: in `spectrum-css`, `.spectrum-Menu` 
 - [x] `role="menuitem"` present before `swc-menu`'s first discovery pass
 - [x] `disabled` exposes `aria-disabled="true"` and the row stays arrow-reachable
 - [x] <kbd>Enter</kbd> and <kbd>Space</kbd> activate an enabled row ([WCAG 2.1.1](https://www.w3.org/WAI/WCAG22/Understanding/keyboard)); a disabled row swallows both without activating
-- [x] Reconcile `accessibility-migration-analysis.md`: its "Migration scope" now lists plain `menuitem` only, with submenu parents and link rows called out as out of scope per [Q17](#blockers-and-open-questions)
+- [x] Reconcile `component-accessibility-specification.md`: its "Migration scope" now lists plain `menuitem` only, with submenu parents and link rows called out as out of scope per [Q17](#blockers-and-open-questions)
 
 ### Testing
 
@@ -277,6 +277,6 @@ Two upstream tokens look like they should apply and deliberately are not used. `
 
 - [`1st-gen/packages/menu/src/MenuItem.ts`](../../../../1st-gen/packages/menu/src/MenuItem.ts)
 - [Menu migration plan](../menu/migration-plan.md) — Q15/Q17/Q19 and the Phase A surface table
-- [Menu item accessibility migration analysis](./accessibility-migration-analysis.md)
+- [Menu item component accessibility specification](./component-accessibility-specification.md)
 - [`gen2/packages/core/components/menu/Menu.base.ts`](../../../../gen2/packages/core/components/menu/Menu.base.ts) — the tag-name contract
 - [APG menu button pattern](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/)

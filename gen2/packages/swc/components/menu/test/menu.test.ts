@@ -2500,6 +2500,60 @@ export const ItemSizeCascadeTest: Story = {
 };
 
 // ──────────────────────────────────────────────────────────────
+// TEST: An invalid menu size resolves before it reaches the rows
+// ──────────────────────────────────────────────────────────────
+
+export const ItemSizeInvalidTest: Story = {
+  render: () => rowsInMenu(threeRows, 'size-invalid-trigger'),
+  play: async ({ canvasElement, step }) => {
+    const menu = await getComponent<Menu>(canvasElement, 'swc-menu');
+
+    // Start from a non-default size so resolving back to `m` is a real change
+    // rather than the value the rows already carried.
+    await step('rows follow a valid menu size', async () => {
+      menu.size = 'l';
+      await menu.updateComplete;
+      await waitFor(() => {
+        for (const row of getRows(canvasElement)) {
+          expect(row.size, 'row follows the menu').toBe('l');
+        }
+      });
+    });
+
+    await step('an invalid menu size reaches the rows resolved', () =>
+      withWarningSpy(async (warnCalls) => {
+        // `SizedMixin` keeps an invalid size on the menu and warns, but the
+        // menu propagates `resolvedSize`, so `"M"` never lands on a row.
+        menu.size = 'M' as Menu['size'];
+        await menu.updateComplete;
+
+        await waitFor(() => {
+          for (const row of getRows(canvasElement)) {
+            expect(row.size, 'row takes the resolved size').toBe('m');
+          }
+        });
+
+        expect(menu.size, 'the menu keeps the value as authored').toBe('M');
+
+        const warnedLocalName = (call: unknown[]): string | undefined =>
+          (call[0] as HTMLElement | undefined)?.localName;
+
+        expect(
+          warnCalls.filter((call) => warnedLocalName(call) === 'swc-menu')
+            .length,
+          'the menu warns about its own size'
+        ).toBeGreaterThan(0);
+
+        expect(
+          warnCalls.filter((call) => warnedLocalName(call) === 'swc-menu-item'),
+          'no row is blamed for a size set on the menu'
+        ).toEqual([]);
+      })
+    );
+  },
+};
+
+// ──────────────────────────────────────────────────────────────
 // TEST: Disabled row swallows a pointer click
 // ──────────────────────────────────────────────────────────────
 

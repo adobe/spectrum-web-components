@@ -207,12 +207,14 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
   // `menu.mdx` tells consumers to set it once on the menu. Writing the
   // attribute rather than the property means it lands whether or not the row
   // class has upgraded yet, the same reason `isRowDisabled` reads an
-  // attribute.
+  // attribute. Propagating `resolvedSize` rather than `size` keeps an invalid
+  // menu size from being copied onto every row, where it would warn again and
+  // blame the rows for a mistake made on the menu.
   private readonly _sizePropagation = new SlotAttributePropagationController(
     this,
     {
       attribute: 'size',
-      getValue: () => this.size,
+      getValue: () => this.resolvedSize,
       selector: 'swc-menu-item',
     }
   );

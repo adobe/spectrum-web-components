@@ -139,12 +139,12 @@ An item's text goes in a required `label` slot, so it stays distinct from the de
 
 ### 4. Set size on the menu
 
-`swc-menu` propagates its own `size` onto every item it slots, so set it once on the menu rather than per item.
+Keep setting `size` on the menu, as before. `swc-menu` propagates its own `size` onto every item it slots, so a `size` set on an item is overwritten on the next propagation, which runs whenever the menu's size changes or its slotted items change. Spectrum 1 had no per-item size at all, so there is nothing to remove here.
 
 ```html
 <!-- Before -->
 <sp-menu size="l">
-  <sp-menu-item size="l">Cut</sp-menu-item>
+  <sp-menu-item>Cut</sp-menu-item>
 </sp-menu>
 
 <!-- After -->
