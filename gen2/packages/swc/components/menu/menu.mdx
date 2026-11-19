@@ -70,7 +70,7 @@ const menu = document.querySelector('swc-menu');
 menu.triggerElement = someElement; // replaces any `for` wiring
 ```
 
-Any focusable element can be the trigger. `swc-button` and `swc-action-button` are both supported, and an icon-only trigger needs its own accessible name.
+Any button can be the trigger: a native `<button>`, `swc-button`, or `swc-action-button`. The menu wires `aria-haspopup` and `aria-expanded` onto whatever element it is given, and those only make sense on a button, so a focusable non-button such as `<div tabindex="0">` breaks the menu button pattern. An icon-only trigger needs its own accessible name.
 
 <Canvas of={MenuStories.TriggerElement} />
 

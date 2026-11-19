@@ -43,7 +43,7 @@ import '@adobe/spectrum-wc/components/menu/swc-menu-item.js';
 | Item label          | Default slot                           | `label` slot, required (see [step 3](#3-move-item-content-into-the-named-slots))            |
 | Item leading visual | `icon` slot                            | `visual` slot, which also accepts `swc-thumbnail`                                           |
 | Item trailing text  | `value` slot                           | `secondary` slot                                                                            |
-| Item custom props   | `--mod-menu-item-*`                    | `--swc-menu-item-*` (see [Styling](#styling))                                               |
+| Item custom props   | `--mod-menu-item-*`                    | `--swc-menu-item-*`, in part only (see [Styling](#styling))                                 |
 
 ### Added in Spectrum 2
 
@@ -61,22 +61,24 @@ import '@adobe/spectrum-wc/components/menu/swc-menu-item.js';
 
 ### Removed in Spectrum 2
 
-| Removed                                                                                     | Replacement                                                                                                                                      |
-| ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `label` property                                                                            | No replacement on the menu itself. Add an accessible name to your trigger element instead, see [step 2](#2-author-and-reference-a-trigger).      |
-| `ignore` property                                                                           | No replacement.                                                                                                                                  |
-| `getNeighboringFocusableElement()` method                                                   | No public replacement; arrow-key navigation is handled internally.                                                                               |
-| `role="menu"` on the host element                                                           | Moved to the shadow-internal surface. Do not select `sp-menu[role="menu"]`-style host selectors.                                                 |
-| `setRole()` on menu items                                                                   | No replacement. A row is always `role="menuitem"`; checkbox and radio rows arrive as dedicated components.                                       |
-| `mobile-view` / `mobile-back-label` (mobile drilldown tray)                                 | No replacement. Not currently planned.                                                                                                           |
-| `selects` / `value` / `selectedItems` / `selectOrToggleItem()` / `change` event (selection) | Not yet available in Spectrum 2.                                                                                                                 |
-| Link items (`href`, `target`, `download`, `rel`, `referrerpolicy` on menu items)            | Not yet available. Navigate from the menu's `click` event, and do not slot an anchor element, which is an invalid child of ARIA role `menuitem`. |
-| `--mod-menu-*` custom properties                                                            | No replacement; `<swc-menu>` currently exposes no public CSS custom properties (see [Styling](#styling)).                                        |
-| `active` / `focused` on menu items                                                          | No replacement. The menu tracks focus with a roving tabindex.                                                                                    |
-| `no-wrap` on menu items                                                                     | No replacement. Long items wrap within the menu's maximum width.                                                                                 |
-| `has-submenu` / `open` / `submenu` slot on menu items                                       | Not yet available. Submenus have not shipped.                                                                                                    |
-| `sp-menu-item-added` event                                                                  | No replacement. `swc-menu` discovers its items itself.                                                                                           |
-| `--mod-menu-item-*` custom properties                                                       | `--swc-menu-item-*` (see [Styling](#styling)).                                                                                                   |
+| Removed                                                                                     | Replacement                                                                                                                                                   |
+| ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `label` property                                                                            | No replacement on the menu itself. Add an accessible name to your trigger element instead, see [step 2](#2-author-and-reference-a-trigger).                   |
+| `ignore` property                                                                           | No replacement.                                                                                                                                               |
+| `getNeighboringFocusableElement()` method                                                   | No public replacement; arrow-key navigation is handled internally.                                                                                            |
+| `role="menu"` on the host element                                                           | Moved to the shadow-internal surface. Do not select `sp-menu[role="menu"]`-style host selectors.                                                              |
+| `setRole()` on menu items                                                                   | No replacement. A row is always `role="menuitem"`; checkbox and radio rows arrive as dedicated components.                                                    |
+| `mobile-view` / `mobile-back-label` (mobile drilldown tray)                                 | No replacement. Not currently planned.                                                                                                                        |
+| `selects` / `value` / `selectedItems` / `selectOrToggleItem()` / `change` event (selection) | Not yet available in Spectrum 2.                                                                                                                              |
+| `selected` on menu items                                                                    | Not yet available. Item selection has not shipped in Spectrum 2.                                                                                              |
+| `value` property on menu items                                                              | No replacement. This is the property, not the `value` slot, which is renamed to `secondary`. Track the chosen item from the menu's `click` event.             |
+| Link items (`href`, `target`, `download`, `rel`, `referrerpolicy` on menu items)            | Not yet available. Navigate from the menu's `click` event, and do not slot an anchor element, which is an invalid child of ARIA role `menuitem`.              |
+| `--mod-menu-*` custom properties                                                            | No replacement; `<swc-menu>` currently exposes no public CSS custom properties (see [Styling](#styling)).                                                     |
+| `active` / `focused` on menu items                                                          | No replacement. The menu tracks focus with a roving tabindex.                                                                                                 |
+| `no-wrap` on menu items                                                                     | No replacement. Long items wrap within the menu's maximum width.                                                                                              |
+| `has-submenu` / `open` / `submenu` slot on menu items                                       | Not yet available. Submenus have not shipped.                                                                                                                 |
+| `sp-menu-item-added` event                                                                  | No replacement. `swc-menu` discovers its items itself.                                                                                                        |
+| `--mod-menu-item-*` custom properties                                                       | `--swc-menu-item-*`, but only in part. Spectrum 1 exposed 45 of these hooks and Spectrum 2 exposes 19, so some have no replacement (see [Styling](#styling)). |
 
 ## Update your code
 
@@ -96,7 +98,7 @@ import '@adobe/spectrum-wc/components/menu/swc-menu-item.js';
 
 ### 2. Author and reference a trigger
 
-`<sp-menu>` rendered as a bare list; something else (`sp-popover`, `sp-action-menu`, or your own code) owned opening and closing it. `<swc-menu>` owns its own open/close and click-to-toggle wiring, but does not render a trigger. Author a real trigger element and reference it with `for` (its `id`) or `triggerElement` (a direct reference, for example across a shadow boundary):
+`<sp-menu>` rendered as a bare list; something else (`sp-popover`, `sp-action-menu`, or your own code) owned opening and closing it. `<swc-menu>` owns its own open/close and click-to-toggle wiring, but does not render a trigger. Author a button to act as the trigger, a native `<button>`, `swc-button`, or `swc-action-button`, and reference it with `for` (its `id`) or `triggerElement` (a direct reference, for example across a shadow boundary). The menu wires `aria-haspopup` and `aria-expanded` onto whatever you give it, so a focusable non-button breaks the menu button pattern:
 
 ```html
 <!-- Before -->
@@ -210,7 +212,7 @@ menu.addEventListener('swc-close', () => {
   warning on minor releases.
 </div>
 
-Menu items do expose public properties, replacing the `--mod-menu-item-*` set:
+Menu items do expose public properties, covering part of the `--mod-menu-item-*` set. Spectrum 1 exposed 45 of those hooks; the 19 below are the Spectrum 2 equivalents. Anything not listed has no replacement, including the disabled colors, the focus-indicator color and width, and the CJK line heights. Those are handled by the component itself and are not consumer-overridable.
 
 | Property                                                                                                                   | Controls                          |
 | -------------------------------------------------------------------------------------------------------------------------- | --------------------------------- |
@@ -227,11 +229,11 @@ Menu items do expose public properties, replacing the `--mod-menu-item-*` set:
 
 - [ ] Update imports
 - [ ] Rename all `<sp-menu>` to `<swc-menu>` and `<sp-menu-item>` to `<swc-menu-item>`
-- [ ] Author a real trigger element and reference it via `for` or `triggerElement`
+- [ ] Author a button as the trigger and reference it via `for` or `triggerElement`
 - [ ] Move the accessible name from `label` to the trigger element
 - [ ] Move each item's text into a `label` slot, and rename `icon` slots to `visual` and `value` slots to `secondary`
 - [ ] Move `size` from items onto the owning menu
 - [ ] Replace `close` event listeners with `swc-close`
-- [ ] Remove `active`, `focused`, `no-wrap`, `has-submenu`, `open`, and `submenu` usage on items, and any `sp-menu-item-added` listeners
-- [ ] Remove any `--mod-menu-*` overrides, and replace `--mod-menu-item-*` with `--swc-menu-item-*`
+- [ ] Remove `active`, `focused`, `selected`, `value`, `no-wrap`, `has-submenu`, `open`, and `submenu` usage on items, and any `sp-menu-item-added` listeners
+- [ ] Remove any `--mod-menu-*` overrides, and replace `--mod-menu-item-*` with `--swc-menu-item-*` where an equivalent exists; check the [Styling](#styling) table, because some have no replacement
 - [ ] Hold off migrating menus that use selection, link items, or the mobile drilldown tray; none of these have shipped in Spectrum 2 yet
