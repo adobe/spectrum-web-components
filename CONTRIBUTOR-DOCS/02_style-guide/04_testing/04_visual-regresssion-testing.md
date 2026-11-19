@@ -130,6 +130,7 @@ Components that size or align their own host are checked in the flex and grid co
 - Use `descriptions` to state intentional results, such as a minimum width or a content-sized width, so reviewers don't read them as bugs.
 - Add a row for each anatomy that changes the host box, such as label and icon-only, or sized and unsized media.
 - Skip components with no host box in the layout, such as `display: contents` or top-layer surfaces (popover, tooltip, menu). Cover their trigger instead.
+- Skip components that position themselves with `position: absolute` and are placed by their parent, such as color handle and color loupe, and components with no host CSS, such as link, typography, and opacity checkerboard.
 
 ## Tips for reliable VRT
 
