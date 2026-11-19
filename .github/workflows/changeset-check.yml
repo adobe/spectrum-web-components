@@ -84,7 +84,9 @@ jobs:
           echo "missing=$missing" >> "$GITHUB_OUTPUT"
 
       - name: Manage changeset comment
+        id: comment
         if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
+        continue-on-error: true
         uses: actions/github-script@v9
         env:
           MISSING: ${{ steps.changesets.outputs.missing }}
@@ -124,3 +126,9 @@ jobs:
             } else {
               await github.rest.issues.createComment({ owner, repo, issue_number, body });
             }
+
+      - name: Warn if comment management fails
+        if: ${{ steps.comment.outcome == 'failure' }}
+        run: |
+          echo "::warning title=Changeset comment unavailable::Could not update the PR comment. See the comment management step for details."
+          echo "⚠️ Could not update the changeset PR comment. See the comment management step for details." >> "$GITHUB_STEP_SUMMARY"
