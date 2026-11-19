@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { html } from 'lit';
+import { html, type TemplateResult } from 'lit';
 import { ref } from 'lit/directives/ref.js';
 import { expect, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
@@ -20,6 +20,8 @@ import { MENU_PLACEMENTS } from '@adobe/spectrum-wc-core/components/menu';
 
 import '@adobe/spectrum-wc-icons/swc-icon-copy.js';
 import '@adobe/spectrum-wc-icons/swc-icon-cut.js';
+import '@adobe/spectrum-wc-icons/swc-icon-more.js';
+import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc/components/menu/swc-menu.js';
 import '@adobe/spectrum-wc/components/menu/swc-menu-item.js';
@@ -68,7 +70,9 @@ const meta: Meta = {
       type: 'figma',
       url: 'https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=37252-553',
     },
-    // Pending a real Stackblitz project for swc-menu.
+    // Pending a real Stackblitz project for swc-menu. The one linked from the
+    // migration ticket builds against 1st-gen, so it would send consumers to
+    // the API this component replaces.
     // stackblitz: { url: '' },
     // swc-menu-item is a second element of this component; surface its API
     // table alongside swc-menu's on the docs page.
@@ -174,7 +178,6 @@ export const Sizes: Story = {
 
 export const ItemContent: Story = {
   args: {
-    open: true,
     for: 'item-content-trigger',
     'actual-placement': null,
   },
@@ -319,32 +322,62 @@ OpenAndClose.storyName = 'Open and close';
 
 // Exercises `triggerElement`, for referencing a trigger across a shadow
 // boundary where `for`'s id lookup can't reach.
+// Pairs a demo with a small caption naming what it shows.
+function captioned(caption: string, content: TemplateResult): TemplateResult {
+  return html`
+    <div
+      style="display: flex; flex-direction: column; gap: var(--swc-spacing-100);"
+    >
+      <div class="swc-Detail swc-Detail--sizeS">${caption}</div>
+      ${content}
+    </div>
+  `;
+}
+
+// Wires a menu to a trigger by reference rather than by `id`, which is the
+// subject of this story. Both triggers take the same path, so the pair shows
+// that the trigger's own element type is the only difference.
+//
+// Resolved from the menu's own `ref` rather than the wrapper's: an element
+// part runs before the child part inside it, so a ref on the wrapper fires
+// while it is still empty.
+function menuWithTrigger(trigger: TemplateResult): TemplateResult {
+  return html`
+    <div>${trigger}</div>
+    <swc-menu
+      ${ref((el) => {
+        const resolved = el?.previousElementSibling?.firstElementChild;
+        if (el && resolved) {
+          (
+            el as HTMLElement & { triggerElement: HTMLElement | null }
+          ).triggerElement = resolved as HTMLElement;
+        }
+      })}
+    >
+      ${defaultItems}
+    </swc-menu>
+  `;
+}
+
 export const TriggerElement: Story = {
   tags: ['behaviors'],
-  render: () => {
-    let triggerEl: HTMLElement | null = null;
-    return html`
-      <swc-button
-        id="trigger-element-trigger"
-        ${ref((el) => {
-          triggerEl = (el as HTMLElement) ?? null;
-        })}
-      >
-        Edit
-      </swc-button>
-      <swc-menu
-        ${ref((el) => {
-          if (el && triggerEl) {
-            (
-              el as HTMLElement & { triggerElement: HTMLElement | null }
-            ).triggerElement = triggerEl;
-          }
-        })}
-      >
-        ${defaultItems}
-      </swc-menu>
-    `;
-  },
+  parameters: { flexLayout: 'row-wrap' },
+  render: () => html`
+    ${captioned(
+      'swc-button trigger',
+      menuWithTrigger(html`
+        <swc-button>Edit</swc-button>
+      `)
+    )}
+    ${captioned(
+      'swc-action-button trigger',
+      menuWithTrigger(html`
+        <swc-action-button accessible-label="More actions">
+          <swc-icon-more slot="icon"></swc-icon-more>
+        </swc-action-button>
+      `)
+    )}
+  `,
 };
 TriggerElement.storyName = 'Trigger element';
 

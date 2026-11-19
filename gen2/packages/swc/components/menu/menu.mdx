@@ -7,6 +7,8 @@ import * as MenuStories from './stories/menu.stories';
 
 <DocsHeader />
 
+Migrating from `<sp-menu>`? See the [Menu migration guide](?path=/docs/components-menu-migration-guide--docs).
+
 ## Anatomy
 
 A `<swc-menu>` consists of:
@@ -68,6 +70,8 @@ const menu = document.querySelector('swc-menu');
 menu.triggerElement = someElement; // replaces any `for` wiring
 ```
 
+Any button can be the trigger: a native `<button>`, `swc-button`, or `swc-action-button`. The menu wires `aria-haspopup` and `aria-expanded` onto whatever element it is given, and those only make sense on a button, so a focusable non-button such as `<div tabindex="0">` breaks the menu button pattern. An icon-only trigger needs its own accessible name.
+
 <Canvas of={MenuStories.TriggerElement} />
 
 ### Open and close
@@ -124,10 +128,12 @@ When no CSS transition is active (for example when `prefers-reduced-motion` remo
 
 ## Upcoming features
 
-The following are planned for future releases:
+The following features are planned for future releases:
 
-- Single- and multi-select modes.
-- Grouped sections with headers, and dividers as separators between items.
-- Nested submenus.
+- **Selection**: single- and multi-select items, as dedicated checkbox and radio items carrying `aria-checked` and the correct ARIA role of either `menuitemcheckbox` or `menuitemradio`. Until then, track the chosen item from the menu's `click` event but do not try to visually represent the element as selectable.
+- **Sections and dividers**: items grouped under a heading, with a divider drawn between groups.
+- **Submenus**: a nested menu opened from an item, with its own trigger and keyboard path.
+- **Link items**: an item that navigates, rendering a real anchor. Until then, navigate from the menu's `click` event and do not slot an anchor element which is an invalid child of ARIA role `menuitem`.
+- **Non-text trailing content**: trailing content other than text, such as a switch, a badge, or an external-link arrow. The `secondary` slot takes text today.
 
 <DocsFooter />
