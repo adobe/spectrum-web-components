@@ -36,6 +36,7 @@ A single dense row of every permutation is hard to scan in a Chromatic diff. Use
 - `<component>.vrt.ts`: permutations for size, variant, state, anatomy, static-color, wrapping, and truncation.
 - `*-global-styles.vrt.ts`: plain global class coverage for `<a>` / `<button>` or equivalent elements.
 - `*-custom-properties.vrt.ts`: one reference/override row per public custom property.
+- `*-layout.vrt.ts`: one `LayoutContexts` story built with `layoutContexts()`, checking the host box in flex and grid parents. See the guide's [Layout contexts](../../../CONTRIBUTOR-DOCS/02_style-guide/04_testing/04_visual-regresssion-testing.md#layout-contexts) section.
 
 ## Forced pseudo-states
 
@@ -51,6 +52,13 @@ Full rationale (attribute-vs-class, nested-rule mirroring, the custom-function p
 ## Positioned overlay components
 
 Components that position a surface with `PlacementController` use Floating UI `shift` (clipping ancestors capped by the visual viewport; `autoUpdate` recomputes on scroll). Opening many instances on a taller-than-viewport page can clamp `start`/`end` (not `top`/`bottom`) onto the same spot. Keep every trigger in the initial viewport (place `start`/`end` first, pin the capture viewport, or split the story), disable `shouldFlip`, and do not use `row()`. Full rationale and a worked example (popover's `test/vrt/`) are in the VRT testing guide's "Positioned overlay components" section.
+
+## Layout contexts
+
+Build the story as the guide's [Layout contexts](../../../CONTRIBUTOR-DOCS/02_style-guide/04_testing/04_visual-regresssion-testing.md#layout-contexts) section describes. When you author or change one:
+
+- Measure every cell in a browser, for example with Playwright against the running Storybook: the host box, the rendered box, and its position in the container. Write the cell `descriptions` from those measurements, not from expectations.
+- Report the outcome to the user so they know what to review: the cells where the host and rendered boxes intentionally differ, any surprise that led to a CSS change, and what you could only check in one browser engine.
 
 ## Custom properties
 

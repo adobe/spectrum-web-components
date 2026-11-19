@@ -18,6 +18,7 @@
 - [Comment conventions](#comment-conventions)
 - [Selector patterns](#selector-patterns)
     - [When to use `:host`](#when-to-use-host)
+    - [Host layout rules](#host-layout-rules)
     - [When to use `:host([attribute])`](#when-to-use-hostattribute)
     - [When to use classes vs attributes](#when-to-use-classes-vs-attributes)
     - [Managing specificity with `:where()`](#managing-specificity-with-where)
@@ -49,6 +50,7 @@ The following are high-level guidelines for the CSS creation for components.
 > For examples of all of these rules in practice, review [Badge](../../../gen2/packages/swc/components/badge/badge.css) and [Status Light](../../../gen2/packages/swc/components/status-light/status-light.css) as reference implementations, the [reference migration for Badge](04_spectrum-swc-migration.md#reference-migration-badge), and the [anti-patterns guide](05_anti-patterns.md).
 
 - `:host` is for defining how the container participates in the global layout, not the core component styles
+- Keep the host box equal to the rendered component in flex and grid parents, following the [host layout rules](#host-layout-rules)
 - Follow the prescribed rule order
 - Strive to keep selector specificity ≤ `\(0,1,0\)` with [explicit management](#managing-specificity)
 - Use variants and custom property exposure intentionally
@@ -65,9 +67,7 @@ Follow this outline for ordering rulesets within component stylesheets. This wil
     - Considered as a "container" for the component, and should not directly manage component styles itself. Its only concern is how the web component participates in the layout.
     - Primarily includes a `display` property to match the layout flow intent, using either `inline-block` or `block`
         - Avoid `inline` which would prevent consumers applying reasonable layout properties such as `margin`
-    - May also include "defensive" styles for `inline-block` elements
-        - `place-self: start` to avoid stretch behaviors if they are placed in a flex or grid context
-        - `vertical-align: middle` to keep a vertically centered position next to other `inline-block` elements (ex. a row of badges outside of a flex or grid context)
+    - May also size the host so it matches the rendered component. See [host layout rules](#host-layout-rules)
 3. `* { box-sizing: border-box; }`
     - Unless there is a strong reason not to, this rule should be included in all components. Expand to pseudo-elements if in use.
     - Required if the component or its descendants set  `padding` and/or `border` to avoid the compounding effect against the element's size.
@@ -228,8 +228,8 @@ Use `:host` only for layout participation. Do not put visual styles here.
 ```css
 :host {
   display: inline-block;
-  place-self: start;
-  vertical-align: middle;
+  inline-size: fit-content;
+  block-size: fit-content;
 }
 ```
 
@@ -268,6 +268,28 @@ Three categories of styles may legitimately live on `:host`, each for a distinct
 ```
 
 All other visual styles still belong on the inner wrapper class (`.swc-ComponentName`).
+
+### Host layout rules
+
+The goal is a host box that matches the rendered component wherever an app places it, so a flex or grid parent can't accidentally change the component's size or position. Verify it with a [layout-context VRT](../04_testing/04_visual-regresssion-testing.md#layout-contexts).
+
+1. **Display follows normal flow.** Use `inline-block` for components that flow with text and hug their content, and `block` for components that take their own line. In flex and grid parents the host is blockified, so this only affects normal flow.
+2. **Prefer plain `block` or `inline-block`.** Use `flex` only when the host lays out several children, as tabs does for its tab list and panels, or when the wrapper has to shrink with the host, as asset's frame does in a narrow container. Comment the reason.
+3. **Keep a block-level box directly inside the host.** An inline-level wrapper can create a line box with a descender gap that `fit-content` can't remove, and a custom property that moves its baseline, such as padding or size, can open one. Make the wrapper `display: block` or `flex`, as progress circle, avatar, badge, close button, and tab do. A block-level `div` wrapper then fills a host that a consumer grows with `flex: 1`, as status light and badge do. That is the consumer's choice (rule 8). A `<button>` wrapper or one with an explicit size keeps its size.
+4. **Use `fit-content` per axis so the host matches the rendered box.** `block-size` stops stretch in a flex row or grid row, and `inline-size` stops it in a flex column or grid track.
+
+    | The component | Host sizing | Examples |
+    | --- | --- | --- |
+    | Hugs its content | `inline-size` and `block-size: fit-content` | button, badge, close button, thumbnail |
+    | Has no intrinsic width and fills its container | `inline-size: 100%` and `block-size: fit-content`. The `100%` is what keeps a centered flex or grid cell from collapsing it | horizontal divider, progress bar, tabs, drop zone |
+    | Takes its inline size from its `display` | `block-size: fit-content` only. A `block` host fills the container, so it can be wider than its content | radio group, text field, accordion, button group, action group |
+    | Stretches with its row by design | No size on the stretched axis. An inner surface can fill the host | card (its surface sets `block-size: 100%`) |
+
+    A container that relies on its children stretching opts them out with `inline-size: unset`, as the vertical action group does.
+5. **The host owns the outer box and the wrapper owns visual sizing.** Put an overall size, minimum, or maximum on `:host` when a percentage-sized wrapper would otherwise resolve against it, as the progress bar and card do. Against a shrink-to-fit host that percentage is circular, so the host sizes to the content instead of the container. Keep dimensions derived from tokens or variants on the wrapper, such as a button's `min-block-size`. A host with an explicit size also sets `box-sizing: border-box`, so consumer padding or borders don't overflow the container.
+6. **Expose a custom property only when a plain override can't reach it.** A consumer sets a host-level size with ordinary CSS, such as `swc-accordion { min-inline-size: 400px }`. Expose a property when the default is a protective expression that a plain override would drop, like the divider's `min(100%, …)` minimum, or when the value lives on the wrapper, like the vertical divider's `min-block-size`. See [custom property exposure](02_custom-properties.md#component-custom-property-exposure).
+7. **Don't set `place-self`, `align-self`, or `justify-self` on the host.** They override the consumer's `align-items` and `justify-items`. Alignment that is part of the component's contract is the exception, and a comment should say so: the vertical divider stretches to its row, `button[justified]` fills its row, and progress circle centers itself.
+8. **Leave layout pressure to the consumer.** The cutline is parity with the native element the component wraps. Fix side effects of the component's own anatomy, such as a line-box gap, a percentage inside a shrink-to-fit host, or stretch beside a taller sibling. Constraints the consumer applies are theirs: `flex: 1` or `flex-shrink` on the host, narrow or content-sized grid tracks, inline margins on a host that fills its container (use padding), and a fixed container height. A small `min-inline-size` floor on the host is acceptable when the component becomes unusable under that pressure, as with radio group's `10ch`. Note consumer-facing cases in the component docs, as the [divider](../../../gen2/packages/swc/components/divider/divider.mdx) and [asset](../../../gen2/packages/swc/components/asset/asset.mdx) docs do.
 
 ### When to use `:host([attribute])`
 

@@ -10,7 +10,8 @@
  * governing permissions and limitations under the License.
  */
 
-/* Fills the container so the width doesn't follow the selected panel. */
+/* Flex stacks the tab list and the panels. It fills the container so the
+ * width doesn't follow the selected panel. */
 :host {
   display: flex;
   flex-direction: column;

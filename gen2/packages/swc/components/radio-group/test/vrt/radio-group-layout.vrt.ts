@@ -46,9 +46,9 @@ const DESCRIPTIONS = {
     'Gray sibling is taller. Fills the track width; host keeps its natural height.',
   'flex-row-stretch': 'Gray sibling is taller. Host keeps its natural height.',
   'flex-shrink':
-    'Gray sibling is wider than the container. Wraps to the narrowest width its content allows.',
+    'Gray sibling is wider than the container. The host shrinks no narrower than its 10ch minimum.',
   'grid-narrow-track':
-    'Track is 40px wide. The host fits the track; content can overflow.',
+    'Track is 40px wide. The host holds its 10ch minimum and overflows the track.',
   'inline-flow':
     'Placed between lines of text. Breaks onto its own line and fills the container width.',
 } as const;

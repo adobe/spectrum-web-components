@@ -11,7 +11,7 @@
  */
 
 :host {
-  display: inline-flex;
+  display: inline-block;
   inline-size: fit-content;
   block-size: fit-content;
   vertical-align: baseline;
@@ -29,7 +29,7 @@
   --_swc-badge-padding-inline: var(--swc-badge-padding-inline, token("base-padding-horizontal-small"));
   --_swc-badge-line-height: var(--swc-badge-line-height, token("line-height-font-size-75"));
 
-  display: inline-flex;
+  display: flex;
   gap: var(--swc-badge-gap, token("base-gap-small"));
   align-items: center;
   min-block-size: var(--swc-badge-height, token("component-height-75"));

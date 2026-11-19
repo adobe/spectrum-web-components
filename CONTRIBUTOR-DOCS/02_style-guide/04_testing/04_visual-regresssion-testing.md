@@ -16,6 +16,7 @@
     - [Grouping permutations into rows](#grouping-permutations-into-rows)
     - [Forced pseudo-states](#forced-pseudo-states)
     - [Positioned overlay components](#positioned-overlay-components)
+    - [Layout contexts](#layout-contexts)
 - [Tips for reliable VRT](#tips-for-reliable-vrt)
 
 </details>
@@ -119,6 +120,16 @@ To keep snapshots deterministic:
 - Do not use the shared `row()` helper. Open surfaces paint in the top layer and overlap at its default gaps. Stack in a column, or use a grid whose cells reserve enough room that adjacent bubbles cannot collide.
 
 See popover's `test/vrt/popover.vrt.ts` and `test/vrt/vrt-helpers.ts` (`stack`, `vrtPage`, `openManyPopoversForVrt`) for a worked example.
+
+### Layout contexts
+
+Components that size or align their own host are checked in the flex and grid contexts an app is likely to place them in, so a parent can't accidentally change their size or position. Add a `<component>-layout.vrt.ts` file with one `LayoutContexts` story built with [`layoutContexts()`](../../../gen2/packages/swc/.storybook/helpers/README.md#layoutcontexts), which documents the contexts and options. A cell is correct when the magenta host outline matches the rendered component, or when its description names an intentional exception: layout the consumer owns (`flex: 1`, narrow tracks), a host that fills its container, or a minimum width. The [host layout rules](../01_css/01_component-css.md#host-layout-rules) define both.
+
+- Validate any used attribute, slot, and enum value against `custom-elements.json`. A wrong attribute renders silently with defaults and measures the wrong thing.
+- Pass `blockSize` and `siblingBlockSize` for components taller than the defaults. The sibling must be taller than the component, or stretch can't show.
+- Use `descriptions` to state intentional results, such as a minimum width or a content-sized width, so reviewers don't read them as bugs.
+- Add a row for each anatomy that changes the host box, such as label and icon-only, or sized and unsized media.
+- Skip components with no host box in the layout, such as `display: contents` or top-layer surfaces (popover, tooltip, menu). Cover their trigger instead.
 
 ## Tips for reliable VRT
 

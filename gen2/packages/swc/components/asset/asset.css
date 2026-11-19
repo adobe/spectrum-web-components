@@ -10,6 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
+/* A flex host lets the frame shrink with the host in a narrow container. */
 :host {
   display: flex;
   inline-size: fit-content;
