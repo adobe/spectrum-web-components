@@ -128,6 +128,7 @@ const meta: Meta<OpacityCheckerboardProps> = {
       subtitle: `Decorative checkerboard background utility used to indicate transparency.`,
       canvas: { sourceState: 'hidden' },
     },
+    missingDesignDocs: true,
   },
   args: {
     size: 'm',

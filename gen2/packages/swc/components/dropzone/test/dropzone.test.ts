@@ -13,6 +13,12 @@
 import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import {
+  fixture,
+  getComponent,
+  getComponents,
+  withWarningSpy,
+} from '@swc-test-helpers/dom';
 
 import { Dropzone } from '@adobe/spectrum-wc/dropzone';
 import {
@@ -27,12 +33,6 @@ import {
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc/components/dropzone/swc-dropzone.js';
 
-import {
-  fixture,
-  getComponent,
-  getComponents,
-  withWarningSpy,
-} from '../../../utils/test-utils.js';
 import meta, {
   BrowseAndDrop,
   Overview,
@@ -760,19 +760,19 @@ export const DropEffectTest: Story = {
     });
 
     await step(
-      'rejects invalid dropEffect and emits a warning in DEBUG mode',
+      'keeps an invalid dropEffect and emits a warning in DEBUG mode',
       () =>
         withWarningSpy(async (warnCalls) => {
           dropzone.dropEffect = 'copy';
           dropzone.dropEffect = 'invalid-effect' as Dropzone['dropEffect'];
+          await dropzone.updateComplete;
+          expect(dropzone.dropEffect, 'invalid value is kept as set').toBe(
+            'invalid-effect'
+          );
           expect(
-            dropzone.dropEffect,
-            'invalid value rejected; stays at prior valid value'
-          ).toBe('copy');
-          expect(
-            warnCalls.length,
-            'warning emitted for invalid dropEffect'
-          ).toBeGreaterThan(0);
+            String(warnCalls[0]?.[1] || ''),
+            'warning names the property and received value'
+          ).toMatch(/"drop-effect".*"invalid-effect"/);
         })
     );
 
@@ -805,7 +805,7 @@ export const DropEffectTest: Story = {
     );
 
     await step(
-      'rejects an invalid drop-effect attribute and emits a warning',
+      'keeps an invalid drop-effect attribute and emits a warning',
       () =>
         withWarningSpy(async (warnCalls) => {
           dropzone.setAttribute('drop-effect', 'link');
@@ -814,13 +814,39 @@ export const DropEffectTest: Story = {
           await dropzone.updateComplete;
           expect(
             dropzone.dropEffect,
-            'invalid attribute value rejected; stays at prior valid value'
-          ).toBe('link');
+            'invalid attribute value is kept as set'
+          ).toBe('invalid-effect');
+          expect(
+            dropzone.getAttribute('drop-effect'),
+            'attribute keeps the value set'
+          ).toBe('invalid-effect');
           expect(
             warnCalls.length,
             'warning emitted for invalid drop-effect attribute'
           ).toBeGreaterThan(0);
         })
+    );
+
+    await step(
+      'hands the browser the default effect for an invalid drop-effect',
+      async () => {
+        const fresh = await fixture<Dropzone>(html`
+          <swc-dropzone aria-label="Upload files" drop-effect="invalid-effect">
+            <swc-button variant="accent">Browse files</swc-button>
+          </swc-dropzone>
+        `);
+        // A synthetic DataTransfer ignores `dropEffect` writes outside a
+        // real drag, so capture the write on a plain stand-in.
+        const event = makeDragEvent('dragover', new DataTransfer());
+        const dataTransfer = { dropEffect: 'none' };
+        Object.defineProperty(event, 'dataTransfer', { value: dataTransfer });
+        fresh.dispatchEvent(event);
+        expect(
+          dataTransfer.dropEffect,
+          'browser receives the default effect'
+        ).toBe('copy');
+        fresh.parentElement?.remove();
+      }
     );
 
     await step(

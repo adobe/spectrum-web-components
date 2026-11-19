@@ -22,7 +22,7 @@ import '@adobe/spectrum-wc/components/badge/swc-badge.js';
 
 import customElements from '../../dist/custom-elements.json' with { type: 'json' };
 
-type Status = 'preview' | 'deprecated' | 'internal';
+type Status = 'experimental' | 'deprecated' | 'internal';
 
 /** A CEM element declaration, plus the tags that `statusPlugin` adds. */
 type StatusDeclaration = CustomElementDeclaration & {
@@ -34,7 +34,7 @@ const STATUS_CONFIG: Record<
   Status,
   { label: string; variant: string; outline?: boolean }
 > = {
-  preview: { label: 'Preview', variant: 'fuchsia' },
+  experimental: { label: 'Experimental', variant: 'fuchsia' },
   deprecated: { label: 'Deprecated', variant: 'negative', outline: true },
   internal: { label: 'Internal', variant: 'neutral', outline: true },
 };

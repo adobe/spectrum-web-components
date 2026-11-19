@@ -40,6 +40,16 @@ const DEFAULT_CONTAINER_PADDING = 8;
 const DEFAULT_SHOULD_FLIP = true;
 const DEFAULT_TIP_PADDING = 8;
 
+// Inline styles `computePlacement` writes, removed by `clearStyles()`.
+const FLOATING_STYLE_PROPERTIES = [
+  'top',
+  'left',
+  'translate',
+  '--swc-placement-available-width',
+  '--swc-placement-available-height',
+] as const;
+const TIP_STYLE_PROPERTIES = ['top', 'left', 'translate'] as const;
+
 /**
  * Round a pixel value to the nearest device-pixel boundary so translated
  * coordinates stay sharp on high-DPR displays.
@@ -98,8 +108,8 @@ type ActiveSession = {
  * floating element — an inline max-size would override the consuming
  * component's intended CSS max-size. Instead it exposes the space available to
  * the trigger as two custom properties on the floating element, refreshed on
- * every compute. The caller removes them after any exit transition completes
- * (clearing them in `stop()` would snap the floating element's size
+ * every compute. Call `clearStyles()` to remove them once any exit transition
+ * completes (clearing them in `stop()` would snap the floating element's size
  * mid-animation):
  *
  * - `--swc-placement-available-width` — usable inline space, in px.
@@ -181,6 +191,10 @@ export class PlacementController implements ReactiveController {
    */
   private lastEmittedPlacement?: Placement;
 
+  /** Last session's floating and tip elements, kept past `stop()`. */
+  private styledElements: { floating: HTMLElement; tip?: HTMLElement } | null =
+    null;
+
   /**
    * Registers this controller on `host` via `addController`.
    *
@@ -213,6 +227,7 @@ export class PlacementController implements ReactiveController {
       isWebKit: isWebKit(),
     };
     this.session = session;
+    this.styledElements = { floating, tip: options.tipElement };
     this.actualPlacement = options.placement ?? DEFAULT_PLACEMENT;
 
     // Single `autoUpdate` channel — receives `ancestorScroll`,
@@ -295,10 +310,8 @@ export class PlacementController implements ReactiveController {
 
   /**
    * Stop positioning: tear down `autoUpdate`, clear `actualPlacement` and
-   * `isConstrained`. Inline style cleanup — including `translate`, `top`,
-   * `left`, and `--swc-placement-available-*` — is left to the caller so
-   * exit transitions can complete before those properties are removed.
-   * Safe to call multiple times.
+   * `isConstrained`. Inline styles stay so an exit transition can finish in
+   * place; remove them with `clearStyles()`. Safe to call multiple times.
    */
   public stop() {
     this.cleanup?.();
@@ -308,6 +321,28 @@ export class PlacementController implements ReactiveController {
     this.isConstrained = false;
     this.initialHeight = undefined;
     this.lastEmittedPlacement = undefined;
+  }
+
+  /**
+   * Remove the inline styles the last session wrote on the floating and tip
+   * elements, leaving other inline styles alone. Call after `stop()` once any
+   * exit transition ends. No-op while positioning is active, so a late call
+   * can't move a reopened surface. Safe to call multiple times.
+   */
+  public clearStyles() {
+    if (this.session || !this.styledElements) {
+      return;
+    }
+    const { floating, tip } = this.styledElements;
+    this.styledElements = null;
+    for (const property of FLOATING_STYLE_PROPERTIES) {
+      floating.style.removeProperty(property);
+    }
+    if (tip) {
+      for (const property of TIP_STYLE_PROPERTIES) {
+        tip.style.removeProperty(property);
+      }
+    }
   }
 
   /**

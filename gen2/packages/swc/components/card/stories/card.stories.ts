@@ -55,6 +55,7 @@ const meta: Meta = {
     docs: {
       subtitle: 'Flexible container that summarizes an object.',
     },
+    designGuidanceSlug: 'cards',
     // design: { type: 'figma', url: 'https://www.figma.com/...' },
     stackblitz: { url: 'https://stackblitz.com/edit/vitejs-vite-wn1hrzqo' },
   },

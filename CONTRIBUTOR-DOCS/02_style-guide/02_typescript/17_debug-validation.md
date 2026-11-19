@@ -57,7 +57,7 @@ interface SWCDebug {
 }
 ```
 
-**Initialization:** The `window.__swc` object is automatically created when the first Spectrum Web Component loads, for every environment except production (`process.env.NODE_ENV !== 'production'`, so `'development'`, `'staging'`, `'test'`, and unset all qualify). The initialization lives in `@adobe/spectrum-wc-core/element/spectrum-element.ts`. In production builds, `window.__swc` is not created, so all debug checks short-circuit via the optional chaining pattern (`window.__swc?.DEBUG`).
+**Initialization:** The `window.__swc` object is automatically created when the first Spectrum Web Component loads, for every environment except production (`process.env.NODE_ENV !== 'production'`, so `'development'`, `'staging'`, `'test'`, and unset all qualify). Settings that the page puts on `window.__swc` before that, including `DEBUG: false`, are kept. The initialization lives in `@adobe/spectrum-wc-core/element/spectrum-element.ts`. In production builds, `window.__swc` is not created, so all debug checks short-circuit via the optional chaining pattern (`window.__swc?.DEBUG`).
 
 Debug mode is enabled by default in development builds. To disable it, set `window.__swc.DEBUG = false` before components load. In production builds, debug checks are either stripped or short-circuit when `DEBUG` is false.
 
@@ -110,6 +110,27 @@ protected override update(changedProperties: PropertyValues): void {
   super.update(changedProperties);
 }
 ```
+
+`validateEnum` also accepts numeric enums, such as a numeric `size` or a heading `level`.
+
+Give a reflected numeric property the `numberAttribute(whenRemoved)` converter from the same utils module. Lit's default `Number` converter parses `size="banana"` to `NaN`, and because a property with a default value has already queued a write to its attribute, the first update then writes `size="NaN"` over the consumer's markup. `numberAttribute` keeps non-numeric text as a string, so that write puts back what the consumer wrote, and it sets `whenRemoved` when the attribute is removed. Give a reflected string property with a default the `stringAttribute(whenRemoved)` converter, so removing its attribute resets it instead of leaving `null` for validation to warn about.
+
+A numeric property can also hold numeric text: frameworks such as React 19 and Vue set custom element properties directly, so `level="4"` in JSX assigns the string `"4"`. Read the property through `parseNumericText` before passing it to `validateEnum`, `resolveEnum`, or any math, so `"4"` behaves like `4`.
+
+#### Rendering the default for an invalid value
+
+A warning is the only thing an invalid value triggers. Keep the value the consumer set on the property and the attribute, and render the default instead:
+
+- **In CSS:** let the value match no `:host([attr="…"])` selector so the stylesheet's default applies.
+- **In TypeScript:** resolve the value at the point of use with `resolveEnum`, exported from the same utils module.
+
+```ts
+protected get resolvedDirection(): TabsDirection {
+  return resolveEnum(this.direction, TABS_DIRECTIONS, TABS_DEFAULT_DIRECTION);
+}
+```
+
+Don't reassign the property, call `setAttribute` or `removeAttribute` on it, or return a different value from its getter.
 
 ### warnIf(): Required, conditionally required, mutually exclusive, and one-off checks
 
@@ -213,7 +234,7 @@ protected override update(changedProperties: PropertyValues): void {
       window.__swc.warn(
         this,
         `Invalid variant "${this.variant}". Valid variants: ${constructor.VARIANTS.join(', ')}.`,
-        'https://spectrum-web-components.adobe.com/components/badge/',
+        'https://spectrum-web-components.adobe.com/?path=/docs/components-badge--docs',
         { issues: [`variant="${this.variant}"`] }
       );
     }
@@ -222,7 +243,7 @@ protected override update(changedProperties: PropertyValues): void {
       window.__swc.warn(
         this,
         `Outline styling requires a semantic variant.`,
-        'https://spectrum-web-components.adobe.com/components/badge/',
+        'https://spectrum-web-components.adobe.com/?path=/docs/components-badge--docs',
         { issues: [`outline + variant="${this.variant}"`] }
       );
     }
@@ -256,7 +277,7 @@ protected override firstUpdated(changed: PropertyValues): void {
       window.__swc.warn(
         this,
         `Missing accessible label. Provide a "label" attribute or "aria-label".`,
-        'https://spectrum-web-components.adobe.com/components/progress-circle/',
+        'https://spectrum-web-components.adobe.com/?path=/docs/components-progress-circle--docs',
         { issues: ['accessibility'] }
       );
     }
@@ -289,7 +310,7 @@ protected override updated(changed: PropertyValues<this>): void {
       window.__swc.warn(
         this,
         `Indeterminate progress should not have a value. The value will be ignored.`,
-        'https://spectrum-web-components.adobe.com/components/progress-circle/',
+        'https://spectrum-web-components.adobe.com/?path=/docs/components-progress-circle--docs',
         { issues: ['indeterminate + value'] }
       );
     }
@@ -322,7 +343,7 @@ public override connectedCallback(): void {
       window.__swc.warn(
         this,
         `This component should be used inside a <form> element.`,
-        'https://spectrum-web-components.adobe.com/components/field/',
+        componentDocsHref(this.localName),
         { issues: ['missing form ancestor'] }
       );
     }
@@ -491,7 +512,7 @@ Warnings should be clear, actionable, and include helpful context. Follow this f
 window.__swc.warn(
   this,
   `Invalid variant "${this.variant}". Valid variants: ${constructor.VARIANTS.join(', ')}.`,
-  'https://spectrum-web-components.adobe.com/components/badge/',
+  'https://spectrum-web-components.adobe.com/?path=/docs/components-badge--docs',
   { issues: [`variant="${this.variant}"`] }
 );
 ```
@@ -511,11 +532,13 @@ window.__swc.warn(
 
 **URL format:**
 
-Use the full documentation URL for the component:
+Use the full URL of the element's Storybook docs page:
 
 ```ts
-'https://spectrum-web-components.adobe.com/components/badge/';
+'https://spectrum-web-components.adobe.com/?path=/docs/components-badge--docs';
 ```
+
+In code that more than one element uses (a mixin, or a base class with several subclasses), use `componentDocsHref(this.localName)` from `@adobe/spectrum-wc-core/utils`, so each element links to its own page. The page ID comes from the story title, not from the tag name, so make sure the page exists. For example, `<swc-dropzone>` is documented at `components-drop-zone--docs`.
 
 ## Known limitations
 

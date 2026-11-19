@@ -178,7 +178,7 @@ export class Dropzone extends DropzoneBase {
       this,
       true,
       `<${this.localName}> requires an accessible name describing the upload purpose.`,
-      'https://spectrum-web-components.adobe.com/?path=/docs/components-dropzone--docs',
+      'https://spectrum-web-components.adobe.com/?path=/docs/components-drop-zone--docs',
       {
         type: 'accessibility',
         issues: [

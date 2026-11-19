@@ -12,6 +12,7 @@
 import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import { getComponent, withWarningSpy } from '@swc-test-helpers/dom';
 
 import { ButtonGroup } from '@adobe/spectrum-wc/button-group';
 import {
@@ -23,7 +24,6 @@ import {
 import '@adobe/spectrum-wc/components/button-group/swc-button-group.js';
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 
-import { getComponent, withWarningSpy } from '../../../utils/test-utils.js';
 import meta, {
   Alignment,
   Disabled,
@@ -524,6 +524,43 @@ export const ValidAlignNoWarningTest: Story = {
 
         expect(warnCalls.length, 'no warnings for valid aligns').toBe(0);
       })
+    );
+  },
+};
+
+export const InvalidSizeTest: Story = {
+  render: () => html`
+    <swc-button-group>
+      <swc-button>First</swc-button>
+      <swc-button>Second</swc-button>
+    </swc-button-group>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const group = await getComponent<ButtonGroup>(
+      canvasElement,
+      'swc-button-group'
+    );
+    const buttons = Array.from(canvasElement.querySelectorAll('swc-button'));
+
+    await step(
+      'keeps an invalid size, warns once, and passes children the default',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          group.setAttribute('size', 'banana');
+          await group.updateComplete;
+
+          expect(group.getAttribute('size')).toBe('banana');
+          for (const button of buttons) {
+            expect(button.getAttribute('size'), 'child gets the default').toBe(
+              'm'
+            );
+          }
+          expect(
+            warnCalls.every((call) => call[0] === group),
+            'only the group warns'
+          ).toBe(true);
+          expect(String(warnCalls[0]?.[1] ?? '')).toMatch(/"size".*"banana"/);
+        })
     );
   },
 };

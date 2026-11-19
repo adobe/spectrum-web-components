@@ -17,6 +17,9 @@ import { SlotPresenceController } from '../controllers/slot-presence-controller/
 import {
   componentDocsHref,
   isDebug,
+  numberAttribute,
+  parseNumericText,
+  stringAttribute,
   validateEnum,
   warnIf,
 } from '../utils/index.js';
@@ -98,21 +101,34 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
 
     /**
      * Current value. Sanitized via `clampedValue` for rendering and
-     * `aria-valuenow`.
+     * `aria-valuenow`. Non-numeric text is kept as set, warns in dev mode,
+     * and renders as the minimum; a removed attribute resets to `0`.
      */
-    @property({ type: Number, reflect: true })
+    @property({ type: Number, reflect: true, converter: numberAttribute(0) })
     public value = 0;
 
     /**
-     * Bottom of the value range.
+     * Bottom of the value range. Non-numeric text is kept as set, warns in
+     * dev mode, and renders as `0`; a removed attribute resets to `0`.
      */
-    @property({ type: Number, reflect: true, attribute: 'min-value' })
+    @property({
+      type: Number,
+      reflect: true,
+      attribute: 'min-value',
+      converter: numberAttribute(0),
+    })
     public minValue = 0;
 
     /**
-     * Top of the value range.
+     * Top of the value range. Non-numeric text is kept as set, warns in dev
+     * mode, and renders as `100`; a removed attribute resets to `100`.
      */
-    @property({ type: Number, reflect: true, attribute: 'max-value' })
+    @property({
+      type: Number,
+      reflect: true,
+      attribute: 'max-value',
+      converter: numberAttribute(100),
+    })
     public maxValue = 100;
 
     /**
@@ -141,7 +157,13 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
     /**
      * Position of the label relative to the bar.
      */
-    @property({ type: String, reflect: true, attribute: 'label-position' })
+    @property({
+      type: String,
+      reflect: true,
+      attribute: 'label-position',
+      // A removed attribute resets to the default rather than `null`.
+      converter: stringAttribute('top'),
+    })
     public labelPosition: LinearProgressLabelPosition = 'top';
 
     /**
@@ -205,8 +227,10 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
      * stays internally consistent.
      */
     public get sanitizedMin(): number {
-      const min = Number.isFinite(this.minValue) ? this.minValue : 0;
-      const max = Number.isFinite(this.maxValue) ? this.maxValue : 100;
+      const minValue = parseNumericText(this.minValue);
+      const maxValue = parseNumericText(this.maxValue);
+      const min = Number.isFinite(minValue) ? minValue : 0;
+      const max = Number.isFinite(maxValue) ? maxValue : 100;
       return Math.min(min, max);
     }
 
@@ -216,8 +240,10 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
      * Sanitized upper bound. See `sanitizedMin`.
      */
     public get sanitizedMax(): number {
-      const min = Number.isFinite(this.minValue) ? this.minValue : 0;
-      const max = Number.isFinite(this.maxValue) ? this.maxValue : 100;
+      const minValue = parseNumericText(this.minValue);
+      const maxValue = parseNumericText(this.maxValue);
+      const min = Number.isFinite(minValue) ? minValue : 0;
+      const max = Number.isFinite(maxValue) ? maxValue : 100;
       return Math.max(min, max);
     }
 
@@ -225,7 +251,8 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
      * @internal
      */
     public get clampedValue(): number {
-      const value = Number.isFinite(this.value) ? this.value : 0;
+      const parsed = parseNumericText(this.value);
+      const value = Number.isFinite(parsed) ? parsed : 0;
       return Math.min(this.sanitizedMax, Math.max(this.sanitizedMin, value));
     }
 
@@ -274,6 +301,35 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
       return formatter.format(this.clampedValue);
     }
 
+    protected override update(changes: PropertyValues): void {
+      // Range checks compare properties only, so they run before render.
+      // Both the range and the value are kept as set; rendering and ARIA use
+      // the sanitized range and clamped value instead.
+      if (isDebug()) {
+        this.warnInvalidRange();
+        this.warnValueOutOfRange();
+      }
+
+      validateEnum(this, {
+        prop: 'label-position',
+        value: this.labelPosition,
+        valid: LINEAR_PROGRESS_LABEL_POSITIONS,
+        url: this.docsHref,
+      });
+
+      // `static-color` is optional; unset means the default colors.
+      if (this.staticColor != null) {
+        validateEnum(this, {
+          prop: 'static-color',
+          value: this.staticColor,
+          valid: LINEAR_PROGRESS_STATIC_COLORS,
+          url: this.docsHref,
+        });
+      }
+
+      super.update(changes);
+    }
+
     protected override updated(changes: PropertyValues): void {
       super.updated(changes);
 
@@ -292,55 +348,49 @@ export function LinearProgressMixin<T extends Constructor<ReactiveElement>>(
       if (isDebug()) {
         this.warnMissingAccessibleName();
       }
+    }
 
-      // Surface a dev warning when `value` falls outside the resolved
-      // range. The value is still clamped for rendering and ARIA, but the
-      // clamp is otherwise silent, so flag it as a likely authoring error.
-      if (
-        isDebug() &&
-        (changes.has('value') ||
-          changes.has('minValue') ||
-          changes.has('maxValue'))
-      ) {
-        this.warnValueOutOfRange();
+    private warnInvalidRange(): void {
+      const minValue = parseNumericText(this.minValue);
+      const maxValue = parseNumericText(this.maxValue);
+      const isFiniteRange =
+        Number.isFinite(minValue) && Number.isFinite(maxValue);
+      // Early return when the range is valid so the message is not built on
+      // every render.
+      if (isFiniteRange && minValue <= maxValue) {
+        return;
       }
-
-      if (changes.has('labelPosition')) {
-        validateEnum(this, {
-          prop: 'label-position',
-          value: this.labelPosition,
-          valid: LINEAR_PROGRESS_LABEL_POSITIONS,
-          url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-meter--docs',
-        });
-      }
-
-      if (changes.has('staticColor') && this.staticColor !== undefined) {
-        validateEnum(this, {
-          prop: 'static-color',
-          value: this.staticColor,
-          valid: LINEAR_PROGRESS_STATIC_COLORS,
-          url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-meter--docs',
-        });
-      }
+      const received = `min-value="${minValue}", max-value="${maxValue}"`;
+      warnIf(
+        this,
+        true,
+        `<${this.localName}> expects "min-value" and "max-value" to be finite numbers with "min-value" no greater than "max-value". Received ${received}; rendering the range [${this.sanitizedMin}, ${this.sanitizedMax}].`,
+        this.docsHref,
+        { issues: [received] }
+      );
     }
 
     private warnValueOutOfRange(): void {
-      const value = this.value;
+      const value = parseNumericText(this.value);
       const min = this.sanitizedMin;
       const max = this.sanitizedMax;
-      // Early return when the value is valid so the message is not built on
-      // every in-range render.
-      if (!Number.isFinite(value) || (value >= min && value <= max)) {
+      // Early return when the value is unset or valid so the message is not
+      // built on every in-range render.
+      if (
+        value === null ||
+        value === undefined ||
+        (Number.isFinite(value) && value >= min && value <= max)
+      ) {
         return;
       }
       warnIf(
         this,
         true,
-        `<${this.localName}> "value" (${value}) is outside the [${min}, ${max}] range and was clamped to ${this.clampedValue}.`,
+        `<${this.localName}> expects "value" to be a number in the range [${min}, ${max}]. Received "${value}"; rendering ${this.clampedValue}.`,
         this.docsHref,
         {
           issues: [
-            'set "value" within the "min-value" and "max-value" range, or',
+            'set "value" to a number within the "min-value" and "max-value" range, or',
             'adjust "min-value"/"max-value" so the range includes the value.',
           ],
         }
