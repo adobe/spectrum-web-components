@@ -52,6 +52,8 @@ type StackSpec = {
   mode?: 'light' | 'dark';
   dir?: 'ltr' | 'rtl';
   focusFront?: boolean;
+  // Forces hover on the stack, which lets the layers peek out further.
+  hover?: boolean;
   // Opens the expanded view through Show all.
   expanded?: boolean;
   // Forces focus on the second listed toast and on Clear all in the expanded view.
@@ -63,6 +65,15 @@ type StackSpec = {
 
 const defaultVariants: ToastVariant[] = ['info', 'positive', 'negative'];
 
+// Layers and toasts move into place, so each snapshot waits until they are at rest.
+const settle = async (container: Element): Promise<void> => {
+  await Promise.all(
+    (container.shadowRoot?.getAnimations() ?? []).map((animation) =>
+      animation.finished.catch(() => undefined)
+    )
+  );
+};
+
 // The container is a single fixed region and every container shares one
 // queue, so each snapshot is its own story.
 const stackStory = ({
@@ -71,6 +82,7 @@ const stackStory = ({
   mode,
   dir,
   focusFront = false,
+  hover = false,
   expanded = false,
   focusInList = false,
   frontToast,
@@ -121,7 +133,11 @@ const stackStory = ({
     if (focusFront && front) {
       forcePseudoState(front, 'focus-visible');
     }
+    if (hover) {
+      forcePseudoState(container, 'hover', '.swc-ToastRegion');
+    }
     if (!expanded || !front) {
+      await settle(container);
       return;
     }
     front.shadowRoot!.querySelector<HTMLElement>('.swc-Toast-showAll')!.click();
@@ -155,6 +171,7 @@ const stackStory = ({
         forcePseudoState(clearAll, 'focus-visible', '.swc-ActionButton');
       }
     }
+    await settle(container);
   },
 });
 
@@ -198,6 +215,9 @@ export const TallFrontToastStack: Story = stackStory({
     actionLabel: 'Undo this change',
   },
 });
+
+// Hovering the stack lets the layers peek out further.
+export const HoveredStack: Story = stackStory({ hover: true });
 
 // The focus ring and the stacked shadow filter share the front toast.
 export const FocusedStack: Story = stackStory({ focusFront: true });

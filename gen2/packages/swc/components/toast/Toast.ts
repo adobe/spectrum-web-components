@@ -11,6 +11,7 @@
  */
 
 import { CSSResultArray, html, nothing, TemplateResult } from 'lit';
+import { property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
@@ -52,6 +53,25 @@ export class Toast extends ToastBase {
     return [styles];
   }
 
+  /**
+   * @internal
+   *
+   * Set by the container while Show all fades out: the toast takes its shape
+   * without it, and Show all leaves the layout.
+   */
+  @property({ attribute: false })
+  public showAllLeaving = false;
+
+  /**
+   * @internal
+   *
+   * Set by the container when Show all was hovered as it was activated, so it
+   * keeps its hover look while it fades out. It is inert by then, so `:hover`
+   * no longer applies.
+   */
+  @property({ attribute: false })
+  public showAllHovered = false;
+
   protected override get internalElement(): HTMLElement | null {
     return this.shadowRoot?.querySelector('.swc-Toast') ?? null;
   }
@@ -75,9 +95,40 @@ export class Toast extends ToastBase {
           </swc-button>
         `
       : nothing;
+    const showAll = this.showAllLabel
+      ? html`
+          <swc-action-button
+            class=${classMap({
+              ['swc-Toast-showAll']: true,
+              ['swc-Toast-showAll--hovered']:
+                this.showAllLeaving && this.showAllHovered,
+            })}
+            quiet
+            static-color="white"
+            @click=${this.requestExpand}
+          >
+            <swc-ui-icon
+              slot="icon"
+              class=${classMap({
+                ['swc-Toast-showAllIcon']: true,
+                ['swc-Toast-showAllIcon--down']:
+                  this.showAllDirection === 'down',
+              })}
+              icon="chevron"
+            ></swc-ui-icon>
+            ${this.showAllLabel}
+          </swc-action-button>
+        `
+      : nothing;
+    const inFooter = Boolean(this.showAllLabel) && !this.showAllLeaving;
     return html`
       <div class="swc-Toast">
-        <div class="swc-Toast-main">
+        <div
+          class=${classMap({
+            ['swc-Toast-main']: true,
+            ['swc-Toast-main--showAll']: inFooter,
+          })}
+        >
           <div
             class="swc-Toast-body"
             role=${ifDefined(this.announces ? 'alert' : undefined)}
@@ -90,30 +141,20 @@ export class Toast extends ToastBase {
                 `
               : nothing}
           </div>
+          ${inFooter ? nothing : action}
           ${this.showAllLabel
             ? html`
-                <div class="swc-Toast-footer">
-                  <swc-action-button
-                    class="swc-Toast-showAll"
-                    quiet
-                    static-color="white"
-                    @click=${this.requestExpand}
-                  >
-                    <swc-ui-icon
-                      slot="icon"
-                      class=${classMap({
-                        ['swc-Toast-showAllIcon']: true,
-                        ['swc-Toast-showAllIcon--down']:
-                          this.showAllDirection === 'down',
-                      })}
-                      icon="chevron"
-                    ></swc-ui-icon>
-                    ${this.showAllLabel}
-                  </swc-action-button>
-                  ${action}
+                <div
+                  class=${classMap({
+                    ['swc-Toast-footer']: true,
+                    ['swc-Toast-footer--leaving']: this.showAllLeaving,
+                  })}
+                  ?inert=${this.showAllLeaving}
+                >
+                  ${showAll} ${inFooter ? action : nothing}
                 </div>
               `
-            : action}
+            : nothing}
         </div>
         <swc-close-button
           class="swc-Toast-close"
