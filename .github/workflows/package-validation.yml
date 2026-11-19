@@ -1,0 +1,109 @@
+name: Package validation
+#
+# Checks what each public package would ship to npm, the way a consumer
+# installs it: every package is packed with `npm pack`, then the tarball is
+# checked with publint (do `exports`, `main`, and `types` point at files that
+# ship?) and attw (do TypeScript consumers get working types?). See
+# scripts/validate-packages.js.
+#
+# Report-only for now: findings show in the job summary but don't fail the
+# check. Drop `--report-only` once the existing findings are fixed or allowed.
+#
+# Version PRs opened by the release workflow with GITHUB_TOKEN don't trigger
+# pull_request workflows, so run this by hand on the `changeset-release/*`
+# branch (workflow_dispatch) before approving a release.
+#
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - '1st-gen/**'
+      - 'gen2/**'
+      - 'package.json'
+      - 'yarn.lock'
+      - 'scripts/validate-packages.js'
+      - 'scripts/workspace-packages.js'
+      - '.github/workflows/package-validation.yml'
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - auto_merge_enabled
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  changes:
+    name: Detect changed generations
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+    outputs:
+      gen1: ${{ github.event_name == 'workflow_dispatch' || steps.changed-files.outputs.gen1_any_changed == 'true' || steps.changed-files.outputs.shared_any_changed == 'true' }}
+      gen2: ${{ github.event_name == 'workflow_dispatch' || steps.changed-files.outputs.gen2_any_changed == 'true' || steps.changed-files.outputs.shared_any_changed == 'true' }}
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Get changed files
+        id: changed-files
+        if: github.event_name == 'pull_request'
+        uses: step-security/changed-files@v46
+        with:
+          files_yaml: |
+            gen1:
+              - '1st-gen/**'
+            gen2:
+              - 'gen2/**'
+            shared:
+              - 'package.json'
+              - 'yarn.lock'
+              - 'scripts/validate-packages.js'
+              - 'scripts/workspace-packages.js'
+              - '.github/workflows/package-validation.yml'
+
+  validate:
+    name: Package validation (${{ matrix.gen }})
+    needs: changes
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - gen: 1st-gen
+            enabled: ${{ needs.changes.outputs.gen1 }}
+            build: yarn build
+          - gen: gen2
+            enabled: ${{ needs.changes.outputs.gen2 }}
+            build: yarn build:gen2
+    steps:
+      - name: Check out code
+        if: matrix.enabled == 'true'
+        uses: actions/checkout@v4
+
+      - name: Setup job and install dependencies
+        if: matrix.enabled == 'true'
+        uses: ./.github/actions/setup-job
+        with:
+          build-command: ${{ matrix.build }}
+
+      - name: Validate packed packages
+        if: matrix.enabled == 'true'
+        run: node scripts/validate-packages.js --gen=${{ matrix.gen }} --report-only
+
+      - name: Skip
+        if: matrix.enabled != 'true'
+        run: echo "No ${{ matrix.gen }} changes - nothing to validate."
