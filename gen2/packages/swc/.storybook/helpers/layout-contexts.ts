@@ -112,7 +112,8 @@ export const LAYOUT_CONTEXTS: readonly LayoutContext[] = [
   {
     id: 'flex-grow',
     label: 'Flex row, flex: 1',
-    description: 'flex: 1 on the host. Ideal outcome is under review.',
+    description:
+      'flex: 1 on the host. The host fills the row by consumer choice.',
     containerStyle: 'display: flex; inline-size: 200px; block-size: 96px;',
   },
   {
