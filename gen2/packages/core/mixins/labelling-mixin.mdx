@@ -19,7 +19,8 @@ import * as Stories from './stories/labelling-mixin.stories';
 ### What it does
 
 - **Accessible name**: three sources feed the name: `accessibleLabelledby` (resolved against the host's root node and written to the role element's `ariaLabelledByElements`), `accessibleLabel` (written to `aria-label`), and a slotted visible label (a real, same-root `<label for>`). The mixin wires each one it is given independently; when more than one is set, the browser's [accessible-name computation](https://www.w3.org/TR/accname-1.2/) decides which is announced. See [Name source precedence](#name-source-precedence) for the order it applies.
-- **Label rendering**: `renderLabel()` renders nothing when there is no slotted `label` content, and otherwise always renders a real `<label for>`, so a visible label keeps native click-to-focus even when a programmatic name is announced instead.
+- **Label rendering**: `renderLabel()` renders nothing when there is no slotted `label` content, and otherwise always renders a real `<label for>`, so a visible label keeps native click-to-focus even when a programmatic name is announced instead. Pass `undefined` for `forId` when the host has no labelable control, such as a radio group: the label renders as a `<span>` instead, and the host wires the name with `aria-labelledby`.
+- **Necessity indicator**: `renderLabel()` can append a required asterisk or `(required)`/`(optional)` text. The asterisk icon is decorative and hides itself from assistive technology; text indicators are part of the label and contribute to the accessible name. The role element keeps its own `required` state.
 - **Dev-mode warnings**: warns when the field has no accessible name, when the field is named only by its `placeholder`, when the host receives `aria-label` or `aria-labelledby` (which do not name the field), when `accessible-labelledby` references an `id` that does not resolve, and when both `accessible-labelledby` and `accessible-label` are set (the lower-precedence source is ignored).
 
 ### Basic usage
@@ -98,13 +99,13 @@ Open the browser console: each example below triggers a distinct labelling warni
 
 ### Members
 
-| Member                 | Description                                                                                                      |
-| ---------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| `accessibleLabel`      | Accessible name, applied as `aria-label`. Takes precedence over a slotted label, but not `accessibleLabelledby`. |
-| `accessibleLabelledby` | Space-separated element `id`s that provide the accessible name. Highest precedence.                              |
-| `hasLabelSlotContent`  | Read-only. Whether slotted `label` content is present.                                                           |
-| `roleElement`          | `@internal`. The element the resolved name is wired onto. Override to return the real role element.              |
-| `renderLabel(forId)`   | Renders the label markup for the current state (via the `renderFieldLabel` directive).                           |
+| Member                 | Description                                                                                                                                       |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `accessibleLabel`      | Accessible name, applied as `aria-label`. Takes precedence over a slotted label, but not `accessibleLabelledby`.                                  |
+| `accessibleLabelledby` | Space-separated element `id`s that provide the accessible name. Highest precedence.                                                               |
+| `hasLabelSlotContent`  | Read-only. Whether slotted `label` content is present.                                                                                            |
+| `roleElement`          | `@internal`. The element the resolved name is wired onto. Override to return the real role element.                                               |
+| `renderLabel(forId)`   | Renders the label markup for the current state (via the `renderFieldLabel` directive). `forId` is optional: `undefined` renders a `<span>` label. |
 
 ### Related primitives
 

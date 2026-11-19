@@ -61,14 +61,14 @@ jobs:
               - '**/*.css'
               - '!1st-gen/**'
             eslint:
-              - '*.{js,json,ts}'
-              - '**/*.{js,json,ts}'
+              - '*.{js,json,ts,tsx}'
+              - '**/*.{js,json,ts,tsx}'
               - '!*.d.ts'
               - '!**/*.d.ts'
               - '!1st-gen/**'
             prettier:
-              - '*.{js,json,ts,css,md,mdx,yaml,yml,html}'
-              - '**/*.{js,json,ts,css,md,mdx,yaml,yml,html}'
+              - '*.{js,json,ts,tsx,css,md,mdx,yaml,yml,html}'
+              - '**/*.{js,json,ts,tsx,css,md,mdx,yaml,yml,html}'
               - '!*.d.ts'
               - '!**/*.d.ts'
               - '!1st-gen/**'

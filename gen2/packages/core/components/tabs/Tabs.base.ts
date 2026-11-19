@@ -18,7 +18,12 @@ import {
   FocusgroupNavigationController,
 } from '@adobe/spectrum-wc-core/controllers/index.js';
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
-import { validateEnum, warnIf } from '@adobe/spectrum-wc-core/utils/index.js';
+import {
+  resolveEnum,
+  stringAttribute,
+  validateEnum,
+  warnIf,
+} from '@adobe/spectrum-wc-core/utils/index.js';
 
 import {
   KEYBOARD_ACTIVATION_DEFAULT,
@@ -83,104 +88,36 @@ export abstract class TabsBase extends SpectrumElement {
    *
    * @see https://w3c.github.io/aria-practices/#kbd_selection_follows_focus
    */
-  @property({ type: String, reflect: true, attribute: 'keyboard-activation' })
-  public get keyboardActivation(): KeyboardActivation {
-    return this._keyboardActivation;
-  }
-
-  public set keyboardActivation(value: string) {
-    const isValid = (KEYBOARD_ACTIVATIONS as readonly string[]).includes(value);
-
-    validateEnum(this, {
-      prop: 'keyboard-activation',
-      value,
-      valid: KEYBOARD_ACTIVATIONS,
-      url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-tabs--docs',
-    });
-
-    const valid = isValid
-      ? (value as KeyboardActivation)
-      : KEYBOARD_ACTIVATION_DEFAULT;
-
-    if (this._keyboardActivation === valid) {
-      return;
-    }
-
-    const old = this._keyboardActivation;
-    this._keyboardActivation = valid;
-    this.requestUpdate('keyboardActivation', old);
-  }
-
-  /** @internal */
-  private _keyboardActivation: KeyboardActivation = KEYBOARD_ACTIVATION_DEFAULT;
+  @property({
+    type: String,
+    reflect: true,
+    attribute: 'keyboard-activation',
+    // A removed attribute resets to the default rather than `null`.
+    converter: stringAttribute(KEYBOARD_ACTIVATION_DEFAULT),
+  })
+  public keyboardActivation: KeyboardActivation = KEYBOARD_ACTIVATION_DEFAULT;
 
   /**
    * Layout density: `regular` (default) or `compact` (reduced tab spacing).
    */
-  @property({ type: String, reflect: true })
-  public get density(): TabDensity {
-    return this._density;
-  }
-
-  public set density(value: string) {
-    const isValid = (TAB_DENSITIES as readonly string[]).includes(value);
-
-    validateEnum(this, {
-      prop: 'density',
-      value,
-      valid: TAB_DENSITIES,
-      url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-tabs--docs',
-    });
-
-    const valid = isValid ? (value as TabDensity) : TAB_DENSITY_DEFAULT;
-
-    if (this._density === valid) {
-      return;
-    }
-
-    const old = this._density;
-    this._density = valid;
-    this.requestUpdate('density', old);
-  }
-
-  /** @internal */
-  private _density: TabDensity = TAB_DENSITY_DEFAULT;
+  @property({
+    type: String,
+    reflect: true,
+    converter: stringAttribute(TAB_DENSITY_DEFAULT),
+  })
+  public density: TabDensity = TAB_DENSITY_DEFAULT;
 
   /**
    * The layout direction of the tab list: `horizontal` (default) or `vertical`.
    *
    * @default 'horizontal'
    */
-  @property({ type: String, reflect: true })
-  public get direction(): TabsDirection {
-    return this._direction;
-  }
-
-  public set direction(value: TabsDirection) {
-    const isValid = (TABS_DIRECTIONS as readonly string[]).includes(value);
-
-    validateEnum(this, {
-      prop: 'direction',
-      value,
-      valid: TABS_DIRECTIONS,
-      url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-tabs--docs',
-    });
-
-    const validDirection = isValid
-      ? (value as TabsDirection)
-      : TABS_DEFAULT_DIRECTION;
-
-    if (this._direction === validDirection) {
-      return;
-    }
-
-    const oldDirection = this._direction;
-    this._direction = validDirection;
-    this.requestUpdate('direction', oldDirection);
-  }
-
-  /** @internal */
-  private _direction: TabsDirection = TABS_DEFAULT_DIRECTION;
+  @property({
+    type: String,
+    reflect: true,
+    converter: stringAttribute(TABS_DEFAULT_DIRECTION),
+  })
+  public direction: TabsDirection = TABS_DEFAULT_DIRECTION;
 
   /**
    * Whether the entire tab list is disabled. When `true`,
@@ -214,6 +151,30 @@ export abstract class TabsBase extends SpectrumElement {
   /**
    * @internal
    *
+   * The direction used for layout and navigation. Invalid values are kept on
+   * `direction` as set and resolve to the default here.
+   */
+  protected get resolvedDirection(): TabsDirection {
+    return resolveEnum(this.direction, TABS_DIRECTIONS, TABS_DEFAULT_DIRECTION);
+  }
+
+  /**
+   * @internal
+   *
+   * The keyboard activation mode used for navigation. Invalid values are kept
+   * on `keyboardActivation` as set and resolve to the default here.
+   */
+  protected get resolvedKeyboardActivation(): KeyboardActivation {
+    return resolveEnum(
+      this.keyboardActivation,
+      KEYBOARD_ACTIVATIONS,
+      KEYBOARD_ACTIVATION_DEFAULT
+    );
+  }
+
+  /**
+   * @internal
+   *
    * Inline style applied to the selection indicator element.
    * Computed from the selected tab's position and dimensions.
    */
@@ -237,11 +198,20 @@ export abstract class TabsBase extends SpectrumElement {
    */
   private _tabs: TabLike[] = [];
 
+  // Shared by every instance, so a link written by one tabs container is
+  // still treated as component-owned when the element moves to another one.
+  private static readonly managedPanelLabels = new WeakMap<
+    TabPanelLike,
+    string
+  >();
+
+  private static readonly managedTabControls = new WeakMap<TabLike, string>();
+
   /**
    * @internal
    *
    * Manages roving tabindex and arrow-key / Home / End focus movement within
-   * the tab list. Direction is kept in sync with `this.direction` via
+   * the tab list. Direction is kept in sync with `resolvedDirection` via
    * `setOptions` in `willUpdate`. Disabled tabs remain in the navigation
    * sequence (per APG) but are not activatable.
    *
@@ -249,7 +219,7 @@ export abstract class TabsBase extends SpectrumElement {
    * tabs lose their tab stop, matching the `aria-disabled` tablist behavior.
    */
   private readonly _navigation = new FocusgroupNavigationController(this, {
-    direction: this._direction,
+    direction: this.resolvedDirection,
     wrap: true,
     memory: true,
     getItems: () => (this.disabled ? [] : (this._tabs as HTMLElement[])),
@@ -269,7 +239,7 @@ export abstract class TabsBase extends SpectrumElement {
    * or `change` event.
    */
   private readonly _handleNavigationActiveChange = (event: Event): void => {
-    if (this._keyboardActivation !== 'automatic') {
+    if (this.resolvedKeyboardActivation !== 'automatic') {
       return;
     }
     const { activeElement, source } = (
@@ -290,8 +260,9 @@ export abstract class TabsBase extends SpectrumElement {
 
   /**
    * Whether an assigned node is treated as a tab. `role="tab"` is set in
-   * each tab's `firstUpdated`, so `slotchange` may run before that — accept
-   * known tab host tag names so the tab list and selection indicator sync.
+   * each tab's `connectedCallback`, but a `swc-tab` that is not yet defined
+   * when `slotchange` runs has no role — accept the tag name so it is still
+   * registered.
    */
   private static isTabSlotNode(el: Element): el is TabLike {
     if (!(el instanceof HTMLElement)) {
@@ -317,6 +288,8 @@ export abstract class TabsBase extends SpectrumElement {
     this._navigation.refresh();
     this.updateCheckedState();
     this.updateSelectionIndicator();
+    // Tabs can change without the panel slot changing, so relink the panels.
+    this.syncPanels();
   }
 
   /**
@@ -324,10 +297,8 @@ export abstract class TabsBase extends SpectrumElement {
    * changes. Wires up `aria-controls` / `aria-labelledby` between
    * each tab and its panel.
    */
-  protected handlePanelSlotChange(event: Event): void {
-    const slot = event.target as HTMLSlotElement;
-    const panels = slot.assignedElements() as TabPanelLike[];
-    this.managePanels(panels);
+  protected handlePanelSlotChange(_event: Event): void {
+    this.syncPanels();
   }
 
   /**
@@ -430,20 +401,106 @@ export abstract class TabsBase extends SpectrumElement {
    * Wires up cross-element ARIA relationships between tabs and
    * panels. Each tab gets `aria-controls` pointing at its panel's
    * `id`, and each panel gets `aria-labelledby` pointing at its
-   * tab's `id`.
+   * tab's `id`. Values set here are removed when the link goes away;
+   * consumer-provided values are kept.
+   *
+   * Both lists are read from the slots on every call, so a tab is never
+   * linked to a panel (or a panel to a tab) that was already removed.
    */
-  private managePanels(panels: TabPanelLike[]): void {
+  private syncPanels(): void {
+    const tabs = this.assignedTo('slot:not([name]), slot[name=""]').filter(
+      TabsBase.isTabSlotNode
+    ) as TabLike[];
+    const panels = this.assignedTo('slot[name="tab-panel"]') as TabPanelLike[];
+    const linkedTabs = new Set<TabLike>();
+
     for (const panel of panels) {
       const { tabId, id } = panel;
-      const tab = this.querySelector(`[role="tab"][tab-id="${tabId}"]`);
+      // Plain `role="tab"` elements have no `tabId` property, so fall back
+      // to the attribute.
+      const tab = tabId
+        ? tabs.find((el) => (el.tabId ?? el.getAttribute('tab-id')) === tabId)
+        : undefined;
 
       if (tab) {
-        tab.setAttribute('aria-controls', id);
-        panel.setAttribute('aria-labelledby', tab.id);
+        TabsBase.setManagedAttribute(
+          tab,
+          'aria-controls',
+          id,
+          TabsBase.managedTabControls
+        );
+        linkedTabs.add(tab);
+        TabsBase.setManagedAttribute(
+          panel,
+          'aria-labelledby',
+          tab.id,
+          TabsBase.managedPanelLabels
+        );
+      } else {
+        TabsBase.clearManagedAttribute(
+          panel,
+          'aria-labelledby',
+          TabsBase.managedPanelLabels
+        );
       }
 
       panel.selected = tabId === this.selected;
     }
+
+    for (const tab of tabs) {
+      if (!linkedTabs.has(tab)) {
+        TabsBase.clearManagedAttribute(
+          tab,
+          'aria-controls',
+          TabsBase.managedTabControls
+        );
+      }
+    }
+  }
+
+  private assignedTo(selector: string): Element[] {
+    return (
+      this.renderRoot
+        ?.querySelector<HTMLSlotElement>(selector)
+        ?.assignedElements() ?? []
+    );
+  }
+
+  /**
+   * Sets an ARIA reference. This component owns the attribute only while it
+   * is absent or still holds the last value written here. If the consumer
+   * set or changed it, their value is kept and no longer tracked.
+   */
+  private static setManagedAttribute<T extends Element>(
+    el: T,
+    name: string,
+    value: string,
+    managed: WeakMap<T, string>
+  ): void {
+    const current = el.getAttribute(name);
+    if (current !== null && current !== managed.get(el)) {
+      managed.delete(el);
+      return;
+    }
+    if (current !== value) {
+      el.setAttribute(name, value);
+    }
+    managed.set(el, value);
+  }
+
+  /**
+   * Removes an ARIA reference only if this component set it and it was not
+   * changed since.
+   */
+  private static clearManagedAttribute<T extends Element>(
+    el: T,
+    name: string,
+    managed: WeakMap<T, string>
+  ): void {
+    if (managed.has(el) && el.getAttribute(name) === managed.get(el)) {
+      el.removeAttribute(name);
+    }
+    managed.delete(el);
   }
 
   // ───────────────────────────────────
@@ -483,7 +540,7 @@ export abstract class TabsBase extends SpectrumElement {
     const tabRect = selectedElement.getBoundingClientRect();
     const listRect = tablist.getBoundingClientRect();
 
-    if (this._direction === 'horizontal') {
+    if (this.resolvedDirection === 'horizontal') {
       const isRtl = getComputedStyle(this).direction === 'rtl';
       const offset = isRtl
         ? tabRect.right - listRect.right
@@ -578,9 +635,31 @@ export abstract class TabsBase extends SpectrumElement {
     }
 
     if (changes.has('direction')) {
-      this._navigation.setOptions({ direction: this.direction });
+      this._navigation.setOptions({ direction: this.resolvedDirection });
       this.updateSelectionIndicator();
     }
+  }
+
+  protected override update(changes: PropertyValues): void {
+    validateEnum(this, {
+      prop: 'direction',
+      value: this.direction,
+      valid: TABS_DIRECTIONS,
+      url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-tabs--docs',
+    });
+    validateEnum(this, {
+      prop: 'density',
+      value: this.density,
+      valid: TAB_DENSITIES,
+      url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-tabs--docs',
+    });
+    validateEnum(this, {
+      prop: 'keyboard-activation',
+      value: this.keyboardActivation,
+      valid: KEYBOARD_ACTIVATIONS,
+      url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-tabs--docs',
+    });
+    super.update(changes);
   }
 
   public override connectedCallback(): void {

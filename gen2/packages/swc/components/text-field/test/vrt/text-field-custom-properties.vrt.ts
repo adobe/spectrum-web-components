@@ -54,12 +54,13 @@ type TextFieldPropertyCase =
 
 const MOD_PROPERTY_CASES: readonly TextFieldPropertyCase[] = [
   { property: '--swc-field-label-max-inline-size', value: '80px' },
-  { property: '--swc-field-input-min-inline-size', value: '260px' },
+  { property: '--swc-field-input-min-inline-size', value: '160px' },
   { property: '--swc-field-input-max-inline-size', value: '120px' },
   { property: '--swc-text-field-padding-block', value: '24px' },
   { property: '--swc-text-field-padding-inline', value: '24px' },
   { property: '--swc-text-field-affix-gap', value: '24px' },
   { property: '--swc-form-field-row-gap', value: '24px' },
+  { property: '--swc-form-field-side-label-gap', value: '48px' },
   { property: '--swc-form-field-necessity-gap', value: '24px' },
   { property: '--swc-text-field-font-size', value: '24px' },
   { property: '--swc-text-field-line-height', value: '2.5' },

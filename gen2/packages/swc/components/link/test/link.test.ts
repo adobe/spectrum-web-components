@@ -11,7 +11,7 @@
  */
 
 import { html } from 'lit';
-import { expect } from '@storybook/test';
+import { expect, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import meta, {
@@ -192,8 +192,12 @@ export const KeyboardFocusTest: Story = {
     const anchor = getAnchor(canvasElement);
 
     await step('link accepts programmatic focus', async () => {
-      anchor.focus();
-      expect(document.activeElement, 'anchor receives focus').toBe(anchor);
+      // Headless Firefox can drop programmatic focus while a sibling test
+      // frame holds it, so retry until the anchor really is active.
+      await waitFor(() => {
+        anchor.focus();
+        expect(document.activeElement, 'anchor receives focus').toBe(anchor);
+      });
       expect(anchor.tabIndex, 'native link is in tab order').toBe(0);
     });
   },

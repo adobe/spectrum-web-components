@@ -104,14 +104,14 @@ const permutationContent = () => html`
 `;
 
 const forcedColorsContent = () => html`
-  ${row([renderAvatar(500)], 'Default')}
+  ${row([renderAvatar(100)], 'Default')}
   ${row([renderCaptionedOutline(500), renderCaptionedOutline(1000)], 'Outline')}
   ${row([renderDisabled()], 'Disabled')}
 `;
 
 // VRT stories
 
-// Every size (50–1500), the outline modifier at the default size and at the
+// Every size (50–1500), the outline modifier below and at the
 // large-size breakpoint (>=1000, where the outline width doubles per
 // avatar.css), and the disabled state. Rendered once in light/ltr and once
 // in dark/rtl below (that combination covers both axes), all in a single

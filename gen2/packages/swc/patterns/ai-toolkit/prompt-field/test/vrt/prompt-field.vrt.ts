@@ -56,7 +56,8 @@ type AttachmentKind =
   | 'cards'
   | 'media'
   | 'mediaBadge'
-  | 'manyMedia';
+  | 'manyMedia'
+  | 'manyCards';
 
 // Every action button (upload, send, and both attachment-scroll chevrons),
 // forced together so one snapshot captures all their hover/focus colors ahead
@@ -105,6 +106,7 @@ const mediaAttachment = (id: number, alt: string, badge?: string) => html`
     <swc-asset slot="thumbnail">
       <img src=${THUMBNAIL_IMAGES[id]} alt=${alt} />
     </swc-asset>
+    <span slot="title">${alt}</span>
     ${badge
       ? html`
           <swc-badge slot="badge" size="s" subtle>${badge}</swc-badge>
@@ -137,6 +139,14 @@ const attachmentSlot = (kind: AttachmentKind) => {
         ${Array.from({ length: 9 }, (_, i) =>
           mediaAttachment([64, 56, 823][i % 3], `Frame ${i + 1}`)
         )}
+      `;
+    // Card tiles overflow too; the chevrons center on the taller card row.
+    case 'manyCards':
+      return html`
+        ${cardAttachment('Brand guidelines', 'PDF')}
+        ${cardAttachment('Q2 metrics draft', 'XLSX')}
+        ${cardAttachment('Launch brief', 'DOCX')}
+        ${cardAttachment('Campaign timeline', 'PDF')}
       `;
     default:
       return nothing;
@@ -174,7 +184,10 @@ const renderField = ({
   fieldHover = false,
   fieldFocus = false,
 }: FieldCase) => {
-  const constrained = value === LONG_PROMPT || attachment === 'manyMedia';
+  const constrained =
+    value === LONG_PROMPT ||
+    attachment === 'manyMedia' ||
+    attachment === 'manyCards';
   const width = constrained
     ? 'inline-size: 380px;'
     : 'inline-size: 800px; max-inline-size: 90vw;';
@@ -199,12 +212,6 @@ const renderField = ({
     </div>
   `;
 };
-
-// Renders content in light/ltr and dark/rtl (that pair covers both axes) in one
-// story so each matrix costs a single snapshot.
-const bothThemes = (content: unknown) => html`
-  ${theme(content, 'light', 'ltr')} ${theme(content, 'dark', 'rtl')}
-`;
 
 // The AI brand treatment (ring/hue-sweep/gloss/inset-shadow) across every
 // variant x generating combination.
@@ -247,7 +254,14 @@ const ANATOMY_PERMUTATIONS = createPermutations([
   {
     group: ['Attachments'],
     value: [SHORT_PROMPT],
-    attachment: ['card', 'cards', 'media', 'mediaBadge', 'manyMedia'],
+    attachment: [
+      'card',
+      'cards',
+      'media',
+      'mediaBadge',
+      'manyMedia',
+      'manyCards',
+    ],
   },
   // manyMedia overflows the strip so the scroll chevrons render and can be
   // forced alongside the upload/send buttons.
@@ -291,7 +305,7 @@ const SIZE_PERMUTATIONS = createPermutations([
     group: ['Small size — attachments'],
     size: ['s'],
     value: [SHORT_PROMPT],
-    attachment: ['card', 'media', 'manyMedia'],
+    attachment: ['card', 'media', 'manyMedia', 'manyCards'],
   },
   {
     group: ['Small size — buttons hover'],
@@ -448,19 +462,39 @@ const sizeRows = () =>
     row(stack(cases as FieldCase[]), group)
   );
 
+const permutationContent = () => [
+  ...variantRows(),
+  ...anatomyRows(),
+  ...sizeRows(),
+];
+
+const forcePermutationStates = async (context: {
+  canvasElement: HTMLElement;
+}) => {
+  await forceButtonStates(context);
+  await forceDraggedStates(context);
+  forceFieldHover(context);
+  forceFieldFocus(context);
+  await pauseLoaders(context);
+};
+
 // VRT stories
 
+// Light / LTR. Each theme has its own story: both in one snapshot exceed
+// Chromatic's 25,000,000 px limit.
 export const Permutations: Story = {
-  render: () => bothThemes([...variantRows(), ...anatomyRows(), ...sizeRows()]),
+  render: () => theme(permutationContent(), 'light', 'ltr'),
   parameters: vrtParameters,
-  play: async (context) => {
-    await forceButtonStates(context);
-    await forceDraggedStates(context);
-    forceFieldHover(context);
-    forceFieldFocus(context);
-    await pauseLoaders(context);
-  },
+  play: forcePermutationStates,
 };
+
+// Dark / RTL: the same permutations, also covering RTL layout.
+export const PermutationsRtl: Story = {
+  render: () => theme(permutationContent(), 'dark', 'rtl'),
+  parameters: vrtParameters,
+  play: forcePermutationStates,
+};
+PermutationsRtl.storyName = 'Permutations RTL';
 
 // Forced-colors replaces the whole palette, so it gets its own story:
 // checks the opaque card boundary the treatment falls back to when the

@@ -93,7 +93,9 @@ function sectionId(baseId: string, tagName?: string): string {
 
 /** Renders a CEM description as inline markdown (code spans, links, bold, etc). */
 function Description({ text }: { text?: string }) {
-  if (!text) return null;
+  if (!text) {
+    return null;
+  }
   return (
     <Markdown
       className="swc-Typography--prose"
@@ -154,7 +156,9 @@ function PropertiesTable({
       !m.static
   );
 
-  if (props.length === 0) return null;
+  if (props.length === 0) {
+    return null;
+  }
 
   return (
     <>
@@ -253,7 +257,9 @@ function SlotsTable({
   sectionHeadingAs: SectionHeading;
   tagName?: string;
 }) {
-  if (slots.length === 0) return null;
+  if (slots.length === 0) {
+    return null;
+  }
   return (
     <>
       <HeaderMdx as={sectionHeadingAs} id={sectionId('slots', tagName)}>
@@ -299,7 +305,9 @@ function EventsTable({
   sectionHeadingAs: SectionHeading;
   tagName?: string;
 }) {
-  if (events.length === 0) return null;
+  if (events.length === 0) {
+    return null;
+  }
 
   return (
     <>
@@ -344,7 +352,9 @@ function CssPropsTable({
   sectionHeadingAs: SectionHeading;
   tagName?: string;
 }) {
-  if (cssProps.length === 0) return null;
+  if (cssProps.length === 0) {
+    return null;
+  }
   return (
     <>
       <HeaderMdx
@@ -401,7 +411,9 @@ function CssPartsTable({
   sectionHeadingAs: SectionHeading;
   tagName?: string;
 }) {
-  if (cssParts.length === 0) return null;
+  if (cssParts.length === 0) {
+    return null;
+  }
   return (
     <>
       <HeaderMdx as={sectionHeadingAs} id={sectionId('css-parts', tagName)}>

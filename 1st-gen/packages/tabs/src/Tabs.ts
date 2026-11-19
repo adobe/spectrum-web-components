@@ -99,6 +99,48 @@ export function calculateScrollTargetForLeftSide(
   return prevTab ? prevTab.offsetLeft + prevTab.offsetWidth : leftmostElement;
 }
 
+// Shared by every `sp-tabs`, so a link written by one tabs container is still
+// treated as component-owned when the element moves to another one.
+const managedPanelLabels = new WeakMap<TabPanel, string>();
+const managedTabControls = new WeakMap<Tab, string>();
+
+/**
+ * Sets an ARIA reference. `sp-tabs` owns the attribute only while it is
+ * absent or still holds the last value written here. If the consumer set or
+ * changed it, their value is kept and no longer tracked.
+ */
+function setManagedAttribute<T extends Element>(
+  el: T,
+  name: string,
+  value: string,
+  managed: WeakMap<T, string>
+): void {
+  const current = el.getAttribute(name);
+  if (current !== null && current !== managed.get(el)) {
+    managed.delete(el);
+    return;
+  }
+  if (current !== value) {
+    el.setAttribute(name, value);
+  }
+  managed.set(el, value);
+}
+
+/**
+ * Removes an ARIA reference only if `sp-tabs` set it and it was not changed
+ * since.
+ */
+function clearManagedAttribute<T extends Element>(
+  el: T,
+  name: string,
+  managed: WeakMap<T, string>
+): void {
+  if (managed.has(el) && el.getAttribute(name) === managed.get(el)) {
+    el.removeAttribute(name);
+  }
+  managed.delete(el);
+}
+
 /**
  * @element sp-tabs
  *
@@ -156,6 +198,9 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
 
   @query('slot')
   private slotEl!: HTMLSlotElement;
+
+  @query('slot[name="tab-panel"]')
+  private panelSlotEl!: HTMLSlotElement;
 
   @query('#list')
   private tabList!: HTMLDivElement;
@@ -363,18 +408,48 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
     }
   }
 
-  protected managePanels({
-    target,
-  }: Event & { target: HTMLSlotElement }): void {
-    const panels = target.assignedElements() as TabPanel[];
+  protected managePanels(): void {
+    this.linkPanels();
+  }
+
+  /**
+   * Both lists are read from the slots on every call, so a tab is never
+   * linked to a panel (or a panel to a tab) that was already removed.
+   */
+  private linkPanels(): void {
+    if (!this.slotEl || !this.panelSlotEl) {
+      return;
+    }
+    const tabs = this.slotEl
+      .assignedElements()
+      .filter((el) => el.getAttribute('role') === 'tab') as Tab[];
+    const panels = this.panelSlotEl.assignedElements() as TabPanel[];
+    const linkedTabs = new Set<Tab>();
     panels.map((panel) => {
       const { value, id } = panel;
-      const tab = this.querySelector(`[role="tab"][value="${value}"]`);
+      // Plain `role="tab"` elements have no `value` property, so fall back
+      // to the attribute.
+      const tab = value
+        ? tabs.find((el) => (el.value ?? el.getAttribute('value')) === value)
+        : undefined;
       if (tab) {
-        tab.setAttribute('aria-controls', id);
-        panel.setAttribute('aria-labelledby', tab.id);
+        setManagedAttribute(tab, 'aria-controls', id, managedTabControls);
+        linkedTabs.add(tab);
+        setManagedAttribute(
+          panel,
+          'aria-labelledby',
+          tab.id,
+          managedPanelLabels
+        );
+      } else {
+        clearManagedAttribute(panel, 'aria-labelledby', managedPanelLabels);
       }
       panel.selected = value === this.selected;
+    });
+    tabs.forEach((tab) => {
+      if (!linkedTabs.has(tab)) {
+        clearManagedAttribute(tab, 'aria-controls', managedTabControls);
+      }
     });
   }
 
@@ -506,6 +581,8 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
       .assignedElements()
       .filter((el) => el.getAttribute('role') === 'tab') as Tab[];
     this.updateCheckedState();
+    // Tabs can change without the panel slot changing, so relink the panels.
+    this.linkPanels();
   }
 
   private updateCheckedState = (): void => {

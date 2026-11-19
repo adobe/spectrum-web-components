@@ -70,6 +70,13 @@ import {
 export abstract class CardBase extends SizedMixin(SpectrumElement, {
   validSizes: CARD_VALID_SIZES,
 }) {
+  /**
+   * The size of the card.
+   *
+   * @default m
+   */
+  declare public size: CardSize;
+
   // ─────────────────────────
   //     API TO OVERRIDE
   // ─────────────────────────
@@ -135,7 +142,7 @@ export abstract class CardBase extends SizedMixin(SpectrumElement, {
     this,
     {
       attribute: 'size',
-      getValue: () => CardBase.getSmallerSize(this.size),
+      getValue: () => CardBase.getSmallerSize(this.resolvedSize),
       slotName: 'actions',
     }
   );
@@ -259,7 +266,7 @@ export abstract class CardBase extends SizedMixin(SpectrumElement, {
    * to exclude the slot for other reasons, independent of size.
    */
   protected get actionsSupported(): boolean {
-    return this.size !== 'xs';
+    return this.resolvedSize !== 'xs';
   }
 
   /**

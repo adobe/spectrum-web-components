@@ -33,6 +33,7 @@
     - [Focus management](01_contributor-guides/14_focus-management.md)
     - [Changelog strategy](01_contributor-guides/15_changelog-strategy.md)
     - [gen2 shared resources quick reference](01_contributor-guides/16_gen2-shared-resources.md)
+    - [Component status and since tags](01_contributor-guides/17_component-status-and-since.md)
 - [Style guide](02_style-guide/README.md)
     - [gen2 CSS](02_style-guide/01_css/README.md)
     - [gen2 TypeScript](02_style-guide/02_typescript/README.md)

@@ -178,17 +178,20 @@ For the full inventory (what each one does and which components use it), see [ge
 
 ### SizedMixin
 
-Adds a reactive `size` property with validation. When an invalid size is set, it falls back to the default. The size is reflected to the `size` attribute.
+Adds a reactive `size` property with validation. The size is reflected to the `size` attribute, and the default is reflected when no size is set (unless `noDefaultSize` is set).
+
+An invalid size, including a different letter case such as `"M"`, is kept on the property and the attribute as set and warns in dev mode. It renders the default: it matches no `:host([size="…"])` selector, and code that renders the size or passes it to child elements reads `resolvedSize`, which resolves it to the default. Read `resolvedSize`, not `size`, whenever the value drives rendering or is passed to another element.
 
 **File:** `core/mixins/sized-mixin.ts`
 
 **Adds to the class:**
 
 - `size` property (public getter/setter)
+- `resolvedSize` getter (`@internal`): `size` when valid, otherwise the default
 - `VALID_SIZES` static readonly array
-- `update()` lifecycle override (sets default size attribute)
+- `update()` lifecycle override (validates `size` and sets the default size attribute)
 
-**Interface:** `SizedElementInterface` (`{ size: ElementSize }`)
+**Interface:** `SizedElementInterface` (`{ size: ElementSize; readonly resolvedSize: ElementSize }`)
 
 ### DisabledMixin
 

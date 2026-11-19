@@ -1,5 +1,15 @@
 # @adobe/spectrum-wc-icons
 
+## 2.0.0-beta.7
+
+### Minor Changes
+
+- **icons**:
+  - [#6917](https://github.com/adobe/spectrum-web-components/pull/6917) [`f8f755c`](https://github.com/adobe/spectrum-web-components/commit/f8f755c7d46a88d8423704be555645b0d13c27da) Thanks [@miwha-adobe](https://github.com/miwha-adobe)! - **feat(icons):** Updated workflow icons to S2 Icon Global Set Open Source 7.5.0.
+    - Added `<swc-icon-arrow-ui-left>`, `<swc-icon-arrow-ui-right>`, `<swc-icon-panel-collapse>`, `<swc-icon-panel-expand>`, `<swc-icon-panel-right-collapse>`, and `<swc-icon-panel-right-expand>`, with corresponding SVG-string functions.
+    - Updated the `AIMark` and `StarFilled` artwork.
+    - Fixed introduction-version metadata so existing icons retained their original `@since` values during regeneration, while new icons received the current package version.
+
 ## 2.0.0-beta.6
 
 ## 2.0.0-beta.5

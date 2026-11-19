@@ -9,21 +9,14 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-export const formatTitle = (
-  title: string,
-  typeCase: 'kebab' | 'pascal' = 'kebab'
-) => {
-  const formattedTitle = title
-    .split('/')
-    .pop()
-    ?.toLowerCase()
-    .replace(/\s+/g, '-');
 
-  if (typeCase === 'pascal') {
-    return formattedTitle
-      ?.split('-')
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join('');
-  }
-  return formattedTitle;
-};
+/**
+ * Turns the last segment of a story title into a kebab-case slug, e.g.
+ * `Components/Drop zone` → `drop-zone`. Matches Spectrum design page names;
+ * use `sourceLocation()` for folder, tag, and import names, because titles do
+ * not always match them.
+ *
+ * @param title - The Storybook story title.
+ */
+export const formatTitle = (title: string) =>
+  title.split('/').pop()?.toLowerCase().replace(/\s+/g, '-');

@@ -1,3 +1,29 @@
+<!-- Apply the Theme toolbar value from the URL before the stylesheets and the
+     Storybook UI load, so a non-default theme doesn't paint a white page
+     first. `manager.tsx` keeps the class in sync after. Keep the pattern in
+     sync with `getThemeFromUrl()` in `utils/color-scheme.ts`. -->
+<script>
+  (() => {
+    const globals = new URLSearchParams(window.location.search).get('globals');
+    const theme = /(?:^|;)theme:(light|dark|adaptive)(?:;|$)/.exec(
+      globals ?? ''
+    )?.[1];
+    if (theme) {
+      document.documentElement.classList.add(`swc-theme--${theme}`);
+    }
+  })();
+</script>
+<style>
+  /* Mirrors swc.css, which loads later with the Storybook UI's stylesheets */
+  :root.swc-theme--dark {
+    color-scheme: dark;
+  }
+
+  :root.swc-theme--adaptive {
+    color-scheme: light dark;
+  }
+</style>
+
 <!-- This preconnect opens the connection for typekit to more quickly load fonts -->
 <link rel="preconnect" href="https://use.typekit.net" crossorigin />
 <link rel="dns-prefetch" href="https://use.typekit.net" />

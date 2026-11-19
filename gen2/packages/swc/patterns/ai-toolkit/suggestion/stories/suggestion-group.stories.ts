@@ -47,7 +47,6 @@ const meta: Meta = {
   render: (args) => template(args),
   parameters: {
     docs: {
-      packagePath: 'patterns/ai-toolkit/suggestion',
       subtitle: 'Follow-up suggestion group for an AI response.',
     },
     layout: 'padded',

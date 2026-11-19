@@ -18,9 +18,9 @@ import {
 } from '@storybook/addon-docs/blocks';
 import React from 'react';
 
-import { GettingStarted } from './GettingStarted';
-import { OverviewStory } from './OverviewStory';
-import { StatusBadge } from './StatusBadge';
+import { GettingStarted } from './GettingStarted.js';
+import { OverviewStory } from './OverviewStory.js';
+import { StatusBadge } from './StatusBadge.js';
 
 /**
  * The standard top of a Storybook docs page: title, status badge, subtitle,

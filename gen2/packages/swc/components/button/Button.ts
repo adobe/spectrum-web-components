@@ -17,6 +17,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 
 import {
   BUTTON_FILL_STYLES,
+  BUTTON_STATIC_COLORS,
   BUTTON_VARIANTS,
   ButtonBase,
   type ButtonFillStyle,
@@ -38,6 +39,8 @@ import baseStyles from './button-base.css';
  *
  * @slot - Visible button label.
  * @slot icon - Leading icon displayed before the label.
+ *
+ * @fires click - Dispatched when the button is activated by pointer, Enter, or Space. Bubbles and crosses shadow boundaries. Suppressed while `disabled` or `pending`.
  *
  * @cssprop --swc-button-min-block-size - Minimum block size of the button.
  * @cssprop --swc-button-max-inline-size - Maximum inline size of the button. Defaults to `inherit` to support truncation.
@@ -156,7 +159,6 @@ export class Button extends PendingMixin(ButtonBase) {
   }
 
   protected override update(changedProperties: PropertyValues): void {
-    super.update(changedProperties);
     validateEnum(this, {
       prop: 'variant',
       value: this.variant,
@@ -169,6 +171,14 @@ export class Button extends PendingMixin(ButtonBase) {
       valid: BUTTON_FILL_STYLES,
       url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-button--docs',
     });
+    if (this.staticColor) {
+      validateEnum(this, {
+        prop: 'static-color',
+        value: this.staticColor,
+        valid: BUTTON_STATIC_COLORS,
+        url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-button--docs',
+      });
+    }
     warnIf(
       this,
       this.fillStyle === 'outline' &&
@@ -185,5 +195,6 @@ export class Button extends PendingMixin(ButtonBase) {
       'https://spectrum-web-components.adobe.com/?path=/docs/components-button--docs',
       { issues: ['primary', 'secondary'] }
     );
+    super.update(changedProperties);
   }
 }

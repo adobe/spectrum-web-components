@@ -178,6 +178,15 @@ export abstract class BadgeBase extends SizedMixin(SpectrumElement, {
       valid: constructor.VARIANTS,
       url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-badge--docs',
     });
+    // `fixed` is optional; unset means the badge is not fixed.
+    if (this.fixed) {
+      validateEnum(this, {
+        prop: 'fixed',
+        value: this.fixed,
+        valid: constructor.FIXED_VALUES,
+        url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-badge--docs',
+      });
+    }
     // Check outline property if it exists (S2 only)
     warnIf(
       this,

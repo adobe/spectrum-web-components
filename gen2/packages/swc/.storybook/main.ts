@@ -27,7 +27,7 @@ mkdirSync(resolve(__dirname, '../coverage'), { recursive: true });
 // Modes:
 // - dev: full local Storybook, including docs and test stories
 // - build: production Storybook build, excluding internal and test stories
-// - ci-a11y: minimal component-only Storybook used by CI accessibility checks
+// - ci-a11y: minimal Storybook used by CI accessibility checks
 // - vrt: Chromatic-only build containing *just* .vrt.ts stories, so the
 //   Chromatic catalog never lists the non-VRT stories it skips snapshotting.
 type StorybookMode = 'dev' | 'build' | 'ci-a11y' | 'vrt';
@@ -158,17 +158,17 @@ const STORIES_BY_MODE: Record<StorybookMode, StorybookConfig['stories']> = {
   // dependencies production doesn't need), and .test.ts fixtures.
   build: [
     { ...COMPONENT_STORIES, files: '**/!(*.internal).stories.ts' },
-    { ...PATTERN_STORIES, files: '**/*.stories.ts' },
-    { ...PATTERN_STORIES, files: '**/*.mdx' },
+    { ...PATTERN_STORIES, files: '**/!(*.internal).stories.ts' },
+    { ...PATTERN_STORIES, files: '**/!(*.internal).mdx' },
     { ...COMPONENT_STORIES, files: '**/!(*.internal).mdx' },
     { ...ICONS_STORIES, files: '**/!(*.internal).stories.ts' },
     { ...ICONS_STORIES, files: '**/!(*.internal).mdx' },
     ...GUIDES,
   ],
-  // CI accessibility checks: component/pattern stories only. addon-docs
-  // stays enabled (see `addons` below) so pattern .mdx still parses, but
-  // component docs, core, contributor docs, and guides are all skipped —
-  // they're not needed for axe checks.
+  // CI accessibility checks: component, pattern, and icon stories.
+  // addon-docs stays enabled (see `addons` below) so pattern .mdx still
+  // parses, but component docs, core, contributor docs, and guide docs
+  // are all skipped — they're not needed for axe checks.
   'ci-a11y': [
     { ...COMPONENT_STORIES, files: '**/*.stories.ts' },
     { ...PATTERN_STORIES, files: '**/*.stories.ts' },
@@ -280,6 +280,20 @@ const config: StorybookConfig = {
       ],
       resolve: {
         alias: [
+          {
+            find: /^@swc-test-helpers\/dom$/,
+            replacement: resolve(
+              __dirname,
+              '../../../test/helpers/dom/index.ts'
+            ),
+          },
+          {
+            find: /^@swc-test-helpers\/playwright$/,
+            replacement: resolve(
+              __dirname,
+              '../../../test/helpers/playwright/index.ts'
+            ),
+          },
           {
             find: '@adobe/spectrum-wc-core',
             replacement: resolve(__dirname, '../../core'),

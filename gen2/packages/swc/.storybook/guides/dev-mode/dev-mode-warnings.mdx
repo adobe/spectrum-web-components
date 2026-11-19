@@ -16,6 +16,7 @@ These warnings exist to catch configuration mistakes early, in your own developm
 - **Mutually exclusive or no-effect property combinations**: e.g. setting two properties together where one has no effect given the other's value.
 - **Missing required slot content**: a slot that must have something assigned to it is empty.
 - **Disallowed slotted children**: a slot received an element type it doesn't support (e.g. a `<p>` in a slot that only accepts headings).
+- **Elements defined twice**: two copies of a component try to register the same tag, usually because the page loads more than one copy or version of a Spectrum Web Components package. The browser then throws an error for the second definition. Make sure your app installs only one version of each package.
 
 ## Only in development
 

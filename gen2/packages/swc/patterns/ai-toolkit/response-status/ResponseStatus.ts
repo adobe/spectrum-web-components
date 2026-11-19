@@ -28,6 +28,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { MutationController } from '@lit-labs/observers/mutation-controller.js';
 
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
+import { stringAttribute, validateEnum } from '@adobe/spectrum-wc-core/utils';
 
 import '@adobe/spectrum-wc/components/icon/swc-icon.js';
 import '@adobe/spectrum-wc/components/ui-icons/swc-ui-icon.js';
@@ -67,7 +68,7 @@ export type ResponseStatusStatus = (typeof RESPONSE_STATUSES)[number];
  * Detail: `{ open: boolean }`
  * @fires swc-response-status-step-toggle - Dispatched when the user expands or collapses
  * a step's description. Detail: `{ open: boolean, index: number }`
- * @cssprop --swc-response-status-label-max-lines - Maximum number of lines for a settled header label. Defaults to 2 when active or stopped; completed labels show in full unless a cap is set.
+ * @cssprop --swc-response-status-label-max-lines - Maximum number of lines for a settled header label. Defaults to 1; a label with no disclosure to open into (any status with no steps) shows in full unless a cap is set.
  * @since 2.0.0-beta.3
  */
 export class ResponseStatus extends SpectrumElement {
@@ -150,7 +151,12 @@ export class ResponseStatus extends SpectrumElement {
   private _loaderStartTimer: number | null = null;
 
   /** Whole response lifecycle status. */
-  @property({ type: String, reflect: true })
+  @property({
+    type: String,
+    reflect: true,
+    // A removed attribute resets to the default rather than `null`.
+    converter: stringAttribute('active'),
+  })
   public status: ResponseStatusStatus = 'active';
 
   /** `true`: step timeline open. */
@@ -165,10 +171,15 @@ export class ResponseStatus extends SpectrumElement {
    * Status loader artwork shown while `status="active"`, matching
    * `swc-prompt-field`'s `loader` attribute for the same underlying control:
    * a preset name (`cc`, `dc`, `exp`, `analyze`, `mega`) cycles a themed icon
-   * sequence; an icon name shows a single static icon. Invalid values fall
-   * back to the `mega` preset.
+   * sequence; an icon name shows a single static icon. Invalid values are
+   * kept as set, warn in dev mode, and render the `mega` preset.
    */
-  @property({ type: String, reflect: true })
+  @property({
+    type: String,
+    reflect: true,
+    // A removed attribute resets to the default rather than `null`.
+    converter: stringAttribute('mega'),
+  })
   public loader: PixelLoaderIconName | PixelLoaderPresetName = 'mega';
 
   @queryAssignedNodes({ slot: 'label', flatten: true })
@@ -233,6 +244,24 @@ export class ResponseStatus extends SpectrumElement {
       this._loaderPaused = true;
       this._engageLoader();
     }
+  }
+
+  protected override update(changed: PropertyValues<this>): void {
+    // Invalid values are kept as set; `_resolvedStatus` and `_resolvedLoader`
+    // render the defaults.
+    validateEnum(this, {
+      prop: 'status',
+      value: this.status,
+      valid: RESPONSE_STATUSES,
+      url: 'https://spectrum-web-components.adobe.com/?path=/docs/patterns-ai-toolkit-response-status--docs',
+    });
+    validateEnum(this, {
+      prop: 'loader',
+      value: this.loader,
+      valid: [...PIXEL_LOADER_PRESET_NAMES, ...PIXEL_LOADER_ICON_NAMES],
+      url: 'https://spectrum-web-components.adobe.com/?path=/docs/patterns-ai-toolkit-response-status--docs',
+    });
+    super.update(changed);
   }
 
   public override disconnectedCallback(): void {
@@ -547,9 +576,10 @@ export class ResponseStatus extends SpectrumElement {
     if (!this._rollActive) {
       // Settled (no transition in flight): the roll geometry below assumes a
       // fixed single-line height, so only constrain to one line while actually
-      // rolling. At rest, let the label wrap across multiple lines instead of
-      // truncating, since a narrow container (or a longer translation) can
-      // easily exceed one line's width.
+      // rolling. At rest, the CSS defaults to clamping the label to one line
+      // (with an ellipsis) when there's a disclosure to expand into, or
+      // wrapping it in full otherwise; either way, `--swc-response-status-
+      // label-max-lines` lets a consumer override the line count.
       return html`
         <span
           class="swc-ResponseStatus-headerTrailViewport swc-ResponseStatus-headerTrailViewport--settled"

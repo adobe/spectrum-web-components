@@ -268,7 +268,7 @@ No sequencing, shared-base, or inheritance decisions require explicit user confi
 
 ## gen2 API decisions
 
-These are derived from the 1st-gen source, the accessibility migration analysis, the spectrum-css `spectrum-two` branch, and the rendering-and-styling migration analysis. Confirmed items are marked; open items are tracked in [Blockers and open questions](#blockers-and-open-questions).
+These are derived from the 1st-gen source, the component accessibility specification, the spectrum-css `spectrum-two` branch, and the rendering-and-styling migration analysis. Confirmed items are marked; open items are tracked in [Blockers and open questions](#blockers-and-open-questions).
 
 Use lightweight confidence labels:
 
@@ -349,7 +349,7 @@ The event flow in gen2 should preserve 1st-gen semantics with two corrections (S
 
 #### `dropEffect` validation
 
-The 1st-gen validates `dropEffect` values silently (ignores invalid values). The gen2 should preserve this behavior: invalid values are ignored, the previous valid value is retained. No thrown error.
+The 1st-gen validates `dropEffect` values silently (ignores invalid values). The gen2 keeps an invalid value on `dropEffect` as set, warns in dev mode, and hands the browser the default `'copy'`. No thrown error.
 
 #### Debounce and cleanup
 
@@ -357,7 +357,7 @@ The 100 ms drag-leave debounce must be cancelled in `disconnectedCallback` to pr
 
 ### Accessibility semantics notes (gen2)
 
-Sourced from [accessibility-migration-analysis.md](./accessibility-migration-analysis.md). Full requirements are there; summary below.
+Sourced from [component-accessibility-specification.md](./component-accessibility-specification.md). Full requirements are there; summary below.
 
 | Topic | gen2 behavior |
 | ----- | ---------------- |
@@ -522,9 +522,9 @@ No `DropzoneEventDetail` alias is exported. gen2 is a clean break from 1st-gen (
 
 #### Behavior
 
-- [x] `dropEffect` defaults to `'copy'`; invalid values are silently ignored
+- [x] `dropEffect` defaults to `'copy'`; invalid values are kept as set, warn in dev mode, and hand the browser `'copy'`
 - [x] `dropEffect` reacts to the `drop-effect` attribute at initial parse and at runtime; invalid
-  attribute values are rejected with a dev warning, same as the JS-property path (B5 regression guard)
+  attribute values are kept with a dev warning, same as the JS-property path (B5 regression guard)
 - [x] Removing the `drop-effect` attribute resets `dropEffect` to the default `'copy'` with no dev
   warning, distinct from setting an invalid value (Lit passes `null` for a removed attribute, which
   is not itself an invalid value)
@@ -626,7 +626,7 @@ No `DropzoneEventDetail` alias is exported. gen2 is a clean break from 1st-gen (
 
 - [Washing machine workflow](../../02_workstreams/02_gen2-component-migration/02_step-by-step/01_washing-machine-workflow.md)
 - [gen2 migration status table](../../02_workstreams/02_gen2-component-migration/01_status.md)
-- [Accessibility migration analysis](./accessibility-migration-analysis.md)
+- [Component accessibility specification](./component-accessibility-specification.md)
 - [Rendering and styling migration analysis](./rendering-and-styling-migration-analysis.md)
 - [CSS style guide — Component Custom Property Exposure](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#component-custom-property-exposure)
 - [CSS style guide — Selector conventions](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md#selector-conventions)
