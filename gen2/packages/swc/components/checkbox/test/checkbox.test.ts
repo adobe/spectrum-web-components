@@ -717,11 +717,30 @@ export const SizeTest: Story = {
       'swc-checkbox'
     );
 
-    await step('falls back to m for an invalid size attribute', async () => {
-      checkbox.setAttribute('size', 'xxl');
-      await checkbox.updateComplete;
-      expect(checkbox.size, 'size after an invalid attribute').toBe('m');
-    });
+    await step(
+      'keeps an invalid size, warns, and renders the default icons',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          checkbox.setAttribute('size', 'xxl');
+          await checkbox.updateComplete;
+          expect(
+            checkbox,
+            'size attribute after an invalid value'
+          ).toHaveAttribute('size', 'xxl');
+          for (const icon of ['checkmark', 'dash']) {
+            expect(
+              partOf(checkbox, `swc-ui-icon[icon="${icon}"]`),
+              `${icon} icon size for an invalid size`
+            ).toHaveAttribute('size', 's');
+          }
+          expect(
+            warnCalls.some((call) => String(call[1]).includes('"size"')),
+            'warning names the invalid size'
+          ).toBe(true);
+          checkbox.removeAttribute('size');
+          await checkbox.updateComplete;
+        })
+    );
 
     await step('reflects each valid size to the attribute', async () => {
       for (const size of CHECKBOX_VALID_SIZES) {

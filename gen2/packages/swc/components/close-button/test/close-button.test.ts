@@ -190,6 +190,29 @@ export const LightDomTextIgnoredTest: Story = {
   },
 };
 
+export const InvalidSizeTest: Story = {
+  render: () => html`
+    <swc-close-button size="XL" accessible-label="Close"></swc-close-button>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const button = await getComponent<CloseButton>(
+      canvasElement,
+      'swc-close-button'
+    );
+
+    await step(
+      'keeps an invalid size and gives its icon the default size',
+      async () => {
+        const icon = button.shadowRoot!.querySelector('swc-ui-icon')!;
+        await (icon as HTMLElement & { updateComplete: Promise<unknown> })
+          .updateComplete;
+        expect(button.getAttribute('size')).toBe('XL');
+        expect(icon.getAttribute('size'), 'icon gets the default').toBe('m');
+      }
+    );
+  },
+};
+
 // ──────────────────────────────────────────────────────────────
 // TEST: Accessibility
 // ──────────────────────────────────────────────────────────────

@@ -126,12 +126,12 @@ export class Checkbox extends CheckboxBase {
             <swc-ui-icon
               class="swc-Checkbox-checkmark"
               icon="checkmark"
-              size=${ICON_SIZE[this.size]}
+              size=${ICON_SIZE[this.resolvedSize]}
             ></swc-ui-icon>
             <swc-ui-icon
               class="swc-Checkbox-dash"
               icon="dash"
-              size=${ICON_SIZE[this.size]}
+              size=${ICON_SIZE[this.resolvedSize]}
             ></swc-ui-icon>
           </span>
           ${this.renderLabel(INPUT_ID)}

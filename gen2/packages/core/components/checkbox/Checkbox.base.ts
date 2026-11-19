@@ -75,6 +75,9 @@ export abstract class CheckboxBase extends SizedMixin(
    */
   declare public size: CheckboxSize;
 
+  /** @internal */
+  declare public readonly resolvedSize: CheckboxSize;
+
   /**
    * Whether the checkbox is checked. The `checked` attribute sets the default
    * state, which form reset restores. Once the user or a script sets
