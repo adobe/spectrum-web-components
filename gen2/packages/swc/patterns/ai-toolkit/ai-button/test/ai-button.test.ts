@@ -422,21 +422,29 @@ export const NoSmallSizeTest: Story = {
   play: async ({ canvasElement, step }) => {
     const el = await getComponent<AiButton>(canvasElement, 'swc-ai-button');
 
-    await step('renders the small size attribute as medium', async () => {
-      expect(el.size).toBe('m');
-      expect(el.getAttribute('size')).toBe('m');
-      expect(innerButton(el).offsetHeight).toBe(DESIGN_SIZES.m.blockSize);
-    });
+    await step(
+      'keeps the small size attribute and renders it as medium',
+      async () => {
+        expect(el.size).toBe('s');
+        expect(el.getAttribute('size')).toBe('s');
+        expect(innerButton(el).offsetHeight).toBe(DESIGN_SIZES.m.blockSize);
+      }
+    );
 
-    await step('renders the small size property as medium', async () => {
-      el.size = 'l';
-      await el.updateComplete;
-      el.size = 's' as AiButtonSize;
-      await el.updateComplete;
-      expect(el.size).toBe('m');
-      expect(el.getAttribute('size')).toBe('m');
-      expect(innerButton(el).offsetHeight).toBe(DESIGN_SIZES.m.blockSize);
-    });
+    await step(
+      'keeps the small size property, warns, and renders it as medium',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          el.size = 'l';
+          await el.updateComplete;
+          el.size = 's' as AiButtonSize;
+          await el.updateComplete;
+          expect(el.size).toBe('s');
+          expect(el.getAttribute('size')).toBe('s');
+          expect(innerButton(el).offsetHeight).toBe(DESIGN_SIZES.m.blockSize);
+          expect(String(warnCalls[0]?.[1] ?? '')).toMatch(/"size".*"s"/);
+        })
+    );
   },
 };
 

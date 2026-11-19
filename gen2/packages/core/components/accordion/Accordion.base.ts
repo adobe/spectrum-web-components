@@ -88,6 +88,9 @@ export abstract class AccordionBase extends SizedMixin(SpectrumElement, {
    */
   declare public size: AccordionSize;
 
+  /** @internal */
+  declare public readonly resolvedSize: AccordionSize;
+
   /**
    * Controls vertical spacing between items.
    *
@@ -171,7 +174,7 @@ export abstract class AccordionBase extends SizedMixin(SpectrumElement, {
   protected syncAccordionItems(): void {
     for (const item of this.assignedItems()) {
       item.setManagedHeading(this.resolvedLevel);
-      item.size = this.size;
+      item.size = this.resolvedSize;
       item.setManagedParentDisabled(this.disabled);
     }
   }
