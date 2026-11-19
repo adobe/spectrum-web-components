@@ -57,6 +57,7 @@
     - Menu
     - Menu Group
     - Menu Item
+    - Menu Item Link
     - Menu Item Radio
     - Menu Separator
     - Meter
