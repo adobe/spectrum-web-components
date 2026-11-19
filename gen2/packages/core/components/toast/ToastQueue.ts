@@ -104,6 +104,11 @@ class ToastQueueState {
     }
   }
 
+  /** @internal Whether `clear()` is closing the entry, rather than a close of its own. */
+  public isClearing(key: string): boolean {
+    return this._clearing.has(key);
+  }
+
   /** @internal Whether a close was requested for the entry and is still pending removal. */
   public isClosing(key: string): boolean {
     return this._closing.has(key);
