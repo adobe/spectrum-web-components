@@ -140,6 +140,27 @@ describe('cem.config.js', () => {
     assert.equal(densityDefault('_density?: string'), undefined);
   });
 
+  test('drops the events that the analyzer cannot name', () => {
+    for (const declaration of declarations()) {
+      for (const event of declaration.events ?? []) {
+        assert.ok(event.name, `${declaration.name} has an unnamed event`);
+      }
+    }
+    const eventNames = (tagName) =>
+      element(tagName).events?.map((event) => event.name);
+    assert.deepEqual(eventNames('swc-tooltip'), [
+      'swc-open',
+      'swc-close',
+      'swc-after-open',
+      'swc-after-close',
+    ]);
+    assert.ok(!eventNames('swc-response-status').includes('type'));
+    assert.ok(!eventNames('swc-response-status-step').includes('type'));
+    assert.ok(
+      eventNames('swc-accordion-item').includes('swc-accordion-item-toggle')
+    );
+  });
+
   test('gives each attribute the parsedType of the field it reflects', () => {
     assert.equal(
       attribute(element('swc-action-button'), 'size')?.parsedType?.text,

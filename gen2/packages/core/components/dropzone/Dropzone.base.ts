@@ -186,7 +186,7 @@ export abstract class DropzoneBase extends SizedMixin(SpectrumElement, {
     this,
     {
       attribute: 'size',
-      getValue: () => this.size,
+      getValue: () => this.resolvedSize,
       selector: 'swc-illustrated-message',
     }
   );

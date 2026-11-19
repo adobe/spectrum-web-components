@@ -12,6 +12,11 @@
 import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import {
+  getComponent,
+  getComponents,
+  withWarningSpy,
+} from '@swc-test-helpers/dom';
 
 import { Badge } from '@adobe/spectrum-wc/badge';
 import {
@@ -24,11 +29,6 @@ import {
 
 import '@adobe/spectrum-wc/components/badge/swc-badge.js';
 
-import {
-  getComponent,
-  getComponents,
-  withWarningSpy,
-} from '../../../utils/test-utils.js';
 import meta, {
   Anatomy,
   Fixed,
@@ -142,6 +142,36 @@ export const FixedClearingTest: Story = {
         'fixed attribute is absent after clearing'
       ).toBe(false);
     });
+  },
+};
+
+export const InvalidSizeTest: Story = {
+  render: () => html`
+    <swc-badge size="M">Uppercase</swc-badge>
+    <swc-badge>Default</swc-badge>
+    <swc-badge size="m">Medium</swc-badge>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const [upper, reference, medium] = await getComponents<Badge>(
+      canvasElement,
+      'swc-badge'
+    );
+    const height = (badge: Badge): number =>
+      badge.shadowRoot!.querySelector('.swc-Badge')!.getBoundingClientRect()
+        .height;
+
+    await step(
+      'keeps an uppercase size and renders the default small size',
+      () => {
+        expect(upper.getAttribute('size'), 'attribute stays "M"').toBe('M');
+        expect(height(upper), 'renders like the default').toBe(
+          height(reference)
+        );
+        expect(height(medium), 'size="m" still renders medium').not.toBe(
+          height(reference)
+        );
+      }
+    );
   },
 };
 

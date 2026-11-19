@@ -13,13 +13,13 @@
 import { html } from 'lit';
 import { expect, userEvent, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import { getComponent } from '@swc-test-helpers/dom';
 
 import type { Button } from '@adobe/spectrum-wc/button';
 
 import '../../suggestion/swc-suggestion-group.js';
 import '../swc-suggestion-item.js';
 
-import { getComponent } from '../../../../utils/test-utils.js';
 import { SuggestionGroup } from '../../suggestion/SuggestionGroup.js';
 import meta, { Overview } from '../stories/suggestion-item.stories.js';
 import { SuggestionItem } from '../SuggestionItem.js';
@@ -103,6 +103,17 @@ export const EventTest: Story = {
         expect(button).toBeTruthy();
         await button?.updateComplete;
 
+        const innerButton = button?.shadowRoot?.querySelector('button');
+        expect(innerButton, 'chip renders a native button').toBeTruthy();
+
+        // Headless Firefox can drop programmatic focus while a sibling test
+        // frame holds it, so retry until `delegatesFocus` actually lands.
+        const focusInnerButton = (): Promise<void> =>
+          waitFor(() => {
+            button?.focus();
+            expect(button?.shadowRoot?.activeElement).toBe(innerButton);
+          });
+
         let detail: { label: string } | undefined;
         el.addEventListener(
           'swc-suggestion',
@@ -111,10 +122,7 @@ export const EventTest: Story = {
           },
           { once: true }
         );
-        button?.focus();
-        expect(button?.shadowRoot?.activeElement).toBe(
-          button?.shadowRoot?.querySelector('button')
-        );
+        await focusInnerButton();
         await userEvent.keyboard('{Enter}');
         await waitFor(() =>
           expect(detail?.label).toBe('Create a slide deck from this')
@@ -128,7 +136,7 @@ export const EventTest: Story = {
           },
           { once: true }
         );
-        button?.focus();
+        await focusInnerButton();
         await userEvent.keyboard(' ');
         await waitFor(() =>
           expect(spaceDetail?.label).toBe('Create a slide deck from this')

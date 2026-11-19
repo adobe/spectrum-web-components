@@ -13,6 +13,12 @@
 import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import {
+  fixture,
+  getComponent,
+  getComponents,
+  withWarningSpy,
+} from '@swc-test-helpers/dom';
 
 import { Accordion, AccordionItem } from '@adobe/spectrum-wc/accordion';
 
@@ -27,12 +33,6 @@ import {
   SWC_ACCORDION_ITEM_OPEN_EVENT,
   SWC_ACCORDION_ITEM_TOGGLE_EVENT,
 } from '../../../../core/components/accordion/Accordion.types.js';
-import {
-  fixture,
-  getComponent,
-  getComponents,
-  withWarningSpy,
-} from '../../../utils/test-utils.js';
 import meta, {
   AllowMultiple,
   Anatomy,
@@ -289,6 +289,32 @@ export const AttributeRemovalResetsTest: Story = {
           })
       );
     }
+  },
+};
+
+export const InvalidSizeTest: Story = {
+  render: () => html`
+    <swc-accordion size="XL">
+      <swc-accordion-item>
+        <span slot="label">Item</span>
+        <p>Panel</p>
+      </swc-accordion-item>
+    </swc-accordion>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const accordion = await getComponent<Accordion>(
+      canvasElement,
+      'swc-accordion'
+    );
+    const item = await getComponent<AccordionItem>(
+      canvasElement,
+      'swc-accordion-item'
+    );
+
+    await step('keeps an invalid size and gives items the default', () => {
+      expect(accordion.getAttribute('size')).toBe('XL');
+      expect(item.size, 'item gets the default').toBe('m');
+    });
   },
 };
 

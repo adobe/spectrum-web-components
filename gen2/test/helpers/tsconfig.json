@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    "emitDeclarationOnly": true,
+    "outDir": "./dist",
+    "rootDir": ".",
+    "types": []
+  },
+  "extends": "../../../tsconfig.base.json",
+  "include": ["dom/**/*.ts", "playwright/**/*.ts"]
+}
