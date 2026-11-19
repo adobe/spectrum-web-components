@@ -24,7 +24,7 @@ import styles from './color-handle.css';
  * A draggable dot rendered on top of a color area, slider, or wheel that shows
  * the currently picked color over an opacity checkerboard and pops a built-in
  * `<swc-color-loupe>` on touch. It is a non-interactive, visual-only primitive;
- * interaction and accessibility are owned by the parent color picker.
+ * accessibility is owned by the parent color picker.
  *
  * @element swc-color-handle
  * @since 2.0.0-beta.1
