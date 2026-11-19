@@ -18,6 +18,7 @@ on:
 
 permissions:
   contents: read
+  pull-requests: write
 
 concurrency:
   group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
@@ -39,6 +40,7 @@ jobs:
           fetch-depth: 0
 
       - name: Check for changesets
+        id: changesets
         env:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
@@ -53,7 +55,7 @@ jobs:
           config_pattern='/(\.gitignore|(vitest|playwright|chromatic)\.config\.([cm]?[jt]s|json))$'
           private_pattern='^gen2/packages/tools/'
 
-          missing=0
+          missing=''
           for gen in 1st-gen gen2; do
             source_changes=$(echo "$changed" | grep -E "^${gen}/(packages|tools)/" | grep -Ev "$ignore_pattern|$config_pattern|$private_pattern" || true)
             if [ -z "$source_changes" ]; then
@@ -66,7 +68,7 @@ jobs:
               continue
             fi
 
-            missing=1
+            missing="${missing:+$missing }$gen"
             echo "::warning title=Missing changeset ($gen)::This PR changes $gen source but doesn't add a changeset in $gen/.changeset/. Run 'yarn changeset:$gen' if the change needs to be published."
             {
               echo "### ⚠️ Missing changeset for \`$gen\`"
@@ -76,6 +78,49 @@ jobs:
             } >> "$GITHUB_STEP_SUMMARY"
           done
 
-          if [ "$missing" -eq 0 ]; then
+          if [ -z "$missing" ]; then
             echo "No missing changesets."
           fi
+          echo "missing=$missing" >> "$GITHUB_OUTPUT"
+
+      - name: Manage changeset comment
+        if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
+        uses: actions/github-script@v9
+        env:
+          MISSING: ${{ steps.changesets.outputs.missing }}
+        with:
+          script: |
+            const marker = '<!-- changeset-check -->';
+            const { owner, repo } = context.repo;
+            const issue_number = context.issue.number;
+            const comments = await github.paginate(github.rest.issues.listComments, {
+              owner, repo, issue_number, per_page: 100,
+            });
+            const comment = comments.find(
+              (item) => item.user.login === 'github-actions[bot]' && item.body.includes(marker)
+            );
+            const missing = process.env.MISSING.split(' ').filter(Boolean);
+            if (missing.length === 0) {
+              if (comment) {
+                await github.rest.issues.deleteComment({ owner, repo, comment_id: comment.id });
+              }
+              return;
+            }
+            const entries = missing.map(
+              (gen) => `- \`${gen}\`: run \`yarn changeset:${gen}\` if this change needs to be published.`
+            ).join('\n');
+            const body = `${marker}
+            ### Missing changeset
+
+            This PR changes source without adding a changeset for:
+
+            ${entries}
+
+            This is a warning based on changed file paths, not a requirement to add a changeset for every change.`;
+            if (comment) {
+              if (comment.body !== body) {
+                await github.rest.issues.updateComment({ owner, repo, comment_id: comment.id, body });
+              }
+            } else {
+              await github.rest.issues.createComment({ owner, repo, issue_number, body });
+            }
