@@ -53,6 +53,8 @@ const STORY_SNAPSHOTS: Record<string, string> = {
     - text: Label
     - checkbox "Label" [checked=false]
     - text: Label Description
+    - checkbox "Label" [checked=false] [invalid]
+    - text: Label Error text
   `,
   sizes: `
     - checkbox "Size s" [checked]
@@ -102,6 +104,10 @@ const STORY_SNAPSHOTS: Record<string, string> = {
     - checkbox "Send me product updates" [checked] [disabled]
     - text: Send me product updates
   `,
+  required: `
+    - checkbox "I agree to the terms of service" [checked=false]
+    - text: I agree to the terms of service Required to create an account.
+  `,
   invalid: `
     - checkbox "I agree to the terms" [checked=false] [invalid]
     - text: I agree to the terms Check this box to continue.
@@ -121,6 +127,35 @@ const STORY_SNAPSHOTS: Record<string, string> = {
       - button "Submit"
       - button "Reset"
     - status
+  `,
+  accessibility: `
+    - checkbox "Send me product updates" [checked=false]
+    - text: Send me product updates We send one email a month.
+    - checkbox "I agree to the terms of service" [checked=false] [invalid]
+    - text: I agree to the terms of service Agree to the terms to continue.
+    - group "Notification preferences":
+      - text: Notification preferences
+      - checkbox "Email notifications" [checked]
+      - text: Email notifications
+      - checkbox "SMS notifications" [checked=false]
+      - text: SMS notifications
+      - checkbox "Push notifications" [checked=false]
+      - text: Push notifications
+    - table "Shared files":
+      - caption: Shared files
+      - rowgroup:
+        - row "Select Name":
+          - columnheader "Select"
+          - columnheader "Name"
+      - rowgroup:
+        - row "Select Quarterly report.pdf Quarterly report.pdf":
+          - cell "Select Quarterly report.pdf":
+            - checkbox "Select Quarterly report.pdf" [checked=false]
+          - cell "Quarterly report.pdf"
+        - row "Select Budget forecast.xlsx Budget forecast.xlsx":
+          - cell "Select Budget forecast.xlsx":
+            - checkbox "Select Budget forecast.xlsx" [checked=false]
+          - cell "Budget forecast.xlsx"
   `,
 };
 

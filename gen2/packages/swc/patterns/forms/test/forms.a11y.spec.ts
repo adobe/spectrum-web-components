@@ -44,6 +44,13 @@ test.describe('Forms - Trusted keyboard interactions', () => {
     await expect(email.locator('input')).toBeFocused();
     await expect(form.locator('output')).toContainText('"valid": false');
 
+    const terms = form.locator('swc-checkbox');
+    await expect(terms).toHaveAttribute('field-status', 'invalid');
+    await form
+      .getByRole('checkbox', { name: 'I agree to the terms of service' })
+      .check();
+    await expect(terms).not.toHaveAttribute('field-status');
+
     await email.evaluate(async (email: TextField) => {
       email.value = 'river@example.com';
       await email.updateComplete;
@@ -52,6 +59,7 @@ test.describe('Forms - Trusted keyboard interactions', () => {
     await expect(email).not.toHaveAttribute('field-status');
     await expect(form.locator('output')).toContainText('"valid": true');
     await expect(form.locator('output')).toContainText('river@example.com');
+    await expect(form.locator('output')).toContainText('"accepted"');
   });
 
   test('other text fields control buttonless submission', async ({ page }) => {
@@ -126,6 +134,75 @@ test.describe('Forms - Trusted keyboard interactions', () => {
       await expect(form).toHaveAttribute(
         'data-submitters',
         JSON.stringify([null, null])
+      );
+    });
+  });
+
+  test('checkboxes do not control buttonless submission', async ({ page }) => {
+    await page.clock.install({ time: new Date('2026-01-01T00:00:00Z') });
+    const root = await gotoStory(
+      page,
+      'patterns-forms--form-behavior',
+      'swc-checkbox'
+    );
+    await root.locator('form').evaluate(async (example) => {
+      if (!customElements.get('swc-checkbox')) {
+        throw new Error('swc-checkbox is not defined');
+      }
+      const form = document.createElement('form');
+      form.setAttribute('aria-label', 'Buttonless form with a checkbox');
+      const email = document.createElement('swc-text-field');
+      email.name = 'email';
+      email.accessibleLabel = 'Email';
+      email.value = 'river@example.com';
+      const updates = document.createElement('swc-checkbox');
+      updates.name = 'updates';
+      updates.value = 'weekly';
+      updates.accessibleLabel = 'Send me weekly updates';
+      updates.checked = true;
+      form.append(email, updates);
+      example.replaceWith(form);
+      const submissions: string[][][] = [];
+      form.dataset.submissions = JSON.stringify(submissions);
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        submissions.push(
+          Array.from(new FormData(form, event.submitter), ([name, value]) => [
+            name,
+            String(value),
+          ])
+        );
+        form.dataset.submissions = JSON.stringify(submissions);
+      });
+      await Promise.all([email.updateComplete, updates.updateComplete]);
+    });
+    const form = root.locator('form');
+    const updates = form.locator('swc-checkbox');
+    const entries = [
+      ['email', 'river@example.com'],
+      ['updates', 'weekly'],
+    ];
+    await form.locator('swc-text-field input').focus();
+    // Freeze after setup, then explicitly run each deferred Enter handler.
+    await page.clock.pauseAt(new Date('2026-01-01T01:00:00Z'));
+
+    await test.step('a text field submits alongside a checkbox', async () => {
+      await page.keyboard.press('Enter');
+      await page.clock.runFor(0);
+      await expect(form).toHaveAttribute(
+        'data-submissions',
+        JSON.stringify([entries])
+      );
+    });
+
+    await test.step('Enter in a checkbox needs a submit button', async () => {
+      await updates.locator('input').focus();
+      await page.keyboard.press('Enter');
+      await page.clock.runFor(0);
+      await expect(updates.locator('input')).toBeChecked();
+      await expect(form).toHaveAttribute(
+        'data-submissions',
+        JSON.stringify([entries])
       );
     });
   });

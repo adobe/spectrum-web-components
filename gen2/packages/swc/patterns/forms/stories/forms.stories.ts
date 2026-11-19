@@ -13,12 +13,14 @@
 import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
+import { Checkbox } from '@adobe/spectrum-wc/checkbox';
 import { RadioGroup } from '@adobe/spectrum-wc/radio-group';
 import { TextField } from '@adobe/spectrum-wc/text-field';
 
 import '@adobe/spectrum-wc/components/text-field/swc-text-field.js';
 import '@adobe/spectrum-wc/components/radio-group/swc-radio-group.js';
 import '@adobe/spectrum-wc/components/radio-group/swc-radio.js';
+import '@adobe/spectrum-wc/components/checkbox/swc-checkbox.js';
 
 // ────────────────
 //    METADATA
@@ -44,7 +46,12 @@ export default meta;
 //    HELPERS
 // ────────────────────
 
-type FormField = TextField | RadioGroup;
+type FormField = TextField | RadioGroup | Checkbox;
+
+const isFormField = (element: unknown): element is FormField =>
+  element instanceof TextField ||
+  element instanceof RadioGroup ||
+  element instanceof Checkbox;
 
 const validateField = async (field: FormField): Promise<void> => {
   if (!field.willValidate) {
@@ -68,7 +75,7 @@ const validateField = async (field: FormField): Promise<void> => {
 
 const handleFieldEdit = async (event: Event): Promise<void> => {
   const field = event.currentTarget;
-  if (!(field instanceof TextField) && !(field instanceof RadioGroup)) {
+  if (!isFormField(field)) {
     throw new Error('Form field edit requires a supported control.');
   }
   if (field.fieldStatus === 'invalid') {
@@ -82,10 +89,7 @@ const handleSubmit = async (event: SubmitEvent): Promise<void> => {
   if (!(form instanceof HTMLFormElement)) {
     throw new Error('Form submission requires a form.');
   }
-  const fields = Array.from(form.elements).filter(
-    (field): field is FormField =>
-      field instanceof TextField || field instanceof RadioGroup
-  );
+  const fields = Array.from(form.elements).filter(isFormField);
   const output = form.querySelector<HTMLOutputElement>('[data-form-data]');
   if (!output) {
     throw new Error('Form result output not found.');
@@ -169,6 +173,15 @@ export const FormBehavior: Story = {
             </swc-radio>
             <swc-radio value="work"><span slot="label">Work</span></swc-radio>
           </swc-radio-group>
+          <swc-checkbox
+            name="terms"
+            value="accepted"
+            required
+            @change=${handleFieldEdit}
+          >
+            <span slot="label">I agree to the terms of service</span>
+            <span slot="error-text"></span>
+          </swc-checkbox>
         </fieldset>
         <div style="display: flex; flex-wrap: wrap; gap: 12px;">
           <button

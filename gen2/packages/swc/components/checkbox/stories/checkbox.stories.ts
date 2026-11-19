@@ -45,7 +45,13 @@ args['field-status'] = undefined;
 
 /**
  * A checkbox selects or marks an item, or gives consent. Each checkbox is an
- * independent control.
+ * independent control with its own label, and submits its own value with a
+ * native `<form>`. Use checkboxes to let people select any number of options
+ * from a list, or to mark a single option as selected. Use a switch instead
+ * when the control activates something rather than selecting it.
+ *
+ * For shared validation, submission, and reset guidance, see the
+ * [Forms pattern](?path=/docs/patterns-forms--docs).
  */
 const meta: Meta = {
   title: 'Checkbox',
@@ -59,6 +65,13 @@ const meta: Meta = {
     },
     docs: {
       subtitle: 'Independent selection or consent control',
+    },
+    design: {
+      type: 'figma',
+      url: 'https://www.figma.com/design/xHBWBBIe2eo5vwoCeNrC4Q/S2---Web?node-id=9961-2510',
+    },
+    stackblitz: {
+      url: 'https://stackblitz.com/edit/vitejs-vite-zybk2quz',
     },
   },
   tags: ['migrated'],
@@ -138,7 +151,7 @@ const handleFormChange = async (event: Event): Promise<void> => {
 // ────────────────────
 
 export const Playground: Story = {
-  tags: ['autodocs', 'dev'],
+  tags: ['dev'],
   args: {
     'label-slot': 'Send me product updates',
   },
@@ -167,6 +180,12 @@ export const Anatomy: Story = {
       ...args,
       'label-slot': 'Label',
       'description-slot': 'Description',
+    })}
+    ${template({
+      ...args,
+      'field-status': 'invalid',
+      'label-slot': 'Label',
+      'error-text-slot': 'Error text',
     })}
   `,
   parameters: { flexLayout: 'row-wrap' },
@@ -219,15 +238,7 @@ export const WithDescription: Story = {
   },
   tags: ['options'],
 };
-
-export const LabelWrapping: Story = {
-  args: {
-    'label-slot':
-      'Send me product updates, event invitations, and occasional surveys about new features',
-  },
-  parameters: { styles: { maxInlineSize: '240px' } },
-  tags: ['options'],
-};
+WithDescription.storyName = 'With description';
 
 // ──────────────────────────
 //    STATES STORIES
@@ -240,6 +251,15 @@ export const Selection: Story = {
     ${template({ ...args, indeterminate: true, 'label-slot': 'Indeterminate' })}
   `,
   parameters: { flexLayout: 'row-wrap' },
+  tags: ['states'],
+};
+
+export const Required: Story = {
+  args: {
+    required: true,
+    'label-slot': 'I agree to the terms of service',
+    'description-slot': 'Required to create an account.',
+  },
   tags: ['states'],
 };
 
@@ -282,6 +302,7 @@ export const ReadOnly: Story = {
   },
   tags: ['states'],
 };
+ReadOnly.storyName = 'Read-only';
 
 export const Invalid: Story = {
   render: (args) => html`
@@ -349,4 +370,79 @@ export const FormParticipation: Story = {
 };
 FormParticipation.storyName = 'Form participation';
 
-// TODO: Phase 7 adds the Accessibility story and the per-unit MDX docs page.
+export const LabelWrapping: Story = {
+  args: {
+    'label-slot':
+      'Send me product updates, event invitations, and occasional surveys about new features',
+  },
+  parameters: { styles: { maxInlineSize: '240px' } },
+  tags: ['behaviors'],
+};
+LabelWrapping.storyName = 'Label wrapping';
+
+// ────────────────────────────────
+//    ACCESSIBILITY STORIES
+// ────────────────────────────────
+
+export const Accessibility: Story = {
+  render: () => html`
+    <swc-checkbox name="updates" value="monthly">
+      <span slot="label">Send me product updates</span>
+      <span slot="description">We send one email a month.</span>
+    </swc-checkbox>
+    <swc-checkbox name="terms" value="accepted" required field-status="invalid">
+      <span slot="label">I agree to the terms of service</span>
+      <span slot="description">Required to create an account.</span>
+      <span slot="error-text">Agree to the terms to continue.</span>
+    </swc-checkbox>
+    <fieldset
+      style="display: grid; gap: var(--swc-spacing-100); margin: 0; padding: 0; border: none;"
+    >
+      <legend>Notification preferences</legend>
+      <swc-checkbox name="notify" value="email" checked>
+        <span slot="label">Email notifications</span>
+      </swc-checkbox>
+      <swc-checkbox name="notify" value="sms">
+        <span slot="label">SMS notifications</span>
+      </swc-checkbox>
+      <swc-checkbox name="notify" value="push">
+        <span slot="label">Push notifications</span>
+      </swc-checkbox>
+    </fieldset>
+    <table>
+      <caption>Shared files</caption>
+      <thead>
+        <tr>
+          <th scope="col">Select</th>
+          <th scope="col">Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <swc-checkbox
+              accessible-label="Select Quarterly report.pdf"
+            ></swc-checkbox>
+          </td>
+          <td>Quarterly report.pdf</td>
+        </tr>
+        <tr>
+          <td>
+            <swc-checkbox
+              accessible-label="Select Budget forecast.xlsx"
+            ></swc-checkbox>
+          </td>
+          <td>Budget forecast.xlsx</td>
+        </tr>
+      </tbody>
+    </table>
+  `,
+  parameters: {
+    styles: {
+      display: 'grid',
+      gap: 'var(--swc-spacing-300)',
+      'justify-items': 'start',
+    },
+  },
+  tags: ['a11y'],
+};
