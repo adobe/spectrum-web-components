@@ -42,7 +42,7 @@ Index of shared, reusable resources in gen2: controllers, mixins, utilities, and
 | `HoverController` | Hover and keyboard-focus wiring for native-Popover-API triggers | `tooltip` |
 | `FocusgroupNavigationController` | Roving-tabindex arrow key navigation for composite widgets ([Open UI `focusgroup`](https://open-ui.org/components/focusgroup.explainer/)-aligned). See [Focus management](14_focus-management.md) | `tabs`, `action-group`, `message-feedback`, `conversation-thread`, `prompt-field`, `menu` |
 | `SlotAttributePropagationController` | Propagates a host attribute (e.g. `size`) to slotted children | `card`, `dropzone`, `illustrated-message`, `button-group`, `menu` |
-| `SlotPresenceController` | Observes whether slotted content matching a selector is present | `button`, `action-button`, `badge`, `accordion`; also `progress-bar`, `meter` (via `LinearProgressMixin`) |
+| `SlotPresenceController` | Observes whether slotted content matching a selector is present | `button`, `action-button`, `badge`, `accordion`, `menu-item`; also `progress-bar`, `meter` (via `LinearProgressMixin`) |
 | `SlotTextController` | Observes whether a slot has meaningful text/element content | `card`, `button`, `action-button`, `illustrated-message`, `badge` |
 | `LiveSelectionController` | Coordinates single/multiple selection across event-dispatching children | `accordion` |
 | `PageScrollLockController` | Reference-counted page scroll lock for stacked blocking surfaces | `popover` |
@@ -55,7 +55,7 @@ Index of shared, reusable resources in gen2: controllers, mixins, utilities, and
 
 | Mixin | What it does | Used by |
 | --- | --- | --- |
-| `SizedMixin` | Reactive `size` property with per-component valid-size enforcement | `button`, `button-group`, `badge`, `card`, `accordion`, `status-light`, `divider`, `dropzone`, `icon`, `infield-button`, `meter`, `progress-bar`, `progress-circle`, `action-group`, `menu` |
+| `SizedMixin` | Reactive `size` property with per-component valid-size enforcement | `button`, `button-group`, `badge`, `card`, `accordion`, `status-light`, `divider`, `dropzone`, `icon`, `infield-button`, `meter`, `progress-bar`, `progress-circle`, `action-group`, `menu`, `menu-item` |
 | `LinearProgressMixin` | Shared value/label/percent-format logic for linear-progress components | `progress-bar`, `meter` |
 | `LabellingMixin` | Renders and associates visible or programmatic field labels | `text-field` |
 | `FieldDescriptionMixin` | Renders and associates field descriptions and invalid-state error text | `text-field` |
@@ -75,7 +75,7 @@ Index of shared, reusable resources in gen2: controllers, mixins, utilities, and
 | `tabbableSelector` | Spec-based tabbable-element selector | none |
 | `isFocusVisibleInTree()` | `:focus-visible` check across shadow roots | none |
 | `getLabelFromSlot()` | Derives a text label from slotted content | `upload-artifact` |
-| `validateRequiredSlot()`, `validateAllowedChildren()` | Dev-mode structural validation | `validateAllowedChildren`: `illustrated-message`, `menu` |
+| `validateRequiredSlot()`, `validateAllowedChildren()` | Dev-mode structural validation | `validateRequiredSlot`: `menu-item`. `validateAllowedChildren`: `illustrated-message`, `menu` |
 | `isDebug()` | Whether dev mode is active (the gate `warnIf`/`validateEnum` build on) | `progress-circle`, `card`, `dropzone`, `asset`; also `progress-bar`, `meter` (via `LinearProgressMixin`) |
 | `capitalize()` | Capitalizes first character of a string | `progress-circle`, `divider` |
 | `physicalSide()` | Drops alignment suffix from a placement (`bottom-start` to `bottom`) | `popover`, `menu` |

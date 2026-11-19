@@ -208,7 +208,7 @@ Row chrome belongs here, not in `swc-menu`: in `spectrum-css`, `.spectrum-Menu` 
 - [x] `role="menuitem"` present before `swc-menu`'s first discovery pass
 - [x] `disabled` exposes `aria-disabled="true"` and the row stays arrow-reachable
 - [x] <kbd>Enter</kbd> and <kbd>Space</kbd> activate an enabled row ([WCAG 2.1.1](https://www.w3.org/WAI/WCAG22/Understanding/keyboard)); a disabled row swallows both without activating
-- [ ] Reconcile `accessibility-migration-analysis.md`: its "Migration scope" currently lists submenu parents and link rows as in scope, contradicting [Q17](#blockers-and-open-questions)
+- [x] Reconcile `accessibility-migration-analysis.md`: its "Migration scope" now lists plain `menuitem` only, with submenu parents and link rows called out as out of scope per [Q17](#blockers-and-open-questions)
 
 ### Testing
 
@@ -226,15 +226,15 @@ Red/green TDD. Each item below should fail before the implementation exists.
 - [x] `size` propagates from `swc-menu` onto its rows, overriding a row-authored value
 - [x] Enter on the trigger opens the menu without the same press activating the first row
 - [x] Modified presses (<kbd>Shift</kbd> + <kbd>Enter</kbd>, <kbd>Ctrl</kbd> + <kbd>Space</kbd>) do not activate a row
-- [ ] Playwright: ARIA tree shows `menu` containing named `menuitem` rows
-- [ ] VRT: sizes, disabled, with and without a visual, with and without a description, forced colors
+- [x] Playwright: ARIA tree shows `menu` containing named `menuitem` rows (`menu.a11y.spec.ts`, `toMatchAriaSnapshot`)
+- [x] VRT: sizes, disabled, with and without a visual, with and without a description, forced colors (`test/vrt/menu.vrt.ts`, `test/vrt/menu-item-custom-properties.vrt.ts`); Chromatic approval still pending above
 
 > **Test-authoring note.** A spike for this plan produced a false failure by pressing a key before the menu's deferred open-focus had settled, so the key went to `body`. Assert the row actually holds focus before dispatching navigation keys.
 
 ### Documentation
 
 - [x] Rows documented in `menu.mdx` and storied in `menu.stories.ts`, per the shared-folder decision above
-- [ ] Consumer migration guide covering the dropped `href` surface and the slot renames
+- [x] Consumer migration guide covering the dropped `href` surface and the slot renames (`components/menu/migration-guide.mdx`, merged into the menu guide per review)
 - [x] Update `swc-menu`'s stories, tests and VRT to use real rows instead of placeholders
 
 ## Blockers and open questions

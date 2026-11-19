@@ -11,4 +11,4 @@ Add the gen2 `<swc-menu>`, the Spectrum 2 successor to `<sp-menu>`.
 - **Core**: adds `MenuBase` and `Menu.types.ts` (`MENU_PLACEMENTS`, `MENU_VALID_SIZES`, `MENU_ALLOWED_CHILDREN`), composing the shared `PlacementController`, `FocusgroupNavigationController`, and `TriggerPressController`.
 - **Docs and tests**: Storybook docs page, consumer migration guide, unit coverage, and Playwright accessibility tests covering the ARIA tree and native light-dismiss.
 
-`<swc-menu-item>` has not shipped yet, so the default slot currently accepts it by name only. Menu groups, dividers as separators, submenus, selection, link rows, and the mobile drilldown tray are not part of this release.
+The default slot accepts `<swc-menu-item>`, which ships alongside this release. Menu groups, dividers as separators, submenus, selection, link rows, and the mobile drilldown tray are not part of this release.
