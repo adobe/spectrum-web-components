@@ -84,4 +84,17 @@ export const argTypes = {
       type: 'boolean',
     },
   },
+  hapticFeedback: {
+    name: 'hapticFeedback',
+    type: { name: 'boolean', required: false },
+    description:
+      'Enables haptic feedback on supported platforms (e.g. iOS 18+ Safari) for accessibility.',
+    table: {
+      type: { summary: 'boolean' },
+      defaultValue: { summary: false },
+    },
+    control: {
+      type: 'boolean',
+    },
+  },
 };
