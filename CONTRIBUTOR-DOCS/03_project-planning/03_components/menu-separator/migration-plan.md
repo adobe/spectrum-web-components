@@ -246,7 +246,7 @@ From the [component accessibility specification](./component-accessibility-speci
 
 - `role="separator"` on the host, no `aria-valuenow` or splitter semantics, no accessible name by default.
 - Direct child of `swc-menu`, `swc-action-menu`, or `swc-menu-item`; not inside `swc-menu-group`. Light-DOM slotting is fine.
-- Line must meet non-text contrast ([WCAG 1.4.11](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html)) against the menu background.
+- The line uses `gray-200` to follow the Spectrum 2 design and React Spectrum. That is about 1.3:1 on light and 1.2:1 on dark, below the 3:1 of [WCAG 1.4.11](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html). Design decided to keep it for 2.0 and revisit divider contrast system-wide later.
 - Docs favor separators between labelled `swc-menu-group` blocks, and discourage them between loose items.
 
 ---
@@ -319,7 +319,7 @@ Planned rendering shape:
 #### Naming and semantics
 
 - [x] Host `role="separator"`, no accessible name by default, no splitter value semantics (set in `connectedCallback`; no `aria-*`, `tabindex` or slot is rendered)
-- [x] Contrast of the line versus menu background meets [1.4.11](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html) (`gray-500` on `background-layer-2-color`: about 3.2:1 light, 3.1:1 dark; design to confirm the token)
+- [x] Line uses `gray-200` per the Spectrum 2 design and React Spectrum. Contrast is below 3:1 ([1.4.11](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html)), a design decision for 2.0 to be revisited system-wide
 
 #### State verification
 
