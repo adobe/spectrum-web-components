@@ -191,7 +191,7 @@ export const VariantIcons: Story = {
       expect(wrapper?.getAttribute('aria-hidden')).toBe('true');
       expect(wrapper?.children).toHaveLength(1);
       expect(wrapper?.firstElementChild?.localName).toBe(tagName);
-      expect(wrapper && getComputedStyle(wrapper).display).toBe('block');
+      expect(wrapper).toBeVisible();
     };
 
     await step(
