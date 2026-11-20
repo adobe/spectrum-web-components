@@ -43,7 +43,7 @@
 }
 
 .swc-ThreadAlert-icon {
-  display: block;
+  display: flex;
   flex: 0 0 auto;
   margin-inline-end: var(--swc-thread-alert-gap, token("base-gap-medium"));
 }
