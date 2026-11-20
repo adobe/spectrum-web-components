@@ -46,4 +46,40 @@ describe('Element Resolution', () => {
     await elementUpdated(el);
     expect(controller.element === target2).to.be.true;
   });
+
+  it('resolves ID selectors after reconnecting from a detached host', async () => {
+    class DetachedTestEl extends LitElement {}
+    if (!customElements.get('test-element-resolution-detached-el')) {
+      customElements.define(
+        'test-element-resolution-detached-el',
+        DetachedTestEl
+      );
+    }
+    const test = await fixture(html`
+      <div>
+        <test-element-resolution-detached-el></test-element-resolution-detached-el>
+        <div id="one"></div>
+        <div id="two"></div>
+      </div>
+    `);
+    const el = test.querySelector(
+      'test-element-resolution-detached-el'
+    ) as DetachedTestEl;
+    const target1 = test.querySelector('#one') as HTMLDivElement;
+    const target2 = test.querySelector('#two') as HTMLDivElement;
+    const controller = new ElementResolutionController(el);
+    controller.selector = '#one';
+    await elementUpdated(el);
+    expect(controller.element).to.equal(target1);
+
+    test.remove();
+    expect(() => {
+      controller.selector = '#two';
+    }).to.not.throw();
+    expect(controller.element).to.be.null;
+
+    document.body.append(test);
+    await elementUpdated(el);
+    expect(controller.element).to.equal(target2);
+  });
 });
