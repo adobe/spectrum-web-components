@@ -58,6 +58,7 @@
     - Menu Group
     - Menu Item
     - Menu Item Checkbox
+    - Menu Item Link
     - Menu Item Radio
     - Menu Separator
     - Meter
