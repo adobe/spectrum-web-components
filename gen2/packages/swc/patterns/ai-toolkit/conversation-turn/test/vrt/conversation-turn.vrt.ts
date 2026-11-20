@@ -16,6 +16,8 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import '../../swc-conversation-turn.js';
 import '../../../system-message/swc-system-message.js';
 import '../../../user-message/swc-user-message.js';
+import '../../../upload-attachment/swc-upload-attachment.js';
+import '@adobe/spectrum-wc/components/thumbnail/swc-thumbnail.js';
 
 import type { ForcedPseudoState } from '../../../../../.storybook/helpers/index.js';
 import {
@@ -64,14 +66,11 @@ const userCopy = (text: string) => html`
 
 const userCard = () => html`
   <swc-user-message type="card">
-    <div
-      slot="thumbnail"
-      role="img"
-      aria-label="File"
-      style="inline-size: 32px; block-size: 32px; border-radius: 3px; background: var(--swc-gray-200);"
-    ></div>
-    <span slot="title">Brand guidelines</span>
-    <span slot="subtitle">PDF</span>
+    <swc-upload-attachment slot="thumbnail" type="card">
+      <swc-thumbnail slot="thumbnail" decorative></swc-thumbnail>
+      <span slot="title">Brand guidelines.pdf</span>
+      <span slot="subtitle">1.2 MB</span>
+    </swc-upload-attachment>
   </swc-user-message>
 `;
 
@@ -83,8 +82,6 @@ const userMedia = () => html`
       aria-label="Campaign still"
       style="background: linear-gradient(135deg, #a78bfa, #f472b6);"
     ></div>
-    <span slot="title">Campaign still</span>
-    <span slot="subtitle">2026</span>
   </swc-user-message>
 `;
 

@@ -334,7 +334,7 @@ export const States: Story = {
 };
 ```
 
-For a **form field**, the Disabled, Read-only, and Error states are values of `field-status`, not separate boolean attributes. Document them in the field's state sections, and cover the form participation points in [forms strategy RFC §3.9](../../../CONTRIBUTOR-DOCS/03_project-planning/05_strategies/forms-strategy-rfc.md#39-form-documentation-until-a-forms-page-exists), using `text-field.mdx` as the reference.
+For a **form field**, the Disabled, Read-only, and Error states are values of `field-status`, not separate boolean attributes. Document them in the field's state sections, and cover the form participation points in [forms strategy RFC §3.9](../../../CONTRIBUTOR-DOCS/03_project-planning/05_strategies/forms-strategy-rfc.md#39-form-documentation), using `text-field.mdx` as the reference.
 
 **Pattern for complex states** (when animation or interaction is critical — states no longer combine into one story, so each gets its own per-story `### Title`):
 
