@@ -11,7 +11,7 @@
  */
 
 import { html } from 'lit';
-import { expect, userEvent } from '@storybook/test';
+import { expect, userEvent, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getComponent, withWarningSpy } from '@swc-test-helpers/dom';
 
@@ -230,13 +230,16 @@ export const DelegatesFocusTest: Story = {
     await step(
       'routes programmatic focus to internal button via delegatesFocus',
       async () => {
-        closeButton.focus();
-        const activeElement = (closeButton.renderRoot as ShadowRoot)
-          .activeElement;
-        expect(
-          activeElement?.tagName.toLowerCase(),
-          'delegatesFocus routes focus to internal <button>'
-        ).toBe('button');
+        // Retry focus while sibling test frames compete for it in Firefox.
+        await waitFor(() => {
+          closeButton.focus();
+          const activeElement = (closeButton.renderRoot as ShadowRoot)
+            .activeElement;
+          expect(
+            activeElement?.tagName.toLowerCase(),
+            'delegatesFocus routes focus to internal <button>'
+          ).toBe('button');
+        });
       }
     );
   },
