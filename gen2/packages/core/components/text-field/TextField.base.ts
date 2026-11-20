@@ -74,6 +74,9 @@ export abstract class TextFieldBase extends SizedMixin(
    */
   declare public size: TextFieldSize;
 
+  /** @internal */
+  declare public readonly resolvedSize: TextFieldSize;
+
   /**
    * Current input value, normalized using the native input type's rules.
    */

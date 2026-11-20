@@ -114,6 +114,8 @@
     - [Menu group component accessibility specification](menu-group/component-accessibility-specification.md)
 - Menu Item
     - [Menu item component accessibility specification](menu-item/component-accessibility-specification.md)
+- Menu Item Checkbox
+    - [Menu item checkbox component accessibility specification](menu-item-checkbox/component-accessibility-specification.md)
 - Menu Item Link
     - [Menu item link component accessibility specification](menu-item-link/component-accessibility-specification.md)
 - Menu Item Radio

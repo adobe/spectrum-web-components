@@ -145,6 +145,36 @@ export const FixedClearingTest: Story = {
   },
 };
 
+export const InvalidSizeTest: Story = {
+  render: () => html`
+    <swc-badge size="M">Uppercase</swc-badge>
+    <swc-badge>Default</swc-badge>
+    <swc-badge size="m">Medium</swc-badge>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const [upper, reference, medium] = await getComponents<Badge>(
+      canvasElement,
+      'swc-badge'
+    );
+    const height = (badge: Badge): number =>
+      badge.shadowRoot!.querySelector('.swc-Badge')!.getBoundingClientRect()
+        .height;
+
+    await step(
+      'keeps an uppercase size and renders the default small size',
+      () => {
+        expect(upper.getAttribute('size'), 'attribute stays "M"').toBe('M');
+        expect(height(upper), 'renders like the default').toBe(
+          height(reference)
+        );
+        expect(height(medium), 'size="m" still renders medium').not.toBe(
+          height(reference)
+        );
+      }
+    );
+  },
+};
+
 // ──────────────────────────────────────────────────────────────
 // TEST: Slots
 // ──────────────────────────────────────────────────────────────

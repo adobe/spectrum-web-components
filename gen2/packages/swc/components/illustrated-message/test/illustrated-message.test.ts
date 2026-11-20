@@ -18,6 +18,7 @@ import {
   withWarningSpy,
 } from '@swc-test-helpers/dom';
 
+import type { Button } from '@adobe/spectrum-wc/button';
 import { IllustratedMessage } from '@adobe/spectrum-wc/illustrated-message';
 
 import '@adobe/spectrum-wc/components/button/swc-button.js';
@@ -383,6 +384,50 @@ export const ActionsSizeChangeTest: Story = {
           ).toBe(size);
         }
       }
+    );
+  },
+};
+
+export const ActionsInvalidSizeTest: Story = {
+  render: () => html`
+    <swc-illustrated-message>
+      <h2 slot="heading">Heading</h2>
+      <swc-button slot="actions" variant="accent">Browse files</swc-button>
+      <swc-button slot="actions" variant="secondary">Cancel</swc-button>
+    </swc-illustrated-message>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const illustratedMessage = await getComponent<IllustratedMessage>(
+      canvasElement,
+      'swc-illustrated-message'
+    );
+    const buttons = Array.from(
+      illustratedMessage.querySelectorAll<Button>('[slot="actions"]')
+    );
+
+    await step(
+      'gives slotted actions the default size for an invalid size and warns once',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          illustratedMessage.setAttribute('size', 'XL');
+          await illustratedMessage.updateComplete;
+          await Promise.all(buttons.map((button) => button.updateComplete));
+
+          expect(
+            illustratedMessage.getAttribute('size'),
+            'attribute is kept'
+          ).toBe('XL');
+          for (const button of buttons) {
+            expect(button.getAttribute('size'), 'action gets the default').toBe(
+              'm'
+            );
+          }
+          expect(
+            warnCalls.every((call) => call[0] === illustratedMessage),
+            'only the illustrated message warns'
+          ).toBe(true);
+          expect(String(warnCalls[0]?.[1] ?? '')).toMatch(/"size".*"XL"/);
+        })
     );
   },
 };
