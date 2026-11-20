@@ -41,6 +41,9 @@
   position: relative;
   gap: token("group-gap-medium");
   align-items: center;
+
+  /* Fills the host when the container gives it its final size before its message renders. */
+  block-size: 100%;
   min-block-size: token("toast-height");
   padding-block: token("banner-padding-vertical");
   padding-inline: token("banner-padding-horizontal") token("spacing-100");
@@ -86,6 +89,9 @@
   gap: token("group-gap-medium");
   align-items: flex-start;
   min-inline-size: 0;
+
+  /* One line high before the message renders into the live region, so nothing moves when it does. */
+  min-block-size: 1lh;
 
   /* Centers the first line against the close button regardless of wrapping. */
   margin-block: calc((token("component-height-100") - 1lh) / 2);
@@ -142,6 +148,12 @@
   position: absolute;
   inset-block-start: 0;
   inset-inline-start: 0;
+}
+
+/* A leaving Show all is inert, so `:hover` no longer applies; it keeps the hover look it had when it was activated. */
+.swc-Toast-showAll--hovered {
+  --swc-action-button-background-color-default: var(--swc-action-button-background-color-hover);
+  --swc-action-button-content-color-default: var(--swc-action-button-content-color-hover);
 }
 
 /* Keeps the chevron at UI icon size; the action button sizes its icon slot for workflow icons. */
@@ -205,6 +217,12 @@
  * Closed state is the exit target; `@starting-style` below is the enter origin.
  * Only `swc-toast-container` sets the exit offsets and duration: in a stack,
  * a closing toast slides out past the edge it is anchored to, as in RSP S2.
+ *
+ * The `--_swc-toast-exit-*`, `--_swc-toast-enter-*`, and
+ * `--_swc-toast-reduced-exit-duration` properties cross from the container into
+ * the toast, but stay private on purpose, not exposed with `@cssprop`: a toast
+ * is only supported inside `swc-toast-container` (Q15), and they carry its
+ * motion, not a styling option for consumers.
  */
 :host(:not([open])) .swc-Toast {
   opacity: 0;
@@ -241,9 +259,14 @@
 
 @media (prefers-reduced-motion: reduce) {
   :host,
-  .swc-Toast,
-  :host(:not([open])) .swc-Toast {
+  .swc-Toast {
     transition-duration: 0ms;
+  }
+
+  /* Nothing moves. `swc-toast-container` keeps an opacity-only exit with `--_swc-toast-reduced-exit-duration`. */
+  :host(:not([open])) .swc-Toast {
+    transform: none;
+    transition-duration: var(--_swc-toast-reduced-exit-duration, 0ms);
   }
 }
 

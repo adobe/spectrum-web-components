@@ -52,12 +52,19 @@ const SHOW_ALL_IN_DURATION = 600;
 const PERSPECTIVE = 80;
 const LAYER_DEPTH = 12;
 
+// The controls' zoom at the front toast's edge. A fixed design value, not derived from layout, so the
+// motion is the same for any message length; design can tune it. It sits between no zoom and the
+// zoom in RSP S2's demo, where view transitions stretch the controls to the stacked toast's width.
+const CONTROLS_ZOOM = 1.15;
+
 // A new toast slides in from this far past its own size, as in RSP S2 (`spacing-200`).
 const SLIDE_GAP = 12;
 
-// The Clear all and Collapse controls start (expanding) or end (collapsing) this much larger, past the stack.
-const CONTROLS_ZOOM = 1.2;
-const CONTROLS_GAP = 12;
+// Keyframes along a cropped zoom, so the box it shows moves one way.
+const ZOOM_STEPS = 8;
+
+// Room outside a zoomed toast's box for its drop shadow, which its crop would otherwise cut off.
+const SHADOW_ROOM = 24;
 
 // The front toast's parts that move on their own while its background changes size.
 const FRONT_PARTS = [
@@ -65,6 +72,10 @@ const FRONT_PARTS = [
   '.swc-Toast-action',
   '.swc-Toast-close',
 ];
+
+// The stack's perspective origin, past its far edge: at rest, and while hovered. Match the stylesheet.
+const PEEK_ORIGIN = 55;
+const PEEK_ORIGIN_HOVER = 95;
 
 // The inline styles that take a toast out of the layout; see `pinAt()`.
 const PIN_PROPERTIES = [
@@ -88,6 +99,8 @@ interface ListMove {
   fade?: [number, number];
   // Opacity of the toast's content, which a layer does not have.
   contentFade?: [number, number];
+  // The toast's drop shadow, as `filter` values: a layer's elevated shadow, or none in the list.
+  shadow?: [string, string];
 }
 
 // The front toast's background and parts, in viewport coordinates.
@@ -102,6 +115,12 @@ interface FrontChange {
   key: string;
   toast: DOMRect;
   region: DOMRect;
+}
+
+// Every listed toast's background and parts, and the controls, before the expanded list changes.
+interface ListBefore {
+  toasts: Map<Toast, FrontBoxes>;
+  controls?: DOMRect;
 }
 
 // A new front toast: sliding in, growing out of its layer, or joining the expanded list.
@@ -154,6 +173,7 @@ export class ToastContainer extends ToastContainerBase {
   private _reshow = false;
   // The stack keeps this width until the new front toast's message renders and it starts to move.
   private _heldInlineSize?: number;
+  private _heldBlockSize?: number;
   // Where the front toast and the layers were before expanding.
   private _expandFrom?: { front?: FrontBoxes; positions: Map<string, DOMRect> };
   // True while the expanded view animates out, before it closes.
@@ -168,11 +188,26 @@ export class ToastContainer extends ToastContainerBase {
   private _frontChange?: FrontChange;
   // Old front toasts that a new toast pushed back, shrinking into their layers as their content fades.
   private _ghosts = new Map<string, Toast>();
-  // A promoted toast's layer, kept until the toast grows out of it.
-  private _ghostLayer?: ToastQueueEntry;
-  // While expanded: toasts that started closing in this update, and where every toast was before.
+  // The layers shown last, and the ones held while a new front toast waits for its message, so
+  // the stack changes depth on the frame the rest of the motion starts.
+  private _renderedLayers: readonly ToastQueueEntry[] = [];
+  private _heldLayers?: readonly ToastQueueEntry[];
+  // The layers that fade out with the front toast when the queue is cleared.
+  private _fadingLayers?: readonly ToastQueueEntry[];
+  // True while `clear()` closes the rendered toasts: they fade out without sliding.
+  private _clearing = false;
+  // True while the emptied expanded view fades out before it closes.
+  private _emptying = false;
+  // While expanded: toasts that started closing in this update, and the list before it changed.
   private _leaving: Toast[] = [];
-  private _listOrigins?: Map<string, DOMRect>;
+  private _listBefore?: ListBefore;
+  // Where the pointer is over the expanded view, so a collapse knows whether it lands on a hovered stack.
+  private _pointer?: { x: number; y: number };
+  // Holds the hovered stack's peek after a collapse that lands under the pointer, until the pointer leaves.
+  private _peekHeld = false;
+  private _showAllIn?: Animation;
+  // The stacked toasts' elevated drop shadow, as a `filter` value, read from the stack before expanding.
+  private _elevatedFilter = 'none';
   // True for the first collapsed render after the expanded view closes: the layers are already
   // where the collapsing toasts left off, so they do not recede from the front again.
   private _settledLayers = false;
@@ -192,6 +227,12 @@ export class ToastContainer extends ToastContainerBase {
       this.dropGhost(key, ghost);
     }
     const front = this.currentToast;
+    if (front) {
+      this._elevatedFilter = getComputedStyle(front).filter;
+      front.showAllHovered = Boolean(
+        front.shadowRoot?.querySelector('.swc-Toast-showAll')?.matches(':hover')
+      );
+    }
     this._expandFrom = {
       front: front?.open ? this.measureFront(front) : undefined,
       positions: this.measurePositions(),
@@ -206,8 +247,11 @@ export class ToastContainer extends ToastContainerBase {
   protected override willChangeFront(): void {
     this._frontChange = undefined;
     const region = this.region;
+    // Measured before the closing toast is pinned: its pinned margins would collapse the stack's width.
+    const regionRect = region?.getBoundingClientRect();
     // Also when the last toast closes and no new front toast takes its place.
     const old = this._shownKey ? this._toasts.get(this._shownKey) : undefined;
+    const oldRect = old?.getBoundingClientRect();
     if (
       old &&
       this._shownKey &&
@@ -216,23 +260,26 @@ export class ToastContainer extends ToastContainerBase {
     ) {
       this.pinLeaving(old);
     }
-    if (
-      !this.frontEntry ||
-      this.expanded ||
-      !region?.matches(':popover-open')
-    ) {
+    if (this.expanded || !region?.matches(':popover-open') || !regionRect) {
       return;
     }
-    const regionRect = region.getBoundingClientRect();
+    if (!this.frontEntry) {
+      // Clear all fades the layers out with the front toast, which leaves the layout, so the stack
+      // keeps its size until they are gone.
+      if (this._shownKey && ToastQueue.isClearing(this._shownKey)) {
+        this._heldInlineSize = regionRect.width;
+        this._heldBlockSize = regionRect.height;
+      }
+      return;
+    }
     this._heldInlineSize = regionRect.width;
+    this._heldBlockSize = regionRect.height;
     this._reshow = this.isCovered(region);
+    // On every front change, closes included: the layers move from where they were. A toast that
+    // closed has already set `open` to false, so that is not checked here.
     this._frontChange =
-      old?.open && this._shownKey
-        ? {
-            key: this._shownKey,
-            toast: old.getBoundingClientRect(),
-            region: regionRect,
-          }
+      oldRect && this._shownKey
+        ? { key: this._shownKey, toast: oldRect, region: regionRect }
         : undefined;
   }
 
@@ -242,7 +289,7 @@ export class ToastContainer extends ToastContainerBase {
    * the same, so nothing moves again.
    */
   protected override collapse(focusRegion: boolean): void {
-    if (!this.expanded || this._collapsing) {
+    if (!this.expanded || this._collapsing || this._emptying) {
       return;
     }
     this._collapsing = true;
@@ -256,6 +303,7 @@ export class ToastContainer extends ToastContainerBase {
         animation.cancel();
       }
       this._collapseAnimations = [];
+      this.region?.style.removeProperty('inline-size');
       const front = this.currentToast;
       if (front) {
         this.unpin(front);
@@ -263,6 +311,23 @@ export class ToastContainer extends ToastContainerBase {
       }
       this._settledLayers = true;
       super.collapse(focusRegion);
+      void this.keepShowAllFading();
+    });
+  }
+
+  /**
+   * Fades the emptied expanded view out (the scrim, the controls, and the
+   * toasts' own exits) before it closes, as RSP S2 does for Clear all.
+   */
+  protected override closeEmptyView(): void {
+    if (this._emptying) {
+      return;
+    }
+    this._emptying = true;
+    void this.fadeOutView().finally(() => {
+      this._emptying = false;
+      this.requestUpdate();
+      this.finishEmptyView();
     });
   }
 
@@ -286,7 +351,6 @@ export class ToastContainer extends ToastContainerBase {
     const previous = this._shownKey;
     const pushedBack = previous ? this._toasts.get(previous) : undefined;
     if (
-      motion &&
       !this.expanded &&
       pushedBack?.open &&
       previous &&
@@ -314,27 +378,49 @@ export class ToastContainer extends ToastContainerBase {
             kind = 'list';
           } else if (this.hasLayer(entry.key)) {
             kind = 'promote';
-            if (motion) {
-              this._ghostLayer = entry;
-            }
+          }
+          if (kind !== 'list' && motion) {
+            this._heldLayers ??= this._renderedLayers;
           }
           this._arrival = { toast, kind };
         }
       }
       toasts.set(entry.key, toast);
     }
-    // Measured while the closing toast still holds its place in the list.
-    const leaving = this.expanded
-      ? [...this._toasts].filter(
-          ([key, toast]) =>
-            ToastQueue.isClosing(key) &&
-            toasts.has(key) &&
-            toast.style.position !== 'absolute'
-        )
-      : [];
-    if (leaving.length > 0) {
-      this._leaving = leaving.map(([, toast]) => toast);
-      this._listOrigins = this.measurePositions();
+    // While the queue empties, the toasts fade out where they are instead.
+    const leaving =
+      this.expanded && front
+        ? [...this._toasts].filter(
+            ([key, toast]) =>
+              ToastQueue.isClosing(key) &&
+              toasts.has(key) &&
+              toast.style.position !== 'absolute'
+          )
+        : [];
+    this._leaving = leaving.map(([, toast]) => toast);
+    // Measured while the list still has its old contents, so every change to it moves in one pass.
+    const listChanged =
+      leaving.length > 0 ||
+      toasts.size !== this._toasts.size ||
+      [...toasts.keys()].some((key) => !this._toasts.has(key));
+    if (
+      this.expanded &&
+      !changes.has('expanded') &&
+      !this._collapsing &&
+      !this._emptying &&
+      listChanged
+    ) {
+      this._listBefore = this.measureList();
+    }
+    this._clearing = [...this._toasts.keys()].some((key) =>
+      ToastQueue.isClearing(key)
+    );
+    if (this._clearing && !this.expanded) {
+      this._fadingLayers ??= this._renderedLayers;
+    } else if (!this._clearing && this._fadingLayers) {
+      this._fadingLayers = undefined;
+      this._heldInlineSize = undefined;
+      this._heldBlockSize = undefined;
     }
     this._toasts = toasts;
     for (const [key, toast] of toasts) {
@@ -344,6 +430,11 @@ export class ToastContainer extends ToastContainerBase {
         toast.announces = false;
         toast.requestUpdate();
       }
+      // A closing toast keeps its look: Clear all removes the layers, but the front toast's Show
+      // all fades out with it instead of disappearing and changing its height.
+      if (ToastQueue.isClosing(key) || ToastQueue.isClearing(key)) {
+        continue;
+      }
       const fading = toast === this._showAllFading;
       // While collapsing, the front toast already takes its stack shape.
       const stacked =
@@ -352,6 +443,9 @@ export class ToastContainer extends ToastContainerBase {
         this.layerEntries.length > 0;
       toast.showAllLabel = stacked || fading ? this.showAllLabel : undefined;
       toast.showAllLeaving = fading && !stacked;
+      if (!toast.showAllLeaving) {
+        toast.showAllHovered = false;
+      }
       // The list opens away from the anchored edge.
       toast.showAllDirection = this.placement.startsWith('top') ? 'down' : 'up';
     }
@@ -361,7 +455,7 @@ export class ToastContainer extends ToastContainerBase {
     const region = this.region;
     const frontKey = this.frontEntry?.key;
     // The expanded view is a modal dialog, which the base class shows.
-    if (region && !this.expanded) {
+    if (region && !this.expanded && this.isConnected) {
       // Re-showing moves the region to the end of the top layer, above anything opened since.
       // It sets `display: none` for a moment, which cuts any motion short, so it runs only when
       // something actually covers the region.
@@ -376,7 +470,16 @@ export class ToastContainer extends ToastContainerBase {
         region.showPopover();
       }
     }
-    this._shownKey = region && !this.expanded ? frontKey : undefined;
+    // A shown toast that is closing with nothing to replace it (Clear all marks it closing before
+    // this update) stays the shown one, so its close can still pin it in place.
+    const leavingKey =
+      this._shownKey &&
+      ToastQueue.isClosing(this._shownKey) &&
+      this._toasts.has(this._shownKey)
+        ? this._shownKey
+        : undefined;
+    this._shownKey =
+      region && !this.expanded ? (frontKey ?? leavingKey) : undefined;
     this._reshow = false;
     // The base class opens the toasts, so the surface must be shown first (a hidden popover is display: none).
     super.updated(changes);
@@ -395,29 +498,41 @@ export class ToastContainer extends ToastContainerBase {
     if (ghost && frontChange && !ghost.style.position) {
       this.pinAt(ghost, frontChange.toast, 0);
     }
+    for (const toast of this._leaving) {
+      this.leaveList(toast);
+    }
+    this._leaving = [];
+    const listBefore = this._listBefore;
+    this._listBefore = undefined;
     const arrival = this._arrival;
     this._arrival = undefined;
+    // Until a new toast in the list starts to move, the others stay where they were.
+    const holds =
+      listBefore && arrival?.kind === 'list'
+        ? this.animateList(listBefore, true)
+        : [];
+    if (listBefore && arrival?.kind !== 'list') {
+      this.animateList(listBefore);
+    }
     if (arrival) {
       // Hidden while its message is not yet rendered, so the empty toast is never painted.
       arrival.toast.style.opacity = '0';
-      void this.arrive(arrival, frontChange);
-    }
-    if (this._leaving.length > 0) {
-      this.closeInList(this._leaving, this._listOrigins);
-      this._leaving = [];
-      this._listOrigins = undefined;
+      void this.arrive(arrival, frontChange, listBefore, holds);
     }
     if (this._settledLayers && !this.expanded) {
       // Layers created from here on recede from the front as usual.
-      requestAnimationFrame(() => {
-        this._settledLayers = false;
-        this.requestUpdate();
-      });
+      void nextFrame()
+        .then(nextFrame)
+        .then(() => {
+          this._settledLayers = false;
+          this.requestUpdate();
+        });
     }
   }
 
   protected override render(): TemplateResult | typeof nothing {
-    if (this._toasts.size === 0) {
+    // An emptied expanded view stays until it has faded out.
+    if (this._toasts.size === 0 && !(this.expanded && this._emptying)) {
       return nothing;
     }
     return this.expanded ? this.renderExpanded() : this.renderCollapsed();
@@ -439,11 +554,12 @@ export class ToastContainer extends ToastContainerBase {
   }
 
   private renderCollapsed(): TemplateResult {
-    // A promoted toast's layer stays until the toast grows out of it.
-    const layers = [
-      ...(this._ghostLayer ? [this._ghostLayer] : []),
-      ...this.layerEntries,
-    ].slice(0, VISIBLE_LAYER_COUNT + 1);
+    const layers = (
+      this._fadingLayers ??
+      this._heldLayers ??
+      this.layerEntries
+    ).slice(0, VISIBLE_LAYER_COUNT + 1);
+    this._renderedLayers = layers;
     return html`
       <div
         class=${classMap({
@@ -451,6 +567,8 @@ export class ToastContainer extends ToastContainerBase {
           [`swc-ToastContainer--${this.placement}`]: true,
           ['swc-ToastContainer--stacked']: layers.length > 0,
           ['swc-ToastContainer--settled']: this._settledLayers,
+          ['swc-ToastContainer--clearing']: this._clearing,
+          ['swc-ToastContainer--peek']: this._peekHeld,
         })}
         role="region"
         popover="manual"
@@ -461,10 +579,14 @@ export class ToastContainer extends ToastContainerBase {
             this._heldInlineSize === undefined
               ? undefined
               : `${this._heldInlineSize}px`,
+          'min-block-size':
+            this._heldBlockSize === undefined
+              ? undefined
+              : `${this._heldBlockSize}px`,
         })}
         @click=${this.handleRegionClick}
         @pointerenter=${this.handlePointerEnter}
-        @pointerleave=${this.handlePointerLeave}
+        @pointerleave=${this.handleStackPointerLeave}
         @pointerdown=${this.handlePointerDown}
         @keydown=${this.handleKeyDown}
         @focusin=${this.handleFocusIn}
@@ -473,7 +595,6 @@ export class ToastContainer extends ToastContainerBase {
         @swc-after-close=${this.handleAfterClose}
         @swc-toast-action=${this.handleAction}
         @swc-toast-expand=${this.handleExpand}
-        @swc-after-open=${this.handleAfterOpen}
       >
         ${repeat(
           layers,
@@ -514,12 +635,15 @@ export class ToastContainer extends ToastContainerBase {
           ['swc-ToastContainer']: true,
           [`swc-ToastContainer--${this.placement}`]: true,
           ['swc-ToastContainer--expanded']: true,
-          ['swc-ToastContainer--collapsing']: this._collapsing,
+          ['swc-ToastContainer--collapsing']:
+            this._collapsing || this._emptying,
+          ['swc-ToastContainer--clearing']: this._clearing,
         })}
         aria-label=${this.getRegionLabel(ToastQueue.entries.length)}
         @cancel=${this.handleCancel}
         @close=${this.handleDialogClose}
         @pointerdown=${this.handleDialogPointerDown}
+        @pointermove=${this.handleViewPointerMove}
         @keydown=${this.handleKeyDown}
         @focusin=${this.handleFocusIn}
         @focusout=${this.handleFocusOut}
@@ -546,16 +670,25 @@ export class ToastContainer extends ToastContainerBase {
     `;
   }
 
-  private readonly handleAfterOpen = (event: Event): void => {
-    // A fallback in case the front toast's arrival never starts its motion.
-    if (event.target === this.currentToast) {
-      this.releaseHeldSize();
+  private readonly handleStackPointerLeave = (): void => {
+    if (this._peekHeld) {
+      this._peekHeld = false;
+      this.requestUpdate();
     }
+    this.handlePointerLeave();
+  };
+
+  private readonly handleViewPointerMove = (event: PointerEvent): void => {
+    this._pointer = { x: event.clientX, y: event.clientY };
   };
 
   private releaseHeldSize(): void {
-    if (this._heldInlineSize !== undefined) {
+    if (
+      this._heldInlineSize !== undefined ||
+      this._heldBlockSize !== undefined
+    ) {
       this._heldInlineSize = undefined;
+      this._heldBlockSize = undefined;
       this.requestUpdate();
     }
   }
@@ -615,19 +748,39 @@ export class ToastContainer extends ToastContainerBase {
     const origins = this.measurePositions();
     const frontFrom = front?.open ? this.measureFront(front) : undefined;
     const controlsFrom = this.controls?.getBoundingClientRect();
+    const motion = Boolean(front && frontFrom && !this.prefersReducedMotion());
+    // The view keeps its width while the front toast takes its stack shape and leaves the list, so
+    // nothing else reflows: the list would widen to the front toast with Show all, and with one
+    // toast, the view would narrow to the controls, and they would jump sideways.
+    const view = this.region;
+    if (motion && view) {
+      view.style.inlineSize = `${view.getBoundingClientRect().width}px`;
+    }
     this.stopShowAllFade();
     this.requestUpdate();
     await this.updateComplete;
     await front?.updateComplete;
     const animations: Animation[] = [];
-    if (front && frontFrom && !this.prefersReducedMotion()) {
+    if (front && frontFrom && motion) {
       const count = this._toasts.size;
       if (this.layerEntries.length > 0) {
         front.classList.add('swc-ToastContainer-front');
       }
       const stack = this.pinAt(front, this.stackRect(front), count + 2);
       animations.push(...this.morphFront(front, frontFrom));
-      this.fadeShowAllIn(front);
+      this._showAllIn = this.fadeShowAllIn(front);
+      // The stack peeks out further while hovered, so if it lands under the pointer, the layers
+      // land where the hovered stack shows them, and the stack holds that until the pointer leaves.
+      const pointer = this._pointer;
+      this._peekHeld = Boolean(
+        pointer &&
+        this.ownerDocument.defaultView?.matchMedia('(hover: hover)').matches &&
+        pointer.x >= stack.left &&
+        pointer.x <= stack.right &&
+        pointer.y >= stack.top &&
+        pointer.y <= stack.bottom
+      );
+      const peek = this._peekHeld ? PEEK_ORIGIN_HOVER : PEEK_ORIGIN;
       // A layer is as tall as the toast's minimum height, which the toast's surface carries.
       const layerHeight =
         parseFloat(
@@ -646,9 +799,11 @@ export class ToastContainer extends ToastContainerBase {
         moves.push({
           toast,
           from,
-          to: this.layerRect(stack, layerHeight, depth),
+          to: this.layerRect(stack, layerHeight, depth, peek),
           fade: [1, depth > VISIBLE_LAYER_COUNT ? 0 : 1],
           contentFade: [1, 0],
+          // The layers that replace them have the stack's shadow.
+          shadow: ['none', this._elevatedFilter],
         });
       }
       animations.push(...this.moveList(moves, 'forwards'));
@@ -662,16 +817,47 @@ export class ToastContainer extends ToastContainerBase {
     this._collapseAnimations = animations;
     // Lets the class change start the CSS transitions before collecting them.
     await nextFrame();
-    // Capped, so an animation that never finishes (paused, for example) cannot leave the view
-    // open with its controls ignoring the pointer.
-    await Promise.race([
-      Promise.all(
-        [...animations, ...(this.shadowRoot?.getAnimations() ?? [])].map(
-          (animation) => animation.finished.catch(() => undefined)
-        )
-      ),
-      new Promise((resolve) => setTimeout(resolve, MOVE_DURATION * 2)),
+    await this.untilSettled([
+      ...animations,
+      ...(this.shadowRoot?.getAnimations() ?? []),
     ]);
+  }
+
+  /**
+   * Resolves when every running animation in `animations` has finished. It
+   * waits on the animations, not on a timer, so motion that plays slower (on a
+   * slow device, or slowed down to inspect it) runs to the end. An animation
+   * that stops running without finishing (paused, or cancelled) no longer holds
+   * it up, so the view cannot stay open with its controls ignoring the
+   * pointer.
+   */
+  private untilSettled(animations: Animation[]): Promise<void> {
+    const running = animations.filter(
+      (animation) => animation.playState === 'running' || animation.pending
+    );
+    return new Promise((resolve) => {
+      let done = false;
+      const finish = (): void => {
+        if (!done) {
+          done = true;
+          resolve();
+        }
+      };
+      void Promise.all(
+        running.map((animation) => animation.finished.catch(() => undefined))
+      ).then(finish);
+      const check = (): void => {
+        if (done) {
+          return;
+        }
+        if (running.every((animation) => animation.playState !== 'running')) {
+          finish();
+          return;
+        }
+        requestAnimationFrame(check);
+      };
+      requestAnimationFrame(check);
+    });
   }
 
   /**
@@ -687,21 +873,91 @@ export class ToastContainer extends ToastContainerBase {
     front?: FrontBoxes;
     positions: Map<string, DOMRect>;
   }): Promise<void> {
-    // The listed toasts open, and the front toast's Show all leaves the layout, in their own updates.
-    for (let pass = 0; pass < 3; pass++) {
-      await Promise.all(
-        [...this._toasts.values()].map((toast) => toast.updateComplete)
-      );
-      if ([...this._toasts.values()].every((toast) => toast.open)) {
-        break;
-      }
-      await nextFrame();
-    }
-    if (!this.expanded) {
-      return;
-    }
     const front = this.currentToast;
     const count = this._toasts.size;
+    const view = this.region;
+    // Everything starts on one frame: the scrim and the controls wait to fade in, and the front
+    // toast holds its first frame, until the listed toasts can move too.
+    view?.classList.add('swc-ToastContainer--held');
+    const others = [...this._toasts.values()].filter(
+      (toast) => toast !== front
+    );
+    // The front toast's background holds its stack box, measured against the toast's layout as it
+    // is now. Its Show all leaves the layout in its own update, and the listed toasts opening can
+    // widen the list, so it is measured again after each; either can take a frame.
+    let background: Animation[] = [];
+    const holdBackground = (): void => {
+      for (const animation of background) {
+        animation.cancel();
+      }
+      background =
+        front && frontFrom && this.expanded
+          ? this.morphFront(front, {
+              surface: frontFrom.surface,
+              parts: new Map(),
+            })
+          : [];
+      for (const animation of background) {
+        animation.pause();
+      }
+    };
+    holdBackground();
+    await front?.updateComplete;
+    holdBackground();
+    const held: Animation[] = [];
+    if (front && frontFrom && this.expanded) {
+      // Only the background and the shadow are held here. The parts and Show all are measured
+      // right before everything plays: until every toast has settled, the toast's inner layout can
+      // still change, and a part's offset measured now would put it in the wrong place.
+      held.push(
+        front.animate(
+          [
+            { zIndex: count + 2, filter: this._elevatedFilter },
+            { zIndex: count + 2, filter: 'none' },
+          ],
+          { duration: MOVE_DURATION, easing: MOVE_EASING }
+        )
+      );
+      for (const animation of held) {
+        animation.pause();
+      }
+    }
+    // The listed toasts open in their own updates, normally within this task. A toast that is not
+    // open is not painted, so nothing shows at rest meanwhile.
+    for (
+      let attempt = 0;
+      attempt < 20 && !others.every((toast) => toast.open);
+      attempt++
+    ) {
+      await Promise.all(others.map((toast) => toast.updateComplete));
+    }
+    // Rarely, they need a frame. They stay transparent for it. As in `whenOpen()`, this counts
+    // frames, not time.
+    if (!others.every((toast) => toast.open)) {
+      for (const toast of others) {
+        toast.style.opacity = '0';
+      }
+      for (
+        let frame = 0;
+        frame < 3 && !others.every((toast) => toast.open);
+        frame++
+      ) {
+        await nextFrame();
+        await Promise.all(others.map((toast) => toast.updateComplete));
+      }
+      for (const toast of others) {
+        toast.style.removeProperty('opacity');
+      }
+    }
+    holdBackground();
+    held.push(...background);
+    view?.classList.remove('swc-ToastContainer--held');
+    if (!this.expanded) {
+      for (const animation of held) {
+        animation.cancel();
+      }
+      return;
+    }
     const known = [...positions.values()];
     const deepest = known[known.length - 1];
     const moves: ListMove[] = [];
@@ -711,27 +967,78 @@ export class ToastContainer extends ToastContainerBase {
         continue;
       }
       const from = positions.get(key);
+      // They start as layers, with the stack's shadow, which fades out in the list.
+      const shadow: [string, string] = [this._elevatedFilter, 'none'];
       moves.push(
         from
-          ? { toast, from, to, contentFade: [0, 1] }
-          : { toast, from: deepest ?? to, to, fade: [0, 1] }
+          ? { toast, from, to, contentFade: [0, 1], shadow }
+          : { toast, from: deepest ?? to, to, fade: [0, 1], shadow }
       );
     }
     this.moveList(moves, 'none');
     if (front && frontFrom) {
-      this.morphFront(front, frontFrom);
-      front.animate([{ zIndex: count + 2 }, { zIndex: count + 2 }], {
-        duration: MOVE_DURATION,
-      });
-      if (frontFrom.showAll) {
-        this.fadeShowAllOut(front, frontFrom.showAll);
-      } else {
+      await front.updateComplete;
+      this.morphParts(front, frontFrom);
+      const fade = frontFrom.showAll
+        ? this.fadeShowAllOut(front, frontFrom.showAll)
+        : undefined;
+      if (!fade) {
         this.stopShowAllFade();
       }
+      // Measured now, with the listed toasts in place: until then, the controls' place can change.
       const controls = this.controls;
       if (controls) {
         this.moveControls(controls, frontFrom.surface, 'in', count + 1);
       }
+    }
+    for (const animation of held) {
+      animation.play();
+    }
+  }
+
+  /**
+   * Fades out the emptied expanded view: the scrim and the controls fade with
+   * the collapsing class, while the closing toasts run their own exits.
+   * Resolves when they end.
+   */
+  private async fadeOutView(): Promise<void> {
+    this.requestUpdate();
+    await this.updateComplete;
+    // Lets the class change start the CSS transitions before collecting them.
+    await nextFrame();
+    const exits = [...this._toasts.values()].flatMap(
+      (toast) =>
+        toast.shadowRoot?.querySelector('.swc-Toast')?.getAnimations() ?? []
+    );
+    await this.untilSettled([
+      ...exits,
+      ...(this.shadowRoot?.getAnimations() ?? []),
+    ]);
+  }
+
+  /**
+   * Show all's fade-in (600ms) outlasts the collapse (400ms), and moving the
+   * toast into the stack can cancel it, so it continues from where it was.
+   */
+  private async keepShowAllFading(): Promise<void> {
+    const fade = this._showAllIn;
+    this._showAllIn = undefined;
+    const elapsed = Number(fade?.currentTime ?? SHOW_ALL_IN_DURATION);
+    await this.updateComplete;
+    const front = this.currentToast;
+    await front?.updateComplete;
+    if (
+      !front ||
+      !fade ||
+      fade.playState === 'running' ||
+      fade.playState === 'finished' ||
+      elapsed >= SHOW_ALL_IN_DURATION
+    ) {
+      return;
+    }
+    const restarted = this.fadeShowAllIn(front);
+    if (restarted) {
+      restarted.currentTime = elapsed;
     }
   }
 
@@ -759,7 +1066,11 @@ export class ToastContainer extends ToastContainerBase {
    * its background changes size, and the message, the action, and the close
    * button each move on their own, so the text never rewraps.
    */
-  private morphFront(toast: Toast, from: FrontBoxes): Animation[] {
+  private morphFront(
+    toast: Toast,
+    from: FrontBoxes,
+    { clip = false }: { clip?: boolean } = {}
+  ): Animation[] {
     const root = toast.shadowRoot;
     const surface = root?.querySelector<HTMLElement>('.swc-Toast');
     const to = surface?.getBoundingClientRect();
@@ -768,27 +1079,66 @@ export class ToastContainer extends ToastContainerBase {
     }
     const options = { duration: MOVE_DURATION, easing: MOVE_EASING };
     const start = from.surface;
-    const animations = [
-      surface.animate(
-        [
-          {
-            top: `${start.top - to.top}px`,
-            right: `${to.right - start.right}px`,
-            bottom: `${to.bottom - start.bottom}px`,
-            left: `${start.left - to.left}px`,
-          },
-          { top: '0px', right: '0px', bottom: '0px', left: '0px' },
-        ],
-        { ...options, pseudoElement: '::before' }
-      ),
+    const inset = [
+      start.top - to.top,
+      to.right - start.right,
+      to.bottom - start.bottom,
+      start.left - to.left,
     ];
+    const animations: Animation[] = [];
+    // A background that stays as it is does not animate; only the parts can move.
+    if (inset.some((value) => Math.abs(value) >= 0.5)) {
+      animations.push(
+        surface.animate(
+          [
+            {
+              top: `${inset[0]}px`,
+              right: `${inset[1]}px`,
+              bottom: `${inset[2]}px`,
+              left: `${inset[3]}px`,
+            },
+            { top: '0px', right: '0px', bottom: '0px', left: '0px' },
+          ],
+          { ...options, pseudoElement: '::before' }
+        )
+      );
+    }
+    // With `clip`, the content stays inside the background while it grows, as RSP S2's scaled image does.
+    if (clip && animations.length > 0) {
+      const radius = this.cornerRadius(toast);
+      animations.push(
+        surface.animate(
+          [
+            {
+              clipPath: `inset(${inset.map((value) => `${value}px`).join(' ')} round ${radius}px)`,
+            },
+            { clipPath: `inset(0px round ${radius}px)` },
+          ],
+          options
+        )
+      );
+    }
+    animations.push(...this.morphParts(toast, from));
+    return animations;
+  }
+
+  /** Moves each of the front toast's parts from its box in `from` to where it is now. */
+  private morphParts(toast: Toast, from: FrontBoxes): Animation[] {
+    const root = toast.shadowRoot;
+    if (!root) {
+      return [];
+    }
+    const options = { duration: MOVE_DURATION, easing: MOVE_EASING };
+    const rtl = getComputedStyle(this).direction === 'rtl';
+    const animations: Animation[] = [];
     for (const [selector, rect] of from.parts) {
       const part = root.querySelector<HTMLElement>(selector);
       const now = part?.getBoundingClientRect();
       if (!part || !now || now.width === 0) {
         continue;
       }
-      const dx = rect.left - now.left;
+      // By the inline-start edge, where a part's content starts; its box can be wider in one layout.
+      const dx = rtl ? rect.right - now.right : rect.left - now.left;
       const dy = rect.top - now.top;
       if (Math.abs(dx) < 0.5 && Math.abs(dy) < 0.5) {
         continue;
@@ -823,14 +1173,13 @@ export class ToastContainer extends ToastContainerBase {
   }
 
   /** Keeps Show all where it was, out of the layout, while it fades out; then drops it. */
-  private fadeShowAllOut(toast: Toast, from: DOMRect): void {
+  private fadeShowAllOut(toast: Toast, from: DOMRect): Animation | undefined {
     const showAll = toast.shadowRoot?.querySelector<HTMLElement>(
       '.swc-Toast-footer--leaving .swc-Toast-showAll'
     );
     const now = showAll?.getBoundingClientRect();
     if (!showAll || !now) {
-      this.stopShowAllFade();
-      return;
+      return undefined;
     }
     const transform = `translate(${from.left - now.left}px, ${from.top - now.top}px)`;
     const fade = showAll.animate(
@@ -848,10 +1197,11 @@ export class ToastContainer extends ToastContainerBase {
         }
       })
       .catch(() => undefined);
+    return fade;
   }
 
-  private fadeShowAllIn(toast: Toast): void {
-    toast.shadowRoot
+  private fadeShowAllIn(toast: Toast): Animation | undefined {
+    return toast.shadowRoot
       ?.querySelector('.swc-Toast-showAll')
       ?.animate([{ opacity: 0 }, { opacity: 1 }], {
         duration: SHOW_ALL_IN_DURATION,
@@ -880,15 +1230,13 @@ export class ToastContainer extends ToastContainerBase {
       '.swc-ToastContainer-list'
     );
     const animations: Animation[] = [];
-    moves.forEach(({ toast, from, to, fade, contentFade }, index) => {
-      const animation = this.zoomBetween(
-        toast,
-        from,
-        to,
-        moves.length - index,
+    moves.forEach(({ toast, from, to, fade, contentFade, shadow }, index) => {
+      const animation = this.zoomBetween(toast, from, to, {
+        zIndex: moves.length - index,
         fill,
-        fade
-      );
+        fade,
+        shadow,
+      });
       if (animation) {
         animations.push(animation);
       }
@@ -908,43 +1256,101 @@ export class ToastContainer extends ToastContainerBase {
     return animations;
   }
 
-  /** Moves a toast from one box to another, zoomed to each box's width and cropped to its height. */
+  /**
+   * Moves a toast from one box to another, zoomed to each box's width and,
+   * with `crop`, cropped to its height. The crop keeps the edge a layer peeks
+   * out from (the far edge from the anchor) and cuts the side the front toast
+   * covers. `shadow` animates the toast's drop shadow between two `filter`
+   * values; the clip leaves room for it on every side but the cut one.
+   */
   private zoomBetween(
     toast: Toast,
     from: DOMRect,
     to: DOMRect,
-    zIndex: number,
-    fill: FillMode,
-    fade?: [number, number]
+    {
+      zIndex,
+      fill,
+      fade,
+      crop = true,
+      shadow,
+    }: {
+      zIndex: number;
+      fill: FillMode;
+      fade?: [number, number];
+      crop?: boolean;
+      shadow?: [string, string];
+    }
   ): Animation | undefined {
     const layout = toast.getBoundingClientRect();
     if (layout.width === 0) {
       return undefined;
     }
     const rtl = getComputedStyle(this).direction === 'rtl';
+    // Layers peek out past the far edge: the top edge for a stack at the bottom, and the reverse.
+    const keepBottom = this.placement.startsWith('top');
     const radius = this.cornerRadius(toast);
-    const frame = (rect: DOMRect, opacity?: number): Keyframe => {
+    const room = -SHADOW_ROOM;
+    const lerp = (a: number, b: number, progress: number): number =>
+      a + (b - a) * progress;
+    const cutAt = (rect: DOMRect): number =>
+      Math.max(0, layout.height - rect.height / (rect.width / layout.width));
+    // A cropped side starts and ends at its cut, even a cut of 0, so the crop moves one way.
+    const cropping = crop && (cutAt(from) > 0 || cutAt(to) > 0);
+    // Zoom and crop each interpolate linearly, so the box they show would not: its cropped edge
+    // could move back. Keyframes along the way put that box where it belongs at each step.
+    const frame = (progress: number): Keyframe => {
+      const rect = new DOMRect(
+        lerp(from.left, to.left, progress),
+        lerp(from.top, to.top, progress),
+        lerp(from.width, to.width, progress),
+        lerp(from.height, to.height, progress)
+      );
       const scale = rect.width / layout.width;
-      const crop = Math.max(0, layout.height - rect.height / scale);
+      const cut = cropping ? cutAt(rect) : room;
       const x = rtl ? rect.right - layout.right : rect.left - layout.left;
-      return {
-        transform: `translate(${x}px, ${rect.top - layout.top}px) scale(${scale})`,
-        transformOrigin: rtl ? 'top right' : 'top left',
-        clipPath: `inset(0 0 ${crop}px 0 round ${radius}px)`,
+      const y = keepBottom
+        ? rect.bottom - layout.bottom
+        : rect.top - layout.top;
+      const inset = keepBottom
+        ? `${cut}px ${room}px ${room}px ${room}px`
+        : `${room}px ${room}px ${cut}px ${room}px`;
+      const keyframe: Keyframe = {
+        transform: `translate(${x}px, ${y}px) scale(${scale})`,
+        transformOrigin: `${keepBottom ? 'bottom' : 'top'} ${rtl ? 'right' : 'left'}`,
+        clipPath: `inset(${inset} round ${radius}px)`,
         zIndex: String(zIndex),
-        ...(opacity === undefined ? {} : { opacity }),
+        offset: progress,
       };
+      // Fades and shadows run across the whole motion, from the first keyframe to the last.
+      if (progress === 0 || progress === 1) {
+        if (fade) {
+          keyframe.opacity = fade[progress];
+        }
+        if (shadow) {
+          keyframe.filter = shadow[progress];
+        }
+      }
+      return keyframe;
     };
-    return toast.animate([frame(from, fade?.[0]), frame(to, fade?.[1])], {
-      duration: MOVE_DURATION,
-      easing: MOVE_EASING,
-      fill,
-    });
+    const steps = cropping ? ZOOM_STEPS : 1;
+    return toast.animate(
+      Array.from({ length: steps + 1 }, (_, step) => frame(step / steps)),
+      {
+        duration: MOVE_DURATION,
+        easing: MOVE_EASING,
+        fill,
+      }
+    );
   }
 
   /**
-   * Zooms the Clear all and Collapse controls in from just past the stack, or
-   * back toward it. They paint above the toasts behind the front one.
+   * Moves the Clear all and Collapse controls between their place in the view
+   * and a box flush against the front toast's far edge, aligned to its end
+   * edge, so they grow out of the front toast and shrink back into it, their
+   * end edge moving straight between the two. There they are zoomed by
+   * `CONTROLS_ZOOM`. They
+   * fade in CSS, and paint above the toasts behind the front one. `from` is
+   * where they were before the front toast left the list.
    */
   private moveControls(
     controls: HTMLElement,
@@ -953,26 +1359,25 @@ export class ToastContainer extends ToastContainerBase {
     zIndex: number,
     from?: DOMRect
   ): Animation {
-    const now = controls.getBoundingClientRect();
+    const layout = controls.getBoundingClientRect();
+    const rest = from ?? layout;
     const anchoredTop = this.placement.startsWith('top');
     const rtl = getComputedStyle(this).direction === 'rtl';
-    const x = rtl ? stack.left - now.left : stack.right - now.right;
-    const top = anchoredTop
-      ? stack.bottom + CONTROLS_GAP
-      : stack.top - CONTROLS_GAP - now.height;
-    const zoomed: Keyframe = {
-      transform: `translate(${x}px, ${top - now.top}px) scale(${CONTROLS_ZOOM})`,
+    const width = rest.width * CONTROLS_ZOOM;
+    const height = rest.height * CONTROLS_ZOOM;
+    const left = rtl ? stack.left : stack.right - width;
+    const top = anchoredTop ? stack.bottom : stack.top - height;
+    const beyond = new DOMRect(left, top, width, height);
+    // Draws the controls over `rect`, zoomed from their layout box's top corner on the end side.
+    const frame = (rect: DOMRect): Keyframe => ({
+      transform: `translate(${rtl ? rect.left - layout.left : rect.right - layout.right}px, ${rect.top - layout.top}px) scale(${rect.width / layout.width})`,
+      transformOrigin: rtl ? 'top left' : 'top right',
       zIndex: String(zIndex),
-    };
-    // Where the controls were before the front toast left the list, which moves them.
-    const inPlace: Keyframe = {
-      transform: from
-        ? `translate(${from.left - now.left}px, ${from.top - now.top}px)`
-        : 'none',
-      zIndex: String(zIndex),
-    };
+    });
     return controls.animate(
-      direction === 'in' ? [zoomed, inPlace] : [inPlace, zoomed],
+      direction === 'in'
+        ? [frame(beyond), frame(rest)]
+        : [frame(rest), frame(beyond)],
       {
         duration: MOVE_DURATION,
         easing: MOVE_EASING,
@@ -1016,13 +1421,16 @@ export class ToastContainer extends ToastContainerBase {
    * `height` tall at its edge away from the anchor, pushed back along Z, as
    * projected from the stack's perspective origin.
    */
-  private layerRect(front: DOMRect, height: number, depth: number): DOMRect {
-    const peek =
-      parseFloat(
-        getComputedStyle(this.region ?? this).getPropertyValue(
-          '--_swc-toast-container-peek-origin'
-        )
-      ) || 0;
+  private layerRect(
+    front: DOMRect,
+    height: number,
+    depth: number,
+    peek = parseFloat(
+      getComputedStyle(this.region ?? this).getPropertyValue(
+        '--_swc-toast-container-peek-origin'
+      )
+    ) || PEEK_ORIGIN
+  ): DOMRect {
     const scale = PERSPECTIVE / (PERSPECTIVE + LAYER_DEPTH * depth);
     const originX = front.left + front.width / 2;
     const anchoredTop = this.placement.startsWith('top');
@@ -1037,43 +1445,78 @@ export class ToastContainer extends ToastContainerBase {
   }
 
   /**
-   * Starts a new front toast's motion once its message renders, so it moves
-   * at its final size. Until then it stays transparent, and the stack keeps
-   * its width. A new toast slides in while the toast it pushed back shrinks
-   * into its layer; a promoted toast grows out of its layer.
+   * Starts a new front toast's motion as soon as it opens, on the same frame
+   * as the close or the add that brought it: a new toast slides in while the
+   * toast it pushed back shrinks into its layer; a promoted toast grows out of
+   * its layer; in the expanded list, a new toast slides in while the others
+   * move. The layers move from where they were. The toast's message renders
+   * into the live region two frames later, so the toast takes its final size
+   * up front (see `holdFinalSize()`). With reduced motion, the new toast fades
+   * in and the old one fades out in place.
    */
   private async arrive(
     { toast, kind }: Arrival,
-    frontChange?: FrontChange
+    frontChange?: FrontChange,
+    listBefore?: ListBefore,
+    holds: Animation[] = []
   ): Promise<void> {
-    const revealed = await this.whenRevealed(toast);
-    const motion =
-      revealed &&
-      !this.prefersReducedMotion() &&
+    const opened = await this.whenOpen(toast);
+    const current =
+      opened &&
       toast === this.currentToast &&
       (kind === 'list') === this.expanded;
-    const ghostLayer = this.measureGhostLayer();
-    this._ghostLayer = undefined;
+    const reduced = this.prefersReducedMotion();
+    const key = [...this._toasts].find(
+      ([, candidate]) => candidate === toast
+    )?.[0];
+    const layer = key ? this.measureLayer(key) : undefined;
+    const unpin = current
+      ? await this.holdFinalSize(toast, kind === 'list')
+      : undefined;
+    this._heldLayers = undefined;
     this.releaseHeldSize();
     this.requestUpdate();
     await this.updateComplete;
+    for (const hold of holds) {
+      hold.cancel();
+    }
     toast.style.removeProperty('opacity');
+    if (unpin) {
+      void this.whenRevealed(toast).then(unpin);
+    }
     const ghost = frontChange ? this._ghosts.get(frontChange.key) : undefined;
-    if (!motion) {
+    const options = { duration: MOVE_DURATION, easing: MOVE_EASING };
+    if (!current) {
       if (ghost && frontChange) {
         this.dropGhost(frontChange.key, ghost);
       }
       return;
     }
-    if (kind === 'list') {
-      toast.animate([{ opacity: 0 }, { opacity: 1 }], {
-        duration: MOVE_DURATION,
-        easing: MOVE_EASING,
-      });
+    if (reduced) {
+      toast.animate([{ opacity: 0 }, { opacity: 1 }], options);
+      if (ghost && frontChange) {
+        const fade = ghost.animate([{ opacity: 1 }, { opacity: 0 }], {
+          ...options,
+          fill: 'forwards',
+        });
+        const drop = (): void => this.dropGhost(frontChange.key, ghost);
+        void fade.finished.then(drop, drop);
+      }
       return;
     }
-    if (kind === 'promote' && ghostLayer) {
-      this.morphFront(toast, { surface: ghostLayer, parts: new Map() });
+    if (kind === 'list') {
+      this.slideIn(toast);
+      if (listBefore) {
+        this.animateList(listBefore);
+      }
+      return;
+    }
+    if (kind === 'promote' && layer) {
+      this.morphFront(
+        toast,
+        { surface: layer, parts: new Map() },
+        { clip: true }
+      );
       this.fadeContent(toast, [0, 1]);
     } else {
       this.slideIn(toast);
@@ -1083,12 +1526,92 @@ export class ToastContainer extends ToastContainerBase {
     }
   }
 
+  /**
+   * Gives a toast whose message is not yet rendered its final size, measured
+   * from a hidden, inert copy that renders its message at once and never
+   * announces. Returns a function that lets the toast size itself again, for
+   * once its message has rendered at the same size.
+   */
+  private async holdFinalSize(
+    toast: Toast,
+    heightOnly: boolean
+  ): Promise<(() => void) | undefined> {
+    const key = [...this._toasts].find(
+      ([, candidate]) => candidate === toast
+    )?.[0];
+    const entry = ToastQueue.entries.find((candidate) => candidate.key === key);
+    const parent = this.region;
+    if (
+      !entry ||
+      !parent ||
+      !toast.announces ||
+      toast.shadowRoot?.querySelector('.swc-Toast-text')
+    ) {
+      return undefined;
+    }
+    const copy = this.createToast(entry, false);
+    copy.showAllLabel = toast.showAllLabel;
+    copy.showAllDirection = toast.showAllDirection;
+    copy.inert = true;
+    copy.setAttribute('aria-hidden', 'true');
+    Object.assign(copy.style, {
+      position: 'fixed',
+      top: '0',
+      left: '0',
+      visibility: 'hidden',
+      pointerEvents: 'none',
+      inlineSize: heightOnly
+        ? `${toast.getBoundingClientRect().width}px`
+        : 'max-content',
+    });
+    // In the stack, so it reads the same custom properties as the toast.
+    parent.append(copy);
+    copy.open = true;
+    await copy.updateComplete;
+    await copy.updateComplete;
+    const { width, height } = copy.getBoundingClientRect();
+    copy.remove();
+    if (width === 0 || height === 0) {
+      return undefined;
+    }
+    const inline = heightOnly ? undefined : `${width}px`;
+    const block = `${height}px`;
+    if (inline) {
+      toast.style.inlineSize = inline;
+    }
+    toast.style.blockSize = block;
+    // A toast that closed meanwhile keeps its size; `pinLeaving()` may have set it since.
+    return () => {
+      if (!toast.open) {
+        return;
+      }
+      if (inline) {
+        toast.style.removeProperty('inline-size');
+      }
+      toast.style.removeProperty('block-size');
+    };
+  }
+
+  /** Waits for the toast to open, and for the update that follows. */
+  private async whenOpen(toast: Toast): Promise<boolean> {
+    // The base class opens the toast a few microtasks after this update, or later if it waits on
+    // the toast's own update. A few frames is plenty; past that, the motion is skipped. These waits
+    // count frames, not time, so a slow device or slowed-down motion gets the same frames: they only
+    // bound a wait for an update that normally lands within a frame or two, and cut nothing short.
+    for (let attempt = 0; attempt < 6 && !toast.open; attempt++) {
+      await toast.updateComplete;
+      if (!toast.open) {
+        await nextFrame();
+      }
+    }
+    // Its update after opening hides the message until it renders into the live region.
+    await toast.updateComplete;
+    return toast.open && toast.isConnected;
+  }
+
   /** Waits for the toast to open and, for a toast that announces, for its message to render. */
   private async whenRevealed(toast: Toast): Promise<boolean> {
-    // The base class opens the toast a few microtasks after this update.
-    for (let attempt = 0; attempt < 10 && !toast.open; attempt++) {
-      await toast.updateComplete;
-    }
+    await this.whenOpen(toast);
     // The message renders two frames after the toast opens.
     for (
       let frame = 0;
@@ -1104,24 +1627,21 @@ export class ToastContainer extends ToastContainerBase {
     return toast.open && toast.isConnected;
   }
 
-  private measureGhostLayer(): DOMRect | undefined {
-    const key = this._ghostLayer?.key;
-    return key
-      ? [
-          ...this.renderRoot.querySelectorAll<HTMLElement>(
-            '.swc-ToastContainer-layer'
-          ),
-        ]
-          .find((layer) => layer.dataset.key === key)
-          ?.getBoundingClientRect()
-      : undefined;
+  private measureLayer(key: string): DOMRect | undefined {
+    return [
+      ...this.renderRoot.querySelectorAll<HTMLElement>(
+        '.swc-ToastContainer-layer'
+      ),
+    ]
+      .find((layer) => layer.dataset.key === key)
+      ?.getBoundingClientRect();
   }
 
   /**
    * Moves the layers from where they were before a new toast took the front,
    * measured from the anchored edge. The old front toast shrinks from its box
-   * into its new layer while its content fades, and covers that layer until
-   * it gets there; then the layer takes over.
+   * to its new layer's width, without cropping, and cross-fades with that
+   * layer, as RSP S2's snapshots do.
    */
   private recede(
     { key, region: before }: FrontChange,
@@ -1152,16 +1672,40 @@ export class ToastContainer extends ToastContainerBase {
     )) {
       depth += 1;
       if (layer.dataset.key === key && ghost) {
-        layer.animate([{ opacity: 0 }, { opacity: 0 }], options);
-        const layerHeight = layer.offsetHeight;
-        const animation = this.zoomBetween(
-          ghost,
-          ghost.getBoundingClientRect(),
-          this.layerRect(now, layerHeight, depth),
-          0,
-          'forwards'
-        );
-        this.fadeContent(ghost, [1, 0], 'forwards');
+        const from = ghost.getBoundingClientRect();
+        const to = this.layerRect(now, layer.offsetHeight, depth);
+        // A new layer starts in the front plane of the new region (its starting style), not where the
+        // old front toast was. It follows the ghost from that toast's box into its place, and fades in
+        // to its own opacity, so the two cross-fade as one toast.
+        const start = layer.getBoundingClientRect();
+        const map = (rect: DOMRect): string =>
+          `translate(${rect.left - start.left}px, ${rect.top - start.top}px) scale(${rect.width / start.width}, ${rect.height / start.height})`;
+        if (start.width > 0 && start.height > 0) {
+          layer.animate(
+            [
+              {
+                opacity: 0,
+                translate: '0 0 0',
+                transform: map(from),
+                transformOrigin: 'top left',
+              },
+              {
+                translate: '0 0 0',
+                transform: map(to),
+                transformOrigin: 'top left',
+              },
+            ],
+            options
+          );
+        } else {
+          layer.animate([{ opacity: 0, offset: 0 }], options);
+        }
+        const animation = this.zoomBetween(ghost, from, to, {
+          zIndex: 0,
+          fill: 'forwards',
+          fade: [1, 0],
+          crop: false,
+        });
         if (animation) {
           void animation.finished
             .then(() => this.dropGhost(key, ghost))
@@ -1285,37 +1829,84 @@ export class ToastContainer extends ToastContainerBase {
     }
   }
 
+  /** Every listed toast's background and parts, and the controls, as they are now. */
+  private measureList(): ListBefore {
+    const toasts = new Map<Toast, FrontBoxes>();
+    for (const toast of this._toasts.values()) {
+      if (toast.open && toast.style.position !== 'absolute') {
+        toasts.set(toast, this.measureFront(toast));
+      }
+    }
+    return { toasts, controls: this.controls?.getBoundingClientRect() };
+  }
+
+  /**
+   * Moves every listed toast and the controls from where they were before the
+   * list changed, in one pass: each toast's background changes size (the list
+   * stretches its toasts to the widest one) while its parts move. With
+   * `hold`, the animations stay paused at their first frame.
+   */
+  private animateList(before: ListBefore, hold = false): Animation[] {
+    if (this.prefersReducedMotion()) {
+      return [];
+    }
+    const animations: Animation[] = [];
+    for (const [toast, from] of before.toasts) {
+      if (
+        !toast.isConnected ||
+        !toast.open ||
+        toast.style.position === 'absolute'
+      ) {
+        continue;
+      }
+      animations.push(...this.morphFront(toast, from));
+    }
+    const controls = this.controls;
+    const was = before.controls;
+    const now = controls?.getBoundingClientRect();
+    if (controls && was && now) {
+      const dx = was.left - now.left;
+      const dy = was.top - now.top;
+      if (Math.abs(dx) >= 0.5 || Math.abs(dy) >= 0.5) {
+        animations.push(
+          controls.animate(
+            [
+              { transform: `translate(${dx}px, ${dy}px)` },
+              { transform: 'none' },
+            ],
+            { duration: MOVE_DURATION, easing: MOVE_EASING }
+          )
+        );
+      }
+    }
+    const list = this.region?.querySelector<HTMLElement>(
+      '.swc-ToastContainer-list'
+    );
+    if (list && animations.length > 0) {
+      // A toast's background can start wider than the list it now sits in.
+      animations.push(
+        list.animate([{ overflow: 'visible' }, { overflow: 'visible' }], {
+          duration: MOVE_DURATION,
+        })
+      );
+    }
+    if (hold) {
+      for (const animation of animations) {
+        animation.pause();
+      }
+    }
+    return animations;
+  }
+
   /**
    * Takes a toast that starts closing in the expanded list out of the layout,
    * where it is, so it slides out over the list while the toasts around it
    * move into its place, as in RSP S2.
    */
-  private closeInList(
-    leaving: Toast[],
-    origins: Map<string, DOMRect> | undefined
-  ): void {
-    for (const toast of leaving) {
-      const rect = toast.getBoundingClientRect();
-      if (rect.width > 0) {
-        this.pinAt(toast, rect, 1);
-      }
-    }
-    if (!origins || this.prefersReducedMotion()) {
-      return;
-    }
-    for (const [key, toast] of this._toasts) {
-      const from = origins.get(key);
-      if (!from || leaving.includes(toast) || !toast.open) {
-        continue;
-      }
-      const dy = from.top - toast.getBoundingClientRect().top;
-      if (Math.abs(dy) < 0.5) {
-        continue;
-      }
-      toast.animate(
-        [{ transform: `translateY(${dy}px)` }, { transform: 'none' }],
-        { duration: MOVE_DURATION, easing: MOVE_EASING }
-      );
+  private leaveList(toast: Toast): void {
+    const rect = toast.getBoundingClientRect();
+    if (rect.width > 0) {
+      this.pinAt(toast, rect, 1);
     }
   }
 }

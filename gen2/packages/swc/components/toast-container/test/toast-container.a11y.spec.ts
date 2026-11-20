@@ -416,16 +416,24 @@ test.describe('Toast container - Motion', () => {
   // Counts toasts with a script animation, which only the expand and collapse move runs.
   // CSS transitions are subclasses of Animation, so they are left out by constructor.
   const movingToasts = (page: Page): Promise<number> =>
-    page
-      .locator('swc-toast:not([inert])')
-      .evaluateAll(
-        (toasts) =>
-          toasts.filter((toast) =>
-            toast
-              .getAnimations()
-              .some((animation) => animation.constructor === Animation)
-          ).length
-      );
+    page.locator('swc-toast:not([inert])').evaluateAll(
+      (toasts) =>
+        toasts.filter((toast) =>
+          // A script animation that changes position; reduced motion still fades.
+          toast
+            .getAnimations()
+            .some(
+              (animation) =>
+                animation.constructor === Animation &&
+                (animation.effect as KeyframeEffect | null)
+                  ?.getKeyframes()
+                  .some(
+                    (keyframe) =>
+                      'transform' in keyframe || 'translate' in keyframe
+                  )
+            )
+        ).length
+    );
 
   test('expanding moves the toasts out of the stack', async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'no-preference' });
@@ -443,9 +451,10 @@ test.describe('Toast container - Motion', () => {
     await add.click();
     const layer = page.locator('.swc-ToastContainer-layer').first();
     await expect(layer).toHaveCSS('transition-property', 'opacity');
+    // The stack's perspective origin does not move; the stack only fades, when it replaces the expanded view.
     await expect(page.locator('.swc-ToastContainer')).toHaveCSS(
-      'transition-duration',
-      '0s'
+      'transition-property',
+      'opacity'
     );
     await page.getByRole('button', { name: 'Show all' }).click();
     await expect(page.getByRole('dialog')).toBeVisible();

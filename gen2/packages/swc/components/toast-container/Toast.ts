@@ -62,6 +62,16 @@ export class Toast extends ToastBase {
   @property({ attribute: false })
   public showAllLeaving = false;
 
+  /**
+   * @internal
+   *
+   * Set by the container when Show all was hovered as it was activated, so it
+   * keeps its hover look while it fades out. It is inert by then, so `:hover`
+   * no longer applies.
+   */
+  @property({ attribute: false })
+  public showAllHovered = false;
+
   protected override get internalElement(): HTMLElement | null {
     return this.shadowRoot?.querySelector('.swc-Toast') ?? null;
   }
@@ -88,7 +98,11 @@ export class Toast extends ToastBase {
     const showAll = this.showAllLabel
       ? html`
           <swc-action-button
-            class="swc-Toast-showAll"
+            class=${classMap({
+              ['swc-Toast-showAll']: true,
+              ['swc-Toast-showAll--hovered']:
+                this.showAllLeaving && this.showAllHovered,
+            })}
             quiet
             static-color="white"
             @click=${this.requestExpand}
@@ -127,19 +141,21 @@ export class Toast extends ToastBase {
                 `
               : nothing}
           </div>
-          ${inFooter
+          ${inFooter ? nothing : action}
+          ${this.showAllLabel
             ? html`
-                <div class="swc-Toast-footer">${showAll} ${action}</div>
+                <div
+                  class=${classMap({
+                    ['swc-Toast-footer']: true,
+                    ['swc-Toast-footer--leaving']: this.showAllLeaving,
+                  })}
+                  ?inert=${this.showAllLeaving}
+                >
+                  ${showAll} ${inFooter ? action : nothing}
+                </div>
               `
-            : action}
+            : nothing}
         </div>
-        ${this.showAllLabel && this.showAllLeaving
-          ? html`
-              <div class="swc-Toast-footer swc-Toast-footer--leaving" inert>
-                ${showAll}
-              </div>
-            `
-          : nothing}
         <swc-close-button
           class="swc-Toast-close"
           size="m"

@@ -39,6 +39,9 @@
   /* The container moves its toasts itself, so it turns off the toast's own entrance. */
   --_swc-toast-enter-opacity: 1;
   --_swc-toast-enter-distance: 0;
+
+  /* With reduced motion, a closing toast still fades out, without moving. */
+  --_swc-toast-reduced-exit-duration: token("animation-duration-800");
   --_swc-toast-exit-x: 0;
   --_swc-toast-exit-y: calc(100% + token("spacing-200"));
 
@@ -89,6 +92,12 @@
   --_swc-toast-exit-x: calc(-100% - token("spacing-200"));
 }
 
+/* As in RSP S2, Clear all fades every toast out where it is, with no slide. After the placement rules, so it wins. */
+.swc-ToastContainer--clearing {
+  --_swc-toast-exit-x: 0;
+  --_swc-toast-exit-y: 0;
+}
+
 /*
  * The toast's own `display` transition is repeated here, because this rule's
  * `transition` replaces the one the toast sets on its host. Without it, a
@@ -101,7 +110,9 @@
 
   /* No descender space under the inline-block toast, so the stack is exactly the toast's box. */
   vertical-align: top;
-  filter: drop-shadow(0 4px 12px transparent) drop-shadow(0 2px 6px transparent) drop-shadow(0 0 2px transparent);
+
+  /* No filter at rest, so the toast composites without repainting. `none` still transitions to a drop shadow. */
+  filter: none;
   transition:
     display token("animation-duration-800") allow-discrete,
     filter token("animation-duration-800") ease;
@@ -115,6 +126,11 @@
  */
 .swc-ToastContainer--stacked > :where(swc-toast) {
   filter: drop-shadow(0 4px 12px token("drop-shadow-ambient-color")) drop-shadow(0 2px 6px token("drop-shadow-transition-color")) drop-shadow(0 0 2px token("drop-shadow-elevated-key-color"));
+}
+
+/* Clear all fades the shadow out with the toast. */
+.swc-ToastContainer--clearing > :where(swc-toast) {
+  filter: none;
 }
 
 /*
@@ -175,7 +191,16 @@
   }
 }
 
-/* Right after the expanded view closes, the collapsing toasts already left off where the layers rest. */
+/* Clear all fades the layers out with the front toast. */
+:where(.swc-ToastContainer--clearing) .swc-ToastContainer-layer {
+  opacity: 0;
+}
+
+/* Right after the expanded view closes, the collapsing toasts already left off where the layers rest, and the stack's peek is already set. */
+.swc-ToastContainer--settled {
+  transition: none;
+}
+
 @starting-style {
   :where(.swc-ToastContainer--settled) .swc-ToastContainer-layer {
     translate: 0 0 calc(-1 * token("spacing-200") * var(--_swc-toast-container-layer-index));
@@ -232,6 +257,12 @@
   }
 }
 
+/* While expanding, the scrim and the controls wait to fade in until the toasts start to move. */
+.swc-ToastContainer--held::backdrop {
+  opacity: 0;
+  transition: none;
+}
+
 /* Collapsing fades the scrim out before the dialog closes. */
 .swc-ToastContainer--collapsing::backdrop {
   opacity: 0;
@@ -261,7 +292,7 @@
 
   flex-shrink: 0;
   align-self: stretch;
-  filter: drop-shadow(0 4px 12px transparent) drop-shadow(0 2px 6px transparent) drop-shadow(0 0 2px transparent);
+  filter: none;
 
   /* Keeps a closing toast rendered for its slide out, as in the stack. */
   transition:
@@ -279,6 +310,9 @@
 
   display: flex;
   gap: token("spacing-100");
+
+  /* As wide as the buttons, at the end edge, so motion can zoom them as one group. */
+  align-self: flex-end;
   justify-content: flex-end;
   transition: opacity token("animation-duration-800") ease;
 }
@@ -287,6 +321,11 @@
   .swc-ToastContainer-controls {
     opacity: 0;
   }
+}
+
+:where(.swc-ToastContainer--held) .swc-ToastContainer-controls {
+  opacity: 0;
+  transition: none;
 }
 
 /* While collapsing, the view fades its controls and ignores the pointer. */
@@ -299,8 +338,10 @@
 }
 
 /* Only for a real pointer hover, so a tap on a touch screen does not leave the layers peeking out. */
+
+/* `--peek` holds the hovered peek after a collapse that lands under the pointer, until the pointer leaves. */
 @media (hover: hover) {
-  .swc-ToastContainer--stacked:where(:hover) {
+  .swc-ToastContainer--stacked:where(:hover, .swc-ToastContainer--peek) {
     --_swc-toast-container-peek-origin: 95px;
   }
 }
@@ -311,17 +352,28 @@
  */
 @media (prefers-reduced-motion: reduce) {
   .swc-ToastContainer {
-    transition: none;
+    transition: opacity token("animation-duration-800") ease;
+  }
+
+  /* The stack that replaces the collapsing view fades in, as the list fades out. */
+  @starting-style {
+    .swc-ToastContainer--settled:popover-open {
+      opacity: 0;
+    }
+  }
+
+  :where(.swc-ToastContainer--collapsing) .swc-ToastContainer-list {
+    opacity: 0;
   }
 
   .swc-ToastContainer-layer {
     transition-property: opacity;
   }
 
-  /* Matches the toast's own reduced-motion rule, which this container's `transition` replaces. */
+  /* Keeps a closing toast rendered for its fade out; nothing else transitions. */
   .swc-ToastContainer > :where(swc-toast),
   .swc-ToastContainer-list > :where(swc-toast) {
-    transition-duration: 0ms;
+    transition: display token("animation-duration-800") allow-discrete;
   }
 
   .swc-ToastContainer-list {

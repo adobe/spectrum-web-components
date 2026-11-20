@@ -102,11 +102,13 @@ export abstract class ToastBase extends SpectrumElement {
   public actionLabel?: string;
 
   /**
+   * @internal
+   *
    * The label for the Show all control. When set, Toast renders the control,
    * which dispatches `swc-toast-expand`. The container sets it on the front
-   * toast while two or more toasts are queued.
+   * toast while two or more toasts are queued, from its own `show-all-label`.
    */
-  @property({ type: String, attribute: 'show-all-label' })
+  @property({ attribute: false })
   public showAllLabel?: string;
 
   /**

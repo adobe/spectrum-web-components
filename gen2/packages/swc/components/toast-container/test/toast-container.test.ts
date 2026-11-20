@@ -963,8 +963,12 @@ export const StackLayersTest: Story = {
           ToastQueue.add('Second notification', { variant: 'info' });
           ToastQueue.add('Third notification', { variant: 'negative' });
           await getFront(container);
-          const layers = getLayers(container);
-          expect(layers, 'layers').toHaveLength(2);
+          // The stack keeps its old layers until the new toast's message renders and it starts to move.
+          const layers = await waitFor(() => {
+            const current = getLayers(container);
+            expect(current, 'layers').toHaveLength(2);
+            return current;
+          });
           for (const layer of layers) {
             expect(layer.getAttribute('role'), 'layer role').toBe(
               'presentation'
@@ -974,10 +978,13 @@ export const StackLayersTest: Story = {
               false
             );
           }
-          expect(
-            container.shadowRoot!.querySelectorAll('swc-toast'),
-            'rendered toasts'
-          ).toHaveLength(1);
+          // An inert toast is the old front toast, still shrinking into its layer.
+          await waitFor(() =>
+            expect(
+              container.shadowRoot!.querySelectorAll('swc-toast'),
+              'rendered toasts'
+            ).toHaveLength(1)
+          );
         }
       );
 
@@ -1119,11 +1126,12 @@ export const RestoreToastsTest: Story = {
     const observer = new MutationObserver((records) => {
       for (const record of records) {
         // The first render adds the region with its toast already inside, so count nested toasts too.
+        // Inert toasts are presentation only: a hidden copy that measures a new toast, or an old front toast.
         for (const node of record.addedNodes) {
           if (node instanceof HTMLElement) {
             renderedToasts +=
-              (node.localName === 'swc-toast' ? 1 : 0) +
-              node.querySelectorAll('swc-toast').length;
+              (node.localName === 'swc-toast' && !node.inert ? 1 : 0) +
+              node.querySelectorAll('swc-toast:not([inert])').length;
           }
         }
       }
@@ -1134,7 +1142,8 @@ export const RestoreToastsTest: Story = {
     const expectStack = (label: string): void => {
       expect(messages(), `${label} queue order`).toEqual(['C', 'B', 'A']);
       expect(
-        container.shadowRoot?.querySelector('swc-toast')?.textContent,
+        container.shadowRoot?.querySelector('swc-toast:not([inert])')
+          ?.textContent,
         `${label} front toast`
       ).toBe('C');
       expect(getRegion(container).getAttribute('aria-label'), label).toBe(
@@ -1243,11 +1252,14 @@ export const AddAllWhileConnectedTest: Story = {
           const front = await getFront(container);
 
           expect(front.textContent, 'new front message').toBe('First');
-          expect(
-            container.shadowRoot!.querySelectorAll('swc-toast'),
-            'toasts in the DOM'
-          ).toHaveLength(1);
-          expect(getLayers(container), 'layers').toHaveLength(2);
+          // An inert toast is the old front toast, still shrinking into its layer.
+          await waitFor(() => {
+            expect(
+              container.shadowRoot!.querySelectorAll('swc-toast'),
+              'toasts in the DOM'
+            ).toHaveLength(1);
+            expect(getLayers(container), 'layers').toHaveLength(2);
+          });
           expect(getRegion(container).getAttribute('aria-label')).toBe(
             '3 notifications.'
           );
@@ -2557,7 +2569,8 @@ export const ExpandMotionTest: Story = {
       await step(
         'expanding moves the front toast from the stack without fading it in again',
         async () => {
-          showAllOf(front)!.click();
+          const showAll = showAllOf(front)!;
+          showAll.click();
           await waitForExpanded(container, true);
           await waitFor(() => {
             expect(
@@ -2580,18 +2593,30 @@ export const ExpandMotionTest: Story = {
               ),
             'host size animated'
           ).toBe(false);
-          // Show all stays while it fades out, out of the layout.
+          // Show all stays while it fades out, out of the layout. It is the same element, so its
+          // hover look fades with it instead of disappearing.
           expect(
             front.shadowRoot!.querySelector(
               '.swc-Toast-footer--leaving .swc-Toast-showAll'
             ),
             'Show all fading out'
-          ).toBeTruthy();
-          // The controls come from just past the stack, zoomed in, as in RSP S2.
+          ).toBe(showAll);
+          // The controls move from just beyond the stack, as in RSP S2 (D9 checks their zoom).
           const controls = getDialog(container)!.querySelector(
             '.swc-ToastContainer-controls'
           )!;
-          expect(zooms(controls), 'controls zoom').toBe(true);
+          expect(isMoving(controls), 'controls move').toBe(true);
+          // The stack's shadow fades out instead of switching off.
+          expect(
+            front
+              .getAnimations()
+              .some((animation) =>
+                (animation.effect as KeyframeEffect | null)
+                  ?.getKeyframes()
+                  .some((keyframe) => 'filter' in keyframe)
+              ),
+            'shadow fades'
+          ).toBe(true);
           expect(getComputedStyle(surfaceOf(front)).opacity, 'opacity').toBe(
             '1'
           );
@@ -2638,7 +2663,7 @@ export const ExpandMotionTest: Story = {
           controlOf(container, 'Collapse').click();
           // At the first frame, the controls have not moved away from the toasts.
           await waitFor(() =>
-            expect(zooms(controls), 'controls zoom').toBe(true)
+            expect(isMoving(controls), 'controls move').toBe(true)
           );
           // Every move rewound to its first frame; they run on from there.
           for (const animation of container.shadowRoot!.getAnimations()) {
@@ -2848,8 +2873,198 @@ export const CloseSlideTest: Story = {
             Math.abs(middle.getBoundingClientRect().top - before.top),
             'closed toast stays in place'
           ).toBeLessThan(2);
-          expect(isMoving(last), 'farther toast moves into place').toBe(true);
-          expect(isMoving(first), 'nearer toast stays').toBe(false);
+          // The farther toast's background and parts move into the gap; the nearer one stays.
+          expect(
+            resizesBackground(last) || movesPart(last, '.swc-Toast-close'),
+            'farther toast moves into place'
+          ).toBe(true);
+          expect(
+            resizesBackground(first) || movesPart(first, '.swc-Toast-close'),
+            'nearer toast stays'
+          ).toBe(false);
+        }
+      );
+    } finally {
+      ToastQueue.clear();
+    }
+  },
+};
+
+export const ListChangeTest: Story = {
+  play: async ({ canvasElement, step }) => {
+    ToastQueue.clear();
+    const container = await getComponent<ToastContainer>(
+      canvasElement,
+      'swc-toast-container'
+    );
+    try {
+      const front = await addQueue(container, ['A', 'B']);
+      await settle(front);
+      showAllOf(front)!.click();
+      await waitForExpanded(container, true);
+      await settle(...renderedToasts(container));
+
+      await step(
+        'a toast added while expanded slides in, and the others move as one',
+        async () => {
+          ToastQueue.add('A newer, wider notification than the others');
+          const added = await waitFor(() => {
+            const toast = renderedToasts(container).find((candidate) =>
+              candidate.textContent?.includes('newer')
+            );
+            expect(toast, 'added toast').toBeDefined();
+            return toast!;
+          });
+          await waitFor(() => expect(slidesIn(added), 'slides in').toBe(true));
+          // The list stretches to the widest toast, so the others change width as they move.
+          expect(resizesBackground(front), 'the old front toast resizes').toBe(
+            true
+          );
+        }
+      );
+    } finally {
+      ToastQueue.clear();
+    }
+  },
+};
+
+export const ClearMotionTest: Story = {
+  play: async ({ canvasElement, step }) => {
+    ToastQueue.clear();
+    const container = await getComponent<ToastContainer>(
+      canvasElement,
+      'swc-toast-container'
+    );
+    const slideOf = (toast: Toast): number =>
+      new DOMMatrix(
+        getComputedStyle(toast.shadowRoot!.querySelector('.swc-Toast')!)
+          .transform
+      ).m42;
+    try {
+      await step(
+        'Clear all fades the stack and its layers out, without a slide',
+        async () => {
+          const front = await addQueue(container, ['A', 'B', 'C']);
+          await settle(front, getRegion(container));
+          const region = getRegion(container);
+          ToastQueue.clear();
+          await container.updateComplete;
+          expect(
+            region.classList.contains('swc-ToastContainer--clearing'),
+            'clearing'
+          ).toBe(true);
+          expect(
+            region.querySelectorAll('.swc-ToastContainer-layer').length,
+            'layers stay while they fade'
+          ).toBeGreaterThan(0);
+          await new Promise((resolve) => setTimeout(resolve, 150));
+          expect(Math.abs(slideOf(front)), 'no slide').toBeLessThan(1);
+          await waitFor(() =>
+            expect(container.shadowRoot!.querySelector('swc-toast')).toBeNull()
+          );
+        }
+      );
+
+      await step(
+        'while expanded, the view fades out with its toasts before it closes',
+        async () => {
+          const front = await addQueue(container, ['A', 'B']);
+          await settle(front);
+          showAllOf(front)!.click();
+          await waitForExpanded(container, true);
+          const [first] = renderedToasts(container);
+          controlOf(container, 'Clear all').click();
+          // The view starts fading once the closes it requested have landed.
+          await waitFor(() => {
+            const dialog = getDialog(container)!;
+            expect(dialog.open, 'still open while fading').toBe(true);
+            expect(
+              dialog.classList.contains('swc-ToastContainer--collapsing'),
+              'fading the scrim and the controls'
+            ).toBe(true);
+          });
+          await new Promise((resolve) => setTimeout(resolve, 150));
+          expect(Math.abs(slideOf(first)), 'no slide').toBeLessThan(1);
+          await waitForExpanded(container, false);
+        }
+      );
+    } finally {
+      ToastQueue.clear();
+    }
+  },
+};
+
+export const CloseFrontMotionTest: Story = {
+  play: async ({ canvasElement, step }) => {
+    ToastQueue.clear();
+    const container = await getComponent<ToastContainer>(
+      canvasElement,
+      'swc-toast-container'
+    );
+    try {
+      await step(
+        'closing the front toast starts the promotion and the layer moves on the close frame',
+        async () => {
+          const front = await addQueue(container, ['A', 'B', 'C', 'D']);
+          await settle(front, getRegion(container));
+          const heights: number[] = [];
+          // Whether the promoted toast was growing on a frame where its message had not rendered.
+          let grewBeforeMessage = false;
+          let sampling = true;
+          const sample = (): void => {
+            if (!sampling) {
+              return;
+            }
+            heights.push(getRegion(container).getBoundingClientRect().height);
+            const promoted = renderedToasts(container).find(
+              (candidate) => candidate.textContent === 'B'
+            );
+            if (
+              promoted &&
+              resizesBackground(promoted) &&
+              !promoted.shadowRoot!.querySelector('.swc-Toast-text')
+            ) {
+              grewBeforeMessage = true;
+            }
+            requestAnimationFrame(sample);
+          };
+          const before = getRegion(container).getBoundingClientRect().height;
+          requestAnimationFrame(sample);
+          closeButtonOf(front).click();
+          const promoted = await waitFor(() => {
+            const toast = renderedToasts(container).find(
+              (candidate) => candidate.textContent === 'B'
+            );
+            expect(toast, 'promoted toast').toBeDefined();
+            return toast!;
+          });
+          await waitFor(() =>
+            expect(resizesBackground(promoted), 'grows').toBe(true)
+          );
+          // The layers that stay move from where they were.
+          expect(
+            getLayers(container).some((layer) =>
+              layer
+                .getAnimations()
+                .some((animation) =>
+                  (animation.effect as KeyframeEffect | null)
+                    ?.getKeyframes()
+                    .some((keyframe) => 'insetBlockStart' in keyframe)
+                )
+            ),
+            'layers move'
+          ).toBe(true);
+          await settle(promoted, getRegion(container));
+          sampling = false;
+          // It grows out of its layer before its message reaches the live region.
+          expect(grewBeforeMessage, 'grows before its message renders').toBe(
+            true
+          );
+          // The stack never drops to the empty toast's height.
+          expect(
+            Math.min(...heights),
+            'shortest stack during the close'
+          ).toBeGreaterThan(before * 0.75);
         }
       );
     } finally {
@@ -2912,6 +3127,8 @@ export const ShowAllWidthTest: Story = {
     }> => {
       ToastQueue.clear();
       const front = await addQueue(container, messages);
+      // Until its message renders, a new toast holds its final size from before Show all changes.
+      await settle(front);
       await front.updateComplete;
       const withShowAll = front.getBoundingClientRect().width;
       const showAll = showAllOf(front)!.getBoundingClientRect().width;
@@ -2954,3 +3171,2313 @@ export const ShowAllWidthTest: Story = {
     }
   },
 };
+
+// ────────────────────────────────────────────────────────────
+//     MOTION CHECKS: measured per frame, at 1× and slowed down
+// ────────────────────────────────────────────────────────────
+
+type MotionCase = {
+  placement: 'bottom' | 'top' | 'bottom-end' | 'top-end';
+  rtl?: boolean;
+  rate: number;
+};
+
+// Bottom and top at 1× and slowed to 0.25×, and an end placement in RTL.
+const MOTION_CASES: MotionCase[] = [
+  { placement: 'bottom', rate: 1 },
+  { placement: 'bottom', rate: 0.25 },
+  { placement: 'top', rate: 1 },
+  { placement: 'top', rate: 0.25 },
+  { placement: 'bottom-end', rtl: true, rate: 0.25 },
+];
+
+const caseName = ({ placement, rtl, rate }: MotionCase): string =>
+  `${placement}${rtl ? ' rtl' : ''} ×${rate}`;
+
+// Every animation in the container and in its toasts, the background `::before` included.
+const allAnimations = (container: ToastContainer): Animation[] => [
+  ...container.shadowRoot!.getAnimations(),
+  ...[...container.shadowRoot!.querySelectorAll<Toast>('swc-toast')].flatMap(
+    (toast) => toast.shadowRoot?.getAnimations() ?? []
+  ),
+];
+
+// Slows every animation to `rate`, as a slow device or a slowed-down inspection would.
+const setRate = (container: ToastContainer, rate: number): void => {
+  for (const animation of allAnimations(container)) {
+    if (animation.playbackRate !== rate) {
+      animation.playbackRate = rate;
+    }
+  }
+};
+
+/**
+ * Calls `sample` on every frame, with every animation slowed to `rate`, from
+ * the first frame after `start` until `done` returns true (checked each frame)
+ * or `limit` frames pass. Returns the samples in order.
+ */
+const sampleFrames = async <T>(
+  container: ToastContainer,
+  rate: number,
+  start: () => void,
+  sample: () => T,
+  done: () => boolean,
+  limit = 400
+): Promise<T[]> => {
+  const samples: T[] = [];
+  start();
+  await new Promise<void>((resolve) => {
+    let frames = 0;
+    const frame = (): void => {
+      setRate(container, rate);
+      samples.push(sample());
+      frames += 1;
+      if (done() || frames >= limit) {
+        resolve();
+        return;
+      }
+      requestAnimationFrame(frame);
+    };
+    requestAnimationFrame(frame);
+  });
+  return samples;
+};
+
+const boxOf = (element: Element | null | undefined): DOMRect | undefined =>
+  element?.getBoundingClientRect();
+
+const near = (
+  a: DOMRect | undefined,
+  b: DOMRect | undefined,
+  tolerance: number
+): boolean =>
+  Boolean(a && b) &&
+  Math.abs(a!.left - b!.left) <= tolerance &&
+  Math.abs(a!.top - b!.top) <= tolerance &&
+  Math.abs(a!.width - b!.width) <= tolerance &&
+  Math.abs(a!.height - b!.height) <= tolerance;
+
+// A part's position: its inline-start edge and its top. Its box can be wider in one layout than
+// another (the message stretches), without its content moving.
+const samePlace = (
+  a: DOMRect | undefined,
+  b: DOMRect | undefined,
+  tolerance: number,
+  rtl = false
+): boolean =>
+  Boolean(a && b) &&
+  Math.abs(rtl ? a!.right - b!.right : a!.left - b!.left) <= tolerance &&
+  Math.abs(a!.top - b!.top) <= tolerance;
+
+const fmt = (rect: DOMRect | undefined): string =>
+  rect
+    ? [rect.left, rect.top, rect.width, rect.height]
+        .map((value) => value.toFixed(1))
+        .join(',')
+    : 'none';
+
+const FRONT_PART_SELECTORS = [
+  '.swc-Toast-body',
+  '.swc-Toast-close',
+  '.swc-Toast-action',
+  '.swc-Toast-showAll',
+];
+
+const partBoxes = (toast: Toast): Record<string, DOMRect | undefined> =>
+  Object.fromEntries(
+    FRONT_PART_SELECTORS.map((selector) => [
+      selector,
+      boxOf(toast.shadowRoot!.querySelector(selector)),
+    ])
+  );
+
+const setUpCase = async (
+  container: ToastContainer,
+  { placement, rtl }: MotionCase
+): Promise<void> => {
+  ToastQueue.clear();
+  await waitFor(() =>
+    expect(container.shadowRoot!.querySelector('swc-toast')).toBeNull()
+  );
+  container.placement = placement;
+  if (rtl) {
+    container.setAttribute('dir', 'rtl');
+  } else {
+    container.removeAttribute('dir');
+  }
+  await container.updateComplete;
+};
+
+// A stack of three, the front one with an action, settled with its message shown.
+const addStackWithAction = async (
+  container: ToastContainer
+): Promise<Toast> => {
+  ToastQueue.add('Oldest notification');
+  ToastQueue.add('Older notification');
+  ToastQueue.add('Front notification', {
+    actionLabel: 'Undo',
+    onAction: () => undefined,
+  });
+  const front = await getFront(container);
+  await waitFor(() =>
+    expect(front.shadowRoot!.querySelector('.swc-Toast-text')).not.toBeNull()
+  );
+  await settle(front, getRegion(container));
+  await new Promise((resolve) => setTimeout(resolve, 100));
+  return front;
+};
+
+export const MotionExpandStartsInPlaceTest: Story = {
+  play: async ({ canvasElement, step }) => {
+    const container = await getComponent<ToastContainer>(
+      canvasElement,
+      'swc-toast-container'
+    );
+    try {
+      for (const motionCase of MOTION_CASES.filter(({ rate }) => rate === 1)) {
+        await step(`D1 ${caseName(motionCase)}`, async () => {
+          await setUpCase(container, motionCase);
+          const front = await addStackWithAction(container);
+          const atRest = partBoxes(front);
+          const showAll = showAllOf(front)!;
+          const frames = await sampleFrames(
+            container,
+            motionCase.rate,
+            () => showAll.click(),
+            () => ({
+              parts: partBoxes(front),
+              moving: allAnimations(container).some(
+                (animation) => animation.playState === 'running'
+              ),
+            }),
+            () =>
+              getDialog(container)?.open === true &&
+              !allAnimations(container).some(
+                (animation) => animation.playState === 'running'
+              )
+          );
+          const final = partBoxes(front);
+          const [first] = frames;
+          for (const selector of FRONT_PART_SELECTORS) {
+            expect(
+              samePlace(
+                first.parts[selector],
+                atRest[selector],
+                0.5,
+                motionCase.rtl
+              ),
+              `${selector} first frame ${fmt(first.parts[selector])} vs at rest ${fmt(atRest[selector])}`
+            ).toBe(true);
+          }
+          // Show all fades out in place.
+          for (const [index, sample] of frames.entries()) {
+            const box = sample.parts['.swc-Toast-showAll'];
+            if (box) {
+              expect(
+                near(box, atRest['.swc-Toast-showAll'], 0.5),
+                `Show all frame ${index} ${fmt(box)} vs at rest ${fmt(atRest['.swc-Toast-showAll'])}`
+              ).toBe(true);
+            }
+          }
+          const last = frames[frames.length - 1];
+          for (const selector of FRONT_PART_SELECTORS.slice(0, 3)) {
+            expect(
+              samePlace(
+                last.parts[selector],
+                final[selector],
+                0.5,
+                motionCase.rtl
+              ),
+              `${selector} last frame ${fmt(last.parts[selector])} vs final ${fmt(final[selector])}`
+            ).toBe(true);
+          }
+          controlOf(container, 'Collapse').click();
+          await waitForExpanded(container, false);
+        });
+      }
+    } finally {
+      container.removeAttribute('dir');
+      ToastQueue.clear();
+    }
+  },
+};
+
+export const MotionExpandStartsInPlaceSlowTest: Story = {
+  play: async ({ canvasElement, step }) => {
+    const container = await getComponent<ToastContainer>(
+      canvasElement,
+      'swc-toast-container'
+    );
+    try {
+      for (const motionCase of MOTION_CASES.filter(({ rate }) => rate !== 1)) {
+        await step(`D1 ${caseName(motionCase)}`, async () => {
+          await setUpCase(container, motionCase);
+          const front = await addStackWithAction(container);
+          const atRest = partBoxes(front);
+          const showAll = showAllOf(front)!;
+          const frames = await sampleFrames(
+            container,
+            motionCase.rate,
+            () => showAll.click(),
+            () => ({
+              parts: partBoxes(front),
+              moving: allAnimations(container).some(
+                (animation) => animation.playState === 'running'
+              ),
+            }),
+            () =>
+              getDialog(container)?.open === true &&
+              !allAnimations(container).some(
+                (animation) => animation.playState === 'running'
+              )
+          );
+          const final = partBoxes(front);
+          const [first] = frames;
+          for (const selector of FRONT_PART_SELECTORS) {
+            expect(
+              samePlace(
+                first.parts[selector],
+                atRest[selector],
+                0.5,
+                motionCase.rtl
+              ),
+              `${selector} first frame ${fmt(first.parts[selector])} vs at rest ${fmt(atRest[selector])}`
+            ).toBe(true);
+          }
+          // Show all fades out in place.
+          for (const [index, sample] of frames.entries()) {
+            const box = sample.parts['.swc-Toast-showAll'];
+            if (box) {
+              expect(
+                near(box, atRest['.swc-Toast-showAll'], 0.5),
+                `Show all frame ${index} ${fmt(box)} vs at rest ${fmt(atRest['.swc-Toast-showAll'])}`
+              ).toBe(true);
+            }
+          }
+          const last = frames[frames.length - 1];
+          for (const selector of FRONT_PART_SELECTORS.slice(0, 3)) {
+            expect(
+              samePlace(
+                last.parts[selector],
+                final[selector],
+                0.5,
+                motionCase.rtl
+              ),
+              `${selector} last frame ${fmt(last.parts[selector])} vs final ${fmt(final[selector])}`
+            ).toBe(true);
+          }
+          controlOf(container, 'Collapse').click();
+          await waitForExpanded(container, false);
+        });
+      }
+    } finally {
+      container.removeAttribute('dir');
+      ToastQueue.clear();
+    }
+  },
+};
+
+export const MotionCollapseFinishesTest: Story = {
+  play: async ({ canvasElement, step }) => {
+    const container = await getComponent<ToastContainer>(
+      canvasElement,
+      'swc-toast-container'
+    );
+    try {
+      for (const motionCase of MOTION_CASES.filter(({ rate }) => rate === 1)) {
+        await step(`D2 ${caseName(motionCase)}`, async () => {
+          await setUpCase(container, motionCase);
+          const front = await addStackWithAction(container);
+          showAllOf(front)!.click();
+          await waitForExpanded(container, true);
+          await settle(...renderedToasts(container));
+          await new Promise((resolve) => setTimeout(resolve, 100));
+          const dialog = getDialog(container)!;
+          // Every collapse animation, and whether it finished, recorded before the swap.
+          const tracked = new Set<Animation>();
+          const finished = new Set<Animation>();
+          let unfinishedAtSwap: string[] | undefined;
+          const observer = new MutationObserver(() => {
+            if (!dialog.open && !unfinishedAtSwap) {
+              unfinishedAtSwap = [...tracked]
+                .filter((animation) => !finished.has(animation))
+                .map(
+                  (animation) =>
+                    `${(animation.effect as KeyframeEffect | null)?.target?.className} ${animation.constructor.name}`
+                );
+            }
+          });
+          observer.observe(dialog, { attributeFilter: ['open'] });
+          let lastOpen:
+            | { layers: DOMRect[]; front: DOMRect | undefined }
+            | undefined;
+          const frames = await sampleFrames(
+            container,
+            motionCase.rate,
+            () => controlOf(container, 'Collapse').click(),
+            () => {
+              for (const animation of allAnimations(container)) {
+                const target = (animation.effect as KeyframeEffect | null)
+                  ?.target as Element | null;
+                // Show all's fade-in outlasts the collapse by design (600ms).
+                if (
+                  !tracked.has(animation) &&
+                  !target?.classList.contains('swc-Toast-showAll')
+                ) {
+                  tracked.add(animation);
+                  void animation.finished.then(
+                    () => finished.add(animation),
+                    () => undefined
+                  );
+                }
+              }
+              const open = Boolean(getDialog(container)?.open);
+              if (open) {
+                const [listFront, ...rest] = renderedToasts(container);
+                lastOpen = {
+                  layers: rest.map((toast) => toast.getBoundingClientRect()),
+                  front: boxOf(listFront),
+                };
+              }
+              return {
+                open,
+                layers: getLayers(container).map((layer) =>
+                  layer.getBoundingClientRect()
+                ),
+                front: boxOf(renderedToasts(container)[0]),
+              };
+            },
+            () => !getDialog(container)?.open
+          );
+          observer.disconnect();
+          expect(
+            unfinishedAtSwap,
+            'collapse animations unfinished at the swap'
+          ).toEqual([]);
+          const after = frames[frames.length - 1];
+          const keepBottom = motionCase.placement.startsWith('top');
+          // The layers peek out at the far edge, so that edge is the one that must not move.
+          for (const [index, layer] of after.layers
+            .slice(0, VISIBLE_LAYERS)
+            .entries()) {
+            const zoomed = lastOpen?.layers[index];
+            expect(zoomed, `zoomed toast ${index}`).toBeDefined();
+            const edge = keepBottom
+              ? Math.abs(layer.bottom - zoomed!.bottom)
+              : Math.abs(layer.top - zoomed!.top);
+            expect(
+              Math.max(
+                Math.abs(layer.left - zoomed!.left),
+                Math.abs(layer.right - zoomed!.right),
+                edge
+              ),
+              `layer ${index} ${fmt(layer)} vs shrinking toast ${fmt(zoomed)}`
+            ).toBeLessThanOrEqual(1);
+          }
+          expect(
+            near(after.front, lastOpen?.front, 0.5),
+            `front ${fmt(after.front)} vs pinned ${fmt(lastOpen?.front)}`
+          ).toBe(true);
+        });
+      }
+    } finally {
+      container.removeAttribute('dir');
+      ToastQueue.clear();
+    }
+  },
+};
+
+export const MotionCollapseFinishesSlowTest: Story = {
+  play: async ({ canvasElement, step }) => {
+    const container = await getComponent<ToastContainer>(
+      canvasElement,
+      'swc-toast-container'
+    );
+    try {
+      for (const motionCase of MOTION_CASES.filter(({ rate }) => rate !== 1)) {
+        await step(`D2 ${caseName(motionCase)}`, async () => {
+          await setUpCase(container, motionCase);
+          const front = await addStackWithAction(container);
+          showAllOf(front)!.click();
+          await waitForExpanded(container, true);
+          await settle(...renderedToasts(container));
+          await new Promise((resolve) => setTimeout(resolve, 100));
+          const dialog = getDialog(container)!;
+          // Every collapse animation, and whether it finished, recorded before the swap.
+          const tracked = new Set<Animation>();
+          const finished = new Set<Animation>();
+          let unfinishedAtSwap: string[] | undefined;
+          const observer = new MutationObserver(() => {
+            if (!dialog.open && !unfinishedAtSwap) {
+              unfinishedAtSwap = [...tracked]
+                .filter((animation) => !finished.has(animation))
+                .map(
+                  (animation) =>
+                    `${(animation.effect as KeyframeEffect | null)?.target?.className} ${animation.constructor.name}`
+                );
+            }
+          });
+          observer.observe(dialog, { attributeFilter: ['open'] });
+          let lastOpen:
+            | { layers: DOMRect[]; front: DOMRect | undefined }
+            | undefined;
+          const frames = await sampleFrames(
+            container,
+            motionCase.rate,
+            () => controlOf(container, 'Collapse').click(),
+            () => {
+              for (const animation of allAnimations(container)) {
+                const target = (animation.effect as KeyframeEffect | null)
+                  ?.target as Element | null;
+                // Show all's fade-in outlasts the collapse by design (600ms).
+                if (
+                  !tracked.has(animation) &&
+                  !target?.classList.contains('swc-Toast-showAll')
+                ) {
+                  tracked.add(animation);
+                  void animation.finished.then(
+                    () => finished.add(animation),
+                    () => undefined
+                  );
+                }
+              }
+              const open = Boolean(getDialog(container)?.open);
+              if (open) {
+                const [listFront, ...rest] = renderedToasts(container);
+                lastOpen = {
+                  layers: rest.map((toast) => toast.getBoundingClientRect()),
+                  front: boxOf(listFront),
+                };
+              }
+              return {
+                open,
+                layers: getLayers(container).map((layer) =>
+                  layer.getBoundingClientRect()
+                ),
+                front: boxOf(renderedToasts(container)[0]),
+              };
+            },
+            () => !getDialog(container)?.open
+          );
+          observer.disconnect();
+          expect(
+            unfinishedAtSwap,
+            'collapse animations unfinished at the swap'
+          ).toEqual([]);
+          const after = frames[frames.length - 1];
+          const keepBottom = motionCase.placement.startsWith('top');
+          // The layers peek out at the far edge, so that edge is the one that must not move.
+          for (const [index, layer] of after.layers
+            .slice(0, VISIBLE_LAYERS)
+            .entries()) {
+            const zoomed = lastOpen?.layers[index];
+            expect(zoomed, `zoomed toast ${index}`).toBeDefined();
+            const edge = keepBottom
+              ? Math.abs(layer.bottom - zoomed!.bottom)
+              : Math.abs(layer.top - zoomed!.top);
+            expect(
+              Math.max(
+                Math.abs(layer.left - zoomed!.left),
+                Math.abs(layer.right - zoomed!.right),
+                edge
+              ),
+              `layer ${index} ${fmt(layer)} vs shrinking toast ${fmt(zoomed)}`
+            ).toBeLessThanOrEqual(1);
+          }
+          expect(
+            near(after.front, lastOpen?.front, 0.5),
+            `front ${fmt(after.front)} vs pinned ${fmt(lastOpen?.front)}`
+          ).toBe(true);
+        });
+      }
+    } finally {
+      container.removeAttribute('dir');
+      ToastQueue.clear();
+    }
+  },
+};
+
+const VISIBLE_LAYERS = 2;
+
+// The scrim, the controls, and every toast's opacity, as painted.
+const viewOpacities = (
+  container: ToastContainer
+): { scrim: number; controls: number; toasts: Map<Toast, number> } => {
+  const dialog = getDialog(container);
+  const controls = dialog?.querySelector('.swc-ToastContainer-controls');
+  const toasts = new Map<Toast, number>();
+  for (const toast of renderedToasts(container)) {
+    const surface = toast.shadowRoot!.querySelector('.swc-Toast')!;
+    toasts.set(
+      toast,
+      Number(getComputedStyle(toast).opacity) *
+        Number(getComputedStyle(surface).opacity)
+    );
+  }
+  return {
+    scrim: dialog ? Number(getComputedStyle(dialog, '::backdrop').opacity) : 0,
+    controls: controls ? Number(getComputedStyle(controls).opacity) : 0,
+    toasts,
+  };
+};
+
+// A toast's paint offset from its exit: the inner surface's translate.
+const slideOffset = (toast: Toast): number => {
+  const matrix = new DOMMatrix(
+    getComputedStyle(toast.shadowRoot!.querySelector('.swc-Toast')!).transform
+  );
+  return Math.max(Math.abs(matrix.m41), Math.abs(matrix.m42));
+};
+
+/**
+ * A toast pushed back by a new one moves into its layer as one toast: the
+ * layer follows the old front toast from its box, and the two cross-fade.
+ * The layer is one toast high, so its near edge can differ.
+ */
+export const MotionPushBackTest: Story = {
+  play: async ({ canvasElement, step }) => {
+    const container = await getComponent<ToastContainer>(
+      canvasElement,
+      'swc-toast-container'
+    );
+    try {
+      for (const motionCase of [
+        MOTION_CASES[0],
+        MOTION_CASES[3],
+        MOTION_CASES[4],
+      ]) {
+        await step(`push-back ${caseName(motionCase)}`, async () => {
+          await setUpCase(container, motionCase);
+          const key = ToastQueue.add('Draft moved to archive');
+          await settle(await getFront(container), getRegion(container));
+          const ghostOf = (): Toast | undefined =>
+            [
+              ...container.shadowRoot!.querySelectorAll<Toast>('swc-toast'),
+            ].find(
+              (toast) =>
+                toast.inert &&
+                toast.style.position &&
+                toast.style.visibility !== 'hidden'
+            );
+          const layerOf = (): HTMLElement | null =>
+            container.shadowRoot!.querySelector<HTMLElement>(
+              `.swc-ToastContainer-layer[data-key="${key}"]`
+            );
+          let seenGhost = false;
+          const frames = await sampleFrames(
+            container,
+            motionCase.rate,
+            () =>
+              ToastQueue.add('File saved', {
+                variant: 'positive',
+                actionLabel: 'Undo',
+                onAction: () => undefined,
+              }),
+            () => {
+              const ghost = ghostOf();
+              seenGhost ||= Boolean(ghost);
+              return { ghost: boxOf(ghost), layer: boxOf(layerOf()) };
+            },
+            () => seenGhost && !ghostOf()
+          );
+          const anchoredTop = motionCase.placement.startsWith('top');
+          const compared = frames.filter(({ ghost, layer }) => ghost && layer);
+          expect(compared.length, 'frames with both').toBeGreaterThan(3);
+          for (const [index, { ghost, layer }] of compared.entries()) {
+            const farEdge = anchoredTop
+              ? Math.abs(ghost!.bottom - layer!.bottom)
+              : Math.abs(ghost!.top - layer!.top);
+            expect(
+              Math.max(
+                Math.abs(ghost!.left - layer!.left),
+                Math.abs(ghost!.width - layer!.width),
+                farEdge
+              ),
+              `frame ${index} ghost ${fmt(ghost)} layer ${fmt(layer)}`
+            ).toBeLessThanOrEqual(1);
+          }
+        });
+      }
+    } finally {
+      ToastQueue.clear();
+    }
+  },
+};
+
+// The controls' fixed zoom at the front toast's edge (`CONTROLS_ZOOM` in the container).
+const CONTROLS_ZOOM = 1.15;
+
+type ControlsFrame = {
+  box?: DOMRect;
+  buttons: number[];
+  opacity: number;
+  time: number;
+};
+
+const controlsOf = (container: ToastContainer): HTMLElement | null =>
+  getDialog(container)?.open
+    ? getDialog(container)!.querySelector<HTMLElement>(
+        '.swc-ToastContainer-controls'
+      )
+    : null;
+
+const sampleControls = (container: ToastContainer): ControlsFrame => {
+  const controls = controlsOf(container);
+  return {
+    box: boxOf(controls),
+    buttons: controls
+      ? [...controls.children].map(
+          (button) => button.getBoundingClientRect().width
+        )
+      : [],
+    opacity: controls ? Number(getComputedStyle(controls).opacity) : 0,
+    time: performance.now(),
+  };
+};
+
+// B0: the controls' resting box zoomed by `CONTROLS_ZOOM`, flush against the front toast's far edge,
+// aligned to its end edge.
+const controlsBeyond = (
+  stack: DOMRect,
+  rest: DOMRect,
+  { placement, rtl }: Pick<MotionCase, 'placement' | 'rtl'>
+): DOMRect => {
+  const width = rest.width * CONTROLS_ZOOM;
+  const height = rest.height * CONTROLS_ZOOM;
+  return new DOMRect(
+    rtl ? stack.left : stack.right - width,
+    placement.startsWith('top') ? stack.bottom : stack.top - height,
+    width,
+    height
+  );
+};
+
+const endOf = (rect: DOMRect, rtl = false): number =>
+  rtl ? rect.left : rect.right;
+
+// The end edge moves one way, allowing 0.1px of rounding.
+const expectMonotonicEnd = (
+  frames: ControlsFrame[],
+  rtl: boolean | undefined,
+  label: string
+): void => {
+  const ends = frames.map(({ box }) => endOf(box!, rtl));
+  let direction = 0;
+  for (let index = 1; index < ends.length; index++) {
+    const delta = ends[index] - ends[index - 1];
+    if (Math.abs(delta) <= 0.1) {
+      continue;
+    }
+    if (direction !== 0) {
+      expect(
+        Math.sign(delta),
+        `${label} end edge reverses at frame ${index}: ${ends.map((end) => end.toFixed(1)).join(' ')}`
+      ).toBe(direction);
+    }
+    direction = Math.sign(delta);
+  }
+};
+
+const expectZoomedButtons = (
+  frame: ControlsFrame,
+  natural: number[],
+  label: string
+): void => {
+  expect(frame.buttons.length, `${label} buttons`).toBe(natural.length);
+  for (const [index, width] of frame.buttons.entries()) {
+    expect(
+      Math.abs(width - natural[index] * CONTROLS_ZOOM),
+      `${label} button ${index} width ${width} vs ${natural[index]} × ${CONTROLS_ZOOM}`
+    ).toBeLessThanOrEqual(0.5);
+  }
+};
+
+/**
+ * No jump at either end: the first and last steps are at most 4px, per 60fps
+ * frame (a headless browser's frames can be longer). An `ease` move of about
+ * 100px peaks near 8px a frame, so only the ends are held to it. The first step
+ * is from the start box, since sampling can start one frame into the motion.
+ */
+const expectNoJump = (
+  frames: ControlsFrame[],
+  start: DOMRect,
+  label: string
+): void => {
+  const stepOf = (a: ControlsFrame, b: ControlsFrame): number =>
+    (Math.max(
+      Math.abs(a.box!.left - b.box!.left),
+      Math.abs(a.box!.top - b.box!.top),
+      Math.abs(a.box!.width - b.box!.width)
+    ) *
+      1000) /
+    60 /
+    Math.max(1000 / 60, b.time - a.time);
+  const first = near(frames[0].box, start, 0.5)
+    ? stepOf(frames[0], frames[1])
+    : stepOf(
+        { ...frames[0], box: start, time: frames[0].time - 1000 / 60 },
+        frames[0]
+      );
+  expect(first, `${label} first step from ${fmt(start)}`).toBeLessThanOrEqual(
+    4
+  );
+  const last = frames.length - 1;
+  expect(
+    stepOf(frames[last - 1], frames[last]),
+    `${label} last step ${fmt(frames[last - 1].box)} → ${fmt(frames[last].box)}`
+  ).toBeLessThanOrEqual(4);
+};
+
+// Expands a stack of `count` toasts, then closes all but the front one when `count` is 1.
+const expandWith = async (
+  container: ToastContainer,
+  count: 1 | 2 | 3,
+  message: string
+): Promise<Toast> => {
+  for (let index = 1; index < Math.max(count, 2); index++) {
+    ToastQueue.add(`Older notification ${index}`);
+  }
+  ToastQueue.add(message);
+  const front = await getFront(container);
+  await settle(front, getRegion(container));
+  return front;
+};
+
+const CONTROLS_PLACEMENTS: Pick<MotionCase, 'placement' | 'rtl'>[] = [
+  { placement: 'bottom' },
+  { placement: 'top' },
+  { placement: 'bottom-end', rtl: true },
+];
+
+type ControlsCase = { count: 1 | 2 | 3; message: string };
+
+const CONTROLS_CASES: Record<string, ControlsCase> = {
+  one: { count: 1, message: 'Front notification saved' },
+  narrow: { count: 1, message: 'Hi' },
+  two: { count: 2, message: 'Front notification saved' },
+  three: { count: 3, message: 'Front notification saved' },
+};
+
+/**
+ * D9. The controls grow out of the box flush against the front toast's far
+ * edge, zoomed by a fixed `CONTROLS_ZOOM` whatever the toasts' widths, and
+ * shrink back into it on collapse. A single toast cannot expand, so its case
+ * expands two and closes one, and checks the collapse.
+ */
+const controlsZoomStory = (
+  placement: Pick<MotionCase, 'placement' | 'rtl'>,
+  rate: number,
+  cases: (keyof typeof CONTROLS_CASES)[]
+): Story => ({
+  play: async ({ canvasElement, step }) => {
+    const container = await getComponent<ToastContainer>(
+      canvasElement,
+      'swc-toast-container'
+    );
+    try {
+      for (const name of cases) {
+        const { count, message } = CONTROLS_CASES[name];
+        await step(
+          `D9 ${name} ${caseName({ ...placement, rate })}`,
+          async () => {
+            await setUpCase(container, { ...placement, rate });
+            let front = await expandWith(container, count, message);
+            const stack = front.getBoundingClientRect();
+            const expandFrames = await sampleFrames(
+              container,
+              count === 1 ? 1 : rate,
+              () => showAllOf(front)!.click(),
+              () => sampleControls(container),
+              () => {
+                const controls = controlsOf(container);
+                return (
+                  Boolean(controls) &&
+                  controls!.getAnimations().length === 0 &&
+                  Number(getComputedStyle(controls!).opacity) >= 0.999
+                );
+              }
+            );
+            if (count === 1) {
+              for (const toast of renderedToasts(container)) {
+                if (toast.textContent !== message) {
+                  closeButtonOf(toast).click();
+                }
+              }
+              await waitFor(() =>
+                expect(renderedToasts(container)).toHaveLength(1)
+              );
+              front = renderedToasts(container)[0];
+            }
+            await settle(...renderedToasts(container));
+            await new Promise((resolve) => setTimeout(resolve, 100));
+            const rest = sampleControls(container);
+            const restBox = rest.box!;
+            if (count > 1) {
+              const beyond = controlsBeyond(stack, restBox, placement);
+              const shown = expandFrames.filter(({ box }) => box);
+              expect(
+                near(shown[0].box, beyond, 1),
+                `expand first frame ${fmt(shown[0].box)} vs B0 ${fmt(beyond)}`
+              ).toBe(true);
+              expect(
+                shown[0].opacity,
+                'expand first opacity'
+              ).toBeLessThanOrEqual(0.05);
+              expectZoomedButtons(shown[0], rest.buttons, 'expand first frame');
+              expect(
+                Math.abs(
+                  endOf(shown[0].box!, placement.rtl) -
+                    endOf(stack, placement.rtl)
+                ),
+                'expand first frame end edge vs the front toast'
+              ).toBeLessThanOrEqual(0.5);
+              expectMonotonicEnd(shown, placement.rtl, 'expand');
+              const last = shown[shown.length - 1];
+              expect(
+                near(last.box, restBox, 0.5),
+                `expand last frame ${fmt(last.box)} vs B1 ${fmt(restBox)}`
+              ).toBe(true);
+              if (rate === 1) {
+                expectNoJump(shown, beyond, 'expand');
+              }
+            }
+
+            const collapseFrames = await sampleFrames(
+              container,
+              rate,
+              () => controlOf(container, 'Collapse').click(),
+              () => sampleControls(container),
+              () => !getDialog(container)?.open
+            );
+            await settle(front, getRegion(container));
+            const stacked = front.getBoundingClientRect();
+            const beyond = controlsBeyond(stacked, restBox, placement);
+            const collapsing = collapseFrames.filter(({ box }) => box);
+            // Sampling starts a frame after the click, so its first frame can be one frame in.
+            expect(
+              near(collapsing[0].box, restBox, 3),
+              `collapse first frame ${fmt(collapsing[0].box)} vs B1 ${fmt(restBox)}`
+            ).toBe(true);
+            const last = collapsing[collapsing.length - 1];
+            expect(
+              near(last.box, beyond, 1),
+              `collapse last frame ${fmt(last.box)} vs B0 ${fmt(beyond)}`
+            ).toBe(true);
+            expectZoomedButtons(last, rest.buttons, 'collapse last frame');
+            expect(
+              Math.abs(
+                endOf(last.box!, placement.rtl) - endOf(stacked, placement.rtl)
+              ),
+              'collapse last frame end edge vs the front toast'
+            ).toBeLessThanOrEqual(0.5);
+            expectMonotonicEnd(collapsing, placement.rtl, 'collapse');
+            if (rate === 1) {
+              expectNoJump(collapsing, restBox, 'collapse');
+            }
+          }
+        );
+      }
+    } finally {
+      ToastQueue.clear();
+    }
+  },
+});
+
+const ALL_CONTROLS_CASES = Object.keys(CONTROLS_CASES);
+export const MotionControlsZoomTest = controlsZoomStory(
+  CONTROLS_PLACEMENTS[0],
+  1,
+  ALL_CONTROLS_CASES
+);
+export const MotionControlsZoomTopTest = controlsZoomStory(
+  CONTROLS_PLACEMENTS[1],
+  1,
+  ALL_CONTROLS_CASES
+);
+export const MotionControlsZoomEndRtlTest = controlsZoomStory(
+  CONTROLS_PLACEMENTS[2],
+  1,
+  ALL_CONTROLS_CASES
+);
+export const MotionControlsZoomSlowOneTest = controlsZoomStory(
+  CONTROLS_PLACEMENTS[0],
+  0.25,
+  ['one', 'narrow']
+);
+export const MotionControlsZoomSlowTest = controlsZoomStory(
+  CONTROLS_PLACEMENTS[0],
+  0.25,
+  ['two', 'three']
+);
+export const MotionControlsZoomSlowTopOneTest = controlsZoomStory(
+  CONTROLS_PLACEMENTS[1],
+  0.25,
+  ['one', 'narrow']
+);
+export const MotionControlsZoomSlowTopTest = controlsZoomStory(
+  CONTROLS_PLACEMENTS[1],
+  0.25,
+  ['two', 'three']
+);
+export const MotionControlsZoomSlowEndRtlOneTest = controlsZoomStory(
+  CONTROLS_PLACEMENTS[2],
+  0.25,
+  ['one', 'narrow']
+);
+export const MotionControlsZoomSlowEndRtlTest = controlsZoomStory(
+  CONTROLS_PLACEMENTS[2],
+  0.25,
+  ['two', 'three']
+);
+
+const clearFadesStory = (rate: number): Story => ({
+  play: async ({ canvasElement, step }) => {
+    const container = await getComponent<ToastContainer>(
+      canvasElement,
+      'swc-toast-container'
+    );
+    try {
+      for (const placement of ['bottom', 'top'] as const) {
+        await step(`D3, D4, D5 expanded ${placement} ×${rate}`, async () => {
+          await setUpCase(container, { placement, rate });
+          const front = await addStackWithAction(container);
+          showAllOf(front)!.click();
+          await waitForExpanded(container, true);
+          await settle(...renderedToasts(container));
+          await new Promise((resolve) => setTimeout(resolve, 100));
+          const starts = new Map(
+            renderedToasts(container).map((toast) => [
+              toast,
+              toast.getBoundingClientRect(),
+            ])
+          );
+          const frames = await sampleFrames(
+            container,
+            rate,
+            () => controlOf(container, 'Clear all').click(),
+            () => ({
+              opacities: viewOpacities(container),
+              boxes: new Map(
+                [...starts.keys()]
+                  .filter((toast) => toast.isConnected)
+                  .map((toast) => [
+                    toast,
+                    {
+                      box: toast.getBoundingClientRect(),
+                      slide: slideOffset(toast),
+                    },
+                  ])
+              ),
+              open: Boolean(getDialog(container)?.open),
+            }),
+            () => !getDialog(container)?.open
+          );
+          const open = frames.filter((frame) => frame.open);
+          // D3: every opacity only goes down, and reaches 0 before the view closes.
+          const series = (
+            pick: (frame: (typeof open)[number]) => number | undefined
+          ): number[] =>
+            open
+              .map(pick)
+              .filter((value): value is number => value !== undefined);
+          const check = (label: string, values: number[]): void => {
+            for (let index = 1; index < values.length; index++) {
+              expect(
+                values[index],
+                `${label} frame ${index}: ${values[index - 1]} → ${values[index]}`
+              ).toBeLessThanOrEqual(values[index - 1] + 0.001);
+            }
+            expect(
+              values[values.length - 1],
+              `${label} last value before the view closes`
+            ).toBeLessThanOrEqual(0.05);
+          };
+          check(
+            'scrim',
+            series((frame) => frame.opacities.scrim)
+          );
+          check(
+            'controls',
+            series((frame) => frame.opacities.controls)
+          );
+          for (const toast of starts.keys()) {
+            const values = series((frame) => frame.opacities.toasts.get(toast));
+            check(`toast ${toast.textContent}`, values);
+          }
+          // D4: no toast moves while it fades.
+          for (const frame of frames) {
+            for (const [toast, { box, slide }] of frame.boxes) {
+              expect(
+                near(box, starts.get(toast), 0.5) && slide <= 0.5,
+                `toast ${toast.textContent} ${fmt(box)} slide ${slide} vs ${fmt(starts.get(toast))}`
+              ).toBe(true);
+            }
+          }
+          // D5: on the first frame, the scrim, the controls, and the toasts are all fading or none are.
+          const [first] = frames;
+          const fading = [
+            first.opacities.scrim < 1,
+            first.opacities.controls < 1,
+            ...[...first.opacities.toasts.values()].map((value) => value < 1),
+          ];
+          expect(
+            fading.every(Boolean) || !fading.some(Boolean),
+            `first frame fading: ${fading.join(', ')}`
+          ).toBe(true);
+          if (frames.length > 1) {
+            const second = frames[1];
+            expect(
+              second.opacities.scrim < 1 &&
+                second.opacities.controls < 1 &&
+                [...second.opacities.toasts.values()].every(
+                  (value) => value < 1
+                ),
+              'all fading by the second frame'
+            ).toBe(true);
+          }
+        });
+      }
+
+      for (const placement of ['bottom', 'top'] as const) {
+        await step(`D4 stacked ${placement} ×${rate}`, async () => {
+          await setUpCase(container, { placement, rate });
+          const front = await addStackWithAction(container);
+          const start = front.getBoundingClientRect();
+          const frames = await sampleFrames(
+            container,
+            rate,
+            () => ToastQueue.clear(),
+            () =>
+              front.isConnected
+                ? {
+                    box: front.getBoundingClientRect(),
+                    slide: slideOffset(front),
+                  }
+                : undefined,
+            () => !front.isConnected
+          );
+          for (const [index, frame] of frames.entries()) {
+            if (frame) {
+              expect(
+                near(frame.box, start, 0.5) && frame.slide <= 0.5,
+                `frame ${index} ${fmt(frame.box)} slide ${frame.slide} vs ${fmt(start)}`
+              ).toBe(true);
+            }
+          }
+        });
+      }
+    } finally {
+      ToastQueue.clear();
+    }
+  },
+});
+
+export const MotionClearFadesTest = clearFadesStory(1);
+export const MotionClearFadesSlowTest = clearFadesStory(0.25);
+
+const oneToastControlsStory = (
+  message: string,
+  trigger: 'button' | 'Escape' | 'scrim'
+): Story => ({
+  play: async ({ canvasElement, step }) => {
+    const container = await getComponent<ToastContainer>(
+      canvasElement,
+      'swc-toast-container'
+    );
+    const triggers: Record<typeof trigger, () => void> = {
+      button: () => controlOf(container, 'Collapse').click(),
+      Escape: () =>
+        getDialog(container)!.dispatchEvent(
+          new Event('cancel', { cancelable: true })
+        ),
+      scrim: () =>
+        getDialog(container)!.dispatchEvent(
+          new PointerEvent('pointerdown', {
+            bubbles: true,
+            composed: true,
+            clientX: 2,
+            clientY: 2,
+          })
+        ),
+    };
+    try {
+      const collapse = triggers[trigger];
+      {
+        for (const rate of [1, 0.25]) {
+          await step(`D6 ${trigger}, "${message}" ×${rate}`, async () => {
+            await setUpCase(container, { placement: 'bottom', rate });
+            // Two toasts to expand, then the other one closes, leaving one in the view.
+            ToastQueue.add('Other notification');
+            ToastQueue.add(message);
+            const front = await getFront(container);
+            await settle(front, getRegion(container));
+            showAllOf(front)!.click();
+            await waitForExpanded(container, true);
+            const other = renderedToasts(container).find(
+              (toast) => toast.textContent === 'Other notification'
+            )!;
+            closeButtonOf(other).click();
+            await waitFor(() =>
+              expect(renderedToasts(container)).toHaveLength(1)
+            );
+            await settle(...renderedToasts(container));
+            await new Promise((resolve) => setTimeout(resolve, 100));
+            const rest = sampleControls(container);
+            const before = rest.box!;
+            const listed = renderedToasts(container)[0].getBoundingClientRect();
+            const frames = (
+              await sampleFrames(
+                container,
+                rate,
+                collapse,
+                () => sampleControls(container),
+                () => !getDialog(container)?.open
+              )
+            ).filter(({ box }) => box);
+            const remaining = renderedToasts(container)[0];
+            await settle(remaining, getRegion(container));
+            const beyond = controlsBeyond(
+              remaining.getBoundingClientRect(),
+              before,
+              { placement: 'bottom' }
+            );
+            // No jump on the first frame; sampling can start one frame in.
+            expect(
+              near(frames[0].box, before, 3),
+              `first frame ${fmt(frames[0].box)} vs ${fmt(before)}`
+            ).toBe(true);
+            const last = frames[frames.length - 1];
+            // Toward the front toast, below them in a bottom stack.
+            expect(
+              last.box!.top,
+              'moves toward the front toast'
+            ).toBeGreaterThan(before.top);
+            expect(
+              near(last.box, beyond, 1),
+              `last frame ${fmt(last.box)} vs B0 ${fmt(beyond)}`
+            ).toBe(true);
+            expectZoomedButtons(last, rest.buttons, 'last frame');
+            const stacked = remaining.getBoundingClientRect();
+            if (Math.abs(listed.right - stacked.right) <= 0.5) {
+              // Straight down: the stacked and listed toast share an end edge.
+              for (const [index, frame] of frames.entries()) {
+                expect(
+                  Math.abs(frame.box!.right - before.right),
+                  `frame ${index} end edge ${frame.box!.right} vs ${before.right}`
+                ).toBeLessThanOrEqual(0.5);
+              }
+            } else {
+              // A toast narrower than the controls spans the view in the list, but not in the
+              // stack, so its end edge moves, and the controls' end edge follows it one way.
+              expectMonotonicEnd(frames, false, 'collapse');
+            }
+            if (rate === 1) {
+              expectNoJump(frames, before, 'collapse');
+            }
+          });
+        }
+      }
+    } finally {
+      ToastQueue.clear();
+    }
+  },
+});
+
+export const MotionOneToastControlsButtonTest = oneToastControlsStory(
+  'A notification wider than the controls',
+  'button'
+);
+export const MotionOneToastControlsEscapeTest = oneToastControlsStory(
+  'A notification wider than the controls',
+  'Escape'
+);
+export const MotionOneToastControlsScrimTest = oneToastControlsStory(
+  'A notification wider than the controls',
+  'scrim'
+);
+export const MotionNarrowToastControlsButtonTest = oneToastControlsStory(
+  'Hi',
+  'button'
+);
+export const MotionNarrowToastControlsEscapeTest = oneToastControlsStory(
+  'Hi',
+  'Escape'
+);
+export const MotionNarrowToastControlsScrimTest = oneToastControlsStory(
+  'Hi',
+  'scrim'
+);
+
+// ────────────────────────────────
+//    MOTION RULES (M1–M5)
+// ────────────────────────────────
+
+type TrackKind = 'background' | 'part' | 'copy' | 'layer' | 'controls';
+
+type Track = {
+  kind: TrackKind;
+  key: string;
+  box: DOMRect;
+  opacity: number;
+};
+
+type MotionFrame = {
+  time: number;
+  open: boolean;
+  tracks: Map<string, Track>;
+};
+
+// The opacity an element shows: its own and every ancestor's, across shadow roots.
+const effectiveOpacity = (element: Element): number => {
+  let opacity = 1;
+  let node: Element | null = element;
+  while (node) {
+    opacity *= Number(getComputedStyle(node).opacity);
+    node =
+      node.parentElement ??
+      ((node.getRootNode() as ShadowRoot).host as Element | undefined) ??
+      null;
+  }
+  return opacity;
+};
+
+// `inset(t r b l round …)` from a computed `clip-path`, in the element's own pixels.
+const clipInsets = (clipPath: string): number[] | undefined => {
+  const match = /^inset\(([^)]*?)(?:\s+round[^)]*)?\)$/.exec(clipPath);
+  if (!match) {
+    return undefined;
+  }
+  const values = match[1].trim().split(/\s+/).map(parseFloat);
+  const [top, right = top, bottom = top, left = right] = values;
+  return [top, right, bottom, left];
+};
+
+const insetBox = (
+  rect: DOMRect,
+  [top, right, bottom, left]: number[],
+  scale: number
+): DOMRect =>
+  new DOMRect(
+    rect.left + left * scale,
+    rect.top + top * scale,
+    rect.width - (left + right) * scale,
+    rect.height - (top + bottom) * scale
+  );
+
+const intersect = (a: DOMRect, b: DOMRect): DOMRect => {
+  const left = Math.max(a.left, b.left);
+  const top = Math.max(a.top, b.top);
+  return new DOMRect(
+    left,
+    top,
+    Math.max(0, Math.min(a.right, b.right) - left),
+    Math.max(0, Math.min(a.bottom, b.bottom) - top)
+  );
+};
+
+// The box a toast's background shows: its `::before`, inside any crop on the surface or the host.
+const backgroundBox = (toast: Toast): DOMRect | undefined => {
+  const surface = toast.shadowRoot?.querySelector<HTMLElement>('.swc-Toast');
+  if (!surface || surface.offsetWidth === 0) {
+    return undefined;
+  }
+  const surfaceRect = surface.getBoundingClientRect();
+  const scale = surfaceRect.width / surface.offsetWidth;
+  const before = getComputedStyle(surface, '::before');
+  let box = insetBox(
+    surfaceRect,
+    [before.top, before.right, before.bottom, before.left].map(
+      (value) => parseFloat(value) || 0
+    ),
+    scale
+  );
+  for (const [element, rect] of [
+    [surface, surfaceRect],
+    [toast, toast.getBoundingClientRect()],
+  ] as const) {
+    const clip = clipInsets(getComputedStyle(element).clipPath);
+    if (clip) {
+      box = intersect(
+        box,
+        // A negative inset reaches past the element, as the clip around a growing background does.
+        insetBox(rect, clip, scale)
+      );
+    }
+  }
+  return box.width > 0 && box.height > 0 ? box : undefined;
+};
+
+const MOTION_PARTS = [
+  '.swc-Toast-body',
+  '.swc-Toast-close',
+  '.swc-Toast-action',
+  '.swc-Toast-showAll',
+];
+
+// Every moving thing in the container on this frame, by a stable id.
+const recordFrame = (
+  container: ToastContainer,
+  keyOf: Map<string, string>
+): MotionFrame => {
+  const root = container.shadowRoot!;
+  const rtl = getComputedStyle(container).direction === 'rtl';
+  const tracks = new Map<string, Track>();
+  const add = (id: string, track: Track): void => {
+    if (track.box.width > 0 && track.box.height > 0) {
+      tracks.set(id, track);
+    }
+  };
+  for (const toast of root.querySelectorAll<Toast>('swc-toast')) {
+    // The hidden copy the container measures a new toast's size with never shows. A closing toast
+    // still shows while it leaves.
+    if (toast.style.visibility === 'hidden') {
+      continue;
+    }
+    const message = toast.textContent?.trim() ?? '';
+    const key = keyOf.get(message) ?? message;
+    const surface = toast.shadowRoot?.querySelector('.swc-Toast');
+    const box = backgroundBox(toast);
+    if (!surface || !box) {
+      continue;
+    }
+    const kind: TrackKind = toast.inert ? 'copy' : 'background';
+    add(`${kind}:${key}`, {
+      kind,
+      key,
+      box,
+      opacity: effectiveOpacity(surface),
+    });
+    if (kind === 'background') {
+      for (const selector of MOTION_PARTS) {
+        const part = toast.shadowRoot!.querySelector(selector);
+        const rect = part?.getBoundingClientRect();
+        // An empty message shows nothing until its text renders into the live region.
+        if (
+          part &&
+          rect &&
+          (selector !== '.swc-Toast-body' || part.childElementCount > 0)
+        ) {
+          // The message's box stretches with the toast, without its text moving, and it has no
+          // background, so only its start corner shows where it is.
+          const box =
+            selector === '.swc-Toast-body'
+              ? new DOMRect(rtl ? rect.right - 1 : rect.left, rect.top, 1, 1)
+              : rect;
+          add(`part:${key}:${selector}`, {
+            kind: 'part',
+            key,
+            box,
+            opacity: effectiveOpacity(part),
+          });
+        }
+      }
+    }
+  }
+  for (const layer of root.querySelectorAll<HTMLElement>(
+    '.swc-ToastContainer-layer'
+  )) {
+    const key = layer.dataset.key ?? '';
+    add(`layer:${key}`, {
+      kind: 'layer',
+      key,
+      box: layer.getBoundingClientRect(),
+      opacity: effectiveOpacity(layer),
+    });
+  }
+  const controls = controlsOf(container);
+  if (controls) {
+    add('controls', {
+      kind: 'controls',
+      key: 'controls',
+      box: controls.getBoundingClientRect(),
+      opacity: effectiveOpacity(controls),
+    });
+  }
+  return {
+    time: performance.now(),
+    open: Boolean(getDialog(container)?.open),
+    tracks,
+  };
+};
+
+type Recording = {
+  frames: MotionFrame[];
+  durations: number[];
+  start: number;
+};
+
+/**
+ * Runs `action` and records every frame until the motion ends. Each new
+ * animation plays at `rate` from its first frame, and CSS transitions are
+ * set to it on every frame, so the motion plays as a slower device would.
+ */
+const recordMotion = async (
+  container: ToastContainer,
+  rate: number,
+  action: () => unknown
+): Promise<Recording> => {
+  const keyOf = new Map<string, string>();
+  const learnKeys = (): void => {
+    for (const entry of ToastQueue.entries) {
+      keyOf.set(entry.message, entry.key);
+    }
+  };
+  learnKeys();
+  const durations: number[] = [];
+  const animate = Element.prototype.animate;
+  Element.prototype.animate = function (
+    this: Element,
+    ...args: Parameters<Element['animate']>
+  ): Animation {
+    const animation = animate.apply(this, args);
+    animation.playbackRate = rate;
+    const duration = animation.effect?.getTiming().duration;
+    if (typeof duration === 'number') {
+      durations.push(duration);
+    }
+    return animation;
+  };
+  const frames: MotionFrame[] = [];
+  try {
+    frames.push(recordFrame(container, keyOf));
+    const start = performance.now();
+    await action();
+    learnKeys();
+    // Show all's 600ms fade is the longest motion; the extra time lets a late one start.
+    const minimum = (SHOW_ALL_FADE_IN / rate) * 0.5 + 100;
+    for (let frame = 0; frame < MAX_FRAMES; frame++) {
+      await new Promise((resolve) => requestAnimationFrame(resolve));
+      setRate(container, rate);
+      for (const animation of getDialog(container)?.getAnimations({
+        subtree: true,
+      }) ?? []) {
+        animation.playbackRate = rate;
+      }
+      learnKeys();
+      frames.push(recordFrame(container, keyOf));
+      const running = [
+        ...allAnimations(container),
+        ...(getDialog(container)?.getAnimations({ subtree: true }) ?? []),
+      ].some(
+        (animation) => animation.playState === 'running' || animation.pending
+      );
+      if (performance.now() - start >= minimum && !running) {
+        break;
+      }
+    }
+    return { frames, durations, start };
+  } finally {
+    Element.prototype.animate = animate;
+  }
+};
+
+const SHOW_ALL_FADE_IN = 600;
+// Well past the slowest motion: Show all's 600ms fade at 0.25×.
+const MAX_FRAMES = 300;
+
+// Progress of CSS `ease` (cubic-bezier(0.25, 0.1, 0.25, 1)) at `time`, a fraction of the duration.
+const easeProgress = (time: number): number => {
+  const bezier = (t: number, a: number, b: number): number =>
+    3 * (1 - t) ** 2 * t * a + 3 * (1 - t) * t ** 2 * b + t ** 3;
+  let low = 0;
+  let high = 1;
+  for (let step = 0; step < 30; step++) {
+    const middle = (low + high) / 2;
+    if (bezier(middle, 0.25, 0.25) < time) {
+      low = middle;
+    } else {
+      high = middle;
+    }
+  }
+  return bezier((low + high) / 2, 0.1, 1);
+};
+
+const endEdge = (box: DOMRect, rtl?: boolean): number =>
+  rtl ? box.left : box.right;
+
+// Per-60fps-frame size of a step between two frames.
+const stepSize = (
+  a: MotionFrame,
+  b: MotionFrame,
+  before: DOMRect,
+  after: DOMRect
+): number =>
+  (Math.max(
+    Math.abs(before.left - after.left),
+    Math.abs(before.top - after.top),
+    Math.abs(before.right - after.right),
+    Math.abs(before.bottom - after.bottom)
+  ) *
+    1000) /
+  60 /
+  Math.max(1000 / 60, b.time - a.time);
+
+/**
+ * Checks M1–M4 on a recording and returns every violation:
+ * M1, each edge moves one way; M2, nothing moves sideways against its anchor;
+ * M3, no jumps at the ends of a motion or at a handoff; M4, opacity goes one
+ * way and reaches its end before the element goes.
+ */
+const motionViolations = (
+  { frames }: Recording,
+  { rtl, front, rate = 1 }: { rtl?: boolean; front?: string; rate?: number }
+): string[] => {
+  const violations: string[] = [];
+  const ids = new Set(frames.flatMap((frame) => [...frame.tracks.keys()]));
+  const series = (id: string): { frame: MotionFrame; track: Track }[] =>
+    frames.flatMap((frame) => {
+      const track = frame.tracks.get(id);
+      return track ? [{ frame, track }] : [];
+    });
+  // Motion only shows where the element does.
+  const VISIBLE = 0.05;
+  for (const id of ids) {
+    const all = series(id);
+    const points = all.filter(({ track }) => track.opacity > VISIBLE);
+    if (all.length < 2) {
+      continue;
+    }
+    // M1. Each edge moves one way, within 0.5px.
+    for (const edge of points.length > 1
+      ? (['left', 'top', 'right', 'bottom'] as const)
+      : []) {
+      let direction = 0;
+      let extreme = points[0].track.box[edge];
+      for (const { track } of points) {
+        const value = track.box[edge];
+        const delta = value - extreme;
+        if (direction === 0) {
+          if (Math.abs(delta) > 0.5) {
+            direction = Math.sign(delta);
+            extreme = value;
+          }
+          continue;
+        }
+        if (delta * direction > 0) {
+          extreme = value;
+        } else if (Math.abs(delta) > 0.5) {
+          violations.push(
+            `M1 ${id} ${edge} reverses by ${Math.abs(delta).toFixed(1)}px`
+          );
+          break;
+        }
+      }
+    }
+    // M3. The first and last steps of its motion are at most 4px per 60fps frame. A step counts
+    // where it lands on a frame the element shows on.
+    // A part moves with its toast, so its own step is what its background's step does not explain.
+    const anchorId = id.startsWith('part:')
+      ? `background:${id.split(':')[1]}`
+      : undefined;
+    const relative = (frame: MotionFrame, box: DOMRect): DOMRect => {
+      const anchor = anchorId ? frame.tracks.get(anchorId) : undefined;
+      return anchor
+        ? new DOMRect(
+            box.left - anchor.box.left,
+            box.top - anchor.box.top,
+            box.width,
+            box.height
+          )
+        : box;
+    };
+    const steps = all
+      .slice(1)
+      .map((point, index) =>
+        stepSize(
+          all[index].frame,
+          point.frame,
+          relative(all[index].frame, all[index].track.box),
+          relative(point.frame, point.track.box)
+        )
+      );
+    const moving = steps.flatMap((step, index) => (step > 0.1 ? [index] : []));
+    // An `ease` move starts at its own pace: one 60fps frame in, a 200px move has gone 5px. A first
+    // step up to that pace, plus 1px, is the curve and not a jump.
+    const travel = Math.max(
+      ...(['left', 'top', 'right', 'bottom'] as const).map((side) =>
+        Math.abs(all[all.length - 1].track.box[side] - all[0].track.box[side])
+      )
+    );
+    const easeStep =
+      travel * easeProgress(1000 / 60 / (MOVE_DURATION_MS / rate)) + 1;
+    if (moving.length > 0) {
+      for (const [which, index] of [
+        ['first', moving[0]],
+        ['last', moving[moving.length - 1]],
+      ] as const) {
+        if (steps[index] > Math.max(4, which === 'first' ? easeStep : 0)) {
+          const a = all[index];
+          const b = all[index + 1];
+          violations.push(
+            `M3 ${id} ${which} step ${steps[index].toFixed(1)}px at frame ${frames.indexOf(b.frame)}: ${fmt(a.track.box)} → ${fmt(b.track.box)}, opacity ${a.track.opacity.toFixed(2)} → ${b.track.opacity.toFixed(2)}`
+          );
+        }
+      }
+    }
+    // M4. Opacity goes one way, within 0.02.
+    let direction = 0;
+    let extreme = all[0].track.opacity;
+    for (const { track } of all) {
+      const delta = track.opacity - extreme;
+      if (direction === 0) {
+        if (Math.abs(delta) > 0.02) {
+          direction = Math.sign(delta);
+          extreme = track.opacity;
+        }
+        continue;
+      }
+      if (delta * direction > 0) {
+        extreme = track.opacity;
+      } else if (Math.abs(delta) > 0.02) {
+        violations.push(
+          `M4 ${id} opacity reverses by ${Math.abs(delta).toFixed(2)}`
+        );
+        break;
+      }
+    }
+  }
+
+  // M2. The controls follow the front toast's end edge, parts their toast's background, and a
+  // fading copy its layer.
+  const anchorOf = (id: string): string | undefined => {
+    if (id === 'controls') {
+      return front ? `background:${front}` : undefined;
+    }
+    const [kind, key] = id.split(':');
+    if (kind === 'part') {
+      return `background:${key}`;
+    }
+    if (kind === 'copy') {
+      return `layer:${key}`;
+    }
+    return undefined;
+  };
+  for (const id of ids) {
+    const anchor = anchorOf(id);
+    if (!anchor) {
+      continue;
+    }
+    const pairs = frames.flatMap((frame) => {
+      const element = frame.tracks.get(id);
+      const target = frame.tracks.get(anchor);
+      return element && target ? [{ element, target }] : [];
+    });
+    if (pairs.length < 2) {
+      continue;
+    }
+    // The message's box stretches with its toast, so its start edge is the one that shows.
+    const edge = id.endsWith('.swc-Toast-body')
+      ? (box: DOMRect): number => endEdge(box, !rtl)
+      : (box: DOMRect): number => endEdge(box, rtl);
+    const elementStart = edge(pairs[0].element.box);
+    const anchorStart = edge(pairs[0].target.box);
+    const anchorMoves = pairs.map(
+      ({ target }) => edge(target.box) - anchorStart
+    );
+    const anchorTravel = anchorMoves[anchorMoves.length - 1];
+    const anchorStill = anchorMoves.every((move) => Math.abs(move) <= 0.5);
+    for (const { element } of pairs) {
+      const move = edge(element.box) - elementStart;
+      if (
+        anchorStill ? Math.abs(move) > 1 : move * Math.sign(anchorTravel) < -1
+      ) {
+        violations.push(
+          `M2 ${id} end edge moves ${move.toFixed(1)}px against ${anchor} (${anchorTravel.toFixed(1)}px)`
+        );
+        break;
+      }
+    }
+  }
+
+  // M3 at handoffs: whatever shows a toast (its background, its fading copy, or its layer) keeps
+  // its place when one takes over from another, and nothing moves when the view gives way to the
+  // stack.
+  const keys = new Set(
+    [...ids].flatMap((id) => {
+      const [kind, key] = id.split(':');
+      return ['background', 'copy', 'layer'].includes(kind) ? [key] : [];
+    })
+  );
+  for (const key of keys) {
+    const shown = (frame: MotionFrame): Track | undefined =>
+      [`background:${key}`, `copy:${key}`, `layer:${key}`]
+        .map((id) => frame.tracks.get(id))
+        .find((track) => track && track.opacity > 0.02);
+    for (let index = 1; index < frames.length; index++) {
+      const before = shown(frames[index - 1]);
+      const after = shown(frames[index]);
+      if (!before || !after || before.kind === after.kind) {
+        continue;
+      }
+      // Layers are one toast high, so the edge away from the anchor, the start edge, and the width.
+      const far = (box: DOMRect): number =>
+        Math.abs(before.box.top - after.box.top) <=
+        Math.abs(before.box.bottom - after.box.bottom)
+          ? box.top
+          : box.bottom;
+      const change = Math.max(
+        Math.abs(before.box.left - after.box.left),
+        Math.abs(before.box.width - after.box.width),
+        Math.abs(far(before.box) - far(after.box))
+      );
+      if (change > 1) {
+        violations.push(
+          `M3 ${key} handoff ${before.kind} → ${after.kind} moves ${change.toFixed(1)}px: ${fmt(before.box)} → ${fmt(after.box)}`
+        );
+      }
+    }
+  }
+  for (let index = 1; index < frames.length; index++) {
+    if (frames[index - 1].open === frames[index].open) {
+      continue;
+    }
+    for (const [id, after] of frames[index].tracks) {
+      const before = frames[index - 1].tracks.get(id);
+      if (before && after.opacity > 0.02 && !near(before.box, after.box, 1)) {
+        violations.push(
+          `M3 ${id} moves at the swap: ${fmt(before.box)} → ${fmt(after.box)}`
+        );
+      }
+    }
+  }
+
+  // M4. Anything that goes without a handoff has faded out first.
+  for (const id of ids) {
+    const points = series(id);
+    const last = points[points.length - 1];
+    if (last.frame === frames[frames.length - 1]) {
+      continue;
+    }
+    const [kind, key] = id.split(':');
+    const next = frames[frames.indexOf(last.frame) + 1];
+    const handedOff =
+      kind === 'part'
+        ? !next.tracks.has(`background:${key}`)
+        : ['background', 'copy', 'layer'].some(
+            (other) => other !== kind && next.tracks.has(`${other}:${key}`)
+          );
+    if (!handedOff && last.track.opacity > 0.05) {
+      violations.push(
+        `M4 ${id} goes at opacity ${last.track.opacity.toFixed(2)} after frame ${frames.indexOf(last.frame)}; next frame shows ${[...next.tracks.keys()].filter((other) => other.includes(key)).join(', ') || 'nothing of it'}`
+      );
+    }
+  }
+  return violations;
+};
+
+type MotionAction =
+  | 'add'
+  | 'close front'
+  | 'close in list'
+  | 'expand'
+  | 'collapse'
+  | 'collapse Escape'
+  | 'clear stacked'
+  | 'clear expanded'
+  | 'hover'
+  | 'leave';
+
+const MESSAGES = [
+  'First notification',
+  'Second notification',
+  'Third notification',
+];
+
+// Sets up `count` toasts, expanded when the action starts from the expanded view.
+const setUpMotion = async (
+  container: ToastContainer,
+  placement: Pick<MotionCase, 'placement' | 'rtl'>,
+  count: number,
+  expanded: boolean
+): Promise<void> => {
+  await setUpCase(container, { ...placement, rate: 1 });
+  for (const message of MESSAGES.slice(0, Math.max(count, expanded ? 2 : 0))) {
+    ToastQueue.add(message);
+  }
+  if (count === 0) {
+    return;
+  }
+  let front = await getFront(container);
+  await settle(front, getRegion(container));
+  if (!expanded) {
+    return;
+  }
+  showAllOf(front)!.click();
+  await waitForExpanded(container, true);
+  await settle(...renderedToasts(container));
+  if (count === 1) {
+    front = renderedToasts(container).find(
+      (toast) => toast.textContent?.trim() === MESSAGES[1]
+    )!;
+    const other = renderedToasts(container).find((toast) => toast !== front)!;
+    closeButtonOf(other).click();
+    await waitFor(() => expect(renderedToasts(container)).toHaveLength(1));
+  }
+  await settle(...renderedToasts(container));
+  await new Promise((resolve) => setTimeout(resolve, 100));
+};
+
+const EXPANDED_ACTIONS: MotionAction[] = [
+  'close in list',
+  'collapse',
+  'collapse Escape',
+  'clear expanded',
+];
+
+const runAction = async (
+  container: ToastContainer,
+  action: MotionAction
+): Promise<void> => {
+  const listed = renderedToasts(container);
+  const front = ToastQueue.entries[0]?.message;
+  const toastOf = (message: string | undefined): Toast | undefined =>
+    listed.find((toast) => toast.textContent?.trim() === message);
+  switch (action) {
+    case 'add':
+      ToastQueue.add('New notification');
+      return;
+    case 'close front':
+      closeButtonOf(toastOf(front)!).click();
+      return;
+    case 'close in list':
+      closeButtonOf(toastOf(ToastQueue.entries[1]?.message)!).click();
+      return;
+    case 'expand':
+      showAllOf(toastOf(front)!)!.click();
+      return;
+    case 'collapse':
+      controlOf(container, 'Collapse').click();
+      return;
+    case 'collapse Escape':
+      await userEvent.keyboard('{Escape}');
+      return;
+    case 'clear stacked':
+      ToastQueue.clear();
+      return;
+    case 'clear expanded':
+      controlOf(container, 'Clear all').click();
+      return;
+    case 'hover':
+      await userEvent.hover(toastOf(front)!);
+      return;
+    case 'leave':
+      await userEvent.hover(container.ownerDocument.querySelector('#outside')!);
+      return;
+  }
+};
+
+type MotionRun = { action: MotionAction; counts: number[]; rate: number };
+
+const motionRulesStory = (
+  placement: Pick<MotionCase, 'placement' | 'rtl'>,
+  runs: MotionRun[]
+): Story => ({
+  play: async ({ canvasElement, step }) => {
+    const container = await getComponent<ToastContainer>(
+      canvasElement,
+      'swc-toast-container'
+    );
+    const found: string[] = [];
+    try {
+      // The first toast on the page can load its font mid-motion, which reflows it; that is not motion.
+      ToastQueue.add('Font warm-up');
+      await settle(await getFront(container));
+      await container.ownerDocument.fonts.ready;
+      for (const { action, counts, rate } of runs) {
+        for (const count of counts) {
+          await step(
+            `${action}, ${count} toast${count === 1 ? '' : 's'}, ${caseName({ ...placement, rate })}`,
+            async () => {
+              const expanded = EXPANDED_ACTIONS.includes(action);
+              await setUpMotion(container, placement, count, expanded);
+              if (action === 'leave') {
+                await runAction(container, 'hover');
+                // The peek's 400ms transition ends.
+                await new Promise((resolve) => setTimeout(resolve, 600));
+              }
+              if (action === 'collapse Escape') {
+                controlOf(container, 'Collapse').focus();
+              }
+              const front = ToastQueue.entries[0]?.key;
+              const recording = await recordMotion(container, rate, () =>
+                runAction(container, action)
+              );
+              const after = ToastQueue.entries[0]?.key;
+              const violations = motionViolations(recording, {
+                rtl: placement.rtl,
+                front: after ?? front,
+                rate,
+              });
+              found.push(
+                ...violations.map(
+                  (violation) =>
+                    `${action}, ${count}, ${caseName({ ...placement, rate })}: ${violation}`
+                )
+              );
+              // The open view covers the page, so the pointer can leave only a stack.
+              if (!getDialog(container)?.open) {
+                await userEvent.hover(
+                  container.ownerDocument.querySelector('#outside')!
+                );
+              }
+            }
+          );
+        }
+      }
+      expect(found, 'motion rules').toEqual([]);
+    } finally {
+      ToastQueue.clear();
+    }
+  },
+});
+
+const MOTION_RUNS = {
+  Add: [{ action: 'add', counts: [0, 1, 2], rate: 1 }] as MotionRun[],
+  CloseFront: [
+    { action: 'close front', counts: [1, 2, 3], rate: 1 },
+  ] as MotionRun[],
+  ClearStacked: [
+    { action: 'clear stacked', counts: [1, 2, 3], rate: 1 },
+  ] as MotionRun[],
+  Hover: [
+    { action: 'hover', counts: [2, 3], rate: 1 },
+    { action: 'leave', counts: [2, 3], rate: 1 },
+  ] as MotionRun[],
+  Expand: [{ action: 'expand', counts: [2, 3], rate: 1 }] as MotionRun[],
+  CloseInList: [
+    { action: 'close in list', counts: [2, 3], rate: 1 },
+  ] as MotionRun[],
+  ClearExpanded: [
+    { action: 'clear expanded', counts: [1, 2, 3], rate: 1 },
+  ] as MotionRun[],
+  Collapse: [{ action: 'collapse', counts: [1, 2, 3], rate: 1 }] as MotionRun[],
+  CollapseEscape: [
+    { action: 'collapse Escape', counts: [1, 2, 3], rate: 1 },
+  ] as MotionRun[],
+  SlowExpand: [{ action: 'expand', counts: [2], rate: 0.25 }] as MotionRun[],
+  SlowExpandThree: [
+    { action: 'expand', counts: [3], rate: 0.25 },
+  ] as MotionRun[],
+  SlowCollapse: [
+    { action: 'collapse', counts: [1, 2], rate: 0.25 },
+  ] as MotionRun[],
+  SlowCollapseThree: [
+    { action: 'collapse', counts: [3], rate: 0.25 },
+  ] as MotionRun[],
+  SlowClearExpanded: [
+    { action: 'clear expanded', counts: [2, 3], rate: 0.25 },
+  ] as MotionRun[],
+  SlowClearStacked: [
+    { action: 'clear stacked', counts: [1, 2, 3], rate: 0.25 },
+  ] as MotionRun[],
+};
+
+const [BOTTOM, TOP, END_RTL] = CONTROLS_PLACEMENTS;
+
+export const MotionRulesAddTest = motionRulesStory(BOTTOM, MOTION_RUNS.Add);
+export const MotionRulesAddTopTest = motionRulesStory(TOP, MOTION_RUNS.Add);
+export const MotionRulesAddEndRtlTest = motionRulesStory(
+  END_RTL,
+  MOTION_RUNS.Add
+);
+export const MotionRulesCloseFrontTest = motionRulesStory(
+  BOTTOM,
+  MOTION_RUNS.CloseFront
+);
+export const MotionRulesCloseFrontTopTest = motionRulesStory(
+  TOP,
+  MOTION_RUNS.CloseFront
+);
+export const MotionRulesCloseFrontEndRtlTest = motionRulesStory(
+  END_RTL,
+  MOTION_RUNS.CloseFront
+);
+export const MotionRulesClearStackedTest = motionRulesStory(
+  BOTTOM,
+  MOTION_RUNS.ClearStacked
+);
+export const MotionRulesClearStackedTopTest = motionRulesStory(
+  TOP,
+  MOTION_RUNS.ClearStacked
+);
+export const MotionRulesClearStackedEndRtlTest = motionRulesStory(
+  END_RTL,
+  MOTION_RUNS.ClearStacked
+);
+export const MotionRulesHoverTest = motionRulesStory(BOTTOM, MOTION_RUNS.Hover);
+export const MotionRulesHoverTopTest = motionRulesStory(TOP, MOTION_RUNS.Hover);
+export const MotionRulesHoverEndRtlTest = motionRulesStory(
+  END_RTL,
+  MOTION_RUNS.Hover
+);
+export const MotionRulesExpandTest = motionRulesStory(
+  BOTTOM,
+  MOTION_RUNS.Expand
+);
+export const MotionRulesExpandTopTest = motionRulesStory(
+  TOP,
+  MOTION_RUNS.Expand
+);
+export const MotionRulesExpandEndRtlTest = motionRulesStory(
+  END_RTL,
+  MOTION_RUNS.Expand
+);
+export const MotionRulesCloseInListTest = motionRulesStory(
+  BOTTOM,
+  MOTION_RUNS.CloseInList
+);
+export const MotionRulesCloseInListTopTest = motionRulesStory(
+  TOP,
+  MOTION_RUNS.CloseInList
+);
+export const MotionRulesCloseInListEndRtlTest = motionRulesStory(
+  END_RTL,
+  MOTION_RUNS.CloseInList
+);
+export const MotionRulesClearExpandedTest = motionRulesStory(
+  BOTTOM,
+  MOTION_RUNS.ClearExpanded
+);
+export const MotionRulesClearExpandedTopTest = motionRulesStory(
+  TOP,
+  MOTION_RUNS.ClearExpanded
+);
+export const MotionRulesClearExpandedEndRtlTest = motionRulesStory(
+  END_RTL,
+  MOTION_RUNS.ClearExpanded
+);
+export const MotionRulesCollapseTest = motionRulesStory(
+  BOTTOM,
+  MOTION_RUNS.Collapse
+);
+export const MotionRulesCollapseTopTest = motionRulesStory(
+  TOP,
+  MOTION_RUNS.Collapse
+);
+export const MotionRulesCollapseEndRtlTest = motionRulesStory(
+  END_RTL,
+  MOTION_RUNS.Collapse
+);
+export const MotionRulesCollapseEscapeTest = motionRulesStory(
+  BOTTOM,
+  MOTION_RUNS.CollapseEscape
+);
+export const MotionRulesCollapseEscapeTopTest = motionRulesStory(
+  TOP,
+  MOTION_RUNS.CollapseEscape
+);
+export const MotionRulesCollapseEscapeEndRtlTest = motionRulesStory(
+  END_RTL,
+  MOTION_RUNS.CollapseEscape
+);
+export const MotionRulesSlowExpandTest = motionRulesStory(
+  BOTTOM,
+  MOTION_RUNS.SlowExpand
+);
+export const MotionRulesSlowExpandTopTest = motionRulesStory(
+  TOP,
+  MOTION_RUNS.SlowExpand
+);
+export const MotionRulesSlowExpandEndRtlTest = motionRulesStory(
+  END_RTL,
+  MOTION_RUNS.SlowExpand
+);
+export const MotionRulesSlowExpandThreeTest = motionRulesStory(
+  BOTTOM,
+  MOTION_RUNS.SlowExpandThree
+);
+export const MotionRulesSlowExpandThreeTopTest = motionRulesStory(
+  TOP,
+  MOTION_RUNS.SlowExpandThree
+);
+export const MotionRulesSlowExpandThreeEndRtlTest = motionRulesStory(
+  END_RTL,
+  MOTION_RUNS.SlowExpandThree
+);
+export const MotionRulesSlowCollapseTest = motionRulesStory(
+  BOTTOM,
+  MOTION_RUNS.SlowCollapse
+);
+export const MotionRulesSlowCollapseTopTest = motionRulesStory(
+  TOP,
+  MOTION_RUNS.SlowCollapse
+);
+export const MotionRulesSlowCollapseEndRtlTest = motionRulesStory(
+  END_RTL,
+  MOTION_RUNS.SlowCollapse
+);
+export const MotionRulesSlowCollapseThreeTest = motionRulesStory(
+  BOTTOM,
+  MOTION_RUNS.SlowCollapseThree
+);
+export const MotionRulesSlowCollapseThreeTopTest = motionRulesStory(
+  TOP,
+  MOTION_RUNS.SlowCollapseThree
+);
+export const MotionRulesSlowCollapseThreeEndRtlTest = motionRulesStory(
+  END_RTL,
+  MOTION_RUNS.SlowCollapseThree
+);
+export const MotionRulesSlowClearExpandedTest = motionRulesStory(
+  BOTTOM,
+  MOTION_RUNS.SlowClearExpanded
+);
+export const MotionRulesSlowClearExpandedTopTest = motionRulesStory(
+  TOP,
+  MOTION_RUNS.SlowClearExpanded
+);
+export const MotionRulesSlowClearExpandedEndRtlTest = motionRulesStory(
+  END_RTL,
+  MOTION_RUNS.SlowClearExpanded
+);
+export const MotionRulesSlowClearStackedTest = motionRulesStory(
+  BOTTOM,
+  MOTION_RUNS.SlowClearStacked
+);
+export const MotionRulesSlowClearStackedTopTest = motionRulesStory(
+  TOP,
+  MOTION_RUNS.SlowClearStacked
+);
+export const MotionRulesSlowClearStackedEndRtlTest = motionRulesStory(
+  END_RTL,
+  MOTION_RUNS.SlowClearStacked
+);
+
+// Where each moving edge of `id` is, as a fraction of its travel, at 25%, 50%, and 75% of the
+// motion's time, counted from when that edge starts to move.
+const pathFractions = (
+  { frames }: Recording,
+  id: string,
+  rate: number
+): Record<string, number[]> => {
+  const duration = MOVE_DURATION_MS / rate;
+  const points = frames.flatMap((frame) => {
+    const track = frame.tracks.get(id);
+    return track ? [{ time: frame.time, box: track.box }] : [];
+  });
+  const result: Record<string, number[]> = {};
+  if (points.length < 2) {
+    return result;
+  }
+  for (const edge of ['left', 'top', 'right', 'bottom'] as const) {
+    const first = points[0].box[edge];
+    const last = points[points.length - 1].box[edge];
+    // With less travel, a frame's timing is a large share of it.
+    if (Math.abs(last - first) <= 10) {
+      continue;
+    }
+    const startIndex = points.findIndex(
+      ({ box }) => Math.abs(box[edge] - first) > 0.1
+    );
+    // It started between the last frame it was still and the first it moved on.
+    const start =
+      (points[Math.max(0, startIndex - 1)].time + points[startIndex].time) / 2;
+    result[edge] = [0.25, 0.5, 0.75].map((fraction) => {
+      const time = start + fraction * duration;
+      const after = points.findIndex((point) => point.time >= time);
+      if (after <= 0) {
+        return Number.NaN;
+      }
+      const a = points[after - 1];
+      const b = points[after];
+      const value =
+        a.box[edge] +
+        ((b.box[edge] - a.box[edge]) * (time - a.time)) /
+          Math.max(1, b.time - a.time);
+      return (value - first) / (last - first);
+    });
+  }
+  return result;
+};
+
+const MOVE_DURATION_MS = 400;
+
+const M5_MESSAGES = [
+  'Hi',
+  'Your changes to the shared quarterly planning document were saved, and everyone with access can now see them',
+];
+
+/**
+ * M5. The same motion for any message length: the controls' zoom, every
+ * duration, and the shape of each path match within 2% for a short message
+ * and a two-line one.
+ */
+const sameMotionStory = (action: 'expand' | 'collapse'): Story => ({
+  play: async ({ canvasElement, step }) => {
+    const container = await getComponent<ToastContainer>(
+      canvasElement,
+      'swc-toast-container'
+    );
+    const rate = 0.25;
+    try {
+      ToastQueue.add('Font warm-up');
+      await settle(await getFront(container));
+      await container.ownerDocument.fonts.ready;
+      const results: {
+        zoom: number;
+        durations: number[];
+        paths: Record<string, Record<string, number[]>>;
+      }[] = [];
+      for (const message of M5_MESSAGES) {
+        await step(`M5 ${action}, "${message.slice(0, 20)}"`, async () => {
+          await setUpCase(container, { placement: 'bottom', rate: 1 });
+          ToastQueue.add('Other notification');
+          const key = ToastQueue.add(message);
+          const front = await getFront(container);
+          await settle(front, getRegion(container));
+          if (action === 'collapse') {
+            showAllOf(front)!.click();
+            await waitForExpanded(container, true);
+            await settle(...renderedToasts(container));
+            await new Promise((resolve) => setTimeout(resolve, 100));
+          }
+          const recording = await recordMotion(container, rate, () =>
+            action === 'expand'
+              ? showAllOf(front)!.click()
+              : controlOf(container, 'Collapse').click()
+          );
+          const controls = recording.frames
+            .map((frame) => frame.tracks.get('controls'))
+            .filter((track): track is Track => Boolean(track));
+          const zoomed =
+            action === 'expand' ? controls[0] : controls[controls.length - 1];
+          const rest =
+            action === 'expand' ? controls[controls.length - 1] : controls[0];
+          results.push({
+            zoom: zoomed && rest ? zoomed.box.width / rest.box.width : 0,
+            durations: [...new Set(recording.durations)].sort((a, b) => a - b),
+            paths: {
+              background: pathFractions(recording, `background:${key}`, rate),
+              controls: pathFractions(recording, 'controls', rate),
+            },
+          });
+        });
+      }
+      const [short, long] = results;
+      expect(
+        Math.abs(short.zoom - long.zoom),
+        `controls zoom ${short.zoom.toFixed(3)} vs ${long.zoom.toFixed(3)}`
+      ).toBeLessThanOrEqual(0.02);
+      expect(long.durations, 'durations').toEqual(short.durations);
+      for (const element of ['background', 'controls']) {
+        for (const [edge, fractions] of Object.entries(short.paths[element])) {
+          const other = long.paths[element][edge];
+          if (!other) {
+            continue;
+          }
+          for (const [index, fraction] of fractions.entries()) {
+            expect(
+              Math.abs(fraction - other[index]),
+              `${element} ${edge} at ${(index + 1) * 25}%: ${fraction.toFixed(3)} vs ${other[index].toFixed(3)}`
+            ).toBeLessThanOrEqual(0.02);
+          }
+        }
+      }
+    } finally {
+      ToastQueue.clear();
+    }
+  },
+});
+
+export const MotionSameForAnyMessageExpandTest = sameMotionStory('expand');
+export const MotionSameForAnyMessageCollapseTest = sameMotionStory('collapse');

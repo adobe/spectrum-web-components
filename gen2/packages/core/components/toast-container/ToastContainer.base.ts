@@ -125,6 +125,8 @@ export abstract class ToastContainerBase extends SpectrumElement {
   private _frontKey?: string;
   private _focusWithin = false;
   private _lastFocused?: HTMLElement;
+  // Where focus returns once an emptied expanded view finishes animating out.
+  private _focusAfterEmpty?: HTMLElement;
   // True when the last input in the region was a pointer, which decides where focus goes when the front changes.
   private _pointerInput = false;
   private _focusFrontOnOpen = false;
@@ -186,6 +188,13 @@ export abstract class ToastContainerBase extends SpectrumElement {
     super.disconnectedCallback();
   }
 
+  // A disconnected container must not render: it would register its own toasts for the shared
+  // queue's entries, taking over their close lifecycle from the container that shows them.
+  // Connecting again requests an update (`handleQueueChange()`).
+  protected override shouldUpdate(changedProperties: PropertyValues): boolean {
+    return this.isConnected && super.shouldUpdate(changedProperties);
+  }
+
   protected override update(changedProperties: PropertyValues): void {
     validateEnum(this, {
       prop: 'placement',
@@ -231,6 +240,29 @@ export abstract class ToastContainerBase extends SpectrumElement {
    * last point at which the stack can be measured as it was.
    */
   protected willChangeFront(): void {}
+
+  /**
+   * Called when the queue empties while expanded. Closes the view at once; a
+   * subclass can animate the view out first, then call `finishEmptyView()`.
+   */
+  protected closeEmptyView(): void {
+    this.finishEmptyView();
+  }
+
+  /** Closes the expanded view after the queue emptied, unless a toast arrived since. */
+  protected finishEmptyView(): void {
+    if (!this.expanded || this.frontEntry) {
+      this._focusAfterEmpty = undefined;
+      return;
+    }
+    this.teardownExpanded();
+    this.expanded = false;
+    const target = this._focusAfterEmpty;
+    this._focusAfterEmpty = undefined;
+    if (target?.isConnected) {
+      target.focus({ preventScroll: true });
+    }
+  }
 
   /** Closes the expanded view. `focusRegion` moves focus to the collapsed region. */
   protected collapse(focusRegion: boolean): void {
@@ -439,9 +471,8 @@ export abstract class ToastContainerBase extends SpectrumElement {
     const key = this.frontEntry?.key;
     // The expanded view collapses on its own when the queue empties, with no focus redirect.
     if (!key && this.expanded) {
-      this.teardownExpanded();
       this._focusRegionOnCollapse = false;
-      this.expanded = false;
+      this.closeEmptyView();
     }
     // An add always lands at the front, so every add changes the front key. Only removing a non-front entry skips this block.
     if (key !== this._frontKey) {
@@ -454,7 +485,12 @@ export abstract class ToastContainerBase extends SpectrumElement {
         (deepContains(this, active) || active === this.ownerDocument.body) &&
         this._lastFocused?.isConnected
       ) {
-        this._lastFocused.focus({ preventScroll: true });
+        // Outside a modal view that is still animating out, focus would not move; it moves once the view closes.
+        if (this.expanded) {
+          this._focusAfterEmpty = this._lastFocused;
+        } else {
+          this._lastFocused.focus({ preventScroll: true });
+        }
       }
       // The old toast's timer never carries over; openToast() starts the new one.
       this.countdown.stop();
