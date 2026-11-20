@@ -49,7 +49,7 @@ This page is for gen2 `swc-menu-separator` in Spectrum Web Components. It is a n
 - Place it as a **direct** list child of `swc-menu`, `swc-action-menu`, or `swc-menu-item` (submenu when the item’s `submenu` slot is in use). **Not** inside `swc-menu-group` ([Menu group](../menu-group/component-accessibility-specification.md#what-swc-menu-group-is-gen2)).
 - It is not a `menuitem`. [FocusgroupNavigationController](https://github.com/adobe/spectrum-web-components/pull/6129) should skip it for roving focus, like 1st-gen `sp-menu-separator` tests.
 
-1st-gen used [`sp-menu-separator` / `MenuDivider`](https://github.com/adobe/spectrum-web-components/blob/main/1st-gen/packages/menu/src/MenuDivider.ts) with `role="separator"` on the host. gen2 should match; confirm attribute timing in source before you lock this copy.
+1st-gen used [`sp-menu-separator` / `MenuDivider`](https://github.com/adobe/spectrum-web-components/blob/main/1st-gen/packages/menu/src/MenuDivider.ts) with `role="separator"` on the host. gen2 matches, and sets the role in `connectedCallback` so it is present before the first render.
 
 **Docs and examples:** avoid separators unless they sit next to [labelled `swc-menu-group`](../menu-group/component-accessibility-specification.md#what-swc-menu-group-is-gen2) blocks. Random lines between loose items can add screen reader noise; prefer real groups for structure.
 
@@ -86,7 +86,7 @@ This page is for gen2 `swc-menu-separator` in Spectrum Web Components. It is a n
 | Idea | Plain meaning |
 | --- | --- |
 | [Name, role, value (4.1.2)](https://www.w3.org/WAI/WCAG22/Understanding/name-role-value) | **`role="separator"`** with **no** progress value semantics (no **`aria-valuenow`**, **`aria-valuemax`**, etc.—not a draggable splitter—see [WAI-ARIA: `separator`](https://www.w3.org/TR/wai-aria/#separator)). Accessible name: usually omit; **`aria-label`** only if authors must verbalize unusual structure (avoid unnecessary verbosity). |
-| [Non-text contrast (1.4.11)](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast) | The **line** should meet contrast against the menu panel background consistent with **`swc-menu`** styling tokens. |
+| [Non-text contrast (1.4.11)](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast) | The **line** uses `gray-200`, following the Spectrum 2 design and React Spectrum, which is below 3:1 against the menu panel. Design decided to keep it for 2.0 and revisit divider contrast system-wide later. |
 
 **Bottom line:** `swc-menu-separator` is a visual and semantic line, not a focus stop. The parent `swc-menu` / `swc-action-menu` / `swc-menu-item` list and `FocusgroupNavigationController` own movement.
 
@@ -167,7 +167,7 @@ Compose **menu + separator + items** paths; reconcile with [Menu — Manual and 
 - [ ] Parent is `swc-menu`, `swc-action-menu`, or `swc-menu-item` (submenu) as a direct list child—[Overview](#overview). No slotted children; not under `swc-menu-group` ([group parent rule](../menu-group/component-accessibility-specification.md#what-swc-menu-group-is-gen2)). In docs, only when between labelled `swc-menu-group` blocks when you can ([Overview](#overview)).
 - [ ] Host **`role="separator"`**, **non-focusable**, **no** draggable **value semantics** (**verify timing** versus **`sp-menu-separator`** in gen2 source).
 - [ ] **`FocusgroupNavigationController`** skips separator for **menuitem** traversal; **manual** sanity on **Escape** returning to trigger or **submenu** **parent** follows the **`swc-menu`** / **`swc-action-menu`** / **`swc-menu-item`** docs.
-- [ ] Visual **contrast** for line versus menu background aligns with **`swc-menu`** tokens.
+- [ ] Line color follows the Spectrum 2 design (`gray-200`); system-wide divider contrast is tracked by Design for a later revisit.
 - [ ] **`menuitemcheckbox`** / **`menuitemradio`** rows and selection separators **defer** per [menu migration scope](../menu/component-accessibility-specification.md#migration-scope-current)—do not document selectable-separator UX here prematurely.
 
 ---
