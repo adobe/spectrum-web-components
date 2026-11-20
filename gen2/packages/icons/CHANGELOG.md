@@ -1,5 +1,19 @@
 # @adobe/spectrum-wc-icons
 
+## 2.0.0-beta.8
+
+### Minor Changes
+
+- **icons**:
+  - [#6921](https://github.com/adobe/spectrum-web-components/pull/6921) [`cc19eb9`](https://github.com/adobe/spectrum-web-components/commit/cc19eb990c9e76a642d3c002ac26f673c1e84ded) Thanks [@rubencarvalho](https://github.com/rubencarvalho)! - **feat(icons):** Update workflow icons to S2 Icon Global Set Open Source 7.6.0.
+
+    Add `AIChatConversation`, `AIExpand`, `AIFill`, `AIImageGenerate`, `AIImage`, `AILayer`, and `AISearch` as custom elements and SVG-string functions. All seven icons are included in the workflow icon gallery.
+
+### Patch Changes
+
+- **icons**:
+  - [#6934](https://github.com/adobe/spectrum-web-components/pull/6934) [`3989392`](https://github.com/adobe/spectrum-web-components/commit/3989392725a4e858dad5d1f5e419509d1a670f74) Thanks [@cdransf](https://github.com/cdransf)! - **fix(icons):** Stopped rewriting an invalid `size` on workflow icons, including a different letter case such as `"M"`, to a valid size. The value you set stays on the attribute and property, a development warning names it, and the icon renders at the default size. An empty `size=""`, which was rewritten to the default, now stays on the attribute and warns too.
+
 ## 2.0.0-beta.7
 
 ### Minor Changes
