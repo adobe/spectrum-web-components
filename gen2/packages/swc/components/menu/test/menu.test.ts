@@ -63,9 +63,10 @@ const keyEvent = (type: 'keydown' | 'keyup', key: string): KeyboardEvent =>
     cancelable: true,
   });
 
-// Rows activate on `keyup`, so a synthetic press has to send both halves or
-// nothing is activated. The keydown is returned because that is the half the
-// component cancels, for example to trap Tab.
+// Rows activate on `keydown`, but a real press sends both halves and the menu
+// guards against the keyup of the press that chose a row, so a synthetic press
+// has to send both. The keydown is returned because that is the half the
+// component cancels, for example to claim Enter from the browser.
 const pressFromActiveRow = (key: string): KeyboardEvent => {
   const target = document.activeElement ?? document.body;
   const down = keyEvent('keydown', key);
@@ -1956,23 +1957,64 @@ export const ItemTypeaheadTest: Story = {
   },
 };
 
+export const ItemTypeaheadDisabledSkipTest: Story = {
+  // `Delete` is disabled and sits between two rows. Each case is its own story
+  // so the search starts from an empty typeahead buffer; the buffer only
+  // clears on a timer or on close, so sharing a menu between cases would mean
+  // waiting it out, and a stale prefix matching nothing would let the
+  // assertion pass without exercising the disabled path at all.
+  render: () =>
+    rowsInMenu(
+      html`
+        <swc-menu-item><span slot="label">Cut</span></swc-menu-item>
+        <swc-menu-item disabled><span slot="label">Delete</span></swc-menu-item>
+        <swc-menu-item><span slot="label">Duplicate</span></swc-menu-item>
+      `,
+      'typeahead-disabled-skip-trigger'
+    ),
+  play: async ({ canvasElement, step }) => {
+    const trigger = canvasElement.querySelector(
+      '#typeahead-disabled-skip-trigger'
+    ) as HTMLElement;
+    const menu = canvasElement.querySelector('swc-menu') as HTMLElement & {
+      open: boolean;
+    };
+
+    await userEvent.click(trigger);
+    await waitFor(() => expect(menu.open).toBe(true));
+    const rows = getRows(canvasElement);
+    await waitFor(() => expect(document.activeElement).toBe(rows[0]));
+
+    await step('a disabled row does not block a later match', async () => {
+      expect(rows[1].getAttribute('aria-disabled'), 'Delete is disabled').toBe(
+        'true'
+      );
+
+      // `d` matches disabled Delete before Duplicate. Skipping it during the
+      // search rather than stopping at it is what lets Duplicate win, which is
+      // how React Spectrum resolves typeahead.
+      rows[0].dispatchEvent(keyEvent('keydown', 'd'));
+
+      expect(document.activeElement, 'focus reaches Duplicate').toBe(rows[2]);
+    });
+  },
+};
+
 export const ItemTypeaheadDisabledOnlyMatchTest: Story = {
   render: () =>
     rowsInMenu(
-      // `Delete` is the only row answering to `d`, and it is disabled. A
-      // prefix shared with an enabled row, such as `co` against Cut and Copy,
-      // cannot isolate this: the intermediate `c` matches Cut and moves focus
-      // there legitimately, which is what typeahead is supposed to do.
+      // Here `d` answers to the disabled row and to nothing else, so there is
+      // no reachable match at all.
       html`
         <swc-menu-item><span slot="label">Cut</span></swc-menu-item>
         <swc-menu-item disabled><span slot="label">Delete</span></swc-menu-item>
         <swc-menu-item><span slot="label">Paste</span></swc-menu-item>
       `,
-      'typeahead-disabled-trigger'
+      'typeahead-disabled-only-trigger'
     ),
   play: async ({ canvasElement, step }) => {
     const trigger = canvasElement.querySelector(
-      '#typeahead-disabled-trigger'
+      '#typeahead-disabled-only-trigger'
     ) as HTMLElement;
     const menu = canvasElement.querySelector('swc-menu') as HTMLElement & {
       open: boolean;
@@ -1986,23 +2028,11 @@ export const ItemTypeaheadDisabledOnlyMatchTest: Story = {
     await step(
       'a prefix only a disabled row answers to moves nothing',
       async () => {
-        expect(
-          rows[1].getAttribute('aria-disabled'),
-          'Delete is disabled'
-        ).toBe('true');
-
-        // Start from Paste. Focus has to sit somewhere other than the first
-        // enabled row, or a fallback landing on Cut would be invisible.
-        rows[0].dispatchEvent(keyEvent('keydown', 'p'));
+        // Focus starts on Cut, so a fallback to the first enabled row would be
+        // invisible. Move to Paste with End, which leaves the buffer empty.
+        rows[0].dispatchEvent(keyEvent('keydown', 'End'));
         expect(document.activeElement, 'focus starts on Paste').toBe(rows[2]);
 
-        // The buffer is shared across presses, so it has to expire or the next
-        // search reads as `pd` and matches nothing for the wrong reason.
-        await new Promise((resolve) => setTimeout(resolve, 600));
-
-        // A disabled row cannot take the roving tab stop, so the controller
-        // redirects it to the first enabled row. Focusing that would land on
-        // Cut, which the typed prefix never named.
         rows[2].dispatchEvent(keyEvent('keydown', 'd'));
 
         expect(document.activeElement, 'focus stays on Paste').toBe(rows[2]);
@@ -2546,6 +2576,62 @@ export const ItemPressStateTest: Story = {
 
       expect(clicks, 'one press, one activation').toBe(1);
       await waitFor(() => expect(menu.open, 'the menu closes').toBe(false));
+    });
+  },
+};
+
+export const ItemActivationKeyGuardTest: Story = {
+  render: () => rowsInMenu(threeRows, 'activation-guard-trigger'),
+  play: async ({ canvasElement, step }) => {
+    const trigger = canvasElement.querySelector(
+      '#activation-guard-trigger'
+    ) as HTMLElement;
+    const menu = canvasElement.querySelector('swc-menu') as HTMLElement & {
+      open: boolean;
+    };
+    // The guard's reset is deferred by a macrotask so a key's own default
+    // action runs first, so each check has to let one pass.
+    const settle = (): Promise<void> =>
+      new Promise((resolve) => {
+        setTimeout(resolve);
+      });
+
+    await userEvent.click(trigger);
+    await waitFor(() => expect(menu.open).toBe(true));
+
+    await step(
+      'an unrelated key release does not disarm the guard',
+      async () => {
+        const [firstRow] = getRows(canvasElement);
+
+        // Enter activates on keydown, so the menu closes and focus returns to
+        // the trigger while the key is still held.
+        firstRow.dispatchEvent(keyEvent('keydown', 'Enter'));
+        await waitFor(() =>
+          expect(menu.open, 'the row activated and closed the menu').toBe(false)
+        );
+
+        // Shift goes down and up inside that Enter press. Only the key that
+        // armed the guard may disarm it.
+        document.dispatchEvent(keyEvent('keyup', 'Shift'));
+        await settle();
+
+        // What the rest of the Enter press produces on the refocused trigger.
+        trigger.click();
+        expect(menu.open, 'the menu does not reopen on the same press').toBe(
+          false
+        );
+      }
+    );
+
+    await step('releasing the activation key disarms the guard', async () => {
+      document.dispatchEvent(keyEvent('keyup', 'Enter'));
+      await settle();
+
+      trigger.click();
+      await waitFor(() =>
+        expect(menu.open, 'a new press opens the menu again').toBe(true)
+      );
     });
   },
 };

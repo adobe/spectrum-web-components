@@ -919,10 +919,14 @@ export class DemoFocusgroupTextPrefix extends LitElement {
    * which is the match itself rather than whatever tab stop was applied for it.
    *
    * @param prefix - Prefix to match against each item's typeahead label.
+   * @param accept - Optional filter; a rejected item is skipped and the search continues.
    * @returns The matched item's trimmed label, or null when nothing matches.
    */
-  public findByTextPrefix(prefix: string): string | null {
-    const match = this.navigation.findItemByTextPrefix(prefix);
+  public findByTextPrefix(
+    prefix: string,
+    accept?: (item: HTMLElement) => boolean
+  ): string | null {
+    const match = this.navigation.findItemByTextPrefix(prefix, accept);
     return match
       ? (match.getAttribute('aria-label') ?? match.textContent?.trim() ?? null)
       : null;

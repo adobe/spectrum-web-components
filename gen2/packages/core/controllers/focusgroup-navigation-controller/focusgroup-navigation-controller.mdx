@@ -32,7 +32,7 @@ import * as FocusgroupNavigationControllerStories from './stories/focusgroup-nav
 ### Programmatic API
 
 - **`setActiveItem(element)`**: sets roving `tabindex` to a chosen eligible item (does **not** call `focus()`; call `getActiveItem()?.focus()` afterward).
-- **`findItemByTextPrefix(prefix)`**: returns the first eligible item whose label starts with `prefix` (case-insensitive), changing nothing.
+- **`findItemByTextPrefix(prefix, accept?)`**: returns the first eligible item whose label starts with `prefix` (case-insensitive), changing nothing. An item `accept` rejects is skipped and the search continues.
 - **`focusFirstItemByTextPrefix(prefix)`**: sets roving `tabindex` to the first eligible item whose label starts with `prefix` (case-insensitive). Does **not** call `focus()`.
 
 ## Basic usage
@@ -203,13 +203,18 @@ if (el && this.navigation.setActiveItem(el)) {
 
 Move focus yourself. From a **`click`** handler on another control, defer `focus()` with **`queueMicrotask`** (or similar) so the browser does not move focus back to the clicked element after your handler returns.
 
-> ⚠️ **Important:** Do not focus **`getActiveItem()`** after a match. A natively `disabled` match cannot hold the roving tab stop, so it is redirected to the first non-disabled item, and `getActiveItem()` then returns that item rather than the match. Focusing it moves focus to something the typed prefix never named. Use **`findItemByTextPrefix(prefix)`** instead and focus the match itself, which also lets you decide what an unfocusable match should do.
+> ⚠️ **Important:** Do not focus **`getActiveItem()`** after a match. A natively `disabled` match cannot hold the roving tab stop, so it is redirected to the first non-disabled item, and `getActiveItem()` then returns that item rather than the match. Focusing it moves focus to something the typed prefix never named. Use **`findItemByTextPrefix(prefix, accept?)`** instead and focus the match itself.
+
+Pass `accept` when some items match the prefix but cannot be acted on. A rejected item is skipped and the search **continues**, so it never blocks a later match. This mirrors how React Spectrum resolves typeahead: its list delegate walks past disabled items rather than stopping at them.
 
 ```typescript
 // Example: after the user types into your menu search buffer `buffer`
-const match = this.navigation.findItemByTextPrefix(buffer);
-// A match that cannot take focus is treated as no match, so focus stays put.
-if (match && !match.hasAttribute('aria-disabled')) {
+const match = this.navigation.findItemByTextPrefix(
+  buffer,
+  (item) => item.getAttribute('aria-disabled') !== 'true'
+);
+// Nothing reachable matched, so focus stays where it is.
+if (match) {
   queueMicrotask(() => {
     this.navigation.setActiveItem(match);
     match.focus();
@@ -273,14 +278,14 @@ Collapses a composite widget to a single Tab stop by managing `tabindex="0"` on 
 
 ### Methods
 
-| Member                               | Description                                                                                                                                    |
-| ------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| `setOptions(partial)`                | Merge new options and reapply roving tabindex.                                                                                                 |
-| `refresh()`                          | Re-query items and sync tabindex (call after DOM changes).                                                                                     |
-| `setActiveItem(element)`             | Set roving `tabindex` to the given eligible item (does **not** call `focus()`). Returns `false` if ineligible.                                 |
-| `findItemByTextPrefix(prefix)`       | Returns the first eligible item matching prefix (case-insensitive), or `null`. Changes nothing.                                                |
-| `focusFirstItemByTextPrefix(prefix)` | Set roving `tabindex` to the first eligible item matching prefix (case-insensitive). Does **not** call `focus()`. Returns `false` if no match. |
-| `getActiveItem()`                    | Returns the eligible item with `tabindex="0"`, if any.                                                                                         |
+| Member                                  | Description                                                                                                                                                   |
+| --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `setOptions(partial)`                   | Merge new options and reapply roving tabindex.                                                                                                                |
+| `refresh()`                             | Re-query items and sync tabindex (call after DOM changes).                                                                                                    |
+| `setActiveItem(element)`                | Set roving `tabindex` to the given eligible item (does **not** call `focus()`). Returns `false` if ineligible.                                                |
+| `findItemByTextPrefix(prefix, accept?)` | Returns the first eligible item matching prefix (case-insensitive), or `null`. Changes nothing. An item `accept` rejects is skipped and the search continues. |
+| `focusFirstItemByTextPrefix(prefix)`    | Set roving `tabindex` to the first eligible item matching prefix (case-insensitive). Does **not** call `focus()`. Returns `false` if no match.                |
+| `getActiveItem()`                       | Returns the eligible item with `tabindex="0"`, if any.                                                                                                        |
 
 ### Events
 

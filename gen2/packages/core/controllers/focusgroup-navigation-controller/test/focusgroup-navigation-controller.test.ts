@@ -66,6 +66,13 @@ function keydown(
   );
 }
 
+/** Returns the menu buttons inside the host shadow root, in DOM order. */
+function buttonsIn(host: HTMLElement): HTMLButtonElement[] {
+  return Array.from(
+    host.shadowRoot?.querySelectorAll<HTMLButtonElement>('.menu button') ?? []
+  );
+}
+
 /** Returns the focused element inside the host shadow root, if any. */
 function shadowActiveButton(host: HTMLElement): HTMLButtonElement | null {
   const root = host.shadowRoot;
@@ -533,6 +540,11 @@ export const TextPrefixFindVsActive: Story = {
       'demo-focusgroup-text-prefix'
     );
 
+    const tabStop = (): string | undefined =>
+      buttonsIn(host)
+        .find((button) => button.tabIndex === 0)
+        ?.textContent?.trim();
+
     await step(
       'findItemByTextPrefix returns the match, not the tab stop applied for it',
       async () => {
@@ -542,28 +554,61 @@ export const TextPrefixFindVsActive: Story = {
         );
 
         // A disabled item cannot hold `tabindex="0"`, so applying the tab stop
-        // redirects it elsewhere. Focusing the active item after a match would
-        // therefore land somewhere the prefix never named, which is why
-        // `findItemByTextPrefix` exists.
+        // for it redirects to the first non-disabled item instead. Pin that
+        // landing spot: focusing the active item after a match would send
+        // focus to `Copy`, which the typed prefix never named.
         expect(host.focusByTextPrefix('d'), 'the prefix still matches').toBe(
           true
         );
-        expect(
-          shadowActiveButton(host)?.textContent?.trim(),
-          'the active item is not the match'
-        ).not.toBe('Delete');
+        expect(tabStop(), 'the tab stop fell through to the first item').toBe(
+          'Copy'
+        );
       }
     );
 
     await step('findItemByTextPrefix changes no state', async () => {
       host.focusByTextPrefix('Paste');
-      const before = shadowActiveButton(host)?.textContent?.trim();
-      expect(host.findByTextPrefix('cu'), 'Cut matches').toBe('Cut');
-      expect(
-        shadowActiveButton(host)?.textContent?.trim(),
-        'the tab stop did not move'
-      ).toBe(before);
+      expect(tabStop(), 'Paste holds the tab stop').toBe('Paste');
+
+      // `focusByTextPrefix` is the only call that focuses, so asserting on
+      // focus alone would not notice a tab stop moving underneath. Watch the
+      // tabindex itself and the event the controller fires when it changes.
+      const changes: FocusgroupNavigationActiveChangeDetail[] = [];
+      const record = (event: Event): void => {
+        changes.push(
+          (event as CustomEvent<FocusgroupNavigationActiveChangeDetail>).detail
+        );
+      };
+      host.addEventListener(focusgroupNavigationActiveChange, record);
+      try {
+        expect(host.findByTextPrefix('cu'), 'Cut matches').toBe('Cut');
+
+        expect(tabStop(), 'the tab stop did not move').toBe('Paste');
+        expect(changes, 'no active-change event fired').toEqual([]);
+      } finally {
+        host.removeEventListener(focusgroupNavigationActiveChange, record);
+      }
     });
+
+    await step(
+      'an accept filter skips a match and keeps searching',
+      async () => {
+        // Without the filter `d` stops at disabled `Delete`. Rejecting disabled
+        // items makes the search continue instead of ending there.
+        expect(
+          host.findByTextPrefix('d', (item) => !item.hasAttribute('disabled')),
+          'the disabled match is skipped and nothing else answers to d'
+        ).toBeNull();
+
+        expect(
+          host.findByTextPrefix(
+            'c',
+            (item) => item.textContent?.trim() !== 'Copy'
+          ),
+          'rejecting Copy lets Cut win'
+        ).toBe('Cut');
+      }
+    );
 
     await step(
       'getTypeaheadLabel replaces the default label chain',

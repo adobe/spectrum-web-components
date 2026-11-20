@@ -115,8 +115,9 @@ When no CSS transition is active (for example when `prefers-reduced-motion` remo
   you typed. Quick typing matches a prefix, and the search starts over after a
   short pause. Matching reads the item's `label` slot, so a `description` or
   `secondary` slot never affects it, whatever order they are authored in.
-  Disabled items are skipped, and a prefix only a disabled item answers to
-  leaves focus where it is.
+  Disabled items are skipped while searching, so one never blocks a later item
+  answering to the same prefix, and a prefix only a disabled item answers to
+  leaves focus where it is. Arrow keys still reach disabled items.
 - <kbd>Enter</kbd> / <kbd>Space</kbd>: activate the focused item and close the
   menu. `swc-menu-item` turns both keys into a click, so keyboard and pointer
   activation reach the same handler.

@@ -456,17 +456,25 @@ export class FocusgroupNavigationController implements ReactiveController {
    *
    * @param prefix - String to match as a leading substring after `trim`; whitespace-only yields
    *   no match and returns `null`.
-   * @returns The first matching item, or null when nothing matches.
+   * @param accept - Optional filter. An item it rejects is skipped and the search **continues**,
+   *   so an unusable item never blocks a later match. Pass one when some items match the prefix
+   *   but cannot be acted on, such as `aria-disabled` rows that stay arrow-reachable.
+   * @returns The first matching accepted item, or null when nothing matches.
    */
-  public findItemByTextPrefix(prefix: string): HTMLElement | null {
+  public findItemByTextPrefix(
+    prefix: string,
+    accept?: (item: HTMLElement) => boolean
+  ): HTMLElement | null {
     const trimmed = prefix.trim();
     if (trimmed === '') {
       return null;
     }
     const needle = trimmed.toLowerCase();
     return (
-      this.getEligibleItems().find((el) =>
-        this.getItemTypeaheadLabel(el).toLowerCase().startsWith(needle)
+      this.getEligibleItems().find(
+        (el) =>
+          (accept?.(el) ?? true) &&
+          this.getItemTypeaheadLabel(el).toLowerCase().startsWith(needle)
       ) ?? null
     );
   }

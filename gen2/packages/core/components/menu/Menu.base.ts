@@ -289,6 +289,7 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
       // key that began it is released. Capture on `document`, because by then
       // neither this menu nor the row is in the event's path.
       this._activationKeyHeld = true;
+      this._activationKey = event.key;
       document.addEventListener('keyup', this.releaseActivationKey, {
         capture: true,
       });
@@ -313,15 +314,16 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
     this._typeaheadTimer = setTimeout(() => {
       this._typeaheadPrefix = '';
     }, TYPEAHEAD_TIMEOUT_MS);
-    // Match first, then decide. The controller cannot make a disabled row the
-    // tab stop, so it redirects to the first enabled one; focusing that would
-    // land where the typed prefix never pointed.
+    // Disabled rows are skipped during the search, not after it, so one never
+    // blocks a later row answering to the same prefix. React Spectrum resolves
+    // typeahead the same way. Arrow keys still reach disabled rows; they do not
+    // come through here.
     const match = this.focusNavigation.findItemByTextPrefix(
-      this._typeaheadPrefix
+      this._typeaheadPrefix,
+      (row) => !isRowDisabled(row)
     );
-    // No match and an unfocusable match both leave focus alone, per APG. Arrow
-    // keys still reach disabled rows; they do not come through here.
-    if (!match || isRowDisabled(match)) {
+    // Nothing reachable matched, so focus stays where it is, per APG.
+    if (!match) {
       return;
     }
     this.focusNavigation.setActiveItem(match);
@@ -339,7 +341,15 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
 
   private _releaseTimer?: ReturnType<typeof setTimeout>;
 
-  private readonly releaseActivationKey = (): void => {
+  // The key that armed the guard, so releasing an unrelated one cannot disarm
+  // it while the activating key is still down.
+  private _activationKey: string | null = null;
+
+  private readonly releaseActivationKey = (event: KeyboardEvent): void => {
+    if (event.key !== this._activationKey) {
+      return;
+    }
+    this._activationKey = null;
     document.removeEventListener('keyup', this.releaseActivationKey, {
       capture: true,
     });
@@ -775,6 +785,7 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
     });
     clearTimeout(this._releaseTimer);
     this._activationKeyHeld = false;
+    this._activationKey = null;
     this.clearTypeahead();
   }
 }

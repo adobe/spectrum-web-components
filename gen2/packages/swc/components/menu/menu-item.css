@@ -158,13 +158,13 @@
 
 /* `:focus-visible`, not `:focus`: opening the menu focuses the first row even
  * on a mouse click, which must not paint it as chosen. */
-:host(:focus-visible:not([disabled])) {
+:host(:focus-visible:not([disabled]):where(:not([pointer-focus]))) {
   --swc-menu-item-label-color: token("neutral-content-color-key-focus");
   --swc-menu-item-description-color: token("neutral-subdued-content-color-key-focus");
   --swc-menu-item-secondary-color: token("neutral-subdued-content-color-key-focus");
 }
 
-:host(:focus-visible:not([disabled])) .swc-MenuItem {
+:host(:focus-visible:not([disabled]):where(:not([pointer-focus]))) .swc-MenuItem {
   background-color: var(--swc-menu-item-background-color-focus, token("menu-item-background-color-keyboard-focus"));
 }
 
@@ -275,7 +275,7 @@
 
   /* Follows RSP behavior */
   :host([pointer-focus]:hover:not([disabled])) .swc-MenuItem {
-    background: Highlight;
+    background-color: Highlight;
     transition-duration: 0ms;
 
     ::slotted(*) {
