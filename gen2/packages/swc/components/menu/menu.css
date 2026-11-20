@@ -28,6 +28,10 @@
 .swc-Menu {
   --_swc-menu-animation-distance: token("spacing-75");
 
+  /* TODO: replace with a token once Spectrum 2 defines motion tokens. 200ms
+   * matches React Spectrum's Popover; `animation-duration-200` is 160ms. */
+  --_swc-menu-animation-duration: 200ms;
+
   position: absolute;
   inset: auto;
   flex-direction: column;
@@ -45,11 +49,14 @@
    * page, matching `swc-popover`'s own scroll containment. */
   overscroll-behavior: contain;
   opacity: 0;
+
+  /* The closed state's timing governs the exit. Easing in, as React Spectrum
+   * does, holds the surface a moment before it fades. */
   transition:
-    opacity token("animation-duration-200") token("animation-ease-out"),
-    transform token("animation-duration-200") token("animation-ease-out"),
-    overlay token("animation-duration-200") allow-discrete,
-    display token("animation-duration-200") allow-discrete;
+    opacity var(--_swc-menu-animation-duration) token("animation-ease-in"),
+    transform var(--_swc-menu-animation-duration) token("animation-ease-in"),
+    overlay var(--_swc-menu-animation-duration) allow-discrete,
+    display var(--_swc-menu-animation-duration) allow-discrete;
 }
 
 /* `flex-direction` lives on the base rule, not here, since it isn't part of
@@ -94,6 +101,11 @@
 :host([actual-placement]) .swc-Menu:popover-open {
   opacity: 1;
   transform: none;
+
+  /* The open state's timing governs the entrance. TODO: replace with a token
+   * once Spectrum 2 defines motion tokens; React Spectrum's Popover enters on
+   * the CSS default `ease`. */
+  transition-timing-function: ease;
 }
 
 @starting-style {
