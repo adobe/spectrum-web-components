@@ -212,15 +212,38 @@
     /* stylelint-disable-next-line property-no-vendor-prefix -- no unprefixed equivalent exists */
     -webkit-mask-clip: text;
   }
+
+  :host([status="active"]) .swc-ResponseStatusStep-titleShimmer::after {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent calc(50% - var(--_swc-response-status-step-shimmer-spread)), token("gray-900") 50%, transparent calc(50% + var(--_swc-response-status-step-shimmer-spread)));
+    content: "";
+    animation: swc-response-status-step-shimmer 1800ms cubic-bezier(0.41, 0.01, 0.43, 0.99) infinite;
+    will-change: transform;
+  }
 }
 
-:host([status="active"]) .swc-ResponseStatusStep-titleShimmer::after {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, transparent calc(50% - var(--_swc-response-status-step-shimmer-spread)), token("gray-900") 50%, transparent calc(50% + var(--_swc-response-status-step-shimmer-spread)));
-  content: "";
-  animation: swc-response-status-step-shimmer 1800ms cubic-bezier(0.41, 0.01, 0.43, 0.99) infinite;
-  will-change: transform;
+/* Firefox clips backgrounds to text, but cannot mask the overlay to glyphs. */
+@supports not (-webkit-mask-clip: text) {
+  :host([status="active"]) .swc-ResponseStatusStep-titleShimmer {
+    background-image: linear-gradient(90deg, transparent, token("gray-900"), transparent);
+    background-repeat: no-repeat;
+    background-position: 200% 0;
+    background-clip: text;
+    background-size: 200% 100%;
+    animation: swc-response-status-step-shimmer-background 1800ms cubic-bezier(0.41, 0.01, 0.43, 0.99) infinite;
+  }
+}
+
+@keyframes swc-response-status-step-shimmer-background {
+  0% {
+    background-position: 200% 0;
+  }
+
+  80%,
+  100% {
+    background-position: -100% 0;
+  }
 }
 
 /* Sweeps over the first 80%, then holds before looping. */
