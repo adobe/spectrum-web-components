@@ -131,6 +131,14 @@
       "types": "./dist/components/icon/index.d.ts",
       "import": "./dist/components/icon/index.js"
     },
+    "./components/icon/Icon.base.js": {
+      "types": "./dist/components/icon/Icon.base.d.ts",
+      "import": "./dist/components/icon/Icon.base.js"
+    },
+    "./components/icon/Icon.types.js": {
+      "types": "./dist/components/icon/Icon.types.d.ts",
+      "import": "./dist/components/icon/Icon.types.js"
+    },
     "./components/icon/index.js": {
       "types": "./dist/components/icon/index.d.ts",
       "import": "./dist/components/icon/index.js"
@@ -363,6 +371,10 @@
       "types": "./dist/element/index.d.ts",
       "import": "./dist/element/index.js"
     },
+    "./element.js": {
+      "types": "./dist/element/index.d.ts",
+      "import": "./dist/element/index.js"
+    },
     "./element/define-element.js": {
       "types": "./dist/element/define-element.d.ts",
       "import": "./dist/element/define-element.js"
@@ -527,6 +539,12 @@
       ],
       "components/icon": [
         "dist/components/icon/index.d.ts"
+      ],
+      "components/icon/Icon.base.js": [
+        "dist/components/icon/Icon.base.d.ts"
+      ],
+      "components/icon/Icon.types.js": [
+        "dist/components/icon/Icon.types.d.ts"
       ],
       "components/icon/index.js": [
         "dist/components/icon/index.d.ts"
@@ -700,6 +718,9 @@
         "dist/directives/render-label/index.d.ts"
       ],
       "element": [
+        "dist/element/index.d.ts"
+      ],
+      "element.js": [
         "dist/element/index.d.ts"
       ],
       "element/define-element.js": [
