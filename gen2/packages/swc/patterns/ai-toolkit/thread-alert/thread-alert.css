@@ -43,7 +43,7 @@
 }
 
 .swc-ThreadAlert-icon {
-  display: none;
+  display: block;
   flex: 0 0 auto;
   margin-inline-end: var(--swc-thread-alert-gap, token("base-gap-medium"));
 }
@@ -73,14 +73,6 @@
   flex: 1 1 0;
   min-inline-size: 0;
   overflow-wrap: anywhere;
-}
-
-:host(:not([variant])) .swc-ThreadAlert-icon--informative,
-:host([variant="informative"]) .swc-ThreadAlert-icon--informative,
-:host([variant="positive"]) .swc-ThreadAlert-icon--positive,
-:host([variant="notice"]) .swc-ThreadAlert-icon--notice,
-:host([variant="negative"]) .swc-ThreadAlert-icon--negative {
-  display: block;
 }
 
 slot {
