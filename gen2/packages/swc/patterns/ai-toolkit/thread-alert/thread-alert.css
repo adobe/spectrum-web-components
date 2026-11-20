@@ -80,7 +80,7 @@
 :host([variant="positive"]) .swc-ThreadAlert-icon--positive,
 :host([variant="notice"]) .swc-ThreadAlert-icon--notice,
 :host([variant="negative"]) .swc-ThreadAlert-icon--negative {
-  display: block;
+  display: flex;
 }
 
 slot {
