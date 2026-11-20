@@ -525,6 +525,73 @@ export const TextPrefixFocusNavigation: Story = {
   },
 };
 
+export const TextPrefixFindVsActive: Story = {
+  ...TextPrefixFocus,
+  play: async ({ canvasElement, step }) => {
+    const host = await getComponent<DemoFocusgroupTextPrefix>(
+      canvasElement,
+      'demo-focusgroup-text-prefix'
+    );
+
+    await step(
+      'findItemByTextPrefix returns the match, not the tab stop applied for it',
+      async () => {
+        // `Delete` is natively disabled and the only item answering to `d`.
+        expect(host.findByTextPrefix('d'), 'the match is Delete').toBe(
+          'Delete'
+        );
+
+        // A disabled item cannot hold `tabindex="0"`, so applying the tab stop
+        // redirects it elsewhere. Focusing the active item after a match would
+        // therefore land somewhere the prefix never named, which is why
+        // `findItemByTextPrefix` exists.
+        expect(host.focusByTextPrefix('d'), 'the prefix still matches').toBe(
+          true
+        );
+        expect(
+          shadowActiveButton(host)?.textContent?.trim(),
+          'the active item is not the match'
+        ).not.toBe('Delete');
+      }
+    );
+
+    await step('findItemByTextPrefix changes no state', async () => {
+      host.focusByTextPrefix('Paste');
+      const before = shadowActiveButton(host)?.textContent?.trim();
+      expect(host.findByTextPrefix('cu'), 'Cut matches').toBe('Cut');
+      expect(
+        shadowActiveButton(host)?.textContent?.trim(),
+        'the tab stop did not move'
+      ).toBe(before);
+    });
+
+    await step(
+      'getTypeaheadLabel replaces the default label chain',
+      async () => {
+        // The default chain reads `aria-label` first, so `un` finds the icon
+        // button. A hook that answers with text content alone never does.
+        expect(
+          host.findByTextPrefix('un'),
+          'aria-label matches by default'
+        ).toBe('Undo');
+
+        host.setTypeaheadLabelHook((item) => item.textContent?.trim() ?? '');
+        expect(
+          host.findByTextPrefix('un'),
+          'the hook shadows aria-label'
+        ).toBeNull();
+        expect(host.findByTextPrefix('cu'), 'text still matches').toBe('Cut');
+
+        host.setTypeaheadLabelHook(null);
+        expect(
+          host.findByTextPrefix('un'),
+          'the default chain is restored'
+        ).toBe('Undo');
+      }
+    );
+  },
+};
+
 // ──────────────────────────────────────────────────────────────
 // Memory: Tab re-entry remembers last focused item (#25)
 // ──────────────────────────────────────────────────────────────

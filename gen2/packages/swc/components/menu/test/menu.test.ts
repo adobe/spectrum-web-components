@@ -1927,11 +1927,10 @@ export const ItemTypeaheadTest: Story = {
       rows[0].dispatchEvent(keyEvent('keydown', 'u'));
       expect(document.activeElement, 'cu still matches Cut').toBe(rows[0]);
 
-      // Reaching the second row needs a prefix only it answers to. `Copy` is
-      // the disabled row here, and the focusgroup controller redirects the
-      // roving tab stop away from anything carrying a truthy `disabled`
-      // property, so typeahead cannot land there. See the note in the menu's
-      // `typeahead`.
+      // Reaching the second row needs a prefix only it answers to, and `Copy`
+      // is the disabled row here, which typeahead leaves alone. See
+      // `ItemTypeaheadDisabledOnlyMatchTest` for what a prefix only it answers
+      // to does.
       await letItExpire();
       rows[0].dispatchEvent(keyEvent('keydown', 'p'));
       expect(document.activeElement, 'p reaches Paste').toBe(rows[2]);
@@ -1954,6 +1953,106 @@ export const ItemTypeaheadTest: Story = {
 
       expect(document.activeElement, 'the search starts clean').toBe(rows[2]);
     });
+  },
+};
+
+export const ItemTypeaheadDisabledOnlyMatchTest: Story = {
+  render: () =>
+    rowsInMenu(
+      // `Delete` is the only row answering to `d`, and it is disabled. A
+      // prefix shared with an enabled row, such as `co` against Cut and Copy,
+      // cannot isolate this: the intermediate `c` matches Cut and moves focus
+      // there legitimately, which is what typeahead is supposed to do.
+      html`
+        <swc-menu-item><span slot="label">Cut</span></swc-menu-item>
+        <swc-menu-item disabled><span slot="label">Delete</span></swc-menu-item>
+        <swc-menu-item><span slot="label">Paste</span></swc-menu-item>
+      `,
+      'typeahead-disabled-trigger'
+    ),
+  play: async ({ canvasElement, step }) => {
+    const trigger = canvasElement.querySelector(
+      '#typeahead-disabled-trigger'
+    ) as HTMLElement;
+    const menu = canvasElement.querySelector('swc-menu') as HTMLElement & {
+      open: boolean;
+    };
+
+    await userEvent.click(trigger);
+    await waitFor(() => expect(menu.open).toBe(true));
+    const rows = getRows(canvasElement);
+    await waitFor(() => expect(document.activeElement).toBe(rows[0]));
+
+    await step(
+      'a prefix only a disabled row answers to moves nothing',
+      async () => {
+        expect(
+          rows[1].getAttribute('aria-disabled'),
+          'Delete is disabled'
+        ).toBe('true');
+
+        // Start from Paste. Focus has to sit somewhere other than the first
+        // enabled row, or a fallback landing on Cut would be invisible.
+        rows[0].dispatchEvent(keyEvent('keydown', 'p'));
+        expect(document.activeElement, 'focus starts on Paste').toBe(rows[2]);
+
+        // The buffer is shared across presses, so it has to expire or the next
+        // search reads as `pd` and matches nothing for the wrong reason.
+        await new Promise((resolve) => setTimeout(resolve, 600));
+
+        // A disabled row cannot take the roving tab stop, so the controller
+        // redirects it to the first enabled row. Focusing that would land on
+        // Cut, which the typed prefix never named.
+        rows[2].dispatchEvent(keyEvent('keydown', 'd'));
+
+        expect(document.activeElement, 'focus stays on Paste').toBe(rows[2]);
+      }
+    );
+  },
+};
+
+export const ItemTypeaheadSlotOrderTest: Story = {
+  render: () =>
+    rowsInMenu(
+      html`
+        <swc-menu-item><span slot="label">Cut</span></swc-menu-item>
+        <swc-menu-item>
+          <span slot="secondary">Ctrl V</span>
+          <span slot="label">Paste</span>
+        </swc-menu-item>
+      `,
+      'typeahead-slot-order-trigger'
+    ),
+  play: async ({ canvasElement, step }) => {
+    const trigger = canvasElement.querySelector(
+      '#typeahead-slot-order-trigger'
+    ) as HTMLElement;
+    const menu = canvasElement.querySelector('swc-menu') as HTMLElement & {
+      open: boolean;
+    };
+
+    await userEvent.click(trigger);
+    await waitFor(() => expect(menu.open).toBe(true));
+    const rows = getRows(canvasElement);
+    await waitFor(() => expect(document.activeElement).toBe(rows[0]));
+
+    await step(
+      'a label authored after another slot still matches',
+      async () => {
+        // The row's grid layout puts the label first on screen whatever the DOM
+        // order, and the row names itself from the `label` slot alone. Matching
+        // `textContent` instead would search `Ctrl VPaste`, which no letter of
+        // the visible label starts.
+        expect(
+          rows[1].textContent?.replace(/\s+/g, ' ').trim(),
+          'textContent leads with the secondary slot'
+        ).toBe('Ctrl V Paste');
+
+        rows[0].dispatchEvent(keyEvent('keydown', 'p'));
+
+        expect(document.activeElement, 'p reaches the Paste row').toBe(rows[1]);
+      }
+    );
   },
 };
 

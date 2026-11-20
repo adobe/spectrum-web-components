@@ -111,6 +111,25 @@ export abstract class MenuItemBase extends SizedMixin(SpectrumElement, {
   @query('slot[name="secondary"]')
   private secondarySlot?: HTMLSlotElement;
 
+  /**
+   * Text of the row's `label` slot, the same content that names the row, or an
+   * empty string when no label is slotted.
+   *
+   * The owning menu matches typeahead against this rather than `textContent`, which
+   * concatenates every slot in DOM order. The row's grid layout makes visual order
+   * independent of DOM order, so a `secondary` or `description` slot authored first
+   * would otherwise prefix what typeahead searches.
+   */
+  public get labelText(): string {
+    return (
+      this.labelSlot
+        ?.assignedElements({ flatten: true })
+        .map((el) => el.textContent?.trim() ?? '')
+        .filter((text) => text !== '')
+        .join(' ') ?? ''
+    );
+  }
+
   // ──────────────────────
   //     IMPLEMENTATION
   // ──────────────────────

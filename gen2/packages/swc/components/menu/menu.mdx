@@ -113,7 +113,10 @@ When no CSS transition is active (for example when `prefers-reduced-motion` remo
   focus on from the trigger, rather than moving between items.
 - Printable characters: move focus to the first item whose label starts with what
   you typed. Quick typing matches a prefix, and the search starts over after a
-  short pause. Disabled items are skipped.
+  short pause. Matching reads the item's `label` slot, so a `description` or
+  `secondary` slot never affects it, whatever order they are authored in.
+  Disabled items are skipped, and a prefix only a disabled item answers to
+  leaves focus where it is.
 - <kbd>Enter</kbd> / <kbd>Space</kbd>: activate the focused item and close the
   menu. `swc-menu-item` turns both keys into a click, so keyboard and pointer
   activation reach the same handler.

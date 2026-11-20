@@ -65,6 +65,13 @@ const DOCS_URL =
 const isRowDisabled = (row: HTMLElement): boolean =>
   row.getAttribute('aria-disabled') === 'true';
 
+// Typeahead matches the row's name, which lives in its `label` slot. Duck-typed
+// like `isRowDisabled`, so the menu still never requires the row class.
+const rowLabelText = (row: HTMLElement): string => {
+  const { labelText } = row as { labelText?: unknown };
+  return typeof labelText === 'string' ? labelText : '';
+};
+
 /**
  * How long typed characters keep accumulating into one typeahead search. Long
  * enough to type a word at speed, short enough that a pause starts over.
@@ -188,6 +195,7 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
     direction: 'vertical',
     wrap: true,
     getItems: () => this.getMenuItems(),
+    getTypeaheadLabel: rowLabelText,
   });
 
   // Suppresses the open/close effect in updated() when `open` is being
@@ -305,21 +313,19 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
     this._typeaheadTimer = setTimeout(() => {
       this._typeaheadPrefix = '';
     }, TYPEAHEAD_TIMEOUT_MS);
-    // The controller owns which label a row answers to, reading `aria-label`
-    // and `aria-labelledby` before text, and applies the roving tabindex. It
-    // deliberately leaves the focus call to its host. No match means focus
-    // stays where it is, which is what APG asks for.
-    //
-    // A disabled row cannot be reached this way: the controller treats any
-    // element with a truthy `disabled` property as natively unfocusable and
-    // moves the tab stop to the first enabled row, and a row carries that
-    // property for its `aria-disabled` semantics. Arrow keys reach disabled
-    // rows because they do not go through this path.
-    if (
-      this.focusNavigation.focusFirstItemByTextPrefix(this._typeaheadPrefix)
-    ) {
-      this.focusNavigation.getActiveItem()?.focus({ preventScroll: true });
+    // Match first, then decide. The controller cannot make a disabled row the
+    // tab stop, so it redirects to the first enabled one; focusing that would
+    // land where the typed prefix never pointed.
+    const match = this.focusNavigation.findItemByTextPrefix(
+      this._typeaheadPrefix
+    );
+    // No match and an unfocusable match both leave focus alone, per APG. Arrow
+    // keys still reach disabled rows; they do not come through here.
+    if (!match || isRowDisabled(match)) {
+      return;
     }
+    this.focusNavigation.setActiveItem(match);
+    match.focus({ preventScroll: true });
   }
 
   private clearTypeahead(): void {
