@@ -31,9 +31,20 @@ Dividers come in three sizes to fit various contexts:
 
 The default **horizontal** divider separates vertically stacked content, such as sections beneath headings. To separate side-by-side content in a flex row (e.g., navigation breadcrumbs, toolbars), use the `vertical` attribute to render a **vertical** divider.
 
-A vertical divider automatically stretches to fill the height of its flex row or `grid-auto-flow: column` grid. The parent doesn't need an explicit height.
-
 <Canvas of={DividerStories.Orientation} />
+
+#### Match orientation and layout direction
+
+Use a horizontal divider in block flow or a flex column, and a vertical divider in a flex or grid row, where it fills the row's height automatically. A mismatch still renders, with side effects:
+
+- A horizontal divider in a row keeps its minimum width and pushes its siblings out.
+- A vertical divider in a flex column sits at the start instead of centering.
+
+Other things to know:
+
+- A horizontal divider fills the width of its container, including centered flex columns and grids such as a narrow navigation rail. Set `--swc-divider-minimum-inline-size` to change its minimum width. In a content-sized grid track (`place-content: center`) there is no width to fill, so give the divider an inline size.
+- Use padding, not margin, for inline spacing. Inline margins overflow the container.
+- A vertical divider with no height to fill, such as one in a line of text, is one line of text tall. Set `--swc-divider-minimum-block-size` to adjust.
 
 ### Static colors
 

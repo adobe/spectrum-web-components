@@ -11,8 +11,7 @@
  */
 
 :host {
-  display: inline-flex;
-  place-self: start;
+  display: inline-block;
   outline: none;
 }
 
@@ -27,7 +26,7 @@
 .swc-Tab {
   --_swc-tab-text-color: var(--swc-tab-text-color, token("neutral-subdued-content-color-default"));
 
-  display: inline-flex;
+  display: flex;
   position: relative;
   gap: token("base-gap-medium");
   align-items: center;

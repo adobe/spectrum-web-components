@@ -4,6 +4,7 @@
 
 - **Working examples:** [badge.css](../../../../gen2/packages/swc/components/badge/badge.css), [status-light.css](../../../../gen2/packages/swc/components/status-light)
 - **Main rules:** [01_component-css](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md)
+- **Host layout:** [host layout rules](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md#host-layout-rules)
 - **Custom property decisions:** [02_custom-properties](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/02_custom-properties.md)
 - **PR self-check:** [03_component-css-pr-checklist](../../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/03_component-css-pr-checklist.md)
 
@@ -14,6 +15,8 @@
 ```css
 :host {
   display: inline-block;
+  inline-size: fit-content;
+  block-size: fit-content;
 }
 
 * {

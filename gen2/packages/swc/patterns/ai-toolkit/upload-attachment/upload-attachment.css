@@ -261,6 +261,14 @@
   display: grid;
   position: absolute;
 
+  /* 2px inset gives the host's inward focus ring empty space to sit in. */
+  inset: token("spacing-50");
+  inline-size: unset;
+  border-radius: token("corner-radius-large-default");
+  overflow: hidden;
+  outline: token("border-width-100") solid var(--_swc-upload-attachment-tint);
+  outline-offset: calc(token("border-width-100") * -1);
+
   /* Media tiles have no title/content/footer, so the default "auto 1fr auto"
    * rows leave the "media" row (which holds the progress circle and badge)
    * sized to its own content instead of the full tile height; forcing it to
@@ -268,13 +276,6 @@
    * below centers against the whole surface, not just the circle's own
    * content box. */
   --swc-card-base-grid-template-rows: 1fr;
-
-  /* 2px inset gives the host's inward focus ring empty space to sit in. */
-  inset: token("spacing-50");
-  border-radius: token("corner-radius-large-default");
-  overflow: hidden;
-  outline: token("border-width-100") solid var(--_swc-upload-attachment-tint);
-  outline-offset: calc(token("border-width-100") * -1);
 }
 
 :host([type="media"]) .swc-UploadAttachment-progress {

@@ -132,7 +132,7 @@ Each anti-pattern is grounded in real Spectrum source patterns. **Badge** and **
 ```
 
 🔎 **Badge reference:**  
-See the migrated Badge where `:host` is limited to layout (`display`, `place-self`, `vertical-align`) and all visual styling lives on `.swc-Badge`.
+See the migrated Badge where `:host` is limited to layout (`display` and sizing, see [host layout rules](01_component-css.md#host-layout-rules)) and all visual styling lives on `.swc-Badge`.
 
 📖 See: *Component CSS Style Guide → [Rule order](01_component-css.md#rule-order)*
 

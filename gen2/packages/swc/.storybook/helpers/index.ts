@@ -15,6 +15,15 @@ export type { ComponentPermutations } from './create-permutations.js';
 export { formatTitle } from './format-title.js';
 export { forcePseudoState } from './pseudo-state.js';
 export type { ForcedPseudoState } from './pseudo-state.js';
+export {
+  LAYOUT_CONTEXTS,
+  layoutContexts,
+  layoutContextsLegend,
+} from './layout-contexts.js';
+export type {
+  LayoutContextId,
+  LayoutContextOptions,
+} from './layout-contexts.js';
 export { SIZE_LABELS } from './size-labels.js';
 export type { SizeLabelKey } from './size-labels.js';
 export { sourceLocation } from './source-location.js';

@@ -11,9 +11,9 @@
  */
 
 :host {
-  display: inline-flex;
-  place-self: start;
-  vertical-align: middle;
+  display: inline-block;
+  inline-size: fit-content;
+  block-size: fit-content;
 }
 
 * {
@@ -93,7 +93,7 @@
 /* ── Layout & shape ─────────────────────────────────────── */
 
 .swc-Avatar {
-  display: inline-block;
+  display: block;
   inline-size: var(--swc-avatar-size, token("avatar-size-100"));
   block-size: var(--swc-avatar-size, token("avatar-size-100"));
   border-radius: token("corner-radius-full");

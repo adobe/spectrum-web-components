@@ -113,7 +113,7 @@ This keeps all overrides and derived calculations linked to the private property
 
 **Selector choice encodes API intent**: exposed properties are modified via `:host()`, while internal-only behavior is implemented with internal class selectors.
 
-- Expose only when the component itself overrides the property based on its own variant, state, or size needs. Do not expose properties for consumer convenience alone. Exceptions: properties required for nested component relationships (e.g. a Picker passing a property down to its Menu) and shared utility properties.
+- Expose only when the component itself overrides the property based on its own variant, state, or size needs. Do not expose properties for consumer convenience alone. Exceptions: properties required for nested component relationships (e.g. a Picker passing a property down to its Menu), shared utility properties, and host-level sizes whose default a plain override would drop (see [host layout rules](01_component-css.md#host-layout-rules)).
 - When a property changes across size variants, expose a **single** property (e.g. `--swc-button-padding-vertical`) and override it per size selector (`:host([size="s"])`). Do not create size-specific custom properties (e.g. `--_swc-button-padding-vertical-s`) — they become part of the external style surface and cannot be made genuinely private.
 - Exposed singularly based on CSS *property type*, and no longer based on states or variants
     - This distinction directly affects which selector type is used (`:host()` vs internal class selectors). See [Variant Selectors and Inheritance](01_component-css.md#shadow-dom-specificity-and-custom-property-inheritance).

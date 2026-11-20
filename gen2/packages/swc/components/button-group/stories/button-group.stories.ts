@@ -143,6 +143,9 @@ export const Sizes: Story = {
     )}
   `,
   tags: ['options'],
+  parameters: {
+    flexLayout: 'column-center',
+  },
 };
 
 export const Orientations: Story = {
@@ -157,6 +160,10 @@ export const Orientations: Story = {
     )}
   `,
   tags: ['options'],
+  parameters: {
+    flexLayout: 'column-center',
+    styles: { gap: 'var(--swc-spacing-500)' },
+  },
 };
 
 export const Alignment: Story = {

@@ -17,6 +17,8 @@
 
 :host {
   display: block;
+  min-inline-size: 10ch; /* Reasonable default to resist shrink pressure */
+  block-size: fit-content;
 }
 
 * {

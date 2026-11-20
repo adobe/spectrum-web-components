@@ -184,7 +184,7 @@ Spectrum 2 exposes a narrow set of public CSS custom properties on `<swc-accordi
 
 | Removed (Spectrum 1)                                                                                           | Replacement (Spectrum 2)                                                                                                              |
 | -------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `--mod-accordion-item-width`                                                                                   | `--swc-accordion-min-inline-size`                                                                                                     |
+| `--mod-accordion-item-width`                                                                                   | No custom property; set `min-inline-size` on `<swc-accordion>`                                                                        |
 | `--mod-accordion-divider-color`                                                                                | `--swc-accordion-item-divider-color`                                                                                                  |
 | `--mod-accordion-component-edge-to-text`                                                                       | `--swc-accordion-item-content-padding-inline`                                                                                         |
 | `--mod-accordion-edge-to-content-area`                                                                         | `--swc-accordion-item-edge-to-content-area`                                                                                           |
@@ -197,13 +197,12 @@ Spectrum 2 exposes a narrow set of public CSS custom properties on `<swc-accordi
 
 ### Public custom properties
 
-These properties are defined on `<swc-accordion-item>` (except `--swc-accordion-min-inline-size`, on `<swc-accordion>`). Because custom properties inherit, you can set an item property on a single `<swc-accordion-item>` or on the parent `<swc-accordion>` to apply it to every item.
+These properties are defined on `<swc-accordion-item>`. Because custom properties inherit, you can set an item property on a single `<swc-accordion-item>` or on the parent `<swc-accordion>` to apply it to every item.
 
 {/* @todo Replace the Description column with the `@cssproperty` JSDoc descriptions from the accordion CEM entries once they are added in a follow-up PR. */}
 
 | Custom property                                      | Description                                               |
 | ---------------------------------------------------- | --------------------------------------------------------- |
-| `--swc-accordion-min-inline-size`                    | Minimum inline size of the accordion.                     |
 | `--swc-accordion-item-divider-color`                 | Color of the item's top and bottom divider borders.       |
 | `--swc-accordion-item-header-corner-radius`          | Corner radius of the header button background.            |
 | `--swc-accordion-item-focus-indicator-corner-radius` | Corner radius of the focus ring around the header button. |
