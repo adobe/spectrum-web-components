@@ -2633,6 +2633,27 @@ export const ItemActivationKeyGuardTest: Story = {
         expect(menu.open, 'a new press opens the menu again').toBe(true)
       );
     });
+
+    await step(
+      'losing the window disarms a guard whose keyup never came',
+      async () => {
+        const [firstRow] = getRows(canvasElement);
+
+        firstRow.dispatchEvent(keyEvent('keydown', 'Enter'));
+        await waitFor(() => expect(menu.open, 'the menu closed').toBe(false));
+
+        // The keyup never arrives: the row's action opened a dialog or another
+        // window, or focus moved away mid-press. Without a second release path
+        // the guard stays armed and the trigger stops responding for good.
+        window.dispatchEvent(new Event('blur'));
+        await settle();
+
+        trigger.click();
+        await waitFor(() =>
+          expect(menu.open, 'the trigger still works').toBe(true)
+        );
+      }
+    );
   },
 };
 

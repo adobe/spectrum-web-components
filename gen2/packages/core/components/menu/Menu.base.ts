@@ -293,6 +293,7 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
       document.addEventListener('keyup', this.releaseActivationKey, {
         capture: true,
       });
+      window.addEventListener('blur', this.releaseActivationKeyNow);
       return;
     }
     if (isTypeaheadKey(event)) {
@@ -345,14 +346,19 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
   // it while the activating key is still down.
   private _activationKey: string | null = null;
 
-  private readonly releaseActivationKey = (event: KeyboardEvent): void => {
-    if (event.key !== this._activationKey) {
-      return;
-    }
+  private stopWatchingActivationKey(): void {
     this._activationKey = null;
     document.removeEventListener('keyup', this.releaseActivationKey, {
       capture: true,
     });
+    window.removeEventListener('blur', this.releaseActivationKeyNow);
+  }
+
+  private readonly releaseActivationKey = (event: KeyboardEvent): void => {
+    if (event.key !== this._activationKey) {
+      return;
+    }
+    this.stopWatchingActivationKey();
     // Not cleared on the keyup itself. A button activates Space on its keyup,
     // and this capture-phase listener runs before that: clearing here would
     // let the click the keyup produces reopen the menu, which is the very
@@ -361,6 +367,15 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
     this._releaseTimer = setTimeout(() => {
       this._activationKeyHeld = false;
     });
+  };
+
+  // The matching keyup can never arrive once the window loses focus mid-press,
+  // which a row action opening a dialog or another window does. Without this
+  // the guard stays armed and the trigger ignores every later press and click.
+  private readonly releaseActivationKeyNow = (): void => {
+    this.stopWatchingActivationKey();
+    clearTimeout(this._releaseTimer);
+    this._activationKeyHeld = false;
   };
 
   // Focus follows the pointer, the way it does in 1st-gen and in the native
@@ -780,12 +795,7 @@ export abstract class MenuBase extends SizedMixin(SpectrumElement, {
     });
     this.removeEventListener('click', this.handleItemActivate);
     this.removeEventListener('pointermove', this.handleItemPointerMove);
-    document.removeEventListener('keyup', this.releaseActivationKey, {
-      capture: true,
-    });
-    clearTimeout(this._releaseTimer);
-    this._activationKeyHeld = false;
-    this._activationKey = null;
+    this.releaseActivationKeyNow();
     this.clearTypeahead();
   }
 }
