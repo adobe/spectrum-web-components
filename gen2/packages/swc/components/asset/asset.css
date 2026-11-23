@@ -12,6 +12,7 @@
 
 /* A flex host lets the frame shrink with the host in a narrow container. */
 :host {
+  box-sizing: border-box;
   display: flex;
   inline-size: fit-content;
   max-inline-size: 100%;

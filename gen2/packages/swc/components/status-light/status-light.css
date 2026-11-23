@@ -14,7 +14,6 @@
   display: inline-block;
   inline-size: fit-content;
   block-size: fit-content;
-  vertical-align: baseline;
 }
 
 *,

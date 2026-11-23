@@ -14,6 +14,7 @@ import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import '@adobe/spectrum-wc/components/badge/swc-badge.js';
+import '@adobe/spectrum-wc-icons/swc-icon-checkmark.js';
 
 import {
   layoutContexts,
@@ -36,9 +37,29 @@ export default meta;
 
 const layoutContent = () => html`
   ${layoutContextsLegend}
-  ${layoutContexts(html`
-    <swc-badge variant="neutral">Archived</swc-badge>
-  `)}
+  ${layoutContexts(
+    html`
+      <swc-badge variant="neutral">Archived</swc-badge>
+    `,
+    { label: 'Label only' }
+  )}
+  ${layoutContexts(
+    html`
+      <swc-badge variant="positive">
+        <swc-icon-checkmark slot="icon"></swc-icon-checkmark>
+        Approved
+      </swc-badge>
+    `,
+    { label: 'Icon and label' }
+  )}
+  ${layoutContexts(
+    html`
+      <swc-badge variant="positive" role="img" aria-label="Approved">
+        <swc-icon-checkmark slot="icon"></swc-icon-checkmark>
+      </swc-badge>
+    `,
+    { label: 'Icon only' }
+  )}
 `;
 
 // VRT stories

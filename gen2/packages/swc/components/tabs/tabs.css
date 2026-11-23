@@ -13,6 +13,7 @@
 /* Flex stacks the tab list and the panels. It fills the container so the
  * width doesn't follow the selected panel. */
 :host {
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   inline-size: 100%;

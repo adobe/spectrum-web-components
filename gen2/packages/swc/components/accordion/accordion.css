@@ -11,6 +11,7 @@
  */
 
 :host {
+  box-sizing: border-box;
   display: block;
   min-inline-size: token("accordion-minimum-width");
   block-size: fit-content;

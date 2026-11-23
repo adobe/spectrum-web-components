@@ -12,6 +12,7 @@
 
 /* Fills the container instead of hugging its message. */
 :host {
+  box-sizing: border-box;
   display: block;
   inline-size: 100%;
   block-size: fit-content;
