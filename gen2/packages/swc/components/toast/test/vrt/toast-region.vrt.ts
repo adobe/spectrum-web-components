@@ -15,12 +15,12 @@ import { expect, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import {
-  type ToastContainerPlacement,
   ToastQueue,
+  type ToastRegionPlacement,
   type ToastVariant,
-} from '@adobe/spectrum-wc-core/components/toast-container/index.js';
+} from '@adobe/spectrum-wc-core/components/toast/index.js';
 
-import '@adobe/spectrum-wc/components/toast-container/swc-toast-container.js';
+import '@adobe/spectrum-wc/components/toast/swc-toast-region.js';
 
 import {
   forcedColorsVrtParameters,
@@ -34,8 +34,8 @@ import {
 // Metadata
 
 const meta: Meta = {
-  title: 'Toast container/Container VRT',
-  component: 'swc-toast-container',
+  title: 'Toast region/Region VRT',
+  component: 'swc-toast-region',
   tags: ['dev'],
   beforeEach: () => {
     ToastQueue.clear();
@@ -48,7 +48,7 @@ export default meta;
 // Helpers
 
 type StackSpec = {
-  placement?: ToastContainerPlacement;
+  placement?: ToastRegionPlacement;
   // Variants in the order they are added, so the last one is the front toast.
   variants?: ToastVariant[];
   mode?: 'light' | 'dark';
@@ -74,7 +74,7 @@ const stackStory = ({
 }: StackSpec = {}): Story => ({
   render: () => {
     const container = html`
-      <swc-toast-container placement=${placement}></swc-toast-container>
+      <swc-toast-region placement=${placement}></swc-toast-region>
     `;
     // The spacer stretches the themed background to the viewport, where the container is fixed.
     return mode
@@ -103,7 +103,7 @@ const stackStory = ({
       }
       ToastQueue.add(`Notification ${index + 1}`, { variant });
     });
-    const container = canvasElement.querySelector('swc-toast-container')!;
+    const container = canvasElement.querySelector('swc-toast-region')!;
     await container.updateComplete;
     const front = container.shadowRoot?.querySelector('swc-toast');
     // Waits for the front toast's enter transition so the snapshot is at rest.

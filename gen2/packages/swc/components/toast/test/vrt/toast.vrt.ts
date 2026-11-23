@@ -18,9 +18,9 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import {
   TOAST_VARIANTS,
   type ToastVariant,
-} from '@adobe/spectrum-wc-core/components/toast-container/index.js';
+} from '@adobe/spectrum-wc-core/components/toast/index.js';
 
-import '@adobe/spectrum-wc/components/toast-container/swc-toast.js';
+import '@adobe/spectrum-wc/components/toast/swc-toast.js';
 
 import {
   forcedColorsVrtParameters,
@@ -36,7 +36,7 @@ import {
 // Metadata
 
 const meta: Meta = {
-  title: 'Toast container/Toast VRT',
+  title: 'Toast region/Toast VRT',
   component: 'swc-toast',
   tags: ['dev'],
 };

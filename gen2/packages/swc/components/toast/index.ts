@@ -10,12 +10,12 @@
  * governing permissions and limitations under the License.
  */
 export * from './Toast.js';
-export * from './ToastContainer.js';
+export * from './ToastRegion.js';
 export {
   ToastQueue,
-  TOAST_CONTAINER_PLACEMENTS,
-  type ToastContainerPlacement,
+  TOAST_REGION_PLACEMENTS,
+  type ToastRegionPlacement,
   type ToastQueueEntry,
   type ToastQueueItem,
   type ToastQueueOptions,
-} from '@adobe/spectrum-wc-core/components/toast-container/index.js';
+} from '@adobe/spectrum-wc-core/components/toast/index.js';

@@ -248,7 +248,7 @@ export abstract class ToastBase extends SpectrumElement {
       prop: 'variant',
       value: this.variant,
       valid: TOAST_VARIANTS,
-      url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-toast-container--docs',
+      url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-toast-region--docs',
     });
     if (!this.hasUpdated || changedProperties.has('open')) {
       this.setAttribute('tabindex', '0');
