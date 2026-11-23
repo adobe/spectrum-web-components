@@ -1716,6 +1716,38 @@ const addQueue = async (
   return getFront(container);
 };
 
+const peekPosition = async (
+  layer: HTMLElement
+): Promise<{ x: number; y: number }> => {
+  // Anchor real input to the flat region, not the perspective-transformed layer.
+  const region = layer.parentElement!;
+  const front = region.querySelector<Toast>('swc-toast')!;
+  // Opening precedes the message reveal, which changes the stack's geometry.
+  await waitFor(() =>
+    expect(
+      front.shadowRoot!.querySelector('.swc-Toast-text slot'),
+      'message is rendered'
+    ).not.toBeNull()
+  );
+  await document.fonts.ready;
+  const rect = layer.getBoundingClientRect();
+  const regionRect = region.getBoundingClientRect();
+  const x = rect.left + rect.width / 2;
+  const y = (rect.top + regionRect.top) / 2;
+  const root = layer.getRootNode();
+  if (!(root instanceof ShadowRoot)) {
+    throw new Error('The peek layer must be in the region shadow root');
+  }
+  expect(
+    root.elementFromPoint(x, y),
+    'the visible peek point hits the layer'
+  ).toBe(layer);
+  return {
+    x: x - regionRect.left,
+    y: y - regionRect.top,
+  };
+};
+
 export const ExpandTriggersTest: Story = {
   play: async ({ canvasElement, step }) => {
     ToastQueue.clear();
@@ -1783,8 +1815,17 @@ export const ExpandTriggersTest: Story = {
           )!;
           // A real press on the strip that peeks above the front toast, so the
           // layer must receive pointer events (a scripted click would not check).
-          const { width } = layer.getBoundingClientRect();
-          await userEvent.click(layer, { position: { x: width / 2, y: 2 } });
+          const clicked = fn();
+          layer.addEventListener('click', clicked, { once: true });
+          await userEvent.click(layer.parentElement!, {
+            position: await peekPosition(layer),
+          });
+          await waitFor(() =>
+            expect(
+              clicked,
+              'the real click reaches the layer'
+            ).toHaveBeenCalledOnce()
+          );
           await waitForExpanded(container, true);
           controlOf(container, 'Collapse').click();
           await waitForExpanded(container, false);
@@ -2133,8 +2174,15 @@ export const PeekHoverPauseTest: Story = {
           const layer = container.shadowRoot!.querySelector<HTMLElement>(
             '.swc-ToastRegion-layer'
           )!;
-          const { width } = layer.getBoundingClientRect();
-          await userEvent.hover(layer, { position: { x: width / 2, y: 2 } });
+          await userEvent.hover(layer.parentElement!, {
+            position: await peekPosition(layer),
+          });
+          await waitFor(() =>
+            expect(
+              layer.matches(':hover'),
+              'the real pointer reaches the layer'
+            ).toBe(true)
+          );
           vi.advanceTimersByTime(20000);
           expect(ToastQueue.entries.length, 'queue size').toBe(2);
         }
