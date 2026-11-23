@@ -133,6 +133,19 @@ Components that size or align their own host are checked in the flex and grid co
 - Add a row for each anatomy that changes the host box, such as label and icon-only, or sized and unsized media.
 - Skip components with no host box in the layout, such as `display: contents` or top-layer surfaces (popover, tooltip, menu). Cover their trigger instead.
 - Skip components that position themselves with `position: absolute` and are placed by their parent, such as color handle and color loupe, and components with no host CSS, such as link, typography, and opacity checkerboard.
+- Skip composite patterns that are validated in context, such as the AI toolkit conversation, response status, and prompt field patterns. A leaf pattern that consumers place on its own, such as `ai-button`, gets a layout VRT like a component, because it ends up in layouts the pattern doesn't control.
+
+#### What the contexts do and don't cover
+
+The contexts exist to answer one question: under centering, stretch, shrink pressure, grow pressure, and content-sized tracks, does the host box match the rendered component? Consumers own the final dimensions and can override any of them on the host, so the suite checks the component's own defaults, not every layout an app could build.
+
+Some cases are left to the consumer by design, and the component behaves like the native element it wraps:
+
+- Shrink-to-fit parents, such as `inline-flex`, floats, absolute positioning, and table cells.
+- `flex-wrap` and vertical writing modes.
+- Narrow, content-sized, or `1fr` grid tracks that push the container or siblings. A `minmax(0, 1fr)` track gives the host a definite width, so it behaves like block flow or the narrow-track cell. A `1fr` track that adapts to the host's minimum size behaves like the shrink-pressure cell. Neither needs its own context.
+
+Right-to-left layout is covered by the directional stories, not by a layout context.
 
 ## Tips for reliable VRT
 

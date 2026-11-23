@@ -54,7 +54,10 @@
   inline-size: fit-content;
 }
 
-/* One line of text tall when the container gives it no height to fill. */
+/* One line of text tall when the container gives it no height to fill. Not
+ * capped at the container: a percentage minimum resolves to 0 when the
+ * container's height is indefinite, which collapses a lone divider. In a
+ * container shorter than one line, lower it with the custom property. */
 .swc-Divider--vertical {
   inline-size: var(--_swc-divider-thickness);
   block-size: 100%;

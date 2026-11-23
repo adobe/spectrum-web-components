@@ -55,7 +55,7 @@ layoutContexts(
 );
 ```
 
-Contexts, in render order. Overlapping cases, such as a fixed-height parent and a taller sibling, are not listed separately.
+Contexts, in render order. Overlapping cases, such as a fixed-height parent and a taller sibling, are not listed separately. `1fr` and `minmax(0, 1fr)` tracks, and shrink-to-fit parents have no context of their own. See [what the contexts do and don't cover](../../../../../CONTRIBUTOR-DOCS/02_style-guide/04_testing/04_visual-regresssion-testing.md#what-the-contexts-do-and-dont-cover).
 
 | Context (`id`)                                                            | What it sets up                             | What it catches                                                                                                                                                                          |
 | ------------------------------------------------------------------------- | ------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

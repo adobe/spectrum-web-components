@@ -59,6 +59,7 @@ Build the story as the guide's [Layout contexts](../../../CONTRIBUTOR-DOCS/02_st
 
 - Measure every cell in a browser, for example with Playwright against the running Storybook: the host box, the rendered box, and its position in the container. Write the cell `descriptions` from those measurements, not from expectations.
 - Report the outcome to the user so they know what to review: the cells where the host and rendered boxes intentionally differ, any surprise that led to a CSS change, and what you could only check in one browser engine.
+- Don't add contexts for the cases the guide leaves to the consumer, such as shrink-to-fit parents and `1fr` tracks. See [what the contexts do and don't cover](../../../CONTRIBUTOR-DOCS/02_style-guide/04_testing/04_visual-regresssion-testing.md#what-the-contexts-do-and-dont-cover).
 
 ## Custom properties
 
