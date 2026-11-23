@@ -11,6 +11,6 @@
  */
 export * from './Toast.base.js';
 export * from './Toast.types.js';
-export * from './ToastContainer.base.js';
-export * from './ToastContainer.types.js';
+export * from './ToastRegion.base.js';
+export * from './ToastRegion.types.js';
 export * from './ToastQueue.js';

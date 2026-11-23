@@ -15,7 +15,7 @@ import { gotoStory } from '@swc-test-helpers/playwright';
 test('the container exposes a counted region with a single named toast', async ({
   page,
 }) => {
-  await gotoStory(page, 'components-toast-container--overview', 'swc-button');
+  await gotoStory(page, 'components-toast-region--overview', 'swc-button');
   await page.getByRole('button', { name: 'Add toast', exact: true }).click();
   const region = page.getByRole('region', { name: '1 notification.' });
   await expect(region).toHaveAttribute('tabindex', '-1');
@@ -32,7 +32,7 @@ test('the container exposes a counted region with a single named toast', async (
 
 const openTimedStory = async (
   page: Page,
-  storyId = 'components-toast-container--auto-dismiss'
+  storyId = 'components-toast-region--auto-dismiss'
 ): Promise<void> => {
   await gotoStory(page, storyId, 'swc-button');
   await page.clock.install({ time: new Date('2026-01-01T00:00:00Z') });
@@ -130,11 +130,7 @@ test('only the front counts down and promotion starts a full timeout', async ({
 test('closing the focused toast with the keyboard focuses the promoted toast, which auto-dismisses once focus leaves', async ({
   page,
 }) => {
-  await gotoStory(
-    page,
-    'components-toast-container--auto-dismiss',
-    'swc-button'
-  );
+  await gotoStory(page, 'components-toast-region--auto-dismiss', 'swc-button');
   const add = page.getByRole('button', { name: 'Add toast', exact: true });
   await add.click();
   await page.waitForTimeout(1500);
@@ -179,7 +175,7 @@ test('closing the focused toast with a pointer leaves the region and gives the p
 test('the stack exposes one named toast; the layers behind it are not in the accessibility tree', async ({
   page,
 }) => {
-  await gotoStory(page, 'components-toast-container--overview', 'swc-button');
+  await gotoStory(page, 'components-toast-region--overview', 'swc-button');
   const add = page.getByRole('button', { name: 'Add toast', exact: true });
   await add.click();
   await add.click();
@@ -195,13 +191,13 @@ test('the stack exposes one named toast; the layers behind it are not in the acc
         - button "Close"
   `);
   await expect(page.getByRole('alertdialog')).toHaveCount(1);
-  await expect(page.locator('.swc-ToastContainer-layer')).toHaveCount(2);
+  await expect(page.locator('.swc-ToastRegion-layer')).toHaveCount(2);
 });
 
 test('Tab only reaches the front toast, never a layer or a queued toast behind it', async ({
   page,
 }) => {
-  await gotoStory(page, 'components-toast-container--overview', 'swc-button');
+  await gotoStory(page, 'components-toast-region--overview', 'swc-button');
   const add = page.getByRole('button', { name: 'Add toast', exact: true });
   for (let count = 0; count < 4; count += 1) {
     await add.click();
@@ -238,8 +234,8 @@ test('Tab only reaches the front toast, never a layer or a queued toast behind i
         };
         return {
           inToast: Boolean(closest('swc-toast')),
-          inLayer: Boolean(closest('.swc-ToastContainer-layer')),
-          inRegion: Boolean(closest('swc-toast-container')),
+          inLayer: Boolean(closest('.swc-ToastRegion-layer')),
+          inRegion: Boolean(closest('swc-toast-region')),
         };
       })
     );
@@ -259,7 +255,7 @@ test('a pointer still inside the region keeps the promoted toast paused', async 
 }) => {
   await openTimedStory(
     page,
-    'components-toast-container--programmatic-close-fixture'
+    'components-toast-region--programmatic-close-fixture'
   );
   const add = page.getByRole('button', { name: 'Add toast', exact: true });
   await add.click();
@@ -300,7 +296,7 @@ test('a configured action never auto-dismisses', async ({ page }) => {
   // The Action story has no timeout, so the URL supplies the one an action must ignore.
   await openTimedStory(
     page,
-    'components-toast-container--action&args=timeout:6000'
+    'components-toast-region--action&args=timeout:6000'
   );
   await page.getByRole('button', { name: 'Add toast', exact: true }).click();
   await expect(page.locator('swc-toast')).toHaveAttribute('open', '');
@@ -314,7 +310,7 @@ test('a configured action never auto-dismisses', async ({ page }) => {
 test('F6 and Shift+F6 move focus into the region and back', async ({
   page,
 }) => {
-  await gotoStory(page, 'components-toast-container--playground', 'swc-button');
+  await gotoStory(page, 'components-toast-region--playground', 'swc-button');
   const add = page.getByRole('button', {
     name: 'Show custom toast',
     exact: true,
@@ -338,7 +334,7 @@ test('F6 and Shift+F6 move focus into the region and back', async ({
 test('F6 keeps its browser behavior while no toast is showing', async ({
   page,
 }) => {
-  await gotoStory(page, 'components-toast-container--playground', 'swc-button');
+  await gotoStory(page, 'components-toast-region--playground', 'swc-button');
   await page.evaluate(() => {
     document.addEventListener('keydown', (event) => {
       if (event.key === 'F6') {

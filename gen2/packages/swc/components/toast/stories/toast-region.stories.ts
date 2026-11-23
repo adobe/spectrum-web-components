@@ -17,17 +17,17 @@ import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import type { ButtonVariant } from '@adobe/spectrum-wc-core/components/button';
 import {
-  TOAST_CONTAINER_PLACEMENTS,
+  TOAST_REGION_PLACEMENTS,
   TOAST_VARIANTS,
-  type ToastContainerPlacement,
   ToastQueue,
   type ToastQueueOptions,
+  type ToastRegionPlacement,
   type ToastVariant,
-} from '@adobe/spectrum-wc-core/components/toast-container/index.js';
+} from '@adobe/spectrum-wc-core/components/toast/index.js';
 
 import '@adobe/spectrum-wc/components/button/swc-button.js';
-import '@adobe/spectrum-wc/components/toast-container/swc-toast.js';
-import '@adobe/spectrum-wc/components/toast-container/swc-toast-container.js';
+import '@adobe/spectrum-wc/components/toast/swc-toast.js';
+import '@adobe/spectrum-wc/components/toast/swc-toast-region.js';
 
 import { uniqueId } from '../../../utils/id.js';
 
@@ -35,18 +35,16 @@ import { uniqueId } from '../../../utils/id.js';
 //    METADATA
 // ────────────────
 
-type ToastContainerArgs = ToastQueueOptions & {
+type ToastRegionArgs = ToastQueueOptions & {
   message: string;
-  placement: ToastContainerPlacement;
+  placement: ToastRegionPlacement;
 };
 
-type ToastPlaygroundArgs = ToastContainerArgs & { open?: boolean };
+type ToastPlaygroundArgs = ToastRegionArgs & { open?: boolean };
 
 // Spreading the helper's argTypes also hides the private and protected members
 // that Storybook would otherwise list as controls.
-const { argTypes: containerArgTypes } = getStorybookHelpers(
-  'swc-toast-container'
-);
+const { argTypes: containerArgTypes } = getStorybookHelpers('swc-toast-region');
 const { argTypes: toastArgTypes } = getStorybookHelpers('swc-toast');
 
 const hiddenControl = { table: { disable: true }, control: false } as const;
@@ -60,13 +58,13 @@ const queueOptions = {
 } as const;
 
 /**
- * The toast container shows temporary notifications from a shared queue. Add
+ * The toast region shows temporary notifications from a shared queue. Add
  * toasts with `ToastQueue.add()`; the container renders one toast at a time and
  * owns placement, auto-dismiss timing, and focus return.
  */
-const meta: Meta<ToastContainerArgs> = {
-  title: 'Toast container',
-  component: 'swc-toast-container',
+const meta: Meta<ToastRegionArgs> = {
+  title: 'Toast region',
+  component: 'swc-toast-region',
   tags: ['migrated'],
   args: {
     placement: 'bottom',
@@ -84,7 +82,7 @@ const meta: Meta<ToastContainerArgs> = {
     placement: {
       ...containerArgTypes?.placement,
       control: 'select',
-      options: TOAST_CONTAINER_PLACEMENTS,
+      options: TOAST_REGION_PLACEMENTS,
     },
     message: {
       control: 'text',
@@ -136,7 +134,7 @@ const meta: Meta<ToastContainerArgs> = {
       story: { inline: false, height: '260px' },
     },
     // swc-toast is a second element of this component; surface its API table
-    // alongside swc-toast-container's on the docs page.
+    // alongside swc-toast-region's on the docs page.
     additionalApiTables: ['swc-toast'],
   },
   beforeEach: () => {
@@ -151,7 +149,7 @@ const meta: Meta<ToastContainerArgs> = {
     return html`
       <swc-button variant="secondary" @click=${addOne}>Add toast</swc-button>
       <swc-button variant="secondary" @click=${clear}>Clear</swc-button>
-      <swc-toast-container .placement=${args.placement}></swc-toast-container>
+      <swc-toast-region .placement=${args.placement}></swc-toast-region>
     `;
   },
 };
@@ -192,13 +190,13 @@ const playgroundVariantButtons = [
 }[];
 
 // Adds `count` toasts, oldest first.
-const addStack = (args: ToastContainerArgs, count: number): void => {
+const addStack = (args: ToastRegionArgs, count: number): void => {
   for (let index = 0; index < count; index += 1) {
     addToast(args, ` (${index + 1})`);
   }
 };
 
-const addToast = (args: ToastContainerArgs, suffix = ''): string =>
+const addToast = (args: ToastRegionArgs, suffix = ''): string =>
   ToastQueue.add(`${args.message}${suffix}`, {
     variant: args.variant,
     iconLabel: args.iconLabel || undefined,
@@ -245,7 +243,7 @@ const staticStackParameters = {
 //    PLAYGROUND STORY
 // ────────────────────
 
-export const Playground: Story<ToastContainerArgs> = {
+export const Playground: Story<ToastRegionArgs> = {
   tags: ['dev'],
   render: (args) => {
     const clear = (): void => ToastQueue.clear();
@@ -307,7 +305,7 @@ export const Playground: Story<ToastContainerArgs> = {
         Show custom toast
       </swc-button>
       <swc-button variant="secondary" @click=${clear}>Clear</swc-button>
-      <swc-toast-container .placement=${args.placement}></swc-toast-container>
+      <swc-toast-region .placement=${args.placement}></swc-toast-region>
     `;
   },
 };
@@ -316,7 +314,7 @@ export const Playground: Story<ToastContainerArgs> = {
 //    OVERVIEW STORY
 // ──────────────────
 
-export const Overview: Story<ToastContainerArgs> = {
+export const Overview: Story<ToastRegionArgs> = {
   tags: ['overview'],
   play: ({ args }) => {
     addToast(args);
@@ -327,7 +325,7 @@ export const Overview: Story<ToastContainerArgs> = {
 //    ANATOMY STORY
 // ──────────────────
 
-export const Anatomy: Story<ToastContainerArgs> = {
+export const Anatomy: Story<ToastRegionArgs> = {
   ...Overview,
   args: { ...Overview.args, actionLabel: 'Undo', onAction: fn() },
   tags: ['anatomy'],
@@ -337,7 +335,7 @@ export const Anatomy: Story<ToastContainerArgs> = {
 //    OPTIONS STORIES
 // ──────────────────
 
-export const Variants: Story<ToastContainerArgs> = {
+export const Variants: Story<ToastRegionArgs> = {
   render: (args) => {
     const addVariant = (event: Event): void => {
       const variant = (event.currentTarget as HTMLElement).dataset
@@ -356,34 +354,34 @@ export const Variants: Story<ToastContainerArgs> = {
           </swc-button>
         `
       )}
-      <swc-toast-container .placement=${args.placement}></swc-toast-container>
+      <swc-toast-region .placement=${args.placement}></swc-toast-region>
     `;
   },
   tags: ['options'],
 };
 
-export const Top: Story<ToastContainerArgs> = {
+export const Top: Story<ToastRegionArgs> = {
   ...Overview,
   args: { ...Overview.args, placement: 'top' },
   play: ({ args }) => addStack(args, 3),
   tags: ['options'],
 };
 
-export const TopEnd: Story<ToastContainerArgs> = {
+export const TopEnd: Story<ToastRegionArgs> = {
   ...Overview,
   args: { ...Overview.args, placement: 'top-end' },
   play: ({ args }) => addStack(args, 3),
   tags: ['options'],
 };
 
-export const Bottom: Story<ToastContainerArgs> = {
+export const Bottom: Story<ToastRegionArgs> = {
   ...Overview,
   args: { ...Overview.args, placement: 'bottom' },
   play: ({ args }) => addStack(args, 3),
   tags: ['options'],
 };
 
-export const BottomEnd: Story<ToastContainerArgs> = {
+export const BottomEnd: Story<ToastRegionArgs> = {
   ...Overview,
   args: { ...Overview.args, placement: 'bottom-end' },
   play: ({ args }) => addStack(args, 3),
@@ -394,12 +392,12 @@ export const BottomEnd: Story<ToastContainerArgs> = {
 //    BEHAVIORS STORIES
 // ──────────────────
 
-export const AutoDismiss: Story<ToastContainerArgs> = {
+export const AutoDismiss: Story<ToastRegionArgs> = {
   args: { timeout: 6000 },
   tags: ['behaviors'],
 };
 
-export const Action: Story<ToastContainerArgs> = {
+export const Action: Story<ToastRegionArgs> = {
   args: { actionLabel: 'Undo' },
   tags: ['behaviors'],
 };
@@ -408,7 +406,7 @@ export const Action: Story<ToastContainerArgs> = {
 //    ACCESSIBILITY STORY
 // ──────────────────────────
 
-export const Accessibility: Story<ToastContainerArgs> = {
+export const Accessibility: Story<ToastRegionArgs> = {
   ...Overview,
   tags: ['a11y'],
 };
@@ -462,7 +460,7 @@ export const ToastAnatomy: Story<ToastPlaygroundArgs> = {
   tags: ['anatomy'],
 };
 
-export const ToastVariants: Story<ToastContainerArgs> = {
+export const ToastVariants: Story<ToastRegionArgs> = {
   render: () => html`
     ${TOAST_VARIANTS.map((variant) =>
       staticToast({ message: variantMessages[variant], variant })
@@ -472,7 +470,7 @@ export const ToastVariants: Story<ToastContainerArgs> = {
   tags: ['options'],
 };
 
-export const ToastAction: Story<ToastContainerArgs> = {
+export const ToastAction: Story<ToastRegionArgs> = {
   render: () => html`
     ${staticToast({
       message: 'Your changes have been saved.',
@@ -489,7 +487,7 @@ export const ToastAction: Story<ToastContainerArgs> = {
   tags: ['options'],
 };
 
-export const ToastTextWrapping: Story<ToastContainerArgs> = {
+export const ToastTextWrapping: Story<ToastRegionArgs> = {
   render: () => html`
     ${staticToast({
       message:
@@ -524,7 +522,7 @@ export const ToastTextWrapping: Story<ToastContainerArgs> = {
 // and production Storybooks build `*.stories.ts` but not `.test.ts` files, so it
 // lives here. `!dev` keeps it out of the sidebar and `!test` out of the
 // automatic runs; it stays addressable by story id.
-export const ProgrammaticCloseFixture: Story<ToastContainerArgs> = {
+export const ProgrammaticCloseFixture: Story<ToastRegionArgs> = {
   render: () => {
     const add = (): void => {
       ToastQueue.add('File saved', { timeout: 6000 });
@@ -540,7 +538,7 @@ export const ProgrammaticCloseFixture: Story<ToastContainerArgs> = {
       <swc-button variant="secondary" @click=${closeNewest}>
         Close newest
       </swc-button>
-      <swc-toast-container></swc-toast-container>
+      <swc-toast-region></swc-toast-region>
     `;
   },
   tags: ['!dev', '!test'],

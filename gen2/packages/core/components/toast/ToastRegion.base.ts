@@ -21,19 +21,19 @@ import {
 } from '@adobe/spectrum-wc-core/utils/index.js';
 
 import type { ToastBase } from './Toast.base.js';
-import {
-  TOAST_CONTAINER_PLACEMENTS,
-  type ToastContainerPlacement,
-  type ToastQueueEntry,
-} from './ToastContainer.types.js';
 import { ToastCountdown } from './ToastCountdown.js';
 import { ToastQueue } from './ToastQueue.js';
+import {
+  TOAST_REGION_PLACEMENTS,
+  type ToastQueueEntry,
+  type ToastRegionPlacement,
+} from './ToastRegion.types.js';
 
-const connectedContainers = new Set<ToastContainerBase>();
+const connectedContainers = new Set<ToastRegionBase>();
 const docsUrl =
-  'https://spectrum-web-components.adobe.com/?path=/docs/components-toast-container--docs';
+  'https://spectrum-web-components.adobe.com/?path=/docs/components-toast-region--docs';
 
-export abstract class ToastContainerBase extends SpectrumElement {
+export abstract class ToastRegionBase extends SpectrumElement {
   // ─────────────────────────
   //     API TO OVERRIDE
   // ─────────────────────────
@@ -49,7 +49,7 @@ export abstract class ToastContainerBase extends SpectrumElement {
 
   /** The viewport edge at which notifications appear. End is logical. */
   @property({ type: String, reflect: true })
-  public placement: ToastContainerPlacement = 'bottom';
+  public placement: ToastRegionPlacement = 'bottom';
 
   /**
    * Builds the accessible name of the notification region from the number of
@@ -95,7 +95,7 @@ export abstract class ToastContainerBase extends SpectrumElement {
       [...connectedContainers].some(
         (container) => container.ownerDocument === this.ownerDocument
       ),
-      'Only one swc-toast-container should be connected per app view.',
+      'Only one swc-toast-region should be connected per app view.',
       docsUrl
     );
     connectedContainers.add(this);
@@ -123,7 +123,7 @@ export abstract class ToastContainerBase extends SpectrumElement {
     validateEnum(this, {
       prop: 'placement',
       value: this.placement,
-      valid: TOAST_CONTAINER_PLACEMENTS,
+      valid: TOAST_REGION_PLACEMENTS,
       url: docsUrl,
     });
     super.update(changedProperties);

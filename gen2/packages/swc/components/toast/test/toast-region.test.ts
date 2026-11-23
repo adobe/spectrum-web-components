@@ -17,30 +17,30 @@ import { getComponent, withWarningSpy } from '@swc-test-helpers/dom';
 import {
   ToastQueue,
   type ToastQueueItem,
-} from '@adobe/spectrum-wc-core/components/toast-container/index.js';
+} from '@adobe/spectrum-wc-core/components/toast/index.js';
 import {
   deepContains,
   getActiveElement,
 } from '@adobe/spectrum-wc-core/utils/index.js';
 
-import '../swc-toast-container.js';
+import '../swc-toast-region.js';
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 
 import { ToastQueue as RenderingToastQueue } from '../index.js';
 import type { Toast } from '../Toast.js';
-import type { ToastContainer } from '../ToastContainer.js';
+import type { ToastRegion } from '../ToastRegion.js';
 
 export default {
-  title: 'Toast container/Tests/Container',
+  title: 'Toast region/Tests/Region',
   tags: ['!autodocs', 'dev'],
   render: () => html`
     <button id="trigger">Add notification</button>
-    <swc-toast-container></swc-toast-container>
+    <swc-toast-region></swc-toast-region>
     <button id="outside">Outside region</button>
   `,
 } as Meta;
 
-const getFront = async (container: ToastContainer): Promise<Toast> => {
+const getFront = async (container: ToastRegion): Promise<Toast> => {
   await container.updateComplete;
   const toast = container.shadowRoot?.querySelector<Toast>('swc-toast');
   expect(toast, 'front toast').not.toBeNull();
@@ -141,9 +141,9 @@ export const RenderingAndClosureTest: Story = {
       expect(RenderingToastQueue, 'SWC queue export').toBe(ToastQueue);
     });
     ToastQueue.clear();
-    const container = await getComponent<ToastContainer>(
+    const container = await getComponent<ToastRegion>(
       canvasElement,
-      'swc-toast-container'
+      'swc-toast-region'
     );
     const onClose = fn();
 
@@ -277,9 +277,9 @@ export const RenderingAndClosureTest: Story = {
 export const RegionLabelTest: Story = {
   play: async ({ canvasElement, step }) => {
     ToastQueue.clear();
-    const container = await getComponent<ToastContainer>(
+    const container = await getComponent<ToastRegion>(
       canvasElement,
-      'swc-toast-container'
+      'swc-toast-region'
     );
     const regionLabel = (): string | null | undefined =>
       container.shadowRoot
@@ -315,9 +315,9 @@ export const RegionLabelTest: Story = {
 export const CloseLabelTest: Story = {
   play: async ({ canvasElement, step }) => {
     ToastQueue.clear();
-    const container = await getComponent<ToastContainer>(
+    const container = await getComponent<ToastRegion>(
       canvasElement,
-      'swc-toast-container'
+      'swc-toast-region'
     );
 
     try {
@@ -341,9 +341,9 @@ export const CloseLabelTest: Story = {
 export const CloseBeforeOpenTest: Story = {
   play: async ({ canvasElement, step }) => {
     ToastQueue.clear();
-    const container = await getComponent<ToastContainer>(
+    const container = await getComponent<ToastRegion>(
       canvasElement,
-      'swc-toast-container'
+      'swc-toast-region'
     );
     const root = container.shadowRoot!;
     const onClose = fn();
@@ -402,9 +402,9 @@ export const CloseBeforeOpenTest: Story = {
 export const QueueOrderTest: Story = {
   play: async ({ canvasElement, step }) => {
     ToastQueue.clear();
-    const container = await getComponent<ToastContainer>(
+    const container = await getComponent<ToastRegion>(
       canvasElement,
-      'swc-toast-container'
+      'swc-toast-region'
     );
     const messages = (): string[] =>
       ToastQueue.entries.map((entry) => entry.message);
@@ -505,9 +505,9 @@ export const QueueOrderTest: Story = {
 export const ConnectsClosedThenOpensTest: Story = {
   play: async ({ canvasElement, step }) => {
     ToastQueue.clear();
-    const container = await getComponent<ToastContainer>(
+    const container = await getComponent<ToastRegion>(
       canvasElement,
-      'swc-toast-container'
+      'swc-toast-region'
     );
     const root = container.shadowRoot!;
     const openAtInsertion: boolean[] = [];
@@ -547,9 +547,9 @@ export const ConnectsClosedThenOpensTest: Story = {
 export const TimeoutConfigurationTest: Story = {
   play: async ({ canvasElement, step }) => {
     ToastQueue.clear();
-    const container = await getComponent<ToastContainer>(
+    const container = await getComponent<ToastRegion>(
       canvasElement,
-      'swc-toast-container'
+      'swc-toast-region'
     );
     try {
       ToastQueue.add('Timed notification', { timeout: 3000 });
@@ -626,9 +626,9 @@ export const TimeoutConfigurationTest: Story = {
 export const ActionsTest: Story = {
   play: async ({ canvasElement, step }) => {
     ToastQueue.clear();
-    const container = await getComponent<ToastContainer>(
+    const container = await getComponent<ToastRegion>(
       canvasElement,
-      'swc-toast-container'
+      'swc-toast-region'
     );
     const onAction = fn();
     const onClose = fn();
@@ -704,9 +704,9 @@ export const ActionsTest: Story = {
 export const FocusAndWarningsTest: Story = {
   play: async ({ canvasElement, step }) => {
     ToastQueue.clear();
-    const container = await getComponent<ToastContainer>(
+    const container = await getComponent<ToastRegion>(
       canvasElement,
-      'swc-toast-container'
+      'swc-toast-region'
     );
     const trigger = canvasElement.querySelector<HTMLButtonElement>('#trigger')!;
     const outside = canvasElement.querySelector<HTMLButtonElement>('#outside')!;
@@ -799,7 +799,7 @@ export const FocusAndWarningsTest: Story = {
         'connecting a second container produces a dev warning',
         async () => {
           await withWarningSpy(async (warnings) => {
-            const second = document.createElement('swc-toast-container');
+            const second = document.createElement('swc-toast-region');
             try {
               canvasElement.append(second);
               await second.updateComplete;
@@ -824,9 +824,9 @@ export const FocusAndWarningsTest: Story = {
 export const InterruptedClosureTest: Story = {
   play: async ({ canvasElement, step }) => {
     ToastQueue.clear();
-    const container = await getComponent<ToastContainer>(
+    const container = await getComponent<ToastRegion>(
       canvasElement,
-      'swc-toast-container'
+      'swc-toast-region'
     );
     const onClose = fn();
     try {
@@ -892,13 +892,13 @@ export const InterruptedClosureTest: Story = {
   },
 };
 
-const getLayers = (container: ToastContainer): HTMLElement[] => [
+const getLayers = (container: ToastRegion): HTMLElement[] => [
   ...container.shadowRoot!.querySelectorAll<HTMLElement>(
-    '.swc-ToastContainer-layer'
+    '.swc-ToastRegion-layer'
   ),
 ];
 
-const getRegion = (container: ToastContainer): HTMLElement =>
+const getRegion = (container: ToastRegion): HTMLElement =>
   container.shadowRoot!.querySelector<HTMLElement>('[role="region"]')!;
 
 // Some engines never apply `perspective` to layout geometry, for example headed Linux
@@ -921,9 +921,9 @@ const projectsPerspective = (): boolean => {
 export const StackLayersTest: Story = {
   play: async ({ canvasElement, step }) => {
     ToastQueue.clear();
-    const container = await getComponent<ToastContainer>(
+    const container = await getComponent<ToastRegion>(
       canvasElement,
-      'swc-toast-container'
+      'swc-toast-region'
     );
 
     try {
@@ -986,13 +986,13 @@ export const StackLayersTest: Story = {
       await step('each layer takes the variant of its toast', () => {
         const [first, second] = getLayers(container);
         expect(
-          first.classList.contains('swc-ToastContainer-layer--info'),
+          first.classList.contains('swc-ToastRegion-layer--info'),
           'nearest layer is the info toast'
         ).toBe(true);
         expect(
           [...second.classList],
           'neutral layer has no variant modifier'
-        ).toEqual(['swc-ToastContainer-layer']);
+        ).toEqual(['swc-ToastRegion-layer']);
         expect(
           getComputedStyle(second).backgroundColor,
           'neutral layer differs from the info layer'
@@ -1001,7 +1001,7 @@ export const StackLayersTest: Story = {
 
       await step('layers stay in the queue order, newest nearest', () => {
         const indexes = getLayers(container).map((layer) =>
-          layer.style.getPropertyValue('--_swc-toast-container-layer-index')
+          layer.style.getPropertyValue('--_swc-toast-region-layer-index')
         );
         expect(indexes, 'layer depth indexes').toEqual(['1', '2']);
       });
@@ -1023,7 +1023,7 @@ export const StackLayersTest: Story = {
           expect(layers, 'layers').toHaveLength(2);
           expect(
             layers.map((layer) =>
-              layer.style.getPropertyValue('--_swc-toast-container-layer-index')
+              layer.style.getPropertyValue('--_swc-toast-region-layer-index')
             ),
             'layer depth indexes'
           ).toEqual(['1', '2']);
@@ -1085,9 +1085,9 @@ export const StackLayersTest: Story = {
 export const RestoreToastsTest: Story = {
   play: async ({ canvasElement, step }) => {
     ToastQueue.clear();
-    const container = await getComponent<ToastContainer>(
+    const container = await getComponent<ToastRegion>(
       canvasElement,
-      'swc-toast-container'
+      'swc-toast-region'
     );
     let renderedToasts = 0;
     const observer = new MutationObserver((records) => {
@@ -1192,9 +1192,9 @@ export const RestoreToastsTest: Story = {
 export const AddAllWhileConnectedTest: Story = {
   play: async ({ canvasElement, step }) => {
     ToastQueue.clear();
-    const container = await getComponent<ToastContainer>(
+    const container = await getComponent<ToastRegion>(
       canvasElement,
-      'swc-toast-container'
+      'swc-toast-region'
     );
 
     try {
@@ -1231,8 +1231,8 @@ export const AddAllWhileConnectedTest: Story = {
             ),
             'layers follow the queue order behind the front toast'
           ).toEqual([
-            'swc-ToastContainer-layer--positive',
-            'swc-ToastContainer-layer--negative',
+            'swc-ToastRegion-layer--positive',
+            'swc-ToastRegion-layer--negative',
           ]);
         }
       );
@@ -1246,9 +1246,9 @@ export const AddAllWhileConnectedTest: Story = {
 export const RestoreFromJsonTest: Story = {
   play: async ({ canvasElement, step }) => {
     ToastQueue.clear();
-    const container = await getComponent<ToastContainer>(
+    const container = await getComponent<ToastRegion>(
       canvasElement,
-      'swc-toast-container'
+      'swc-toast-region'
     );
     const staleOnAction = fn();
     const staleOnClose = fn();
@@ -1345,9 +1345,9 @@ export const RestoreFromJsonTest: Story = {
 export const StackPlacementTest: Story = {
   play: async ({ canvasElement, step }) => {
     ToastQueue.clear();
-    const container = await getComponent<ToastContainer>(
+    const container = await getComponent<ToastRegion>(
       canvasElement,
-      'swc-toast-container'
+      'swc-toast-region'
     );
 
     try {
@@ -1435,9 +1435,9 @@ const emulateInput = (target: HTMLElement, type: 'pointer' | 'keyboard') => {
 export const StackFocusTest: Story = {
   play: async ({ canvasElement, step }) => {
     ToastQueue.clear();
-    const container = await getComponent<ToastContainer>(
+    const container = await getComponent<ToastRegion>(
       canvasElement,
-      'swc-toast-container'
+      'swc-toast-region'
     );
     const trigger = canvasElement.querySelector<HTMLButtonElement>('#trigger')!;
 
@@ -1560,13 +1560,13 @@ export const TopLayerStackingTest: Story = {
       popover="manual"
       style="inset: auto 0 0 0; inline-size: auto; block-size: 200px; margin: 0;"
     ></div>
-    <swc-toast-container></swc-toast-container>
+    <swc-toast-region></swc-toast-region>
   `,
   play: async ({ canvasElement, step }) => {
     ToastQueue.clear();
-    const container = await getComponent<ToastContainer>(
+    const container = await getComponent<ToastRegion>(
       canvasElement,
-      'swc-toast-container'
+      'swc-toast-region'
     );
     const overlap = canvasElement.querySelector<HTMLElement>('#overlap')!;
     const topElementOverToast = (): Element | null => {
@@ -1664,7 +1664,7 @@ export const LayeringFixture: Story = {
           Close dialog
         </swc-button>
       </dialog>
-      <swc-toast-container .placement=${args.placement}></swc-toast-container>
+      <swc-toast-region .placement=${args.placement}></swc-toast-region>
     `;
   },
 };

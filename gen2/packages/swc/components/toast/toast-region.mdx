@@ -2,26 +2,26 @@ import { Canvas, Meta } from '@storybook/addon-docs/blocks';
 
 import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
 
-import * as ToastContainerStories from './stories/toast-container.stories';
+import * as ToastRegionStories from './stories/toast-region.stories';
 
-<Meta of={ToastContainerStories} />
+<Meta of={ToastRegionStories} />
 
 <DocsHeader />
 
 ## Anatomy
 
-A toast container consists of:
+A toast region consists of:
 
 - **Region**: a fixed-position wrapper with `role="region"` and a label that counts the queued notifications
-- **Toast**: the front `<swc-toast>` that the container renders, with an optional variant icon, a message, an optional action button, and a close button
+- **Toast**: the front `<swc-toast>` that the region renders, with an optional variant icon, a message, an optional action button, and a close button
 
-The container does not take children. Add toasts to the shared `ToastQueue` and the container renders them.
+The region does not take children. Add toasts to the shared `ToastQueue` and the region renders them.
 
-<Canvas of={ToastContainerStories.Anatomy} />
+<Canvas of={ToastRegionStories.Anatomy} />
 
 The toast itself, shown on its own:
 
-<Canvas of={ToastContainerStories.ToastAnatomy} />
+<Canvas of={ToastRegionStories.ToastAnatomy} />
 
 ## Options
 
@@ -29,33 +29,33 @@ The toast itself, shown on its own:
 
 Set `variant` when you add a toast. A toast has four semantic variants: `neutral` (default), `info`, `positive`, and `negative`. The `info`, `positive`, and `negative` variants show a matching icon.
 
-<Canvas of={ToastContainerStories.ToastVariants} />
+<Canvas of={ToastRegionStories.ToastVariants} />
 
-Add each variant from the container:
+Add each variant from the region:
 
-<Canvas of={ToastContainerStories.Variants} />
+<Canvas of={ToastRegionStories.Variants} />
 
 ### Placement
 
-Set `placement` on the container to choose where toasts appear: `bottom` (default), `bottom-end`, `top`, or `top-end`. The `-end` placements sit at the end side of the viewport, which is the right in left-to-right layouts and the left in right-to-left layouts.
+Set `placement` on the region to choose where toasts appear: `bottom` (default), `bottom-end`, `top`, or `top-end`. The `-end` placements sit at the end side of the viewport, which is the right in left-to-right layouts and the left in right-to-left layouts.
 
-<Canvas of={ToastContainerStories.Bottom} />
+<Canvas of={ToastRegionStories.Bottom} />
 
-<Canvas of={ToastContainerStories.BottomEnd} />
+<Canvas of={ToastRegionStories.BottomEnd} />
 
-<Canvas of={ToastContainerStories.Top} />
+<Canvas of={ToastRegionStories.Top} />
 
-<Canvas of={ToastContainerStories.TopEnd} />
+<Canvas of={ToastRegionStories.TopEnd} />
 
 ## Behaviors
 
 ### Adding and removing toasts
 
-Add one `<swc-toast-container>` to your page, then use `ToastQueue` to manage toasts. `ToastQueue.add()` returns a key that identifies the entry.
+Add one `<swc-toast-region>` to your page, then use `ToastQueue` to manage toasts. `ToastQueue.add()` returns a key that identifies the entry.
 
 ```javascript
-import '@adobe/spectrum-wc/components/toast-container/swc-toast-container.js';
-import { ToastQueue } from '@adobe/spectrum-wc/components/toast-container/index.js';
+import '@adobe/spectrum-wc/components/toast/swc-toast-region.js';
+import { ToastQueue } from '@adobe/spectrum-wc/components/toast/index.js';
 
 const key = ToastQueue.add('File saved', { variant: 'positive' });
 
@@ -74,19 +74,19 @@ ToastQueue.clear();
 - `shouldCloseOnAction`: closes the toast after the action runs, default `false`
 - `onClose`: called once when the toast is removed
 
-These options apply to a toast when you add it. Changing them later does not affect toasts that are already in the queue. This differs from `placement` on the container, which updates right away.
+These options apply to a toast when you add it. Changing them later does not affect toasts that are already in the queue. This differs from `placement` on the region, which updates right away.
 
 `ToastQueue.addAll()` adds several toasts in one change. Pass an array of objects with a `message` and the same options. The first item shows in front, and the returned keys are in the same order. See [Restoring toasts](#restoring-toasts).
 
-The queue keeps every toast you add, but the container renders only the newest one as a real toast. When it closes, the next toast in the queue appears. The region label counts every queued toast, including the ones that are waiting.
+The queue keeps every toast you add, but the region renders only the newest one as a real toast. When it closes, the next toast in the queue appears. The region label counts every queued toast, including the ones that are waiting.
 
 `ToastQueue.close(key)` closes one toast and calls its `onClose`. `ToastQueue.clear()` removes all toasts and does not call any `onClose` callbacks. A toast that a listener keeps open by canceling its `swc-close` event stays in the queue and does not call `onClose`.
 
-Connect only one `<swc-toast-container>` per page. A second container logs a warning during development.
+Connect only one `<swc-toast-region>` per page. A second region logs a warning during development.
 
 ### Stack
 
-When more than one toast is queued, empty layers appear behind the front toast to show that more are waiting. The newest toast is closest to the edge where the container is anchored, and the layers peek out on the opposite side. Each layer takes the color of its toast's variant. The stack shows three toasts at most: the front toast and the two layers behind it. Layers beyond them are not rendered, and the region label still reports the full count.
+When more than one toast is queued, empty layers appear behind the front toast to show that more are waiting. The newest toast is closest to the edge where the region is anchored, and the layers peek out on the opposite side. Each layer takes the color of its toast's variant. The stack shows three toasts at most: the front toast and the two layers behind it. Layers beyond them are not rendered, and the region label still reports the full count.
 
 The layers are decorative. They use `role="presentation"`, contain no content, and cannot receive focus, so <kbd>Tab</kbd> never reaches a toast that is behind the front one.
 
@@ -125,7 +125,7 @@ ToastQueue.addAll(
 
 Give `onAction` only to toasts that have an `actionLabel`, because a toast needs both. If your toasts have different actions, choose the handler from the saved data, for example from `actionLabel` or from a field of your own.
 
-You can restore before the container connects. `addAll()` renders one toast with the stack behind it. Calling `add()` several times in a row also renders once, but each `add()` puts its toast in front, so the last one added shows first. An `await` between calls renders each toast separately.
+You can restore before the region connects. `addAll()` renders one toast with the stack behind it. Calling `add()` several times in a row also renders once, but each `add()` puts its toast in front, so the last one added shows first. An `await` between calls renders each toast separately.
 
 Each restored toast animates in and announces its message when it reaches the front. A toast with a `timeout` starts its full countdown at that point. Leave out `timeout` to keep a toast until it is dismissed. For a long backlog, restore only the toasts that still matter, or show one summary toast.
 
@@ -135,23 +135,23 @@ A toast stays until it is closed unless you set `timeout`. Positive values are r
 
 Only the toast that is showing counts down. When the next toast appears, its timer starts from the full duration. The timer pauses while a pointer or keyboard focus is anywhere in the region, and it resumes when both have left.
 
-<Canvas of={ToastContainerStories.AutoDismiss} />
+<Canvas of={ToastRegionStories.AutoDismiss} />
 
 ### Actions
 
 Set `actionLabel` and `onAction` to add an action button to a toast. Activating the button calls `onAction` and leaves the toast open unless you set `shouldCloseOnAction`. A toast with an action never auto-dismisses, so users have time to reach the button. If you also set `timeout`, a warning appears during development and the timeout is ignored.
 
-<Canvas of={ToastContainerStories.ToastAction} />
+<Canvas of={ToastRegionStories.ToastAction} />
 
-The same toasts in a container:
+The same toasts in a region:
 
-<Canvas of={ToastContainerStories.Action} />
+<Canvas of={ToastRegionStories.Action} />
 
 ### Text wrapping
 
 Long messages wrap within the toast's maximum width. When the toast has an action, the action moves below the text. Long unbroken words break instead of overflowing the toast.
 
-<Canvas of={ToastContainerStories.ToastTextWrapping} />
+<Canvas of={ToastRegionStories.ToastTextWrapping} />
 
 ### Focus
 
@@ -161,11 +161,11 @@ Opening a toast does not move focus, unless focus is already inside the region a
 
 ### Features
 
-The region has `role="region"` and an accessible name that reads "1 notification." or "N notifications." based on the number of queued toasts. To localize it, set the `getRegionLabel` property on `<swc-toast-container>` to a function that takes the count and returns the label, for example `container.getRegionLabel = (count) => ...`. A function lets you handle plural forms for your language. It is a property only, not an attribute. The region has `tabindex="-1"`, so it can receive focus from script but is not part of the normal <kbd>Tab</kbd> sequence.
+The region has `role="region"` and an accessible name that reads "1 notification." or "N notifications." based on the number of queued toasts. To localize it, set the `getRegionLabel` property on `<swc-toast-region>` to a function that takes the count and returns the label, for example `region.getRegionLabel = (count) => ...`. A function lets you handle plural forms for your language. It is a property only, not an attribute. The region has `tabindex="-1"`, so it can receive focus from script but is not part of the normal <kbd>Tab</kbd> sequence.
 
 While a toast is showing, <kbd>F6</kbd> and <kbd>Shift</kbd> + <kbd>F6</kbd> move focus into the region from anywhere on the page. Pressing either key again returns focus to where it was. Both keys keep their normal browser behavior when no toast is showing.
 
-Each `<swc-toast>` has `role="alertdialog"`, `aria-modal="false"`, and `tabindex="0"`, with an inner `role="alert"` wrapper so screen readers announce the message. The container reveals the message shortly after the toast opens, so assistive technology registers the live region first. The toast's accessible name comes from its message. For `info`, `positive`, and `negative` toasts, the name starts with the icon's label (for example, "Error File could not be saved"), so a screen reader reads it when focus moves onto the toast. The toast gets that name through `ElementInternals`, which test tooling such as Playwright ARIA snapshots cannot see, so it shows these toasts without a name. Safari does not include the icon in an `ElementInternals` name, so there the toast sets an `aria-label` with the icon's label followed by the message text instead. An `aria-label` that you set on the toast yourself is never replaced.
+Each `<swc-toast>` has `role="alertdialog"`, `aria-modal="false"`, and `tabindex="0"`, with an inner `role="alert"` wrapper so screen readers announce the message. The region reveals the message shortly after the toast opens, so assistive technology registers the live region first. The toast's accessible name comes from its message. For `info`, `positive`, and `negative` toasts, the name starts with the icon's label (for example, "Error File could not be saved"), so a screen reader reads it when focus moves onto the toast. The toast gets that name through `ElementInternals`, which test tooling such as Playwright ARIA snapshots cannot see, so it shows these toasts without a name. Safari does not include the icon in an `ElementInternals` name, so there the toast sets an `aria-label` with the icon's label followed by the message text instead. An `aria-label` that you set on the toast yourself is never replaced.
 
 ### Best practices
 
@@ -173,7 +173,7 @@ Each `<swc-toast>` has `role="alertdialog"`, `aria-modal="false"`, and `tabindex
 - If the message already states the status, set `iconLabel` to an empty string so the icon is decorative and screen readers do not say it twice.
 - Provide a descriptive `actionLabel` for the action button.
 
-<Canvas of={ToastContainerStories.Accessibility} />
+<Canvas of={ToastRegionStories.Accessibility} />
 
 ## Upcoming features
 

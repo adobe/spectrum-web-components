@@ -20,16 +20,16 @@ import { classMap } from 'lit/directives/class-map.js';
 import { styleMap } from 'lit/directives/style-map.js';
 
 import {
-  ToastContainerBase,
   ToastQueue,
-} from '@adobe/spectrum-wc-core/components/toast-container/index.js';
+  ToastRegionBase,
+} from '@adobe/spectrum-wc-core/components/toast/index.js';
 
 import './swc-toast.js';
 
 import { uniqueId } from '../../utils/id.js';
 import type { Toast } from './Toast.js';
 
-import styles from './toast-container.css';
+import styles from './toast-region.css';
 
 // Only the layers nearest the front toast render, however many are queued.
 const VISIBLE_LAYER_COUNT = 2;
@@ -37,10 +37,10 @@ const VISIBLE_LAYER_COUNT = 2;
 /**
  * Renders the front queued notification in a named region.
  *
- * @element swc-toast-container
+ * @element swc-toast-region
  * @since 2.0.0
  */
-export class ToastContainer extends ToastContainerBase {
+export class ToastRegion extends ToastRegionBase {
   // ────────────────────
   //     API OVERRIDES
   // ────────────────────
@@ -120,9 +120,9 @@ export class ToastContainer extends ToastContainerBase {
     return html`
       <div
         class=${classMap({
-          ['swc-ToastContainer']: true,
-          [`swc-ToastContainer--${this.placement}`]: true,
-          ['swc-ToastContainer--stacked']: layers.length > 0,
+          ['swc-ToastRegion']: true,
+          [`swc-ToastRegion--${this.placement}`]: true,
+          ['swc-ToastRegion--stacked']: layers.length > 0,
         })}
         role="region"
         popover="manual"
@@ -143,13 +143,13 @@ export class ToastContainer extends ToastContainerBase {
           return html`
             <div
               class=${classMap({
-                ['swc-ToastContainer-layer']: true,
-                [`swc-ToastContainer-layer--${entry.variant}`]:
+                ['swc-ToastRegion-layer']: true,
+                [`swc-ToastRegion-layer--${entry.variant}`]:
                   entry.variant != null && entry.variant !== 'neutral',
               })}
               role="presentation"
               style=${styleMap({
-                '--_swc-toast-container-layer-index': depth,
+                '--_swc-toast-region-layer-index': depth,
               })}
             ></div>
           `;

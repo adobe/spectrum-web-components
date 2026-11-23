@@ -11,12 +11,12 @@
  */
 import { defineElement } from '@adobe/spectrum-wc-core/element/index.js';
 
-import { ToastContainer } from './ToastContainer.js';
+import { ToastRegion } from './ToastRegion.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'swc-toast-container': ToastContainer;
+    'swc-toast-region': ToastRegion;
   }
 }
 
-defineElement('swc-toast-container', ToastContainer);
+defineElement('swc-toast-region', ToastRegion);
