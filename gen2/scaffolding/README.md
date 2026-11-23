@@ -33,9 +33,17 @@ yarn plop test
 yarn plop vrt
 ```
 
-You are prompted for a name (enter it in any form: `action-button`,
-`actionButton`, `Action Button`, or `sp-action-button` — the `sp-`/`swc-`
-prefix is stripped and the case helpers normalize the rest).
+You are prompted for a name in kebab-case: lowercase letters and numbers, words joined by dashes (for example `action-button`). The name becomes the tag (`swc-action-button`), directory, and file names as entered. An `sp-`/`swc-` prefix is stripped if pasted.
+
+Any other format is rejected before a file is written, with a message that names the format entered and the kebab-case name to use instead:
+
+| Entered         | Rejected as                        | Use             |
+| --------------- | ---------------------------------- | --------------- |
+| `Action Button` | Title Case                         | `action-button` |
+| `action button` | multiple words separated by spaces | `action-button` |
+| `ActionButton`  | PascalCase                         | `action-button` |
+| `actionButton`  | camelCase                          | `action-button` |
+| `action_button` | snake_case                         | `action-button` |
 
 ### Headless (agents, scripts, CI)
 

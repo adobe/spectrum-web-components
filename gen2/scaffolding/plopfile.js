@@ -80,16 +80,61 @@ export default function (plop) {
     return words.join(' ');
   });
 
-  // Shared prompt for the retrofit generators. A component name is entered in
-  // any form (`action-button`, `actionButton`, `Action Button`,
-  // `sp-action-button`); the case helpers normalize it.
+  // Component names must be kebab-case: lowercase words joined by single
+  // dashes (`action-button`). Anything else is rejected with a message naming
+  // the format that was entered and the kebab-case equivalent to use instead,
+  // so the name the author types is exactly the tag, directory, and file name.
+  const KEBAB_CASE = /^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$/;
+
+  const describeNameFormat = (name) => {
+    if (/\s/.test(name)) {
+      return name.split(/\s+/).every((word) => /^[A-Z]/.test(word))
+        ? 'Title Case'
+        : 'multiple words separated by spaces';
+    }
+    if (/^[A-Z][A-Za-z0-9]*$/.test(name)) {
+      return 'PascalCase';
+    }
+    if (/^[a-z][a-z0-9]*[A-Z][A-Za-z0-9]*$/.test(name)) {
+      return 'camelCase';
+    }
+    if (name.includes('_')) {
+      return 'snake_case';
+    }
+    if (/[A-Z]/.test(name)) {
+      return 'uppercase letters';
+    }
+    return 'characters that are not allowed';
+  };
+
+  const validateComponentName = (input) => {
+    const name = String(input ?? '').trim();
+    if (name.length === 0) {
+      return 'A component name is required, in kebab-case (e.g. action-button).';
+    }
+    if (KEBAB_CASE.test(name)) {
+      return true;
+    }
+    const suggestion = render('{{dashCase name}}', { name });
+    const hint = KEBAB_CASE.test(suggestion) ? ` Use "${suggestion}".` : '';
+    return (
+      `"${name}" uses ${describeNameFormat(name)}. Component names must be ` +
+      `kebab-case: lowercase letters and numbers, words joined by dashes ` +
+      `(e.g. action-button).${hint}`
+    );
+  };
+
+  // Shared name prompt for every generator. An `sp-`/`swc-` tag prefix is
+  // stripped if pasted; the rest must already be kebab-case.
   const namePrompt = (message) => ({
     type: 'input',
     name: 'name',
     message,
-    filter: (input) => input.trim().replace(/^(sp|swc)-/i, ''),
-    validate: (input) =>
-      input.trim().length > 0 || 'A name is required. You can rename it later.',
+    filter: (input) =>
+      String(input ?? '')
+        .trim()
+        .replace(/^(sp|swc)-/, ''),
+    validate: validateComponentName,
   });
 
   // ──────────────────────
@@ -208,18 +253,7 @@ export default function (plop) {
     description:
       'Scaffold a gen2 component (core base + SWC concrete + stories, docs, tests)',
     prompts: [
-      {
-        type: 'input',
-        name: 'name',
-        message: 'Component name (e.g. action-button):',
-        // Strip an sp-/swc- prefix if pasted; dashCase in templates
-        // normalizes the rest, so "Action Button" and "actionButton"
-        // both resolve correctly.
-        filter: (input) => input.trim().replace(/^(sp|swc)-/i, ''),
-        validate: (input) =>
-          input.trim().length > 0 ||
-          'A component needs a name. You can rename it later.',
-      },
+      namePrompt('Component name, in kebab-case (e.g. action-button):'),
     ],
     actions: () => {
       const coreDir = `${CORE_COMPONENTS}/{{dashCase name}}`;
@@ -298,7 +332,11 @@ export default function (plop) {
 
   plop.setGenerator('test', {
     description: 'Retrofit an existing component with unit + a11y test files',
-    prompts: [namePrompt('Component to add tests for (e.g. action-button):')],
+    prompts: [
+      namePrompt(
+        'Component to add tests for, in kebab-case (e.g. action-button):'
+      ),
+    ],
     actions: () => {
       const swcDir = `${SWC_COMPONENTS}/{{dashCase name}}`;
 
@@ -324,7 +362,9 @@ export default function (plop) {
   plop.setGenerator('vrt', {
     description: 'Retrofit an existing component with a Chromatic VRT story',
     prompts: [
-      namePrompt('Component to add a VRT story for (e.g. action-button):'),
+      namePrompt(
+        'Component to add a VRT story for, in kebab-case (e.g. action-button):'
+      ),
     ],
     actions: () => {
       const swcDir = `${SWC_COMPONENTS}/{{dashCase name}}`;
