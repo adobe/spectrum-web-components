@@ -11,8 +11,13 @@
  */
 
 import { html } from 'lit';
-import { expect } from '@storybook/test';
+import { expect, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import {
+  getComponent,
+  getComponents,
+  withWarningSpy,
+} from '@swc-test-helpers/dom';
 
 import { ActionButton } from '@adobe/spectrum-wc/action-button';
 import {
@@ -22,11 +27,6 @@ import {
 
 import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
 
-import {
-  getComponent,
-  getComponents,
-  withWarningSpy,
-} from '../../../utils/test-utils.js';
 import meta, {
   Accessibility,
   Anatomy,
@@ -709,12 +709,15 @@ export const HostListenersTest: Story = {
     await step(
       'routes programmatic focus to internal button via delegatesFocus',
       async () => {
-        button.focus();
-        const activeElement = (button.renderRoot as ShadowRoot).activeElement;
-        expect(
-          activeElement?.tagName.toLowerCase(),
-          'delegatesFocus routes focus to internal <button>'
-        ).toBe('button');
+        // Retry focus while sibling test frames compete for it in Firefox.
+        await waitFor(() => {
+          button.focus();
+          const activeElement = (button.renderRoot as ShadowRoot).activeElement;
+          expect(
+            activeElement?.tagName.toLowerCase(),
+            'delegatesFocus routes focus to internal <button>'
+          ).toBe('button');
+        });
       }
     );
   },

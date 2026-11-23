@@ -34,7 +34,7 @@ Steps are optional in every response state. When `swc-response-status-step` chil
 
 ### Generating presets
 
-While `status="active"`, `loader` selects the status pixel-loader's artwork; the same attribute name and control as `swc-prompt-field` uses for its own loader. A preset name (`cc`, `dc`, `exp`, `analyze`, `mega`) cycles a themed icon sequence; an icon name shows a single static icon instead. Defaults to `mega`. Invalid values fall back to `mega`.
+While `status="active"`, `loader` selects the status pixel-loader's artwork; the same attribute name and control as `swc-prompt-field` uses for its own loader. A preset name (`cc`, `dc`, `exp`, `analyze`, `mega`) cycles a themed icon sequence; an icon name shows a single static icon instead. Defaults to `mega`. An invalid value stays on the attribute, emits a development warning, and renders the `mega` preset.
 
 <Canvas of={ResponseStatusStories.GeneratingPresets} />
 
@@ -95,7 +95,7 @@ Header-label cadence is consumer-managed. The component rolls the header label w
 
 When `slot="label"` is empty and the response is `active`, the header falls back to the active step's label while the step timeline is closed. While it's open and at least one step hasn't finished, the header shows a generic "Processing…" label instead, since the specific step is already visible in the timeline below.
 
-Once settled (no roll transition in flight), active and stopped labels wrap across up to 2 lines. Completed labels wrap in full so they remain readable when there is no panel to expand. Set `--swc-response-status-label-max-lines` to cap the number of lines when needed. A label stays constrained to a single line only while it is rolling to a new value.
+Once settled (no roll transition in flight), the header label defaults to 1 line, truncating with an ellipsis once a disclosure panel is available to open for the rest. A label with no disclosure to open into — any status with no steps — wraps in full instead, so the whole message stays readable with no panel to expand. Set `--swc-response-status-label-max-lines` to cap the number of lines when needed. A label stays constrained to a single line only while it is rolling to a new value.
 
 The `LabelCadence` story demonstrates one consumer-side queue pattern.
 

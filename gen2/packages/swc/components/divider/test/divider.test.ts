@@ -12,6 +12,11 @@
 import { html } from 'lit';
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import {
+  getComponent,
+  getComponents,
+  withWarningSpy,
+} from '@swc-test-helpers/dom';
 
 import { Divider } from '@adobe/spectrum-wc/divider';
 import {
@@ -21,11 +26,6 @@ import {
 
 import '@adobe/spectrum-wc/components/divider/swc-divider.js';
 
-import {
-  getComponent,
-  getComponents,
-  withWarningSpy,
-} from '../../../utils/test-utils.js';
 import meta, {
   Overview,
   Sizes,
@@ -190,6 +190,22 @@ export const StaticColorToggleTest: Story = {
         divider.hasAttribute('static-color'),
         'static-color attribute is absent after removal'
       ).toBe(false);
+    });
+  },
+};
+
+export const InvalidSizeTest: Story = {
+  render: () => html`
+    <swc-divider size="banana"></swc-divider>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const divider = await getComponent<Divider>(canvasElement, 'swc-divider');
+
+    await step('keeps an invalid size and renders the default class', () => {
+      const inner = divider.shadowRoot!.querySelector('.swc-Divider')!;
+      expect(divider.getAttribute('size')).toBe('banana');
+      expect(inner.classList.contains('swc-Divider--sizeM')).toBe(true);
+      expect(inner.className).not.toContain('BANANA');
     });
   },
 };

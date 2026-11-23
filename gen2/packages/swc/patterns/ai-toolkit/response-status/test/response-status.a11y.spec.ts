@@ -11,11 +11,150 @@
  */
 
 import { expect, test } from '@playwright/test';
+import { gotoStory, waitForCustomElement } from '@swc-test-helpers/playwright';
 
-import {
-  gotoStory,
-  waitForCustomElement,
-} from '../../../../utils/a11y-helpers.js';
+import type { ResponseStatusStep } from '../response-status-step/ResponseStatusStep.js';
+
+for (const hasDescription of [false, true]) {
+  test(`active step shimmer stays inside glyphs ${hasDescription ? 'with' : 'without'} a description`, async ({
+    page,
+  }) => {
+    await page.emulateMedia({ reducedMotion: 'no-preference' });
+    await gotoStory(
+      page,
+      'patterns-ai-toolkit-response-status--steps',
+      'swc-response-status'
+    );
+    await waitForCustomElement(page, 'swc-response-status-step');
+    await page.evaluate(async (hasDescription) => {
+      const fixture = document.createElement('div');
+      fixture.id = 'shimmer-fixture';
+      fixture.style.cssText =
+        'position:fixed;inset:20px auto auto 20px;background:white;color-scheme:light;padding:20px;z-index:1000';
+      const step = document.createElement('swc-response-status-step');
+      step.style.animation = 'none';
+      step.innerHTML = `<span slot="label">HHHH HHHH</span>${
+        hasDescription
+          ? '<span slot="description">Execution details</span>'
+          : ''
+      }`;
+      fixture.append(step);
+      document.body.append(fixture);
+      await step.updateComplete;
+      await document.fonts.ready;
+    }, hasDescription);
+
+    const host = page.locator('#shimmer-fixture swc-response-status-step');
+    const title = host.locator('.swc-ResponseStatusStep-title');
+    const shimmer = host.locator('.swc-ResponseStatusStep-titleShimmer');
+    if (hasDescription) {
+      await host.locator('[slot="label"]').evaluate((element) => {
+        element.textContent = 'HHHH HHHH HHHH';
+      });
+      await expect(shimmer).toHaveText('HHHH HHHH HHHH');
+      await title.evaluate((element: HTMLElement) => {
+        element.style.maxInlineSize = '60px';
+      });
+    }
+    await shimmer.evaluate((element: HTMLElement) => {
+      element.style.visibility = 'hidden';
+    });
+    const baseline = await title.screenshot({ scale: 'css' });
+    await shimmer.evaluate((element: HTMLElement) => {
+      element.style.removeProperty('visibility');
+    });
+
+    let changedGlyphPixels = 0;
+    for (const time of [0, 360, 720, 1080, 1440, 1799]) {
+      await host.evaluate((element: ResponseStatusStep, time) => {
+        for (const animation of element.shadowRoot!.getAnimations()) {
+          animation.pause();
+          animation.currentTime = time;
+        }
+      }, time);
+      const frame = await title.screenshot({ scale: 'css' });
+      const pixels = await page.evaluate(
+        async ({ baseline, frame }) => {
+          const readPixels = async (png: string): Promise<ImageData> => {
+            const image = new Image();
+            image.src = `data:image/png;base64,${png}`;
+            await image.decode();
+            const canvas = document.createElement('canvas');
+            canvas.width = image.width;
+            canvas.height = image.height;
+            const context = canvas.getContext('2d')!;
+            context.drawImage(image, 0, 0);
+            return context.getImageData(0, 0, image.width, image.height);
+          };
+          const plain = await readPixels(baseline);
+          const animated = await readPixels(frame);
+          let outsideGlyphs = 0;
+          let changedGlyphs = 0;
+          for (let index = 0; index < plain.data.length; index += 4) {
+            const x = (index / 4) % plain.width;
+            const y = Math.floor(index / 4 / plain.width);
+            // Ignore the one-pixel glyph fringe, which masks and text can
+            // antialias differently, without tolerating a painted rectangle.
+            const background = [-1, 0, 1].every((dy) =>
+              [-1, 0, 1].every((dx) => {
+                const offset = ((y + dy) * plain.width + x + dx) * 4;
+                return (
+                  x + dx >= 0 &&
+                  x + dx < plain.width &&
+                  y + dy >= 0 &&
+                  y + dy < plain.height &&
+                  [0, 1, 2].every(
+                    (channel) => plain.data[offset + channel] === 255
+                  )
+                );
+              })
+            );
+            const changed = [0, 1, 2].some(
+              (channel) =>
+                Math.abs(
+                  plain.data[index + channel] - animated.data[index + channel]
+                ) > 2
+            );
+            if (changed) {
+              if (background) {
+                outsideGlyphs++;
+              } else {
+                changedGlyphs++;
+              }
+            }
+          }
+          return { outsideGlyphs, changedGlyphs };
+        },
+        {
+          baseline: baseline.toString('base64'),
+          frame: frame.toString('base64'),
+        }
+      );
+      expect(pixels.outsideGlyphs, `Shimmer at ${time}ms`).toBe(0);
+      changedGlyphPixels += pixels.changedGlyphs;
+    }
+    expect(changedGlyphPixels, 'The shimmer remains visible').toBeGreaterThan(
+      0
+    );
+    await host.evaluate(async (element: ResponseStatusStep) => {
+      element.status = 'complete';
+      await element.updateComplete;
+    });
+    expect(
+      await shimmer.evaluate(
+        (element) => element.getAnimations({ subtree: true }).length
+      )
+    ).toBe(0);
+    await expect(title).toBeVisible();
+    await host.evaluate(async (element: ResponseStatusStep) => {
+      element.status = 'active';
+      await element.updateComplete;
+    });
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await expect(shimmer).toBeHidden();
+    await expect(title).toBeVisible();
+  });
+}
 
 /**
  * ARIA snapshot tests for response status.
