@@ -59,7 +59,6 @@
 - [Blockers and open questions](#blockers-and-open-questions)
     - [Blocking for swc-menu](#blocking-for-swc-menu)
     - [Cross-component follow-ups (not blocking `swc-menu`)](#cross-component-follow-ups-not-blocking-swc-menu)
-    - [Decision log](#decision-log)
 - [Decision log](#decision-log)
     - [Q16: trigger, shadow-rendered vs externally referenced](#q16-trigger-shadow-rendered-vs-externally-referenced)
 - [References](#references)
@@ -737,18 +736,16 @@ These surfaced while drafting this plan but are about a sibling component's own 
 
 <!-- Where possible, include the next action in the Item text or Status so reviewers know how to resolve the question. -->
 
-### Decision log
+---
+
+## Decision log
+
+This section records settled decisions and their rationale, including the reasoning and dead ends behind answers that went through review. Link-component decisions are summarized below; the trigger decision's detailed history follows.
 
 | Decision | Outcome and rationale |
 | --- | --- |
 | Q17 / B2: separate navigation component | `swc-menu-item-link` is the canonical name for the component previously called `swc-menu-link` in this plan. `swc-menu-item` remains a command/submenu component without `href` or anchor rendering. Both expose `menuitem`; the split reflects native navigation behavior and role placement, not different ARIA roles. The menu/item/action-menu accessibility specifications now point to the dedicated link specification instead of recommending a nested anchor or Cards pattern. Rendering/composition remains open under Q17; implementation and scheduling remain outside Phase A. |
 | Q19: semantic anchor and single activation | Per the [APG navigation menu button example](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/examples/menu-button-links/), put `role="menuitem"` and actual focus on the real anchor, with no competing host role or host tab stop. The [link accessibility specification](../menu-item-link/component-accessibility-specification.md) requires native link affordances and no host-to-anchor proxy click or duplicate navigation. Future parent integration must reach the anchor and preserve enabled native activation rather than applying the current command-row cancellation of native Enter behavior. This records the accessibility requirement, not completed parent support. |
-
----
-
-## Decision log
-
-The tables above state each resolved question's current answer. This section keeps the reasoning and dead ends behind answers that went through real back-and-forth (5t3ph review), so the tables above can stay short without losing the "why."
 
 ### Q16: trigger, shadow-rendered vs externally referenced
 
