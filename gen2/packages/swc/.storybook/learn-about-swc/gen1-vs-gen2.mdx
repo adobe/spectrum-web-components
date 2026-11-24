@@ -1,44 +1,57 @@
 import { Meta } from '@storybook/addon-docs/blocks';
-import headerImage from '../assets/images/banner_introduction_S2_desktop_2x_1689964089087.png';
 
 <Meta title="Gen1 vs Gen2" />
 
-<img src={headerImage} alt="gen1 vs gen2" class="docs-image" />
+{/* page-type: explanation */}
 
-# What's new in Gen2?
+# Gen1 vs Gen2
 
-Spectrum Web Components has been hard at work developing the next evolution of our system that we have come to know as gen2. It includes full-fidelity Spectrum 2 styles, improved system architecture, and updates to components' APIs and accessibility contracts. This page is an overview of how the packages differ so teams know what to expect when adopting or migrating.
+Decide whether to adopt SWC Gen2 (`@adobe/spectrum-wc`), and when to move your Gen1 app to it.
 
-## Key differences
+- **For:** application developers and engineering leads planning SWC work
 
-| Area               | SWC Gen1                                                                                             | SWC Gen2                                                                                  |
-| ------------------ | ---------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
-| Package name       | `@spectrum-web-components`                                                                           | `@adobe/spectrum-wc`                                                                      |
-| Documentation site | [opensource.adobe.com/spectrum-web-components](https://opensource.adobe.com/spectrum-web-components) | [spectrum-web-components.adobe.com](https://spectrum-web-components.adobe.com)            |
-| Design             | Includes Spectrum, Express, and S2 Foundations themes                                                | Spectrum 2 only                                                                           |
-| Architecture       | Earlier component patterns; less consistent                                                          | More consistent structure and APIs across the library                                     |
-| Styling            | Components are styled via `<sp-theme>`                                                               | Components styled via CSS classes at application root (e.g., `swc-theme swc-theme--dark`) |
-| Customization      | Done via `--mod` CSS custom properties                                                               | Done via `--swc` custom properties and/or global element styles                           |
-| Accessibility      | Basic support, several known bugs                                                                    | Improved accessibility coverage, bugs fixed                                               |
-| Performance        | More interdependencies, larger bundles                                                               | Smaller bundles, higher reliance on browser standards, better runtime performance         |
-| Long-term support  | No new components or features, minimal bug fixes                                                     | New features, components, and fixes                                                       |
+## What changed in Gen2
 
-## What this means for teams
+Gen2 brings full-fidelity Spectrum 2 styles, a more consistent architecture, and updated component APIs and accessibility contracts.
 
-### If you are starting a new project
+| Area               | SWC Gen1                                                                                             | SWC Gen2                                                                                   |
+| ------------------ | ---------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| Package name       | `@spectrum-web-components`                                                                           | `@adobe/spectrum-wc`                                                                       |
+| Documentation site | [opensource.adobe.com/spectrum-web-components](https://opensource.adobe.com/spectrum-web-components) | [spectrum-web-components.adobe.com](https://spectrum-web-components.adobe.com)             |
+| Design             | Includes Spectrum, Express, and S2 Foundations themes                                                | Spectrum 2 only                                                                            |
+| Architecture       | Earlier component patterns; less consistent                                                          | More consistent structure and APIs across the library                                      |
+| Styling            | Components are styled via `<sp-theme>`                                                               | Components styled via CSS classes at application root, such as `swc-theme swc-theme--dark` |
+| Customization      | Done via `--mod` CSS custom properties                                                               | Done via `--swc` custom properties and/or global element styles                            |
+| Accessibility      | Basic support, several known bugs                                                                    | Improved accessibility coverage, bugs fixed                                                |
+| Performance        | More interdependencies, larger bundles                                                               | Smaller bundles, higher reliance on browser standards, better runtime performance          |
+| Long-term support  | No new components or features, minimal bug fixes                                                     | New features, components, and fixes                                                        |
 
-Use `@adobe/spectrum-wc` where available. It matches the most recent Spectrum guidelines, is built on a new architecture designed to scale into the future, and will receive long-term support.
+## Should you migrate, and when?
 
-### If your project currently uses Gen1 SWC
+| If you…                                      | Do this                                                                                                                                                                               | When                         |
+| -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------- |
+| Start a new project                          | Use `@adobe/spectrum-wc` wherever a Gen2 component exists.                                                                                                                            | Now                          |
+| Maintain a Gen1 app                          | Plan to adopt Gen2 one component at a time, as each Gen2 version ships.                                                                                                               | Start planning now           |
+| Need a fix for a Gen1 bug                    | Check the [Gen1 bug policy](/docs/resources-support-and-compatibility--docs#gen1-bug-policy). Gen1 fixes cover SEV1 and SEV2 bugs only; other bugs are addressed in the Gen2 version. | When the Gen2 version ships  |
+| Use a component that has no Gen2 version yet | Keep that component on Gen1, next to your Gen2 components.                                                                                                                            | Until its Gen2 version ships |
 
-You should begin to plan how you'll adopt Gen2 components as they become available. Each component has a migration guide which includes more details on the specific changes. Migrating on a per-component basis allows teams to update gradually, and the Gen1 "spectrum-two" theme allows for visual consistency between both generations.
+To see which components have a Gen2 version, browse the **Components** section of the sidebar. Each migrated component has a **Migration guide** page.
 
-For a step-by-step walkthrough of coexisting Gen1 `<sp-*>` and Gen2 `<swc-*>` elements, swapping themes and fonts, mapping `--mod-*` overrides to `--swc-*`, and decommissioning Gen1, see [Migrate from Gen1](/docs/resources-migrate-from-gen1--docs).
+## How Gen1 and Gen2 coexist
 
-## Learn more
+Gen1 and Gen2 run in the same app, so you can migrate one component or one screen at a time. Four properties make that work:
 
-You can find specifics about each component in its documentation, including updated APIs, usage examples, patterns, and migration guides.
+- **Different package names:** `@spectrum-web-components/*` and `@adobe/spectrum-wc` install side by side without conflicts.
+- **Different tag prefixes:** `<sp-badge>` and `<swc-badge>` are independent custom elements, so both can share one tree.
+- **Shared visual language:** Gen1's `spectrum-two` theme bridges Spectrum and Express to Spectrum 2, which Gen2 uses by default. Gen1 components in that theme look consistent with their Gen2 neighbors.
+- **Separate token namespace:** Gen2 design tokens use the `swc` namespace, so they don't conflict with Gen1 visuals.
 
-For more details on the changes to our styling and customization, our [customization guides](/docs/guides-customization-getting-started--docs) are a great place to start.
+The Gen1 `<sp-theme>` element only affects its `<sp-*>` descendants. The Gen2 `swc-theme*` classes only affect `<swc-*>` descendants, so the two systems don't interfere.
 
-You can find more details about our bug policy on our [Support and compatibility page](/docs/resources-support-and-compatibility--docs).
+## What does running both cost?
+
+Running Gen1 and Gen2 together is expected during migration. Keeping both versions of the same component on a page ships extra component code and loads CSS custom properties you don't need. Migrating by route or feature area keeps the time that any one page loads both versions short.
+
+## Next step
+
+Plan and run your migration with [Migrate from Gen1](/docs/resources-migrate-from-gen1--docs).
