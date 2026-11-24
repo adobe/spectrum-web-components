@@ -25,7 +25,15 @@
  * exit transition.
  */
 .swc-ToastRegion {
-  --_swc-toast-region-peek-origin: 55px;
+  /*
+   * The stack's depth and peek, which the region's script motion also reads, so the
+   * two stay in step. `perspective` is turned off in the expanded view, so it is
+   * read from here.
+   */
+  --_swc-toast-region-perspective: 80px;
+  --_swc-toast-region-peek-rest: 55px;
+  --_swc-toast-region-peek-hover: 95px;
+  --_swc-toast-region-peek-origin: var(--_swc-toast-region-peek-rest);
   --_swc-toast-exit-duration: token("animation-duration-800");
 
   /*
@@ -59,7 +67,7 @@
   border-radius: token("corner-radius-700");
   overflow: visible;
   outline: none;
-  perspective: 80px;
+  perspective: var(--_swc-toast-region-perspective);
   perspective-origin: center calc(-1 * var(--_swc-toast-region-peek-origin));
   transition: perspective-origin token("animation-duration-800") ease;
 }
@@ -342,7 +350,7 @@
 /* `--peek` holds the hovered peek after a collapse that lands under the pointer, until the pointer leaves. */
 @media (hover: hover) {
   .swc-ToastRegion--stacked:where(:hover, .swc-ToastRegion--peek) {
-    --_swc-toast-region-peek-origin: 95px;
+    --_swc-toast-region-peek-origin: var(--_swc-toast-region-peek-hover);
   }
 }
 

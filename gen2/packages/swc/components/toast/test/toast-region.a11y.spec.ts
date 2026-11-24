@@ -40,6 +40,21 @@ const openTimedStory = async (
 };
 
 // Inert toasts are old front toasts still shrinking into the stack, which are presentation only.
+// Waits for every rendered toast to finish its enter transition.
+const expectShown = async (page: Page): Promise<void> => {
+  await expect
+    .poll(() =>
+      page
+        .locator('swc-toast:not([inert])')
+        .evaluateAll(
+          (toasts) =>
+            toasts.length > 0 &&
+            toasts.every((toast) => toast.matches(':state(shown)'))
+        )
+    )
+    .toBe(true);
+};
+
 const disableCloseTransition = async (page: Page): Promise<void> => {
   const toast = page.locator('swc-toast:not([inert])');
   await expect(toast).toHaveAttribute('open', '');
@@ -134,11 +149,11 @@ test('closing the focused toast with the keyboard focuses the promoted toast, wh
   await gotoStory(page, 'components-toast-region--auto-dismiss', 'swc-button');
   const add = page.getByRole('button', { name: 'Add toast', exact: true });
   await add.click();
-  await page.waitForTimeout(1500);
+  await expectShown(page);
   await add.click();
   const region = page.getByRole('region');
   await expect(region).toHaveAttribute('aria-label', '2 notifications.');
-  await page.waitForTimeout(1500);
+  await expectShown(page);
   await add.focus();
   // Clear, the toast host, Show all, then Close.
   await page.keyboard.press('Tab');
@@ -399,23 +414,30 @@ test('F6 keeps its browser behavior while no toast is showing', async ({
 });
 
 test.describe('Toast region - Motion', () => {
-  const expandThree = async (page: Page): Promise<void> => {
+  const addThree = async (page: Page): Promise<void> => {
     await gotoStory(page, 'components-toast-region--overview', 'swc-button');
     const add = page.getByRole('button', { name: 'Add toast', exact: true });
     await add.click();
     await add.click();
     await add.click();
-    await page.getByRole('button', { name: 'Show all' }).click();
-    await expect(page.getByRole('dialog')).toBeVisible();
   };
 
-  // Counts toasts with a script animation, which only the expand and collapse move runs.
-  // CSS transitions are subclasses of Animation, so they are left out by constructor.
-  const movingToasts = (page: Page): Promise<number> =>
-    page.locator('swc-toast:not([inert])').evaluateAll(
-      (toasts) =>
-        toasts.filter((toast) =>
-          // A script animation that changes position; reduced motion still fades.
+  // Samples every frame from Show all until the animations that start with the
+  // expand have run and finished. It returns the most toasts that had a move on
+  // any one frame: a script animation that changes position, which only the expand and
+  // collapse move runs. CSS transitions are subclasses of Animation, so they are left
+  // out by constructor.
+  const sampleExpand = (
+    page: Page
+  ): Promise<{ settled: boolean; moved: number }> =>
+    page.evaluate(async () => {
+      const region = document.querySelector('swc-toast-region')!;
+      const isRunning = (animation: Animation): boolean =>
+        animation.pending || animation.playState === 'running';
+      const moving = (): number =>
+        [
+          ...region.shadowRoot!.querySelectorAll('swc-toast:not([inert])'),
+        ].filter((toast) =>
           toast
             .getAnimations()
             .some(
@@ -428,13 +450,45 @@ test.describe('Toast region - Motion', () => {
                       'transform' in keyframe || 'translate' in keyframe
                   )
             )
-        ).length
-    );
+        ).length;
+      // Animations already running before the dialog opened, such as the Show all
+      // press, do not count. The expand's own start on the frame the dialog opens.
+      let before = new Set<Animation>();
+      let started = false;
+      let moved = 0;
+      // A bound on frames, not time, so a stuck animation fails instead of hanging.
+      for (let frame = 0; frame < 600; frame++) {
+        await new Promise((resolve) => requestAnimationFrame(resolve));
+        moved = Math.max(moved, moving());
+        // `getAnimations({ subtree: true })` does not reach into shadow roots.
+        const root = region.shadowRoot!;
+        const animations = [
+          ...root.getAnimations(),
+          ...[...root.querySelectorAll('swc-toast')].flatMap(
+            (toast) => toast.shadowRoot?.getAnimations() ?? []
+          ),
+        ];
+        if (!root.querySelector('dialog')?.open) {
+          before = new Set(animations);
+          continue;
+        }
+        started ||= animations.some((animation) => !before.has(animation));
+        if (started && !animations.some(isRunning)) {
+          return { settled: true, moved };
+        }
+      }
+      return { settled: false, moved };
+    });
 
   test('expanding moves the toasts out of the stack', async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'no-preference' });
-    await expandThree(page);
-    await expect.poll(() => movingToasts(page)).toBeGreaterThan(0);
+    await addThree(page);
+    const [sample] = await Promise.all([
+      sampleExpand(page),
+      page.getByRole('button', { name: 'Show all' }).click(),
+    ]);
+    expect(sample.settled, 'the expand ran and finished').toBe(true);
+    expect(sample.moved, 'toasts with a move animation').toBeGreaterThan(0);
   });
 
   test('with reduced motion, nothing moves and the layers only fade', async ({
@@ -452,8 +506,14 @@ test.describe('Toast region - Motion', () => {
       'transition-property',
       'opacity'
     );
-    await page.getByRole('button', { name: 'Show all' }).click();
+    // The expand starts its animations a frame after the dialog opens, so every frame
+    // is checked until they finish, not only the first.
+    const [sample] = await Promise.all([
+      sampleExpand(page),
+      page.getByRole('button', { name: 'Show all' }).click(),
+    ]);
     await expect(page.getByRole('dialog')).toBeVisible();
-    expect(await movingToasts(page)).toBe(0);
+    expect(sample.settled, 'the expand fades ran and finished').toBe(true);
+    expect(sample.moved, 'toasts with a move animation on any frame').toBe(0);
   });
 });

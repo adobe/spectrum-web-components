@@ -38,9 +38,9 @@ import styles from './toast-region.css';
 // more renders fully transparent, so a layer can fade in or out of the stack.
 const VISIBLE_LAYER_COUNT = 2;
 
-// RSP S2 runs every move as one 400ms view transition on the default `ease` curve. `animation-duration-800`
-// matches the duration; no Spectrum easing token matches `ease`.
-const MOVE_DURATION = 400;
+// RSP S2 runs every move as one 400ms view transition on the default `ease` curve. The duration is
+// `animation-duration-800`, read from the stylesheet; see `moveDuration`. No Spectrum easing token
+// matches `ease`.
 const MOVE_EASING = 'ease';
 
 // As in RSP S2, Show all fades out faster than the toast moves when expanding, and slower when
@@ -48,8 +48,8 @@ const MOVE_EASING = 'ease';
 const SHOW_ALL_OUT_DURATION = 300;
 const SHOW_ALL_IN_DURATION = 600;
 
-// Match the stylesheet's stack depth: `perspective: 80px`, with each layer `spacing-200` further back.
-const PERSPECTIVE = 80;
+// Match the stylesheet's stack depth: each layer is `spacing-200` further back. The perspective is
+// read from the stylesheet; see `layerRect()`.
 const LAYER_DEPTH = 12;
 
 // The controls' zoom at the front toast's edge. A fixed design value, not derived from layout, so the
@@ -72,10 +72,6 @@ const FRONT_PARTS = [
   '.swc-Toast-action',
   '.swc-Toast-close',
 ];
-
-// The stack's perspective origin, past its far edge: at rest, and while hovered. Match the stylesheet.
-const PEEK_ORIGIN = 55;
-const PEEK_ORIGIN_HOVER = 95;
 
 // The inline styles that take a toast out of the layout; see `pinAt()`.
 const PIN_PROPERTIES = [
@@ -779,7 +775,11 @@ export class ToastRegion extends ToastRegionBase {
         pointer.y >= stack.top &&
         pointer.y <= stack.bottom
       );
-      const peek = this._peekHeld ? PEEK_ORIGIN_HOVER : PEEK_ORIGIN;
+      const peek = this.styleNumber(
+        this._peekHeld
+          ? '--_swc-toast-region-peek-hover'
+          : '--_swc-toast-region-peek-rest'
+      );
       // A layer is as tall as the toast's minimum height, which the toast's surface carries.
       const layerHeight =
         parseFloat(
@@ -914,7 +914,7 @@ export class ToastRegion extends ToastRegionBase {
             { zIndex: count + 2, filter: this._elevatedFilter },
             { zIndex: count + 2, filter: 'none' },
           ],
-          { duration: MOVE_DURATION, easing: MOVE_EASING }
+          { duration: this.moveDuration, easing: MOVE_EASING }
         )
       );
       for (const animation of held) {
@@ -1076,7 +1076,7 @@ export class ToastRegion extends ToastRegionBase {
     if (!root || !surface || !to || to.width === 0) {
       return [];
     }
-    const options = { duration: MOVE_DURATION, easing: MOVE_EASING };
+    const options = { duration: this.moveDuration, easing: MOVE_EASING };
     const start = from.surface;
     const inset = [
       start.top - to.top,
@@ -1127,7 +1127,7 @@ export class ToastRegion extends ToastRegionBase {
     if (!root) {
       return [];
     }
-    const options = { duration: MOVE_DURATION, easing: MOVE_EASING };
+    const options = { duration: this.moveDuration, easing: MOVE_EASING };
     const rtl = getComputedStyle(this).direction === 'rtl';
     const animations: Animation[] = [];
     for (const [selector, rect] of from.parts) {
@@ -1164,7 +1164,7 @@ export class ToastRegion extends ToastRegionBase {
       ) ?? []),
     ].map((part) =>
       part.animate([{ opacity: from }, { opacity: to }], {
-        duration: MOVE_DURATION,
+        duration: this.moveDuration,
         easing: MOVE_EASING,
         fill,
       })
@@ -1247,7 +1247,7 @@ export class ToastRegion extends ToastRegionBase {
       // The toasts start or end outside the list, which would otherwise clip them.
       animations.push(
         list.animate([{ overflow: 'visible' }, { overflow: 'visible' }], {
-          duration: MOVE_DURATION,
+          duration: this.moveDuration,
           fill,
         })
       );
@@ -1335,7 +1335,7 @@ export class ToastRegion extends ToastRegionBase {
     return toast.animate(
       Array.from({ length: steps + 1 }, (_, step) => frame(step / steps)),
       {
-        duration: MOVE_DURATION,
+        duration: this.moveDuration,
         easing: MOVE_EASING,
         fill,
       }
@@ -1378,7 +1378,7 @@ export class ToastRegion extends ToastRegionBase {
         ? [frame(beyond), frame(rest)]
         : [frame(rest), frame(beyond)],
       {
-        duration: MOVE_DURATION,
+        duration: this.moveDuration,
         easing: MOVE_EASING,
         fill: direction === 'out' ? 'forwards' : 'none',
       }
@@ -1416,6 +1416,26 @@ export class ToastRegion extends ToastRegionBase {
   }
 
   /**
+   * A length in pixels or a time in milliseconds from one of the stylesheet's private
+   * properties, so the script motion keeps to the values the CSS uses.
+   */
+  private styleNumber(property: string): number {
+    const value = getComputedStyle(this.region ?? this)
+      .getPropertyValue(property)
+      .trim();
+    const number = parseFloat(value);
+    if (!Number.isFinite(number)) {
+      return 0;
+    }
+    return /[^m]s$/.test(value) ? number * 1000 : number;
+  }
+
+  /** Every move's duration: the same token as the stylesheet's exit and peek transitions. */
+  private get moveDuration(): number {
+    return this.styleNumber('--_swc-toast-exit-duration');
+  }
+
+  /**
    * Where a layer appears in the stack: a box as wide as the front toast and
    * `height` tall at its edge away from the anchor, pushed back along Z, as
    * projected from the stack's perspective origin.
@@ -1424,13 +1444,10 @@ export class ToastRegion extends ToastRegionBase {
     front: DOMRect,
     height: number,
     depth: number,
-    peek = parseFloat(
-      getComputedStyle(this.region ?? this).getPropertyValue(
-        '--_swc-toast-region-peek-origin'
-      )
-    ) || PEEK_ORIGIN
+    peek = this.styleNumber('--_swc-toast-region-peek-origin')
   ): DOMRect {
-    const scale = PERSPECTIVE / (PERSPECTIVE + LAYER_DEPTH * depth);
+    const perspective = this.styleNumber('--_swc-toast-region-perspective');
+    const scale = perspective / (perspective + LAYER_DEPTH * depth);
     const originX = front.left + front.width / 2;
     const anchoredTop = this.placement.startsWith('top');
     const originY = anchoredTop ? front.bottom + peek : front.top - peek;
@@ -1484,7 +1501,7 @@ export class ToastRegion extends ToastRegionBase {
       void this.whenRevealed(toast).then(unpin);
     }
     const ghost = frontChange ? this._ghosts.get(frontChange.key) : undefined;
-    const options = { duration: MOVE_DURATION, easing: MOVE_EASING };
+    const options = { duration: this.moveDuration, easing: MOVE_EASING };
     if (!current) {
       if (ghost && frontChange) {
         this.dropGhost(frontChange.key, ghost);
@@ -1664,7 +1681,7 @@ export class ToastRegion extends ToastRegionBase {
           insetInlineStart: `calc(50% - ${before.width / 2}px)`,
           insetInlineEnd: `calc(50% - ${before.width / 2}px)`,
         };
-    const options = { duration: MOVE_DURATION, easing: MOVE_EASING };
+    const options = { duration: this.moveDuration, easing: MOVE_EASING };
     let depth = 0;
     for (const layer of region.querySelectorAll<HTMLElement>(
       '.swc-ToastRegion-layer'
@@ -1759,7 +1776,7 @@ export class ToastRegion extends ToastRegionBase {
         { translate: start, opacity: 0 },
         { translate: '0 0', opacity: 1 },
       ],
-      { duration: MOVE_DURATION, easing: MOVE_EASING }
+      { duration: this.moveDuration, easing: MOVE_EASING }
     );
   }
 
@@ -1873,7 +1890,7 @@ export class ToastRegion extends ToastRegionBase {
               { transform: `translate(${dx}px, ${dy}px)` },
               { transform: 'none' },
             ],
-            { duration: MOVE_DURATION, easing: MOVE_EASING }
+            { duration: this.moveDuration, easing: MOVE_EASING }
           )
         );
       }
@@ -1885,7 +1902,7 @@ export class ToastRegion extends ToastRegionBase {
       // A toast's background can start wider than the list it now sits in.
       animations.push(
         list.animate([{ overflow: 'visible' }, { overflow: 'visible' }], {
-          duration: MOVE_DURATION,
+          duration: this.moveDuration,
         })
       );
     }

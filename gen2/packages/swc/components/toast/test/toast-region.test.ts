@@ -2859,16 +2859,23 @@ export const CloseSlideTest: Story = {
       await step(
         'a closing toast slides out past the anchored edge, as in RSP S2, instead of only fading',
         async () => {
-          closeButtonOf(toast).click();
-          // Past the toast's own short exit (130ms), the slide is still running.
-          await new Promise((resolve) => setTimeout(resolve, 200));
-          expect(getComputedStyle(toast).display, 'still rendered').not.toBe(
-            'none'
-          );
           const surface = toast.shadowRoot!.querySelector('.swc-Toast')!;
+          const rendered = (): boolean =>
+            toast.isConnected && getComputedStyle(toast).display !== 'none';
+          // Every frame until the toast stops rendering, so a late frame cannot miss the slide.
+          const slides = await sampleFrames(
+            container,
+            1,
+            () => closeButtonOf(toast).click(),
+            () =>
+              rendered()
+                ? new DOMMatrix(getComputedStyle(surface).transform).m42
+                : 0,
+            () => !rendered()
+          );
           expect(
-            new DOMMatrix(getComputedStyle(surface).transform).m42,
-            'moved down'
+            Math.max(...slides),
+            'moved down while still rendered'
           ).toBeGreaterThan(8);
           await waitFor(() =>
             expect(ToastQueue.entries, 'queue after exit').toHaveLength(0)
@@ -2987,11 +2994,16 @@ export const ClearMotionTest: Story = {
       canvasElement,
       'swc-toast-region'
     );
+    // 0 once the toast is gone, which ends the slide it could have had.
     const slideOf = (toast: Toast): number =>
-      new DOMMatrix(
-        getComputedStyle(toast.shadowRoot!.querySelector('.swc-Toast')!)
-          .transform
-      ).m42;
+      toast.isConnected
+        ? Math.abs(
+            new DOMMatrix(
+              getComputedStyle(toast.shadowRoot!.querySelector('.swc-Toast')!)
+                .transform
+            ).m42
+          )
+        : 0;
     try {
       await step(
         'Clear all fades the stack and its layers out, without a slide',
@@ -3009,8 +3021,14 @@ export const ClearMotionTest: Story = {
             region.querySelectorAll('.swc-ToastRegion-layer').length,
             'layers stay while they fade'
           ).toBeGreaterThan(0);
-          await new Promise((resolve) => setTimeout(resolve, 150));
-          expect(Math.abs(slideOf(front)), 'no slide').toBeLessThan(1);
+          const slides = await sampleFrames(
+            container,
+            1,
+            () => undefined,
+            () => slideOf(front),
+            () => !container.shadowRoot!.querySelector('swc-toast')
+          );
+          expect(Math.max(...slides), 'no slide on any frame').toBeLessThan(1);
           await waitFor(() =>
             expect(container.shadowRoot!.querySelector('swc-toast')).toBeNull()
           );
@@ -3035,8 +3053,14 @@ export const ClearMotionTest: Story = {
               'fading the scrim and the controls'
             ).toBe(true);
           });
-          await new Promise((resolve) => setTimeout(resolve, 150));
-          expect(Math.abs(slideOf(first)), 'no slide').toBeLessThan(1);
+          const slides = await sampleFrames(
+            container,
+            1,
+            () => undefined,
+            () => slideOf(first),
+            () => !getDialog(container)?.open
+          );
+          expect(Math.max(...slides), 'no slide on any frame').toBeLessThan(1);
           await waitForExpanded(container, false);
         }
       );
@@ -3254,6 +3278,23 @@ const allAnimations = (container: ToastRegion): Animation[] => [
   ),
 ];
 
+/**
+ * Waits until no animation in the region or its toasts has run for two frames in a
+ * row. Unlike `settle()`, this sees animations that start after it is called, such as
+ * Show all fading in once a message is revealed, and those inside shadow roots.
+ */
+const settleRegion = async (container: ToastRegion): Promise<void> => {
+  let idle = 0;
+  for (let frame = 0; frame < 1000 && idle < 2; frame++) {
+    await new Promise((resolve) => requestAnimationFrame(resolve));
+    const running = allAnimations(container).some(
+      (animation) => animation.pending || animation.playState === 'running'
+    );
+    idle = running ? 0 : idle + 1;
+  }
+  expect(idle, 'the region settles').toBe(2);
+};
+
 // Slows every animation to `rate`, as a slow device or a slowed-down inspection would.
 const setRate = (container: ToastRegion, rate: number): void => {
   for (const animation of allAnimations(container)) {
@@ -3308,6 +3349,13 @@ const near = (
   Math.abs(a!.top - b!.top) <= tolerance &&
   Math.abs(a!.width - b!.width) <= tolerance &&
   Math.abs(a!.height - b!.height) <= tolerance;
+
+/**
+ * The most a box moves in one 60fps frame at either end of a motion. The first sample
+ * comes on the frame after the action, which can already be one frame into the move,
+ * so first-frame checks allow this much. Last-frame checks stay tight.
+ */
+const END_STEP = 4;
 
 // A part's position: its inline-start edge and its top. Its box can be wider in one layout than
 // another (the message stretches), without its content moving.
@@ -3372,8 +3420,7 @@ const addStackWithAction = async (container: ToastRegion): Promise<Toast> => {
   await waitFor(() =>
     expect(front.shadowRoot!.querySelector('.swc-Toast-text')).not.toBeNull()
   );
-  await settle(front, getRegion(container));
-  await new Promise((resolve) => setTimeout(resolve, 100));
+  await settleRegion(container);
   return front;
 };
 
@@ -3413,7 +3460,7 @@ export const MotionExpandStartsInPlaceTest: Story = {
               samePlace(
                 first.parts[selector],
                 atRest[selector],
-                0.5,
+                END_STEP,
                 motionCase.rtl
               ),
               `${selector} first frame ${fmt(first.parts[selector])} vs at rest ${fmt(atRest[selector])}`
@@ -3488,7 +3535,7 @@ export const MotionExpandStartsInPlaceSlowTest: Story = {
               samePlace(
                 first.parts[selector],
                 atRest[selector],
-                0.5,
+                END_STEP,
                 motionCase.rtl
               ),
               `${selector} first frame ${fmt(first.parts[selector])} vs at rest ${fmt(atRest[selector])}`
@@ -3527,21 +3574,23 @@ export const MotionExpandStartsInPlaceSlowTest: Story = {
   },
 };
 
-export const MotionCollapseFinishesTest: Story = {
+// Collapses the expanded view at `rate` and checks that it finishes before the swap.
+const collapseFinishesStory = (rate: number): Story => ({
   play: async ({ canvasElement, step }) => {
     const container = await getComponent<ToastRegion>(
       canvasElement,
       'swc-toast-region'
     );
     try {
-      for (const motionCase of MOTION_CASES.filter(({ rate }) => rate === 1)) {
+      for (const motionCase of MOTION_CASES.filter(
+        (motionCase) => motionCase.rate === rate
+      )) {
         await step(`D2 ${caseName(motionCase)}`, async () => {
           await setUpCase(container, motionCase);
           const front = await addStackWithAction(container);
           showAllOf(front)!.click();
           await waitForExpanded(container, true);
-          await settle(...renderedToasts(container));
-          await new Promise((resolve) => setTimeout(resolve, 100));
+          await settleRegion(container);
           const dialog = getDialog(container)!;
           // Every collapse animation, and whether it finished, recorded before the swap.
           const tracked = new Set<Animation>();
@@ -3635,117 +3684,10 @@ export const MotionCollapseFinishesTest: Story = {
       ToastQueue.clear();
     }
   },
-};
+});
 
-export const MotionCollapseFinishesSlowTest: Story = {
-  play: async ({ canvasElement, step }) => {
-    const container = await getComponent<ToastRegion>(
-      canvasElement,
-      'swc-toast-region'
-    );
-    try {
-      for (const motionCase of MOTION_CASES.filter(({ rate }) => rate !== 1)) {
-        await step(`D2 ${caseName(motionCase)}`, async () => {
-          await setUpCase(container, motionCase);
-          const front = await addStackWithAction(container);
-          showAllOf(front)!.click();
-          await waitForExpanded(container, true);
-          await settle(...renderedToasts(container));
-          await new Promise((resolve) => setTimeout(resolve, 100));
-          const dialog = getDialog(container)!;
-          // Every collapse animation, and whether it finished, recorded before the swap.
-          const tracked = new Set<Animation>();
-          const finished = new Set<Animation>();
-          let unfinishedAtSwap: string[] | undefined;
-          const observer = new MutationObserver(() => {
-            if (!dialog.open && !unfinishedAtSwap) {
-              unfinishedAtSwap = [...tracked]
-                .filter((animation) => !finished.has(animation))
-                .map(
-                  (animation) =>
-                    `${(animation.effect as KeyframeEffect | null)?.target?.className} ${animation.constructor.name}`
-                );
-            }
-          });
-          observer.observe(dialog, { attributeFilter: ['open'] });
-          let lastOpen:
-            | { layers: DOMRect[]; front: DOMRect | undefined }
-            | undefined;
-          const frames = await sampleFrames(
-            container,
-            motionCase.rate,
-            () => controlOf(container, 'Collapse').click(),
-            () => {
-              for (const animation of allAnimations(container)) {
-                const target = (animation.effect as KeyframeEffect | null)
-                  ?.target as Element | null;
-                // Show all's fade-in outlasts the collapse by design (600ms).
-                if (
-                  !tracked.has(animation) &&
-                  !target?.classList.contains('swc-Toast-showAll')
-                ) {
-                  tracked.add(animation);
-                  void animation.finished.then(
-                    () => finished.add(animation),
-                    () => undefined
-                  );
-                }
-              }
-              const open = Boolean(getDialog(container)?.open);
-              if (open) {
-                const [listFront, ...rest] = renderedToasts(container);
-                lastOpen = {
-                  layers: rest.map((toast) => toast.getBoundingClientRect()),
-                  front: boxOf(listFront),
-                };
-              }
-              return {
-                open,
-                layers: getLayers(container).map((layer) =>
-                  layer.getBoundingClientRect()
-                ),
-                front: boxOf(renderedToasts(container)[0]),
-              };
-            },
-            () => !getDialog(container)?.open
-          );
-          observer.disconnect();
-          expect(
-            unfinishedAtSwap,
-            'collapse animations unfinished at the swap'
-          ).toEqual([]);
-          const after = frames[frames.length - 1];
-          const keepBottom = motionCase.placement.startsWith('top');
-          // The layers peek out at the far edge, so that edge is the one that must not move.
-          for (const [index, layer] of after.layers
-            .slice(0, VISIBLE_LAYERS)
-            .entries()) {
-            const zoomed = lastOpen?.layers[index];
-            expect(zoomed, `zoomed toast ${index}`).toBeDefined();
-            const edge = keepBottom
-              ? Math.abs(layer.bottom - zoomed!.bottom)
-              : Math.abs(layer.top - zoomed!.top);
-            expect(
-              Math.max(
-                Math.abs(layer.left - zoomed!.left),
-                Math.abs(layer.right - zoomed!.right),
-                edge
-              ),
-              `layer ${index} ${fmt(layer)} vs shrinking toast ${fmt(zoomed)}`
-            ).toBeLessThanOrEqual(1);
-          }
-          expect(
-            near(after.front, lastOpen?.front, 0.5),
-            `front ${fmt(after.front)} vs pinned ${fmt(lastOpen?.front)}`
-          ).toBe(true);
-        });
-      }
-    } finally {
-      container.removeAttribute('dir');
-      ToastQueue.clear();
-    }
-  },
-};
+export const MotionCollapseFinishesTest = collapseFinishesStory(1);
+export const MotionCollapseFinishesSlowTest = collapseFinishesStory(0.25);
 
 const VISIBLE_LAYERS = 2;
 
@@ -3943,7 +3885,7 @@ const expectZoomedButtons = (
 };
 
 /**
- * No jump at either end: the first and last steps are at most 4px, per 60fps
+ * No jump at either end: the first and last steps are at most `END_STEP`, per 60fps
  * frame (a headless browser's frames can be longer). An `ease` move of about
  * 100px peaks near 8px a frame, so only the ends are held to it. The first step
  * is from the start box, since sampling can start one frame into the motion.
@@ -3969,13 +3911,13 @@ const expectNoJump = (
         frames[0]
       );
   expect(first, `${label} first step from ${fmt(start)}`).toBeLessThanOrEqual(
-    4
+    END_STEP
   );
   const last = frames.length - 1;
   expect(
     stepOf(frames[last - 1], frames[last]),
     `${label} last step ${fmt(frames[last - 1].box)} → ${fmt(frames[last].box)}`
-  ).toBeLessThanOrEqual(4);
+  ).toBeLessThanOrEqual(END_STEP);
 };
 
 // Expands a stack of `count` toasts, then closes all but the front one when `count` is 1.
@@ -4058,15 +4000,14 @@ const controlsZoomStory = (
               );
               front = renderedToasts(container)[0];
             }
-            await settle(...renderedToasts(container));
-            await new Promise((resolve) => setTimeout(resolve, 100));
+            await settleRegion(container);
             const rest = sampleControls(container);
             const restBox = rest.box!;
             if (count > 1) {
               const beyond = controlsBeyond(stack, restBox, placement);
               const shown = expandFrames.filter(({ box }) => box);
               expect(
-                near(shown[0].box, beyond, 1),
+                near(shown[0].box, beyond, END_STEP),
                 `expand first frame ${fmt(shown[0].box)} vs B0 ${fmt(beyond)}`
               ).toBe(true);
               expect(
@@ -4080,7 +4021,7 @@ const controlsZoomStory = (
                     endOf(stack, placement.rtl)
                 ),
                 'expand first frame end edge vs the front toast'
-              ).toBeLessThanOrEqual(0.5);
+              ).toBeLessThanOrEqual(END_STEP);
               expectMonotonicEnd(shown, placement.rtl, 'expand');
               const last = shown[shown.length - 1];
               expect(
@@ -4193,8 +4134,7 @@ const clearFadesStory = (rate: number): Story => ({
           const front = await addStackWithAction(container);
           showAllOf(front)!.click();
           await waitForExpanded(container, true);
-          await settle(...renderedToasts(container));
-          await new Promise((resolve) => setTimeout(resolve, 100));
+          await settleRegion(container);
           const starts = new Map(
             renderedToasts(container).map((toast) => [
               toast,
@@ -4370,8 +4310,7 @@ const oneToastControlsStory = (
             await waitFor(() =>
               expect(renderedToasts(container)).toHaveLength(1)
             );
-            await settle(...renderedToasts(container));
-            await new Promise((resolve) => setTimeout(resolve, 100));
+            await settleRegion(container);
             const rest = sampleControls(container);
             const before = rest.box!;
             const listed = renderedToasts(container)[0].getBoundingClientRect();
@@ -4654,6 +4593,15 @@ type Recording = {
   frames: MotionFrame[];
   durations: number[];
   start: number;
+  // Every move's duration, read from the stylesheet as the component does.
+  moveDuration: number;
+};
+
+// A time in milliseconds from one of the region's private custom properties.
+const styleTime = (element: Element, property: string): number => {
+  const value = getComputedStyle(element).getPropertyValue(property).trim();
+  const time = parseFloat(value);
+  return /[^m]s$/.test(value) ? time * 1000 : time;
 };
 
 /**
@@ -4687,15 +4635,27 @@ const recordMotion = async (
     }
     return animation;
   };
+  // The region is not rendered while the queue is empty, so this is read on any frame it is.
+  let moveDuration = 0;
+  const learnMoveDuration = (): void => {
+    const region =
+      container.shadowRoot!.querySelector<HTMLElement>('.swc-ToastRegion');
+    if (region && !moveDuration) {
+      moveDuration = styleTime(region, '--_swc-toast-exit-duration');
+    }
+  };
   const frames: MotionFrame[] = [];
   try {
+    learnMoveDuration();
     frames.push(recordFrame(container, keyOf));
     const start = performance.now();
     await action();
     learnKeys();
     // Show all's 600ms fade is the longest motion; the extra time lets a late one start.
     const minimum = (SHOW_ALL_FADE_IN / rate) * 0.5 + 100;
-    for (let frame = 0; frame < MAX_FRAMES; frame++) {
+    // A bound on time, not frames, so a display faster than 60Hz does not end it early.
+    const limit = (SHOW_ALL_FADE_IN / rate) * 3 + 1000;
+    while (performance.now() - start < limit) {
       await new Promise((resolve) => requestAnimationFrame(resolve));
       setRate(container, rate);
       for (const animation of getDialog(container)?.getAnimations({
@@ -4704,6 +4664,7 @@ const recordMotion = async (
         animation.playbackRate = rate;
       }
       learnKeys();
+      learnMoveDuration();
       frames.push(recordFrame(container, keyOf));
       const running = [
         ...allAnimations(container),
@@ -4715,15 +4676,22 @@ const recordMotion = async (
         break;
       }
     }
-    return { frames, durations, start };
+    expect(
+      Math.max(0, ...durations),
+      'no script motion is longer than the Show all fade the times above allow for'
+    ).toBeLessThanOrEqual(SHOW_ALL_FADE_IN);
+    expect(moveDuration, 'move duration from the stylesheet').toBeGreaterThan(
+      0
+    );
+    return { frames, durations, start, moveDuration };
   } finally {
     Element.prototype.animate = animate;
   }
 };
 
+// The component's Show all fade-in, its longest script motion. `recordMotion()` checks that
+// no recorded motion is longer.
 const SHOW_ALL_FADE_IN = 600;
-// Well past the slowest motion: Show all's 600ms fade at 0.25×.
-const MAX_FRAMES = 300;
 
 // Progress of CSS `ease` (cubic-bezier(0.25, 0.1, 0.25, 1)) at `time`, a fraction of the duration.
 const easeProgress = (time: number): number => {
@@ -4769,7 +4737,7 @@ const stepSize = (
  * way and reaches its end before the element goes.
  */
 const motionViolations = (
-  { frames }: Recording,
+  { frames, moveDuration }: Recording,
   { rtl, front, rate = 1 }: { rtl?: boolean; front?: string; rate?: number }
 ): string[] => {
   const violations: string[] = [];
@@ -4813,7 +4781,7 @@ const motionViolations = (
         }
       }
     }
-    // M3. The first and last steps of its motion are at most 4px per 60fps frame. A step counts
+    // M3. The first and last steps of its motion are at most `END_STEP` per 60fps frame. A step counts
     // where it lands on a frame the element shows on.
     // A part moves with its toast, so its own step is what its background's step does not explain.
     const anchorId = id.startsWith('part:')
@@ -4849,13 +4817,16 @@ const motionViolations = (
       )
     );
     const easeStep =
-      travel * easeProgress(1000 / 60 / (MOVE_DURATION_MS / rate)) + 1;
+      travel * easeProgress(1000 / 60 / (moveDuration / rate)) + 1;
     if (moving.length > 0) {
       for (const [which, index] of [
         ['first', moving[0]],
         ['last', moving[moving.length - 1]],
       ] as const) {
-        if (steps[index] > Math.max(4, which === 'first' ? easeStep : 0)) {
+        if (
+          all[index + 1].track.opacity > VISIBLE &&
+          steps[index] > Math.max(END_STEP, which === 'first' ? easeStep : 0)
+        ) {
           const a = all[index];
           const b = all[index + 1];
           violations.push(
@@ -5063,8 +5034,7 @@ const setUpMotion = async (
     closeButtonOf(other).click();
     await waitFor(() => expect(renderedToasts(container)).toHaveLength(1));
   }
-  await settle(...renderedToasts(container));
-  await new Promise((resolve) => setTimeout(resolve, 100));
+  await settleRegion(container);
 };
 
 const EXPANDED_ACTIONS: MotionAction[] = [
@@ -5142,8 +5112,7 @@ const motionRulesStory = (
               await setUpMotion(container, placement, count, expanded);
               if (action === 'leave') {
                 await runAction(container, 'hover');
-                // The peek's 400ms transition ends.
-                await new Promise((resolve) => setTimeout(resolve, 600));
+                await settleRegion(container);
               }
               if (action === 'collapse Escape') {
                 controlOf(container, 'Collapse').focus();
@@ -5396,11 +5365,11 @@ export const MotionRulesSlowClearStackedEndRtlTest = motionRulesStory(
 // Where each moving edge of `id` is, as a fraction of its travel, at 25%, 50%, and 75% of the
 // motion's time, counted from when that edge starts to move.
 const pathFractions = (
-  { frames }: Recording,
+  { frames, moveDuration }: Recording,
   id: string,
   rate: number
 ): Record<string, number[]> => {
-  const duration = MOVE_DURATION_MS / rate;
+  const duration = moveDuration / rate;
   const points = frames.flatMap((frame) => {
     const track = frame.tracks.get(id);
     return track ? [{ time: frame.time, box: track.box }] : [];
@@ -5440,8 +5409,6 @@ const pathFractions = (
   return result;
 };
 
-const MOVE_DURATION_MS = 400;
-
 const M5_MESSAGES = [
   'Hi',
   'Your changes to the shared quarterly planning document were saved, and everyone with access can now see them',
@@ -5478,8 +5445,7 @@ const sameMotionStory = (action: 'expand' | 'collapse'): Story => ({
           if (action === 'collapse') {
             showAllOf(front)!.click();
             await waitForExpanded(container, true);
-            await settle(...renderedToasts(container));
-            await new Promise((resolve) => setTimeout(resolve, 100));
+            await settleRegion(container);
           }
           const recording = await recordMotion(container, rate, () =>
             action === 'expand'
