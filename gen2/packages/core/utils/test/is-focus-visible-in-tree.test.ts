@@ -49,6 +49,13 @@ export const IsFocusVisibleInTreeTest: Story = {
     await step(
       'returns true when the active element is :focus-visible (keyboard focus)',
       async () => {
+        // Activate the iframe before simulated Tab so Firefox does not
+        // activate it during the button's focus transition.
+        window.focus();
+        expect(
+          document.hasFocus(),
+          'story document has focus before Tab navigation'
+        ).toBe(true);
         const beforeTab = getFocusState();
         await userEvent.tab();
 
