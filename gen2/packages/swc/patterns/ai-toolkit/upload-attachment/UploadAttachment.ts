@@ -85,8 +85,8 @@ export class UploadAttachment extends SpectrumElement {
 
   /**
    * Accessible label for the dismiss/remove attachment button. When unset, derives
-   * "Remove [file name].[file type]" from the `title` slot's text content, falling
-   * back to "Remove attachment" when no title text is available.
+   * "Remove [title]" from the `title` slot, falling back to "Remove attachment".
+   * Appends nonempty `badge` slot text for media attachments.
    */
   @property({ type: String, attribute: 'dismiss-label' })
   public dismissLabel = '';
@@ -116,7 +116,10 @@ export class UploadAttachment extends SpectrumElement {
   @query('slot[name="title"]')
   private _titleSlot?: HTMLSlotElement;
 
-  private _titleObserver = new MutationObserver(() => this.requestUpdate());
+  @query('slot[name="badge"]')
+  private _badgeSlot?: HTMLSlotElement;
+
+  private _labelObserver = new MutationObserver(() => this.requestUpdate());
 
   /** Whether the delayed progress-circle visual is currently shown; see {@link _syncProgressVisibility}. */
   private _progressVisible = false;
@@ -137,9 +140,7 @@ export class UploadAttachment extends SpectrumElement {
 
   public override connectedCallback(): void {
     super.connectedCallback();
-    if (this._titleSlot) {
-      this._observeTitleSlot(this._titleSlot);
-    }
+    this._observeLabelSlots();
     // Force a re-sync: `_wasLoading` was reset in `disconnectedCallback`, so
     // if still loading, this re-arms a fresh 1s delay instead of staying
     // stuck hidden (the edge-detection in `_syncProgressVisibility` would
@@ -149,7 +150,7 @@ export class UploadAttachment extends SpectrumElement {
 
   public override disconnectedCallback(): void {
     super.disconnectedCallback();
-    this._titleObserver.disconnect();
+    this._labelObserver.disconnect();
     this._clearProgressTimer();
     // Reset the edge-detection flag so reconnecting (e.g. the attachment
     // strip reordering tiles) re-arms the delay instead of leaving the
@@ -201,22 +202,29 @@ export class UploadAttachment extends SpectrumElement {
       return explicit;
     }
     const title = this._titleText();
-    return title ? `Remove ${title}` : 'Remove attachment';
+    const label = title ? `Remove ${title}` : 'Remove attachment';
+    const badge =
+      this.type === 'media' && this._badgeSlot
+        ? getLabelFromSlot('', this._badgeSlot)
+        : null;
+    return badge ? `${label}, ${badge}` : label;
   }
 
-  private _observeTitleSlot(slot: HTMLSlotElement): void {
-    this._titleObserver.disconnect();
-    for (const node of slot.assignedNodes({ flatten: true })) {
-      this._titleObserver.observe(node, {
-        characterData: true,
-        childList: true,
-        subtree: true,
-      });
+  private _observeLabelSlots(): void {
+    this._labelObserver.disconnect();
+    for (const slot of [this._titleSlot, this._badgeSlot]) {
+      for (const node of slot?.assignedNodes({ flatten: true }) ?? []) {
+        this._labelObserver.observe(node, {
+          characterData: true,
+          childList: true,
+          subtree: true,
+        });
+      }
     }
   }
 
-  private _handleTitleSlotChange(event: Event): void {
-    this._observeTitleSlot(event.target as HTMLSlotElement);
+  private _handleLabelSlotChange(): void {
+    this._observeLabelSlots();
     this._syncHostAccessibleLabel();
     this.requestUpdate();
   }
@@ -314,7 +322,11 @@ export class UploadAttachment extends SpectrumElement {
               ></swc-progress-circle>
             `
           : nothing}
-        <slot name="badge" slot="media"></slot>
+        <slot
+          name="badge"
+          slot="media"
+          @slotchange=${this._handleLabelSlotChange}
+        ></slot>
       </swc-card>
       <div class="swc-UploadAttachment-actions">
         <slot name="actions"></slot>
@@ -322,7 +334,7 @@ export class UploadAttachment extends SpectrumElement {
       <slot
         name="title"
         hidden
-        @slotchange=${this._handleTitleSlotChange}
+        @slotchange=${this._handleLabelSlotChange}
       ></slot>
     `;
   }
@@ -348,7 +360,7 @@ export class UploadAttachment extends SpectrumElement {
               name="title"
               class="swc-VisuallyHidden"
               hidden
-              @slotchange=${this._handleTitleSlotChange}
+              @slotchange=${this._handleLabelSlotChange}
             ></slot>
           </div>
           <div class="swc-UploadAttachment-subtitle">

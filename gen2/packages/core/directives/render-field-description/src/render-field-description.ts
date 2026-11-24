@@ -29,6 +29,17 @@ export interface RenderFieldDescriptionOptions {
   onDescriptionElement: (element: Element | undefined) => void;
   /** Called with the rendered error-text element (or `undefined` on removal). */
   onErrorTextElement: (element: Element | undefined) => void;
+
+  /**
+   * Decorative icon rendered before the error message, inside an `aria-hidden`
+   * wrapper. Supplied by the consumer because this `core` directive can't
+   * import a `swc` icon. Omit when the
+   * control already shows its own invalid icon (e.g. a text field's input).
+   * When supplied, an invalid field always shows it, even with no error text,
+   * so the invalid state never relies on color alone: it appears beside the
+   * description if there is one, and on its own otherwise.
+   */
+  errorIcon?: TemplateResult;
 }
 
 /**
@@ -49,12 +60,22 @@ export function renderFieldDescription({
   invalid,
   onDescriptionElement,
   onErrorTextElement,
+  errorIcon,
 }: RenderFieldDescriptionOptions): RenderFieldDescriptionResult {
   const showError = invalid && hasErrorTextSlotContent;
   const showDescription = hasDescriptionSlotContent && !showError;
-  if (!showDescription && !showError) {
+  const showInvalidIcon =
+    invalid && !hasErrorTextSlotContent && errorIcon !== undefined;
+  if (!showDescription && !showError && !showInvalidIcon) {
     return nothing;
   }
+  const icon = errorIcon
+    ? html`
+        <span class="swc-FormFieldErrorText-icon" aria-hidden="true">
+          ${errorIcon}
+        </span>
+      `
+    : nothing;
   return html`
     ${showDescription
       ? html`
@@ -66,8 +87,22 @@ export function renderFieldDescription({
             tabindex="-1"
             ${ref(onDescriptionElement)}
           >
-            <slot name="description"></slot>
+            ${showInvalidIcon
+              ? html`
+                  ${icon}
+                  <span class="swc-FormFieldErrorText-text">
+                    <slot name="description"></slot>
+                  </span>
+                `
+              : html`
+                  <slot name="description"></slot>
+                `}
           </span>
+        `
+      : nothing}
+    ${showInvalidIcon && !hasDescriptionSlotContent
+      ? html`
+          <span class="swc-FormFieldErrorText">${icon}</span>
         `
       : nothing}
     ${showError
@@ -77,7 +112,10 @@ export function renderFieldDescription({
             tabindex="-1"
             ${ref(onErrorTextElement)}
           >
-            <slot name="error-text"></slot>
+            ${icon}
+            <span class="swc-FormFieldErrorText-text">
+              <slot name="error-text"></slot>
+            </span>
           </span>
         `
       : nothing}

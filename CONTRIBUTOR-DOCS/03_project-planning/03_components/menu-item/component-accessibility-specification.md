@@ -53,11 +53,14 @@ This page is for gen2 `swc-menu-item` in Spectrum Web Components. Most rows are 
 ### Migration scope (this phase)
 
 - `menuitemcheckbox`, `menuitemradio`, `aria-checked`, and selection modes are out of scope. Follow [Menu — Migration scope (current)](../menu/component-accessibility-specification.md#migration-scope-current).
-- In scope: plain `menuitem`, submenu parents, and link rows (see below).
+- In scope: plain `menuitem` only.
+- Submenu parents are out of scope; submenus have not shipped in gen2.
+- Link rows are out of scope. Per [Q17](migration-plan.md#blockers-and-open-questions), `href` leaves this component entirely and moves to a separate [menu item link component](../menu-item-link/component-accessibility-specification.md), so `swc-menu-item` never renders an anchor.
 
 ### Also read
 
-- [Menu a11y doc](../menu/component-accessibility-specification.md) — `swc-menu`, `FocusgroupNavigationController`, link rows.
+- [Menu a11y doc](../menu/component-accessibility-specification.md): `swc-menu` and `FocusgroupNavigationController`.
+- [Menu item link a11y doc](../menu-item-link/component-accessibility-specification.md): native navigation, with `role="menuitem"` and actual focus on the anchor rather than the custom-element host.
 - [Menu group a11y doc](../menu-group/component-accessibility-specification.md) — `swc-menu-group` (same three parents; `role="group"` in the list).
 - [Menu separator a11y doc](../menu-separator/component-accessibility-specification.md) — `swc-menu-separator` in the list, not in a group default slot; `role="separator"`. [Overview](../menu-separator/component-accessibility-specification.md#overview).
 - [Action menu a11y doc](../action-menu/component-accessibility-specification.md) — `swc-action-menu` next to `swc-menu` (ActionMenu).
@@ -68,10 +71,11 @@ This page is for gen2 `swc-menu-item` in Spectrum Web Components. Most rows are 
 - **Placement:** slotted under `swc-menu`, `swc-action-menu`, `swc-menu-group`, or `swc-menu-item`. **Label** slot: text, icons, etc. (check exposed name in source). **Submenu** slot: only `swc-menu-group`, `swc-menu-item`, and `swc-menu-separator` in current allow-list (source).
 - **Submenu slot:** with children from that list, the row is a submenu parent. Trigger and child `role="menu"` live in `swc-menu-item`’s shadow DOM, with `swc-popover` (or similar) for the layer—**not** another `swc-menu` in the parent list. Empty slot: plain `menuitem`. Verify DOM in source.
 - **Submenu ARIA:** `aria-haspopup="menu"`; `aria-expanded` matches open state. Which node carries the row ARIA: verify in source. Child `role="menu"` is inside the item’s shadow, not the CE. See [Menu: Shadow DOM](../menu/component-accessibility-specification.md#shadow-dom-and-cross-root-aria-issues) and [Action menu](../action-menu/component-accessibility-specification.md).
-- **Link rows:** consumers should slot a real `<a href>` with a clear name in the label slot. For a full row hit, they can consider using the [Cards](https://inclusive-components.design/cards/) pattern (one big click, no double fire). For main site nav, consider nav patterns ([disclosure navigation](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/examples/disclosure-navigation/))—menus are for commands, not main nav.
+- Navigation belongs to [swc-menu-item-link](../menu-item-link/component-accessibility-specification.md). Both components expose `menuitem`, but the link component puts the role and real focus on its native anchor. `swc-menu-item` does not carry `href`, render an anchor, or accept an interactive anchor in its label. Do not use a Cards-style nested link or host-to-anchor proxy click to turn a command row into a link.
 
 ### When to use something else
 
+- Use [swc-menu-item-link](../menu-item-link/component-accessibility-specification.md) for a destination within a complete menu keyboard pattern.
 - **Picker / combobox** single-select from a field — [APG combobox](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/); not a menu row.
 - **Page navigation** — prefer **nav** and disclosure patterns over `role="menu"` + link rows when **links** are the **main** affordance ([Menu — When to use something else](../menu/component-accessibility-specification.md#when-to-use-something-else)).
 
@@ -89,7 +93,7 @@ This page is for gen2 `swc-menu-item` in Spectrum Web Components. Most rows are 
 | --- | --- |
 | [Name, role, value (4.1.2)](https://www.w3.org/WAI/WCAG22/Understanding/name-role-value) | `menuitem` name from content or `aria-*`; disabled items use `aria-disabled="true"` when appropriate. |
 | [Keyboard (2.1.1)](https://www.w3.org/WAI/WCAG22/Understanding/keyboard) | Activate with **Enter** / **Space** per pattern; **no** pointer-only rows (see 1st-gen [SWC-1332](https://jira.corp.adobe.com/browse/SWC-1332)). |
-| [Link purpose (2.4.4)](https://www.w3.org/WAI/WCAG22/Understanding/link-purpose-in-context) | Link rows expose a **clear** link **name**; avoid duplicate activations ([SWC-923](https://jira.corp.adobe.com/browse/SWC-923)). |
+| [Link purpose (2.4.4)](https://www.w3.org/WAI/WCAG22/Understanding/link-purpose-in-context) | Navigation rows use the separate [menu item link specification](../menu-item-link/component-accessibility-specification.md), including clear destination names and single native activation. |
 
 **Bottom line:** Items use roving `tabindex` and `FocusgroupNavigationController`. Submenu parents wire open, close, focus return, and child `role="menu"` in the item’s shadow, not the CE. Top-level hosts stay `swc-menu` / `swc-action-menu` ([Menu](../menu/component-accessibility-specification.md), [Action menu](../action-menu/component-accessibility-specification.md)).
 
@@ -108,7 +112,7 @@ See [Menu — Related 1st-gen accessibility (Jira)](../menu/component-accessibil
 
 ## Recommendations: `<swc-menu-item>`
 
-**Scope:** `menuitem` rows, submenu parents, and link rows (Cards). Checkbox/radio rows: out for now ([Menu migration scope](../menu/component-accessibility-specification.md#migration-scope-current)).
+**Scope:** Command `menuitem` rows and submenu parents. Links use [swc-menu-item-link](../menu-item-link/component-accessibility-specification.md); checkbox/radio rows remain outside this component's scope ([Menu migration scope](../menu/component-accessibility-specification.md#migration-scope-current)).
 
 ### ARIA roles, states, and properties
 
@@ -117,7 +121,7 @@ See [Menu — Related 1st-gen accessibility (Jira)](../menu/component-accessibil
 | Plain command | `role="menuitem"` and a name; one clear action per row. |
 | Disabled | `aria-disabled="true"` when the row looks disabled and cannot run. |
 | Submenu parent | Only when the `submenu` slot has content. Trigger + child `role="menu"` in `swc-menu-item`’s shadow, not the CE. `aria-haspopup="menu"`; `aria-expanded` matches state (see source for which node gets ARIA). Do not add `swc-menu` in the list to mean submenu ([Menu recommendations](../menu/component-accessibility-specification.md#recommendations-swc-menu)). |
-| Link row | Do not make the host fire both menu and link ([SWC-923](https://jira.corp.adobe.com/browse/SWC-923)). Child `<a href>` with [Cards](https://inclusive-components.design/cards/)-style full row hit. For main nav, use nav patterns when that fits (Overview). |
+| Navigation boundary | Use [swc-menu-item-link](../menu-item-link/component-accessibility-specification.md), whose anchor owns `role="menuitem"` and focus. This component remains a command/submenu item with no link mode or nested interactive link. |
 | Checkbox / radio | Out of scope this phase. |
 
 ### Shadow DOM and cross-root ARIA Issues
@@ -126,7 +130,7 @@ Follow [Menu — Shadow DOM](../menu/component-accessibility-specification.md#sh
 
 ### Accessibility tree expectations
 
-- Command and link rows expose `menuitem` and a name.
+- Command rows expose one `menuitem` and a name. Link rows are a separate component with the same ARIA role on a different native element: the anchor itself, not its custom-element wrapper.
 - Submenu parents (when the `submenu` slot has content) tie `aria-expanded` / `aria-haspopup` to open state and expose a child `role="menu"` (with items) from `swc-menu-item`’s shadow—not by putting `role="menu"` on the `<swc-menu-item>` host.
 
 ### Form-associated custom properties (labels, `ElementInternals`)
@@ -155,7 +159,7 @@ On a parent `role="menu"` list (top-level or submenu surface as implemented), a 
 
 | Kind of test | What to check |
 | --- | --- |
-| Unit / aXe + Storybook | `role`, **name**, **disabled**, **expanded** props as implemented; link rows — **no** duplicate activation ([SWC-923](https://jira.corp.adobe.com/browse/SWC-923)). |
+| Unit / aXe + Storybook | `role`, **name**, **disabled**, **expanded** props as implemented; no link mode or interactive anchor nested in the command row. Native link activation and duplicate-navigation regression tests belong to [menu item link](../menu-item-link/component-accessibility-specification.md#automated-tests). |
 | Playwright / ARIA snapshots | Roving focus; **submenu** open/close when in scope; **no** gated **`menuitemcheckbox` / `menuitemradio`** coverage until [Migration scope](../menu/component-accessibility-specification.md#migration-scope-current) closes. |
 
 ### Keyboard testing
@@ -164,7 +168,7 @@ Follow [Keyboard testing](../../../../gen2/packages/swc/.storybook/guides/access
 
 ### Manual and screen reader testing
 
-Use [Screen reader testing](../../../../gen2/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx) with the **composed** menu pattern ([Menu](../menu/component-accessibility-specification.md)); verify **link** rows announce **once** and **match** **[Cards](https://inclusive-components.design/cards/)** expectations.
+Use [Screen reader testing](../../../../gen2/packages/swc/.storybook/guides/accessibility-guides/screen_reader_testing.mdx) with the composed menu pattern ([Menu](../menu/component-accessibility-specification.md)). Verify command and submenu rows expose one named menu item without a nested interactive link. Navigation-specific checks belong to the [menu item link specification](../menu-item-link/component-accessibility-specification.md#manual-and-screen-reader-testing).
 
 ---
 
@@ -172,8 +176,8 @@ Use [Screen reader testing](../../../../gen2/packages/swc/.storybook/guides/acce
 
 - [ ] Checkbox / radio `menuitem` not in scope for this doc ([Menu migration scope](../menu/component-accessibility-specification.md#migration-scope-current)).
 - [ ] Names, disabled, submenu `aria-expanded` / `aria-haspopup` match implementation when `submenu` has content; trigger + child `role="menu"` in item shadow + popover as built. If [printable character navigation](../menu/component-accessibility-specification.md#printable-character-navigation-optional-not-typeahead) is implemented, submenu list behavior matches the top-level menu (not typeahead).
-- [ ] Link rows: child `<a>` + Cards; call out nav patterns when links are the main job.
-- [ ] SWC-923 duplicate click guarded in tests; SWC-1332 when custom submenu content is in scope.
+- [ ] Navigation uses the separate `swc-menu-item-link` component; command rows have no `href`, anchor rendering, or nested interactive link.
+- [ ] Duplicate-activation regression coverage lives with menu item link; custom submenu keyboard coverage remains with this component when in scope.
 
 ---
 
@@ -183,7 +187,7 @@ Use [Screen reader testing](../../../../gen2/packages/swc/.storybook/guides/acce
 - [Menu group component accessibility specification](../menu-group/component-accessibility-specification.md)
 - [Menu separator component accessibility specification](../menu-separator/component-accessibility-specification.md)
 - [Action menu component accessibility specification](../action-menu/component-accessibility-specification.md)
-- [Heydon Pickering: Inclusive Components — Cards](https://inclusive-components.design/cards/)
+- [Menu item link component accessibility specification](../menu-item-link/component-accessibility-specification.md)
 - [WAI-ARIA APG: Menu button](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/)
 - [WAI-ARIA APG: Disclosure navigation](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/examples/disclosure-navigation/)
 - [spectrum-web-components PR #6129 — Focusgroup navigation controller](https://github.com/adobe/spectrum-web-components/pull/6129)
