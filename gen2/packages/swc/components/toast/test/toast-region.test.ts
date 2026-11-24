@@ -1770,14 +1770,18 @@ const peekPosition = async (
     ).not.toBeNull()
   );
   await document.fonts.ready;
-  const rect = layer.getBoundingClientRect();
-  const regionRect = region.getBoundingClientRect();
-  const x = rect.left + rect.width / 2;
-  const y = (rect.top + regionRect.top) / 2;
   const root = layer.getRootNode();
   if (!(root instanceof ShadowRoot)) {
     throw new Error('The peek layer must be in the region shadow root');
   }
+  // The layer animates into place as the toast arrives; measure where it lands.
+  await Promise.all(
+    root.getAnimations().map((animation) => animation.finished.catch(() => {}))
+  );
+  const rect = layer.getBoundingClientRect();
+  const regionRect = region.getBoundingClientRect();
+  const x = rect.left + rect.width / 2;
+  const y = (rect.top + regionRect.top) / 2;
   expect(
     root.elementFromPoint(x, y),
     'the visible peek point hits the layer'
