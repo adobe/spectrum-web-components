@@ -13,6 +13,7 @@
 import { html } from 'lit';
 import { expect, userEvent } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import { ensureDocumentHasFocus } from '@swc-test-helpers/dom';
 
 import { getActiveElement, isFocusVisibleInTree } from '../index.js';
 
@@ -36,12 +37,7 @@ export const IsFocusVisibleInTreeTest: Story = {
     await step(
       'returns true when the active element is :focus-visible (keyboard focus)',
       async () => {
-        // Activate the iframe before simulated Tab navigation.
-        window.focus();
-        expect(
-          document.hasFocus(),
-          'story document has focus before Tab navigation'
-        ).toBe(true);
+        ensureDocumentHasFocus(canvasElement);
         await userEvent.tab();
 
         expect(getActiveElement(document)).toBe(button);

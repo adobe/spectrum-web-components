@@ -31,6 +31,7 @@
 
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import { ensureDocumentHasFocus } from '@swc-test-helpers/dom';
 
 import './demo-hosts.js';
 
@@ -104,12 +105,7 @@ export const FocusRetainedTest: Story = {
     await step(
       'mouse-focus-style interaction: button receives focus',
       async () => {
-        // Activate the iframe before programmatic button focus.
-        window.focus();
-        expect(
-          document.hasFocus(),
-          'story document has focus before button focus'
-        ).toBe(true);
+        ensureDocumentHasFocus(canvasElement);
         // Dispatch pointerdown before focus to mirror the sequence a real
         // mouse click produces (pointer-click focus, not keyboard focus).
         internalButton.dispatchEvent(
