@@ -1286,13 +1286,8 @@
   --swc-bar-thickness-2x-large: 12px;
   --swc-bar-thickness-2x-small: 1px;
   --swc-bar-thickness-3x-large: 16px;
-  --swc-bar-thickness-extra-large: 10px;
   --swc-bar-thickness-extra-small: 2px;
-  --swc-bar-thickness-large: 8px;
-  --swc-bar-thickness-medium: 6px;
-  --swc-bar-thickness-small: 4px;
   --swc-bar-width-extra-large: 240px;
-  --swc-bar-width-large: 192px;
   --swc-bar-width-medium: 144px;
   --swc-bar-width-small: 120px;
   --swc-base-visual-size-2x-large: 24px;
@@ -1302,51 +1297,16 @@
   --swc-base-visual-size-extra-large: 22px;
   --swc-base-visual-size-extra-small: 14px;
   --swc-base-visual-size-large: 20px;
-  --swc-base-visual-size-medium: 18px;
   --swc-base-visual-size-small: 16px;
-  --swc-control-size-extra-large: 20px;
   --swc-control-size-extra-small: 12px;
-  --swc-control-size-large: 18px;
-  --swc-control-size-medium: 16px;
-  --swc-control-size-small: 14px;
-  --swc-field-minimum-height-extra-large: 64px;
-  --swc-field-minimum-height-large: 56px;
-  --swc-field-minimum-height-medium: 40px;
   --swc-field-minimum-height-small: 32px;
   --swc-field-minimum-width-extra-large: 240px;
-  --swc-field-minimum-width-large: 192px;
   --swc-field-minimum-width-medium: 144px;
-  --swc-field-minimum-width-small: 120px;
-  --swc-field-width-2x-large: 352px;
   --swc-field-width-3x-large: 416px;
-  --swc-field-width-extra-large: 288px;
-  --swc-field-width-large: 240px;
-  --swc-field-width-medium: 192px;
-  --swc-field-width-small: 144px;
-  --swc-list-item-height-extra-large: 56px;
-  --swc-list-item-height-extra-small: 24px;
-  --swc-list-item-height-large: 48px;
-  --swc-list-item-height-medium: 40px;
-  --swc-list-item-height-small: 32px;
-  --swc-list-item-minimum-height: 40px;
-  --swc-list-item-minimum-width-medium: 192px;
-  --swc-list-item-minimum-width-small: 144px;
   --swc-list-item-width-extra-large: 240px;
   --swc-list-item-width-large: 192px;
   --swc-list-item-width-medium: 144px;
   --swc-list-item-width-small: 120px;
-  --swc-visual-size-100: 24px;
-  --swc-visual-size-1000: 96px;
-  --swc-visual-size-200: 28px;
-  --swc-visual-size-300: 32px;
-  --swc-visual-size-400: 36px;
-  --swc-visual-size-50: 16px;
-  --swc-visual-size-500: 40px;
-  --swc-visual-size-600: 48px;
-  --swc-visual-size-700: 56px;
-  --swc-visual-size-75: 20px;
-  --swc-visual-size-800: 64px;
-  --swc-visual-size-900: 80px;
   --swc-accessory-gap-2x-large: 9px;
   --swc-accessory-gap-affixed-2x-large: 7px;
   --swc-accessory-gap-affixed-extra-large: 6px;
@@ -1376,15 +1336,11 @@
   --swc-aspect-ratio-800: 4;
   --swc-banner-gap-horizontal: 24px;
   --swc-banner-gap-vertical: 8px;
-  --swc-banner-height: 56px;
-  --swc-banner-maximum-width: 352px;
-  --swc-banner-minimum-height: 56px;
   --swc-banner-minimum-width-large: 240px;
   --swc-banner-minimum-width-medium: 192px;
   --swc-banner-padding-horizontal: 16px;
   --swc-banner-padding-horizontal-compact: 8px;
   --swc-banner-padding-vertical: 12px;
-  --swc-banner-width: 896px;
   --swc-base-gap-2x-large: 8px;
   --swc-base-gap-3x-large: 8px;
   --swc-base-gap-4x-large: 10px;
@@ -1393,13 +1349,6 @@
   --swc-base-gap-large: 6px;
   --swc-base-gap-medium: 6px;
   --swc-base-gap-small: 4px;
-  --swc-base-height-2x-large: 56px;
-  --swc-base-height-3x-large: 64px;
-  --swc-base-height-extra-large: 48px;
-  --swc-base-height-extra-small: 20px;
-  --swc-base-height-large: 40px;
-  --swc-base-height-medium: 32px;
-  --swc-base-height-small: 24px;
   --swc-base-maximum-width: 288px;
   --swc-base-padding-horizontal-extra-small: 8px;
   --swc-base-padding-horizontal-uniform-2x-large: 15px;
@@ -1431,19 +1380,15 @@
   --swc-container-gap-large: 20px;
   --swc-container-gap-medium: 16px;
   --swc-container-gap-small: 12px;
-  --swc-container-height: 192px;
   --swc-container-maximum-width-2x-large: 512px;
-  --swc-container-maximum-width-2x-small: 144px;
   --swc-container-maximum-width-3x-large: 608px;
   --swc-container-maximum-width-extra-large: 416px;
   --swc-container-maximum-width-extra-small: 192px;
-  --swc-container-maximum-width-large: 352px;
   --swc-container-maximum-width-medium: 288px;
   --swc-container-maximum-width-small: 240px;
   --swc-container-minimum-height-2x-large: 416px;
   --swc-container-minimum-height-2x-small: 120px;
   --swc-container-minimum-height-3x-large: 512px;
-  --swc-container-minimum-height-3x-small: 96px;
   --swc-container-minimum-height-extra-large: 352px;
   --swc-container-minimum-height-extra-small: 144px;
   --swc-container-minimum-height-large: 288px;
@@ -1451,10 +1396,8 @@
   --swc-container-minimum-height-small: 192px;
   --swc-container-minimum-width-2x-large: 352px;
   --swc-container-minimum-width-3x-large: 416px;
-  --swc-container-minimum-width-extra-large: 288px;
   --swc-container-minimum-width-extra-small: 120px;
   --swc-container-minimum-width-large: 240px;
-  --swc-container-minimum-width-medium: 192px;
   --swc-container-minimum-width-small: 144px;
   --swc-container-padding-2x-large: 32px;
   --swc-container-padding-2x-small: 6px;
@@ -1464,7 +1407,6 @@
   --swc-container-padding-large: 20px;
   --swc-container-padding-medium: 16px;
   --swc-container-padding-small: 12px;
-  --swc-container-width-2x-large: 352px;
   --swc-container-width-3x-large: 416px;
   --swc-container-width-extra-large: 288px;
   --swc-container-width-extra-small: 120px;
@@ -1550,7 +1492,6 @@
   --swc-list-item-padding-horizontal: 6px;
   --swc-list-item-padding-vertical-regular: 4px;
   --swc-list-item-padding-vertical-spacious: 8px;
-  --swc-list-width: 192px;
   --swc-size-100: 8px;
   --swc-size-1000: 96px;
   --swc-size-1100: 120px;
@@ -1734,6 +1675,7 @@
     var(--swc-gray-400)
   );
   --swc-action-bar-counter-font-size: var(--swc-font-size-100);
+  --swc-alert-dialog-minimum-width: 288px;
   --swc-avatar-border-color: var(--swc-gray-25);
   --swc-avatar-border-width: var(--swc-border-width-100);
   --swc-avatar-opacity-disabled: var(--swc-opacity-disabled);
@@ -1742,6 +1684,9 @@
   --swc-gradient-stop-3-avatar: 100%;
   --swc-bar-panel-gripper-color: var(--swc-gray-200);
   --swc-bar-panel-gripper-color-drag: var(--swc-gray-800);
+  --swc-bar-panel-maximum-width: 72px;
+  --swc-bar-panel-minimum-width: 40px;
+  --swc-bar-panel-width: 56px;
   --swc-body-cjk-emphasized-font-style: var(--swc-default-font-style);
   --swc-body-cjk-emphasized-font-weight: var(--swc-extra-bold-font-weight);
   --swc-body-cjk-font-family: var(--swc-cjk-font-family);
@@ -1795,9 +1740,9 @@
   --swc-body-size-xxl: var(--swc-font-size-500);
   --swc-body-size-xxs: var(--swc-font-size-50);
   --swc-body-size-xxxl: var(--swc-font-size-600);
-  --swc-button-minimum-width-multiplier: 2.25;
   --swc-card-background-loading-color: var(--swc-gray-100);
   --swc-card-background-well-color: var(--swc-gray-100);
+  --swc-card-minimum-width-large: 288px;
   --swc-card-selection-background-color: light-dark(
     rgb(255 255 255 / 48%),
     rgb(0 0 0 / 56%)
@@ -1880,7 +1825,8 @@
   --swc-color-wheel-border-color: var(--swc-gray-1000);
   --swc-color-wheel-border-opacity: 0.1;
   --swc-color-wheel-color-area-margin: 12px;
-  --swc-combo-box-minimum-width-multiplier: 2.5;
+  --swc-date-field-minimum-width: 152px;
+  --swc-date-picker-minimum-width: 152px;
   --swc-detail-cjk-emphasized-font-style: var(--swc-default-font-style);
   --swc-detail-cjk-emphasized-font-weight: var(--swc-extra-bold-font-weight);
   --swc-detail-cjk-font-family: var(--swc-cjk-font-family);
@@ -1931,6 +1877,8 @@
   --swc-detail-size-s: var(--swc-font-size-75);
   --swc-detail-size-xl: var(--swc-font-size-300);
   --swc-detail-size-xs: var(--swc-font-size-50);
+  --swc-double-calendar-popover-minimum-height: 320px;
+  --swc-double-calendar-popover-minimum-width: 616px;
   --swc-drop-zone-background-color: var(--swc-accent-visual-color);
   --swc-drop-zone-background-color-opacity: 0.1;
   --swc-drop-zone-background-color-opacity-filled: 0.3;
@@ -2057,7 +2005,12 @@
   --swc-heading-size-xxxl: var(--swc-font-size-1300);
   --swc-heading-size-xxxxl: var(--swc-font-size-1500);
   --swc-illustrated-message-small-body-font-size: var(--swc-body-size-xs);
+  --swc-illustrated-message-vertical-maximum-width: 352px;
   --swc-in-field-button-fill-stacked-inner-border-rounding: 0px;
+  --swc-in-field-button-width-stacked-extra-large: 44px;
+  --swc-in-field-button-width-stacked-large: 36px;
+  --swc-in-field-button-width-stacked-medium: 28px;
+  --swc-in-field-button-width-stacked-small: 20px;
   --swc-list-view-item-bottom-corner-radius: var(
     --swc-corner-radius-medium-default
   );
@@ -2085,14 +2038,14 @@
     var(--swc-gray-200)
   );
   --swc-menu-item-background-opacity: 0;
-  --swc-number-field-minimum-width-multiplier: 1.25;
+  --swc-menu-item-section-divider-height: 12px;
+  --swc-meter-maximum-width: 768px;
   --swc-opacity-checkerboard-square-dark-light: var(--swc-gray-200);
   --swc-opacity-checkerboard-square-dark-dark: var(--swc-gray-800);
   --swc-opacity-checkerboard-square-light: var(
     --swc-transparent-static-white-1000
   );
   --swc-picker-border-width: var(--swc-border-width-100);
-  --swc-picker-minimum-width-multiplier: 2;
   --swc-popover-border-color: light-dark(
     rgb(255 255 255 / 0%),
     var(--swc-gray-400)
@@ -2103,11 +2056,15 @@
   --swc-popover-padding: var(--swc-spacing-100);
   --swc-popover-tip-height: 8px;
   --swc-popover-tip-width: 16px;
+  --swc-progress-bar-maximum-width: 768px;
   --swc-radio-button-selection-indicator: 4px;
-  --swc-search-field-minimum-width-multiplier: 4;
+  --swc-rating-width-medium: 128px;
+  --swc-rating-width-small: 104px;
   --swc-segmented-control-selection-border-width: var(--swc-border-width-200);
   --swc-segmented-text-field-rounding: 2px;
   --swc-select-box-selected-border-color: var(--swc-gray-800);
+  --swc-single-calendar-popover-minimum-height: 320px;
+  --swc-single-calendar-popover-minimum-width: 320px;
   --swc-slider-track-height-large: 16px;
   --swc-slider-track-height-medium: 4px;
   --swc-stack-item-background-color-down: var(--swc-gray-100);
@@ -2127,6 +2084,7 @@
   --swc-stack-item-selected-background-opacity-emphasized-key-focus: 0.15;
   --swc-stack-item-selected-background-opacity-highlight: 0.1;
   --swc-stack-item-selected-background-opacity-highlight-hover: 0.15;
+  --swc-standard-dialog-minimum-width: 288px;
   --swc-standard-panel-gripper-color: var(--swc-gray-500);
   --swc-standard-panel-gripper-color-drag: var(--swc-gray-800);
   --swc-standard-panel-title-font-size: var(--swc-title-size-s);
@@ -2140,7 +2098,6 @@
     --swc-transparent-static-black-1000
   );
   --swc-swatch-disabled-icon-border-opacity: 0.42;
-  --swc-swatch-rectangle-width-multiplier: 2;
   --swc-swatch-slash-thickness-extra-small: 2px;
   --swc-swatch-slash-thickness-large: 5px;
   --swc-swatch-slash-thickness-medium: 4px;
@@ -2152,6 +2109,12 @@
   --swc-table-item-padding-regular: var(--swc-spacing-200);
   --swc-table-item-padding-spacious: var(--swc-spacing-300);
   --swc-table-row-down-opacity: 0.1;
+  --swc-table-row-height-extra-large-compact: var(
+    --swc-base-height-extra-large
+  );
+  --swc-table-row-height-large-compact: var(--swc-base-height-large);
+  --swc-table-row-height-medium-compact: var(--swc-base-height-medium);
+  --swc-table-row-height-small-compact: var(--swc-base-height-small);
   --swc-table-row-hover-color: var(--swc-gray-900);
   --swc-table-row-hover-opacity: 0.07;
   --swc-table-selected-row-background-color: var(
@@ -2168,11 +2131,17 @@
   --swc-tab-gap-horizontal-large: var(--swc-spacing-500);
   --swc-tab-gap-horizontal-medium: var(--swc-spacing-400);
   --swc-tab-gap-horizontal-small: var(--swc-spacing-350);
-  --swc-text-field-minimum-width-multiplier: 1.5;
+  --swc-tab-item-compact-height-extra-large: var(--swc-base-height-extra-large);
+  --swc-tab-item-compact-height-large: var(--swc-base-height-large);
+  --swc-tab-item-compact-height-medium: var(--swc-base-height-medium);
+  --swc-tab-item-compact-height-small: var(--swc-base-height-small);
+  --swc-tag-maximum-width-multiplier: 7;
   --swc-thumbnail-border-color: var(--swc-gray-800);
   --swc-thumbnail-border-opacity: 0.1;
   --swc-thumbnail-corner-radius: var(--swc-corner-radius-75);
+  --swc-thumbnail-opacity-checkerboard-square-size: 4px;
   --swc-thumbnail-opacity-disabled: var(--swc-opacity-disabled);
+  --swc-time-field-minimum-width: 2.5;
   --swc-title-cjk-emphasized-font-style: var(--swc-default-font-style);
   --swc-title-cjk-emphasized-font-weight: var(--swc-extra-bold-font-weight);
   --swc-title-cjk-font-family: var(--swc-cjk-font-family);
@@ -2233,6 +2202,8 @@
   --swc-tree-view-selected-row-background-hover: var(--swc-gray-100);
   --swc-tree-view-selected-row-background-opacity-emphasized: 0.1;
   --swc-tree-view-selected-row-background-opacity-emphasized-hover: 0.15;
+  --swc-triple-calendar-popover-minimum-height: 320px;
+  --swc-triple-calendar-popover-minimum-width: 912px;
   --swc-animation-duration-0: 0ms;
   --swc-animation-duration-100: 130ms;
   --swc-animation-duration-1000: 500ms;
@@ -2301,6 +2272,62 @@
 
 :root,
 .swc-theme {
+  --swc-bar-thickness-extra-large: var(--swc-theme--sizeM, 10px)
+    var(--swc-theme--sizeL, 13px);
+  --swc-bar-thickness-large: var(--swc-theme--sizeM, 8px)
+    var(--swc-theme--sizeL, 10px);
+  --swc-bar-thickness-medium: var(--swc-theme--sizeM, 6px)
+    var(--swc-theme--sizeL, 8px);
+  --swc-bar-thickness-small: var(--swc-theme--sizeM, 4px)
+    var(--swc-theme--sizeL, 5px);
+  --swc-bar-width-large: var(--swc-theme--sizeM, 192px)
+    var(--swc-theme--sizeL, 240px);
+  --swc-base-visual-size-medium: var(--swc-theme--sizeM, 18px)
+    var(--swc-theme--sizeL, 23px);
+  --swc-control-size-extra-large: var(--swc-theme--sizeM, 20px)
+    var(--swc-theme--sizeL, 25px);
+  --swc-control-size-large: var(--swc-theme--sizeM, 18px)
+    var(--swc-theme--sizeL, 23px);
+  --swc-control-size-medium: var(--swc-theme--sizeM, 16px)
+    var(--swc-theme--sizeL, 20px);
+  --swc-control-size-small: var(--swc-theme--sizeM, 14px)
+    var(--swc-theme--sizeL, 18px);
+  --swc-field-minimum-height-extra-large: var(--swc-theme--sizeM, 64px)
+    var(--swc-theme--sizeL, 80px);
+  --swc-field-minimum-height-large: var(--swc-theme--sizeM, 56px)
+    var(--swc-theme--sizeL, 70px);
+  --swc-field-minimum-height-medium: var(--swc-theme--sizeM, 40px)
+    var(--swc-theme--sizeL, 50px);
+  --swc-field-minimum-width-large: var(--swc-theme--sizeM, 192px)
+    var(--swc-theme--sizeL, 240px);
+  --swc-field-minimum-width-small: var(--swc-theme--sizeM, 120px)
+    var(--swc-theme--sizeL, 150px);
+  --swc-field-width-2x-large: var(--swc-theme--sizeM, 352px)
+    var(--swc-theme--sizeL, 312px);
+  --swc-field-width-extra-large: var(--swc-theme--sizeM, 288px)
+    var(--swc-theme--sizeL, 360px);
+  --swc-field-width-large: var(--swc-theme--sizeM, 240px)
+    var(--swc-theme--sizeL, 300px);
+  --swc-field-width-medium: var(--swc-theme--sizeM, 192px)
+    var(--swc-theme--sizeL, 240px);
+  --swc-field-width-small: var(--swc-theme--sizeM, 144px)
+    var(--swc-theme--sizeL, 180px);
+  --swc-list-item-height-extra-large: var(--swc-theme--sizeM, 56px)
+    var(--swc-theme--sizeL, 70px);
+  --swc-list-item-height-extra-small: var(--swc-theme--sizeM, 24px)
+    var(--swc-theme--sizeL, 30px);
+  --swc-list-item-height-large: var(--swc-theme--sizeM, 48px)
+    var(--swc-theme--sizeL, 60px);
+  --swc-list-item-height-medium: var(--swc-theme--sizeM, 40px)
+    var(--swc-theme--sizeL, 50px);
+  --swc-list-item-height-small: var(--swc-theme--sizeM, 32px)
+    var(--swc-theme--sizeL, 40px);
+  --swc-list-item-minimum-height: var(--swc-theme--sizeM, 40px)
+    var(--swc-theme--sizeL, 50px);
+  --swc-list-item-minimum-width-medium: var(--swc-theme--sizeM, 192px)
+    var(--swc-theme--sizeL, 240px);
+  --swc-list-item-minimum-width-small: var(--swc-theme--sizeM, 144px)
+    var(--swc-theme--sizeL, 180px);
   --swc-ui-icon-2x-large: var(--swc-theme--sizeM, 16px)
     var(--swc-theme--sizeL, 18px);
   --swc-ui-icon-extra-large: var(--swc-theme--sizeM, 14px)
@@ -2313,6 +2340,52 @@
     var(--swc-theme--sizeL, 12px);
   --swc-ui-icon-small: var(--swc-theme--sizeM, 10px)
     var(--swc-theme--sizeL, 12px);
+  --swc-visual-size-100: var(--swc-theme--sizeM, 24px)
+    var(--swc-theme--sizeL, 30px);
+  --swc-visual-size-1000: var(--swc-theme--sizeM, 96px)
+    var(--swc-theme--sizeL, 120px);
+  --swc-visual-size-200: var(--swc-theme--sizeM, 28px)
+    var(--swc-theme--sizeL, 35px);
+  --swc-visual-size-300: var(--swc-theme--sizeM, 32px)
+    var(--swc-theme--sizeL, 40px);
+  --swc-visual-size-400: var(--swc-theme--sizeM, 36px)
+    var(--swc-theme--sizeL, 45px);
+  --swc-visual-size-50: var(--swc-theme--sizeM, 16px)
+    var(--swc-theme--sizeL, 20px);
+  --swc-visual-size-500: var(--swc-theme--sizeM, 40px)
+    var(--swc-theme--sizeL, 50px);
+  --swc-visual-size-600: var(--swc-theme--sizeM, 48px)
+    var(--swc-theme--sizeL, 60px);
+  --swc-visual-size-700: var(--swc-theme--sizeM, 56px)
+    var(--swc-theme--sizeL, 70px);
+  --swc-visual-size-75: var(--swc-theme--sizeM, 20px)
+    var(--swc-theme--sizeL, 25px);
+  --swc-visual-size-800: var(--swc-theme--sizeM, 64px)
+    var(--swc-theme--sizeL, 80px);
+  --swc-visual-size-900: var(--swc-theme--sizeM, 80px)
+    var(--swc-theme--sizeL, 100px);
+  --swc-banner-height: var(--swc-theme--sizeM, 56px)
+    var(--swc-theme--sizeL, 70px);
+  --swc-banner-maximum-width: var(--swc-theme--sizeM, 352px)
+    var(--swc-theme--sizeL, 440px);
+  --swc-banner-minimum-height: var(--swc-theme--sizeM, 56px)
+    var(--swc-theme--sizeL, 70px);
+  --swc-banner-width: var(--swc-theme--sizeM, 896px)
+    var(--swc-theme--sizeL, 680px);
+  --swc-base-height-2x-large: var(--swc-theme--sizeM, 56px)
+    var(--swc-theme--sizeL, 70px);
+  --swc-base-height-3x-large: var(--swc-theme--sizeM, 64px)
+    var(--swc-theme--sizeL, 80px);
+  --swc-base-height-extra-large: var(--swc-theme--sizeM, 48px)
+    var(--swc-theme--sizeL, 60px);
+  --swc-base-height-extra-small: var(--swc-theme--sizeM, 20px)
+    var(--swc-theme--sizeL, 25px);
+  --swc-base-height-large: var(--swc-theme--sizeM, 40px)
+    var(--swc-theme--sizeL, 50px);
+  --swc-base-height-medium: var(--swc-theme--sizeM, 32px)
+    var(--swc-theme--sizeL, 40px);
+  --swc-base-height-small: var(--swc-theme--sizeM, 24px)
+    var(--swc-theme--sizeL, 30px);
   --swc-base-padding-horizontal-2x-large: var(--swc-theme--sizeM, 20px)
     var(--swc-theme--sizeL, 14px);
   --swc-base-padding-horizontal-extra-large: var(--swc-theme--sizeM, 18px)
@@ -2323,6 +2396,22 @@
     var(--swc-theme--sizeL, 10px);
   --swc-base-padding-horizontal-small: var(--swc-theme--sizeM, 10px)
     var(--swc-theme--sizeL, 8px);
+  --swc-container-height: var(--swc-theme--sizeM, 192px)
+    var(--swc-theme--sizeL, 240px);
+  --swc-container-maximum-width-2x-small: var(--swc-theme--sizeM, 144px)
+    var(--swc-theme--sizeL, 180px);
+  --swc-container-maximum-width-large: var(--swc-theme--sizeM, 352px)
+    var(--swc-theme--sizeL, 248px);
+  --swc-container-minimum-height-3x-small: var(--swc-theme--sizeM, 96px)
+    var(--swc-theme--sizeL, 120px);
+  --swc-container-minimum-width-extra-large: var(--swc-theme--sizeM, 288px)
+    var(--swc-theme--sizeL, 216px);
+  --swc-container-minimum-width-medium: var(--swc-theme--sizeM, 192px)
+    var(--swc-theme--sizeL, 240px);
+  --swc-container-width-2x-large: var(--swc-theme--sizeM, 352px)
+    var(--swc-theme--sizeL, 440px);
+  --swc-list-width: var(--swc-theme--sizeM, 192px)
+    var(--swc-theme--sizeL, 240px);
   --swc-workflow-icon-2x-large: var(--swc-theme--sizeM, 24px)
     var(--swc-theme--sizeL, 32px);
   --swc-workflow-icon-2x-small: var(--swc-theme--sizeM, 12px)
@@ -2421,15 +2510,13 @@
       var(--swc-title-size-xxl)
     )
     var(--swc-theme--sizeL, var(--swc-title-size-xl));
+  --swc-breadcrumbs-height-multiline: var(--swc-theme--sizeM, 72px)
+    var(--swc-theme--sizeL, 90px);
   --swc-coach-mark-body-font-size: var(
       --swc-theme--sizeM,
       var(--swc-body-size-m)
     )
     var(--swc-theme--sizeL, var(--swc-body-size-s));
-  --swc-coach-mark-media-height: var(--swc-theme--sizeM, 222px)
-    var(--swc-theme--sizeL, 162px);
-  --swc-coach-mark-media-minimum-height: var(--swc-theme--sizeM, 166px)
-    var(--swc-theme--sizeL, 121px);
   --swc-coach-mark-pagination-body-font-size: var(
       --swc-theme--sizeM,
       var(--swc-body-size-s)
@@ -2440,6 +2527,26 @@
       var(--swc-title-size-m)
     )
     var(--swc-theme--sizeL, var(--swc-title-size-s));
+  --swc-color-area-height: var(--swc-theme--sizeM, 192px)
+    var(--swc-theme--sizeL, 240px);
+  --swc-color-area-minimum-height: var(--swc-theme--sizeM, 64px)
+    var(--swc-theme--sizeL, 80px);
+  --swc-color-area-minimum-width: var(--swc-theme--sizeM, 64px)
+    var(--swc-theme--sizeL, 80px);
+  --swc-color-area-width: var(--swc-theme--sizeM, 192px)
+    var(--swc-theme--sizeL, 240px);
+  --swc-color-control-track-width: var(--swc-theme--sizeM, 24px)
+    var(--swc-theme--sizeL, 30px);
+  --swc-color-handle-size: var(--swc-theme--sizeM, 16px)
+    var(--swc-theme--sizeL, 20px);
+  --swc-color-handle-size-key-focus: var(--swc-theme--sizeM, 32px)
+    var(--swc-theme--sizeL, 40px);
+  --swc-color-slider-minimum-length: var(--swc-theme--sizeM, 80px)
+    var(--swc-theme--sizeL, 100px);
+  --swc-color-wheel-minimum-width: var(--swc-theme--sizeM, 144px)
+    var(--swc-theme--sizeL, 180px);
+  --swc-color-wheel-width: var(--swc-theme--sizeM, 192px)
+    var(--swc-theme--sizeL, 240px);
   --swc-contextual-help-body-font-size: var(
       --swc-theme--sizeM,
       var(--swc-body-size-s)
@@ -2490,26 +2597,6 @@
       var(--swc-title-size-m)
     )
     var(--swc-theme--sizeL, var(--swc-title-size-s));
-  --swc-number-field-with-stepper-minimum-width-extra-large: var(
-      --swc-theme--sizeM,
-      168px
-    )
-    var(--swc-theme--sizeL, 198px);
-  --swc-number-field-with-stepper-minimum-width-large: var(
-      --swc-theme--sizeM,
-      144px
-    )
-    var(--swc-theme--sizeL, 174px);
-  --swc-number-field-with-stepper-minimum-width-medium: var(
-      --swc-theme--sizeM,
-      120px
-    )
-    var(--swc-theme--sizeL, 150px);
-  --swc-number-field-with-stepper-minimum-width-small: var(
-      --swc-theme--sizeM,
-      104px
-    )
-    var(--swc-theme--sizeL, 126px);
   --swc-opacity-checkerboard-square-size-medium: var(--swc-theme--sizeM, 8px)
     var(--swc-theme--sizeL, 10px);
   --swc-opacity-checkerboard-square-size-small: var(--swc-theme--sizeM, 4px)
@@ -2520,6 +2607,8 @@
     var(--swc-theme--sizeL, 4px);
   --swc-progress-circle-thickness-small: var(--swc-theme--sizeM, 2px)
     var(--swc-theme--sizeL, 3px);
+  --swc-stack-item-header-minimum-width: var(--swc-theme--sizeM, 200px)
+    var(--swc-theme--sizeL, 240px);
   --swc-stack-item-minimum-padding-vertical: var(--swc-theme--sizeM, 8px)
     var(--swc-theme--sizeL, 10px);
   --swc-standard-dialog-body-font-size: var(
@@ -2532,6 +2621,14 @@
       var(--swc-title-size-xxl)
     )
     var(--swc-theme--sizeL, var(--swc-title-size-xl));
+  --swc-switch-control-width-extra-large: var(--swc-theme--sizeM, 34px)
+    var(--swc-theme--sizeL, 46px);
+  --swc-switch-control-width-large: var(--swc-theme--sizeM, 30px)
+    var(--swc-theme--sizeL, 38px);
+  --swc-switch-control-width-medium: var(--swc-theme--sizeM, 26px)
+    var(--swc-theme--sizeL, 34px);
+  --swc-switch-control-width-small: var(--swc-theme--sizeM, 22px)
+    var(--swc-theme--sizeL, 30px);
   --swc-switch-handle-selected-size-extra-large: var(--swc-theme--sizeM, 14px)
     var(--swc-theme--sizeL, 20px);
   --swc-switch-handle-selected-size-large: var(--swc-theme--sizeM, 12px)
@@ -2548,9 +2645,27 @@
     var(--swc-theme--sizeL, 12px);
   --swc-switch-handle-size-small: var(--swc-theme--sizeM, 6px)
     var(--swc-theme--sizeL, 10px);
+  --swc-table-row-height-extra-large-spacious: var(--swc-theme--sizeM, 64px)
+    var(--swc-theme--sizeL, 80px);
+  --swc-table-row-height-large-spacious: var(--swc-theme--sizeM, 56px)
+    var(--swc-theme--sizeL, 70px);
+  --swc-table-row-height-medium-spacious: var(--swc-theme--sizeM, 48px)
+    var(--swc-theme--sizeL, 60px);
+  --swc-table-row-height-small-spacious: var(--swc-theme--sizeM, 40px)
+    var(--swc-theme--sizeL, 50px);
+  --swc-tag-minimum-width-large: var(--swc-theme--sizeM, 33px)
+    var(--swc-theme--sizeL, 42px);
+  --swc-tag-minimum-width-medium: var(--swc-theme--sizeM, 27px)
+    var(--swc-theme--sizeL, 34px);
+  --swc-tag-minimum-width-small: var(--swc-theme--sizeM, 21px)
+    var(--swc-theme--sizeL, 25px);
   --swc-tooltip-tip-height: var(--swc-theme--sizeM, 4px)
-    var(--swc-theme--sizeL, 4px);
+    var(--swc-theme--sizeL, 5px);
   --swc-tooltip-tip-width: var(--swc-theme--sizeM, 8px)
-    var(--swc-theme--sizeL, 8px);
+    var(--swc-theme--sizeL, 10px);
+  --swc-tree-view-disclosure-indicator-height: var(--swc-theme--sizeM, 32px)
+    var(--swc-theme--sizeL, 40px);
+  --swc-tree-view-disclosure-indicator-width: var(--swc-theme--sizeM, 34px)
+    var(--swc-theme--sizeL, 42px);
   --swc-font-size: var(--swc-theme--sizeM, 14px) var(--swc-theme--sizeL, 17px);
 }

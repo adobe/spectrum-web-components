@@ -252,7 +252,7 @@ export const LabelOverflowTest: Story = {
       () => {
         container.style.inlineSize = '320px';
         expect(topField.getBoundingClientRect().width).toBeCloseTo(320, 1);
-        expect(control.getBoundingClientRect().width).toBeCloseTo(208, 1);
+        expect(control.getBoundingClientRect().width).toBeCloseTo(192, 1);
       }
     );
 
@@ -290,7 +290,7 @@ export const SizesTest: Story = {
           return control ? getComputedStyle(control).maxInlineSize : null;
         }),
         'each size uses its default control width'
-      ).toEqual(['192px', '208px', '224px', '240px']);
+      ).toEqual(['144px', '192px', '240px', '288px']);
     });
 
     await step('consumers can override form-field size properties', () => {

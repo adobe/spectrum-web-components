@@ -182,10 +182,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@adobe/spectrum-tokens@npm:0.0.0-size-token-taxonomy-20261029173424":
-  version: 0.0.0-size-token-taxonomy-20261029173424
-  resolution: "@adobe/spectrum-tokens@npm:0.0.0-size-token-taxonomy-20261029173424"
-  checksum: 10c0/d7179c2fcf71648372162556cbb60445b5e7d05fb24330e21e363b36dc71d73b3fc62bf94e44e2574fe4c0f872839614d8249c0677f313052cb17f065c185d12
+"@adobe/spectrum-tokens@npm:15.8.0":
+  version: 15.8.0
+  resolution: "@adobe/spectrum-tokens@npm:15.8.0"
+  checksum: 10c0/0f9d5410e454627d601beb62f08624b204645035076b68716fcd454c28de973c3b837beccbf28217601f7ed3105e55089b6ca1ce8962ed970311af66c8600ae2
   languageName: node
   linkType: hard
 
@@ -289,7 +289,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@adobe/swc-tokens@workspace:gen2/packages/tools/swc-tokens"
   dependencies:
-    "@adobe/spectrum-tokens": "npm:0.0.0-size-token-taxonomy-20261029173424"
+    "@adobe/spectrum-tokens": "npm:15.8.0"
     prettier: "npm:3.8.1"
     vitest: "npm:4.1.7"
     yargs: "npm:18.0.0"

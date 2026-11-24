@@ -21,7 +21,7 @@
 
 .swc-Thumbnail {
   --_swc-thumbnail-size: var(--swc-thumbnail-size, token("visual-size-500"));
-  --_swc-opacity-checkerboard-square-size: token("opacity-checkerboard-square-size-small");
+  --_swc-opacity-checkerboard-square-size: token("thumbnail-opacity-checkerboard-square-size");
 
   display: flex;
   position: relative;

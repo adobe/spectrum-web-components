@@ -22,7 +22,7 @@
 
   display: block;
   position: absolute;
-  inset-block-end: calc((token("size-300") - token("color-handle-outer-border-width")) + token("color-loupe-bottom-to-color-handle"));
+  inset-block-end: calc((token("color-handle-size") - token("color-handle-outer-border-width")) + token("color-loupe-bottom-to-color-handle"));
   inset-inline-end: calc(50% - (var(--_swc-color-loupe-width) / 2));
   inline-size: var(--_swc-color-loupe-width);
   block-size: token("size-800");

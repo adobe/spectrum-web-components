@@ -22,6 +22,7 @@
   display: inline-block;
   inline-size: 100%;
   min-inline-size: token("bar-minimum-width-extra-large");
+  max-inline-size: token("progress-bar-maximum-width");
   vertical-align: top;
 }
 
