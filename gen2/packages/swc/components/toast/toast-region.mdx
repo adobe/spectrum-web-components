@@ -113,6 +113,12 @@ To localize the control labels, set `show-all-label`, `collapse-label`, and `cle
 
 <Canvas of={ToastRegionStories.ExpandedView} />
 
+### Motion
+
+Toasts move between their places in the stack and the expanded list. The Clear all and Collapse controls come out of the front toast when the view opens, and go back into it when it closes. A new toast slides in from the edge the region is anchored to. When the front toast closes, it slides out while the next one grows out of the stack. Clear all fades every toast out in place. Hovering the stack with a pointer lets the layers behind the front toast peek out further.
+
+When the user prefers reduced motion, nothing moves: toasts, the layers, and the expanded list fade in place.
+
 ### Restoring toasts
 
 The queue lives in memory, so it is empty after a page load. If your app reloads, navigates to another page, or signs a user in, rebuild the toasts you still want to show.
@@ -188,9 +194,5 @@ Each `<swc-toast>` has `role="alertdialog"`, `aria-modal="false"`, and `tabindex
 - Provide a descriptive `actionLabel` for the action button.
 
 <Canvas of={ToastRegionStories.Accessibility} />
-
-## Upcoming features
-
-- Motion between stack positions and for opening and closing the expanded view.
 
 <DocsFooter />

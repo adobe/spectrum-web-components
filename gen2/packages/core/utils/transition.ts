@@ -53,6 +53,9 @@ export function maxTransitionDurationMs(element: Element): number {
   return Math.max(0, ...transitionDurationsMs(element));
 }
 
+// How often the fallback timer checks again while the transition is still running.
+const RECHECK_MS = 100;
+
 /** Whether a CSS transition is running on the element itself. */
 function hasRunningTransition(element: Element): boolean {
   return element
@@ -74,7 +77,9 @@ function hasRunningTransition(element: Element): boolean {
  * When `fallback` is `true` (the default) a timer (the longest declared duration
  * plus a small buffer) also settles the callback, covering browsers that skip
  * both transition events for `transition-behavior: allow-discrete` properties
- * (e.g. Firefox). Pass `fallback: false` when no completion-gated work depends on
+ * (e.g. Firefox). While a transition on the element is still running, the timer
+ * checks again instead, so a transition that plays slower than its declared
+ * duration still runs to the end. Pass `fallback: false` when no completion-gated work depends on
  * the callback (e.g. an open transition, where a delayed `transitionend` should
  * not be pre-empted by the timer). The listeners and the timer are mutually
  * cancelling, so the callback runs exactly once.
@@ -106,6 +111,12 @@ export function runAfterTransition(
     if (event?.type === 'transitioncancel' && hasRunningTransition(element)) {
       return;
     }
+    // The timer measures wall-clock time, but a transition can play slower (a slowed-down
+    // inspection, or a busy device), so it waits while the transition is still running.
+    if (!event && hasRunningTransition(element)) {
+      timer = setTimeout(settle, RECHECK_MS);
+      return;
+    }
     cancel();
     callback();
   };
@@ -117,7 +128,7 @@ export function runAfterTransition(
     element.removeEventListener('transitioncancel', settle as EventListener);
   };
 
-  const timer = fallback
+  let timer = fallback
     ? setTimeout(settle, maxTransitionDurationMs(element) + 100)
     : undefined;
   element.addEventListener('transitionend', settle as EventListener);
