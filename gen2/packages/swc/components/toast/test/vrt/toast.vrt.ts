@@ -30,7 +30,7 @@ import {
   vrtParameters,
 } from '../../../../.storybook/helpers/index.js';
 
-// Show all and the expanded view are covered in toast-region.vrt.ts, where the container sets them up.
+// Show all and the expanded view are covered in toast-region.vrt.ts, where the region sets them up.
 
 // Metadata
 

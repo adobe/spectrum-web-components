@@ -38,7 +38,7 @@ import styles from './toast.css';
  *
  * @slot - Toast message text.
  *
- * @cssprop --swc-toast-focus-indicator-color - Color of the focus indicator. The container sets it to white in the expanded view, for contrast against the scrim.
+ * @cssprop --swc-toast-focus-indicator-color - Color of the focus indicator. The region sets it to white in the expanded view, for contrast against the scrim.
  *
  * @fires swc-open - Dispatched when the toast begins to open.
  * @fires swc-after-open - Dispatched after the toast finishes opening.

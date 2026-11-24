@@ -69,13 +69,13 @@ export class ToastRegion extends ToastRegionBase {
   //     RENDERING & STYLING
   // ──────────────────────────────
 
-  // The toast elements to render, by queue key, in queue order.
-  private _toasts = new Map<string, Toast>();
-  private _shownKey?: string;
-
   public static override get styles(): CSSResultArray {
     return [styles];
   }
+
+  // The toast elements to render, by queue key, in queue order.
+  private _toasts = new Map<string, Toast>();
+  private _shownKey?: string;
 
   protected override willUpdate(changes: PropertyValues): void {
     super.willUpdate(changes);

@@ -9,13 +9,15 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { html } from 'lit';
+import { html, render } from 'lit';
 import { expect, fn, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getComponent, withWarningSpy } from '@swc-test-helpers/dom';
 import { vi } from 'vitest';
 import { userEvent } from 'vitest/browser';
 
+import type { Popover } from '@adobe/spectrum-wc/popover';
+import type { Tooltip } from '@adobe/spectrum-wc/tooltip';
 import {
   ToastQueue,
   type ToastQueueItem,
@@ -33,6 +35,10 @@ import '@adobe/spectrum-wc/components/popover/swc-popover.js';
 import '@adobe/spectrum-wc/components/tooltip/swc-tooltip.js';
 
 import { ToastQueue as RenderingToastQueue } from '../index.js';
+import regionStoriesMeta, {
+  Playground,
+  Variants,
+} from '../stories/toast-region.stories.js';
 import type { Toast } from '../Toast.js';
 import type { ToastRegion } from '../ToastRegion.js';
 
@@ -179,7 +185,7 @@ export const RenderingAndClosureTest: Story = {
         }
       );
 
-      await step('the container creates the default-slot naming target', () => {
+      await step('the region creates the default-slot naming target', () => {
         const message = toast.firstElementChild;
         expect(message?.id, 'message id').toBeTruthy();
         expect(
@@ -802,7 +808,7 @@ export const FocusAndWarningsTest: Story = {
       );
 
       await step(
-        'connecting a second container produces a dev warning',
+        'connecting a second region produces a dev warning',
         async () => {
           await withWarningSpy(async (warnings) => {
             const second = document.createElement('swc-toast-region');
@@ -813,7 +819,7 @@ export const FocusAndWarningsTest: Story = {
                 warnings.some((warning) =>
                   String(warning[1]).includes('Only one')
                 ),
-                'second container warning'
+                'second region warning'
               ).toBe(true);
             } finally {
               second.remove();
@@ -1162,9 +1168,9 @@ export const RestoreToastsTest: Story = {
       );
 
       await step(
-        'addAll with the saved list, before the container connects, restores the same stack',
+        'addAll with the saved list, before the region connects, restores the same stack',
         async () => {
-          // A reload: the old page's queue is gone, and the container connects after the app restores.
+          // A reload: the old page's queue is gone, and the region connects after the app restores.
           container.remove();
           ToastQueue.clear();
           expect(ToastQueue.entries, 'queue after the reload').toHaveLength(0);
@@ -1194,7 +1200,7 @@ export const RestoreToastsTest: Story = {
   },
 };
 
-// Restoring while the container is live, for example after a sign-in that happens without a reload.
+// Restoring while the region is live, for example after a sign-in that happens without a reload.
 export const AddAllWhileConnectedTest: Story = {
   play: async ({ canvasElement, step }) => {
     ToastQueue.clear();
@@ -1714,6 +1720,92 @@ const addQueue = async (
     ToastQueue.add(message);
   }
   return getFront(container);
+};
+
+type RegionStoryArgs = Parameters<
+  NonNullable<typeof regionStoriesMeta.render>
+>[0];
+
+export const StoryLabelControlsTest: Story<RegionStoryArgs> = {
+  args: {
+    ...regionStoriesMeta.args,
+    placement: 'bottom-end',
+    message: 'Controlled toast',
+    actionLabel: 'Revert',
+    onAction: fn(),
+  },
+  render: () => html`
+    <div></div>
+  `,
+  play: async (context) => {
+    const { args, canvasElement, step } = context;
+    const renderers = [
+      {
+        name: 'Default',
+        renderStory: regionStoriesMeta.render,
+        add: 'Add toast',
+      },
+      {
+        name: 'Playground',
+        renderStory: Playground.render,
+        add: 'Show custom toast',
+      },
+      { name: 'Variants', renderStory: Variants.render, add: 'Positive' },
+    ];
+    try {
+      for (const { name, renderStory, add } of renderers) {
+        if (!renderStory) {
+          throw new Error(`${name} must have a renderer`);
+        }
+        for (const label of ['Custom', '', 'Updated', undefined]) {
+          await step(`${name}: ${label || 'default'} labels`, async () => {
+            const storyArgs = {
+              ...args,
+              'show-all-label': label && `${label} show`,
+              'collapse-label': label && `${label} collapse`,
+              'clear-all-label': label && `${label} clear`,
+            };
+            render(
+              renderStory(storyArgs, { ...context, args: storyArgs }),
+              canvasElement
+            );
+            const region = await getComponent<ToastRegion>(
+              canvasElement,
+              'swc-toast-region'
+            );
+            expect(region.placement, 'placement control').toBe('bottom-end');
+            const addButton = [
+              ...canvasElement.querySelectorAll<HTMLElement>('swc-button'),
+            ].find((button) => button.textContent?.trim() === add)!;
+            await userEvent.click(addButton);
+            await userEvent.click(addButton);
+            const front = await getFront(region);
+            expect(front.actionLabel, 'queue action control').toBe('Revert');
+            await waitFor(() =>
+              expect(
+                showAllOf(front)?.textContent?.trim(),
+                'Show all label'
+              ).toBe(label ? `${label} show` : 'Show all')
+            );
+            showAllOf(front)!.click();
+            await waitForExpanded(region, true);
+            const collapse = label ? `${label} collapse` : 'Collapse';
+            const clear = label ? `${label} clear` : 'Clear all';
+            expect(controlOf(region, clear), 'Clear all label').toBeDefined();
+            controlOf(region, collapse).click();
+            await waitForExpanded(region, false);
+            showAllOf(await getFront(region))!.click();
+            await waitForExpanded(region, true);
+            controlOf(region, clear).click();
+            await waitForExpanded(region, false);
+            expect(ToastQueue.entries, 'queue cleared').toHaveLength(0);
+          });
+        }
+      }
+    } finally {
+      ToastQueue.clear();
+    }
+  },
 };
 
 const peekPosition = async (
@@ -2264,11 +2356,7 @@ export const ExpandedOverPopoverTest: Story = {
       canvasElement,
       'swc-toast-region'
     );
-    const popover = canvasElement.querySelector(
-      'swc-popover'
-    ) as HTMLElement & {
-      open: boolean;
-    };
+    const popover = await getComponent<Popover>(canvasElement, 'swc-popover');
     try {
       const front = await addQueue(container, ['A', 'B']);
       await userEvent.click(
@@ -2314,11 +2402,7 @@ export const ExpandedOverTooltipTest: Story = {
       canvasElement,
       'swc-toast-region'
     );
-    const tooltip = canvasElement.querySelector(
-      'swc-tooltip'
-    ) as HTMLElement & {
-      open: boolean;
-    };
+    const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
     try {
       const front = await addQueue(container, ['A', 'B']);
       tooltip.open = true;

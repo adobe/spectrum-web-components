@@ -33,7 +33,7 @@ import {
   type ToastRegionPlacement,
 } from './ToastRegion.types.js';
 
-const connectedContainers = new Set<ToastRegionBase>();
+const connectedRegions = new Set<ToastRegionBase>();
 const docsUrl =
   'https://spectrum-web-components.adobe.com/?path=/docs/components-toast-region--docs';
 
@@ -76,30 +76,33 @@ export abstract class ToastRegionBase extends SpectrumElement {
 
   /**
    * The label for the Show all control on the front toast. Set it to localize the label.
+   * Removing the attribute restores the default label.
    *
    * @todo Localize the default via LanguageResolutionController once a runtime
    * i18n system for static strings is available.
    */
-  @property({ type: String, attribute: 'show-all-label' })
+  @property({ type: String, attribute: 'show-all-label', useDefault: true })
   public showAllLabel = 'Show all';
 
   /**
    * The label for the control that collapses the expanded view. Set it to localize the label.
+   * Removing the attribute restores the default label.
    *
    * @todo Localize the default via LanguageResolutionController once a runtime
    * i18n system for static strings is available.
    */
-  @property({ type: String, attribute: 'collapse-label' })
+  @property({ type: String, attribute: 'collapse-label', useDefault: true })
   public collapseLabel = 'Collapse';
 
   /**
    * The label for the control that clears every notification in the expanded
    * view. Set it to localize the label.
+   * Removing the attribute restores the default label.
    *
    * @todo Localize the default via LanguageResolutionController once a runtime
    * i18n system for static strings is available.
    */
-  @property({ type: String, attribute: 'clear-all-label' })
+  @property({ type: String, attribute: 'clear-all-label', useDefault: true })
   public clearAllLabel = 'Clear all';
 
   // ──────────────────────
@@ -144,13 +147,13 @@ export abstract class ToastRegionBase extends SpectrumElement {
     super.connectedCallback();
     warnIf(
       this,
-      [...connectedContainers].some(
-        (container) => container.ownerDocument === this.ownerDocument
+      [...connectedRegions].some(
+        (region) => region.ownerDocument === this.ownerDocument
       ),
       'Only one swc-toast-region should be connected per app view.',
       docsUrl
     );
-    connectedContainers.add(this);
+    connectedRegions.add(this);
     this.ownerDocument.addEventListener('keydown', this.handleLandmarkKeydown, {
       capture: true,
     });
@@ -171,12 +174,12 @@ export abstract class ToastRegionBase extends SpectrumElement {
     this._registrations.clear();
     unregisterDismissible(this);
     this.expanded = false;
-    connectedContainers.delete(this);
+    connectedRegions.delete(this);
     super.disconnectedCallback();
   }
 
-  // A disconnected container must not render: it would register its own toasts for the shared
-  // queue's entries, taking over their close lifecycle from the container that shows them.
+  // A disconnected region must not render: it would register its own toasts for the shared
+  // queue's entries, taking over their close lifecycle from the region that shows them.
   // Connecting again requests an update (`handleQueueChange()`).
   protected override shouldUpdate(changedProperties: PropertyValues): boolean {
     return this.isConnected && super.shouldUpdate(changedProperties);
@@ -434,9 +437,7 @@ export abstract class ToastRegionBase extends SpectrumElement {
     const key = this.frontEntry?.key;
     // The expanded view collapses on its own when the queue empties, with no focus redirect.
     if (!key && this.expanded) {
-      this.teardownExpanded();
-      this._focusRegionOnCollapse = false;
-      this.expanded = false;
+      this.collapse(false);
     }
     // An add always lands at the front, so every add changes the front key. Only removing a non-front entry skips this block.
     if (key !== this._frontKey) {

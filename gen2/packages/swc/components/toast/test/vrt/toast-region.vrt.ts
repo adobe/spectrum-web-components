@@ -63,7 +63,7 @@ type StackSpec = {
 
 const defaultVariants: ToastVariant[] = ['info', 'positive', 'negative'];
 
-// The container is a single fixed region and every container shares one
+// The toast region is fixed and every region shares one
 // queue, so each snapshot is its own story.
 const stackStory = ({
   placement = 'bottom',
@@ -80,7 +80,7 @@ const stackStory = ({
     const container = html`
       <swc-toast-region placement=${placement}></swc-toast-region>
     `;
-    // The spacer stretches the themed background to the viewport, where the container is fixed.
+    // The spacer stretches the themed background to the viewport, where the region is fixed.
     return mode
       ? theme(
           html`

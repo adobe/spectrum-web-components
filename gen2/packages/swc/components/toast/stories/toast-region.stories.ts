@@ -38,16 +38,25 @@ import { uniqueId } from '../../../utils/id.js';
 type ToastRegionArgs = ToastQueueOptions & {
   message: string;
   placement: ToastRegionPlacement;
+  'show-all-label'?: string;
+  'collapse-label'?: string;
+  'clear-all-label'?: string;
 };
 
 type ToastPlaygroundArgs = ToastRegionArgs & { open?: boolean };
 
 // Spreading the helper's argTypes also hides the private and protected members
 // that Storybook would otherwise list as controls.
-const { argTypes: containerArgTypes } = getStorybookHelpers('swc-toast-region');
+const { argTypes: regionArgTypes } = getStorybookHelpers('swc-toast-region');
 const { argTypes: toastArgTypes } = getStorybookHelpers('swc-toast');
 
 const hiddenControl = { table: { disable: true }, control: false } as const;
+
+const hiddenRegionLabelControls = {
+  'show-all-label': hiddenControl,
+  'collapse-label': hiddenControl,
+  'clear-all-label': hiddenControl,
+};
 
 // A function can't be edited in a control, and the MDX documents it.
 const functionPropertyArgTypes = { getRegionLabel: hiddenControl };
@@ -59,8 +68,9 @@ const queueOptions = {
 
 /**
  * The toast region shows temporary notifications from a shared queue. Add
- * toasts with `ToastQueue.add()`; the container renders one toast at a time and
- * owns placement, auto-dismiss timing, and focus return.
+ * toasts with `ToastQueue.add()`; the region renders the front toast while
+ * collapsed or every toast in a modal list while expanded. It owns placement,
+ * auto-dismiss timing, and focus return.
  */
 const meta: Meta<ToastRegionArgs> = {
   title: 'Toast region',
@@ -77,10 +87,10 @@ const meta: Meta<ToastRegionArgs> = {
     onAction: fn(),
   },
   argTypes: {
-    ...containerArgTypes,
+    ...regionArgTypes,
     ...functionPropertyArgTypes,
     placement: {
-      ...containerArgTypes?.placement,
+      ...regionArgTypes?.placement,
       control: 'select',
       options: TOAST_REGION_PLACEMENTS,
     },
@@ -129,7 +139,7 @@ const meta: Meta<ToastRegionArgs> = {
     flexLayout: 'row-wrap',
     docs: {
       subtitle:
-        'Fixed region that shows queued toast notifications, one at a time.',
+        'Queued notifications in a collapsed stack or an expanded modal list.',
       // position: fixed needs its own viewport, so render docs canvases in iframes.
       story: { inline: false, height: '260px' },
     },
@@ -149,7 +159,7 @@ const meta: Meta<ToastRegionArgs> = {
     return html`
       <swc-button variant="secondary" @click=${addOne}>Add toast</swc-button>
       <swc-button variant="secondary" @click=${clear}>Clear</swc-button>
-      <swc-toast-region .placement=${args.placement}></swc-toast-region>
+      ${renderRegion(args)}
     `;
   },
 };
@@ -159,6 +169,15 @@ export default meta;
 // ───────────────
 //    HELPERS
 // ───────────────
+
+const renderRegion = (args: ToastRegionArgs) => html`
+  <swc-toast-region
+    .placement=${args.placement}
+    show-all-label=${ifDefined(args['show-all-label'] || undefined)}
+    collapse-label=${ifDefined(args['collapse-label'] || undefined)}
+    clear-all-label=${ifDefined(args['clear-all-label'] || undefined)}
+  ></swc-toast-region>
+`;
 
 const variantLabels = {
   neutral: 'Neutral',
@@ -215,7 +234,7 @@ type StaticToastOptions = {
   open?: boolean;
 };
 
-// Static toast for side-by-side docs; the container shows one toast at a time.
+// Static toast for side-by-side docs without the region's fixed positioning.
 const staticToast = ({
   message,
   variant,
@@ -305,7 +324,7 @@ export const Playground: Story<ToastRegionArgs> = {
         Show custom toast
       </swc-button>
       <swc-button variant="secondary" @click=${clear}>Clear</swc-button>
-      <swc-toast-region .placement=${args.placement}></swc-toast-region>
+      ${renderRegion(args)}
     `;
   },
 };
@@ -354,7 +373,7 @@ export const Variants: Story<ToastRegionArgs> = {
           </swc-button>
         `
       )}
-      <swc-toast-region .placement=${args.placement}></swc-toast-region>
+      ${renderRegion(args)}
     `;
   },
   tags: ['options'],
@@ -425,6 +444,7 @@ export const Accessibility: Story<ToastRegionArgs> = {
 export const ToastPlayground: Story<ToastPlaygroundArgs> = {
   args: { open: true, variant: 'neutral' },
   argTypes: {
+    ...hiddenRegionLabelControls,
     // Reuse the manifest entries so names, descriptions, and the
     // attributes/slots categories match swc-toast's own API.
     open: { ...toastArgTypes?.open },
@@ -468,6 +488,7 @@ export const ToastAnatomy: Story<ToastPlaygroundArgs> = {
 };
 
 export const ToastVariants: Story<ToastRegionArgs> = {
+  argTypes: hiddenRegionLabelControls,
   render: () => html`
     ${TOAST_VARIANTS.map((variant) =>
       staticToast({ message: variantMessages[variant], variant })
@@ -478,6 +499,7 @@ export const ToastVariants: Story<ToastRegionArgs> = {
 };
 
 export const ToastAction: Story<ToastRegionArgs> = {
+  argTypes: hiddenRegionLabelControls,
   render: () => html`
     ${staticToast({
       message: 'Your changes have been saved.',
@@ -495,6 +517,7 @@ export const ToastAction: Story<ToastRegionArgs> = {
 };
 
 export const ToastTextWrapping: Story<ToastRegionArgs> = {
+  argTypes: hiddenRegionLabelControls,
   render: () => html`
     ${staticToast({
       message:
@@ -530,6 +553,7 @@ export const ToastTextWrapping: Story<ToastRegionArgs> = {
 // lives here. `!dev` keeps it out of the sidebar and `!test` out of the
 // automatic runs; it stays addressable by story id.
 export const ProgrammaticCloseFixture: Story<ToastRegionArgs> = {
+  argTypes: hiddenRegionLabelControls,
   render: () => {
     const add = (): void => {
       ToastQueue.add('File saved', { timeout: 6000 });

@@ -135,16 +135,19 @@
 
 :host([variant="info"]) .swc-Toast {
   --_swc-toast-background-color: token("informative-background-color-default");
-  --_swc-toast-show-all-offset: calc(token("workflow-icon-medium") + token("group-gap-medium") - token("base-padding-horizontal-medium"));
 }
 
 :host([variant="positive"]) .swc-Toast {
   --_swc-toast-background-color: token("positive-background-color-default");
-  --_swc-toast-show-all-offset: calc(token("workflow-icon-medium") + token("group-gap-medium") - token("base-padding-horizontal-medium"));
 }
 
 :host([variant="negative"]) .swc-Toast {
   --_swc-toast-background-color: token("negative-background-color-default");
+}
+
+:host([variant="info"]) .swc-Toast,
+:host([variant="positive"]) .swc-Toast,
+:host([variant="negative"]) .swc-Toast {
   --_swc-toast-show-all-offset: calc(token("workflow-icon-medium") + token("group-gap-medium") - token("base-padding-horizontal-medium"));
 }
 

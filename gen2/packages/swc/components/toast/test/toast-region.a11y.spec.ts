@@ -12,7 +12,7 @@
 import { expect, type Page, test } from '@playwright/test';
 import { gotoStory } from '@swc-test-helpers/playwright';
 
-test('the container exposes a counted region with a single named toast', async ({
+test('the toast region exposes a counted region with a single named toast', async ({
   page,
 }) => {
   await gotoStory(page, 'components-toast-region--overview', 'swc-button');
