@@ -104,6 +104,12 @@ export const FocusRetainedTest: Story = {
     await step(
       'mouse-focus-style interaction: button receives focus',
       async () => {
+        // Activate the iframe before programmatic button focus.
+        window.focus();
+        expect(
+          document.hasFocus(),
+          'story document has focus before button focus'
+        ).toBe(true);
         // Dispatch pointerdown before focus to mirror the sequence a real
         // mouse click produces (pointer-click focus, not keyboard focus).
         internalButton.dispatchEvent(
