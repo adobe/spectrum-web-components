@@ -27,19 +27,6 @@ export default {
 export const IsFocusVisibleInTreeTest: Story = {
   play: async ({ canvasElement, step }) => {
     const button = canvasElement.querySelector('#probe') as HTMLButtonElement;
-    const getFocusState = () => {
-      const activeElement = getActiveElement(document);
-      return {
-        activeElement: activeElement
-          ? { tagName: activeElement.localName, id: activeElement.id }
-          : null,
-        documentHasFocus: document.hasFocus(),
-        visibilityState: document.visibilityState,
-        buttonConnected: button.isConnected,
-        buttonFocused: button.matches(':focus'),
-        buttonFocusVisible: button.matches(':focus-visible'),
-      };
-    };
 
     await step('returns false when nothing is focused', () => {
       (getActiveElement() as HTMLElement | null)?.blur();
@@ -49,34 +36,17 @@ export const IsFocusVisibleInTreeTest: Story = {
     await step(
       'returns true when the active element is :focus-visible (keyboard focus)',
       async () => {
-        // Activate the iframe before simulated Tab so Firefox does not
-        // activate it during the button's focus transition.
+        // Activate the iframe before simulated Tab navigation.
         window.focus();
         expect(
           document.hasFocus(),
           'story document has focus before Tab navigation'
         ).toBe(true);
-        const beforeTab = getFocusState();
         await userEvent.tab();
 
-        const afterTab = getFocusState();
-        const focusEstablished =
-          getActiveElement(document) === button &&
-          button.matches(':focus-visible');
-        const buttonStyle = focusEstablished ? null : getComputedStyle(button);
-        const diagnostics = focusEstablished
-          ? undefined
-          : `Focus state around simulated Tab: ${JSON.stringify({
-              beforeTab,
-              afterTab,
-              buttonDisplay: buttonStyle?.display,
-              buttonVisibility: buttonStyle?.visibility,
-              buttonRectCount: button.getClientRects().length,
-            })}`;
-
-        expect(getActiveElement(document), diagnostics).toBe(button);
-        expect(button.matches(':focus-visible'), diagnostics).toBe(true);
-        expect(isFocusVisibleInTree(document), diagnostics).toBe(true);
+        expect(getActiveElement(document)).toBe(button);
+        expect(button.matches(':focus-visible')).toBe(true);
+        expect(isFocusVisibleInTree(document)).toBe(true);
       }
     );
 
