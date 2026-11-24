@@ -915,6 +915,36 @@ export class DemoFocusgroupTextPrefix extends LitElement {
   }
 
   /**
+   * Label of the item {@link FocusgroupNavigationController.findItemByTextPrefix} matches,
+   * which is the match itself rather than whatever tab stop was applied for it.
+   *
+   * @param prefix - Prefix to match against each item's typeahead label.
+   * @param accept - Optional filter; a rejected item is skipped and the search continues.
+   * @returns The matched item's trimmed label, or null when nothing matches.
+   */
+  public findByTextPrefix(
+    prefix: string,
+    accept?: (item: HTMLElement) => boolean
+  ): string | null {
+    const match = this.navigation.findItemByTextPrefix(prefix, accept);
+    return match
+      ? (match.getAttribute('aria-label') ?? match.textContent?.trim() ?? null)
+      : null;
+  }
+
+  /**
+   * Swaps {@link FocusgroupNavigationOptions.getTypeaheadLabel} at runtime so a test can
+   * compare the default label chain against a host-supplied one.
+   *
+   * @param hook - Label resolver, or null to restore the default chain.
+   */
+  public setTypeaheadLabelHook(
+    hook: ((item: HTMLElement) => string) | null
+  ): void {
+    this.navigation.setOptions({ getTypeaheadLabel: hook ?? undefined });
+  }
+
+  /**
    * Demo: roving tabindex for **Paste** via prefix `Pas`, then move focus after the click target
    * has finished activation.
    */
@@ -949,6 +979,12 @@ export class DemoFocusgroupTextPrefix extends LitElement {
         <button type="button">Cut</button>
         <button type="button">Paste</button>
         <button type="button">Select all</button>
+        <!--
+          Natively disabled, and the only item answering to "d". It can be
+          matched but cannot hold the roving tab stop, so it shows why a
+          caller must not focus getActiveItem() after a match.
+        -->
+        <button type="button" disabled>Delete</button>
         <button type="button" class="typeahead-icon" aria-label="Undo">
           ↩
         </button>

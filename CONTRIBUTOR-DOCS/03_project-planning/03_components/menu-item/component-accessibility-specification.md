@@ -53,7 +53,9 @@ This page is for gen2 `swc-menu-item` in Spectrum Web Components. Most rows are 
 ### Migration scope (this phase)
 
 - `menuitemcheckbox`, `menuitemradio`, `aria-checked`, and selection modes are out of scope. Follow [Menu — Migration scope (current)](../menu/component-accessibility-specification.md#migration-scope-current).
-- In scope: command `menuitem` rows and submenu parents. Navigation rows belong to the separate [menu item link component](../menu-item-link/component-accessibility-specification.md), not a link mode of `swc-menu-item`.
+- In scope: plain `menuitem` only.
+- Submenu parents are out of scope; submenus have not shipped in gen2.
+- Link rows are out of scope. Per [Q17](migration-plan.md#blockers-and-open-questions), `href` leaves this component entirely and moves to a separate [menu item link component](../menu-item-link/component-accessibility-specification.md), so `swc-menu-item` never renders an anchor.
 
 ### Also read
 
