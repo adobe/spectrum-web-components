@@ -23,17 +23,16 @@ import {
   SWC_TOAST_ACTION_EVENT,
   TOAST_VARIANTS,
   type ToastVariant,
-} from '@adobe/spectrum-wc-core/components/toast-container/index.js';
+} from '@adobe/spectrum-wc-core/components/toast/index.js';
 
 import '../swc-toast.js';
 
 import { Toast } from '../Toast.js';
 
-// These tests cover standalone Toast only; queue and container behavior is tested in toast-container.
-// TODO(SWC-2654): add expanded-view tests: Show all, scrim, Escape, Collapse, Clear all, focus management.
+// These tests cover standalone Toast only; queue and region behavior is tested in toast-region.
 
 export default {
-  title: 'Toast container/Tests/Toast',
+  title: 'Toast region/Tests/Toast',
   component: 'swc-toast',
   parameters: {
     docs: { disable: true, page: null },

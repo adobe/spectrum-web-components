@@ -21,15 +21,13 @@ import { gotoStory } from '@swc-test-helpers/playwright';
  * .storybook/test-runner.ts). Both are included in the `test:a11y` command.
  */
 
-// TODO(SWC-2654): add expanded-view snapshots.
-
 test.describe('Toast - ARIA Snapshots', () => {
   test('open toast exposes an alertdialog with an alert and close button', async ({
     page,
   }) => {
     const root = await gotoStory(
       page,
-      'components-toast-container--toast-playground',
+      'components-toast-region--toast-playground',
       'swc-toast'
     );
     await expect(root).toMatchAriaSnapshot(`
@@ -46,7 +44,7 @@ test.describe('Toast - ARIA Snapshots', () => {
   }) => {
     const root = await gotoStory(
       page,
-      'components-toast-container--toast-anatomy',
+      'components-toast-region--toast-anatomy',
       'swc-toast'
     );
     await expect(root).toMatchAriaSnapshot(`
@@ -62,7 +60,7 @@ test.describe('Toast - ARIA Snapshots', () => {
   test('icon-label overrides the default icon label', async ({ page }) => {
     const root = await gotoStory(
       page,
-      'components-toast-container--toast-playground',
+      'components-toast-region--toast-playground',
       'swc-toast'
     );
     await page.evaluate(async () => {
@@ -87,7 +85,7 @@ test.describe('Toast - ARIA Snapshots', () => {
   }) => {
     const root = await gotoStory(
       page,
-      'components-toast-container--toast-playground',
+      'components-toast-region--toast-playground',
       'swc-toast'
     );
     await page.evaluate(async () => {
@@ -120,7 +118,7 @@ test.describe('Toast - ARIA Snapshots', () => {
   }) => {
     await gotoStory(
       page,
-      'components-toast-container--toast-variants',
+      'components-toast-region--toast-variants',
       'swc-toast'
     );
     expect(await hostNames(page)).toEqual([
@@ -136,7 +134,7 @@ test.describe('Toast - ARIA Snapshots', () => {
   }) => {
     await gotoStory(
       page,
-      'components-toast-container--toast-playground',
+      'components-toast-region--toast-playground',
       'swc-toast'
     );
     const setIconLabel = (value: string): Promise<void> =>
@@ -163,7 +161,7 @@ test.describe('Toast - ARIA Snapshots', () => {
   }) => {
     const root = await gotoStory(
       page,
-      'components-toast-container--toast-variants',
+      'components-toast-region--toast-variants',
       'swc-toast'
     );
     await expect(root).toMatchAriaSnapshot(`
@@ -204,7 +202,7 @@ test.describe('Toast - Keyboard', () => {
   }) => {
     await gotoStory(
       page,
-      'components-toast-container--toast-anatomy',
+      'components-toast-region--toast-anatomy',
       'swc-toast'
     );
     const toast = page.locator('swc-toast');
@@ -245,7 +243,7 @@ test.describe('Toast - Reduced motion', () => {
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await gotoStory(
       page,
-      'components-toast-container--toast-playground',
+      'components-toast-region--toast-playground',
       'swc-toast'
     );
     const toast = page.locator('swc-toast');
@@ -259,7 +257,7 @@ test.describe('Toast - Reduced motion', () => {
     await page.emulateMedia({ reducedMotion: 'no-preference' });
     await gotoStory(
       page,
-      'components-toast-container--toast-playground',
+      'components-toast-region--toast-playground',
       'swc-toast'
     );
     const toast = page.locator('swc-toast');

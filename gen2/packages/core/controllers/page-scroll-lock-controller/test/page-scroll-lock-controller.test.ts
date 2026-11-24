@@ -101,3 +101,52 @@ export const PageScrollLockTest: Story = {
     }
   },
 };
+
+export const ScrollbarWidthTest: Story = {
+  play: async ({ step }) => {
+    const html = document.documentElement;
+    const original = Object.getOwnPropertyDescriptor(window, 'innerWidth');
+    const lock = new PageScrollLockController(makeHost());
+    try {
+      await step('with overlay scrollbars, nothing is kept', () => {
+        Object.defineProperty(window, 'innerWidth', {
+          configurable: true,
+          value: html.clientWidth,
+        });
+        lock.lock();
+        expect(html.style.scrollbarGutter, 'gutter').toBe('');
+        expect(html.style.paddingInlineEnd, 'padding').toBe('');
+        lock.unlock();
+      });
+
+      await step(
+        "with a classic scrollbar, its width is kept so the page doesn't shift",
+        () => {
+          // A 15px scrollbar: the window is wider than the page's content box.
+          Object.defineProperty(window, 'innerWidth', {
+            configurable: true,
+            value: html.clientWidth + 15,
+          });
+          html.style.scrollbarGutter = 'auto';
+          lock.lock();
+          if (CSS.supports('scrollbar-gutter', 'stable')) {
+            expect(html.style.scrollbarGutter, 'gutter').toBe('stable');
+          } else {
+            expect(html.style.paddingInlineEnd, 'padding').toBe('15px');
+          }
+          lock.unlock();
+          expect(html.style.scrollbarGutter, 'gutter restored').toBe('auto');
+          expect(html.style.paddingInlineEnd, 'padding restored').toBe('');
+        }
+      );
+    } finally {
+      lock.unlock();
+      html.style.removeProperty('scrollbar-gutter');
+      if (original) {
+        Object.defineProperty(window, 'innerWidth', original);
+      } else {
+        delete (window as { innerWidth?: number }).innerWidth;
+      }
+    }
+  },
+};

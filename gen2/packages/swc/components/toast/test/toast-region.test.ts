@@ -9,38 +9,50 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { html } from 'lit';
+import { html, render } from 'lit';
 import { expect, fn, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getComponent, withWarningSpy } from '@swc-test-helpers/dom';
+import { vi } from 'vitest';
+import { userEvent } from 'vitest/browser';
 
+import type { Popover } from '@adobe/spectrum-wc/popover';
+import type { Tooltip } from '@adobe/spectrum-wc/tooltip';
 import {
   ToastQueue,
   type ToastQueueItem,
-} from '@adobe/spectrum-wc-core/components/toast-container/index.js';
+} from '@adobe/spectrum-wc-core/components/toast/index.js';
 import {
   deepContains,
   getActiveElement,
+  registerDismissible,
+  unregisterDismissible,
 } from '@adobe/spectrum-wc-core/utils/index.js';
 
-import '../swc-toast-container.js';
+import '../swc-toast-region.js';
 import '@adobe/spectrum-wc/components/button/swc-button.js';
+import '@adobe/spectrum-wc/components/popover/swc-popover.js';
+import '@adobe/spectrum-wc/components/tooltip/swc-tooltip.js';
 
 import { ToastQueue as RenderingToastQueue } from '../index.js';
+import regionStoriesMeta, {
+  Playground,
+  Variants,
+} from '../stories/toast-region.stories.js';
 import type { Toast } from '../Toast.js';
-import type { ToastContainer } from '../ToastContainer.js';
+import type { ToastRegion } from '../ToastRegion.js';
 
 export default {
-  title: 'Toast container/Tests/Container',
+  title: 'Toast region/Tests/Region',
   tags: ['!autodocs', 'dev'],
   render: () => html`
     <button id="trigger">Add notification</button>
-    <swc-toast-container></swc-toast-container>
+    <swc-toast-region></swc-toast-region>
     <button id="outside">Outside region</button>
   `,
 } as Meta;
 
-const getFront = async (container: ToastContainer): Promise<Toast> => {
+const getFront = async (container: ToastRegion): Promise<Toast> => {
   await container.updateComplete;
   const toast = container.shadowRoot?.querySelector<Toast>('swc-toast');
   expect(toast, 'front toast').not.toBeNull();
@@ -141,9 +153,9 @@ export const RenderingAndClosureTest: Story = {
       expect(RenderingToastQueue, 'SWC queue export').toBe(ToastQueue);
     });
     ToastQueue.clear();
-    const container = await getComponent<ToastContainer>(
+    const container = await getComponent<ToastRegion>(
       canvasElement,
-      'swc-toast-container'
+      'swc-toast-region'
     );
     const onClose = fn();
 
@@ -173,7 +185,7 @@ export const RenderingAndClosureTest: Story = {
         }
       );
 
-      await step('the container creates the default-slot naming target', () => {
+      await step('the region creates the default-slot naming target', () => {
         const message = toast.firstElementChild;
         expect(message?.id, 'message id').toBeTruthy();
         expect(
@@ -277,9 +289,9 @@ export const RenderingAndClosureTest: Story = {
 export const RegionLabelTest: Story = {
   play: async ({ canvasElement, step }) => {
     ToastQueue.clear();
-    const container = await getComponent<ToastContainer>(
+    const container = await getComponent<ToastRegion>(
       canvasElement,
-      'swc-toast-container'
+      'swc-toast-region'
     );
     const regionLabel = (): string | null | undefined =>
       container.shadowRoot
@@ -315,9 +327,9 @@ export const RegionLabelTest: Story = {
 export const CloseLabelTest: Story = {
   play: async ({ canvasElement, step }) => {
     ToastQueue.clear();
-    const container = await getComponent<ToastContainer>(
+    const container = await getComponent<ToastRegion>(
       canvasElement,
-      'swc-toast-container'
+      'swc-toast-region'
     );
 
     try {
@@ -341,9 +353,9 @@ export const CloseLabelTest: Story = {
 export const CloseBeforeOpenTest: Story = {
   play: async ({ canvasElement, step }) => {
     ToastQueue.clear();
-    const container = await getComponent<ToastContainer>(
+    const container = await getComponent<ToastRegion>(
       canvasElement,
-      'swc-toast-container'
+      'swc-toast-region'
     );
     const root = container.shadowRoot!;
     const onClose = fn();
@@ -402,9 +414,9 @@ export const CloseBeforeOpenTest: Story = {
 export const QueueOrderTest: Story = {
   play: async ({ canvasElement, step }) => {
     ToastQueue.clear();
-    const container = await getComponent<ToastContainer>(
+    const container = await getComponent<ToastRegion>(
       canvasElement,
-      'swc-toast-container'
+      'swc-toast-region'
     );
     const messages = (): string[] =>
       ToastQueue.entries.map((entry) => entry.message);
@@ -505,9 +517,9 @@ export const QueueOrderTest: Story = {
 export const ConnectsClosedThenOpensTest: Story = {
   play: async ({ canvasElement, step }) => {
     ToastQueue.clear();
-    const container = await getComponent<ToastContainer>(
+    const container = await getComponent<ToastRegion>(
       canvasElement,
-      'swc-toast-container'
+      'swc-toast-region'
     );
     const root = container.shadowRoot!;
     const openAtInsertion: boolean[] = [];
@@ -547,9 +559,9 @@ export const ConnectsClosedThenOpensTest: Story = {
 export const TimeoutConfigurationTest: Story = {
   play: async ({ canvasElement, step }) => {
     ToastQueue.clear();
-    const container = await getComponent<ToastContainer>(
+    const container = await getComponent<ToastRegion>(
       canvasElement,
-      'swc-toast-container'
+      'swc-toast-region'
     );
     try {
       ToastQueue.add('Timed notification', { timeout: 3000 });
@@ -626,9 +638,9 @@ export const TimeoutConfigurationTest: Story = {
 export const ActionsTest: Story = {
   play: async ({ canvasElement, step }) => {
     ToastQueue.clear();
-    const container = await getComponent<ToastContainer>(
+    const container = await getComponent<ToastRegion>(
       canvasElement,
-      'swc-toast-container'
+      'swc-toast-region'
     );
     const onAction = fn();
     const onClose = fn();
@@ -704,9 +716,9 @@ export const ActionsTest: Story = {
 export const FocusAndWarningsTest: Story = {
   play: async ({ canvasElement, step }) => {
     ToastQueue.clear();
-    const container = await getComponent<ToastContainer>(
+    const container = await getComponent<ToastRegion>(
       canvasElement,
-      'swc-toast-container'
+      'swc-toast-region'
     );
     const trigger = canvasElement.querySelector<HTMLButtonElement>('#trigger')!;
     const outside = canvasElement.querySelector<HTMLButtonElement>('#outside')!;
@@ -796,10 +808,10 @@ export const FocusAndWarningsTest: Story = {
       );
 
       await step(
-        'connecting a second container produces a dev warning',
+        'connecting a second region produces a dev warning',
         async () => {
           await withWarningSpy(async (warnings) => {
-            const second = document.createElement('swc-toast-container');
+            const second = document.createElement('swc-toast-region');
             try {
               canvasElement.append(second);
               await second.updateComplete;
@@ -807,7 +819,7 @@ export const FocusAndWarningsTest: Story = {
                 warnings.some((warning) =>
                   String(warning[1]).includes('Only one')
                 ),
-                'second container warning'
+                'second region warning'
               ).toBe(true);
             } finally {
               second.remove();
@@ -824,9 +836,9 @@ export const FocusAndWarningsTest: Story = {
 export const InterruptedClosureTest: Story = {
   play: async ({ canvasElement, step }) => {
     ToastQueue.clear();
-    const container = await getComponent<ToastContainer>(
+    const container = await getComponent<ToastRegion>(
       canvasElement,
-      'swc-toast-container'
+      'swc-toast-region'
     );
     const onClose = fn();
     try {
@@ -892,13 +904,13 @@ export const InterruptedClosureTest: Story = {
   },
 };
 
-const getLayers = (container: ToastContainer): HTMLElement[] => [
+const getLayers = (container: ToastRegion): HTMLElement[] => [
   ...container.shadowRoot!.querySelectorAll<HTMLElement>(
-    '.swc-ToastContainer-layer'
+    '.swc-ToastRegion-layer'
   ),
 ];
 
-const getRegion = (container: ToastContainer): HTMLElement =>
+const getRegion = (container: ToastRegion): HTMLElement =>
   container.shadowRoot!.querySelector<HTMLElement>('[role="region"]')!;
 
 // Some engines never apply `perspective` to layout geometry, for example headed Linux
@@ -921,9 +933,9 @@ const projectsPerspective = (): boolean => {
 export const StackLayersTest: Story = {
   play: async ({ canvasElement, step }) => {
     ToastQueue.clear();
-    const container = await getComponent<ToastContainer>(
+    const container = await getComponent<ToastRegion>(
       canvasElement,
-      'swc-toast-container'
+      'swc-toast-region'
     );
 
     try {
@@ -986,13 +998,13 @@ export const StackLayersTest: Story = {
       await step('each layer takes the variant of its toast', () => {
         const [first, second] = getLayers(container);
         expect(
-          first.classList.contains('swc-ToastContainer-layer--info'),
+          first.classList.contains('swc-ToastRegion-layer--info'),
           'nearest layer is the info toast'
         ).toBe(true);
         expect(
           [...second.classList],
           'neutral layer has no variant modifier'
-        ).toEqual(['swc-ToastContainer-layer']);
+        ).toEqual(['swc-ToastRegion-layer']);
         expect(
           getComputedStyle(second).backgroundColor,
           'neutral layer differs from the info layer'
@@ -1001,7 +1013,7 @@ export const StackLayersTest: Story = {
 
       await step('layers stay in the queue order, newest nearest', () => {
         const indexes = getLayers(container).map((layer) =>
-          layer.style.getPropertyValue('--_swc-toast-container-layer-index')
+          layer.style.getPropertyValue('--_swc-toast-region-layer-index')
         );
         expect(indexes, 'layer depth indexes').toEqual(['1', '2']);
       });
@@ -1023,7 +1035,7 @@ export const StackLayersTest: Story = {
           expect(layers, 'layers').toHaveLength(2);
           expect(
             layers.map((layer) =>
-              layer.style.getPropertyValue('--_swc-toast-container-layer-index')
+              layer.style.getPropertyValue('--_swc-toast-region-layer-index')
             ),
             'layer depth indexes'
           ).toEqual(['1', '2']);
@@ -1085,9 +1097,9 @@ export const StackLayersTest: Story = {
 export const RestoreToastsTest: Story = {
   play: async ({ canvasElement, step }) => {
     ToastQueue.clear();
-    const container = await getComponent<ToastContainer>(
+    const container = await getComponent<ToastRegion>(
       canvasElement,
-      'swc-toast-container'
+      'swc-toast-region'
     );
     let renderedToasts = 0;
     const observer = new MutationObserver((records) => {
@@ -1156,9 +1168,9 @@ export const RestoreToastsTest: Story = {
       );
 
       await step(
-        'addAll with the saved list, before the container connects, restores the same stack',
+        'addAll with the saved list, before the region connects, restores the same stack',
         async () => {
-          // A reload: the old page's queue is gone, and the container connects after the app restores.
+          // A reload: the old page's queue is gone, and the region connects after the app restores.
           container.remove();
           ToastQueue.clear();
           expect(ToastQueue.entries, 'queue after the reload').toHaveLength(0);
@@ -1188,13 +1200,13 @@ export const RestoreToastsTest: Story = {
   },
 };
 
-// Restoring while the container is live, for example after a sign-in that happens without a reload.
+// Restoring while the region is live, for example after a sign-in that happens without a reload.
 export const AddAllWhileConnectedTest: Story = {
   play: async ({ canvasElement, step }) => {
     ToastQueue.clear();
-    const container = await getComponent<ToastContainer>(
+    const container = await getComponent<ToastRegion>(
       canvasElement,
-      'swc-toast-container'
+      'swc-toast-region'
     );
 
     try {
@@ -1231,8 +1243,8 @@ export const AddAllWhileConnectedTest: Story = {
             ),
             'layers follow the queue order behind the front toast'
           ).toEqual([
-            'swc-ToastContainer-layer--positive',
-            'swc-ToastContainer-layer--negative',
+            'swc-ToastRegion-layer--positive',
+            'swc-ToastRegion-layer--negative',
           ]);
         }
       );
@@ -1246,9 +1258,9 @@ export const AddAllWhileConnectedTest: Story = {
 export const RestoreFromJsonTest: Story = {
   play: async ({ canvasElement, step }) => {
     ToastQueue.clear();
-    const container = await getComponent<ToastContainer>(
+    const container = await getComponent<ToastRegion>(
       canvasElement,
-      'swc-toast-container'
+      'swc-toast-region'
     );
     const staleOnAction = fn();
     const staleOnClose = fn();
@@ -1345,9 +1357,9 @@ export const RestoreFromJsonTest: Story = {
 export const StackPlacementTest: Story = {
   play: async ({ canvasElement, step }) => {
     ToastQueue.clear();
-    const container = await getComponent<ToastContainer>(
+    const container = await getComponent<ToastRegion>(
       canvasElement,
-      'swc-toast-container'
+      'swc-toast-region'
     );
 
     try {
@@ -1435,9 +1447,9 @@ const emulateInput = (target: HTMLElement, type: 'pointer' | 'keyboard') => {
 export const StackFocusTest: Story = {
   play: async ({ canvasElement, step }) => {
     ToastQueue.clear();
-    const container = await getComponent<ToastContainer>(
+    const container = await getComponent<ToastRegion>(
       canvasElement,
-      'swc-toast-container'
+      'swc-toast-region'
     );
     const trigger = canvasElement.querySelector<HTMLButtonElement>('#trigger')!;
 
@@ -1560,13 +1572,13 @@ export const TopLayerStackingTest: Story = {
       popover="manual"
       style="inset: auto 0 0 0; inline-size: auto; block-size: 200px; margin: 0;"
     ></div>
-    <swc-toast-container></swc-toast-container>
+    <swc-toast-region></swc-toast-region>
   `,
   play: async ({ canvasElement, step }) => {
     ToastQueue.clear();
-    const container = await getComponent<ToastContainer>(
+    const container = await getComponent<ToastRegion>(
       canvasElement,
-      'swc-toast-container'
+      'swc-toast-region'
     );
     const overlap = canvasElement.querySelector<HTMLElement>('#overlap')!;
     const topElementOverToast = (): Element | null => {
@@ -1664,7 +1676,807 @@ export const LayeringFixture: Story = {
           Close dialog
         </swc-button>
       </dialog>
-      <swc-toast-container .placement=${args.placement}></swc-toast-container>
+      <swc-toast-region .placement=${args.placement}></swc-toast-region>
     `;
+  },
+};
+
+// ──────────────────────────
+//     EXPANDED VIEW
+// ──────────────────────────
+
+const getDialog = (container: ToastRegion): HTMLDialogElement | null =>
+  container.shadowRoot!.querySelector<HTMLDialogElement>('dialog');
+
+const renderedToasts = (container: ToastRegion): Toast[] => [
+  ...container.shadowRoot!.querySelectorAll<Toast>('swc-toast'),
+];
+
+const showAllOf = (toast: Toast): HTMLElement | null =>
+  toast.shadowRoot!.querySelector<HTMLElement>('.swc-Toast-showAll');
+
+const controlOf = (container: ToastRegion, label: string): HTMLElement =>
+  [
+    ...container.shadowRoot!.querySelectorAll<HTMLElement>(
+      '.swc-ToastRegion-controls swc-action-button'
+    ),
+  ].find((button) => button.textContent?.trim() === label)!;
+
+const waitForExpanded = async (
+  container: ToastRegion,
+  expanded: boolean
+): Promise<void> => {
+  await waitFor(() =>
+    expect(Boolean(getDialog(container)?.open), 'expanded').toBe(expanded)
+  );
+  await container.updateComplete;
+};
+
+const addQueue = async (
+  container: ToastRegion,
+  messages: string[]
+): Promise<Toast> => {
+  for (const message of [...messages].reverse()) {
+    ToastQueue.add(message);
+  }
+  return getFront(container);
+};
+
+type RegionStoryArgs = Parameters<
+  NonNullable<typeof regionStoriesMeta.render>
+>[0];
+
+export const StoryLabelControlsTest: Story<RegionStoryArgs> = {
+  args: {
+    ...regionStoriesMeta.args,
+    placement: 'bottom-end',
+    message: 'Controlled toast',
+    actionLabel: 'Revert',
+    onAction: fn(),
+  },
+  render: () => html`
+    <div></div>
+  `,
+  play: async (context) => {
+    const { args, canvasElement, step } = context;
+    const renderers = [
+      {
+        name: 'Default',
+        renderStory: regionStoriesMeta.render,
+        add: 'Add toast',
+      },
+      {
+        name: 'Playground',
+        renderStory: Playground.render,
+        add: 'Show custom toast',
+      },
+      { name: 'Variants', renderStory: Variants.render, add: 'Positive' },
+    ];
+    try {
+      for (const { name, renderStory, add } of renderers) {
+        if (!renderStory) {
+          throw new Error(`${name} must have a renderer`);
+        }
+        for (const label of ['Custom', '', 'Updated', undefined]) {
+          await step(`${name}: ${label || 'default'} labels`, async () => {
+            const storyArgs = {
+              ...args,
+              'show-all-label': label && `${label} show`,
+              'collapse-label': label && `${label} collapse`,
+              'clear-all-label': label && `${label} clear`,
+            };
+            render(
+              renderStory(storyArgs, { ...context, args: storyArgs }),
+              canvasElement
+            );
+            const region = await getComponent<ToastRegion>(
+              canvasElement,
+              'swc-toast-region'
+            );
+            expect(region.placement, 'placement control').toBe('bottom-end');
+            const addButton = [
+              ...canvasElement.querySelectorAll<HTMLElement>('swc-button'),
+            ].find((button) => button.textContent?.trim() === add)!;
+            await userEvent.click(addButton);
+            await userEvent.click(addButton);
+            const front = await getFront(region);
+            expect(front.actionLabel, 'queue action control').toBe('Revert');
+            await waitFor(() =>
+              expect(
+                showAllOf(front)?.textContent?.trim(),
+                'Show all label'
+              ).toBe(label ? `${label} show` : 'Show all')
+            );
+            showAllOf(front)!.click();
+            await waitForExpanded(region, true);
+            const collapse = label ? `${label} collapse` : 'Collapse';
+            const clear = label ? `${label} clear` : 'Clear all';
+            expect(controlOf(region, clear), 'Clear all label').toBeDefined();
+            controlOf(region, collapse).click();
+            await waitForExpanded(region, false);
+            showAllOf(await getFront(region))!.click();
+            await waitForExpanded(region, true);
+            controlOf(region, clear).click();
+            await waitForExpanded(region, false);
+            expect(ToastQueue.entries, 'queue cleared').toHaveLength(0);
+          });
+        }
+      }
+    } finally {
+      ToastQueue.clear();
+    }
+  },
+};
+
+const peekPosition = async (
+  layer: HTMLElement
+): Promise<{ x: number; y: number }> => {
+  // Anchor real input to the flat region, not the perspective-transformed layer.
+  const region = layer.parentElement!;
+  const front = region.querySelector<Toast>('swc-toast')!;
+  // Opening precedes the message reveal, which changes the stack's geometry.
+  await waitFor(() =>
+    expect(
+      front.shadowRoot!.querySelector('.swc-Toast-text slot'),
+      'message is rendered'
+    ).not.toBeNull()
+  );
+  await document.fonts.ready;
+  const rect = layer.getBoundingClientRect();
+  const regionRect = region.getBoundingClientRect();
+  const x = rect.left + rect.width / 2;
+  const y = (rect.top + regionRect.top) / 2;
+  const root = layer.getRootNode();
+  if (!(root instanceof ShadowRoot)) {
+    throw new Error('The peek layer must be in the region shadow root');
+  }
+  expect(
+    root.elementFromPoint(x, y),
+    'the visible peek point hits the layer'
+  ).toBe(layer);
+  return {
+    x: x - regionRect.left,
+    y: y - regionRect.top,
+  };
+};
+
+export const ExpandTriggersTest: Story = {
+  play: async ({ canvasElement, step }) => {
+    ToastQueue.clear();
+    const container = await getComponent<ToastRegion>(
+      canvasElement,
+      'swc-toast-region'
+    );
+    try {
+      await step('Show all appears only with two or more toasts', async () => {
+        ToastQueue.add('Only');
+        const single = await getFront(container);
+        expect(showAllOf(single), 'Show all with one toast').toBeNull();
+        ToastQueue.add('Newer');
+        const front = await getFront(container);
+        await front.updateComplete;
+        expect(showAllOf(front)?.textContent?.trim(), 'Show all label').toBe(
+          'Show all'
+        );
+      });
+
+      await step(
+        'Show all opens a modal list of real toasts and focuses the front toast',
+        async () => {
+          const front = await getFront(container);
+          showAllOf(front)!.click();
+          await waitForExpanded(container, true);
+          expect(getDialog(container)!.matches(':modal'), 'modal').toBe(true);
+          const toasts = renderedToasts(container);
+          expect(
+            toasts.map((toast) => toast.textContent),
+            'listed toasts'
+          ).toEqual(['Newer', 'Only']);
+          expect(
+            toasts.every(
+              (toast) => toast.getAttribute('role') === 'alertdialog'
+            ),
+            'every toast is an alertdialog'
+          ).toBe(true);
+          expect(toasts[0], 'front toast element is kept').toBe(front);
+          expect(getActiveElement(document), 'focus').toBe(front);
+          expect(showAllOf(front), 'Show all while expanded').toBeNull();
+        }
+      );
+
+      await step('Collapse returns to the stack', async () => {
+        controlOf(container, 'Collapse').click();
+        await waitForExpanded(container, false);
+        expect(renderedToasts(container).length, 'rendered toasts').toBe(1);
+      });
+
+      await step('clicking the stack expands it', async () => {
+        const front = await getFront(container);
+        front.click();
+        await waitForExpanded(container, true);
+        controlOf(container, 'Collapse').click();
+        await waitForExpanded(container, false);
+      });
+
+      await step(
+        'clicking a layer behind the front toast expands it',
+        async () => {
+          await getFront(container);
+          const layer = container.shadowRoot!.querySelector<HTMLElement>(
+            '.swc-ToastRegion-layer'
+          )!;
+          // A real press on the strip that peeks above the front toast, so the
+          // layer must receive pointer events (a scripted click would not check).
+          const clicked = fn();
+          layer.addEventListener('click', clicked, { once: true });
+          await userEvent.click(layer.parentElement!, {
+            position: await peekPosition(layer),
+          });
+          await waitFor(() =>
+            expect(
+              clicked,
+              'the real click reaches the layer'
+            ).toHaveBeenCalledOnce()
+          );
+          await waitForExpanded(container, true);
+          controlOf(container, 'Collapse').click();
+          await waitForExpanded(container, false);
+        }
+      );
+
+      await step(
+        'clicking the close button or the action does not expand',
+        async () => {
+          ToastQueue.add('With action', {
+            actionLabel: 'Undo',
+            onAction: fn(),
+          });
+          const front = await getFront(container);
+          front
+            .shadowRoot!.querySelector<HTMLElement>('.swc-Toast-action')!
+            .click();
+          await container.updateComplete;
+          expect(getDialog(container), 'dialog after action').toBeNull();
+          closeButtonOf(front).click();
+          await container.updateComplete;
+          expect(getDialog(container), 'dialog after close').toBeNull();
+        }
+      );
+    } finally {
+      ToastQueue.clear();
+    }
+  },
+};
+
+export const CollapseTriggersTest: Story = {
+  play: async ({ canvasElement, step }) => {
+    ToastQueue.clear();
+    const container = await getComponent<ToastRegion>(
+      canvasElement,
+      'swc-toast-region'
+    );
+    const region = (): HTMLElement =>
+      container.shadowRoot!.querySelector<HTMLElement>('[role="region"]')!;
+    const expand = async (): Promise<void> => {
+      const front = await getFront(container);
+      showAllOf(front)!.click();
+      await waitForExpanded(container, true);
+    };
+    try {
+      await addQueue(container, ['A', 'B', 'C']);
+
+      await step('Escape collapses and focuses the region', async () => {
+        await expand();
+        await userEvent.keyboard('{Escape}');
+        await waitForExpanded(container, false);
+        await waitFor(() =>
+          expect(getActiveElement(document), 'focus').toBe(region())
+        );
+      });
+
+      await step(
+        'Escape waits for a surface opened above the view',
+        async () => {
+          await expand();
+          const above = {};
+          registerDismissible(above);
+          try {
+            await userEvent.keyboard('{Escape}');
+            await container.updateComplete;
+            expect(getDialog(container)?.open, 'still expanded').toBe(true);
+          } finally {
+            unregisterDismissible(above);
+          }
+          await userEvent.keyboard('{Escape}');
+          await waitForExpanded(container, false);
+        }
+      );
+
+      await step('a scrim press collapses and focuses the region', async () => {
+        await expand();
+        getDialog(container)!.dispatchEvent(
+          new PointerEvent('pointerdown', {
+            bubbles: true,
+            clientX: 1,
+            clientY: 1,
+          })
+        );
+        await waitForExpanded(container, false);
+        expect(getActiveElement(document), 'focus').toBe(region());
+      });
+
+      await step('Collapse collapses and focuses the region', async () => {
+        await expand();
+        controlOf(container, 'Collapse').click();
+        await waitForExpanded(container, false);
+        expect(getActiveElement(document), 'focus').toBe(region());
+      });
+
+      await step('Clear all empties the queue and collapses', async () => {
+        await expand();
+        controlOf(container, 'Clear all').click();
+        await waitFor(() =>
+          expect(ToastQueue.entries.length, 'queue size').toBe(0)
+        );
+        await waitForExpanded(container, false);
+      });
+
+      await step('the view collapses when the queue empties', async () => {
+        await addQueue(container, ['D', 'E']);
+        await expand();
+        for (const toast of renderedToasts(container)) {
+          toast.close();
+        }
+        await waitFor(() =>
+          expect(ToastQueue.entries.length, 'queue size').toBe(0)
+        );
+        await waitForExpanded(container, false);
+        expect(
+          getActiveElement(document),
+          'focus does not move to a region'
+        ).not.toBe(region());
+      });
+    } finally {
+      ToastQueue.clear();
+    }
+  },
+};
+
+export const ExpandedFocusTest: Story = {
+  render: () => html`
+    <button id="trigger">Add notification</button>
+    <swc-toast-region></swc-toast-region>
+    <button id="outside">Outside region</button>
+  `,
+  play: async ({ canvasElement, step }) => {
+    ToastQueue.clear();
+    const container = await getComponent<ToastRegion>(
+      canvasElement,
+      'swc-toast-region'
+    );
+    const outside = canvasElement.querySelector<HTMLElement>('#outside')!;
+    const describe = (element: Element | null): string => {
+      const toasts = renderedToasts(container);
+      const index = toasts.findIndex(
+        (toast) => toast === element || deepContains(toast, element)
+      );
+      if (index !== -1) {
+        return toasts[index] === element ? `toast ${index}` : `close ${index}`;
+      }
+      const control = [
+        ...container.shadowRoot!.querySelectorAll<HTMLElement>(
+          'swc-action-button'
+        ),
+      ].find((button) => button === element || deepContains(button, element));
+      return control?.textContent?.trim() ?? element?.localName ?? 'none';
+    };
+    try {
+      const front = await addQueue(container, ['A', 'B']);
+      showAllOf(front)!.click();
+      await waitForExpanded(container, true);
+
+      await step('the page behind the view is inert', () => {
+        outside.focus();
+        expect(getActiveElement(document), 'focus').not.toBe(outside);
+      });
+
+      await step('page scroll is locked', () => {
+        expect(document.documentElement.style.overflow, 'overflow').toBe(
+          'hidden'
+        );
+      });
+
+      await step(
+        'Tab moves through each toast, then the controls',
+        async () => {
+          front.focus();
+          const order = [describe(getActiveElement(document))];
+          for (let press = 0; press < 5; press++) {
+            await userEvent.keyboard('{Tab}');
+            order.push(describe(getActiveElement(document)));
+          }
+          expect(order, 'Tab order').toEqual([
+            'toast 0',
+            'close 0',
+            'toast 1',
+            'close 1',
+            'Clear all',
+            'Collapse',
+          ]);
+        }
+      );
+
+      await step('adding a toast keeps focus where it is', async () => {
+        const second = renderedToasts(container)[1];
+        second.focus();
+        ToastQueue.add('Newest');
+        await waitFor(() =>
+          expect(renderedToasts(container).length, 'rendered toasts').toBe(3)
+        );
+        await container.updateComplete;
+        expect(getActiveElement(document), 'focus').toBe(second);
+      });
+
+      await step(
+        'closing a focused toast focuses the nearest toast',
+        async () => {
+          const [newest, middle] = renderedToasts(container);
+          closeButtonOf(middle).focus();
+          closeButtonOf(middle).click();
+          await waitFor(() =>
+            expect(getActiveElement(document), 'focus').toBe(newest)
+          );
+        }
+      );
+
+      await step('scroll unlocks after collapsing', async () => {
+        controlOf(container, 'Collapse').click();
+        await waitForExpanded(container, false);
+        expect(document.documentElement.style.overflow, 'overflow').toBe('');
+      });
+    } finally {
+      ToastQueue.clear();
+    }
+  },
+};
+
+export const ExpandedAnnouncementTest: Story = {
+  play: async ({ canvasElement, step }) => {
+    ToastQueue.clear();
+    const container = await getComponent<ToastRegion>(
+      canvasElement,
+      'swc-toast-region'
+    );
+    const liveRegionOf = (toast: Toast): Element =>
+      toast.shadowRoot!.querySelector('.swc-Toast-body')!;
+    try {
+      const front = await addQueue(container, ['A', 'B', 'C']);
+      showAllOf(front)!.click();
+      await waitForExpanded(container, true);
+
+      await step(
+        'toasts shown only in the list are not announced again',
+        async () => {
+          const [, ...behind] = renderedToasts(container);
+          await Promise.all(behind.map((toast) => toast.updateComplete));
+          expect(liveRegionOf(front).getAttribute('role'), 'front').toBe(
+            'alert'
+          );
+          for (const toast of behind) {
+            expect(
+              liveRegionOf(toast).hasAttribute('role'),
+              `${toast.textContent} live region`
+            ).toBe(false);
+            expect(
+              liveRegionOf(toast).querySelector('slot'),
+              `${toast.textContent} content shown at once`
+            ).not.toBeNull();
+          }
+        }
+      );
+
+      await step(
+        'a toast added while expanded is the only live region',
+        async () => {
+          ToastQueue.add('Newest');
+          await waitFor(() =>
+            expect(renderedToasts(container).length, 'rendered toasts').toBe(4)
+          );
+          const toasts = renderedToasts(container);
+          await Promise.all(toasts.map((toast) => toast.updateComplete));
+          expect(
+            toasts.map((toast) => liveRegionOf(toast).getAttribute('role')),
+            'live regions'
+          ).toEqual(['alert', null, null, null]);
+        }
+      );
+    } finally {
+      ToastQueue.clear();
+    }
+  },
+};
+
+export const ExpandedTimeoutTest: Story = {
+  play: async ({ canvasElement, step }) => {
+    ToastQueue.clear();
+    const container = await getComponent<ToastRegion>(
+      canvasElement,
+      'swc-toast-region'
+    );
+    try {
+      ToastQueue.add('Older', { timeout: 6000 });
+      ToastQueue.add('Newer', { timeout: 6000 });
+      const front = await getFront(container);
+      vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout', 'Date'] });
+      showAllOf(front)!.click();
+      await waitForExpanded(container, true);
+
+      await step('no toast auto-dismisses while expanded', async () => {
+        vi.advanceTimersByTime(20000);
+        await container.updateComplete;
+        expect(ToastQueue.entries.length, 'queue size').toBe(2);
+      });
+
+      await step(
+        'the front toast gets a fresh timeout after collapsing',
+        async () => {
+          controlOf(container, 'Collapse').click();
+          await waitForExpanded(container, false);
+          // Focus on the region pauses the countdown, as it does for any focus in the region.
+          container.blur();
+          (getActiveElement(document) as HTMLElement | null)?.blur();
+          await container.updateComplete;
+          vi.advanceTimersByTime(5000);
+          expect(ToastQueue.entries.length, 'before the timeout').toBe(2);
+          vi.advanceTimersByTime(1500);
+          vi.useRealTimers();
+          await waitFor(() =>
+            expect(ToastQueue.entries.length, 'after the timeout').toBe(1)
+          );
+        }
+      );
+    } finally {
+      vi.useRealTimers();
+      ToastQueue.clear();
+    }
+  },
+};
+
+export const PeekHoverPauseTest: Story = {
+  render: () => html`
+    <button id="away">Away from the toasts</button>
+    <swc-toast-region></swc-toast-region>
+  `,
+  play: async ({ canvasElement, step }) => {
+    ToastQueue.clear();
+    const container = await getComponent<ToastRegion>(
+      canvasElement,
+      'swc-toast-region'
+    );
+    const away = canvasElement.querySelector<HTMLElement>('#away')!;
+    try {
+      vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout', 'Date'] });
+      ToastQueue.add('Older', { timeout: 6000 });
+      ToastQueue.add('Newer', { timeout: 6000 });
+      await getFront(container);
+
+      await step(
+        'a pointer on the peek behind the front toast pauses its countdown',
+        async () => {
+          const layer = container.shadowRoot!.querySelector<HTMLElement>(
+            '.swc-ToastRegion-layer'
+          )!;
+          await userEvent.hover(layer.parentElement!, {
+            position: await peekPosition(layer),
+          });
+          await waitFor(() =>
+            expect(
+              layer.matches(':hover'),
+              'the real pointer reaches the layer'
+            ).toBe(true)
+          );
+          vi.advanceTimersByTime(20000);
+          expect(ToastQueue.entries.length, 'queue size').toBe(2);
+        }
+      );
+
+      await step('leaving the peek resumes the countdown', async () => {
+        await userEvent.hover(away);
+        vi.advanceTimersByTime(6500);
+        vi.useRealTimers();
+        await waitFor(() =>
+          expect(ToastQueue.entries.length, 'queue size').toBe(1)
+        );
+      });
+    } finally {
+      vi.useRealTimers();
+      ToastQueue.clear();
+    }
+  },
+};
+
+export const ExpandedActionTest: Story = {
+  play: async ({ canvasElement, step }) => {
+    ToastQueue.clear();
+    const container = await getComponent<ToastRegion>(
+      canvasElement,
+      'swc-toast-region'
+    );
+    const onAction = fn();
+    try {
+      ToastQueue.add('Oldest');
+      ToastQueue.add('With action', {
+        actionLabel: 'Undo',
+        onAction,
+        shouldCloseOnAction: true,
+      });
+      const front = await addQueue(container, ['Newest']);
+      showAllOf(front)!.click();
+      await waitForExpanded(container, true);
+
+      await step(
+        'an action in the list calls onAction, closes that toast, and focuses the nearest toast',
+        async () => {
+          const [newest, withAction] = renderedToasts(container);
+          const action =
+            withAction.shadowRoot!.querySelector<HTMLElement>(
+              '.swc-Toast-action'
+            )!;
+          action.focus();
+          action.click();
+          expect(onAction, 'onAction').toHaveBeenCalledTimes(1);
+          await waitFor(() =>
+            expect(
+              ToastQueue.entries.map((entry) => entry.message),
+              'queue'
+            ).toEqual(['Newest', 'Oldest'])
+          );
+          expect(getActiveElement(document), 'focus').toBe(newest);
+          expect(getDialog(container)?.open, 'still expanded').toBe(true);
+        }
+      );
+    } finally {
+      ToastQueue.clear();
+    }
+  },
+};
+
+// Q16: how the expanded view behaves next to other open surfaces.
+export const ExpandedOverPopoverTest: Story = {
+  render: () => html`
+    <button id="popover-trigger">Open popover</button>
+    <swc-popover for="popover-trigger" accessible-label="Background popover">
+      <button id="in-popover">In popover</button>
+    </swc-popover>
+    <swc-toast-region></swc-toast-region>
+  `,
+  play: async ({ canvasElement, step }) => {
+    ToastQueue.clear();
+    const container = await getComponent<ToastRegion>(
+      canvasElement,
+      'swc-toast-region'
+    );
+    const popover = await getComponent<Popover>(canvasElement, 'swc-popover');
+    try {
+      const front = await addQueue(container, ['A', 'B']);
+      await userEvent.click(
+        canvasElement.querySelector<HTMLElement>('#popover-trigger')!
+      );
+      await waitFor(() => expect(popover.open, 'popover open').toBe(true));
+      showAllOf(front)!.click();
+      await waitForExpanded(container, true);
+      // Chromium closes an open `popover="auto"` on `showModal()`; WebKit leaves it open under the scrim.
+      const openAfterExpand = popover.open;
+
+      await step('the popover cannot take focus behind the view', () => {
+        const inPopover =
+          canvasElement.querySelector<HTMLElement>('#in-popover')!;
+        inPopover.focus();
+        expect(getActiveElement(document), 'focus').not.toBe(inPopover);
+      });
+
+      await step(
+        'Escape collapses the view and leaves the popover as it was',
+        async () => {
+          await userEvent.keyboard('{Escape}');
+          await waitForExpanded(container, false);
+          expect(popover.open, 'popover open').toBe(openAfterExpand);
+        }
+      );
+    } finally {
+      popover.open = false;
+      ToastQueue.clear();
+    }
+  },
+};
+
+export const ExpandedOverTooltipTest: Story = {
+  render: () => html`
+    <swc-button id="tooltip-trigger">Tooltip trigger</swc-button>
+    <swc-tooltip for="tooltip-trigger" manual>Background tooltip</swc-tooltip>
+    <swc-toast-region></swc-toast-region>
+  `,
+  play: async ({ canvasElement, step }) => {
+    ToastQueue.clear();
+    const container = await getComponent<ToastRegion>(
+      canvasElement,
+      'swc-toast-region'
+    );
+    const tooltip = await getComponent<Tooltip>(canvasElement, 'swc-tooltip');
+    try {
+      const front = await addQueue(container, ['A', 'B']);
+      tooltip.open = true;
+      await waitFor(() => expect(tooltip.open, 'tooltip open').toBe(true));
+      showAllOf(front)!.click();
+      await waitForExpanded(container, true);
+
+      await step(
+        'Escape collapses the view first, because it registered on the dismissible stack last',
+        async () => {
+          await userEvent.keyboard('{Escape}');
+          await waitForExpanded(container, false);
+          expect(tooltip.open, 'tooltip open').toBe(true);
+        }
+      );
+    } finally {
+      tooltip.open = false;
+      ToastQueue.clear();
+    }
+  },
+};
+
+export const ToastInsideModalTest: Story = {
+  render: () => html`
+    <dialog id="consumer-modal">
+      <button id="in-modal">Inside the modal</button>
+    </dialog>
+    <swc-toast-region></swc-toast-region>
+  `,
+  play: async ({ canvasElement, step }) => {
+    ToastQueue.clear();
+    const container = await getComponent<ToastRegion>(
+      canvasElement,
+      'swc-toast-region'
+    );
+    const modal =
+      canvasElement.querySelector<HTMLDialogElement>('#consumer-modal')!;
+    try {
+      modal.showModal();
+      const front = await addQueue(container, ['A', 'B']);
+
+      await step(
+        'a consumer modal makes the collapsed toast inert, so it cannot be expanded by keyboard',
+        () => {
+          front.focus();
+          expect(getActiveElement(document), 'toast focus').not.toBe(front);
+          showAllOf(front)!.focus();
+          expect(
+            deepContains(front, getActiveElement(document)),
+            'Show all focus'
+          ).toBe(false);
+        }
+      );
+
+      await step(
+        'a view opened from script, not by the user, stacks above the modal and Escape returns to it',
+        async () => {
+          // Chromium groups a modal opened without user activation with the one below it,
+          // so one Escape would close both. A real press inside the consumer modal first
+          // matches an app that expands the view in response to the user.
+          await userEvent.click(
+            canvasElement.querySelector<HTMLElement>('#in-modal')!
+          );
+          showAllOf(front)!.click();
+          await waitForExpanded(container, true);
+          expect(getDialog(container)!.matches(':modal'), 'modal').toBe(true);
+          await userEvent.keyboard('{Escape}');
+          await waitForExpanded(container, false);
+          expect(modal.open, 'consumer modal open').toBe(true);
+        }
+      );
+    } finally {
+      modal.close();
+      ToastQueue.clear();
+    }
   },
 };

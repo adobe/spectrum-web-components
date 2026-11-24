@@ -9,8 +9,13 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-export * from './Toast.base.js';
-export * from './Toast.types.js';
-export * from './ToastContainer.base.js';
-export * from './ToastContainer.types.js';
-export * from './ToastQueue.js';
+export * from './Toast.js';
+export * from './ToastRegion.js';
+export {
+  ToastQueue,
+  TOAST_REGION_PLACEMENTS,
+  type ToastRegionPlacement,
+  type ToastQueueEntry,
+  type ToastQueueItem,
+  type ToastQueueOptions,
+} from '@adobe/spectrum-wc-core/components/toast/index.js';

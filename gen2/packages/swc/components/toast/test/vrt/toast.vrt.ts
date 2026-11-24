@@ -18,9 +18,9 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import {
   TOAST_VARIANTS,
   type ToastVariant,
-} from '@adobe/spectrum-wc-core/components/toast-container/index.js';
+} from '@adobe/spectrum-wc-core/components/toast/index.js';
 
-import '@adobe/spectrum-wc/components/toast-container/swc-toast.js';
+import '@adobe/spectrum-wc/components/toast/swc-toast.js';
 
 import {
   forcedColorsVrtParameters,
@@ -30,13 +30,12 @@ import {
   vrtParameters,
 } from '../../../../.storybook/helpers/index.js';
 
-// TODO(SWC-2654): add Show all coverage.
-// TODO(SWC-2654): add expanded-view, scrim, and Clear all / Collapse coverage.
+// Show all and the expanded view are covered in toast-region.vrt.ts, where the region sets them up.
 
 // Metadata
 
 const meta: Meta = {
-  title: 'Toast container/Toast VRT',
+  title: 'Toast region/Toast VRT',
   component: 'swc-toast',
   tags: ['dev'],
 };

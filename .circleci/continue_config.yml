@@ -430,12 +430,23 @@ jobs:
           name: Run gen2 << parameters.browser >> tests (shard $CIRCLE_NODE_INDEX/$CIRCLE_NODE_TOTAL)
           command: |
             if [ "<< parameters.browser >>" = "webkit" ]; then
-              # Keep one visible WebKit test window on the virtual display.
-              VITEST_BROWSER_INSTANCES=webkit xvfb-run -a \
+              # Headed WebKit on xvfb does not composite the toast stack's
+              # perspective, so peek hit-testing fails. Toast runs headless
+              # below. Storybook's Vitest plugin ignores test.include, so this
+              # has to be a second command rather than a second browser instance.
+              VITEST_SKIP_TOAST=1 VITEST_BROWSER_INSTANCES=webkit xvfb-run -a \
                 yarn workspace @spectrum-web-components/gen2 run test \
                 --browser.headless=false \
                 --maxWorkers=1 \
                 --shard=$((CIRCLE_NODE_INDEX + 1))/$CIRCLE_NODE_TOTAL
+              if [ "$CIRCLE_NODE_INDEX" = "0" ]; then
+                VITEST_JUNIT_OUTPUT=./test-results/junit-toast.xml \
+                  VITEST_BROWSER_INSTANCES=webkit xvfb-run -a \
+                  yarn workspace @spectrum-web-components/gen2 run test \
+                  --browser.headless=true \
+                  --maxWorkers=1 \
+                  components/toast
+              fi
             else
               VITEST_BROWSER_INSTANCES=<< parameters.browser >> \
                 yarn workspace @spectrum-web-components/gen2 run test \

@@ -13,7 +13,7 @@ import type {
   ToastQueueEntry,
   ToastQueueItem,
   ToastQueueOptions,
-} from './ToastContainer.types.js';
+} from './ToastRegion.types.js';
 
 class ToastQueueState {
   private _entries: ToastQueueEntry[] = [];

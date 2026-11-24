@@ -25,11 +25,26 @@ import type { ReactiveController, ReactiveElement } from 'lit';
 
 let lockCount = 0;
 let savedOverflow = '';
+let savedGutter = '';
+let savedPadding = '';
 
 function acquirePageScrollLock(): void {
   if (lockCount === 0) {
     const html = document.documentElement;
+    // A classic scrollbar takes up width. Hiding it would widen the page, and shift centered or
+    // end-aligned content (fixed surfaces included) by the scrollbar's width, so that width is
+    // kept. Overlay scrollbars take up none, so there is nothing to keep.
+    const scrollbar = window.innerWidth - html.clientWidth;
     savedOverflow = html.style.overflow;
+    savedGutter = html.style.scrollbarGutter;
+    savedPadding = html.style.paddingInlineEnd;
+    if (scrollbar > 0) {
+      if (CSS.supports('scrollbar-gutter', 'stable')) {
+        html.style.scrollbarGutter = 'stable';
+      } else {
+        html.style.paddingInlineEnd = `${scrollbar}px`;
+      }
+    }
     html.style.overflow = 'hidden';
   }
   lockCount += 1;
@@ -41,14 +56,21 @@ function releasePageScrollLock(): void {
   }
   lockCount -= 1;
   if (lockCount === 0) {
-    document.documentElement.style.overflow = savedOverflow;
+    const html = document.documentElement;
+    html.style.overflow = savedOverflow;
+    html.style.scrollbarGutter = savedGutter;
+    html.style.paddingInlineEnd = savedPadding;
     savedOverflow = '';
+    savedGutter = '';
+    savedPadding = '';
   }
 }
 
 /**
  * Locks page scroll behind a blocking surface (a modal popover, dialog, or tray)
- * by setting `overflow: hidden` on the document element. A component's shadow
+ * by setting `overflow: hidden` on the document element. Where the page has a
+ * classic scrollbar, its width is kept (`scrollbar-gutter: stable`, or padding
+ * where that is not supported), so the page does not shift. A component's shadow
  * stylesheet cannot reach `<html>`, so this is done in JS.
  *
  * The lock is reference-counted at module scope so concurrent locks from stacked

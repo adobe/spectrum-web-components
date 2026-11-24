@@ -11,15 +11,14 @@
  */
 import type { ToastVariant } from './Toast.types.js';
 
-export const TOAST_CONTAINER_PLACEMENTS = [
+export const TOAST_REGION_PLACEMENTS = [
   'top',
   'top-end',
   'bottom',
   'bottom-end',
 ] as const;
 
-export type ToastContainerPlacement =
-  (typeof TOAST_CONTAINER_PLACEMENTS)[number];
+export type ToastRegionPlacement = (typeof TOAST_REGION_PLACEMENTS)[number];
 
 export interface ToastQueueOptions {
   variant?: ToastVariant;

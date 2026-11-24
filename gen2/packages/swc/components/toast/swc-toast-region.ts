@@ -9,14 +9,14 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+import { defineElement } from '@adobe/spectrum-wc-core/element/index.js';
 
-export const TOAST_VARIANTS = [
-  'neutral',
-  'info',
-  'positive',
-  'negative',
-] as const;
+import { ToastRegion } from './ToastRegion.js';
 
-export const SWC_TOAST_ACTION_EVENT = 'swc-toast-action' as const;
+declare global {
+  interface HTMLElementTagNameMap {
+    'swc-toast-region': ToastRegion;
+  }
+}
 
-export type ToastVariant = (typeof TOAST_VARIANTS)[number];
+defineElement('swc-toast-region', ToastRegion);

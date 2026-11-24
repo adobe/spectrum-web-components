@@ -9,13 +9,16 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-export * from './Toast.js';
-export * from './ToastContainer.js';
-export {
-  ToastQueue,
-  TOAST_CONTAINER_PLACEMENTS,
-  type ToastContainerPlacement,
-  type ToastQueueEntry,
-  type ToastQueueItem,
-  type ToastQueueOptions,
-} from '@adobe/spectrum-wc-core/components/toast-container/index.js';
+
+export const TOAST_VARIANTS = [
+  'neutral',
+  'info',
+  'positive',
+  'negative',
+] as const;
+
+export const SWC_TOAST_ACTION_EVENT = 'swc-toast-action' as const;
+
+export const SWC_TOAST_EXPAND_EVENT = 'swc-toast-expand' as const;
+
+export type ToastVariant = (typeof TOAST_VARIANTS)[number];

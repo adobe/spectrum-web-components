@@ -101,6 +101,34 @@ export abstract class ToastBase extends SpectrumElement {
   @property({ type: String, attribute: 'action-label' })
   public actionLabel?: string;
 
+  /**
+   * @internal
+   *
+   * The label for the Show all control. When set, Toast renders the control,
+   * which dispatches `swc-toast-expand`. The region sets it on the front
+   * toast while two or more toasts are queued, from its own `show-all-label`.
+   */
+  @property({ attribute: false })
+  public showAllLabel?: string;
+
+  /**
+   * @internal
+   *
+   * Where the Show all chevron points: toward the side where the expanded
+   * list opens. The region sets it from its placement.
+   */
+  @property({ attribute: false })
+  public showAllDirection: 'up' | 'down' = 'up';
+
+  /**
+   * @internal
+   *
+   * Whether the message is announced when the toast opens. The region
+   * turns this off for toasts it shows only in the expanded list, because each
+   * one was announced when it came to the front. Set it before the toast connects.
+   */
+  public announces = true;
+
   // ──────────────────────
   //     IMPLEMENTATION
   // ──────────────────────
@@ -217,7 +245,7 @@ export abstract class ToastBase extends SpectrumElement {
   protected override willUpdate(changedProperties: PropertyValues): void {
     super.willUpdate(changedProperties);
     if (this.open && changedProperties.get('open') === false) {
-      this._contentRevealed = false;
+      this._contentRevealed = !this.announces;
       this.dispatchEvent(
         new CustomEvent('swc-open', {
           bubbles: true,
@@ -248,7 +276,7 @@ export abstract class ToastBase extends SpectrumElement {
       prop: 'variant',
       value: this.variant,
       valid: TOAST_VARIANTS,
-      url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-toast-container--docs',
+      url: 'https://spectrum-web-components.adobe.com/?path=/docs/components-toast-region--docs',
     });
     if (!this.hasUpdated || changedProperties.has('open')) {
       this.setAttribute('tabindex', '0');
@@ -277,7 +305,9 @@ export abstract class ToastBase extends SpectrumElement {
         this._closeEventDispatched = false;
         return;
       }
-      this.scheduleContentReveal();
+      if (this.announces) {
+        this.scheduleContentReveal();
+      }
       this.dispatchAfterTransition(() => {
         this.dispatchEvent(
           new CustomEvent('swc-after-open', {

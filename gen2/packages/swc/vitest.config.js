@@ -27,6 +27,19 @@ const browserInstances = (process.env.VITEST_BROWSER_INSTANCES ?? 'chromium')
 const resolvedBrowserInstances =
   browserInstances.length > 0 ? browserInstances : [{ browser: 'chromium' }];
 
+// .vrt.ts stories are authored for Chromatic snapshots, which
+// runs their play functions itself; keep them out of Vitest.
+// `**` doesn't match `..`, so sibling packages (icons) need
+// their own pattern.
+const storybookExcludes = [
+  ...configDefaults.exclude,
+  '**/*.vrt.ts',
+  '../**/*.vrt.ts',
+  // Linux WebKit CI runs toast in a separate headless command. The headed
+  // command sets this so those files are not collected twice.
+  ...(process.env.VITEST_SKIP_TOAST === '1' ? ['components/toast/**'] : []),
+];
+
 // Cap parallel browser contexts for memory-heavy browsers. At the default
 // (CPU-count) parallelism they exceed CI's 8 GiB and get OOM-killed.
 const maxWorkersByBrowser = { webkit: 2, firefox: 4 };
@@ -55,7 +68,16 @@ export default mergeConfig(
       ...browserMemoryLimits,
       // JUnit reporter for CI test results
       reporters: process.env.CI
-        ? ['default', ['junit', { outputFile: './test-results/junit.xml' }]]
+        ? [
+            'default',
+            [
+              'junit',
+              {
+                outputFile:
+                  process.env.VITEST_JUNIT_OUTPUT ?? './test-results/junit.xml',
+              },
+            ],
+          ]
         : ['default'],
       coverage: {
         provider: 'v8',
@@ -179,15 +201,7 @@ export default mergeConfig(
           },
           test: {
             name: 'storybook',
-            // .vrt.ts stories are authored for Chromatic snapshots, which
-            // runs their play functions itself; keep them out of Vitest.
-            // `**` doesn't match `..`, so sibling packages (icons) need
-            // their own pattern.
-            exclude: [
-              ...configDefaults.exclude,
-              '**/*.vrt.ts',
-              '../**/*.vrt.ts',
-            ],
+            exclude: storybookExcludes,
             browser: {
               enabled: true,
               provider: playwright(),

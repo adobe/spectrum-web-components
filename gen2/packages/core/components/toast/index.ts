@@ -9,14 +9,8 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { defineElement } from '@adobe/spectrum-wc-core/element/index.js';
-
-import { ToastContainer } from './ToastContainer.js';
-
-declare global {
-  interface HTMLElementTagNameMap {
-    'swc-toast-container': ToastContainer;
-  }
-}
-
-defineElement('swc-toast-container', ToastContainer);
+export * from './Toast.base.js';
+export * from './Toast.types.js';
+export * from './ToastRegion.base.js';
+export * from './ToastRegion.types.js';
+export * from './ToastQueue.js';

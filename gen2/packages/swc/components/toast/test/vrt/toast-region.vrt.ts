@@ -15,12 +15,12 @@ import { expect, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 
 import {
-  type ToastContainerPlacement,
   ToastQueue,
+  type ToastRegionPlacement,
   type ToastVariant,
-} from '@adobe/spectrum-wc-core/components/toast-container/index.js';
+} from '@adobe/spectrum-wc-core/components/toast/index.js';
 
-import '@adobe/spectrum-wc/components/toast-container/swc-toast-container.js';
+import '@adobe/spectrum-wc/components/toast/swc-toast-region.js';
 
 import {
   forcedColorsVrtParameters,
@@ -29,13 +29,11 @@ import {
   vrtParameters,
 } from '../../../../.storybook/helpers/index.js';
 
-// TODO(SWC-2654): add expanded-view, scrim, and Clear all / Collapse coverage.
-
 // Metadata
 
 const meta: Meta = {
-  title: 'Toast container/Container VRT',
-  component: 'swc-toast-container',
+  title: 'Toast region/Region VRT',
+  component: 'swc-toast-region',
   tags: ['dev'],
   beforeEach: () => {
     ToastQueue.clear();
@@ -48,12 +46,16 @@ export default meta;
 // Helpers
 
 type StackSpec = {
-  placement?: ToastContainerPlacement;
+  placement?: ToastRegionPlacement;
   // Variants in the order they are added, so the last one is the front toast.
   variants?: ToastVariant[];
   mode?: 'light' | 'dark';
   dir?: 'ltr' | 'rtl';
   focusFront?: boolean;
+  // Opens the expanded view through Show all.
+  expanded?: boolean;
+  // Forces focus on the second listed toast and on Clear all in the expanded view.
+  focusInList?: boolean;
   // Replaces the front toast's message, and gives it an action when `actionLabel` is set.
   frontToast?: { message: string; actionLabel?: string };
   parameters?: Story['parameters'];
@@ -61,7 +63,7 @@ type StackSpec = {
 
 const defaultVariants: ToastVariant[] = ['info', 'positive', 'negative'];
 
-// The container is a single fixed region and every container shares one
+// The toast region is fixed and every region shares one
 // queue, so each snapshot is its own story.
 const stackStory = ({
   placement = 'bottom',
@@ -69,14 +71,16 @@ const stackStory = ({
   mode,
   dir,
   focusFront = false,
+  expanded = false,
+  focusInList = false,
   frontToast,
   parameters = vrtParameters,
 }: StackSpec = {}): Story => ({
   render: () => {
     const container = html`
-      <swc-toast-container placement=${placement}></swc-toast-container>
+      <swc-toast-region placement=${placement}></swc-toast-region>
     `;
-    // The spacer stretches the themed background to the viewport, where the container is fixed.
+    // The spacer stretches the themed background to the viewport, where the region is fixed.
     return mode
       ? theme(
           html`
@@ -103,7 +107,7 @@ const stackStory = ({
       }
       ToastQueue.add(`Notification ${index + 1}`, { variant });
     });
-    const container = canvasElement.querySelector('swc-toast-container')!;
+    const container = canvasElement.querySelector('swc-toast-region')!;
     await container.updateComplete;
     const front = container.shadowRoot?.querySelector('swc-toast');
     // Waits for the front toast's enter transition so the snapshot is at rest.
@@ -116,6 +120,40 @@ const stackStory = ({
     });
     if (focusFront && front) {
       forcePseudoState(front, 'focus-visible');
+    }
+    if (!expanded || !front) {
+      return;
+    }
+    front.shadowRoot!.querySelector<HTMLElement>('.swc-Toast-showAll')!.click();
+    await waitFor(() =>
+      expect(
+        container.shadowRoot?.querySelector('dialog')?.open,
+        'expanded'
+      ).toBe(true)
+    );
+    const listed = [
+      ...container.shadowRoot!.querySelectorAll<HTMLElement>('swc-toast'),
+    ];
+    // Waits for every listed toast's enter transition so the snapshot is at rest.
+    await waitFor(() => {
+      for (const toast of listed) {
+        const surface = toast.shadowRoot?.querySelector('.swc-Toast');
+        expect(
+          surface && getComputedStyle(surface).opacity,
+          'listed toast opacity'
+        ).toBe('1');
+      }
+    });
+    // Show all moves focus to the front toast; drop it so only forced focus shows.
+    front.blur();
+    if (focusInList) {
+      forcePseudoState(listed[1], 'focus-visible');
+      const clearAll = container.shadowRoot!.querySelector(
+        '.swc-ToastRegion-controls swc-action-button'
+      );
+      if (clearAll) {
+        forcePseudoState(clearAll, 'focus-visible', '.swc-ActionButton');
+      }
     }
   },
 });
@@ -133,6 +171,11 @@ export const TopEndStack: Story = stackStory({ placement: 'top-end' });
 // Neutral layers use the default background, which has no variant modifier.
 export const NeutralStack: Story = stackStory({
   variants: ['neutral', 'neutral', 'negative'],
+});
+
+// A front toast with no icon lines its Show all chevron up with the content edge instead of the text.
+export const NeutralFrontStack: Story = stackStory({
+  variants: ['info', 'positive', 'neutral'],
 });
 
 // Only the two layers behind the front toast render, however many are queued.
@@ -160,5 +203,36 @@ export const TallFrontToastStack: Story = stackStory({
 export const FocusedStack: Story = stackStory({ focusFront: true });
 
 export const ForcedColors: Story = stackStory({
+  parameters: forcedColorsVrtParameters,
+});
+
+// The expanded list sits flush with the anchored edge, newest toast nearest it, with Clear all and Collapse on the far side.
+export const ExpandedBottom: Story = stackStory({
+  expanded: true,
+  variants: ['neutral', 'info', 'positive', 'negative'],
+  frontToast: { message: 'File could not be saved', actionLabel: 'Retry' },
+});
+
+// At the top, the list and the controls run the other way.
+export const ExpandedTop: Story = stackStory({
+  placement: 'top',
+  expanded: true,
+});
+
+export const ExpandedDarkRtl: Story = stackStory({
+  placement: 'bottom-end',
+  mode: 'dark',
+  dir: 'rtl',
+  expanded: true,
+});
+
+// Focus rings are white against the scrim, on toasts and on the controls.
+export const ExpandedFocused: Story = stackStory({
+  expanded: true,
+  focusInList: true,
+});
+
+export const ExpandedForcedColors: Story = stackStory({
+  expanded: true,
   parameters: forcedColorsVrtParameters,
 });
