@@ -436,6 +436,13 @@ jobs:
                 --browser.headless=false \
                 --maxWorkers=1 \
                 --shard=$((CIRCLE_NODE_INDEX + 1))/$CIRCLE_NODE_TOTAL
+            elif [ "<< parameters.browser >>" = "firefox" ] &&
+              [ "$CIRCLE_BRANCH" = "miwhabonini/test-focus-visible-diagnostics" ]; then
+              echo "Firefox diagnostic comparison: maxWorkers=1"
+              VITEST_BROWSER_INSTANCES=firefox \
+                yarn workspace @spectrum-web-components/gen2 run test \
+                --maxWorkers=1 \
+                --shard=$((CIRCLE_NODE_INDEX + 1))/$CIRCLE_NODE_TOTAL
             else
               VITEST_BROWSER_INSTANCES=<< parameters.browser >> \
                 yarn workspace @spectrum-web-components/gen2 run test \
@@ -460,9 +467,10 @@ jobs:
             fi
 
             for attempt in $(seq 2 20); do
-              echo "Focus-visible diagnostics: attempt $attempt/20 (shard $((CIRCLE_NODE_INDEX + 1))/$CIRCLE_NODE_TOTAL)"
+              echo "Focus-visible diagnostics: attempt $attempt/20 (shard $((CIRCLE_NODE_INDEX + 1))/$CIRCLE_NODE_TOTAL; maxWorkers=1)"
               VITEST_BROWSER_INSTANCES=firefox \
                 yarn workspace @spectrum-web-components/gen2 run test \
+                --maxWorkers=1 \
                 --shard=$((CIRCLE_NODE_INDEX + 1))/$CIRCLE_NODE_TOTAL || exit "$?"
             done
       - store_test_results:
