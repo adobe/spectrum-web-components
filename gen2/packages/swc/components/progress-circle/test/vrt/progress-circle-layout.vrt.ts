@@ -36,9 +36,17 @@ export default meta;
 
 const layoutContent = () => html`
   ${layoutContextsLegend}
-  ${layoutContexts(html`
-    <swc-progress-circle progress="50" label="Loading"></swc-progress-circle>
-  `)}
+  ${layoutContexts(
+    html`
+      <swc-progress-circle progress="50" label="Loading"></swc-progress-circle>
+    `,
+    {
+      descriptions: {
+        'inline-flow':
+          'A block host takes its own line between the text and has no descender gap.',
+      },
+    }
+  )}
 `;
 
 // VRT stories

@@ -31,10 +31,8 @@
   }
 }
 
-/* place-self centers the circle in any flex or grid parent, by design. */
 :host {
-  display: inline-block;
-  place-self: center;
+  display: block;
   inline-size: fit-content;
   block-size: fit-content;
 }

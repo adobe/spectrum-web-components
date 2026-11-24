@@ -38,11 +38,19 @@ const SQUARE_SRC = './images/avatar-preview.png';
 
 const layoutContent = () => html`
   ${layoutContextsLegend}
-  ${layoutContexts(html`
-    <swc-thumbnail>
-      <img src=${SQUARE_SRC} alt="Preview" />
-    </swc-thumbnail>
-  `)}
+  ${layoutContexts(
+    html`
+      <swc-thumbnail>
+        <img src=${SQUARE_SRC} alt="Preview" />
+      </swc-thumbnail>
+    `,
+    {
+      descriptions: {
+        'inline-flow':
+          'A block host takes its own line between the text and has no descender gap.',
+      },
+    }
+  )}
 `;
 
 // VRT stories

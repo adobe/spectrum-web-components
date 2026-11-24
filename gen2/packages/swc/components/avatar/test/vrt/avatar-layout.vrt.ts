@@ -38,9 +38,17 @@ const PLACEHOLDER_SRC = './images/avatar-preview.png';
 
 const layoutContent = () => html`
   ${layoutContextsLegend}
-  ${layoutContexts(html`
-    <swc-avatar src=${PLACEHOLDER_SRC} alt="Jane Doe"></swc-avatar>
-  `)}
+  ${layoutContexts(
+    html`
+      <swc-avatar src=${PLACEHOLDER_SRC} alt="Jane Doe"></swc-avatar>
+    `,
+    {
+      descriptions: {
+        'inline-flow':
+          'A block host takes its own line between the text and has no descender gap.',
+      },
+    }
+  )}
 `;
 
 // VRT stories
