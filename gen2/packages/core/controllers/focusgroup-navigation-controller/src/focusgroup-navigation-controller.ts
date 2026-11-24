@@ -84,6 +84,18 @@ export type FocusgroupNavigationOptions = {
   onActiveItemChange?: (active: HTMLElement | null) => void;
 
   /**
+   * Supplies the string {@link FocusgroupNavigationController.findItemByTextPrefix} matches
+   * against, overriding the default `aria-label` → `aria-labelledby` → `textContent` chain.
+   *
+   * Needed when an item names itself through `ElementInternals`
+   * (`internals.ariaLabelledByElements`) rather than content attributes, which the default
+   * chain cannot read, or when `textContent` would fold in text the name excludes, such as a
+   * description or a keyboard shortcut. Return an empty string to fall back to the default
+   * chain for that item.
+   */
+  getTypeaheadLabel?: (item: HTMLElement) => string;
+
+  /**
    * When set to a **non-zero** integer, **Page Up** / **Page Down** move focus by that many
    * positions in `getItems()` order for **`horizontal`**, **`vertical`**, and **`both`** modes
    * (respects **`wrap`** the same way as single-step arrows).
@@ -420,21 +432,51 @@ export class FocusgroupNavigationController implements ReactiveController {
    * @returns True if a matching item was found and roving tabindex was applied.
    */
   public focusFirstItemByTextPrefix(prefix: string): boolean {
-    const trimmed = prefix.trim();
-    if (trimmed === '') {
-      return false;
-    }
-    const needle = trimmed.toLowerCase();
-    const items = this.getEligibleItems();
-    const match = items.find((el) => {
-      const label = this.getItemTypeaheadLabel(el).toLowerCase();
-      return label.startsWith(needle);
-    });
+    const match = this.findItemByTextPrefix(prefix);
     if (!match) {
       return false;
     }
     this.applyRovingTabindex(match, 'programmatic');
     return true;
+  }
+
+  /**
+   * Returns the first **eligible** item (same set as arrow navigation) whose typeahead label
+   * starts with `prefix`, without changing `tabindex`, focus, or any other state.
+   *
+   * Prefer this over {@link focusFirstItemByTextPrefix} when the caller has to inspect the
+   * match before acting on it. {@link focusFirstItemByTextPrefix} reports only whether *some*
+   * item matched, and the tab stop it then applies may land on a **different** element than the
+   * match: a natively disabled match is redirected to the first non-disabled item by
+   * {@link applyRovingTabindex}. Focusing {@link getActiveItem} after a match can therefore move
+   * focus to an unrelated item. Matching here first lets the caller decide instead.
+   *
+   * Matching is **case-insensitive**; see {@link getItemTypeaheadLabel} for how the label is
+   * resolved.
+   *
+   * @param prefix - String to match as a leading substring after `trim`; whitespace-only yields
+   *   no match and returns `null`.
+   * @param accept - Optional filter. An item it rejects is skipped and the search **continues**,
+   *   so an unusable item never blocks a later match. Pass one when some items match the prefix
+   *   but cannot be acted on, such as `aria-disabled` rows that stay arrow-reachable.
+   * @returns The first matching accepted item, or null when nothing matches.
+   */
+  public findItemByTextPrefix(
+    prefix: string,
+    accept?: (item: HTMLElement) => boolean
+  ): HTMLElement | null {
+    const trimmed = prefix.trim();
+    if (trimmed === '') {
+      return null;
+    }
+    const needle = trimmed.toLowerCase();
+    return (
+      this.getEligibleItems().find(
+        (el) =>
+          (accept?.(el) ?? true) &&
+          this.getItemTypeaheadLabel(el).toLowerCase().startsWith(needle)
+      ) ?? null
+    );
   }
 
   /**
@@ -590,11 +632,17 @@ export class FocusgroupNavigationController implements ReactiveController {
   }
 
   /**
-   * String used for {@link focusFirstItemByTextPrefix}: prefers **`aria-label`**, then text from
-   * **`aria-labelledby`** (IDs resolved in the shadow root or document), else **`textContent`**.
+   * String used for {@link findItemByTextPrefix}: prefers
+   * {@link FocusgroupNavigationOptions.getTypeaheadLabel} when it returns a non-empty string,
+   * then **`aria-label`**, then text from **`aria-labelledby`** (IDs resolved in the shadow root
+   * or document), else **`textContent`**.
    * All branches are trimmed; empty strings fall through to the next source.
    */
   private getItemTypeaheadLabel(el: HTMLElement): string {
+    const fromHook = this.options.getTypeaheadLabel?.(el)?.trim();
+    if (fromHook) {
+      return fromHook;
+    }
     const fromAria = el.getAttribute('aria-label')?.trim();
     if (fromAria) {
       return fromAria;

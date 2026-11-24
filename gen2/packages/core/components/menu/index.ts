@@ -11,4 +11,6 @@
  */
 
 export * from './Menu.base.js';
+export * from './MenuItem.base.js';
 export * from './Menu.types.js';
+export * from './MenuItem.types.js';
