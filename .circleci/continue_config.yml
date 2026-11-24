@@ -441,30 +441,6 @@ jobs:
                 yarn workspace @spectrum-web-components/gen2 run test \
                 --shard=$((CIRCLE_NODE_INDEX + 1))/$CIRCLE_NODE_TOTAL
             fi
-      - run:
-          name: Repeat focus-visible Firefox shard (diagnostic branch only)
-          command: |
-            if [ "<< parameters.browser >>" != "firefox" ] ||
-              [ "$CIRCLE_BRANCH" != "miwhabonini/test-focus-visible-diagnostics" ]; then
-              exit 0
-            fi
-
-            report=gen2/packages/swc/test-results/junit.xml
-            if [ ! -f "$report" ]; then
-              echo "Missing JUnit report: $report" >&2
-              exit 1
-            fi
-            if ! grep -Fq "core/utils/test/is-focus-visible-in-tree.test.ts" "$report"; then
-              echo "This shard does not contain the focus-visible test; skipping repetitions."
-              exit 0
-            fi
-
-            for attempt in $(seq 2 20); do
-              echo "Focus-visible diagnostics: attempt $attempt/20 (shard $((CIRCLE_NODE_INDEX + 1))/$CIRCLE_NODE_TOTAL)"
-              VITEST_BROWSER_INSTANCES=firefox \
-                yarn workspace @spectrum-web-components/gen2 run test \
-                --shard=$((CIRCLE_NODE_INDEX + 1))/$CIRCLE_NODE_TOTAL || exit "$?"
-            done
       - store_test_results:
           path: /root/project/gen2/packages/swc/test-results
 
