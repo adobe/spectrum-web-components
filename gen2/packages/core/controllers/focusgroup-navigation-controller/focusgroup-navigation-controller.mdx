@@ -27,10 +27,12 @@ import * as FocusgroupNavigationControllerStories from './stories/focusgroup-nav
 - **`memory`**: <kbd>Tab</kbd> returns to the last focused item instead of resetting, similar to the `nomemory` concepts in the `focusgroup` proposal.
 - **`skipDisabled`**: when `true`, elements with `disabled` or `aria-disabled="true"` are excluded from the roving tab stop and arrow navigation.
 - **`pageStep`**: non-zero positive integer enables <kbd>Page Up</kbd> / <kbd>Page Down</kbd> movement.
+- **`getTypeaheadLabel`**: supplies the string typeahead matches against, replacing the default `aria-label` / `aria-labelledby` / `textContent` chain.
 
 ### Programmatic API
 
 - **`setActiveItem(element)`**: sets roving `tabindex` to a chosen eligible item (does **not** call `focus()`; call `getActiveItem()?.focus()` afterward).
+- **`findItemByTextPrefix(prefix, accept?)`**: returns the first eligible item whose label starts with `prefix` (case-insensitive), changing nothing. An item `accept` rejects is skipped and the search continues.
 - **`focusFirstItemByTextPrefix(prefix)`**: sets roving `tabindex` to the first eligible item whose label starts with `prefix` (case-insensitive). Does **not** call `focus()`.
 
 ## Basic usage
@@ -199,15 +201,34 @@ if (el && this.navigation.setActiveItem(el)) {
 
 **`focusFirstItemByTextPrefix(prefix)`** updates roving `tabindex` to the first eligible item whose typeahead label starts with `prefix` (case-insensitive), in `getItems()` order. Matching uses each item's typeahead label: trimmed **`aria-label`** if set, otherwise text from **`aria-labelledby`** references (in order), otherwise trimmed **`textContent`**. Only **eligible** items are considered (respects **`skipDisabled`**). The first match in `getItems()` order becomes the roving tab stop; **`focus()` is not called** by the controller.
 
-Move focus yourself on **`getActiveItem()`**. From a **`click`** handler on another control, defer `focus()` with **`queueMicrotask`** (or similar) so the browser does not move focus back to the clicked element after your handler returns.
+Move focus yourself. From a **`click`** handler on another control, defer `focus()` with **`queueMicrotask`** (or similar) so the browser does not move focus back to the clicked element after your handler returns.
+
+> ⚠️ **Important:** Do not focus **`getActiveItem()`** after a match. A natively `disabled` match cannot hold the roving tab stop, so it is redirected to the first non-disabled item, and `getActiveItem()` then returns that item rather than the match. Focusing it moves focus to something the typed prefix never named. Use **`findItemByTextPrefix(prefix, accept?)`** instead and focus the match itself.
+
+Pass `accept` when some items match the prefix but cannot be acted on. A rejected item is skipped and the search **continues**, so it never blocks a later match. This mirrors how React Spectrum resolves typeahead: its list delegate walks past disabled items rather than stopping at them.
 
 ```typescript
 // Example: after the user types into your menu search buffer `buffer`
-if (this.navigation.focusFirstItemByTextPrefix(buffer)) {
+const match = this.navigation.findItemByTextPrefix(
+  buffer,
+  (item) => item.getAttribute('aria-disabled') !== 'true'
+);
+// Nothing reachable matched, so focus stays where it is.
+if (match) {
   queueMicrotask(() => {
-    this.navigation.getActiveItem()?.focus();
+    this.navigation.setActiveItem(match);
+    match.focus();
   });
 }
+```
+
+When an item names itself through `ElementInternals` (`internals.ariaLabelledByElements`) rather than an `aria-label` or `aria-labelledby` **attribute**, the default chain cannot read that name and falls through to `textContent`, which concatenates every child in DOM order. Pass **`getTypeaheadLabel`** so matching uses the same text that names the item:
+
+```typescript
+new FocusgroupNavigationController(this, {
+  getItems: () => this.rows,
+  getTypeaheadLabel: (row) => (row as MyRow).labelText,
+});
 ```
 
 <Canvas of={FocusgroupNavigationControllerStories.TextPrefixFocus} />
@@ -257,13 +278,14 @@ Collapses a composite widget to a single Tab stop by managing `tabindex="0"` on 
 
 ### Methods
 
-| Member                               | Description                                                                                                                                    |
-| ------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| `setOptions(partial)`                | Merge new options and reapply roving tabindex.                                                                                                 |
-| `refresh()`                          | Re-query items and sync tabindex (call after DOM changes).                                                                                     |
-| `setActiveItem(element)`             | Set roving `tabindex` to the given eligible item (does **not** call `focus()`). Returns `false` if ineligible.                                 |
-| `focusFirstItemByTextPrefix(prefix)` | Set roving `tabindex` to the first eligible item matching prefix (case-insensitive). Does **not** call `focus()`. Returns `false` if no match. |
-| `getActiveItem()`                    | Returns the eligible item with `tabindex="0"`, if any.                                                                                         |
+| Member                                  | Description                                                                                                                                                   |
+| --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `setOptions(partial)`                   | Merge new options and reapply roving tabindex.                                                                                                                |
+| `refresh()`                             | Re-query items and sync tabindex (call after DOM changes).                                                                                                    |
+| `setActiveItem(element)`                | Set roving `tabindex` to the given eligible item (does **not** call `focus()`). Returns `false` if ineligible.                                                |
+| `findItemByTextPrefix(prefix, accept?)` | Returns the first eligible item matching prefix (case-insensitive), or `null`. Changes nothing. An item `accept` rejects is skipped and the search continues. |
+| `focusFirstItemByTextPrefix(prefix)`    | Set roving `tabindex` to the first eligible item matching prefix (case-insensitive). Does **not** call `focus()`. Returns `false` if no match.                |
+| `getActiveItem()`                       | Returns the eligible item with `tabindex="0"`, if any.                                                                                                        |
 
 ### Events
 
@@ -288,6 +310,7 @@ host.addEventListener(focusgroupNavigationActiveChange, (event) => {
 | `skipDisabled`       | `boolean`                                              | `false`    | Skip `disabled` / `aria-disabled="true"` items.                                                                                           |
 | `pageStep`           | `number`                                               | —          | Non-zero: <kbd>Page Up</kbd> / <kbd>Page Down</kbd> move this many items (linear) or rows (`grid`). `0` / omitted / non-finite: disabled. |
 | `onActiveItemChange` | `(el) => void`                                         | —          | Callback when active item changes.                                                                                                        |
+| `getTypeaheadLabel`  | `(el) => string`                                       | —          | Text typeahead matches against, replacing the `aria-label` / `aria-labelledby` / `textContent` chain. Empty string falls back to it.      |
 
 ## Appendix
 

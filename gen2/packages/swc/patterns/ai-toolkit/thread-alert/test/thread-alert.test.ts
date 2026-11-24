@@ -21,6 +21,7 @@ import {
   meta as threadAlertMeta,
   Playground,
 } from '../stories/thread-alert.stories.js';
+import type { ThreadAlert } from '../ThreadAlert.js';
 
 const meta: Meta = {
   title: 'AI Toolkit/Thread alert/Tests',
@@ -150,11 +151,13 @@ export const VariantControl: Story = {
     const icons = el.shadowRoot?.querySelectorAll<HTMLElement>(
       '.swc-ThreadAlert-icon'
     );
+    expect(icons).toHaveLength(1);
     expect(
-      [...(icons ?? [])]
-        .filter((icon) => getComputedStyle(icon).display !== 'none')
-        .map((icon) => icon.dataset.variant)
-    ).toEqual(['negative']);
+      icons?.[0].classList.contains('swc-ThreadAlert-icon--negative')
+    ).toBe(true);
+    expect(icons?.[0].firstElementChild?.localName).toBe(
+      'swc-icon-alert-triangle'
+    );
   },
 };
 VariantControl.storyName = 'Variant control';
@@ -171,44 +174,68 @@ export const VariantIcons: Story = {
     </swc-thread-alert>
   `,
   play: async ({ canvasElement, step }) => {
-    const el = await getComponent(canvasElement, 'swc-thread-alert');
-    const icons = el.shadowRoot?.querySelectorAll<HTMLElement>(
-      '.swc-ThreadAlert-icon'
+    const el = await getComponent<ThreadAlert>(
+      canvasElement,
+      'swc-thread-alert'
     );
-    if (!icons) {
-      throw new Error('Expected the status icons');
-    }
+    const icons = () =>
+      el.shadowRoot?.querySelectorAll<HTMLElement>('.swc-ThreadAlert-icon');
 
-    const visibleIcons = () =>
-      [...icons]
-        .filter((icon) => getComputedStyle(icon).display !== 'none')
-        .map((icon) => icon.dataset.variant);
+    const expectIcon = (variant: string, tagName: string) => {
+      const wrappers = icons();
+      expect(wrappers).toHaveLength(1);
+      const wrapper = wrappers?.[0];
+      expect(wrapper?.className.trim()).toBe(
+        `swc-ThreadAlert-icon swc-ThreadAlert-icon--${variant}`
+      );
+      expect(wrapper?.getAttribute('aria-hidden')).toBe('true');
+      expect(wrapper?.children).toHaveLength(1);
+      expect(wrapper?.firstElementChild?.localName).toBe(tagName);
+      expect(wrapper).toBeVisible();
+    };
 
     await step(
       'defaults to the informative icon without reflecting',
       async () => {
-        expect(visibleIcons()).toEqual(['informative']);
+        expectIcon('informative', 'swc-icon-info-circle');
         expect(el.hasAttribute('variant')).toBe(false);
-        expect(
-          [...icons].every(
-            (icon) => icon.getAttribute('aria-hidden') === 'true'
-          )
-        ).toBe(true);
+        expect('variant' in el).toBe(false);
       }
     );
 
-    for (const variant of [
-      'positive',
-      'notice',
-      'negative',
-      'neutral',
-      'informative',
+    const wrapper = icons()?.[0];
+    for (const [variant, tagName] of [
+      ['positive', 'swc-icon-checkmark-circle'],
+      ['notice', 'swc-icon-alert-diamond'],
+      ['negative', 'swc-icon-alert-triangle'],
+      ['informative', 'swc-icon-info-circle'],
     ]) {
-      await step(`updates the ${variant} appearance through CSS`, async () => {
+      await step(`renders only the ${variant} icon`, async () => {
         el.setAttribute('variant', variant);
-        expect(visibleIcons()).toEqual(variant === 'neutral' ? [] : [variant]);
+        await el.updateComplete;
+        expectIcon(variant, tagName);
+        expect(icons()?.[0]).toBe(wrapper);
       });
     }
+
+    for (const variant of ['neutral', '', 'unsupported']) {
+      await step(`omits the icon for variant="${variant}"`, async () => {
+        el.setAttribute('variant', variant);
+        await el.updateComplete;
+        expect(icons()).toHaveLength(0);
+      });
+    }
+
+    await step(
+      'restores the default icon when the attribute is removed',
+      async () => {
+        el.removeAttribute('variant');
+        await el.updateComplete;
+        expectIcon('informative', 'swc-icon-info-circle');
+        expect(el.hasAttribute('variant')).toBe(false);
+        expect('variant' in el).toBe(false);
+      }
+    );
   },
 };
 VariantIcons.storyName = 'Variant icons';

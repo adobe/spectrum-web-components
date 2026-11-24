@@ -10,14 +10,20 @@
  * governing permissions and limitations under the License.
  */
 
-import { html } from 'lit';
+import { html, type TemplateResult } from 'lit';
 import { ref } from 'lit/directives/ref.js';
 import { expect, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
+import '@adobe/spectrum-wc-icons/swc-icon-copy.js';
+import '@adobe/spectrum-wc-icons/swc-icon-cut.js';
+import '@adobe/spectrum-wc-icons/swc-icon-more.js';
+import '@adobe/spectrum-wc/components/action-button/swc-action-button.js';
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc/components/menu/swc-menu.js';
+import '@adobe/spectrum-wc/components/menu/swc-menu-item.js';
+import '@adobe/spectrum-wc/components/thumbnail/swc-thumbnail.js';
 
 // ────────────────
 //    METADATA
@@ -53,8 +59,13 @@ const meta: Meta = {
       type: 'figma',
       url: 'https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=37252-553',
     },
-    // Pending a real Stackblitz project for swc-menu.
+    // Pending a real Stackblitz project for swc-menu. The one linked from the
+    // migration ticket builds against 1st-gen, so it would send consumers to
+    // the API this component replaces.
     // stackblitz: { url: '' },
+    // swc-menu-item is a second element of this component; surface its API
+    // table alongside swc-menu's on the docs page.
+    additionalApiTables: ['swc-menu-item'],
   },
   tags: ['migrated'],
 };
@@ -65,12 +76,10 @@ export default meta;
 //    HELPERS
 // ────────────────────
 
-// Placeholders for `swc-menu-item`, which doesn't exist yet; matches its
-// eventual tag name and `role="menuitem"` so the story stays aXe-clean.
 const defaultItems = html`
-  <swc-menu-item role="menuitem">Cut</swc-menu-item>
-  <swc-menu-item role="menuitem">Copy</swc-menu-item>
-  <swc-menu-item role="menuitem">Paste</swc-menu-item>
+  <swc-menu-item><span slot="label">Cut</span></swc-menu-item>
+  <swc-menu-item><span slot="label">Copy</span></swc-menu-item>
+  <swc-menu-item><span slot="label">Paste</span></swc-menu-item>
 `;
 
 // ────────────────────
@@ -156,6 +165,49 @@ export const Sizes: Story = {
   tags: ['options'],
 };
 
+export const ItemContent: Story = {
+  args: {
+    for: 'item-content-trigger',
+    'actual-placement': null,
+  },
+  render: (args) => html`
+    <swc-button id="item-content-trigger">Edit</swc-button>
+    ${template(
+      args,
+      html`
+        <swc-menu-item>
+          <swc-icon-copy slot="visual"></swc-icon-copy>
+          <span slot="label">Copy</span>
+          <span slot="secondary">⌘C</span>
+        </swc-menu-item>
+        <swc-menu-item disabled>
+          <swc-icon-cut slot="visual"></swc-icon-cut>
+          <span slot="label">Cut</span>
+          <span slot="description">Cut the selected text</span>
+          <span slot="secondary">⌘X</span>
+        </swc-menu-item>
+        <swc-menu-item>
+          <swc-thumbnail slot="visual">
+            <img src="./images/avatar-preview.png" alt="" />
+          </swc-thumbnail>
+          <span slot="label">Paste</span>
+          <span slot="secondary">⌘V</span>
+        </swc-menu-item>
+        <swc-menu-item disabled>
+          <swc-thumbnail slot="visual">
+            <img src="./images/landscape-asset.jpg" alt="" />
+          </swc-thumbnail>
+          <span slot="label">Paste special</span>
+          <span slot="description">Keeps the source formatting</span>
+          <span slot="secondary">⌘⇧V</span>
+        </swc-menu-item>
+      `
+    )}
+  `,
+  tags: ['options'],
+};
+ItemContent.storyName = 'Item content';
+
 export const Placements: Story = {
   render: (args) => html`
     <swc-button id="placement-bottom-start-trigger">Edit</swc-button>
@@ -219,6 +271,27 @@ export const States: Story = {
   tags: ['states'],
 };
 
+export const ItemStates: Story = {
+  args: {
+    for: 'item-states-trigger',
+    'actual-placement': null,
+  },
+  render: (args) => html`
+    <swc-button id="item-states-trigger">Edit</swc-button>
+    ${template(
+      args,
+      html`
+        <swc-menu-item><span slot="label">Default</span></swc-menu-item>
+        <swc-menu-item disabled>
+          <span slot="label">Disabled</span>
+        </swc-menu-item>
+      `
+    )}
+  `,
+  tags: ['states'],
+};
+ItemStates.storyName = 'Item states';
+
 // ──────────────────────────────
 //    BEHAVIORS STORIES
 // ──────────────────────────────
@@ -238,32 +311,62 @@ OpenAndClose.storyName = 'Open and close';
 
 // Exercises `triggerElement`, for referencing a trigger across a shadow
 // boundary where `for`'s id lookup can't reach.
+// Pairs a demo with a small caption naming what it shows.
+function captioned(caption: string, content: TemplateResult): TemplateResult {
+  return html`
+    <div
+      style="display: flex; flex-direction: column; gap: var(--swc-spacing-100);"
+    >
+      <div class="swc-Detail swc-Detail--sizeS">${caption}</div>
+      ${content}
+    </div>
+  `;
+}
+
+// Wires a menu to a trigger by reference rather than by `id`, which is the
+// subject of this story. Both triggers take the same path, so the pair shows
+// that the trigger's own element type is the only difference.
+//
+// Resolved from the menu's own `ref` rather than the wrapper's: an element
+// part runs before the child part inside it, so a ref on the wrapper fires
+// while it is still empty.
+function menuWithTrigger(trigger: TemplateResult): TemplateResult {
+  return html`
+    <div>${trigger}</div>
+    <swc-menu
+      ${ref((el) => {
+        const resolved = el?.previousElementSibling?.firstElementChild;
+        if (el && resolved) {
+          (
+            el as HTMLElement & { triggerElement: HTMLElement | null }
+          ).triggerElement = resolved as HTMLElement;
+        }
+      })}
+    >
+      ${defaultItems}
+    </swc-menu>
+  `;
+}
+
 export const TriggerElement: Story = {
   tags: ['behaviors'],
-  render: () => {
-    let triggerEl: HTMLElement | null = null;
-    return html`
-      <swc-button
-        id="trigger-element-trigger"
-        ${ref((el) => {
-          triggerEl = (el as HTMLElement) ?? null;
-        })}
-      >
-        Edit
-      </swc-button>
-      <swc-menu
-        ${ref((el) => {
-          if (el && triggerEl) {
-            (
-              el as HTMLElement & { triggerElement: HTMLElement | null }
-            ).triggerElement = triggerEl;
-          }
-        })}
-      >
-        ${defaultItems}
-      </swc-menu>
-    `;
-  },
+  parameters: { flexLayout: 'row-wrap' },
+  render: () => html`
+    ${captioned(
+      'swc-button trigger',
+      menuWithTrigger(html`
+        <swc-button>Edit</swc-button>
+      `)
+    )}
+    ${captioned(
+      'swc-action-button trigger',
+      menuWithTrigger(html`
+        <swc-action-button accessible-label="More actions">
+          <swc-icon-more slot="icon"></swc-icon-more>
+        </swc-action-button>
+      `)
+    )}
+  `,
 };
 TriggerElement.storyName = 'Trigger element';
 

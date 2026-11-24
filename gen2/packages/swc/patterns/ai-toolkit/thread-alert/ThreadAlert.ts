@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { CSSResultArray, html, TemplateResult } from 'lit';
+import { CSSResultArray, html, nothing, TemplateResult } from 'lit';
 
 import { SpectrumElement } from '@adobe/spectrum-wc-core/element/index.js';
 
@@ -26,7 +26,7 @@ import styles from './thread-alert.css';
  *
  * The message host is non-interactive and has no role or live region.
  * Applications own announcements, retry, dismissal, and named slotted controls.
- * The CSS-only `variant` attribute has no corresponding JavaScript property.
+ * The `variant` HTML attribute has no corresponding JavaScript property.
  *
  * @element swc-thread-alert
  * @attr {'informative' | 'positive' | 'notice' | 'negative' | 'neutral'} variant - Visual status. Defaults to informative when omitted.
@@ -52,41 +52,63 @@ import styles from './thread-alert.css';
  * @cssprop --swc-thread-alert-line-height - Message line height.
  */
 export class ThreadAlert extends SpectrumElement {
+  public static override get observedAttributes(): string[] {
+    return [...super.observedAttributes, 'variant'];
+  }
+
+  public override attributeChangedCallback(
+    name: string,
+    oldValue: string | null,
+    newValue: string | null
+  ): void {
+    super.attributeChangedCallback(name, oldValue, newValue);
+    if (name === 'variant' && oldValue !== newValue) {
+      this.requestUpdate();
+    }
+  }
+
   public static override get styles(): CSSResultArray {
     return [styles];
   }
 
+  protected renderIcon(variant: string): TemplateResult | typeof nothing {
+    switch (variant) {
+      case 'informative':
+        return html`
+          <swc-icon-info-circle></swc-icon-info-circle>
+        `;
+      case 'positive':
+        return html`
+          <swc-icon-checkmark-circle></swc-icon-checkmark-circle>
+        `;
+      case 'notice':
+        return html`
+          <swc-icon-alert-diamond></swc-icon-alert-diamond>
+        `;
+      case 'negative':
+        return html`
+          <swc-icon-alert-triangle></swc-icon-alert-triangle>
+        `;
+      default:
+        return nothing;
+    }
+  }
+
   protected override render(): TemplateResult {
+    const variant = this.getAttribute('variant') ?? 'informative';
+    const icon = this.renderIcon(variant);
     return html`
       <div class="swc-ThreadAlert">
-        <span
-          class="swc-ThreadAlert-icon swc-ThreadAlert-icon--informative"
-          data-variant="informative"
-          aria-hidden="true"
-        >
-          <swc-icon-info-circle></swc-icon-info-circle>
-        </span>
-        <span
-          class="swc-ThreadAlert-icon swc-ThreadAlert-icon--positive"
-          data-variant="positive"
-          aria-hidden="true"
-        >
-          <swc-icon-checkmark-circle></swc-icon-checkmark-circle>
-        </span>
-        <span
-          class="swc-ThreadAlert-icon swc-ThreadAlert-icon--notice"
-          data-variant="notice"
-          aria-hidden="true"
-        >
-          <swc-icon-alert-diamond></swc-icon-alert-diamond>
-        </span>
-        <span
-          class="swc-ThreadAlert-icon swc-ThreadAlert-icon--negative"
-          data-variant="negative"
-          aria-hidden="true"
-        >
-          <swc-icon-alert-triangle></swc-icon-alert-triangle>
-        </span>
+        ${icon === nothing
+          ? nothing
+          : html`
+              <span
+                class="swc-ThreadAlert-icon swc-ThreadAlert-icon--${variant}"
+                aria-hidden="true"
+              >
+                ${icon}
+              </span>
+            `}
         <span class="swc-ThreadAlert-content">
           <slot></slot>
         </span>

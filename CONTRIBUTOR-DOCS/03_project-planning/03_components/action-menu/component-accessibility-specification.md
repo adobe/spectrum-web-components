@@ -67,7 +67,7 @@ These items wait on a single product decision from design and accessibility:
 ### Also read
 
 - [Action menu migration roadmap](./rendering-and-styling-migration-analysis.md) for DOM, CSS, and API.
-- [Menu a11y doc](../menu/component-accessibility-specification.md) — `swc-menu` as a parallel top-level host, `FocusgroupNavigationController`, [Migration scope](../menu/component-accessibility-specification.md#migration-scope-current), link rows ([Cards](https://inclusive-components.design/cards/)).
+- [Menu a11y doc](../menu/component-accessibility-specification.md): `swc-menu` as a parallel top-level host, `FocusgroupNavigationController`, and [migration scope](../menu/component-accessibility-specification.md#migration-scope-current). Navigation rows have a separate [menu item link specification](../menu-item-link/component-accessibility-specification.md), with the menu-item role and focus on the anchor.
 - [Popover a11y doc](../popover/component-accessibility-specification.md) — `swc-popover` and layering; it does not replace the internal `role="menu"` wiring in menu hosts.
 
 ### What `swc-action-menu` is (gen2)
@@ -94,7 +94,7 @@ These items wait on a single product decision from design and accessibility:
 - [Menu a11y doc](../menu/component-accessibility-specification.md) — `swc-menu`, items, submenus, links, [scope](../menu/component-accessibility-specification.md#migration-scope-current).
 - [Menu group a11y doc](../menu-group/component-accessibility-specification.md) — `swc-menu-group` under `swc-menu`, `swc-action-menu`, or `swc-menu-item` (submenu list).
 - [Menu separator a11y doc](../menu-separator/component-accessibility-specification.md) — `swc-menu-separator` as a direct list row, not under a group; in docs, prefer it between [labelled groups](../menu-group/component-accessibility-specification.md#what-swc-menu-group-is-gen2) ([Overview](../menu-separator/component-accessibility-specification.md#overview)).
-- [Menu item a11y doc](../menu-item/component-accessibility-specification.md) — rows, `submenu` slot, link rows.
+- [Menu item a11y doc](../menu-item/component-accessibility-specification.md): command rows and the `submenu` slot, not link rows.
 
 ---
 
