@@ -129,13 +129,12 @@
       font-family: var(--swc-sans-font-family-stack) !important;
     }
 
+    /* Markdown headings get sizes from swc-Heading utilities (blocks/DocsElements.tsx).
+       These cover headings outside the components map: the DocsHeader title (h1)
+       and ApiTable sections (h3, h4). */
     h1 {
       font-size: var(--swc-heading-size-xxl) !important;
       line-height: var(--swc-heading-line-height) !important;
-    }
-
-    h2:not(.sbdocs-subtitle) {
-      font-size: var(--swc-heading-size-l) !important;
     }
 
     h3 {
@@ -146,24 +145,6 @@
       font-size: var(--swc-heading-size-xs) !important;
     }
 
-    kbd {
-      line-height: 1;
-      margin: 0px 2px;
-      padding: 3px 5px;
-      white-space: nowrap;
-      border-radius: 3px;
-      font-size: 12px;
-      border: 1px solid var(--swc-gray-400);
-      border-inline-end-width: 2px;
-      border-block-end-width: 2px;
-      color: var(--swc-neutral-content-color-default);
-      background-color: var(--swc-gray-75);
-      font-family:
-        ui-monospace, Menlo, Monaco, 'Roboto Mono', 'Oxygen Mono',
-        'Ubuntu Monospace', 'Source Code Pro', 'Droid Sans Mono', 'Courier New',
-        monospace !important;
-    }
-
     :is(html, p, li, ul, ol) {
       font-size: 1.15rem !important;
     }
@@ -172,26 +153,26 @@
       font-size: 0.88em !important;
     }
 
-    /* Inline code uses Storybook's palette; use Spectrum tokens instead */
-    :not(pre) > code:not(.swc-Code) {
-      color: var(--swc-code-color);
-      background-color: var(--swc-gray-75);
-      border-color: var(--swc-gray-200);
-    }
-
+    /* Spectrum separates sections with space, not rules under headings. */
     #stories,
     .sbdocs-content h2:not(.sbdocs-subtitle) {
       font-size: var(--swc-heading-size-l) !important;
-      margin: 1.25rem 0px 2rem;
+      margin: var(--swc-spacing-800) 0 var(--swc-spacing-300);
       -webkit-font-smoothing: antialiased;
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-      padding: 0px 0px 4px;
-      cursor: text;
+      padding: 0;
       position: relative;
       color: var(--swc-heading-color);
-      border-bottom: 1px solid var(--swc-gray-200);
+      border-bottom: 0;
       letter-spacing: unset;
       line-height: unset;
+    }
+
+    /* Subsections get less space than sections so the hierarchy reads. The
+       `:not()` outranks Storybook's rule that removes the first h3's top
+       margin. */
+    .sbdocs-content h3:not(.sbdocs-subtitle) {
+      margin: var(--swc-spacing-500) 0 var(--swc-spacing-200);
     }
 
     table:not(.swc-ApiTable),
@@ -209,8 +190,9 @@
     }
 
     /* Storybook stripes docs tables with its own palette, which put links
-       in dark rows below text contrast minimums */
-    .sbdocs-content table tr:nth-of-type(2n) {
+       in dark rows below text contrast minimums. Markdown tables use
+       Spectrum row dividers instead (see assets/docs-elements.css). */
+    .sbdocs-content table:not(.swc-DocsTable-table) tr:nth-of-type(2n) {
       background-color: var(--swc-background-layer-1-color);
     }
 
@@ -261,11 +243,12 @@
     }
   }
 
+  /* Keep the table of contents narrow so the page content gets the space. */
   .sbdocs-toc--custom {
-    width: 20rem !important;
+    width: 12rem !important;
     nav {
       width: auto;
-      max-width: 17rem !important;
+      max-width: 11rem !important;
       font-size: 0.75rem !important;
     }
   }
@@ -277,7 +260,9 @@
   /* Give table of contents links targets of at least 24px (WCAG 2.5.8). The
      inline padding keeps the focus ring off the text, and the negative start
      margin keeps the text aligned with the rails. The end margin keeps the
-     ring inside the table of contents, which clips its overflow. */
+     ring inside the table of contents, which clips its overflow. The block
+     end margin sits on the link, not the list item, so a parent and its
+     first child get the same gap as any two siblings. */
   .sbdocs-toc--custom .toc-list-item {
     padding-block: 0 !important;
     font-size: var(--swc-font-size-100) !important;
@@ -289,6 +274,7 @@
     align-items: center;
     min-block-size: 24px;
     padding-inline: 6px;
+    margin-block: 0 var(--swc-spacing-100);
     margin-inline: -6px var(--swc-focus-indicator-thickness);
     border-radius: var(--swc-corner-radius-100);
   }

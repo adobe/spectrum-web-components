@@ -140,8 +140,8 @@ const createManagerTheme = (theme: string): ThemeVars => {
 
 // The Theme toolbar global themes the Storybook UI as well as the stories.
 // `manager-head.html` already applied the URL's theme class before this
-// bundle loaded; `light` matches `initialGlobals` in preview.ts.
-const initialTheme = getThemeFromUrl() ?? 'light';
+// bundle loaded; `adaptive` matches `initialGlobals` in preview.ts.
+const initialTheme = getThemeFromUrl() ?? 'adaptive';
 
 addons.register('swc/theme', (api) => {
   let theme = initialTheme;
