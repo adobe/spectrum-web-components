@@ -1,0 +1,54 @@
+---
+description: Accumulated lessons for the gen2 Storybook docs site, covering how docs styles load, the MDX components map, Storybook's own docs styles, Spectrum design choices, and how to verify docs changes.
+paths:
+  - 'gen2/packages/swc/.storybook/**'
+---
+
+# Storybook lessons
+
+Lessons for the gen2 docs site in `gen2/packages/swc/.storybook/`. Group by category and update in place.
+
+---
+
+## Project structure
+
+- **Markdown elements map through `docsMdxComponents`**: `blocks/DocsElements.tsx` sets `parameters.docs.components` in `preview.ts`, and its styles live in `assets/docs-elements.css`. Only markdown output goes through the map, so story previews keep their own styles.
+- **The default theme lives in four places**: `globalTypes.theme.defaultValue` and `initialGlobals.theme` in `preview.ts`, the `getThemeFromUrl() ??` fallback in `manager.tsx`, and the first-paint script in `manager-head.html`. Change all four together.
+- **`preview-head.html` holds docs-wide overrides**: Its inline `<style>` sets `!important` heading sizes, h2 and h3 spacing, and table striping. Read it before adding docs CSS, and move a rule into `docs-elements.css` instead of fighting it.
+
+---
+
+## Styling
+
+- **`.storybook` CSS loads as global CSS**: `vite.config.ts` excludes `./.storybook/**/*.css` from `vite-plugin-lit-css`. Without that exclusion, a side-effect CSS import becomes a Lit `css` module and never reaches the page.
+- **Use `token()` in `.storybook` stylesheets**: Vite's PostCSS step compiles it the same way it does for component CSS. Inline `<style>` in `preview-head.html` skips PostCSS, so it must use `var(--swc-*)`.
+- **Add `sb-unstyled` to elements that use `swc-*` utility classes**: Storybook's docs styles use `.css-x :where(el:not(.sb-unstyled))`, which ties with a single utility class and wins on source order. `sb-unstyled` also drops Storybook's antialiasing, so restore `-webkit-font-smoothing: antialiased` or text looks heavier in dark mode.
+- **Don't wrap docs content in `.swc-Typography--prose`**: Its descendant selectors restyle story previews too; on the Typography docs page it changed 143 of 169 preview elements. Put `swc-Heading`, `swc-Body`, and `swc-Code` on individual elements through the components map instead.
+- **Literal JSX tags skip the components map**: MDX maps only markdown output, so `<kbd>`, `<figure>`, and other tags written as JSX need element CSS scoped with `:not(.sbdocs-preview *)`.
+
+---
+
+## Component patterns
+
+- **Overriding a components-map entry replaces Storybook's default**: Delegate fenced code to `CodeOrSourceMdx` and headings to `HeaderMdx`, which renders the anchor link, from `@storybook/addon-docs/blocks`. Load them with `React.lazy`, because Vitest imports `preview.ts` and can't load addon-docs.
+- **Heading anchors come from `HeaderMdx`, not the heading text**: Only the hover anchor icon updates the URL hash, and only in the full `?path=` view. Bare `iframe.html` has no manager to update.
+
+---
+
+## Design language
+
+- **Separate sections with space, not rules**: Spectrum doesn't underline headings. Space h2 sections with `spacing-800` above, and h3 with `spacing-500`.
+- **Use gen2 workflow icons, not emoji**: Callouts lead with `swc-icon-*` elements, such as `swc-icon-alert-diamond` for notice and `swc-icon-info-circle` for informative, colored with the variant's `*-visual-color` token.
+- **Content wins over the table of contents**: Keep the TOC narrow (12rem) so tables and code get the width.
+
+---
+
+## CI / build
+
+- **`yarn type-check` skips most of `.storybook`**: `gen2/packages/swc/tsconfig.json` includes only `helpers`, `decorators`, and `utils/color-scheme.ts`, so `blocks/*.tsx` and `preview.ts` aren't type-checked.
+
+---
+
+## Verification
+
+- **Check forced colors with Playwright**: Open a page with `browser.newPage({ forcedColors: 'active' })` and screenshot the docs iframe (`iframe.html?viewMode=docs&id=<id>`). SVG fills keep author colors in forced colors, so set `--swc-icon-color: CanvasText`.
