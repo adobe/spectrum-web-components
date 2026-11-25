@@ -98,7 +98,7 @@ button[data-action="collapse-root"] {
 
 /* Table of Contents aside */
 .sbdocs-toc--custom {
-  width: 20rem;
+  width: 12rem;
 
   nav {
     width: 100%;

@@ -1,0 +1,132 @@
+/**
+ * Copyright 2026 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+/* Spectrum styles for markdown elements on docs pages. See blocks/DocsElements.tsx. */
+
+/* --- Table --- */
+
+.swc-DocsTable {
+  margin-block: var(--swc-spacing-300);
+  border: var(--swc-border-width-100) solid var(--swc-gray-300);
+  border-radius: var(--swc-corner-radius-500);
+  overflow-x: auto;
+
+  &:focus-visible {
+    outline: var(--swc-focus-indicator-thickness) solid var(--swc-focus-indicator-color);
+    outline-offset: var(--swc-focus-indicator-thickness);
+  }
+}
+
+/* The wrapper class outranks the docs-wide row striping in preview-head.html. */
+.swc-DocsTable .swc-DocsTable-table {
+  inline-size: 100%;
+  margin: 0;
+  font-size: var(--swc-body-size-s);
+  line-height: var(--swc-line-height-200);
+  border-collapse: collapse;
+
+  & th,
+  & td {
+    padding-block: var(--swc-spacing-200);
+    padding-inline: var(--swc-table-item-padding-regular);
+    vertical-align: top;
+    color: var(--swc-neutral-content-color-default);
+    text-align: start;
+    border: 0;
+  }
+
+  & th {
+    font-weight: var(--swc-bold-font-weight);
+    white-space: nowrap;
+    background: var(--swc-background-layer-1-color);
+  }
+
+  & tr {
+    background: transparent;
+    border: 0;
+  }
+
+  & tbody tr {
+    border-block-start: var(--swc-table-border-divider-width) solid var(--swc-gray-300);
+  }
+}
+
+/* --- Callout --- */
+
+.swc-DocsCallout {
+  padding-block: var(--swc-spacing-200);
+  padding-inline: var(--swc-spacing-300);
+  margin-block: var(--swc-spacing-300);
+  margin-inline: 0;
+  color: var(--swc-neutral-content-color-default);
+  background: transparent;
+  border: var(--swc-border-width-200) solid var(--swc-neutral-visual-color);
+  border-radius: var(--swc-corner-radius-500);
+
+  & > :first-child {
+    margin-block-start: 0;
+  }
+
+  & > :last-child {
+    margin-block-end: 0;
+  }
+}
+
+.swc-DocsCallout--notice {
+  --swc-icon-color: var(--swc-notice-visual-color);
+
+  border-color: var(--swc-notice-visual-color);
+}
+
+.swc-DocsCallout--informative {
+  --swc-icon-color: var(--swc-informative-visual-color);
+
+  border-color: var(--swc-informative-visual-color);
+}
+
+/* Workflow icons render as blocks, so sit this one in the first line of text. */
+.swc-DocsCallout-icon {
+  display: inline-block;
+  margin-inline-end: var(--swc-spacing-100);
+  vertical-align: text-bottom;
+}
+
+/* --- Keyboard key --- */
+
+/* Literal `<kbd>` in MDX skips the components map, so style it by element, outside story previews. */
+.sbdocs-content kbd:not(.sbdocs-preview *) {
+  display: inline-block;
+  padding-block: 0;
+  padding-inline: var(--swc-spacing-75);
+  margin-inline: var(--swc-spacing-25);
+  font-family: inherit;
+  font-size: var(--swc-body-size-xs);
+  line-height: var(--swc-line-height-200);
+  color: var(--swc-neutral-content-color-default);
+  white-space: nowrap;
+  background: var(--swc-background-layer-1-color);
+  border: var(--swc-border-width-100) solid var(--swc-gray-400);
+  border-block-end-width: var(--swc-border-width-200);
+  border-radius: var(--swc-corner-radius-100);
+}
+
+/* Forced colors drop backgrounds, so thicken the header rule to keep the header row distinct. */
+@media (forced-colors: active) {
+  .swc-DocsTable .swc-DocsTable-table thead th {
+    border-block-end: var(--swc-border-width-200) solid CanvasText;
+  }
+
+  /* SVG fills keep author colors in forced colors, so use the system text color. */
+  .swc-DocsCallout {
+    --swc-icon-color: CanvasText;
+  }
+}
