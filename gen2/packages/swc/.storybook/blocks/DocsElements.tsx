@@ -14,7 +14,9 @@ import React, {
   cloneElement,
   type ComponentPropsWithoutRef,
   isValidElement,
+  lazy,
   type ReactNode,
+  Suspense,
   useLayoutEffect,
   useRef,
   useState,
@@ -27,6 +29,113 @@ import '../assets/docs-elements.css';
 
 const classNames = (...names: (string | undefined)[]): string =>
   names.filter(Boolean).join(' ');
+
+// Loaded on demand because addon-docs doesn't load under Vitest, which imports preview.ts.
+const CodeOrSourceMdx = lazy(() =>
+  import('@storybook/addon-docs/blocks').then((module) => ({
+    default: module.CodeOrSourceMdx,
+  }))
+);
+
+const HeaderMdx = lazy(() =>
+  import('@storybook/addon-docs/blocks').then((module) => ({
+    default: module.HeaderMdx,
+  }))
+);
+
+/**
+ * Renders inline code with the `.swc-Code` typography utility. Fenced code
+ * blocks, which carry a language class or span lines, go to Storybook's
+ * source block as before.
+ */
+export const DocsCode = ({
+  className,
+  children,
+  ...props
+}: ComponentPropsWithoutRef<'code'>) => {
+  const isBlock =
+    typeof className === 'string' ||
+    (typeof children === 'string' && /[\n\r]/.test(children));
+
+  if (isBlock) {
+    return (
+      <Suspense fallback={null}>
+        <CodeOrSourceMdx className={className} {...props}>
+          {children}
+        </CodeOrSourceMdx>
+      </Suspense>
+    );
+  }
+  return (
+    <code
+      className="swc-DocsCode swc-Code swc-Code--sizeS sb-unstyled"
+      {...props}
+    >
+      {children}
+    </code>
+  );
+};
+
+type HeadingLevel = 'h1' | 'h2' | 'h3' | 'h4';
+
+/**
+ * Creates a markdown heading that uses the `.swc-Heading` typography
+ * utility. It renders through Storybook's `HeaderMdx`, which adds the hover
+ * anchor link, with a plain heading until that loads. `sb-unstyled` opts out
+ * of Storybook's docs typography, which would otherwise tie with the utility
+ * and win. The MDX compiler sets each heading's `id`, which the anchor link
+ * and the table of contents point to.
+ */
+const createDocsHeading = (Tag: HeadingLevel, size: string) => {
+  // The h1 is the page title, so it gets no extra space above it.
+  const margins = Tag === 'h1' ? undefined : 'swc-Heading--margins';
+  const DocsHeading = ({
+    className,
+    ...props
+  }: ComponentPropsWithoutRef<HeadingLevel>) => {
+    const headingProps = {
+      ...props,
+      className: classNames(
+        'swc-Heading',
+        `swc-Heading--size${size}`,
+        margins,
+        'sb-unstyled',
+        className
+      ),
+    };
+    return (
+      <Suspense fallback={<Tag {...headingProps} />}>
+        <HeaderMdx as={Tag} {...headingProps} />
+      </Suspense>
+    );
+  };
+  DocsHeading.displayName = `DocsHeading(${Tag})`;
+  return DocsHeading;
+};
+
+/** A markdown paragraph that uses the `.swc-Body` typography utility. */
+export const DocsParagraph = ({
+  className,
+  ...props
+}: ComponentPropsWithoutRef<'p'>) => (
+  <p
+    className={classNames(
+      'swc-Body',
+      'swc-Body--margins',
+      'sb-unstyled',
+      className
+    )}
+    {...props}
+  />
+);
+
+/** A markdown list item that uses the `.swc-Body` typography utility. */
+export const DocsListItem = ({
+  className,
+  ...props
+}: ComponentPropsWithoutRef<'li'>) => (
+  <li className={classNames('swc-Body', 'sb-unstyled', className)} {...props} />
+);
 
 /**
  * Wraps a markdown table in a Spectrum-styled container. When the table is
@@ -203,10 +312,20 @@ export const DocsCallout = ({
 
 /**
  * Spectrum replacements for the elements that markdown creates on docs
- * pages. Set as `parameters.docs.components`. MDX doesn't map tags written
- * as literal JSX, such as `<kbd>`, so `docs-elements.css` styles those.
+ * pages. Set as `parameters.docs.components`. Only markdown output goes
+ * through this map, so story previews keep their own styles. MDX doesn't
+ * map tags written as literal JSX, such as `<kbd>`, so `docs-elements.css`
+ * styles those. Links keep Storybook's component, which handles navigation
+ * between docs pages.
  */
 export const docsMdxComponents = {
+  h1: createDocsHeading('h1', 'XXL'),
+  h2: createDocsHeading('h2', 'L'),
+  h3: createDocsHeading('h3', 'M'),
+  h4: createDocsHeading('h4', 'XS'),
+  p: DocsParagraph,
+  li: DocsListItem,
+  code: DocsCode,
   table: DocsTable,
   th: DocsTableHeaderCell,
   blockquote: DocsCallout,

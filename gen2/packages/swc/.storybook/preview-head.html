@@ -154,13 +154,6 @@
       font-size: 0.88em !important;
     }
 
-    /* Inline code uses Storybook's palette; use Spectrum tokens instead */
-    :not(pre) > code:not(.swc-Code) {
-      color: var(--swc-code-color);
-      background-color: var(--swc-gray-75);
-      border-color: var(--swc-gray-200);
-    }
-
     /* Spectrum separates sections with space, not rules under headings. */
     #stories,
     .sbdocs-content h2:not(.sbdocs-subtitle) {
@@ -169,7 +162,6 @@
       -webkit-font-smoothing: antialiased;
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
       padding: 0;
-      cursor: text;
       position: relative;
       color: var(--swc-heading-color);
       border-bottom: 0;

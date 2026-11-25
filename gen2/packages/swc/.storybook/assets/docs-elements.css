@@ -12,17 +12,25 @@
 
 /* Spectrum styles for markdown elements on docs pages. See blocks/DocsElements.tsx. */
 
+/* --- Typography --- */
+
+/* `sb-unstyled` drops Storybook's antialiasing, which makes light text on dark look heavier. */
+.sbdocs-content :is(.swc-Heading, .swc-Body, .swc-DocsCode):not(.sbdocs-preview *) {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 /* --- Table --- */
 
 .swc-DocsTable {
-  margin-block: var(--swc-spacing-300);
-  border: var(--swc-border-width-100) solid var(--swc-gray-300);
-  border-radius: var(--swc-corner-radius-500);
+  margin-block: token("spacing-300");
+  border: token("border-width-100") solid token("gray-300");
+  border-radius: token("corner-radius-500");
   overflow-x: auto;
 
   &:focus-visible {
-    outline: var(--swc-focus-indicator-thickness) solid var(--swc-focus-indicator-color);
-    outline-offset: var(--swc-focus-indicator-thickness);
+    outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
+    outline-offset: token("focus-indicator-thickness");
   }
 }
 
@@ -30,24 +38,24 @@
 .swc-DocsTable .swc-DocsTable-table {
   inline-size: 100%;
   margin: 0;
-  font-size: var(--swc-body-size-s);
-  line-height: var(--swc-line-height-200);
+  font-size: token("body-size-s");
+  line-height: token("line-height-200");
   border-collapse: collapse;
 
   & th,
   & td {
-    padding-block: var(--swc-spacing-200);
-    padding-inline: var(--swc-table-item-padding-regular);
+    padding-block: token("spacing-200");
+    padding-inline: token("table-item-padding-regular");
     vertical-align: top;
-    color: var(--swc-neutral-content-color-default);
+    color: token("neutral-content-color-default");
     text-align: start;
     border: 0;
   }
 
   & th {
-    font-weight: var(--swc-bold-font-weight);
+    font-weight: token("bold-font-weight");
     white-space: nowrap;
-    background: var(--swc-background-layer-1-color);
+    background: token("background-layer-1-color");
   }
 
   & tr {
@@ -56,21 +64,21 @@
   }
 
   & tbody tr {
-    border-block-start: var(--swc-table-border-divider-width) solid var(--swc-gray-300);
+    border-block-start: token("table-border-divider-width") solid token("gray-300");
   }
 }
 
 /* --- Callout --- */
 
 .swc-DocsCallout {
-  padding-block: var(--swc-spacing-200);
-  padding-inline: var(--swc-spacing-300);
-  margin-block: var(--swc-spacing-300);
+  padding-block: token("spacing-200");
+  padding-inline: token("spacing-300");
+  margin-block: token("spacing-300");
   margin-inline: 0;
-  color: var(--swc-neutral-content-color-default);
+  color: token("neutral-content-color-default");
   background: transparent;
-  border: var(--swc-border-width-200) solid var(--swc-neutral-visual-color);
-  border-radius: var(--swc-corner-radius-500);
+  border: token("border-width-200") solid token("neutral-visual-color");
+  border-radius: token("corner-radius-500");
 
   & > :first-child {
     margin-block-start: 0;
@@ -82,21 +90,21 @@
 }
 
 .swc-DocsCallout--notice {
-  --swc-icon-color: var(--swc-notice-visual-color);
+  --swc-icon-color: token("notice-visual-color");
 
-  border-color: var(--swc-notice-visual-color);
+  border-color: token("notice-visual-color");
 }
 
 .swc-DocsCallout--informative {
-  --swc-icon-color: var(--swc-informative-visual-color);
+  --swc-icon-color: token("informative-visual-color");
 
-  border-color: var(--swc-informative-visual-color);
+  border-color: token("informative-visual-color");
 }
 
 /* Workflow icons render as blocks, so sit this one in the first line of text. */
 .swc-DocsCallout-icon {
   display: inline-block;
-  margin-inline-end: var(--swc-spacing-100);
+  margin-inline-end: token("spacing-100");
   vertical-align: text-bottom;
 }
 
@@ -106,23 +114,144 @@
 .sbdocs-content kbd:not(.sbdocs-preview *) {
   display: inline-block;
   padding-block: 0;
-  padding-inline: var(--swc-spacing-75);
-  margin-inline: var(--swc-spacing-25);
+  padding-inline: token("spacing-75");
+  margin-inline: token("spacing-25");
   font-family: inherit;
-  font-size: var(--swc-body-size-xs);
-  line-height: var(--swc-line-height-200);
-  color: var(--swc-neutral-content-color-default);
+  font-size: token("body-size-xs");
+  line-height: token("line-height-200");
+  color: token("neutral-content-color-default");
   white-space: nowrap;
-  background: var(--swc-background-layer-1-color);
-  border: var(--swc-border-width-100) solid var(--swc-gray-400);
-  border-block-end-width: var(--swc-border-width-200);
-  border-radius: var(--swc-corner-radius-100);
+  background: token("background-layer-1-color");
+  border: token("border-width-100") solid token("gray-400");
+  border-block-end-width: token("border-width-200");
+  border-radius: token("corner-radius-100");
+}
+
+/* --- Code block --- */
+
+/* Storybook's source block, outside story previews. The transparent border shows up in forced colors. */
+.sbdocs-content .docblock-source:not(.sbdocs-preview *) {
+  background: token("background-layer-1-color");
+  border: token("border-width-100") solid transparent;
+  border-radius: token("corner-radius-500");
+  box-shadow: none;
+
+  & pre,
+  & code {
+    font-family: token("code-font");
+    font-size: token("code-size-s");
+    line-height: token("code-line-height");
+  }
+
+  & pre {
+    color: token("neutral-content-color-default");
+  }
+
+  /* The copy button's bar paints Storybook's white panel color. */
+  & div:has(> button) {
+    background: transparent;
+  }
+
+  & button {
+    padding-block: token("spacing-75");
+    padding-inline: token("spacing-200");
+    margin: token("spacing-75");
+    font-size: token("body-size-xs");
+    font-weight: token("bold-font-weight");
+    color: token("neutral-content-color-default");
+    background: transparent;
+    border: token("border-width-100") solid transparent;
+    border-radius: token("corner-radius-300");
+
+    &:hover {
+      background: token("gray-200");
+    }
+
+    &:focus-visible {
+      outline: token("focus-indicator-thickness") solid token("focus-indicator-color");
+      outline-offset: token("focus-indicator-thickness");
+    }
+  }
+
+  /* Syntax colors use the 1000 shades, which keep text contrast on layer 1 in light and dark. */
+  & :is(.token.comment, .token.prolog, .token.doctype, .token.cdata) {
+    color: token("neutral-subdued-content-color-default");
+  }
+
+  & :is(.token.tag, .token.selector, .token.keyword, .token.atrule, .token.important) {
+    color: token("magenta-1000");
+  }
+
+  & :is(.token.attr-name, .token.property) {
+    color: token("indigo-1000");
+  }
+
+  & :is(.token.attr-value, .token.string, .token.char, .token.url) {
+    color: token("green-1000");
+  }
+
+  & :is(.token.number, .token.boolean, .token.constant, .token.unit) {
+    color: token("orange-1000");
+  }
+
+  & :is(.token.function, .token.class-name) {
+    color: token("blue-1000");
+  }
+
+  /* Last, so brackets and quotes inside tags and attribute values stay neutral. */
+  & .token.punctuation {
+    color: token("neutral-content-color-default");
+  }
+}
+
+/* --- Inline code --- */
+
+/* The `.swc-Code` utility sets the font, size, and color. This adds the chip behind it. */
+.sbdocs-content .swc-DocsCode:not(.sbdocs-preview *) {
+  padding-block: 0;
+  padding-inline: token("spacing-50");
+  background: token("gray-75");
+  border: token("border-width-100") solid transparent;
+  border-radius: token("corner-radius-100");
+}
+
+/* --- Figure --- */
+
+/* Literal `<figure>` in MDX skips the components map, so style it by element, outside story previews. */
+.sbdocs-content figure:not(.sbdocs-preview *) {
+  margin-block: token("spacing-400");
+  margin-inline: 0;
+
+  & img {
+    display: block;
+    max-inline-size: 100%;
+    block-size: auto;
+
+    /* Overrides the inline border that guide pages set with a stale 1st-gen token. */
+    border: token("border-width-100") solid token("gray-300") !important;
+    border-radius: token("corner-radius-500");
+  }
+
+  & figcaption {
+    margin-block-start: token("spacing-100");
+    font-size: token("body-size-s");
+    line-height: token("line-height-200");
+    color: token("neutral-subdued-content-color-default");
+
+    /* MDX wraps the caption text in a paragraph that Storybook styles as body text. */
+    & > p {
+      margin: 0;
+      font-size: inherit;
+      line-height: inherit;
+      color: inherit;
+    }
+  }
 }
 
 /* Forced colors drop backgrounds, so thicken the header rule to keep the header row distinct. */
 @media (forced-colors: active) {
   .swc-DocsTable .swc-DocsTable-table thead th {
-    border-block-end: var(--swc-border-width-200) solid CanvasText;
+    border-block-end: token("border-width-200") solid CanvasText;
   }
 
   /* SVG fills keep author colors in forced colors, so use the system text color. */
