@@ -304,7 +304,7 @@ export const DocsCallout = ({
     );
   }
   return (
-    <div role="note" className={classes}>
+    <div role="note" className={classes} {...props}>
       {withVariantIcon(children, variant)}
     </div>
   );

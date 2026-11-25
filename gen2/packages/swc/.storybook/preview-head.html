@@ -129,13 +129,12 @@
       font-family: var(--swc-sans-font-family-stack) !important;
     }
 
+    /* Markdown headings get sizes from swc-Heading utilities (blocks/DocsElements.tsx).
+       These cover headings outside the components map: the DocsHeader title (h1)
+       and ApiTable sections (h3, h4). */
     h1 {
       font-size: var(--swc-heading-size-xxl) !important;
       line-height: var(--swc-heading-line-height) !important;
-    }
-
-    h2:not(.sbdocs-subtitle) {
-      font-size: var(--swc-heading-size-l) !important;
     }
 
     h3 {
