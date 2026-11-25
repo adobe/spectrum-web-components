@@ -73,6 +73,119 @@ readonly.args = {
   value: 'Solomon Islands',
 };
 
+export const webHaptics = (args: StoryArgs): TemplateResult => html`
+  <div class="web-haptics-story">
+    <div class="web-haptics-story__instructions">
+      <h3>Web Haptics (accessibility)</h3>
+      <p>
+        Test haptic feedback on
+        <strong>iOS 18+ Safari</strong>
+        (iPhone/iPad). Haptics fire when you open the list and when you select
+        an option.
+      </p>
+      <ul>
+        <li>
+          <strong>With haptics:</strong>
+          tap the first combobox — you should feel a tap when the list opens and
+          again when you pick an option.
+        </li>
+        <li>
+          <strong>Without haptics:</strong>
+          second combobox has haptics disabled for comparison.
+        </li>
+      </ul>
+      <p>
+        Uses the native
+        <code>&lt;input type="checkbox" switch&gt;</code>
+        haptic in Safari 18.
+        <a
+          href="https://webkit.org/blog/15865/webkit-features-in-safari-18-0/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          WebKit blog
+        </a>
+        .
+      </p>
+    </div>
+    <div class="web-haptics-story__demos">
+      <div class="web-haptics-story__demo">
+        <sp-field-label for="combobox-haptic-on">
+          With haptic feedback
+        </sp-field-label>
+        <sp-combobox
+          id="combobox-haptic-on"
+          .options=${fruits}
+          .value=${args.value ?? ''}
+          ?haptic-feedback=${true}
+        ></sp-combobox>
+      </div>
+      <div class="web-haptics-story__demo">
+        <sp-field-label for="combobox-haptic-off">
+          Without haptic feedback
+        </sp-field-label>
+        <sp-combobox
+          id="combobox-haptic-off"
+          .options=${fruits}
+          .value=${args.value ?? ''}
+        ></sp-combobox>
+      </div>
+    </div>
+  </div>
+  <style>
+    .web-haptics-story {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      max-inline-size: 32rem;
+    }
+    .web-haptics-story__instructions {
+      padding: 1rem;
+      background: var(--spectrum-gray-100, #f5f5f5);
+      border-radius: 0.5rem;
+    }
+    .web-haptics-story__instructions h3 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1.125rem;
+    }
+    .web-haptics-story__instructions p,
+    .web-haptics-story__instructions ul {
+      margin: 0.5rem 0 0 0;
+      font-size: 0.875rem;
+    }
+    .web-haptics-story__instructions code {
+      font-size: 0.8125rem;
+      padding: 0.125rem 0.25rem;
+      background: var(--spectrum-gray-200, #e5e5e5);
+      border-radius: 0.25rem;
+    }
+    .web-haptics-story__instructions a {
+      color: var(--spectrum-blue-600, #0d66d0);
+    }
+    .web-haptics-story__demos {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .web-haptics-story__demo {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+  </style>
+`;
+webHaptics.args = {
+  value: '',
+};
+webHaptics.parameters = {
+  docs: {
+    description: {
+      story:
+        'Side-by-side comboboxes to test native haptic feedback on iOS 18+ Safari. Enable haptics for accessibility when users benefit from tactile confirmation (e.g. open list, selection).',
+    },
+  },
+};
+
 export const hasDisabledItems = (args: StoryArgs): TemplateResult => {
   // let's create a new array from countries and set the disabled property to true if the value is in args.disabledItems
   const countriesWithDisabledItems = countries.map((country) => ({
