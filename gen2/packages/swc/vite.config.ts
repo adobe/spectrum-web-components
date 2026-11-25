@@ -90,6 +90,8 @@ export default defineConfig({
         './stylesheets/*.css',
         './stylesheets/global/**/*.css',
         './stylesheets/typography/**/*.css',
+        // Storybook imports these for their side effects, as global stylesheets.
+        './.storybook/**/*.css',
       ],
     }),
     processStylesheets(),

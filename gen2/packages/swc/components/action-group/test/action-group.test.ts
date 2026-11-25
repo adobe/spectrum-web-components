@@ -14,6 +14,7 @@ import { expect, userEvent } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getComponent, withWarningSpy } from '@swc-test-helpers/dom';
 
+import type { ActionButton } from '@adobe/spectrum-wc/action-button';
 import { ActionGroup } from '@adobe/spectrum-wc/action-group';
 import {
   ACTION_GROUP_ORIENTATIONS,
@@ -971,6 +972,48 @@ export const ValidStaticColorNoWarningTest: Story = {
           expect(warnCalls.length, 'no warnings for valid static-colors').toBe(
             0
           );
+        })
+    );
+  },
+};
+
+export const InvalidSizeTest: Story = {
+  render: () => html`
+    <swc-action-group accessible-label="Actions">
+      <swc-action-button>First</swc-action-button>
+      <swc-action-button>Second</swc-action-button>
+    </swc-action-group>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const group = await getComponent<ActionGroup>(
+      canvasElement,
+      'swc-action-group'
+    );
+    const buttons = Array.from(
+      canvasElement.querySelectorAll<ActionButton>('swc-action-button')
+    );
+
+    await step(
+      'keeps an invalid size, warns once, and passes children the default',
+      () =>
+        withWarningSpy(async (warnCalls) => {
+          group.setAttribute('size', 'banana');
+          await group.updateComplete;
+          await Promise.all(buttons.map((button) => button.updateComplete));
+
+          expect(group.getAttribute('size'), 'attribute is kept').toBe(
+            'banana'
+          );
+          for (const button of buttons) {
+            expect(button.getAttribute('size'), 'child gets the default').toBe(
+              'm'
+            );
+          }
+          expect(
+            warnCalls.every((call) => call[0] === group),
+            'only the group warns'
+          ).toBe(true);
+          expect(String(warnCalls[0]?.[1] ?? '')).toMatch(/"size".*"banana"/);
         })
     );
   },

@@ -79,10 +79,12 @@ export const StatusTransitions: Story = {
           expect(input.disabled).toBe(status === 'disabled');
           expect(input.readOnly).toBe(status === 'readonly');
           expect(field.required).toBe(true);
-          expect(input.required).toBe(true);
-          expect(field.hasAttribute('disabled')).toBe(status === 'disabled');
-          expect(field.hasAttribute('readonly')).toBe(status === 'readonly');
-          expect(field.matches(':disabled')).toBe(status === 'disabled');
+          // Read-only fields are barred, so required isn't exposed.
+          expect(input.required).toBe(status !== 'readonly');
+          expect(field).not.toHaveAttribute('disabled');
+          expect(field).not.toHaveAttribute('readonly');
+          expect(field.matches(':disabled')).toBe(false);
+          expect(field.matches(':state(disabled)')).toBe(status === 'disabled');
           expect(field.willValidate).toBe(
             status !== 'disabled' && status !== 'readonly'
           );
@@ -94,6 +96,11 @@ export const StatusTransitions: Story = {
           );
           expect(field.validity.customError).toBe(status === 'invalid');
           expect(field.checkValidity()).toBe(status !== 'invalid');
+          if (field.willValidate) {
+            expect(field.validationMessage).toBe(
+              status === 'invalid' ? 'This username is unavailable.' : ''
+            );
+          }
           expect(
             field.shadowRoot?.querySelector('.swc-FormFieldErrorText') !== null
           ).toBe(status === 'invalid');
@@ -360,30 +367,6 @@ export const ValidationSources: Story = {
       canvasElement,
       'swc-text-field'
     );
-    await step('slotted messages apply only while invalid', async () => {
-      for (const status of [
-        'invalid',
-        'disabled',
-        'readonly',
-        'valid',
-        undefined,
-      ] as const) {
-        field.fieldStatus = status;
-        await field.updateComplete;
-        expect(field.validity.customError).toBe(status === 'invalid');
-        expect(field.checkValidity()).toBe(status !== 'invalid');
-        if (field.willValidate) {
-          expect(field.validationMessage).toBe(
-            status === 'invalid' ? 'This username is unavailable.' : ''
-          );
-        }
-        expect(field.roleElement?.getAttribute('aria-invalid')).toBe(
-          status === 'invalid' ? 'true' : null
-        );
-      }
-      expect(field.checkValidity()).toBe(true);
-    });
-
     await step(
       'authored valid does not bypass native required validation',
       async () => {

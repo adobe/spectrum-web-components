@@ -20,6 +20,7 @@ import isChromatic from 'chromatic/isChromatic';
 import { createElement, lazy, type PropsWithChildren, Suspense } from 'react';
 
 import customElements from '../dist/custom-elements.json';
+import { docsMdxComponents } from './blocks/DocsElements.js';
 import { withContext } from './decorators/contexts.js';
 import { withFlexLayout, withStaticColorsDemo } from './decorators/index.js';
 import { withLanguageWrapper } from './decorators/language.js';
@@ -65,7 +66,7 @@ const preview = {
     theme: {
       name: 'Theme',
       description: 'Global theme for components',
-      defaultValue: 'light',
+      defaultValue: 'adaptive',
       type: 'string',
       toolbar: {
         title: 'Theme',
@@ -133,7 +134,7 @@ const preview = {
     },
   },
   initialGlobals: {
-    theme: 'light',
+    theme: 'adaptive',
     lang: 'en-US',
     textDirection: 'auto',
   },
@@ -185,6 +186,7 @@ const preview = {
     },
     docs: {
       codePanel: true,
+      components: docsMdxComponents,
       container: (props: PropsWithChildren<DocsContainerProps>) =>
         createElement(
           Suspense,
@@ -251,6 +253,8 @@ const preview = {
           ],
           'Patterns',
           [
+            'Forms',
+            ['Docs', 'Account details', 'Playground', 'Tests', '*'],
             'AI Toolkit',
             // Implementation order: input, structure, turns, follow-ups, then
             // shared primitives. storySort is parsed statically, so each child
