@@ -479,6 +479,9 @@ export class HandleController {
     input: HTMLInputElement,
     handle: SliderHandle
   ): void {
+    for (const currentHandle of this.handles.values()) {
+      this.setValueFromHandle(currentHandle);
+    }
     input.valueAsNumber = handle.value;
 
     const changeEvent = new Event('change', {
@@ -641,7 +644,10 @@ export class HandleController {
               break;
             }
           }
-          result.clamp.min = Math.max(previous.value, result.range.min);
+          result.clamp.min = Math.min(
+            result.range.max,
+            Math.max(previous.value, result.range.min)
+          );
         }
         if (window.__swc?.DEBUG) {
           if (!previous) {
@@ -662,7 +668,10 @@ export class HandleController {
               break;
             }
           }
-          result.clamp.max = Math.min(next.value, result.range.max);
+          result.clamp.max = Math.max(
+            result.range.min,
+            Math.min(next.value, result.range.max)
+          );
         }
         if (window.__swc?.DEBUG) {
           if (!next) {
