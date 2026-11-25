@@ -13,6 +13,7 @@
 import { html } from 'lit';
 import { expect, userEvent } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import { ensureDocumentHasFocus } from '@swc-test-helpers/dom';
 
 import { getActiveElement, isFocusVisibleInTree } from '../index.js';
 
@@ -36,9 +37,7 @@ export const IsFocusVisibleInTreeTest: Story = {
     await step(
       'returns true when the active element is :focus-visible (keyboard focus)',
       async () => {
-        // A real Tab keydown puts the UA in keyboard modality, so the focused
-        // button matches :focus-visible across evergreen browsers. (Programmatic
-        // .focus() is unreliable here: the UA may still paint a focus ring.)
+        ensureDocumentHasFocus(canvasElement);
         await userEvent.tab();
 
         expect(getActiveElement(document)).toBe(button);
