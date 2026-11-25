@@ -2115,3 +2115,93 @@ describe('Slider', () => {
     });
   });
 });
+
+describe('Slider release after bounds change', () => {
+  for (const scenario of [
+    { name: 'lower maximum', fraction: 0.85, min: 0, max: 60, expected: 60 },
+    { name: 'higher minimum', fraction: 0.15, min: 40, max: 100, expected: 40 },
+  ]) {
+    it(`commits within a ${scenario.name} after dragging`, async () => {
+      const el = await fixture<Slider>(html`
+        <sp-slider label="Volume" value="50" style="width: 400px"></sp-slider>
+      `);
+      await elementUpdated(el);
+      const handle = el.shadowRoot.querySelector('.handle') as HTMLElement;
+      const rect = el.track.getBoundingClientRect();
+      await sendMouse([
+        { type: 'move', position: [handle] },
+        { type: 'down' },
+        {
+          type: 'move',
+          position: [
+            rect.left + rect.width * scenario.fraction,
+            rect.top + rect.height / 2,
+          ],
+        },
+      ]);
+      await elementUpdated(el);
+      let committed: number | undefined;
+      el.addEventListener('change', () => {
+        committed = el.value;
+      });
+      el.min = scenario.min;
+      el.max = scenario.max;
+      await elementUpdated(el);
+      await sendMouse({ type: 'up' });
+      await elementUpdated(el);
+      expect(committed).to.equal(scenario.expected);
+      expect(el.value).to.equal(scenario.expected);
+    });
+  }
+
+  for (const scenario of [
+    {
+      low: 20, high: 80, min: 30, max: 60, fraction: 0.9,
+      expected: { low: 30, high: 60 },
+    },
+    {
+      low: 80, high: 90, min: 0, max: 60, fraction: 0.95,
+      expected: { low: 60, high: 60 },
+    },
+  ]) {
+    it(`commits every handle within [${scenario.min}, ${scenario.max}]`, async () => {
+      const el = await fixture<Slider>(html`
+        <sp-slider label="Range" style="width: 400px">
+          <sp-slider-handle slot="handle" name="low" label="Lower value"
+            value=${scenario.low} max="next"></sp-slider-handle>
+          <sp-slider-handle slot="handle" name="high" label="Upper value"
+            value=${scenario.high} min="previous"></sp-slider-handle>
+        </sp-slider>
+      `);
+      await elementUpdated(el);
+      await nextFrame();
+      const handle = el.shadowRoot.querySelector(
+        '.handle[name="high"]'
+      ) as HTMLElement;
+      const rect = el.track.getBoundingClientRect();
+      await sendMouse([
+        { type: 'move', position: [handle] },
+        { type: 'down' },
+        {
+          type: 'move',
+          position: [
+            rect.left + rect.width * scenario.fraction,
+            rect.top + rect.height / 2,
+          ],
+        },
+      ]);
+      await elementUpdated(el);
+      let committed: Record<string, number> | undefined;
+      el.addEventListener('change', () => {
+        committed = { ...el.values };
+      });
+      el.min = scenario.min;
+      el.max = scenario.max;
+      await elementUpdated(el);
+      await sendMouse({ type: 'up' });
+      await elementUpdated(el);
+      expect(committed).to.deep.equal(scenario.expected);
+      expect(el.values).to.deep.equal(scenario.expected);
+    });
+  }
+});
