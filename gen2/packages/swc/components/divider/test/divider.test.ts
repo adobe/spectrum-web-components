@@ -194,6 +194,22 @@ export const StaticColorToggleTest: Story = {
   },
 };
 
+export const InvalidSizeTest: Story = {
+  render: () => html`
+    <swc-divider size="banana"></swc-divider>
+  `,
+  play: async ({ canvasElement, step }) => {
+    const divider = await getComponent<Divider>(canvasElement, 'swc-divider');
+
+    await step('keeps an invalid size and renders the default class', () => {
+      const inner = divider.shadowRoot!.querySelector('.swc-Divider')!;
+      expect(divider.getAttribute('size')).toBe('banana');
+      expect(inner.classList.contains('swc-Divider--sizeM')).toBe(true);
+      expect(inner.className).not.toContain('BANANA');
+    });
+  },
+};
+
 // ──────────────────────────────────────────────────────────────
 // TEST: Accessibility
 // ──────────────────────────────────────────────────────────────

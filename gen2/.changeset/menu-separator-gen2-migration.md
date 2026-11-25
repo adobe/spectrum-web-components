@@ -7,7 +7,7 @@ Add the gen2 `<swc-menu-separator>`, the Spectrum 2 successor to `<sp-menu-divid
 
 - **API**: no attributes, properties, slots, or events. The `size` option and `--mod-*` custom properties are not carried over.
 - **Accessibility**: sets `role="separator"` on the host. It has no accessible name and is not focusable.
-- **Styling**: Spectrum 2 2px line centered in the 12px section-divider container, with forced-colors support. Thickness comes from an internal custom property, not a public styling API.
+- **Styling**: Spectrum 2 2px line centered in the 12px section-divider container, with forced-colors support. Thickness comes from an internal custom property. The inline inset follows `--swc-menu-item-padding-inline`, set by `swc-menu` per size.
 - **Core**: adds `MenuSeparatorBase`.
 - **Docs and tests**: Storybook docs page, consumer migration guide, unit coverage, and Playwright accessibility tests.
 - **Menu**: `<swc-menu>` accepts `<swc-menu-separator>` as a direct child, so slotting it no longer logs a placement warning.

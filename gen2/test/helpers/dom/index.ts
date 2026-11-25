@@ -10,6 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
+export { ensureDocumentHasFocus } from './ensure-document-has-focus.js';
 export { fixture } from './fixture.js';
 export { getComponent } from './get-component.js';
 export { getComponents } from './get-components.js';

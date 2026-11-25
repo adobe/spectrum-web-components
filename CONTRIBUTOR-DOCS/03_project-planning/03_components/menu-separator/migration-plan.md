@@ -192,7 +192,7 @@ Migrate `swc-menu-separator` independently of the other menu parts. It has no be
 
 | #      | What changes                           | 1st-gen behavior                                                                                | gen2 behavior                                                                                          | Consumer migration path                                                                  |
 | ------ | -------------------------------------- | ----------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------- |
-| **B4** | No `--mod-*`; S2 tokens                | Thickness and color from `--mod-divider-thickness` and `--mod-divider-background-color` (`divider.css`); margin-block from `--mod-menu-section-divider-margin-block`; margin-inline from item label edge | Spacing from S2 tokens (`menu-item-section-divider-height`, `base-padding-horizontal-*`; `menu-item-label-inline-edge-to-content` is a Spectrum CSS variable, not a token), thickness per Q6 | Remove `--mod-divider-*` and `--mod-menu-section-divider-margin-block` overrides; no replacement API planned. |
+| **B4** | No `--mod-*`; S2 tokens                | Thickness and color from `--mod-divider-thickness` and `--mod-divider-background-color` (`divider.css`); margin-block from `--mod-menu-section-divider-margin-block`; margin-inline from item label edge | Spacing from S2 tokens (`menu-item-section-divider-height`, `--swc-menu-item-padding-inline`, defined on `swc-menu` from `base-padding-horizontal-*`; `menu-item-label-inline-edge-to-content` is a Spectrum CSS variable, not a token), thickness per Q6 | Remove `--mod-divider-*` and `--mod-menu-section-divider-margin-block` overrides; no replacement API planned. |
 
 #### Accessibility and behavior
 
@@ -343,7 +343,7 @@ Planned rendering shape:
 
 #### General
 
-- [x] JSDoc on the class and any CSS custom properties (no public custom properties, so no `@cssprop`)
+- [x] JSDoc on the class and any CSS custom properties (the separator defines no custom properties; the inline inset reads `--swc-menu-item-padding-inline` from `swc-menu`)
 - [ ] Storybook story with a separator between labelled `swc-menu-group` blocks
 
 #### Breaking changes

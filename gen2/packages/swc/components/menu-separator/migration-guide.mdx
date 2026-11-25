@@ -39,13 +39,13 @@ import '@adobe/spectrum-wc/components/menu-separator/swc-menu-separator.js';
 
 ### Removed in Spectrum 2
 
-| Removed                                                        | Replacement                                                                     |
-| -------------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| `size` attribute (`SizedMixin`)                                | None. The line is 2px for every menu                                            |
-| `--mod-divider-thickness`, `--mod-divider-background-color`    | None. Thickness and color come from Spectrum 2 tokens                           |
-| `--mod-menu-section-divider-margin-block`                      | None. Block spacing comes from the `menu-item-section-divider-height` token     |
-| `--mod-menu-item-label-inline-edge-to-content` (inline margin) | None. Inline spacing comes from the `base-padding-horizontal-medium` token      |
-| Placement anywhere inside `sp-menu`, including menu groups     | None. Place it between groups of items as a direct child of `swc-menu` (step 5) |
+| Removed                                                        | Replacement                                                                      |
+| -------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| `size` attribute (`SizedMixin`)                                | None. The line is 2px for every menu                                             |
+| `--mod-divider-thickness`, `--mod-divider-background-color`    | None. Thickness and color come from Spectrum 2 tokens                            |
+| `--mod-menu-section-divider-margin-block`                      | None. Block spacing comes from the `menu-item-section-divider-height` token      |
+| `--mod-menu-item-label-inline-edge-to-content` (inline margin) | None. Inline spacing follows `--swc-menu-item-padding-inline`, set by `swc-menu` |
+| Placement anywhere inside `sp-menu`, including menu groups     | None. Place it between groups of items as a direct child of `swc-menu` (step 5)  |
 
 ## Update your code
 
@@ -132,7 +132,7 @@ No accessibility changes are required. `<swc-menu-separator>` renders with `role
 
 ## Styling
 
-`<swc-menu-separator>` exposes no public CSS custom properties.
+`<swc-menu-separator>` exposes no custom properties of its own. Its inline inset follows `--swc-menu-item-padding-inline`, which you can set on `swc-menu`.
 
 {/* @todo Replace the inline-styled callouts in this section with `<swc-inline-alert>` once it is migrated to Spectrum 2. */}
 

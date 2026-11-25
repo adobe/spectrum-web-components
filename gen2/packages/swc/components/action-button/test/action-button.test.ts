@@ -11,9 +11,10 @@
  */
 
 import { html } from 'lit';
-import { expect } from '@storybook/test';
+import { expect, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import {
+  ensureDocumentHasFocus,
   getComponent,
   getComponents,
   withWarningSpy,
@@ -709,12 +710,16 @@ export const HostListenersTest: Story = {
     await step(
       'routes programmatic focus to internal button via delegatesFocus',
       async () => {
-        button.focus();
-        const activeElement = (button.renderRoot as ShadowRoot).activeElement;
-        expect(
-          activeElement?.tagName.toLowerCase(),
-          'delegatesFocus routes focus to internal <button>'
-        ).toBe('button');
+        ensureDocumentHasFocus(canvasElement);
+        // Retry focus while sibling test frames compete for it in Firefox.
+        await waitFor(() => {
+          button.focus();
+          const activeElement = (button.renderRoot as ShadowRoot).activeElement;
+          expect(
+            activeElement?.tagName.toLowerCase(),
+            'delegatesFocus routes focus to internal <button>'
+          ).toBe('button');
+        });
       }
     );
   },
