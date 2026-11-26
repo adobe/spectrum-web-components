@@ -64,9 +64,9 @@ Migrate the parent `<sp-menu>` to `<swc-menu>` first, following the Menu migrati
 <!-- After -->
 <swc-button id="edit-trigger">Edit</swc-button>
 <swc-menu for="edit-trigger">
-  <swc-menu-item>Cut</swc-menu-item>
+  <swc-menu-item><span slot="label">Cut</span></swc-menu-item>
   <swc-menu-separator></swc-menu-separator>
-  <swc-menu-item>Paste</swc-menu-item>
+  <swc-menu-item><span slot="label">Paste</span></swc-menu-item>
 </swc-menu>
 ```
 
@@ -120,9 +120,9 @@ A separator must be a direct child of `swc-menu`, never inside a menu group. Pla
 <!-- After -->
 <swc-button id="edit-trigger">Edit</swc-button>
 <swc-menu for="edit-trigger">
-  <swc-menu-item>Cut</swc-menu-item>
+  <swc-menu-item><span slot="label">Cut</span></swc-menu-item>
   <swc-menu-separator></swc-menu-separator>
-  <swc-menu-item>Paste</swc-menu-item>
+  <swc-menu-item><span slot="label">Paste</span></swc-menu-item>
 </swc-menu>
 ```
 

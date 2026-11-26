@@ -73,7 +73,7 @@ import '@adobe/spectrum-wc/components/menu/swc-menu-item.js';
 | `selected` on menu items                                                                    | Not yet available. Item selection has not shipped in Spectrum 2.                                                                                              |
 | `value` property on menu items                                                              | No replacement. This is the property, not the `value` slot, which is renamed to `secondary`. Track the chosen item from the menu's `click` event.             |
 | Link items (`href`, `target`, `download`, `rel`, `referrerpolicy` on menu items)            | Not yet available. Navigate from the menu's `click` event, and do not slot an anchor element, which is an invalid child of ARIA role `menuitem`.              |
-| `--mod-menu-*` custom properties                                                            | No replacement; `<swc-menu>` currently exposes no public CSS custom properties (see [Styling](#styling)).                                                     |
+| `--mod-menu-*` custom properties                                                            | No replacement. `<swc-menu>` exposes one public property, `--swc-menu-item-padding-inline` (see [Styling](#styling)).                                         |
 | `active` / `focused` on menu items                                                          | No replacement. The menu tracks focus with a roving tabindex.                                                                                                 |
 | `no-wrap` on menu items                                                                     | No replacement. Long items wrap within the menu's maximum width.                                                                                              |
 | `has-submenu` / `open` / `submenu` slot on menu items                                       | Not yet available. Submenus have not shipped.                                                                                                                 |
@@ -193,8 +193,9 @@ menu.addEventListener('swc-close', () => {
 >
   <strong>⚠️ Breaking change.</strong> Spectrum 1 <code>{'--mod-menu-*'}</code>{' '}
   properties <strong>do not apply</strong> to <code>{'<swc-menu>'}</code>.{' '}
-  <code>{'<swc-menu>'}</code> currently exposes no public CSS custom properties;
-  remove any <code>{'--mod-menu-*'}</code> overrides.
+  <code>{'<swc-menu>'}</code> exposes only{' '}
+  <code>{'--swc-menu-item-padding-inline'}</code>; remove any{' '}
+  <code>{'--mod-menu-*'}</code> overrides.
 </div>
 
 <div
@@ -211,6 +212,8 @@ menu.addEventListener('swc-close', () => {
   <strong>not public API</strong>. Styling applied to them will break without
   warning on minor releases.
 </div>
+
+The menu sets `--swc-menu-item-padding-inline` on its host, defaulting by `size` (`s`, `m`, `l`, `xl`). Menu items and `swc-menu-separator` elements inherit it, so it controls both the row padding and the separator inset. Set it on `<swc-menu>` to override both.
 
 Menu items do expose public properties, covering part of the `--mod-menu-item-*` set. Spectrum 1 exposed 45 of those hooks; the 19 below are the Spectrum 2 equivalents. Anything not listed has no replacement, including the disabled colors, the focus-indicator color and width, and the CJK line heights. Those are handled by the component itself and are not consumer-overridable.
 

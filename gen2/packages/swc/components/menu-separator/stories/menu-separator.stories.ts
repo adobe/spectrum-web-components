@@ -19,6 +19,7 @@ import type { Menu } from '@adobe/spectrum-wc/components/menu/Menu.js';
 
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc/components/menu/swc-menu.js';
+import '@adobe/spectrum-wc/components/menu/swc-menu-item.js';
 import '@adobe/spectrum-wc/components/menu-separator/swc-menu-separator.js';
 
 // ────────────────
@@ -54,14 +55,13 @@ export default meta;
 // Menus are `popover="auto"`, so opening several on one docs page would close
 // each other. Stories that render open use `docs.story.inline: false` so each
 // gets its own iframe.
-// Placeholder rows: `swc-menu-item` has not shipped yet.
 const renderInMenu = (id: string, open = false) => html`
   <swc-button id="${id}-trigger">Edit</swc-button>
   <swc-menu ?open=${open} for="${id}-trigger">
-    <swc-menu-item role="menuitem">Cut</swc-menu-item>
-    <swc-menu-item role="menuitem">Copy</swc-menu-item>
+    <swc-menu-item><span slot="label">Cut</span></swc-menu-item>
+    <swc-menu-item><span slot="label">Copy</span></swc-menu-item>
     <swc-menu-separator></swc-menu-separator>
-    <swc-menu-item role="menuitem">Delete</swc-menu-item>
+    <swc-menu-item><span slot="label">Delete</span></swc-menu-item>
   </swc-menu>
 `;
 

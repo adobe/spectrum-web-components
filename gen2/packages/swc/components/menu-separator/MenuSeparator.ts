@@ -22,9 +22,9 @@ import styles from './menu-separator.css';
  * @example
  * <swc-button id="edit-trigger">Edit</swc-button>
  * <swc-menu for="edit-trigger">
- *   <swc-menu-item>Cut</swc-menu-item>
+ *   <swc-menu-item><span slot="label">Cut</span></swc-menu-item>
  *   <swc-menu-separator></swc-menu-separator>
- *   <swc-menu-item>Paste</swc-menu-item>
+ *   <swc-menu-item><span slot="label">Paste</span></swc-menu-item>
  * </swc-menu>
  *
  * @element swc-menu-separator

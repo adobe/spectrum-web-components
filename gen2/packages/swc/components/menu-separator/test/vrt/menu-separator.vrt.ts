@@ -18,6 +18,7 @@ import type { Menu } from '@adobe/spectrum-wc/components/menu/Menu.js';
 
 import '@adobe/spectrum-wc/components/button/swc-button.js';
 import '@adobe/spectrum-wc/components/menu/swc-menu.js';
+import '@adobe/spectrum-wc/components/menu/swc-menu-item.js';
 import '@adobe/spectrum-wc/components/menu-separator/swc-menu-separator.js';
 
 import {
@@ -62,14 +63,14 @@ const separatorForcedColorsVrtParameters = {
 const renderMenu = (id: string) => html`
   <swc-button id=${id}>Edit</swc-button>
   <swc-menu for=${id} placement="bottom-start">
-    <swc-menu-item role="menuitem">Cut</swc-menu-item>
-    <swc-menu-item role="menuitem">Copy</swc-menu-item>
+    <swc-menu-item><span slot="label">Cut</span></swc-menu-item>
+    <swc-menu-item><span slot="label">Copy</span></swc-menu-item>
     <swc-menu-separator></swc-menu-separator>
-    <swc-menu-item role="menuitem">Paste</swc-menu-item>
+    <swc-menu-item><span slot="label">Paste</span></swc-menu-item>
     <swc-menu-separator hidden></swc-menu-separator>
-    <swc-menu-item role="menuitem">Paste special</swc-menu-item>
+    <swc-menu-item><span slot="label">Paste special</span></swc-menu-item>
     <swc-menu-separator></swc-menu-separator>
-    <swc-menu-item role="menuitem">Delete</swc-menu-item>
+    <swc-menu-item><span slot="label">Delete</span></swc-menu-item>
   </swc-menu>
 `;
 

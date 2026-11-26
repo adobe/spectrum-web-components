@@ -96,6 +96,17 @@ export const AnatomyTest: Story = {
   },
 };
 
+// `userEvent.keyboard` stops reaching the menu once rows have a shadow root,
+// so dispatch the key from the focused row.
+const pressArrowDown = (): void => {
+  const target = document.activeElement ?? document.body;
+  const init = { key: 'ArrowDown', bubbles: true, composed: true };
+  target.dispatchEvent(new KeyboardEvent('keydown', init));
+  (document.activeElement ?? document.body).dispatchEvent(
+    new KeyboardEvent('keyup', init)
+  );
+};
+
 export const FocusTest: Story = {
   ...Anatomy,
   play: async ({ canvasElement, step }) => {
@@ -109,14 +120,35 @@ export const FocusTest: Story = {
     ) as HTMLElement[];
     const popover = menu.shadowRoot?.querySelector('.swc-Menu') as HTMLElement;
 
+    await step('fixture rows are upgraded menu items with names', async () => {
+      expect(items.length, 'fixture has menu items').toBeGreaterThan(0);
+      items.forEach((item) => {
+        expect(
+          customElements.get('swc-menu-item'),
+          'swc-menu-item is registered'
+        ).toBeDefined();
+        expect(item.getAttribute('role'), 'row has the menuitem role').toBe(
+          'menuitem'
+        );
+        expect(
+          item.textContent?.trim(),
+          'row has an accessible name'
+        ).toBeTruthy();
+      });
+    });
+
     await step('keyboard navigation skips the separator', async () => {
       menu.open = true;
       await menu.updateComplete;
       await waitFor(() =>
         expect(popover.matches(':popover-open'), 'menu is open').toBe(true)
       );
-      items[1].focus();
-      await userEvent.keyboard('{ArrowDown}');
+      items[0].focus();
+      pressArrowDown();
+      expect(document.activeElement, 'ArrowDown from Cut lands on Copy').toBe(
+        items[1]
+      );
+      pressArrowDown();
       expect(
         document.activeElement,
         'ArrowDown from Copy lands on Delete'
