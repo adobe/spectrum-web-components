@@ -231,6 +231,14 @@
       "types": "./dist/components/thumbnail/index.d.ts",
       "import": "./dist/components/thumbnail/index.js"
     },
+    "./components/toast-container": {
+      "types": "./dist/components/toast-container/index.d.ts",
+      "import": "./dist/components/toast-container/index.js"
+    },
+    "./components/toast-container/index.js": {
+      "types": "./dist/components/toast-container/index.d.ts",
+      "import": "./dist/components/toast-container/index.js"
+    },
     "./components/tooltip": {
       "types": "./dist/components/tooltip/index.d.ts",
       "import": "./dist/components/tooltip/index.js"
@@ -602,6 +610,12 @@
       ],
       "components/thumbnail/index.js": [
         "dist/components/thumbnail/index.d.ts"
+      ],
+      "components/toast-container": [
+        "dist/components/toast-container/index.d.ts"
+      ],
+      "components/toast-container/index.js": [
+        "dist/components/toast-container/index.d.ts"
       ],
       "components/tooltip": [
         "dist/components/tooltip/index.d.ts"
