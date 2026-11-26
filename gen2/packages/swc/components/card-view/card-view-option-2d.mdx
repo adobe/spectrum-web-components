@@ -1,0 +1,58 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
+import * as Stories from './stories/card-view-option-2d.stories';
+
+<Meta of={Stories} />
+
+<DocsHeader />
+
+## Anatomy
+
+- A labelled grid contains one semantic row for the entire collection.
+- Each card is a focusable `gridcell` with its collection-order column index.
+- Each cell contains a photo, selection checkbox, Open action, and Share action.
+
+## Options
+
+### Grid
+
+Cards align in uniform visual rows without adding semantic rows. Every arrow follows collection order rather than geometry and cycles at collection boundaries.
+
+<Canvas of={Stories.Grid} />
+
+### Waterfall
+
+Cards fill visual columns from top to bottom in collection order, then continue across the layout. The same full collection cycle applies, regardless of a card's visual neighbors.
+
+<Canvas of={Stories.Waterfall} />
+
+## Behaviors
+
+In LTR, <kbd>ArrowRight</kbd> and <kbd>ArrowDown</kbd> advance to the next enabled card; <kbd>ArrowLeft</kbd> and <kbd>ArrowUp</kbd> return to the previous enabled card. Horizontal directions reverse in RTL. Moving beyond a collection boundary cycles to the opposite end. Repeating any one arrow visits the entire enabled collection from any starting card. <kbd>Home</kbd> and <kbd>End</kbd> reach the first and last enabled cards.
+
+<kbd>Space</kbd> toggles selection and <kbd>Enter</kbd> opens the focused card.
+Holding <kbd>Shift</kbd> with an arrow key, <kbd>Home</kbd>, or <kbd>End</kbd>
+selects a collection-order range, skipping disabled cards. <kbd>Tab</kbd> visits
+the active card's checkbox and actions, then leaves the collection;
+<kbd>Shift</kbd> + <kbd>Tab</kbd> reverses that path. Child controls retain
+their own keyboard behavior.
+
+## Accessibility
+
+### Features
+
+The collection exposes `grid > row > gridcell`, `aria-rowcount="1"`, and a column count equal to the collection size. Each cell has a one-based collection-order column index, accessible name, and selection state when selection is enabled. Disabled cards remain represented but are skipped by navigation. Native checkboxes expose checked state, and a live status reports the selected count.
+
+### Best practices
+
+Full cycling provides complete single-axis traversal but removes a boundary stop and may move in a different visual direction from the key pressed. Compare it with option 2C's local wrapping. Test whether users understand the cycle, recognize revisited cards, and can still identify their position and the collection size.
+
+One semantic row does not explain vertical navigation, and ARIA indices do not guarantee spoken “x of y.” Verify actual speech, range selection across a cycle boundary, child actions, disabled cards, keyboard entry and exit, RTL, zoom, and layout changes with screen reader and keyboard users. This prototype is not an accessibility sign-off.
+
+<Canvas of={Stories.Accessibility} />
+
+## Upcoming features
+
+Virtualization and dynamic loading are deferred. All cards are loaded in this prototype.
+
+<DocsFooter />

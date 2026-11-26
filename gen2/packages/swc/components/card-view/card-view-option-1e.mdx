@@ -1,0 +1,58 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { DocsFooter, DocsHeader } from '../../.storybook/blocks';
+import * as Stories from './stories/card-view-option-1e.stories';
+
+<Meta of={Stories} />
+
+<DocsHeader />
+
+## Anatomy
+
+- A labelled grid represents the collection as one semantic column.
+- Each card is a row containing a focusable `gridcell`.
+- Each cell contains a photo, selection checkbox, Open action, and Share action.
+
+## Options
+
+### Grid
+
+Cards align in uniform visual rows. Every arrow follows collection order rather than visual geometry, cycling at the collection boundaries.
+
+<Canvas of={Stories.Grid} />
+
+### Waterfall
+
+Cards have varied heights. The same collection-order cycle applies; a vertical arrow does not necessarily move to a visually adjacent card.
+
+<Canvas of={Stories.Waterfall} />
+
+## Behaviors
+
+In left-to-right layouts, <kbd>ArrowRight</kbd> and <kbd>ArrowDown</kbd> advance to the next enabled card; <kbd>ArrowLeft</kbd> and <kbd>ArrowUp</kbd> move to the previous enabled card. Horizontal directions reverse in RTL. Advancing past the last enabled card returns to the first; moving before the first returns to the last. Repeating any one arrow visits the entire enabled collection from any starting card. <kbd>Home</kbd> and <kbd>End</kbd> reach the first and last enabled cards.
+
+<kbd>Space</kbd> toggles selection and <kbd>Enter</kbd> opens the focused card.
+Holding <kbd>Shift</kbd> with an arrow key, <kbd>Home</kbd>, or <kbd>End</kbd>
+selects a collection-order range, skipping disabled cards. <kbd>Tab</kbd> visits
+the active card's checkbox and actions, then leaves the collection;
+<kbd>Shift</kbd> + <kbd>Tab</kbd> reverses that path. Child controls retain
+their own keyboard behavior.
+
+## Accessibility
+
+### Features
+
+The collection exposes `grid > row > gridcell` semantics with one semantic column and a row per card. Cards expose accessible names and selection state when selection is enabled. Disabled cards remain represented but are skipped by navigation. Native checkboxes expose checked state, and a live status reports the selected count.
+
+### Best practices
+
+Full cycling avoids the incomplete single-axis route of spatial navigation, but it removes the boundary stop that can communicate the end of a collection. The key direction can also disagree with the visual destination. Compare this with local spatial wrapping in option 1C and test whether users recognize that they have returned to an earlier card.
+
+Verify actual position and total announcements, range selection across a cycle boundary, child actions, disabled cards, keyboard entry and exit, RTL, zoom, and layout changes with screen reader and keyboard users. Metadata and complete traversal alone do not establish usability or conformance.
+
+<Canvas of={Stories.Accessibility} />
+
+## Upcoming features
+
+Virtualization and dynamic loading are deferred. All cards are loaded in this prototype.
+
+<DocsFooter />
