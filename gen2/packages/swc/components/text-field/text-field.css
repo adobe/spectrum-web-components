@@ -12,6 +12,7 @@
 
 :host {
   display: block;
+  block-size: fit-content;
 }
 
 * {

@@ -18,12 +18,16 @@
  *
  */
 
+/* inline-size is required: a bar has no intrinsic width, so without it a
+ * centered flex or grid cell shrinks the bar to its label text (or to the
+ * minimum width). */
 :host {
-  display: inline-block;
+  box-sizing: border-box;
+  display: block;
   inline-size: 100%;
   min-inline-size: token("progress-bar-minimum-width");
   max-inline-size: token("progress-bar-maximum-width");
-  vertical-align: top;
+  block-size: fit-content;
 }
 
 * {

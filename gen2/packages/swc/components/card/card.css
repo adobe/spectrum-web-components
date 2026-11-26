@@ -29,6 +29,11 @@
   grid-area: media;
 }
 
+/* A loading spinner in the media slot centers over the media area. */
+::slotted(swc-progress-circle[slot="media"]) {
+  place-self: center;
+}
+
 /* ─────────────────────────────────────────────────────────────────────────────
    COLLECTION SLOT
    ───────────────────────────────────────────────────────────────────────────── */

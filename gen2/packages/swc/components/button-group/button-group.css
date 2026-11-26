@@ -11,7 +11,8 @@
  */
 
 :host {
-  display: flex;
+  display: block;
+  block-size: fit-content;
 }
 
 * {

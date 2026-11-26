@@ -32,8 +32,9 @@
 }
 
 :host {
-  display: inline-block;
-  place-self: center;
+  display: block;
+  inline-size: fit-content;
+  block-size: fit-content;
 }
 
 * {
@@ -46,7 +47,7 @@
   --_swc-progress-circle-fill-border-color: var(--swc-progress-circle-fill-border-color, token("accent-content-color-default"));
   --_swc-progress-circle-thickness: var(--swc-progress-circle-thickness, token("progress-circle-thickness-medium"));
 
-  display: inline-block;
+  display: block;
   position: relative;
   inline-size: var(--_swc-progress-circle-size);
   block-size: var(--_swc-progress-circle-size);

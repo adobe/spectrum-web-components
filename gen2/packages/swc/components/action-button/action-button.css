@@ -14,8 +14,16 @@
 
 :host {
   display: inline-block;
-  vertical-align: top;
 }
+
+/* @global-exclude: keeps the shadow-DOM host the same size as the rendered button; plain elements via global classes have no separate host, and should still stretch in a flex or grid layout */
+/* stylelint-disable-next-line no-duplicate-selectors -- separate rule so the @global-exclude fence (see vite-global-elements-css) can strip only these declarations from the generated global stylesheet */
+:host {
+  inline-size: fit-content;
+  block-size: fit-content;
+}
+
+/* @global-exclude-end */
 
 * {
   box-sizing: border-box;

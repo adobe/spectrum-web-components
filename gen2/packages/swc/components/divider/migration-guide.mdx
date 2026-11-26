@@ -40,10 +40,10 @@ import '@adobe/spectrum-wc/components/divider/swc-divider.js';
 
 ### Removed in Spectrum 2
 
-| Removed                                                      | Replacement                                                                                         |
-| ------------------------------------------------------------ | --------------------------------------------------------------------------------------------------- |
-| `--mod-divider-*` custom properties                          | `--swc-divider-*` equivalents (see [Styling](#styling))                                             |
-| Size- and static-color-specific `--mod-divider-*` properties | Simplified to two public properties: `--swc-divider-thickness` and `--swc-divider-background-color` |
+| Removed                                                      | Replacement                                                                                                                                                                              |
+| ------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--mod-divider-*` custom properties                          | `--swc-divider-*` equivalents (see [Styling](#styling))                                                                                                                                  |
+| Size- and static-color-specific `--mod-divider-*` properties | Simplified to a small set of public properties: `--swc-divider-thickness`, `--swc-divider-background-color`, `--swc-divider-minimum-inline-size`, and `--swc-divider-minimum-block-size` |
 
 ## Update your code
 
@@ -119,10 +119,12 @@ Replace `--mod-divider-*` properties with their `--swc-divider-*` equivalents wh
 
 {/* @todo Replace the Description column with the `@cssproperty` JSDoc descriptions from `<swc-divider>`'s CEM entry once they are added in a follow-up PR. */}
 
-| Custom property                  | Description                    | Notes |
-| -------------------------------- | ------------------------------ | ----- |
-| `--swc-divider-thickness`        | Thickness of the divider line. |       |
-| `--swc-divider-background-color` | Color of the divider line.     |       |
+| Custom property                     | Description                                                                                                | Notes                                            |
+| ----------------------------------- | ---------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
+| `--swc-divider-thickness`           | Thickness of the divider line.                                                                             |                                                  |
+| `--swc-divider-background-color`    | Color of the divider line.                                                                                 |                                                  |
+| `--swc-divider-minimum-inline-size` | Minimum width of a horizontal divider when it shrinks in a flex row, capped at the width of its container. | New in Spectrum 2.                               |
+| `--swc-divider-minimum-block-size`  | Minimum height of a vertical divider when its container gives it no height to fill.                        | New in Spectrum 2. Defaults to one line of text. |
 
 <div
   style={{

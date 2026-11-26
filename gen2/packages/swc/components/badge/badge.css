@@ -11,8 +11,9 @@
  */
 
 :host {
-  display: inline-flex;
-  place-self: start;
+  display: inline-block;
+  inline-size: fit-content;
+  block-size: fit-content;
   vertical-align: middle;
 }
 
@@ -28,9 +29,10 @@
   --_swc-badge-padding-inline: var(--swc-badge-padding-inline, token("base-padding-horizontal-small"));
   --_swc-badge-line-height: var(--swc-badge-line-height, token("line-height-font-size-75"));
 
-  display: inline-flex;
+  display: flex;
   gap: var(--swc-badge-gap, token("base-gap-small"));
   align-items: center;
+  inline-size: fit-content;
   min-block-size: var(--swc-badge-height, token("component-height-75"));
   padding-block: calc(var(--_swc-badge-padding-block) - var(--_swc-badge-border-width));
   padding-inline-start: calc(var(--_swc-badge-padding-inline-start) - var(--_swc-badge-border-width));

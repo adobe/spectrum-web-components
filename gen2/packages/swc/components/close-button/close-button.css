@@ -11,8 +11,9 @@
  */
 
 :host {
-  display: inline-flex;
-  vertical-align: top;
+  display: inline-block;
+  inline-size: fit-content;
+  block-size: fit-content;
 }
 
 * {
@@ -23,7 +24,7 @@
   --_swc-close-button-border-width: token("border-width-200");
 
   -webkit-tap-highlight-color: transparent;
-  display: inline-flex;
+  display: flex;
   position: relative;
   align-items: center;
   justify-content: center;
@@ -73,7 +74,7 @@
 }
 
 .swc-CloseButton-icon {
-  display: block;
+  display: flex;
   flex-shrink: 0;
 }
 

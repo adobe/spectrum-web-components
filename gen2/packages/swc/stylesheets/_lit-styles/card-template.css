@@ -27,7 +27,9 @@
   --_swc-card-base-border-radius: var(--swc-card-base-border-radius, token("corner-radius-700"));
   --_swc-card-base-selected-focus-outline: token("focus-indicator-thickness") solid token("gray-800");
 
+  box-sizing: border-box;
   display: block;
+  inline-size: 100%;
   max-inline-size: var(--swc-card-base-max-inline-size, 280px);
 }
 
@@ -59,6 +61,7 @@
     "footer";
   grid-template-rows: var(--_swc-card-base-grid-template-rows);
   align-items: start;
+  block-size: 100%;
   font-size: var(--_swc-card-base-title-font-size);
   line-height: var(--_swc-card-base-title-line-height);
   color: token("neutral-content-color-default");

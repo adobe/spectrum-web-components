@@ -13,6 +13,7 @@
 
 - [Structure & Order](#structure--order)
 - [Layout & Tokens](#layout--tokens)
+- [Host layout](#host-layout)
 - [Specificity](#specificity)
 - [Variants & States](#variants--states)
 - [Cascade Layers (if used)](#cascade-layers-if-used)
@@ -39,6 +40,11 @@ Use this checklist when opening or reviewing a PR.
 - [ ]  Layout primitives (`gap`, alignment, min/max sizes) are preferred over margins/padding hacks
 - [ ]  Padding values are defensive, not layout-driven, where possible
 - [ ]  `::slotted()` rules that set `inline-size`, `block-size`, `width`, `height`, `aspect-ratio`, or a `max-*` size cap also declare `box-sizing: border-box` explicitly (the component's `* { box-sizing: border-box; }` reset does not reach light DOM slotted content)
+
+## Host layout
+
+- [ ]  `:host` display, sizing, and alignment follow the [host layout rules](01_component-css.md#host-layout-rules)
+- [ ]  A `LayoutContexts` VRT covers the component, or the component is documented as out of scope (see [layout contexts](../04_testing/04_visual-regresssion-testing.md#layout-contexts))
 
 ## Specificity
 

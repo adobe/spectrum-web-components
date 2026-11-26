@@ -111,3 +111,5 @@ export class Badge extends BadgeBase { … }
 ```
 
 Storybook picks these up automatically and surfaces them in the API docs panel. Do not add `@cssprop` tags for private `--_swc-*` properties — those are internal only.
+
+**Step 6 — Check the host layout.** Apply the [host layout rules](../../../CONTRIBUTOR-DOCS/02_style-guide/01_css/01_component-css.md#host-layout-rules) to `:host` (display, `fit-content`, no `place-self`), then add a `LayoutContexts` VRT as described in the [`vrt-authoring`](../vrt-authoring/SKILL.md) skill.

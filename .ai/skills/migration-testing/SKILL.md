@@ -40,7 +40,7 @@ Follow **[Phase 6: Testing](../../../CONTRIBUTOR-DOCS/03_project-planning/02_wor
 
 If the implementation or the needed test coverage has drifted from the migration plan, follow [`migration-plan-contract`](../migration-prep/references/migration-plan-contract.md).
 
-For dedicated visual regression stories (`test/vrt/*.vrt.ts`), also use the [`vrt-authoring`](../vrt-authoring/SKILL.md) skill.
+For dedicated visual regression stories (`test/vrt/*.vrt.ts`), also use the [`vrt-authoring`](../vrt-authoring/SKILL.md) skill. That includes the `LayoutContexts` story for host layout.
 
 ## Form-associated components
 
