@@ -202,6 +202,14 @@ jobs:
         working-directory: gen2
         run: yarn changeset publish --no-git-tag --tag ${{ steps.extract-tag.outputs.tag }}
 
+      # Confirms npm serves every gen2 package at the snapshot version with the snapshot
+      # dist-tag pointing at it. Runs after a partial publish failure too - that's when a
+      # registry mismatch is most likely.
+      - name: Verify the registry
+        id: verify
+        if: ${{ !cancelled() && steps.publish.outcome != 'skipped' }}
+        run: node scripts/verify-registry.js --gen=gen2 --tag=${{ steps.extract-tag.outputs.tag }}
+
       - name: Snapshot summary
         if: always()
         env:
@@ -213,11 +221,16 @@ jobs:
           # The actual publish result, not just the auth check - so a failed publish
           # doesn't get reported as a success.
           PUBLISH_OUTCOME: ${{ steps.publish.outcome }}
+          # `changeset publish` can report success before npm serves every package, so
+          # the summary only claims success once the registry check agrees.
+          VERIFY_OUTCOME: ${{ steps.verify.outcome }}
         run: |
           echo "## Snapshot summary (gen2)" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
 
-          if [ "$PUBLISH_OUTCOME" == "success" ]; then
+          if [ "$PUBLISH_OUTCOME" == "success" ] && [ "$VERIFY_OUTCOME" != "success" ]; then
+            echo "❌ Publish reported success, but npm doesn't serve every package at the snapshot version (registry check: \`${VERIFY_OUTCOME:-skipped}\`). See the registry verification table above." >> $GITHUB_STEP_SUMMARY
+          elif [ "$PUBLISH_OUTCOME" == "success" ]; then
             echo "| Field | Value |" >> $GITHUB_STEP_SUMMARY
             echo "|-------|-------|" >> $GITHUB_STEP_SUMMARY
             echo "| **Snapshotted branch** | \`${TARGET_REF}\` |" >> $GITHUB_STEP_SUMMARY
