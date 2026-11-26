@@ -35,6 +35,8 @@ The menu's `PlacementController` handles pixel positioning automatically. When t
 
 `size` accepts `s`, `m`, `l`, and `xl` (default `m`). Set it on `swc-menu`, which propagates its own size onto every `swc-menu-item` it slots. A `size` set on an item directly is not rejected: it holds until the next propagation, which runs when the menu's size changes or when its slotted items change. Set the size on the menu rather than per item.
 
+The menu also sets `--swc-menu-item-padding-inline` per size on its host. Rows and `swc-menu-separator` elements inherit it, so the separator inset follows the row padding. Override it on `swc-menu` to change both.
+
 <Canvas of={MenuStories.Sizes} />
 
 ### Item content

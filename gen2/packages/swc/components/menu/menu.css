@@ -12,6 +12,22 @@
 
 :host {
   display: block;
+
+  --swc-menu-item-padding-inline: token("base-padding-horizontal-medium");
+}
+
+/* Set on the host so consumers can override per size, and so rows and
+ * `swc-menu-separator` inherit one shared inline inset. */
+:host([size="s"]) {
+  --swc-menu-item-padding-inline: token("base-padding-horizontal-small");
+}
+
+:host([size="l"]) {
+  --swc-menu-item-padding-inline: token("base-padding-horizontal-large");
+}
+
+:host([size="xl"]) {
+  --swc-menu-item-padding-inline: token("base-padding-horizontal-extra-large");
 }
 
 * {

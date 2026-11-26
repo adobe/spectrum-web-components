@@ -155,6 +155,14 @@
       "types": "./dist/components/menu/index.d.ts",
       "import": "./dist/components/menu/index.js"
     },
+    "./components/menu-separator": {
+      "types": "./dist/components/menu-separator/index.d.ts",
+      "import": "./dist/components/menu-separator/index.js"
+    },
+    "./components/menu-separator/index.js": {
+      "types": "./dist/components/menu-separator/index.d.ts",
+      "import": "./dist/components/menu-separator/index.js"
+    },
     "./components/menu/index.js": {
       "types": "./dist/components/menu/index.d.ts",
       "import": "./dist/components/menu/index.js"
@@ -545,6 +553,12 @@
       ],
       "components/menu": [
         "dist/components/menu/index.d.ts"
+      ],
+      "components/menu-separator": [
+        "dist/components/menu-separator/index.d.ts"
+      ],
+      "components/menu-separator/index.js": [
+        "dist/components/menu-separator/index.d.ts"
       ],
       "components/menu/index.js": [
         "dist/components/menu/index.d.ts"

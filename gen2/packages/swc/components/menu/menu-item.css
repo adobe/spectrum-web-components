@@ -90,7 +90,6 @@
 :host([size="s"]) {
   --swc-menu-item-min-block-size: token("component-height-75");
   --swc-menu-item-padding-block: token("base-padding-vertical-small");
-  --swc-menu-item-padding-inline: token("base-padding-horizontal-small");
   --swc-menu-item-gap: token("base-gap-small");
   --swc-menu-item-corner-radius: token("corner-radius-medium-size-small");
   --swc-menu-item-label-font-size: token("font-size-75");
@@ -105,7 +104,6 @@
 :host([size="l"]) {
   --swc-menu-item-min-block-size: token("component-height-200");
   --swc-menu-item-padding-block: token("base-padding-vertical-large");
-  --swc-menu-item-padding-inline: token("base-padding-horizontal-large");
   --swc-menu-item-gap: token("base-gap-large");
   --swc-menu-item-corner-radius: token("corner-radius-medium-size-large");
   --swc-menu-item-label-font-size: token("font-size-200");
@@ -120,7 +118,6 @@
 :host([size="xl"]) {
   --swc-menu-item-min-block-size: token("component-height-300");
   --swc-menu-item-padding-block: token("base-padding-vertical-extra-large");
-  --swc-menu-item-padding-inline: token("base-padding-horizontal-extra-large");
   --swc-menu-item-gap: token("base-gap-extra-large");
   --swc-menu-item-corner-radius: token("corner-radius-medium-size-extra-large");
   --swc-menu-item-label-font-size: token("font-size-300");
