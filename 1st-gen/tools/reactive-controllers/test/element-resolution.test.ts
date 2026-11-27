@@ -46,4 +46,44 @@ describe('Element Resolution', () => {
     await elementUpdated(el);
     expect(controller.element === target2).to.be.true;
   });
+  it('does not throw when the selector changes while the host is detached', async () => {
+    class TestEl extends LitElement {}
+    if (!customElements.get('test-element-resolution-detached-el')) {
+      customElements.define('test-element-resolution-detached-el', TestEl);
+    }
+    const test = await fixture(html`
+      <div>
+        <test-element-resolution-detached-el></test-element-resolution-detached-el>
+        <div id="one"></div>
+        <div id="two"></div>
+      </div>
+    `);
+    const el = test.querySelector(
+      'test-element-resolution-detached-el'
+    ) as TestEl;
+    const target2 = test.querySelector('#two') as HTMLDivElement;
+    const controller = new ElementResolutionController(el as LitElement, {
+      selector: '#one',
+    });
+    const parent = test.parentElement as HTMLElement;
+
+    // Detach the whole subtree: `getRootNode()` now returns the `<div>`.
+    test.remove();
+    expect(() => {
+      controller.selector = '#two';
+    }).not.to.throw();
+    expect(controller.element).to.be.null;
+
+    // Re-attaching resolves the element again.
+    parent.append(test);
+    await elementUpdated(el);
+    expect(controller.element === target2).to.be.true;
+
+    // Detach only the host: `getRootNode()` now returns the host itself.
+    el.remove();
+    expect(() => {
+      controller.selector = '#one';
+    }).not.to.throw();
+    expect(controller.element).to.be.null;
+  });
 });
