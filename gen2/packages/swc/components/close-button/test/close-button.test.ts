@@ -13,7 +13,11 @@
 import { html } from 'lit';
 import { expect, userEvent, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
-import { getComponent, withWarningSpy } from '@swc-test-helpers/dom';
+import {
+  ensureDocumentHasFocus,
+  getComponent,
+  withWarningSpy,
+} from '@swc-test-helpers/dom';
 
 import { CloseButton } from '@adobe/spectrum-wc/components/close-button';
 import {
@@ -230,6 +234,7 @@ export const DelegatesFocusTest: Story = {
     await step(
       'routes programmatic focus to internal button via delegatesFocus',
       async () => {
+        ensureDocumentHasFocus(canvasElement);
         // Retry focus while sibling test frames compete for it in Firefox.
         await waitFor(() => {
           closeButton.focus();

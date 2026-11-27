@@ -22,6 +22,7 @@ Accumulated lessons from working sessions on this project. Grouped by category. 
 - **Root `package.json` has `"type": "module"`**: All `.js` scripts in this repo use ESM `import`/`export` syntax. Write new scripts with `import`, not `require`.
 - **`linters/` is at the repo root**: The `stylelint-property-order.js` and ESLint plugin live at `linters/`, not inside `gen2/` or `1st-gen/`.
 - **`.ai/memory/` is the persistent lessons store**: Lessons and cross-session notes belong here, not in session-handoff documents or code comments. Each lessons file needs instruction frontmatter (`description` and a quoted `paths` list) so `yarn ai:sync` loads it as a path-scoped instruction; `yarn lint:ai` fails without it.
+- **Stage new `.ai/` sources before `yarn lint:ai`**: `yarn ai:sync` reads untracked files, but the check in `yarn lint:ai` reads only git-tracked ones. An unstaged new rule or lessons file makes it report `.ai/README.md` as out of date.
 
 ---
 

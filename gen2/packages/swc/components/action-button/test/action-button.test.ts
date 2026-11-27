@@ -14,6 +14,7 @@ import { html } from 'lit';
 import { expect, waitFor } from '@storybook/test';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import {
+  ensureDocumentHasFocus,
   getComponent,
   getComponents,
   withWarningSpy,
@@ -709,6 +710,7 @@ export const HostListenersTest: Story = {
     await step(
       'routes programmatic focus to internal button via delegatesFocus',
       async () => {
+        ensureDocumentHasFocus(canvasElement);
         // Retry focus while sibling test frames compete for it in Firefox.
         await waitFor(() => {
           button.focus();

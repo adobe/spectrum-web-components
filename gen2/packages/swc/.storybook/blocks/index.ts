@@ -10,6 +10,7 @@
  * governing permissions and limitations under the License.
  */
 export * from './ApiTable.js';
+export * from './DocsElements.js';
 export * from './DocsFooter.js';
 export * from './DocsHeader.js';
 export * from './GettingStarted.js';

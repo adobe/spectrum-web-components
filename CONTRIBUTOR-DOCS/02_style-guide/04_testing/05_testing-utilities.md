@@ -11,6 +11,7 @@
 <details open>
 <summary><strong>In this doc</strong></summary>
 
+- [`ensureDocumentHasFocus(canvasElement)`](#ensuredocumenthasfocuscanvaselement)
 - [`getComponent<T>(canvasElement, selector)`](#getcomponenttcanvaselement-selector)
 - [`getComponents<T>(canvasElement, selector)`](#getcomponentstcanvaselement-selector)
 - [`fixture<T>(template)`](#fixturettemplate)
@@ -28,6 +29,22 @@ Shared test utilities live in [`gen2/test/helpers/`](../../../gen2/test/helpers/
 Keep reusable helpers here and component- or controller-specific setup beside its tests. Test helpers are not a public component API.
 
 Run `yarn test:helper` to verify helper imports and editor discovery. These checks also run before `yarn test:gen2`.
+
+## `ensureDocumentHasFocus(canvasElement)`
+
+Activate the element's owning document before a focus-dependent interaction:
+
+```typescript
+import { userEvent } from '@storybook/test';
+import { ensureDocumentHasFocus } from '@swc-test-helpers/dom';
+
+ensureDocumentHasFocus(canvasElement);
+await userEvent.tab();
+```
+
+The helper focuses the document's window once and throws if the document has no window or `document.hasFocus()` is still false. It does not retry, focus a particular element, or establish keyboard modality. Keep interaction and focus assertions in the test; document activation does not prevent subsequent focus loss.
+
+Use it in iframe-based tests that need an active document before simulated keyboard navigation or programmatic element focus. Do not apply it globally or in tests that intentionally exercise an unfocused document.
 
 ## `getComponent<T>(canvasElement, selector)`
 

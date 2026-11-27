@@ -30,6 +30,7 @@ const aliases = {
 
 test('DOM helpers retain their exports through individual modules', () => {
   const helpers = {
+    ensureDocumentHasFocus: 'ensure-document-has-focus',
     fixture: 'fixture',
     getComponent: 'get-component',
     getComponents: 'get-components',
