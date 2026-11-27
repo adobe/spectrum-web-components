@@ -119,12 +119,16 @@ export class ElementResolutionController implements ReactiveController {
   }
 
   private resolveElement(): void {
-    if (!this.selector) {
+    // While the host is detached, `getRootNode()` returns its top-most
+    // ancestor element (or the host itself) rather than a Document or
+    // ShadowRoot, and elements do not have `getElementById()`. Skip the
+    // lookup until `hostConnected()` resolves the element again.
+    if (!this.selector || !this.host.isConnected) {
       this.releaseElement();
       return;
     }
 
-    const parent = this.host.getRootNode() as ShadowRoot;
+    const parent = this.host.getRootNode() as Document | ShadowRoot;
     this.element = this.selectorIsId
       ? (parent.getElementById(this.selectorAsId) as HTMLElement)
       : (parent.querySelector(this.selector) as HTMLElement);
